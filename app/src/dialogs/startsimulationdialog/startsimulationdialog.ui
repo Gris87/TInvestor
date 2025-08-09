@@ -131,13 +131,16 @@
          <widget class="QDateEdit" name="fromDateEdit">
           <property name="dateTime">
            <datetime>
-            <hour>6</hour>
+            <hour>0</hour>
             <minute>0</minute>
             <second>0</second>
             <year>2023</year>
             <month>12</month>
             <day>31</day>
            </datetime>
+          </property>
+          <property name="displayFormat">
+           <string>dd.MM.yyyy</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
@@ -161,13 +164,16 @@
          <widget class="QDateEdit" name="toDateEdit">
           <property name="dateTime">
            <datetime>
-            <hour>6</hour>
+            <hour>0</hour>
             <minute>0</minute>
             <second>0</second>
             <year>2024</year>
             <month>12</month>
             <day>31</day>
            </datetime>
+          </property>
+          <property name="displayFormat">
+           <string>dd.MM.yyyy</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>

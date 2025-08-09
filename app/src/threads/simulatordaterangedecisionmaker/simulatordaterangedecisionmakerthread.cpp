@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QMutex>
+#include <algorithm>
 
 #include "src/grpc/utils.h"
 #include "src/threads/parallelhelper/parallelhelperthread.h"
@@ -20,6 +21,7 @@ constexpr int    OPTIMIZE_OPERATIONS_SIZE = 10000;
 constexpr int    LIMIT_LOGS               = 1000000;
 constexpr int    OPTIMIZE_LOGS_SIZE       = 10000;
 constexpr float  ZERO_LIMIT               = 0.0001f;
+constexpr double LIMIT_MAX_YIELD_PERCENT  = 100.0;
 constexpr float  HUNDRED_PERCENT          = 100.0f;
 constexpr qint64 MS_IN_SECOND             = 1000LL;
 constexpr qint64 ONE_MINUTE               = 60LL * MS_IN_SECOND;
@@ -592,23 +594,31 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
 
             if (totalMoney > *bestLocalTotalMoney)
             {
-                *bestLocalTotalMoney = totalMoney;
+                double maxYieldWithCommissionPercent =
+                    std::max_element(operations.constBegin(), operations.constEnd(), [](const Operation& l, const Operation& r) {
+                        return l.yieldWithCommissionPercent < r.yieldWithCommissionPercent;
+                    })->yieldWithCommissionPercent;
 
-                *bestOperations = reverseOperations(operations);
-                *bestEntries    = reverseEntries(entries);
-                *bestPortfolio  = portfolio;
-
-                mOperationsDatabase->writeOperations(*bestOperations, buyDecisionId);
-                mLogsDatabase->writeLogs(*bestEntries, buyDecisionId);
-                mPortfolioDatabase->writePortfolio(*bestPortfolio, buyDecisionId);
-
-                mSettingsEditor->setValue(QString("Options/BestConfigId%1").arg(settingsSuffix), currentConfig);
-
-                if (totalMoney > *bestGlobalTotalMoney)
+                if (maxYieldWithCommissionPercent < LIMIT_MAX_YIELD_PERCENT)
                 {
-                    *bestGlobalTotalMoney = totalMoney;
+                    *bestLocalTotalMoney = totalMoney;
 
-                    notifyBestResult(totalMoney);
+                    *bestOperations = reverseOperations(operations);
+                    *bestEntries    = reverseEntries(entries);
+                    *bestPortfolio  = portfolio;
+
+                    mOperationsDatabase->writeOperations(*bestOperations, buyDecisionId);
+                    mLogsDatabase->writeLogs(*bestEntries, buyDecisionId);
+                    mPortfolioDatabase->writePortfolio(*bestPortfolio, buyDecisionId);
+
+                    mSettingsEditor->setValue(QString("Options/BestConfigId%1").arg(settingsSuffix), currentConfig);
+
+                    if (totalMoney > *bestGlobalTotalMoney)
+                    {
+                        *bestGlobalTotalMoney = totalMoney;
+
+                        notifyBestResult(totalMoney);
+                    }
                 }
             }
 
@@ -664,7 +674,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
 
     qint64 timestamp = mStartTimestamp;
 
-    while (timestamp < mEndTimestamp && !QThread::currentThread()->isInterruptionRequested())
+    while (timestamp < mEndTimestamp && !parentThread->isInterruptionRequested())
     {
         if (timestamp % NOTIFY_PROGRESS_STEP == 0)
         {
@@ -1554,13 +1564,15 @@ void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
         currentMinute = qMax(currentMinute, currentMinuteArray[i]);
     }
 
-    qint64 remainingMilliseconds = remainingMinutes > 0 ? (deltaTime / processedMinutes) * remainingMinutes : 0;
+    qint64 remainingMilliseconds =
+        processedMinutes > 0 && remainingMinutes > 0 ? (deltaTime / processedMinutes) * remainingMinutes : 0;
 
     if (buyDecisionId >= 0)
     {
         Q_ASSERT_X(mConfigVariants.size() == AMOUNT_OF_BUY_DECISIONS, __FUNCTION__, "Unexpected behavior");
 
-        remainingMilliseconds += (deltaTime + remainingMilliseconds) * DURATION_COEFFICIENTS[buyDecisionId];
+        remainingMilliseconds += (((deltaTime + remainingMilliseconds) / (amountOfConfigs - startConfigId)) * amountOfConfigs) *
+                                 DURATION_COEFFICIENTS[buyDecisionId];
     }
 
     remainingMilliseconds /= MS_IN_SECOND;

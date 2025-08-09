@@ -53,9 +53,9 @@ public:
 
 private:
     IDecisionMakerConfig* chooseDecisionConfig(IConfig* config, bool autoPilot);
-    void                  updateStocksMap(const QList<Stock*>& stocks);
-    void
-    getStocksWithAvgPrice(const Portfolio& portfolio, const QList<Stock*>& stocks, QList<StockWithAvgPrice>& stocksWithAvgPrice);
+    void                  updateStocksMap(QThread* parentThread, const QList<Stock*>& stocks);
+    QList<StockWithAvgPrice>
+         getStocksWithAvgPrice(QThread* parentThread, const Portfolio& portfolio, const QList<Stock*>& stocks);
     void makeDecisions(
         QThread*                  parentThread,
         IConfig*                  config,
@@ -68,7 +68,7 @@ private:
         bool                      useParallel,
         InstrumentsForTrading&    res
     );
-    void calculateTotalCostAndMoney(const Portfolio& portfolio, double& totalCost, double& money);
+    void calculateTotalCostAndMoney(QThread* parentThread, const Portfolio& portfolio, double& totalCost, double& money);
 
     IInstrumentsStorage*    mInstrumentsStorage;
     IUserStorage*           mUserStorage;

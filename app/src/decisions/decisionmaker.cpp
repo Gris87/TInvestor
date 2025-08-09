@@ -71,11 +71,10 @@ InstrumentsForTrading DecisionMaker::makeDecision(
         }
     }
 
-    IDecisionMakerConfig*    decisionConfig = chooseDecisionConfig(config, autoPilot);
-    QList<StockWithAvgPrice> stocksWithAvgPrice;
+    IDecisionMakerConfig* decisionConfig = chooseDecisionConfig(config, autoPilot);
 
-    updateStocksMap(stocks);
-    getStocksWithAvgPrice(portfolio, stocks, stocksWithAvgPrice);
+    updateStocksMap(parentThread, stocks);
+    QList<StockWithAvgPrice> stocksWithAvgPrice = getStocksWithAvgPrice(parentThread, portfolio, stocks);
 
     makeDecisions(
         parentThread, config, decisionConfig, timestamp, portfolio, stocksWithAvgPrice, keepMoney, dateRange, useParallel, res
@@ -99,31 +98,40 @@ IDecisionMakerConfig* DecisionMaker::chooseDecisionConfig(IConfig* config, bool 
     return config->getSimulatorConfig();
 }
 
-void DecisionMaker::updateStocksMap(const QList<Stock*>& stocks)
+void DecisionMaker::updateStocksMap(QThread* parentThread, const QList<Stock*>& stocks)
 {
     if (mStocksMap.size() != stocks.size())
     {
-        for (Stock* stock : stocks)
+        for (int i = 0; i < stocks.size() && !parentThread->isInterruptionRequested(); ++i)
         {
+            Stock* stock = stocks.at(i);
+
+            stock->readLock();
             mStocksMap[stock->meta.instrumentId] = stock;
+            stock->readUnlock();
         }
     }
 }
 
-void DecisionMaker::getStocksWithAvgPrice(
-    const Portfolio& portfolio, const QList<Stock*>& stocks, QList<StockWithAvgPrice>& stocksWithAvgPrice
-)
+QList<StockWithAvgPrice>
+DecisionMaker::getStocksWithAvgPrice(QThread* parentThread, const Portfolio& portfolio, const QList<Stock*>& stocks)
 {
+    QList<StockWithAvgPrice> res;
+
     mUserStorage->readLock();
     const bool qualifiedUser = mUserStorage->isQualified();
     mUserStorage->readUnlock();
 
     QMap<QString, float> existingStocks; // Instrument UID => Average price
 
-    for (const PortfolioCategoryItem& category : portfolio.positions)
+    for (int i = 0; i < portfolio.positions.size() && !parentThread->isInterruptionRequested(); ++i)
     {
-        for (const PortfolioItem& item : category.items)
+        const PortfolioCategoryItem& category = portfolio.positions.at(i);
+
+        for (int j = 0; j < category.items.size() && !parentThread->isInterruptionRequested(); ++j)
         {
+            const PortfolioItem& item = category.items.at(j);
+
             if (mStocksMap.contains(item.instrumentId))
             {
                 existingStocks[item.instrumentId] = item.avgPriceWavg;
@@ -131,8 +139,9 @@ void DecisionMaker::getStocksWithAvgPrice(
         }
     }
 
-    for (Stock* stock : stocks)
+    for (int i = 0; i < stocks.size() && !parentThread->isInterruptionRequested(); ++i)
     {
+        Stock* stock = stocks.at(i);
         stock->readLock();
 
         const float avgPrice = existingStocks.value(stock->meta.instrumentId, -1);
@@ -141,16 +150,18 @@ void DecisionMaker::getStocksWithAvgPrice(
         {
             if (qualifiedUser || !stock->meta.forQualInvestorFlag)
             {
-                stocksWithAvgPrice.append(StockWithAvgPrice(stock, avgPrice));
+                res.append(StockWithAvgPrice(stock, avgPrice));
             }
         }
         else
         {
-            stocksWithAvgPrice.append(StockWithAvgPrice(stock, avgPrice));
+            res.append(StockWithAvgPrice(stock, avgPrice));
         }
 
         stock->readUnlock();
     }
+
+    return res;
 }
 
 struct MakeDecisionsInfo
@@ -320,7 +331,7 @@ void DecisionMaker::makeDecisions(
     double totalCost = 0.0;
     double money     = 0.0;
 
-    calculateTotalCostAndMoney(portfolio, totalCost, money);
+    calculateTotalCostAndMoney(parentThread, portfolio, totalCost, money);
     money -= keepMoney;
 
     mUserStorage->readLock();
@@ -350,14 +361,16 @@ void DecisionMaker::makeDecisions(
 
     commission /= HUNDRED_PERCENT;
 
-    for (const InstrumentsForTrading& result : std::as_const(makeDecisionsInfo.sellResults))
+    for (int i = 0; i < makeDecisionsInfo.sellResults.size() && !parentThread->isInterruptionRequested(); ++i)
     {
-        res.insert(result);
+        res.insert(makeDecisionsInfo.sellResultsArray[i]);
     }
 
-    for (const InstrumentsForTrading& result : std::as_const(makeDecisionsInfo.buyResults))
+    for (int i = 0; i < makeDecisionsInfo.buyResults.size() && !parentThread->isInterruptionRequested(); ++i)
     {
-        for (auto it = result.constBegin(); it != result.constEnd(); ++it)
+        const InstrumentsForTrading& result = makeDecisionsInfo.buyResultsArray[i];
+
+        for (auto it = result.constBegin(); it != result.constEnd() && !parentThread->isInterruptionRequested(); ++it)
         {
             const QString& instrumentId = it.key();
             TradingInfo    tradingInfo  = it.value();
@@ -412,15 +425,20 @@ void DecisionMaker::makeDecisions(
     }
 }
 
-void DecisionMaker::calculateTotalCostAndMoney(const Portfolio& portfolio, double& totalCost, double& money)
+void
+DecisionMaker::calculateTotalCostAndMoney(QThread* parentThread, const Portfolio& portfolio, double& totalCost, double& money)
 {
     totalCost = 0.0;
     money     = 0.0;
 
-    for (const PortfolioCategoryItem& category : portfolio.positions)
+    for (int i = 0; i < portfolio.positions.size() && !parentThread->isInterruptionRequested(); ++i)
     {
-        for (const PortfolioItem& item : category.items)
+        const PortfolioCategoryItem& category = portfolio.positions.at(i);
+
+        for (int j = 0; j < category.items.size() && !parentThread->isInterruptionRequested(); ++j)
         {
+            const PortfolioItem& item = category.items.at(j);
+
             if (item.instrumentId == RUBLE_UID)
             {
                 money = item.cost;
