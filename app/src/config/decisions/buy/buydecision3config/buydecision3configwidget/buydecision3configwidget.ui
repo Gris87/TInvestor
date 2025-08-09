@@ -86,6 +86,9 @@
        <property name="suffix">
         <string> days</string>
        </property>
+       <property name="maximum">
+        <number>365</number>
+       </property>
        <property name="value">
         <number>5</number>
        </property>

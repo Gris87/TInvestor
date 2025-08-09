@@ -106,6 +106,9 @@
        <property name="suffix">
         <string> minutes</string>
        </property>
+       <property name="maximum">
+        <number>100000</number>
+       </property>
        <property name="value">
         <number>5</number>
        </property>

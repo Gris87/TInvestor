@@ -189,17 +189,20 @@ TEST(Test_BuyDecision3Config, Test_variantsAsJson)
 
     QStringList variants = config.variantsAsJson();
 
-    ASSERT_EQ(variants.size(), 10);
+    ASSERT_EQ(variants.size(), 13);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
     ASSERT_EQ(variants.at(1), R"({"enabled":true,"priceFall":"10.00","duration":3})");
     ASSERT_EQ(variants.at(2), R"({"enabled":true,"priceFall":"10.00","duration":7})");
     ASSERT_EQ(variants.at(3), R"({"enabled":true,"priceFall":"10.00","duration":14})");
-    ASSERT_EQ(variants.at(4), R"({"enabled":true,"priceFall":"15.00","duration":3})");
-    ASSERT_EQ(variants.at(5), R"({"enabled":true,"priceFall":"15.00","duration":7})");
-    ASSERT_EQ(variants.at(6), R"({"enabled":true,"priceFall":"15.00","duration":14})");
-    ASSERT_EQ(variants.at(7), R"({"enabled":true,"priceFall":"20.00","duration":3})");
-    ASSERT_EQ(variants.at(8), R"({"enabled":true,"priceFall":"20.00","duration":7})");
-    ASSERT_EQ(variants.at(9), R"({"enabled":true,"priceFall":"20.00","duration":14})");
+    ASSERT_EQ(variants.at(4), R"({"enabled":true,"priceFall":"10.00","duration":30})");
+    ASSERT_EQ(variants.at(5), R"({"enabled":true,"priceFall":"15.00","duration":3})");
+    ASSERT_EQ(variants.at(6), R"({"enabled":true,"priceFall":"15.00","duration":7})");
+    ASSERT_EQ(variants.at(7), R"({"enabled":true,"priceFall":"15.00","duration":14})");
+    ASSERT_EQ(variants.at(8), R"({"enabled":true,"priceFall":"15.00","duration":30})");
+    ASSERT_EQ(variants.at(9), R"({"enabled":true,"priceFall":"20.00","duration":3})");
+    ASSERT_EQ(variants.at(10), R"({"enabled":true,"priceFall":"20.00","duration":7})");
+    ASSERT_EQ(variants.at(11), R"({"enabled":true,"priceFall":"20.00","duration":14})");
+    ASSERT_EQ(variants.at(12), R"({"enabled":true,"priceFall":"20.00","duration":30})");
 }
 
 TEST(Test_BuyDecision3Config, Test_setEnabled_and_isEnabled)

@@ -30,10 +30,10 @@ constexpr qint64 NOTIFY_PROGRESS_STEP     = 1LL * ONE_HOUR;
 const int        SECONDS_IN_MINUTE        = 60;
 const int        MINUTES_IN_HOUR          = 60;
 
-constexpr double DURATION_ONE_DAY_STEP_0 = 63723.0;
-constexpr double DURATION_ONE_DAY_STEP_1 = 166381.0;
-constexpr double DURATION_ONE_DAY_STEP_2 = 451554.0;
-constexpr double DURATION_ONE_DAY_STEP_3 = 1473831.0;
+constexpr double DURATION_ONE_DAY_STEP_0 = 99567.0;
+constexpr double DURATION_ONE_DAY_STEP_1 = 259970.0;
+constexpr double DURATION_ONE_DAY_STEP_2 = 752590.0;
+constexpr double DURATION_ONE_DAY_STEP_3 = 2456385.0;
 constexpr double DURATION_ONE_DAY_STEP_4 = 915531.0;
 
 constexpr int    AMOUNT_OF_BUY_DECISIONS                        = 4;
