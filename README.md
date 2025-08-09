@@ -8,6 +8,20 @@ TInvestor is a T-Bank Investment trading robot
 
 ---
 
+## Minimal system requirements
+
+- 2 cores Intel Core i5-6400 2.70GHz
+- 4 GB RAM
+- 1 GB free space on HDD
+
+## Recommended system requirements
+
+- 6 cores Intel Core i5-11400F 2.60GHz
+- 16 GB RAM
+- 4 GB free space on HDD
+
+---
+
 ## How to build
 
 You have to install prerequisites in order to build TInvestor.

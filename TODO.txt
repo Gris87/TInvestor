@@ -1,6 +1,14 @@
 Improve coverage
 Create release
 
+Script to send notifications via WhatsApp
+
+Use readonly grpc streams
+Double check mutexes
+Use TEST_F tests everywhere
+Improve all readability-function-cognitive-complexity
+Make experiments with non Moscow timezone
+
 Buy if price fall and raise several times in price range
 Buy at the end of the day if price raises in non-working hours multiple days
 Buy if it was sold during 24h and price is less than 1%
@@ -11,18 +19,7 @@ Follow for the crowd (Buy if price raises and sell if price fall)
 Rezko rastet, znachit budet rezko padat (2-3 times)
 Buy and sell on extremums (AI assisted)
 
-Use readonly grpc streams
-Double check mutexes
-Use TEST_F tests everywhere
-Check for maximum memory requirements (With all limits)
-Improve all readability-function-cognitive-complexity
-Make experiments with non Moscow timezone
-System requirements
-
-
-
 =======================================
 For the best times
 =======================================
 Allow to select/deselect stocks for trading
-Allow to perform manual buying with trailing tickets from nearest maximum
