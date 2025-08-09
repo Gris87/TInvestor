@@ -45,7 +45,7 @@ QString BuyDecision2::makeDecision(
         const int   duration     = buyConfig->getDuration();
         const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
 
-        StockData* stockData = stock->data.data();
+        const StockData* stockData = stock->data.constData();
 
         if (dateRange)
         {
@@ -123,7 +123,7 @@ QString BuyDecision2::makeDecision(
         {
             const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE);
 
-            StockOperationalData* stockOperationalData = stock->operational.detailedData.data();
+            const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
 
             for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {

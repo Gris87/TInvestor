@@ -46,7 +46,7 @@ QString SellDecision2::makeDecision(
             const float minimumPrice = avgPrice * (1 + (yieldAbove / HUNDRED_PERCENT));
             const float maximumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
 
-            StockData* stockData = stock->data.data();
+            const StockData* stockData = stock->data.constData();
 
             if (dateRange)
             {
@@ -80,7 +80,7 @@ QString SellDecision2::makeDecision(
             }
             else
             {
-                StockOperationalData* stockOperationalData = stock->operational.detailedData.data();
+                const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
 
                 for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
                 {
