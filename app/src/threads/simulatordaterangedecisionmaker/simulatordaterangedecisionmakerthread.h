@@ -239,22 +239,27 @@ private:
     void simulateBuyForInstruments(
         const QString& instrumentId, qint64 quantity, double cost, QuantityAndCostDoubleInstruments& instruments
     ) const;
+
+    [[nodiscard]]
     QList<Operation> reverseOperations(const QList<Operation>& operations) const;
-    QList<LogEntry>  reverseEntries(const QList<LogEntry>& entries) const;
-    void             updateCostAndPart();
-    void             updatePrice();
-    void             notifyProgressChanged(
-                    qint64  startTime,
-                    int     buyDecisionId,
-                    int     startConfigId,
-                    int     processedConfigId,
-                    int     amountOfConfigs,
-                    qint64* currentMinuteArray,
-                    int     threadId,
-                    int     threadsCount,
-                    qint64  currentMinute,
-                    qint64  totalMinutes
-                );
+
+    [[nodiscard]]
+    QList<LogEntry> reverseEntries(const QList<LogEntry>& entries) const;
+
+    void updateCostAndPart();
+    void updatePrice();
+    void notifyProgressChanged(
+        qint64  startTime,
+        int     buyDecisionId,
+        int     startConfigId,
+        int     processedConfigId,
+        int     amountOfConfigs,
+        qint64* currentMinuteArray,
+        int     threadId,
+        int     threadsCount,
+        qint64  currentMinute,
+        qint64  totalMinutes
+    );
     void        notifyBestResult(double bestTotalMoney);
     void        optimizeOperations();
     void        optimizeLogs();

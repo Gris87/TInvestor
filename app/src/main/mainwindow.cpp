@@ -1075,7 +1075,13 @@ struct ReadDatabasesInfo
 };
 
 static void readDatabasesForParallel(
-    QThread* parentThread, int /*threadId*/, DatabaseType* databases, int /*size*/, int start, int end, void* additionalArgs
+    QThread* parentThread,
+    int /*threadId*/,
+    DatabaseType* databases, // NOLINT(readability-non-const-parameter)
+    int /*size*/,
+    int   start,
+    int   end,
+    void* additionalArgs
 )
 {
     ReadDatabasesInfo* readDatabasesInfo = reinterpret_cast<ReadDatabasesInfo*>(additionalArgs);

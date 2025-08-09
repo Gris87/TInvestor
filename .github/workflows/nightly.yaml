@@ -90,7 +90,6 @@ jobs:
     needs: [env-qt-zlib-quazip, env-vcpkg, build-debug]
     name: Clang-Tidy [${{ matrix.config.name }}] (${{ matrix.part }}/10)
     runs-on: ${{ matrix.config.os }}
-    timeout-minutes: 1000
     strategy:
       matrix:
         config:
@@ -115,13 +114,12 @@ jobs:
     needs: [env-qt-zlib-quazip, env-vcpkg, build-debug]
     name: Clazy [${{ matrix.config.name }}] (${{ matrix.part }}/10)
     runs-on: ${{ matrix.config.os }}
-    timeout-minutes: 1000
     strategy:
       matrix:
         config:
           - { name: "win64", os: windows-latest }
           - { name: "linux", os: ubuntu-latest }
-        part: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        part: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
       fail-fast: false
 
     steps:

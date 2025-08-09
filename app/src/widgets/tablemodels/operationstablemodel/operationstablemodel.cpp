@@ -782,7 +782,7 @@ void OperationsTableModel::sortEntries()
     const std::shared_ptr<QList<Operation>> entries = std::make_shared<QList<Operation>>();
     entries->resizeForOverwrite(mEntries->size());
 
-    MergeSortedEntriesInfo mergeSortedEntriesInfo(*mEntries.get(), entriesIndecies);
+    MergeSortedEntriesInfo mergeSortedEntriesInfo(*mEntries, entriesIndecies);
     processInParallel(QThread::currentThread(), *entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
 
     mEntries = entries;

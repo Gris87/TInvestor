@@ -135,9 +135,9 @@ struct ReadOperationsInfo
         indeciesArray = _indecies.constData();
     }
 
-    ILogosStorage*    logosStorage;
-    const QByteArray& content;
-    const int*        indeciesArray;
+    ILogosStorage* logosStorage;
+    QByteArray     content;
+    const int*     indeciesArray;
 };
 
 static void readOperationsForParallel(
