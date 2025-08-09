@@ -1,6 +1,7 @@
 #include "src/decisions/decisionmaker.h"
 
 #include <QDebug>
+#include <QMutex>
 
 #include "src/threads/parallelhelper/parallelhelperthread.h"
 
@@ -102,6 +103,9 @@ void DecisionMaker::updateStocksMap(QThread* parentThread, const QList<Stock*>& 
 {
     if (mStocksMap.size() != stocks.size())
     {
+        static QMutex      mutex;
+        const QMutexLocker lock(&mutex);
+
         for (int i = 0; i < stocks.size() && !parentThread->isInterruptionRequested(); ++i)
         {
             Stock* stock = stocks.at(i);
