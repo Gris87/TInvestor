@@ -433,6 +433,70 @@ TEST(Test_DecisionMakerConfig, Test_variantsToJsonStringList)
     ASSERT_EQ(variants, expectedVariants);
 }
 
+TEST(Test_DecisionMakerConfig, Test_variantsToJsonStringListExtendedBySellDecisions)
+{
+    const InSequence seq;
+
+    StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
+    StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
+    StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
+    StrictMock<BuyDecision4ConfigMock>  buyDecision4ConfigMock;
+    StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
+    StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
+    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
+    StrictMock<SellDecision4ConfigMock> sellDecision4ConfigMock;
+
+    DecisionMakerConfig config(
+        &buyDecision1ConfigMock,
+        &buyDecision2ConfigMock,
+        &buyDecision3ConfigMock,
+        &buyDecision4ConfigMock,
+        &sellDecision1ConfigMock,
+        &sellDecision2ConfigMock,
+        &sellDecision3ConfigMock,
+        &sellDecision4ConfigMock
+    );
+
+    // clang-format off
+    //EXPECT_CALL(buyDecision1ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    //EXPECT_CALL(buyDecision2ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    //EXPECT_CALL(buyDecision3ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    //EXPECT_CALL(buyDecision4ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    //EXPECT_CALL(sellDecision1ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    //EXPECT_CALL(sellDecision2ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    EXPECT_CALL(sellDecision3ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    EXPECT_CALL(sellDecision4ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    // clang-format on
+
+    QStringList bestConfigs = {
+        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})"
+    };
+
+    const QString variants = config.variantsToJsonStringListExtendedBySellDecisions(bestConfigs);
+    const QString expectedVariants =
+        "[\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{"
+        "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"
+        "\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":"
+        "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":true}},\n{\"b1\":{\"enabled\":true},"
+        "\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{"
+        "\"enabled\":false},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":true},\"b2\":{"
+        "\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":"
+        "false},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":true}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},"
+        "\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{"
+        "\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{"
+        "\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":"
+        "false},\"s4\":{\"enabled\":true}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},"
+        "\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":true},\"s4\":{"
+        "\"enabled\":false}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{"
+        "\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":"
+        "true}}\n]";
+
+    ASSERT_EQ(variants, expectedVariants);
+}
+
 TEST(Test_DecisionMakerConfig, Test_getBuyDecision1Config)
 {
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;

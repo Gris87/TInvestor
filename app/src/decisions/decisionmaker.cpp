@@ -1,7 +1,6 @@
 #include "src/decisions/decisionmaker.h"
 
 #include <QDebug>
-#include <QMutex>
 
 #include "src/threads/parallelhelper/parallelhelperthread.h"
 
@@ -22,6 +21,7 @@ DecisionMaker::DecisionMaker(
     IDecisionMaker(),
     mInstrumentsStorage(instrumentsStorage),
     mUserStorage(userStorage),
+    mRwMutex(),
     mBuyDecisions(buyDecisions),
     mSellDecisions(sellDecisions),
     mStocksMap()
@@ -101,10 +101,13 @@ IDecisionMakerConfig* DecisionMaker::chooseDecisionConfig(IConfig* config, bool 
 
 void DecisionMaker::updateStocksMap(QThread* parentThread, const QList<Stock*>& stocks)
 {
-    if (mStocksMap.size() != stocks.size())
+    mRwMutex.lockForRead();
+    const int mapSize = mStocksMap.size();
+    mRwMutex.unlock();
+
+    if (mapSize != stocks.size())
     {
-        static QMutex      mutex;
-        const QMutexLocker lock(&mutex);
+        mRwMutex.lockForWrite();
 
         for (int i = 0; i < stocks.size() && !parentThread->isInterruptionRequested(); ++i)
         {
@@ -114,6 +117,8 @@ void DecisionMaker::updateStocksMap(QThread* parentThread, const QList<Stock*>& 
             mStocksMap[stock->meta.instrumentId] = stock;
             stock->readUnlock();
         }
+
+        mRwMutex.unlock();
     }
 }
 
@@ -126,6 +131,7 @@ DecisionMaker::getStocksWithAvgPrice(QThread* parentThread, const Portfolio& por
     const bool qualifiedUser = mUserStorage->isQualified();
     mUserStorage->readUnlock();
 
+    mRwMutex.lockForRead();
     QMap<QString, float> existingStocks; // Instrument UID => Average price
 
     for (int i = 0; i < portfolio.positions.size() && !parentThread->isInterruptionRequested(); ++i)
@@ -142,6 +148,7 @@ DecisionMaker::getStocksWithAvgPrice(QThread* parentThread, const Portfolio& por
             }
         }
     }
+    mRwMutex.unlock();
 
     for (int i = 0; i < stocks.size() && !parentThread->isInterruptionRequested(); ++i)
     {

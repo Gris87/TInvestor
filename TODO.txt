@@ -1,6 +1,7 @@
 Improve coverage
 Create release
 
+Fix display isssue with instrument name popup
 Script to send notifications via WhatsApp
 
 Use readonly grpc streams

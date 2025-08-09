@@ -4,6 +4,8 @@
 
 #include "src/decisions/idecisionmaker.h"
 
+#include <QReadWriteLock>
+
 #include "src/config/iconfig.h"
 #include "src/decisions/iactiondecision.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
@@ -72,6 +74,7 @@ private:
 
     IInstrumentsStorage*    mInstrumentsStorage;
     IUserStorage*           mUserStorage;
+    QReadWriteLock          mRwMutex;
     QList<IActionDecision*> mBuyDecisions;
     QList<IActionDecision*> mSellDecisions;
     QMap<QString, Stock*>   mStocksMap;
