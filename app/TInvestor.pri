@@ -130,6 +130,7 @@ SOURCES += \
     src/widgets/actionstableitemwidget/actionstableitemwidgetfactory.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.cpp \
+    src/widgets/floatinglabel/floatinglabel.cpp \
     src/widgets/logsfilterwidget/logsfilterwidget.cpp \
     src/widgets/logsfilterwidget/logsfilterwidgetfactory.cpp \
     src/widgets/logstablewidget/logstablewidget.cpp \
@@ -377,6 +378,7 @@ HEADERS += \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h \
+    src/widgets/floatinglabel/floatinglabel.h \
     src/widgets/logsfilterwidget/ilogsfilterwidget.h \
     src/widgets/logsfilterwidget/ilogsfilterwidgetfactory.h \
     src/widgets/logsfilterwidget/logsfilterwidget.h \

@@ -234,6 +234,7 @@ public slots:
     void simulatorStepProgressChanged(int current, int maximum) const;
     void simulatorTotalProgressChanged(int current, int maximum) const;
     void simulatorProgressChanged(int current, int maximum, const QString& remainingTime) const;
+    void simulatorResultFound(const QString& result, const QColor& color) const;
     void simulatorBestResultChanged(const QString& bestResult, const QColor& color) const;
     void simulatorBestConfigFound();
     void simulatorOperationsRead(const QList<Operation>& operations);

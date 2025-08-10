@@ -260,6 +260,7 @@ private:
         qint64  currentMinute,
         qint64  totalMinutes
     );
+    void        notifyResult(double totalMoney);
     void        notifyBestResult(double bestTotalMoney);
     void        optimizeOperations();
     void        optimizeLogs();

@@ -590,6 +590,8 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
 
         if (!parentThread->isInterruptionRequested())
         {
+            notifyResult(totalMoney);
+
             mutex->lock();
 
             if (totalMoney > *bestLocalTotalMoney)
@@ -1594,13 +1596,13 @@ void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
     );
 }
 
-void SimulatorDateRangeDecisionMakerThread::notifyBestResult(double bestTotalMoney)
+void SimulatorDateRangeDecisionMakerThread::notifyResult(double totalMoney)
 {
-    const double totalYieldWithCommission        = bestTotalMoney - mStartMoney;
+    const double totalYieldWithCommission        = totalMoney - mStartMoney;
     const double totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
 
-    const QString prefix     = totalYieldWithCommissionPercent > 0 ? "+" : "";
-    const QString bestResult = prefix + QString::number(totalYieldWithCommissionPercent, 'f', 2) + "%";
+    const QString prefix = totalYieldWithCommissionPercent > 0 ? "+" : "";
+    const QString result = prefix + QString::number(totalYieldWithCommissionPercent, 'f', 2) + "%";
 
     QColor color;
 
@@ -1620,7 +1622,36 @@ void SimulatorDateRangeDecisionMakerThread::notifyBestResult(double bestTotalMon
         }
     }
 
-    emit bestResultChanged(bestResult, color);
+    emit resultFound(result, color);
+}
+
+void SimulatorDateRangeDecisionMakerThread::notifyBestResult(double bestTotalMoney)
+{
+    const double totalYieldWithCommission        = bestTotalMoney - mStartMoney;
+    const double totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
+
+    const QString prefix = totalYieldWithCommissionPercent > 0 ? "+" : "";
+    const QString result = prefix + QString::number(totalYieldWithCommissionPercent, 'f', 2) + "%";
+
+    QColor color;
+
+    if (totalYieldWithCommissionPercent > -ZERO_LIMIT && totalYieldWithCommissionPercent < ZERO_LIMIT)
+    {
+        color = NORMAL_COLOR;
+    }
+    else
+    {
+        if (totalYieldWithCommissionPercent > 0)
+        {
+            color = GREEN_COLOR;
+        }
+        else
+        {
+            color = RED_COLOR;
+        }
+    }
+
+    emit bestResultChanged(result, color);
 }
 
 void SimulatorDateRangeDecisionMakerThread::optimizeOperations()

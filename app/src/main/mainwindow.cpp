@@ -3,8 +3,10 @@
 
 #include <QDebug>
 #include <QEvent>
+#include <QRandomGenerator>
 
 #include "src/threads/parallelhelper/parallelhelperthread.h"
+#include "src/widgets/floatinglabel/floatinglabel.h"
 
 
 
@@ -281,6 +283,7 @@ MainWindow::MainWindow(
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(stepProgressChanged(int, int)),                                                        this, SLOT(simulatorStepProgressChanged(int, int)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(totalProgressChanged(int, int)),                                                       this, SLOT(simulatorTotalProgressChanged(int, int)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(progressChanged(int, int, const QString&)),                                            this, SLOT(simulatorProgressChanged(int, int, const QString&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(resultFound(const QString&, const QColor&)),                                           this, SLOT(simulatorResultFound(const QString&, const QColor&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestResultChanged(const QString&, const QColor&)),                                     this, SLOT(simulatorBestResultChanged(const QString&, const QColor&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestConfigFound()),                                                                    this, SLOT(simulatorBestConfigFound()));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
@@ -764,6 +767,25 @@ void MainWindow::simulatorProgressChanged(int current, int maximum, const QStrin
     ui->simulatorRemainingTimeLabel->setText(remainingTime);
     ui->simulatorProgressBar->setMaximum(maximum);
     ui->simulatorProgressBar->setValue(current);
+}
+
+void MainWindow::simulatorResultFound(const QString& result, const QColor& color) const
+{
+    qInfo() << "Intermediate simulation result:" << result; // TODO: Use debug
+
+    FloatingLabel* label = new FloatingLabel(result);
+
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, color);
+    label->setPalette(palette);
+
+    QRandomGenerator* generator = QRandomGenerator::global();
+
+    const QPoint globalPos = ui->simulatorBestResultLabel->mapToGlobal(QPoint(0, 20));
+    label->setStartPoint(globalPos);
+    label->setEndPoint(globalPos + QPoint(generator->bounded(-100, 100), generator->bounded(150, 200)));
+
+    label->show();
 }
 
 void MainWindow::simulatorBestResultChanged(const QString& bestResult, const QColor& color) const

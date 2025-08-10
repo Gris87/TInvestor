@@ -32,6 +32,7 @@ signals:
     void stepProgressChanged(int current, int maximum);
     void totalProgressChanged(int current, int maximum);
     void progressChanged(int current, int maximum, const QString& remainingTime);
+    void resultFound(const QString& result, const QColor& color);
     void bestResultChanged(const QString& bestResult, const QColor& color);
     void bestConfigFound();
     void operationsRead(const QList<Operation>& operations);

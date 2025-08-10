@@ -126,6 +126,7 @@ SOURCES += \
     src/widgets/actionstableitemwidget/test_actionstableitemwidgetfactory.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidgetfactory.cpp \
+    src/widgets/floatinglabel/test_floatinglabel.cpp \
     src/widgets/logsfilterwidget/test_logsfilterwidget.cpp \
     src/widgets/logsfilterwidget/test_logsfilterwidgetfactory.cpp \
     src/widgets/logstablewidget/test_logstablewidget.cpp \
