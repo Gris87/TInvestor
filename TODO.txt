@@ -1,8 +1,7 @@
 Improve coverage
 Create release
 
-Do not sell stock with incredible results
-Fix display isssue with instrument name popup
+Fix display issue with instrument name popup
 Script to send notifications via WhatsApp
 
 Use readonly grpc streams

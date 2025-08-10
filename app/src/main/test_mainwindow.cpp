@@ -881,6 +881,11 @@ TEST_F(Test_MainWindow, Test_simulatorProgressChanged)
     // clang-format on
 }
 
+TEST_F(Test_MainWindow, Test_simulatorResultFound)
+{
+    mainWindow->simulatorResultFound("-100500%", Qt::red);
+}
+
 TEST_F(Test_MainWindow, Test_simulatorBestResultChanged)
 {
     mainWindow->simulatorBestResultChanged("-100500%", Qt::red);

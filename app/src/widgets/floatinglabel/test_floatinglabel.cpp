@@ -9,7 +9,7 @@ class Test_FloatingLabel : public ::testing::Test
 protected:
     void SetUp() override
     {
-        label = new FloatingLabel("+100.00%");
+        label = new FloatingLabel("+100.00%", QPoint(0, 0), QPoint(10, 10));
     }
 
     void TearDown() override
@@ -24,4 +24,9 @@ protected:
 
 TEST_F(Test_FloatingLabel, Test_constructor_and_destructor)
 {
+}
+
+TEST_F(Test_FloatingLabel, Test_deathTimerTicked)
+{
+    label->deathTimerTicked();
 }

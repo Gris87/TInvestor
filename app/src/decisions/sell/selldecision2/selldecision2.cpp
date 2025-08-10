@@ -56,7 +56,7 @@ QString SellDecision2::makeDecision(
 
                     if (prevPrice < minimumPrice)
                     {
-                        return "";
+                        break;
                     }
 
                     if (prevPrice >= maximumPrice)
@@ -69,7 +69,7 @@ QString SellDecision2::makeDecision(
                         )
                             .arg(
                                 QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QString::number(yield, 'f', 2) + "%",
+                                "+" + QString::number(yield, 'f', 2) + "%",
                                 QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
                                 QString::number(lostYield, 'f', 2) + "%",
                                 QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
@@ -88,7 +88,7 @@ QString SellDecision2::makeDecision(
 
                     if (prevPrice < minimumPrice)
                     {
-                        return "";
+                        break;
                     }
 
                     if (prevPrice >= maximumPrice)
@@ -101,7 +101,7 @@ QString SellDecision2::makeDecision(
                         )
                             .arg(
                                 QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QString::number(yield, 'f', 2) + "%",
+                                "+" + QString::number(yield, 'f', 2) + "%",
                                 QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
                                 QString::number(lostYield, 'f', 2) + "%",
                                 QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
@@ -116,7 +116,7 @@ QString SellDecision2::makeDecision(
 
                     if (prevPrice < minimumPrice)
                     {
-                        return "";
+                        break;
                     }
 
                     if (prevPrice >= maximumPrice)
@@ -129,7 +129,7 @@ QString SellDecision2::makeDecision(
                         )
                             .arg(
                                 QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QString::number(yield, 'f', 2) + "%",
+                                "+" + QString::number(yield, 'f', 2) + "%",
                                 QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
                                 QString::number(lostYield, 'f', 2) + "%",
                                 QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",

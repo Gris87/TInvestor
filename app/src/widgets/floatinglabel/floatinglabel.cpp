@@ -10,7 +10,7 @@ constexpr qint64 DEATH_INTERVAL = 3 * MS_IN_SECOND; // 3 seconds
 
 
 
-FloatingLabel::FloatingLabel(const QString& text, QWidget* parent) :
+FloatingLabel::FloatingLabel(const QString& text, const QPoint& startPoint, const QPoint& endPoint, QWidget* parent) :
     QLabel(text, parent),
     mDeathTimer()
 {
@@ -29,6 +29,11 @@ FloatingLabel::FloatingLabel(const QString& text, QWidget* parent) :
     mPositionAnimation.setTargetObject(this);
     mPositionAnimation.setPropertyName("pos");
     mPositionAnimation.setDuration(DEATH_INTERVAL);
+    mPositionAnimation.setStartValue(startPoint);
+    mPositionAnimation.setEndValue(endPoint);
+
+    const QSize labelSizeHint = sizeHint();
+    setGeometry(startPoint.x(), startPoint.y(), labelSizeHint.width(), labelSizeHint.height());
 
     connect(&mDeathTimer, SIGNAL(timeout()), this, SLOT(deathTimerTicked()));
 
@@ -40,19 +45,6 @@ FloatingLabel::FloatingLabel(const QString& text, QWidget* parent) :
 FloatingLabel::~FloatingLabel()
 {
     qDebug() << "Destroy FloatingLabel";
-}
-
-void FloatingLabel::setStartPoint(const QPoint& point)
-{
-    mPositionAnimation.setStartValue(point);
-
-    const QSize labelSizeHint = sizeHint();
-    setGeometry(point.x(), point.y(), labelSizeHint.width(), labelSizeHint.height());
-}
-
-void FloatingLabel::setEndPoint(const QPoint& point)
-{
-    mPositionAnimation.setEndValue(point);
 }
 
 void FloatingLabel::deathTimerTicked()

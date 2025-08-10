@@ -42,7 +42,7 @@ QString SellDecision1::makeDecision(
             return QObject::tr("Decided to sell because the price reached %1 with yield %2 from the price %3")
                 .arg(
                     QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                    QString::number(yield, 'f', 2) + "%",
+                    "+" + QString::number(yield, 'f', 2) + "%",
                     QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
                 );
         }

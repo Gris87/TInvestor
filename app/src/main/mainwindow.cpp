@@ -769,23 +769,22 @@ void MainWindow::simulatorProgressChanged(int current, int maximum, const QStrin
     ui->simulatorProgressBar->setValue(current);
 }
 
-void MainWindow::simulatorResultFound(const QString& result, const QColor& color) const
+void MainWindow::simulatorResultFound(const QString& result, const QColor& color)
 {
     qInfo() << "Intermediate simulation result:" << result; // TODO: Use debug
-
-    FloatingLabel* label = new FloatingLabel(result);
-
-    QPalette palette;
-    palette.setColor(QPalette::WindowText, color);
-    label->setPalette(palette);
 
     QRandomGenerator* generator = QRandomGenerator::global();
 
     // NOLINTBEGIN(readability-magic-numbers)
-    const QPoint globalPos = ui->simulatorBestResultLabel->mapToGlobal(QPoint(0, 20));
-    label->setStartPoint(globalPos);
-    label->setEndPoint(globalPos + QPoint(generator->bounded(-100, 100), generator->bounded(150, 200)));
+    const QPoint startPoint = ui->simulatorBestResultLabel->mapToGlobal(QPoint(0, 20));
+    const QPoint endPoint   = startPoint + QPoint(generator->bounded(-100, 100), generator->bounded(150, 200));
     // NOLINTEND(readability-magic-numbers)
+
+    FloatingLabel* label = new FloatingLabel(result, startPoint, endPoint, this);
+
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, color);
+    label->setPalette(palette);
 
     label->show();
 }
