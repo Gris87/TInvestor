@@ -211,8 +211,10 @@ TEST_F(Test_BuyDecision1, Test_makeDecision)
 
     ASSERT_EQ(
         cause,
-        QString("Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at %1 within last 3 minutes and the "
-                "fall is -16.67%")
+        QString(
+            "Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at %1 within last 3 minutes and the "
+            "fall is -16.67%"
+        )
             .arg(QDateTime::fromMSecsSinceEpoch(stockOperationalData4.timestamp).toString(DATETIME_FORMAT))
     );
 
@@ -285,8 +287,10 @@ TEST_F(Test_BuyDecision1, Test_makeDecision)
 
     ASSERT_EQ(
         cause,
-        QString("Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at %1 within last 3 minutes and the "
-                "fall is -16.67%")
+        QString(
+            "Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at %1 within last 3 minutes and the "
+            "fall is -16.67%"
+        )
             .arg(QDateTime::fromMSecsSinceEpoch(stockData4.timestamp).toString(DATETIME_FORMAT))
     );
 }
