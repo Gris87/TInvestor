@@ -21,7 +21,7 @@ constexpr int    OPTIMIZE_OPERATIONS_SIZE = 10000;
 constexpr int    LIMIT_LOGS               = 1000000;
 constexpr int    OPTIMIZE_LOGS_SIZE       = 10000;
 constexpr float  ZERO_LIMIT               = 0.0001f;
-constexpr double LIMIT_MAX_YIELD_PERCENT  = 100.0;
+constexpr double INCREDIBLE_SELL_COEF     = 3.0;
 constexpr float  HUNDRED_PERCENT          = 100.0f;
 constexpr qint64 MS_IN_SECOND             = 1000LL;
 constexpr qint64 ONE_MINUTE               = 60LL * MS_IN_SECOND;
@@ -596,31 +596,23 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
 
             if (totalMoney > *bestLocalTotalMoney)
             {
-                double maxYieldWithCommissionPercent =
-                    std::max_element(operations.constBegin(), operations.constEnd(), [](const Operation& l, const Operation& r) {
-                        return l.yieldWithCommissionPercent < r.yieldWithCommissionPercent;
-                    })->yieldWithCommissionPercent;
+                *bestLocalTotalMoney = totalMoney;
 
-                if (maxYieldWithCommissionPercent < LIMIT_MAX_YIELD_PERCENT)
+                *bestOperations = reverseOperations(operations);
+                *bestEntries    = reverseEntries(entries);
+                *bestPortfolio  = portfolio;
+
+                mOperationsDatabase->writeOperations(*bestOperations, buyDecisionId);
+                mLogsDatabase->writeLogs(*bestEntries, buyDecisionId);
+                mPortfolioDatabase->writePortfolio(*bestPortfolio, buyDecisionId);
+
+                mSettingsEditor->setValue(QString("Options/BestConfigId%1").arg(settingsSuffix), currentConfig);
+
+                if (totalMoney > *bestGlobalTotalMoney)
                 {
-                    *bestLocalTotalMoney = totalMoney;
+                    *bestGlobalTotalMoney = totalMoney;
 
-                    *bestOperations = reverseOperations(operations);
-                    *bestEntries    = reverseEntries(entries);
-                    *bestPortfolio  = portfolio;
-
-                    mOperationsDatabase->writeOperations(*bestOperations, buyDecisionId);
-                    mLogsDatabase->writeLogs(*bestEntries, buyDecisionId);
-                    mPortfolioDatabase->writePortfolio(*bestPortfolio, buyDecisionId);
-
-                    mSettingsEditor->setValue(QString("Options/BestConfigId%1").arg(settingsSuffix), currentConfig);
-
-                    if (totalMoney > *bestGlobalTotalMoney)
-                    {
-                        *bestGlobalTotalMoney = totalMoney;
-
-                        notifyBestResult(totalMoney);
-                    }
+                    notifyBestResult(totalMoney);
                 }
             }
 
@@ -1026,8 +1018,16 @@ void SimulatorDateRangeDecisionMakerThread::simulateSell(
     const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
     mUserStorage->readUnlock();
 
-    const double cost            = quantityAndCost.quantity * tradingInfo.price;
-    const double totalCommission = cost * commission;
+    double cost            = quantityAndCost.quantity * tradingInfo.price;
+    double totalCommission = cost * commission;
+
+    if (cost > quantityAndCost.cost * INCREDIBLE_SELL_COEF)
+    {
+        qWarning() << "Incredible selling detected. Trying to negotiate it";
+
+        cost            = quantityAndCost.cost;
+        totalCommission = 0;
+    }
 
     mLogosStorage->readLock();
     Logo* logo = mLogosStorage->getLogo(instrumentId);
@@ -1573,8 +1573,12 @@ void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
     {
         Q_ASSERT_X(mConfigVariants.size() == AMOUNT_OF_BUY_DECISIONS, __FUNCTION__, "Unexpected behavior");
 
-        remainingMilliseconds += (((deltaTime + remainingMilliseconds) / (amountOfConfigs - startConfigId)) * amountOfConfigs) *
-                                 DURATION_COEFFICIENTS[buyDecisionId];
+        remainingMilliseconds += static_cast<qint64>(
+            (((static_cast<double>(deltaTime) + static_cast<double>(remainingMilliseconds)) /
+              (static_cast<double>(amountOfConfigs) - static_cast<double>(startConfigId))) *
+             static_cast<double>(amountOfConfigs)) *
+            DURATION_COEFFICIENTS[buyDecisionId]
+        );
     }
 
     remainingMilliseconds /= MS_IN_SECOND;

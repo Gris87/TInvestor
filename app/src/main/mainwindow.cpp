@@ -781,9 +781,11 @@ void MainWindow::simulatorResultFound(const QString& result, const QColor& color
 
     QRandomGenerator* generator = QRandomGenerator::global();
 
+    // NOLINTBEGIN(readability-magic-numbers)
     const QPoint globalPos = ui->simulatorBestResultLabel->mapToGlobal(QPoint(0, 20));
     label->setStartPoint(globalPos);
     label->setEndPoint(globalPos + QPoint(generator->bounded(-100, 100), generator->bounded(150, 200)));
+    // NOLINTEND(readability-magic-numbers)
 
     label->show();
 }
