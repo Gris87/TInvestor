@@ -269,8 +269,10 @@ TEST_F(Test_BuyDecision4, Test_makeDecision)
 
     ASSERT_EQ(
         cause,
-        QString("Decided to buy because the price fall to 100.00 \u20BD from 150.00 \u20BD at %1 and lost yield 25.00% from the "
-                "minimum price 80.00 \u20BD at %2 within last 3 days and the fall is -33.33%")
+        QString(
+            "Decided to buy because the price fall to 100.00 \u20BD from 150.00 \u20BD at %1 and lost yield 25.00% from the "
+            "minimum price 80.00 \u20BD at %2 within last 3 days and the fall is -33.33%"
+        )
             .arg(
                 QDateTime::fromMSecsSinceEpoch(stockOperationalData3.timestamp).toString(DATETIME_FORMAT),
                 QDateTime::fromMSecsSinceEpoch(stockOperationalData4.timestamp).toString(DATETIME_FORMAT)
@@ -373,8 +375,10 @@ TEST_F(Test_BuyDecision4, Test_makeDecision)
 
     ASSERT_EQ(
         cause,
-        QString("Decided to buy because the price fall to 100.00 \u20BD from 150.00 \u20BD at %1 and lost yield 25.00% from the "
-                "minimum price 80.00 \u20BD at %2 within last 3 days and the fall is -33.33%")
+        QString(
+            "Decided to buy because the price fall to 100.00 \u20BD from 150.00 \u20BD at %1 and lost yield 25.00% from the "
+            "minimum price 80.00 \u20BD at %2 within last 3 days and the fall is -33.33%"
+        )
             .arg(
                 QDateTime::fromMSecsSinceEpoch(stockData3.timestamp).toString(DATETIME_FORMAT),
                 QDateTime::fromMSecsSinceEpoch(stockData4.timestamp).toString(DATETIME_FORMAT)
