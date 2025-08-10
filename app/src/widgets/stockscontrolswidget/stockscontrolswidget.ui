@@ -104,7 +104,7 @@
               </datetime>
              </property>
              <property name="displayFormat">
-              <string>dd.MM.yyyy H:mm</string>
+              <string notr="true">dd.MM.yyyy H:mm</string>
              </property>
              <property name="calendarPopup">
               <bool>true</bool>

@@ -48,7 +48,7 @@ QString BuyDecision1::makeDecision(
 
         if (dateRange)
         {
-            const qint64 limitTimestamp = stock->data.at(dataIndex).timestamp - (duration * ONE_MINUTE);
+            const qint64 limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
 
             for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {

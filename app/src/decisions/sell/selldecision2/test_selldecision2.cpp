@@ -9,6 +9,9 @@
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
+constexpr qint64 MS_IN_SECOND = 1000LL;
+constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
+
 
 
 using ::testing::InSequence;
@@ -124,13 +127,13 @@ TEST_F(Test_SellDecision2, Test_makeDecision)
         "-4.00% from the maximum price 125.00 \u20BD at 2024-01-01 00:02:00"
     );
 
-    stockOperationalData1.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 4;
+    stockOperationalData1.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 4;
     stockOperationalData1.price     = 101.0f;
-    stockOperationalData2.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 3;
+    stockOperationalData2.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 3;
     stockOperationalData2.price     = 101.0f;
-    stockOperationalData3.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 2;
+    stockOperationalData3.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 2;
     stockOperationalData3.price     = 101.0f;
-    stockOperationalData4.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000;
+    stockOperationalData4.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE;
     stockOperationalData4.price     = 101.0f;
     stockOperationalData5.timestamp = QDateTime::currentMSecsSinceEpoch();
     stockOperationalData5.price     = 120.0f;
@@ -148,13 +151,13 @@ TEST_F(Test_SellDecision2, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
-    stockOperationalData1.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 4;
+    stockOperationalData1.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 4;
     stockOperationalData1.price     = 101.0f;
-    stockOperationalData2.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 3;
+    stockOperationalData2.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 3;
     stockOperationalData2.price     = 124.9f;
-    stockOperationalData3.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 2;
+    stockOperationalData3.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 2;
     stockOperationalData3.price     = 125.0f;
-    stockOperationalData4.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000;
+    stockOperationalData4.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE;
     stockOperationalData4.price     = 120.0f;
     stockOperationalData5.timestamp = QDateTime::currentMSecsSinceEpoch();
     stockOperationalData5.price     = 120.0f;
@@ -179,13 +182,13 @@ TEST_F(Test_SellDecision2, Test_makeDecision)
             .arg(QDateTime::fromMSecsSinceEpoch(stockOperationalData3.timestamp).toString(DATETIME_FORMAT))
     );
 
-    stockData1.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 4;
+    stockData1.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 4;
     stockData1.price     = 101.0f;
-    stockData2.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 3;
+    stockData2.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 3;
     stockData2.price     = 101.0f;
-    stockData3.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 2;
+    stockData3.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 2;
     stockData3.price     = 101.0f;
-    stockData4.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000;
+    stockData4.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE;
     stockData4.price     = 101.0f;
     stockData5.timestamp = QDateTime::currentMSecsSinceEpoch();
     stockData5.price     = 120.0f;
@@ -202,13 +205,13 @@ TEST_F(Test_SellDecision2, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
-    stockData1.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 4;
+    stockData1.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 4;
     stockData1.price     = 101.0f;
-    stockData2.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 3;
+    stockData2.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 3;
     stockData2.price     = 124.9f;
-    stockData3.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000 * 2;
+    stockData3.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE * 2;
     stockData3.price     = 125.0f;
-    stockData4.timestamp = QDateTime::currentMSecsSinceEpoch() - 60000;
+    stockData4.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_MINUTE;
     stockData4.price     = 120.0f;
     stockData5.timestamp = QDateTime::currentMSecsSinceEpoch();
     stockData5.price     = 120.0f;

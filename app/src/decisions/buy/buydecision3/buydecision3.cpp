@@ -59,7 +59,7 @@ QString BuyDecision3::makeDecision(
 
                 if (timestamp < limitTimestamp)
                 {
-                    return "";
+                    break;
                 }
 
                 if (prevPrice >= maximumPrice)
@@ -87,7 +87,7 @@ QString BuyDecision3::makeDecision(
                         const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
                         return QObject::tr(
-                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
+                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 days and the "
                                    "fall is %5"
                         )
                             .arg(
@@ -114,7 +114,7 @@ QString BuyDecision3::makeDecision(
 
                 if (timestamp < limitTimestamp)
                 {
-                    return "";
+                    break;
                 }
 
                 if (prevPrice >= maximumPrice)
@@ -142,7 +142,7 @@ QString BuyDecision3::makeDecision(
                         const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
                         return QObject::tr(
-                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
+                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 days and the "
                                    "fall is %5"
                         )
                             .arg(
@@ -163,7 +163,7 @@ QString BuyDecision3::makeDecision(
 
                 if (timestamp < limitTimestamp)
                 {
-                    return "";
+                    break;
                 }
 
                 if (prevPrice >= maximumPrice)
@@ -191,7 +191,7 @@ QString BuyDecision3::makeDecision(
                         const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
                         return QObject::tr(
-                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
+                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 days and the "
                                    "fall is %5"
                         )
                             .arg(

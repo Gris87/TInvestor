@@ -883,6 +883,10 @@ TEST_F(Test_MainWindow, Test_simulatorProgressChanged)
 
 TEST_F(Test_MainWindow, Test_simulatorResultFound)
 {
+    mainWindow->show();
+    mainWindow->activateWindow();
+    mainWindow->ui->stackedWidget->setCurrentWidget(mainWindow->ui->simulationPage);
+
     mainWindow->simulatorResultFound("-100500%", Qt::red);
 }
 

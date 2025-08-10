@@ -176,7 +176,7 @@
          <item>
           <widget class="QTimeEdit" name="scheduleStartTimeEdit">
            <property name="displayFormat">
-            <string>H:mm</string>
+            <string notr="true">H:mm</string>
            </property>
            <property name="time">
             <time>
@@ -197,7 +197,7 @@
          <item>
           <widget class="QTimeEdit" name="scheduleEndTimeEdit">
            <property name="displayFormat">
-            <string>H:mm</string>
+            <string notr="true">H:mm</string>
            </property>
            <property name="time">
             <time>

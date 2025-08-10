@@ -60,7 +60,7 @@ QString BuyDecision4::makeDecision(
 
                 if (timestamp < limitTimestamp)
                 {
-                    return "";
+                    break;
                 }
 
                 if (prevPrice >= maximumPrice)
@@ -91,9 +91,9 @@ QString BuyDecision4::makeDecision(
                         {
                             const float prevPrice2 = stockData[j].price;
 
-                            if (prevPrice2 >= price)
+                            if (prevPrice2 >= maximumPrice)
                             {
-                                return "";
+                                break;
                             }
 
                             if (prevPrice2 <= minimumPrice)
@@ -134,7 +134,7 @@ QString BuyDecision4::makeDecision(
 
                 if (timestamp < limitTimestamp)
                 {
-                    return "";
+                    break;
                 }
 
                 if (prevPrice >= maximumPrice)
@@ -166,9 +166,9 @@ QString BuyDecision4::makeDecision(
                         {
                             const float prevPrice2 = stockOperationalData[j].price;
 
-                            if (prevPrice2 >= price)
+                            if (prevPrice2 >= maximumPrice)
                             {
-                                return "";
+                                break;
                             }
 
                             if (prevPrice2 <= minimumPrice)
@@ -204,7 +204,7 @@ QString BuyDecision4::makeDecision(
 
                 if (timestamp < limitTimestamp)
                 {
-                    return "";
+                    break;
                 }
 
                 if (prevPrice >= maximumPrice)
@@ -235,9 +235,9 @@ QString BuyDecision4::makeDecision(
                         {
                             const float prevPrice2 = stockData[j].price;
 
-                            if (prevPrice2 >= price)
+                            if (prevPrice2 >= maximumPrice)
                             {
-                                return "";
+                                break;
                             }
 
                             if (prevPrice2 <= minimumPrice)

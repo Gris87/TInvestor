@@ -773,20 +773,23 @@ void MainWindow::simulatorResultFound(const QString& result, const QColor& color
 {
     qInfo() << "Intermediate simulation result:" << result; // TODO: Use debug
 
-    QRandomGenerator* generator = QRandomGenerator::global();
+    if (isActiveWindow() && ui->stackedWidget->currentWidget() == ui->simulationPage)
+    {
+        QRandomGenerator* generator = QRandomGenerator::global();
 
-    // NOLINTBEGIN(readability-magic-numbers)
-    const QPoint startPoint = ui->simulatorBestResultLabel->mapToGlobal(QPoint(0, 20));
-    const QPoint endPoint   = startPoint + QPoint(generator->bounded(-100, 100), generator->bounded(150, 200));
-    // NOLINTEND(readability-magic-numbers)
+        // NOLINTBEGIN(readability-magic-numbers)
+        const QPoint startPoint = ui->simulatorBestResultLabel->mapToGlobal(QPoint(0, 20));
+        const QPoint endPoint   = startPoint + QPoint(generator->bounded(-100, 100), generator->bounded(150, 200));
+        // NOLINTEND(readability-magic-numbers)
 
-    FloatingLabel* label = new FloatingLabel(result, startPoint, endPoint, this);
+        FloatingLabel* label = new FloatingLabel(result, startPoint, endPoint, this);
 
-    QPalette palette;
-    palette.setColor(QPalette::WindowText, color);
-    label->setPalette(palette);
+        QPalette palette;
+        palette.setColor(QPalette::WindowText, color);
+        label->setPalette(palette);
 
-    label->show();
+        label->show();
+    }
 }
 
 void MainWindow::simulatorBestResultChanged(const QString& bestResult, const QColor& color) const
