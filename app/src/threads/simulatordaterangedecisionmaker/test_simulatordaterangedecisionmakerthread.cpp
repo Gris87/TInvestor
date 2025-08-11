@@ -24,8 +24,12 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
+constexpr int AMOUNT_OF_BUY_DECISIONS = 4;
 
 
+
+using ::testing::_;
+using ::testing::Ge;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -118,13 +122,22 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     const InSequence seq;
 
     StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
-    StrictMock<DirMock>*                dirMock   = new StrictMock<DirMock>();  // Will be deleted in initConfigs function
-    StrictMock<FileMock>*               fileMock1 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
-    StrictMock<FileMock>*               fileMock2 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
-    StrictMock<FileMock>*               fileMock3 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
-    StrictMock<FileMock>*               fileMock4 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<DirMock>*                dirMock         = new StrictMock<DirMock>();  // Will be deleted in initConfigs function
+    StrictMock<FileMock>*               configFileMock1 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>*               configFileMock2 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>*               configFileMock3 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>*               configFileMock4 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
 
-    QList<StrictMock<FileMock>*> configFileMocksForWriting = {fileMock1, fileMock2, fileMock3, fileMock4};
+    QList<StrictMock<FileMock>*> configFileMocksForWriting = {configFileMock1, configFileMock2, configFileMock3, configFileMock4};
+
+    StrictMock<ConfigMock>              clonedConfigMock;
+    StrictMock<DecisionMakerConfigMock> clonedSimulatorConfigMock;
+
+    // Will be deleted in simulationWithBestConfigStep1 function
+    StrictMock<FileMock>* totalConfigFileWriteMock = new StrictMock<FileMock>();
+
+    // Will be deleted in simulationWithBestConfigStep2 function
+    StrictMock<FileMock>* totalConfigFileReadMock = new StrictMock<FileMock>();
 
     thread->reset();
 
@@ -199,6 +212,135 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     stocks << &stock1 << &stock2 << &stock3;
 
+    QList<Operation> bestLocalOperations;
+
+    Operation bestLocalOperation;
+
+    bestLocalOperation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    bestLocalOperation.instrumentId                    = RUBLE_UID;
+    bestLocalOperation.instrumentLogo                  = &logo;
+    bestLocalOperation.instrumentTicker                = "RUBLE";
+    bestLocalOperation.instrumentName                  = "Ruble";
+    bestLocalOperation.description                     = "Input money";
+    bestLocalOperation.price                           = 0.0f;
+    bestLocalOperation.avgPriceFifo                    = 0.0f;
+    bestLocalOperation.avgPriceWavg                    = 0.0f;
+    bestLocalOperation.quantity                        = 0;
+    bestLocalOperation.remainedQuantity                = 0;
+    bestLocalOperation.payment                         = 1000000;
+    bestLocalOperation.avgCostFifo                     = 0.0f;
+    bestLocalOperation.costFifo.units                  = 0;
+    bestLocalOperation.costFifo.nano                   = 0;
+    bestLocalOperation.costWavg.units                  = 0;
+    bestLocalOperation.costWavg.nano                   = 0;
+    bestLocalOperation.commission                      = 0.0f;
+    bestLocalOperation.yield                           = 0.0f;
+    bestLocalOperation.yieldWithCommission             = 0.0f;
+    bestLocalOperation.yieldWithCommissionPercent      = 0.0f;
+    bestLocalOperation.inputMoney.units                = 1000000;
+    bestLocalOperation.inputMoney.nano                 = 0;
+    bestLocalOperation.maxInputMoney.units             = 1000000;
+    bestLocalOperation.maxInputMoney.nano              = 0;
+    bestLocalOperation.totalYieldWithCommission.units  = 0;
+    bestLocalOperation.totalYieldWithCommission.nano   = 0;
+    bestLocalOperation.totalYieldWithCommissionPercent = 0.0f;
+    bestLocalOperation.remainedMoney.units             = 1000000;
+    bestLocalOperation.remainedMoney.nano              = 0;
+    bestLocalOperation.totalMoney.units                = 1000000;
+    bestLocalOperation.totalMoney.nano                 = 0;
+    bestLocalOperation.pricePrecision                  = 2;
+    bestLocalOperation.paymentPrecision                = 2;
+    bestLocalOperation.commissionPrecision             = 2;
+
+    bestLocalOperations.append(bestLocalOperation);
+
+    QList<LogEntry> bestLocalEntries;
+
+    Portfolio             bestLocalPortfolio;
+    PortfolioCategoryItem bestLocalCategory1;
+    PortfolioCategoryItem bestLocalCategory2;
+    PortfolioItem         bestLocalItem;
+
+    bestLocalItem.instrumentId       = RUBLE_UID;
+    bestLocalItem.instrumentLogo     = &logo;
+    bestLocalItem.instrumentTicker   = "RUBLE";
+    bestLocalItem.instrumentName     = "Ruble";
+    bestLocalItem.showPrices         = false;
+    bestLocalItem.available          = 1000000;
+    bestLocalItem.price              = 1.0f;
+    bestLocalItem.avgPriceFifo       = 1.0f;
+    bestLocalItem.avgPriceWavg       = 1.0f;
+    bestLocalItem.cost               = 1000000;
+    bestLocalItem.part               = 100.0;
+    bestLocalItem.yield              = 0.0f;
+    bestLocalItem.yieldPercent       = 0.0f;
+    bestLocalItem.dailyYield         = 0.0f;
+    bestLocalItem.priceForDailyYield = 0.0f;
+    bestLocalItem.costForDailyYield  = 0.0;
+    bestLocalItem.dailyYieldPercent  = 0.0f;
+    bestLocalItem.pricePrecision     = 2;
+
+    bestLocalCategory1.id   = 0;
+    bestLocalCategory1.name = "Currency and metals";
+    bestLocalCategory1.cost = 1000000;
+    bestLocalCategory1.part = 100.0;
+    bestLocalCategory1.items.append(bestLocalItem);
+
+    bestLocalCategory2.id   = 1;
+    bestLocalCategory2.name = "Share";
+    bestLocalCategory2.cost = 0.0;
+    bestLocalCategory2.part = 0.0;
+
+    bestLocalPortfolio.positions << bestLocalCategory1 << bestLocalCategory2;
+
+    Portfolio             portfolio;
+    PortfolioCategoryItem category1;
+    PortfolioCategoryItem category2;
+    PortfolioItem         item;
+
+    item.instrumentId       = RUBLE_UID;
+    item.instrumentLogo     = &logo;
+    item.instrumentTicker   = "RUBLE";
+    item.instrumentName     = "Ruble";
+    item.showPrices         = false;
+    item.available          = 1000000;
+    item.price              = 1.0f;
+    item.avgPriceFifo       = 1.0f;
+    item.avgPriceWavg       = 1.0f;
+    item.cost               = 1000000;
+    item.part               = 100.0;
+    item.yield              = 0.0f;
+    item.yieldPercent       = 0.0f;
+    item.dailyYield         = 0.0f;
+    item.priceForDailyYield = 0.0f;
+    item.costForDailyYield  = 0.0;
+    item.dailyYieldPercent  = 0.0f;
+    item.pricePrecision     = 2;
+
+    category1.id   = 0;
+    category1.name = "Currency and metals";
+    category1.cost = 1000000;
+    category1.part = 100.0;
+    category1.items.append(item);
+
+    category2.id   = 1;
+    category2.name = "Share";
+    category2.cost = 0.0;
+    category2.part = 0.0;
+
+    portfolio.positions << category1 << category2;
+
+    InstrumentsForTrading emptyInstrumentsForTrading;
+
+    QStringList bestConfigs = {
+        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})"
+    };
+
+    QString bestConfigsExtended = "[{}]";
+
     EXPECT_CALL(*settingsEditorMock, value(QString("Options/StartMoney"), QVariant(0))).WillOnce(Return(QVariant(1000000)));
     EXPECT_CALL(*settingsEditorMock, value(QString("Options/FromDate"), QVariant(""))).WillOnce(Return(QVariant("2024-01-01")));
     EXPECT_CALL(*settingsEditorMock, value(QString("Options/ToDate"), QVariant(""))).WillOnce(Return(QVariant("2024-01-02")));
@@ -219,11 +361,11 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readUnlock());
     EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(&simulatorConfigMock));
     EXPECT_CALL(simulatorConfigMock, variantsToJsonStringList()).WillOnce(Return(configVariants));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("Options/AmountOfBuyDecisions"), QVariant(4)));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("Options/AmountOfBuyDecisions"), QVariant(AMOUNT_OF_BUY_DECISIONS)));
     EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
     EXPECT_CALL(*dirMock, mkpath(appDir + "/data/simulator")).WillOnce(Return(true));
 
-    for (int i = 0; i < configFileMocksForWriting.size(); ++i)
+    for (int i = 0; i < AMOUNT_OF_BUY_DECISIONS; ++i)
     {
         StrictMock<FileMock>* fileMock = configFileMocksForWriting.at(i);
 
@@ -241,7 +383,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     EXPECT_CALL(*logsDatabaseMock, deleteLogs(-1));
     EXPECT_CALL(*portfolioDatabaseMock, deletePortfolio(-1));
 
-    for (int i = 0; i < configFileMocksForWriting.size(); ++i)
+    for (int i = 0; i < AMOUNT_OF_BUY_DECISIONS; ++i)
     {
         EXPECT_CALL(*operationsDatabaseMock, deleteOperations(i));
         EXPECT_CALL(*logsDatabaseMock, deleteLogs(i));
@@ -251,7 +393,57 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
-    EXPECT_CALL(*settingsEditorMock, value(QString("Options/Step"), QVariant(0))).WillOnce(Return(QVariant(1000))); // TODO: Use 0
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/Step"), QVariant(0))).WillOnce(Return(QVariant(0)));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(0)).WillOnce(Return(bestLocalOperations));
+    EXPECT_CALL(*logsDatabaseMock, readLogs(0)).WillOnce(Return(bestLocalEntries));
+    EXPECT_CALL(*portfolioDatabaseMock, readPortfolio(0)).WillOnce(Return(bestLocalPortfolio));
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/LastConfigId0"), QVariant(0))).WillOnce(Return(QVariant(0)));
+    EXPECT_CALL(*configMock, clone()).WillOnce(Return(&clonedConfigMock));
+    EXPECT_CALL(clonedConfigMock, getSimulatorConfig()).WillOnce(Return(&clonedSimulatorConfigMock));
+    EXPECT_CALL(clonedSimulatorConfigMock, fromJsonObject(_));
+
+    EXPECT_CALL(
+        *decisionMakerMock,
+        makeDecision(QThread::currentThread(), Ge(1704056400000), &clonedConfigMock, portfolio, stocks, false, 0, true, false)
+    )
+        .Times(24 * 60) // Amount of minutes in a day
+        .WillRepeatedly(Return(emptyInstrumentsForTrading));
+
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("Options/LastConfigId0"), QVariant(1)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/BestConfigId0"), QVariant(0))).WillOnce(Return(QVariant(0)));
+    EXPECT_CALL(clonedConfigMock, deleteRecursively());
+
+    for (int i = 1; i < AMOUNT_OF_BUY_DECISIONS; ++i)
+    {
+        EXPECT_CALL(*operationsDatabaseMock, readOperations(i)).WillOnce(Return(bestLocalOperations));
+        EXPECT_CALL(*logsDatabaseMock, readLogs(i)).WillOnce(Return(bestLocalEntries));
+        EXPECT_CALL(*portfolioDatabaseMock, readPortfolio(i)).WillOnce(Return(bestLocalPortfolio));
+        EXPECT_CALL(*settingsEditorMock, value(QString("Options/LastConfigId%1").arg(i), QVariant(0)))
+            .WillOnce(Return(QVariant(1)));
+        EXPECT_CALL(*configMock, clone()).WillOnce(Return(&clonedConfigMock));
+        EXPECT_CALL(*settingsEditorMock, value(QString("Options/BestConfigId%1").arg(i), QVariant(0)))
+            .WillOnce(Return(QVariant(0)));
+        EXPECT_CALL(clonedConfigMock, deleteRecursively());
+    }
+
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(&simulatorConfigMock));
+    EXPECT_CALL(simulatorConfigMock, variantsToJsonStringListExtendedBySellDecisions(bestConfigs))
+        .WillOnce(Return(bestConfigsExtended));
+    EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/simulator/configs.json"))
+        .WillOnce(Return(std::shared_ptr<IFile>(totalConfigFileWriteMock)));
+    EXPECT_CALL(*totalConfigFileWriteMock, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*totalConfigFileWriteMock, write(bestConfigsExtended.toUtf8())).WillOnce(Return(bestConfigsExtended.size()));
+    EXPECT_CALL(*totalConfigFileWriteMock, close());
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("Options/Step"), QVariant(AMOUNT_OF_BUY_DECISIONS)));
+
+    for (int i = 0; i < AMOUNT_OF_BUY_DECISIONS; ++i)
+    {
+        EXPECT_CALL(*operationsDatabaseMock, readOperations(i)).WillOnce(Return(bestLocalOperations));
+    }
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/simulator/configs.json"))
+        .WillOnce(Return(std::shared_ptr<IFile>(totalConfigFileReadMock)));
+    EXPECT_CALL(*totalConfigFileReadMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(false));
 
     thread->run();
 }
