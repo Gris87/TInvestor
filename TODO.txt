@@ -2,6 +2,7 @@ Improve coverage
 Create release
 
 Fix display issue with instrument name popup
+Fix fade out for floating label
 Script to send notifications via WhatsApp
 
 Use readonly grpc streams
