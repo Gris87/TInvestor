@@ -35,8 +35,7 @@ def run_clang_tidy(args):
     number_of_parts = min(max(args.number_of_parts, 1), len(matched_files))
     part = min(max(args.part, 1), number_of_parts)
 
-    chunk_size = math.ceil(len(matched_files) / number_of_parts);
-    file_chunks = [matched_files[i : i + chunk_size] for i in range(0, len(matched_files), chunk_size)]
+    file_chunks = _split_into_chunks(matched_files, number_of_parts)
     chunk = file_chunks[part - 1]
 
     print(f"Files in chunk: {len(chunk)}")
@@ -51,6 +50,32 @@ def run_clang_tidy(args):
         commands.append(command)
 
     return _execute_commands(commands)
+
+
+def _split_into_chunks(items, number_of_parts):
+    chunks = []
+
+    chunk_size = math.floor(len(items) / number_of_parts)
+    tail = len(items) % number_of_parts
+
+    i = 0
+    start = 0
+    end = len(items)
+
+    while start < end:
+        next_start = start
+
+        if i < tail:
+            next_start += chunk_size + 1
+        else:
+            next_start += chunk_size
+
+        chunks.append(items[start:next_start])
+        start = next_start
+
+        i += 1
+
+    return chunks
 
 
 def _execute_commands(commands):

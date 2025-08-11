@@ -49,8 +49,7 @@ def run_clazy(args):
     number_of_parts = min(max(args.number_of_parts, 1), len(checks))
     part = min(max(args.part, 1), number_of_parts)
 
-    chunk_size = math.ceil(len(checks) / number_of_parts)
-    check_chunks = [checks[i : i + chunk_size] for i in range(0, len(checks), chunk_size)]
+    check_chunks = _split_into_chunks(checks, number_of_parts)
     chunk = check_chunks[part - 1]
 
     print(f"Checks in chunk: {len(chunk)}")
@@ -68,6 +67,32 @@ def run_clazy(args):
             commands.append(command)
 
     return _execute_commands(commands)
+
+
+def _split_into_chunks(items, number_of_parts):
+    chunks = []
+
+    chunk_size = math.floor(len(items) / number_of_parts)
+    tail = len(items) % number_of_parts
+
+    i = 0
+    start = 0
+    end = len(items)
+
+    while start < end:
+        next_start = start
+
+        if i < tail:
+            next_start += chunk_size + 1
+        else:
+            next_start += chunk_size
+
+        chunks.append(items[start:next_start])
+        start = next_start
+
+        i += 1
+
+    return chunks
 
 
 def _execute_commands(commands):
