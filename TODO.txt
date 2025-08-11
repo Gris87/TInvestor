@@ -1,6 +1,8 @@
 Improve coverage
 Create release
 
+Extract simulateTrading function
+Replace append with <<
 Fix remaining time accuracy
 Fix display issue with instrument name popup
 Fix fade out for floating label

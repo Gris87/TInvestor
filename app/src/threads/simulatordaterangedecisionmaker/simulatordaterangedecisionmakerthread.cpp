@@ -693,7 +693,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
 
         if (!instrumentsForTrading.isEmpty())
         {
-            simulateTrading(timestamp, instrumentsForTrading, totalMoney, operations, entries, portfolio, instruments);
+            simulateTrading(timestamp + 1, instrumentsForTrading, totalMoney, operations, entries, portfolio, instruments);
         }
 
         timestamp += ONE_MINUTE;
@@ -934,7 +934,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig()
 
         if (!instrumentsForTrading.isEmpty())
         {
-            simulateTrading(timestamp, instrumentsForTrading, totalMoney, operations, entries, portfolio, instruments);
+            simulateTrading(timestamp + 1, instrumentsForTrading, totalMoney, operations, entries, portfolio, instruments);
         }
 
         timestamp += ONE_MINUTE;

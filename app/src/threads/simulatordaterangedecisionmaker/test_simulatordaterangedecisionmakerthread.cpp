@@ -214,45 +214,45 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     QList<Operation> bestLocalOperations;
 
-    Operation bestLocalOperation;
+    Operation operation;
 
-    bestLocalOperation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
-    bestLocalOperation.instrumentId                    = RUBLE_UID;
-    bestLocalOperation.instrumentLogo                  = &logo;
-    bestLocalOperation.instrumentTicker                = "RUBLE";
-    bestLocalOperation.instrumentName                  = "Ruble";
-    bestLocalOperation.description                     = "Input money";
-    bestLocalOperation.price                           = 0.0f;
-    bestLocalOperation.avgPriceFifo                    = 0.0f;
-    bestLocalOperation.avgPriceWavg                    = 0.0f;
-    bestLocalOperation.quantity                        = 0;
-    bestLocalOperation.remainedQuantity                = 0;
-    bestLocalOperation.payment                         = 1000000;
-    bestLocalOperation.avgCostFifo                     = 0.0f;
-    bestLocalOperation.costFifo.units                  = 0;
-    bestLocalOperation.costFifo.nano                   = 0;
-    bestLocalOperation.costWavg.units                  = 0;
-    bestLocalOperation.costWavg.nano                   = 0;
-    bestLocalOperation.commission                      = 0.0f;
-    bestLocalOperation.yield                           = 0.0f;
-    bestLocalOperation.yieldWithCommission             = 0.0f;
-    bestLocalOperation.yieldWithCommissionPercent      = 0.0f;
-    bestLocalOperation.inputMoney.units                = 1000000;
-    bestLocalOperation.inputMoney.nano                 = 0;
-    bestLocalOperation.maxInputMoney.units             = 1000000;
-    bestLocalOperation.maxInputMoney.nano              = 0;
-    bestLocalOperation.totalYieldWithCommission.units  = 0;
-    bestLocalOperation.totalYieldWithCommission.nano   = 0;
-    bestLocalOperation.totalYieldWithCommissionPercent = 0.0f;
-    bestLocalOperation.remainedMoney.units             = 1000000;
-    bestLocalOperation.remainedMoney.nano              = 0;
-    bestLocalOperation.totalMoney.units                = 1000000;
-    bestLocalOperation.totalMoney.nano                 = 0;
-    bestLocalOperation.pricePrecision                  = 2;
-    bestLocalOperation.paymentPrecision                = 2;
-    bestLocalOperation.commissionPrecision             = 2;
+    operation.timestamp                       = 1704056400001;
+    operation.instrumentId                    = RUBLE_UID;
+    operation.instrumentLogo                  = &logo;
+    operation.instrumentTicker                = "RUBLE";
+    operation.instrumentName                  = "Ruble";
+    operation.description                     = "Input money";
+    operation.price                           = 0.0f;
+    operation.avgPriceFifo                    = 0.0f;
+    operation.avgPriceWavg                    = 0.0f;
+    operation.quantity                        = 0;
+    operation.remainedQuantity                = 0;
+    operation.payment                         = 1000000;
+    operation.avgCostFifo                     = 0.0f;
+    operation.costFifo.units                  = 0;
+    operation.costFifo.nano                   = 0;
+    operation.costWavg.units                  = 0;
+    operation.costWavg.nano                   = 0;
+    operation.commission                      = 0.0f;
+    operation.yield                           = 0.0f;
+    operation.yieldWithCommission             = 0.0f;
+    operation.yieldWithCommissionPercent      = 0.0f;
+    operation.inputMoney.units                = 1000000;
+    operation.inputMoney.nano                 = 0;
+    operation.maxInputMoney.units             = 1000000;
+    operation.maxInputMoney.nano              = 0;
+    operation.totalYieldWithCommission.units  = 0;
+    operation.totalYieldWithCommission.nano   = 0;
+    operation.totalYieldWithCommissionPercent = 0.0f;
+    operation.remainedMoney.units             = 1000000;
+    operation.remainedMoney.nano              = 0;
+    operation.totalMoney.units                = 1000000;
+    operation.totalMoney.nano                 = 0;
+    operation.pricePrecision                  = 2;
+    operation.paymentPrecision                = 2;
+    operation.commissionPrecision             = 2;
 
-    bestLocalOperations.append(bestLocalOperation);
+    bestLocalOperations.append(operation);
 
     QList<LogEntry> bestLocalEntries;
 
@@ -293,6 +293,48 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     bestLocalPortfolio.positions << bestLocalCategory1 << bestLocalCategory2;
 
+    QList<Operation> bestOperations;
+
+    operation.timestamp                       = 1704056400000;
+    operation.instrumentId                    = RUBLE_UID;
+    operation.instrumentLogo                  = &logo;
+    operation.instrumentTicker                = "RUBLE";
+    operation.instrumentName                  = "Ruble";
+    operation.description                     = "Input money";
+    operation.price                           = 0.0f;
+    operation.avgPriceFifo                    = 0.0f;
+    operation.avgPriceWavg                    = 0.0f;
+    operation.quantity                        = 0;
+    operation.remainedQuantity                = 0;
+    operation.payment                         = 1000000;
+    operation.avgCostFifo                     = 0.0f;
+    operation.costFifo.units                  = 0;
+    operation.costFifo.nano                   = 0;
+    operation.costWavg.units                  = 0;
+    operation.costWavg.nano                   = 0;
+    operation.commission                      = 0.0f;
+    operation.yield                           = 0.0f;
+    operation.yieldWithCommission             = 0.0f;
+    operation.yieldWithCommissionPercent      = 0.0f;
+    operation.inputMoney.units                = 1000000;
+    operation.inputMoney.nano                 = 0;
+    operation.maxInputMoney.units             = 1000000;
+    operation.maxInputMoney.nano              = 0;
+    operation.totalYieldWithCommission.units  = 0;
+    operation.totalYieldWithCommission.nano   = 0;
+    operation.totalYieldWithCommissionPercent = 0.0f;
+    operation.remainedMoney.units             = 1000000;
+    operation.remainedMoney.nano              = 0;
+    operation.totalMoney.units                = 1000000;
+    operation.totalMoney.nano                 = 0;
+    operation.pricePrecision                  = 2;
+    operation.paymentPrecision                = 2;
+    operation.commissionPrecision             = 2;
+
+    bestOperations.prepend(operation);
+
+    QList<LogEntry> bestEntries;
+
     Portfolio             portfolio;
     PortfolioCategoryItem category1;
     PortfolioCategoryItem category2;
@@ -329,6 +371,587 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     category2.part = 0.0;
 
     portfolio.positions << category1 << category2;
+
+    InstrumentsForTrading instrumentsForTrading1;
+    TradingInfo           tradingInfo;
+
+    tradingInfo.price        = 200.0f;
+    tradingInfo.expectedCost = 100000.0;
+    tradingInfo.cause        = "I want to buy";
+
+    instrumentsForTrading1["aaaaa"] = tradingInfo;
+
+    operation.timestamp                       = 1704056400001;
+    operation.instrumentId                    = "aaaaa";
+    operation.instrumentLogo                  = &logo;
+    operation.instrumentTicker                = "ABBA";
+    operation.instrumentName                  = "Abstract Basics";
+    operation.description                     = "Purchase of shares";
+    operation.price                           = 200.0f;
+    operation.avgPriceFifo                    = 200.0f;
+    operation.avgPriceWavg                    = 200.0f;
+    operation.quantity                        = 500;
+    operation.remainedQuantity                = 500;
+    operation.payment                         = -100000.0f;
+    operation.avgCostFifo                     = 100000.0f;
+    operation.costFifo.units                  = 100000;
+    operation.costFifo.nano                   = 0;
+    operation.costWavg.units                  = 100000;
+    operation.costWavg.nano                   = 0;
+    operation.commission                      = -40.0f;
+    operation.yield                           = 0.0f;
+    operation.yieldWithCommission             = -40.0f;
+    operation.yieldWithCommissionPercent      = -0.04f;
+    operation.inputMoney.units                = 1000000;
+    operation.inputMoney.nano                 = 0;
+    operation.maxInputMoney.units             = 1000000;
+    operation.maxInputMoney.nano              = 0;
+    operation.totalYieldWithCommission.units  = -39;
+    operation.totalYieldWithCommission.nano   = -999998989;
+    operation.totalYieldWithCommissionPercent = -0.004f;
+    operation.remainedMoney.units             = 899960;
+    operation.remainedMoney.nano              = 1010;
+    operation.totalMoney.units                = 999960;
+    operation.totalMoney.nano                 = 1010;
+    operation.pricePrecision                  = 1;
+    operation.paymentPrecision                = 1;
+    operation.commissionPrecision             = 1;
+
+    bestOperations.prepend(operation);
+
+    LogEntry buyEntry1;
+    LogEntry buyEntry2;
+    LogEntry buyEntry3;
+    LogEntry buyEntry4;
+
+    buyEntry1.timestamp        = 1704056400002;
+    buyEntry1.level            = LOG_LEVEL_DEBUG;
+    buyEntry1.instrumentId     = "aaaaa";
+    buyEntry1.instrumentLogo   = &logo;
+    buyEntry1.instrumentTicker = "ABBA";
+    buyEntry1.instrumentName   = "Abstract Basics";
+    buyEntry1.message          = "I want to buy";
+
+    buyEntry2.timestamp        = 1704056400003;
+    buyEntry2.level            = LOG_LEVEL_VERBOSE;
+    buyEntry2.instrumentId     = "aaaaa";
+    buyEntry2.instrumentLogo   = &logo;
+    buyEntry2.instrumentTicker = "ABBA";
+    buyEntry2.instrumentName   = "Abstract Basics";
+    buyEntry2.message          = "Order to buy 500 created with a price 200.0 \u20BD";
+
+    buyEntry3.timestamp        = 1704056400004;
+    buyEntry3.level            = LOG_LEVEL_VERBOSE;
+    buyEntry3.instrumentId     = "aaaaa";
+    buyEntry3.instrumentLogo   = &logo;
+    buyEntry3.instrumentTicker = "ABBA";
+    buyEntry3.instrumentName   = "Abstract Basics";
+    buyEntry3.message          = "Order completed. 500 bought with a price 200.0 \u20BD";
+
+    buyEntry4.timestamp        = 1704056400005;
+    buyEntry4.level            = LOG_LEVEL_VERBOSE;
+    buyEntry4.instrumentId     = "aaaaa";
+    buyEntry4.instrumentLogo   = &logo;
+    buyEntry4.instrumentTicker = "ABBA";
+    buyEntry4.instrumentName   = "Abstract Basics";
+    buyEntry4.message          = "Trade completed successfully";
+
+    bestEntries.prepend(buyEntry1);
+    bestEntries.prepend(buyEntry2);
+    bestEntries.prepend(buyEntry3);
+    bestEntries.prepend(buyEntry4);
+
+    Portfolio             buyPortfolio;
+    PortfolioCategoryItem buyCategory1;
+    PortfolioCategoryItem buyCategory2;
+    PortfolioItem         buyItem1;
+    PortfolioItem         buyItem2;
+
+    buyItem1.instrumentId       = RUBLE_UID;
+    buyItem1.instrumentLogo     = &logo;
+    buyItem1.instrumentTicker   = "RUBLE";
+    buyItem1.instrumentName     = "Ruble";
+    buyItem1.showPrices         = false;
+    buyItem1.available          = 899960.0;
+    buyItem1.price              = 1.0f;
+    buyItem1.avgPriceFifo       = 1.0f;
+    buyItem1.avgPriceWavg       = 1.0f;
+    buyItem1.cost               = 899960.0;
+    buyItem1.part               = 100.0f;
+    buyItem1.yield              = 0.0f;
+    buyItem1.yieldPercent       = 0.0f;
+    buyItem1.dailyYield         = 0.0f;
+    buyItem1.priceForDailyYield = 0.0f;
+    buyItem1.costForDailyYield  = 0.0;
+    buyItem1.dailyYieldPercent  = 0.0f;
+    buyItem1.pricePrecision     = 2;
+
+    buyItem2.instrumentId       = "aaaaa";
+    buyItem2.instrumentLogo     = &logo;
+    buyItem2.instrumentTicker   = "ABBA";
+    buyItem2.instrumentName     = "Abstract Basics";
+    buyItem2.showPrices         = true;
+    buyItem2.available          = 500;
+    buyItem2.price              = 200.0f;
+    buyItem2.avgPriceFifo       = 200.0f;
+    buyItem2.avgPriceWavg       = 200.0f;
+    buyItem2.cost               = 100000.0;
+    buyItem2.part               = 0.0f;
+    buyItem2.yield              = 0.0f;
+    buyItem2.yieldPercent       = 0.0f;
+    buyItem2.dailyYield         = 0.0f;
+    buyItem2.priceForDailyYield = 200.0f;
+    buyItem2.costForDailyYield  = 100000.0;
+    buyItem2.dailyYieldPercent  = 0.0f;
+    buyItem2.pricePrecision     = 1;
+
+    buyCategory1.id   = 0;
+    buyCategory1.name = "Currency and metals";
+    buyCategory1.cost = 1000000.0;
+    buyCategory1.part = 100.0;
+    buyCategory1.items.append(buyItem1);
+
+    buyCategory2.id   = 1;
+    buyCategory2.name = "Share";
+    buyCategory2.cost = 0.0;
+    buyCategory2.part = 0.0;
+    buyCategory2.items.append(buyItem2);
+
+    buyPortfolio.positions << buyCategory1 << buyCategory2;
+
+    InstrumentsForTrading instrumentsForTrading2 = instrumentsForTrading1;
+
+    tradingInfo.price        = 200.0f;
+    tradingInfo.expectedCost = 100000.0;
+    tradingInfo.cause        = "I want to buy";
+
+    instrumentsForTrading2["aaaaa"] = tradingInfo;
+
+    tradingInfo.price        = 200.0f;
+    tradingInfo.expectedCost = 150000.0;
+    tradingInfo.cause        = "I want to buy";
+
+    instrumentsForTrading2["bbbbb"] = tradingInfo;
+
+    operation.timestamp                       = 1704056460001;
+    operation.instrumentId                    = "bbbbb";
+    operation.instrumentLogo                  = &logo;
+    operation.instrumentTicker                = "BASE";
+    operation.instrumentName                  = "Basketball enhancement";
+    operation.description                     = "Purchase of shares";
+    operation.price                           = 200.0f;
+    operation.avgPriceFifo                    = 200.0f;
+    operation.avgPriceWavg                    = 200.0f;
+    operation.quantity                        = 750;
+    operation.remainedQuantity                = 750;
+    operation.payment                         = -150000.0f;
+    operation.avgCostFifo                     = 150000.0f;
+    operation.costFifo.units                  = 150000;
+    operation.costFifo.nano                   = 0;
+    operation.costWavg.units                  = 150000;
+    operation.costWavg.nano                   = 0;
+    operation.commission                      = -60.0f;
+    operation.yield                           = 0.0f;
+    operation.yieldWithCommission             = -60.0f;
+    operation.yieldWithCommissionPercent      = -0.04f;
+    operation.inputMoney.units                = 1000000;
+    operation.inputMoney.nano                 = 0;
+    operation.maxInputMoney.units             = 1000000;
+    operation.maxInputMoney.nano              = 0;
+    operation.totalYieldWithCommission.units  = -99;
+    operation.totalYieldWithCommission.nano   = -999997473;
+    operation.totalYieldWithCommissionPercent = -0.01f;
+    operation.remainedMoney.units             = 749900;
+    operation.remainedMoney.nano              = 2526;
+    operation.totalMoney.units                = 999900;
+    operation.totalMoney.nano                 = 2526;
+    operation.pricePrecision                  = 2;
+    operation.paymentPrecision                = 2;
+    operation.commissionPrecision             = 2;
+
+    bestOperations.prepend(operation);
+
+    buyEntry1.timestamp        = 1704056460002;
+    buyEntry1.level            = LOG_LEVEL_DEBUG;
+    buyEntry1.instrumentId     = "bbbbb";
+    buyEntry1.instrumentLogo   = &logo;
+    buyEntry1.instrumentTicker = "BASE";
+    buyEntry1.instrumentName   = "Basketball enhancement";
+    buyEntry1.message          = "I want to buy";
+
+    buyEntry2.timestamp        = 1704056460003;
+    buyEntry2.level            = LOG_LEVEL_VERBOSE;
+    buyEntry2.instrumentId     = "bbbbb";
+    buyEntry2.instrumentLogo   = &logo;
+    buyEntry2.instrumentTicker = "BASE";
+    buyEntry2.instrumentName   = "Basketball enhancement";
+    buyEntry2.message          = "Order to buy 750 created with a price 200.00 \u20BD";
+
+    buyEntry3.timestamp        = 1704056460004;
+    buyEntry3.level            = LOG_LEVEL_VERBOSE;
+    buyEntry3.instrumentId     = "bbbbb";
+    buyEntry3.instrumentLogo   = &logo;
+    buyEntry3.instrumentTicker = "BASE";
+    buyEntry3.instrumentName   = "Basketball enhancement";
+    buyEntry3.message          = "Order completed. 750 bought with a price 200.00 \u20BD";
+
+    buyEntry4.timestamp        = 1704056460005;
+    buyEntry4.level            = LOG_LEVEL_VERBOSE;
+    buyEntry4.instrumentId     = "bbbbb";
+    buyEntry4.instrumentLogo   = &logo;
+    buyEntry4.instrumentTicker = "BASE";
+    buyEntry4.instrumentName   = "Basketball enhancement";
+    buyEntry4.message          = "Trade completed successfully";
+
+    bestEntries.prepend(buyEntry1);
+    bestEntries.prepend(buyEntry2);
+    bestEntries.prepend(buyEntry3);
+    bestEntries.prepend(buyEntry4);
+
+    Portfolio             buyPortfolio2;
+    PortfolioCategoryItem buyCategory3;
+    PortfolioCategoryItem buyCategory4;
+    PortfolioItem         buyItem3;
+    PortfolioItem         buyItem4;
+    PortfolioItem         buyItem5;
+
+    buyItem3.instrumentId       = RUBLE_UID;
+    buyItem3.instrumentLogo     = &logo;
+    buyItem3.instrumentTicker   = "RUBLE";
+    buyItem3.instrumentName     = "Ruble";
+    buyItem3.showPrices         = false;
+    buyItem3.available          = 749900.0;
+    buyItem3.price              = 1.0f;
+    buyItem3.avgPriceFifo       = 1.0f;
+    buyItem3.avgPriceWavg       = 1.0f;
+    buyItem3.cost               = 749900.0;
+    buyItem3.part               = 100.0;
+    buyItem3.yield              = 0.0f;
+    buyItem3.yieldPercent       = 0.0f;
+    buyItem3.dailyYield         = 0.0f;
+    buyItem3.priceForDailyYield = 0.0f;
+    buyItem3.costForDailyYield  = 0.0;
+    buyItem3.dailyYieldPercent  = 0.0f;
+    buyItem3.pricePrecision     = 2;
+
+    buyItem4.instrumentId       = "aaaaa";
+    buyItem4.instrumentLogo     = &logo;
+    buyItem4.instrumentTicker   = "ABBA";
+    buyItem4.instrumentName     = "Abstract Basics";
+    buyItem4.showPrices         = true;
+    buyItem4.available          = 500;
+    buyItem4.price              = 200.0f;
+    buyItem4.avgPriceFifo       = 200.0f;
+    buyItem4.avgPriceWavg       = 200.0f;
+    buyItem4.cost               = 100000.0;
+    buyItem4.part               = 0.0;
+    buyItem4.yield              = 0.0f;
+    buyItem4.yieldPercent       = 0.0f;
+    buyItem4.dailyYield         = 0.0f;
+    buyItem4.priceForDailyYield = 200.0f;
+    buyItem4.costForDailyYield  = 100000.0;
+    buyItem4.dailyYieldPercent  = 0.0f;
+    buyItem4.pricePrecision     = 1;
+
+    buyItem5.instrumentId       = "bbbbb";
+    buyItem5.instrumentLogo     = &logo;
+    buyItem5.instrumentTicker   = "BASE";
+    buyItem5.instrumentName     = "Basketball enhancement";
+    buyItem5.showPrices         = true;
+    buyItem5.available          = 750;
+    buyItem5.price              = 200.0f;
+    buyItem5.avgPriceFifo       = 200.0f;
+    buyItem5.avgPriceWavg       = 200.0f;
+    buyItem5.cost               = 150000.0;
+    buyItem5.part               = 0.0;
+    buyItem5.yield              = 0.0f;
+    buyItem5.yieldPercent       = 0.0f;
+    buyItem5.dailyYield         = 0.0f;
+    buyItem5.priceForDailyYield = 200.0f;
+    buyItem5.costForDailyYield  = 150000.0;
+    buyItem5.dailyYieldPercent  = 0.0f;
+    buyItem5.pricePrecision     = 2;
+
+    buyCategory3.id   = 0;
+    buyCategory3.name = "Currency and metals";
+    buyCategory3.cost = 1000000.0;
+    buyCategory3.part = 100.0;
+    buyCategory3.items.append(buyItem3);
+
+    buyCategory4.id   = 1;
+    buyCategory4.name = "Share";
+    buyCategory4.cost = 0.0;
+    buyCategory4.part = 0.0;
+    buyCategory4.items.append(buyItem4);
+    buyCategory4.items.append(buyItem5);
+
+    buyPortfolio2.positions << buyCategory3 << buyCategory4;
+
+    InstrumentsForTrading instrumentsForTrading3 = instrumentsForTrading2;
+
+    tradingInfo.price        = 300.0f;
+    tradingInfo.expectedCost = 0.0;
+    tradingInfo.cause        = "I want to sell";
+
+    instrumentsForTrading3["bbbbb"] = tradingInfo;
+
+    operation.timestamp                       = 1704056520001;
+    operation.instrumentId                    = "bbbbb";
+    operation.instrumentLogo                  = &logo;
+    operation.instrumentTicker                = "BASE";
+    operation.instrumentName                  = "Basketball enhancement";
+    operation.description                     = "Sale of shares";
+    operation.price                           = 300.0f;
+    operation.avgPriceFifo                    = 200.0f;
+    operation.avgPriceWavg                    = 200.0f;
+    operation.quantity                        = 750;
+    operation.remainedQuantity                = 0;
+    operation.payment                         = 225000.0f;
+    operation.avgCostFifo                     = 150000.0f;
+    operation.costFifo.units                  = 0;
+    operation.costFifo.nano                   = 0;
+    operation.costWavg.units                  = 0;
+    operation.costWavg.nano                   = 0;
+    operation.commission                      = -90.0f;
+    operation.yield                           = 75000.0f;
+    operation.yieldWithCommission             = 74910.0f;
+    operation.yieldWithCommissionPercent      = 49.94f;
+    operation.inputMoney.units                = 1000000;
+    operation.inputMoney.nano                 = 0;
+    operation.maxInputMoney.units             = 1000000;
+    operation.maxInputMoney.nano              = 0;
+    operation.totalYieldWithCommission.units  = 74810;
+    operation.totalYieldWithCommission.nano   = 4799;
+    operation.totalYieldWithCommissionPercent = 7.481f;
+    operation.remainedMoney.units             = 974810;
+    operation.remainedMoney.nano              = 4799;
+    operation.totalMoney.units                = 1074810;
+    operation.totalMoney.nano                 = 4799;
+    operation.pricePrecision                  = 2;
+    operation.paymentPrecision                = 2;
+    operation.commissionPrecision             = 2;
+
+    bestOperations.prepend(operation);
+
+    LogEntry sellEntry1;
+    LogEntry sellEntry2;
+    LogEntry sellEntry3;
+    LogEntry sellEntry4;
+
+    sellEntry1.timestamp        = 1704056520002;
+    sellEntry1.level            = LOG_LEVEL_DEBUG;
+    sellEntry1.instrumentId     = "bbbbb";
+    sellEntry1.instrumentLogo   = &logo;
+    sellEntry1.instrumentTicker = "BASE";
+    sellEntry1.instrumentName   = "Basketball enhancement";
+    sellEntry1.message          = "I want to sell";
+
+    sellEntry2.timestamp        = 1704056520003;
+    sellEntry2.level            = LOG_LEVEL_VERBOSE;
+    sellEntry2.instrumentId     = "bbbbb";
+    sellEntry2.instrumentLogo   = &logo;
+    sellEntry2.instrumentTicker = "BASE";
+    sellEntry2.instrumentName   = "Basketball enhancement";
+    sellEntry2.message          = "Order to sell 750 created with a price 300.00 \u20BD";
+
+    sellEntry3.timestamp        = 1704056520004;
+    sellEntry3.level            = LOG_LEVEL_VERBOSE;
+    sellEntry3.instrumentId     = "bbbbb";
+    sellEntry3.instrumentLogo   = &logo;
+    sellEntry3.instrumentTicker = "BASE";
+    sellEntry3.instrumentName   = "Basketball enhancement";
+    sellEntry3.message          = "Order completed. 750 sold with a price 300.00 \u20BD";
+
+    sellEntry4.timestamp        = 1704056520005;
+    sellEntry4.level            = LOG_LEVEL_VERBOSE;
+    sellEntry4.instrumentId     = "bbbbb";
+    sellEntry4.instrumentLogo   = &logo;
+    sellEntry4.instrumentTicker = "BASE";
+    sellEntry4.instrumentName   = "Basketball enhancement";
+    sellEntry4.message          = "Trade completed successfully";
+
+    bestEntries.prepend(sellEntry1);
+    bestEntries.prepend(sellEntry2);
+    bestEntries.prepend(sellEntry3);
+    bestEntries.prepend(sellEntry4);
+
+    Portfolio             sellPortfolio;
+    PortfolioCategoryItem sellCategory1;
+    PortfolioCategoryItem sellCategory2;
+    PortfolioItem         sellItem1;
+    PortfolioItem         sellItem2;
+
+    sellItem1.instrumentId       = RUBLE_UID;
+    sellItem1.instrumentLogo     = &logo;
+    sellItem1.instrumentTicker   = "RUBLE";
+    sellItem1.instrumentName     = "Ruble";
+    sellItem1.showPrices         = false;
+    sellItem1.available          = 974810.0;
+    sellItem1.price              = 1.0f;
+    sellItem1.avgPriceFifo       = 1.0f;
+    sellItem1.avgPriceWavg       = 1.0f;
+    sellItem1.cost               = 974810.0;
+    sellItem1.part               = 100.0;
+    sellItem1.yield              = 0.0f;
+    sellItem1.yieldPercent       = 0.0f;
+    sellItem1.dailyYield         = 0.0f;
+    sellItem1.priceForDailyYield = 0.0f;
+    sellItem1.costForDailyYield  = 0.0;
+    sellItem1.dailyYieldPercent  = 0.0f;
+    sellItem1.pricePrecision     = 2;
+
+    sellItem2.instrumentId       = "aaaaa";
+    sellItem2.instrumentLogo     = &logo;
+    sellItem2.instrumentTicker   = "ABBA";
+    sellItem2.instrumentName     = "Abstract Basics";
+    sellItem2.showPrices         = true;
+    sellItem2.available          = 500;
+    sellItem2.price              = 200.0f;
+    sellItem2.avgPriceFifo       = 200.0f;
+    sellItem2.avgPriceWavg       = 200.0f;
+    sellItem2.cost               = 100000.0;
+    sellItem2.part               = 0.0;
+    sellItem2.yield              = 0.0f;
+    sellItem2.yieldPercent       = 0.0f;
+    sellItem2.dailyYield         = 0.0f;
+    sellItem2.priceForDailyYield = 200.0f;
+    sellItem2.costForDailyYield  = 100000.0;
+    sellItem2.dailyYieldPercent  = 0.0;
+    sellItem2.pricePrecision     = 1;
+
+    sellCategory1.id   = 0;
+    sellCategory1.name = "Currency and metals";
+    sellCategory1.cost = 1000000.0;
+    sellCategory1.part = 100.0;
+    sellCategory1.items.append(sellItem1);
+
+    sellCategory2.id   = 1;
+    sellCategory2.name = "Share";
+    sellCategory2.cost = 0.0;
+    sellCategory2.part = 0.0;
+    sellCategory2.items.append(sellItem2);
+
+    sellPortfolio.positions << sellCategory1 << sellCategory2;
+
+    InstrumentsForTrading instrumentsForTrading4 = instrumentsForTrading3;
+
+    tradingInfo.price        = 220.0f;
+    tradingInfo.expectedCost = 0.0;
+    tradingInfo.cause        = "I want to sell";
+
+    instrumentsForTrading4["aaaaa"] = tradingInfo;
+
+    operation.timestamp                       = 1704056580001;
+    operation.instrumentId                    = "aaaaa";
+    operation.instrumentLogo                  = &logo;
+    operation.instrumentTicker                = "ABBA";
+    operation.instrumentName                  = "Abstract Basics";
+    operation.description                     = "Sale of shares";
+    operation.price                           = 220.0f;
+    operation.avgPriceFifo                    = 200.0f;
+    operation.avgPriceWavg                    = 200.0f;
+    operation.quantity                        = 500;
+    operation.remainedQuantity                = 0;
+    operation.payment                         = 110000.0f;
+    operation.avgCostFifo                     = 100000.0f;
+    operation.costFifo.units                  = 0;
+    operation.costFifo.nano                   = 0;
+    operation.costWavg.units                  = 0;
+    operation.costWavg.nano                   = 0;
+    operation.commission                      = -44.0f;
+    operation.yield                           = 10000.0f;
+    operation.yieldWithCommission             = 9956.0f;
+    operation.yieldWithCommissionPercent      = 9.956f;
+    operation.inputMoney.units                = 1000000;
+    operation.inputMoney.nano                 = 0;
+    operation.maxInputMoney.units             = 1000000;
+    operation.maxInputMoney.nano              = 0;
+    operation.totalYieldWithCommission.units  = 84766;
+    operation.totalYieldWithCommission.nano   = 5911;
+    operation.totalYieldWithCommissionPercent = 8.4766f;
+    operation.remainedMoney.units             = 1084766;
+    operation.remainedMoney.nano              = 5911;
+    operation.totalMoney.units                = 1084766;
+    operation.totalMoney.nano                 = 5911;
+    operation.pricePrecision                  = 1;
+    operation.paymentPrecision                = 1;
+    operation.commissionPrecision             = 1;
+
+    bestOperations.prepend(operation);
+
+    sellEntry1.timestamp        = 1704056580002;
+    sellEntry1.level            = LOG_LEVEL_DEBUG;
+    sellEntry1.instrumentId     = "aaaaa";
+    sellEntry1.instrumentLogo   = &logo;
+    sellEntry1.instrumentTicker = "ABBA";
+    sellEntry1.instrumentName   = "Abstract Basics";
+    sellEntry1.message          = "I want to sell";
+
+    sellEntry2.timestamp        = 1704056580003;
+    sellEntry2.level            = LOG_LEVEL_VERBOSE;
+    sellEntry2.instrumentId     = "aaaaa";
+    sellEntry2.instrumentLogo   = &logo;
+    sellEntry2.instrumentTicker = "ABBA";
+    sellEntry2.instrumentName   = "Abstract Basics";
+    sellEntry2.message          = "Order to sell 500 created with a price 220.0 \u20BD";
+
+    sellEntry3.timestamp        = 1704056580004;
+    sellEntry3.level            = LOG_LEVEL_VERBOSE;
+    sellEntry3.instrumentId     = "aaaaa";
+    sellEntry3.instrumentLogo   = &logo;
+    sellEntry3.instrumentTicker = "ABBA";
+    sellEntry3.instrumentName   = "Abstract Basics";
+    sellEntry3.message          = "Order completed. 500 sold with a price 220.0 \u20BD";
+
+    sellEntry4.timestamp        = 1704056580005;
+    sellEntry4.level            = LOG_LEVEL_VERBOSE;
+    sellEntry4.instrumentId     = "aaaaa";
+    sellEntry4.instrumentLogo   = &logo;
+    sellEntry4.instrumentTicker = "ABBA";
+    sellEntry4.instrumentName   = "Abstract Basics";
+    sellEntry4.message          = "Trade completed successfully";
+
+    bestEntries.prepend(sellEntry1);
+    bestEntries.prepend(sellEntry2);
+    bestEntries.prepend(sellEntry3);
+    bestEntries.prepend(sellEntry4);
+
+    Portfolio             sellPortfolio2;
+    PortfolioCategoryItem sellCategory3;
+    PortfolioCategoryItem sellCategory4;
+    PortfolioItem         sellItem3;
+
+    sellItem3.instrumentId       = RUBLE_UID;
+    sellItem3.instrumentLogo     = &logo;
+    sellItem3.instrumentTicker   = "RUBLE";
+    sellItem3.instrumentName     = "Ruble";
+    sellItem3.showPrices         = false;
+    sellItem3.available          = 1084766.0;
+    sellItem3.price              = 1.0f;
+    sellItem3.avgPriceFifo       = 1.0f;
+    sellItem3.avgPriceWavg       = 1.0f;
+    sellItem3.cost               = 1084766.0;
+    sellItem3.part               = 100.0;
+    sellItem3.yield              = 0.0f;
+    sellItem3.yieldPercent       = 0.0f;
+    sellItem3.dailyYield         = 0.0f;
+    sellItem3.priceForDailyYield = 0.0f;
+    sellItem3.costForDailyYield  = 0.0;
+    sellItem3.dailyYieldPercent  = 0.0f;
+    sellItem3.pricePrecision     = 2;
+
+    sellCategory3.id   = 0;
+    sellCategory3.name = "Currency and metals";
+    sellCategory3.cost = 1000000.0;
+    sellCategory3.part = 100.0f;
+    sellCategory3.items.append(sellItem3);
+
+    sellCategory4.id   = 1;
+    sellCategory4.name = "Share";
+    sellCategory4.cost = 0.0;
+    sellCategory4.part = 0.0f;
+
+    sellPortfolio2.positions << sellCategory3 << sellCategory4;
 
     InstrumentsForTrading emptyInstrumentsForTrading;
 
@@ -404,11 +1027,77 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), Ge(1704056400000), &clonedConfigMock, portfolio, stocks, false, 0, true, false)
+        makeDecision(QThread::currentThread(), 1704056400000, &clonedConfigMock, portfolio, stocks, false, 0, true, false)
     )
-        .Times(24 * 60) // Amount of minutes in a day
+        .WillOnce(Return(instrumentsForTrading1));
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+
+    EXPECT_CALL(
+        *decisionMakerMock,
+        makeDecision(QThread::currentThread(), 1704056460000, &clonedConfigMock, buyPortfolio, stocks, false, 0, true, false)
+    )
+        .WillOnce(Return(instrumentsForTrading2));
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("bbbbb"))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+
+    EXPECT_CALL(
+        *decisionMakerMock,
+        makeDecision(QThread::currentThread(), 1704056520000, &clonedConfigMock, buyPortfolio2, stocks, false, 0, true, false)
+    )
+        .WillOnce(Return(instrumentsForTrading3));
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("bbbbb"))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+
+    EXPECT_CALL(
+        *decisionMakerMock,
+        makeDecision(QThread::currentThread(), 1704056580000, &clonedConfigMock, sellPortfolio, stocks, false, 0, true, false)
+    )
+        .WillOnce(Return(instrumentsForTrading4));
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+
+    EXPECT_CALL(
+        *decisionMakerMock,
+        makeDecision(
+            QThread::currentThread(), Ge(1704056640000), &clonedConfigMock, sellPortfolio2, stocks, false, 0, true, false
+        )
+    )
+        .Times(24 * 60 - 4) // Amount of minutes in a day and skip previous steps
         .WillRepeatedly(Return(emptyInstrumentsForTrading));
 
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(bestOperations, 0));
+    EXPECT_CALL(*logsDatabaseMock, writeLogs(bestEntries, 0));
+    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(sellPortfolio2, 0));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("Options/BestConfigId0"), QVariant(0)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("Options/LastConfigId0"), QVariant(1)));
     EXPECT_CALL(*settingsEditorMock, value(QString("Options/BestConfigId0"), QVariant(0))).WillOnce(Return(QVariant(0)));
     EXPECT_CALL(clonedConfigMock, deleteRecursively());

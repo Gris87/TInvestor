@@ -39,7 +39,7 @@ MATCHER_P(IsOperationsEqWithoutTimeout, another, "")
     for (int i = 0; i < arg.size(); ++i)
     {
         Operation        operation        = arg.at(i);
-        const Operation& anotherOperation = arg.at(i);
+        const Operation& anotherOperation = another.at(i);
 
         operation.timestamp = anotherOperation.timestamp;
 
@@ -308,10 +308,10 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     buyOperation.remainedQuantity                = 500;
     buyOperation.payment                         = -100000.0f;
     buyOperation.avgCostFifo                     = 100000.0f;
-    buyOperation.costFifo.units                  = 0;
-    buyOperation.costFifo.nano                   = 100000;
-    buyOperation.costWavg.units                  = 0;
-    buyOperation.costWavg.nano                   = 100000;
+    buyOperation.costFifo.units                  = 100000;
+    buyOperation.costFifo.nano                   = 0;
+    buyOperation.costWavg.units                  = 100000;
+    buyOperation.costWavg.nano                   = 0;
     buyOperation.commission                      = -40.0f;
     buyOperation.yield                           = 0.0f;
     buyOperation.yieldWithCommission             = -40.0f;
@@ -322,7 +322,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     buyOperation.maxInputMoney.nano              = 0;
     buyOperation.totalYieldWithCommission.units  = -39;
     buyOperation.totalYieldWithCommission.nano   = -999998989;
-    buyOperation.totalYieldWithCommissionPercent = -0.04f;
+    buyOperation.totalYieldWithCommissionPercent = -0.004f;
     buyOperation.remainedMoney.units             = 899960;
     buyOperation.remainedMoney.nano              = 1010;
     buyOperation.totalMoney.units                = 999960;
@@ -502,10 +502,10 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     buyOperation2.remainedQuantity                = 750;
     buyOperation2.payment                         = -150000.0f;
     buyOperation2.avgCostFifo                     = 150000.0f;
-    buyOperation2.costFifo.units                  = 0;
-    buyOperation2.costFifo.nano                   = 150000;
-    buyOperation2.costWavg.units                  = 0;
-    buyOperation2.costWavg.nano                   = 150000;
+    buyOperation2.costFifo.units                  = 150000;
+    buyOperation2.costFifo.nano                   = 0;
+    buyOperation2.costWavg.units                  = 150000;
+    buyOperation2.costWavg.nano                   = 0;
     buyOperation2.commission                      = -60.0f;
     buyOperation2.yield                           = 0.0f;
     buyOperation2.yieldWithCommission             = -60.0f;
@@ -516,7 +516,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     buyOperation2.maxInputMoney.nano              = 0;
     buyOperation2.totalYieldWithCommission.units  = -99;
     buyOperation2.totalYieldWithCommission.nano   = -999997473;
-    buyOperation2.totalYieldWithCommissionPercent = -0.001f;
+    buyOperation2.totalYieldWithCommissionPercent = -0.01f;
     buyOperation2.remainedMoney.units             = 749900;
     buyOperation2.remainedMoney.nano              = 2526;
     buyOperation2.totalMoney.units                = 999900;
