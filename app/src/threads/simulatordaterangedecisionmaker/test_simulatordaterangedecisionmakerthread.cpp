@@ -123,12 +123,14 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
     StrictMock<DirMock>*                dirMock         = new StrictMock<DirMock>();  // Will be deleted in initConfigs function
-    StrictMock<FileMock>*               configFileMock1 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
-    StrictMock<FileMock>*               configFileMock2 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
-    StrictMock<FileMock>*               configFileMock3 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
-    StrictMock<FileMock>*               configFileMock4 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>* configFileWriteMock1          = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>* configFileWriteMock2          = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>* configFileWriteMock3          = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>* configFileWriteMock4          = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
 
-    QList<StrictMock<FileMock>*> configFileMocksForWriting = {configFileMock1, configFileMock2, configFileMock3, configFileMock4};
+    QList<StrictMock<FileMock>*> configFileMocksForWriting = {
+        configFileWriteMock1, configFileWriteMock2, configFileWriteMock3, configFileWriteMock4
+    };
 
     StrictMock<ConfigMock>              clonedConfigMock;
     StrictMock<DecisionMakerConfigMock> clonedSimulatorConfigMock;
@@ -137,7 +139,17 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     StrictMock<FileMock>* totalConfigFileWriteMock = new StrictMock<FileMock>();
 
     // Will be deleted in simulationWithBestConfigStep2 function
-    StrictMock<FileMock>* totalConfigFileReadMock = new StrictMock<FileMock>();
+    StrictMock<FileMock>* totalConfigFileReadMock1 = new StrictMock<FileMock>();
+    StrictMock<FileMock>* totalConfigFileReadMock2 = new StrictMock<FileMock>();
+
+    StrictMock<FileMock>* configFileReadMock1 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>* configFileReadMock2 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>* configFileReadMock3 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>* configFileReadMock4 = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+
+    QList<StrictMock<FileMock>*> configFileMocksForReading = {
+        configFileReadMock1, configFileReadMock2, configFileReadMock3, configFileReadMock4
+    };
 
     thread->reset();
 
@@ -1131,8 +1143,71 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     }
 
     EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/simulator/configs.json"))
-        .WillOnce(Return(std::shared_ptr<IFile>(totalConfigFileReadMock)));
-    EXPECT_CALL(*totalConfigFileReadMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(false));
+        .WillOnce(Return(std::shared_ptr<IFile>(totalConfigFileReadMock1)));
+    EXPECT_CALL(*totalConfigFileReadMock1, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*totalConfigFileReadMock1, readAll()).WillOnce(Return(bestConfigsExtended.toUtf8()));
+    EXPECT_CALL(*totalConfigFileReadMock1, close());
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/LastConfigId"), QVariant(0))).WillOnce(Return(QVariant(1)));
+    EXPECT_CALL(*configMock, clone()).WillOnce(Return(&clonedConfigMock));
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/BestConfigId"), QVariant(0))).WillOnce(Return(QVariant(0)));
+    EXPECT_CALL(clonedConfigMock, deleteRecursively());
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(&simulatorConfigMock));
+    EXPECT_CALL(simulatorConfigMock, fromJsonObject(_));
+
+    thread->run();
+
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/StartMoney"), QVariant(0))).WillOnce(Return(QVariant(1000000)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/FromDate"), QVariant(""))).WillOnce(Return(QVariant("2024-01-01")));
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/ToDate"), QVariant(""))).WillOnce(Return(QVariant("2024-01-02")));
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/BestConfig"), QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(*configMock, setSimulatorConfigCommon(true));
+    EXPECT_CALL(*configMock, setAutoPilotConfigCommon(false));
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString(RUBLE_UID))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString(RUBLE_UID))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(bestOperations));
+    EXPECT_CALL(*logsDatabaseMock, readLogs(-1)).WillOnce(Return(bestEntries));
+    EXPECT_CALL(*portfolioDatabaseMock, readPortfolio(-1)).WillOnce(Return(buyPortfolio2));
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/AmountOfBuyDecisions"), QVariant(0)))
+        .WillOnce(Return(QVariant(AMOUNT_OF_BUY_DECISIONS)));
+
+    for (int i = 0; i < AMOUNT_OF_BUY_DECISIONS; ++i)
+    {
+        StrictMock<FileMock>* fileMock = configFileMocksForReading.at(i);
+
+        EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/simulator/configs%2.json").arg(appDir, QString::number(i))))
+            .WillOnce(Return(std::shared_ptr<IFile>(fileMock)));
+        EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+        EXPECT_CALL(*fileMock, readAll()).WillOnce(Return(configVariants.at(i).toUtf8()));
+        EXPECT_CALL(*fileMock, close());
+    }
+
+    EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/Step"), QVariant(0)))
+        .WillOnce(Return(QVariant(AMOUNT_OF_BUY_DECISIONS)));
+
+    for (int i = 0; i < AMOUNT_OF_BUY_DECISIONS; ++i)
+    {
+        EXPECT_CALL(*operationsDatabaseMock, readOperations(i)).WillOnce(Return(bestLocalOperations));
+    }
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/simulator/configs.json"))
+        .WillOnce(Return(std::shared_ptr<IFile>(totalConfigFileReadMock2)));
+    EXPECT_CALL(*totalConfigFileReadMock2, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(false));
+    EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
 
     thread->run();
 }
