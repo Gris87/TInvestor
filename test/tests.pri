@@ -119,6 +119,7 @@ SOURCES += \
     src/utils/settingseditor/test_settingseditor.cpp \
     src/utils/style/test_darkpalette.cpp \
     src/utils/timeutils/test_timeutils.cpp \
+    src/utils/tradesimulation/test_tradesimulation.cpp \
     src/widgets/accountchartwidget/test_accountchartwidget.cpp \
     src/widgets/accountchartwidget/test_accountchartwidgetfactory.cpp \
     src/widgets/accountchartwidget/test_charttooltip.cpp \

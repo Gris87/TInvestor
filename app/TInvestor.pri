@@ -123,6 +123,7 @@ SOURCES += \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
     src/utils/timeutils/timeutils.cpp \
+    src/utils/tradesimulation/tradesimulation.cpp \
     src/widgets/accountchartwidget/accountchartwidget.cpp \
     src/widgets/accountchartwidget/accountchartwidgetfactory.cpp \
     src/widgets/accountchartwidget/charttooltip.cpp \
@@ -365,6 +366,7 @@ HEADERS += \
     src/utils/style/darkpalette.h \
     src/utils/timeutils/itimeutils.h \
     src/utils/timeutils/timeutils.h \
+    src/utils/tradesimulation/tradesimulation.h \
     src/widgets/accountchartwidget/accountchartwidget.h \
     src/widgets/accountchartwidget/accountchartwidgetfactory.h \
     src/widgets/accountchartwidget/charttooltip.h \

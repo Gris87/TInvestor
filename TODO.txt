@@ -1,4 +1,5 @@
 Investigate simulation results
+Step 60 minutes for Buy 3/4
 Extract simulateTrading function
 Replace append with <<
 Fix remaining time accuracy
