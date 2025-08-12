@@ -52,6 +52,8 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
     StrictMock<DecisionMakerConfigMock> configMock;
     StrictMock<BuyDecision3ConfigMock>  decisionConfigMock;
 
+    buyDecision3->testSetStep(1);
+
     Stock stock;
     stock.meta.pricePrecision = 2;
 

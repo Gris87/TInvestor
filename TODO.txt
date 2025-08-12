@@ -1,7 +1,5 @@
 Investigate simulation results
-Step 60 minutes for Buy 3/4
 Replace append with <<
-Fix remaining time accuracy
 Fix display issue with instrument name popup
 Fix fade out for floating label
 Script to send notifications via WhatsApp

@@ -6,6 +6,7 @@
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
+constexpr int    STEP                    = 60;
 constexpr int    MINUTES_TO_DOUBLE_CHECK = 5;
 constexpr float  HUNDRED_PERCENT         = 100.0f;
 constexpr qint64 MS_IN_SECOND            = 1000LL;
@@ -16,7 +17,8 @@ constexpr qint64 ONE_DAY                 = 24LL * ONE_HOUR;
 
 
 BuyDecision3::BuyDecision3() :
-    IActionDecision()
+    IActionDecision(),
+    mStep(STEP)
 {
     qDebug() << "Create BuyDecision3";
 }
@@ -52,7 +54,7 @@ QString BuyDecision3::makeDecision(
         {
             const qint64 limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_DAY);
 
-            for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+            for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); i -= mStep)
             {
                 const qint64 timestamp = stockData[i].timestamp;
                 const float  prevPrice = stockData[i].price;
@@ -107,7 +109,8 @@ QString BuyDecision3::makeDecision(
 
             const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
 
-            for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+            for (int i  = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested();
+                 i     -= mStep)
             {
                 const qint64 timestamp = stockOperationalData[i].timestamp;
                 const float  prevPrice = stockOperationalData[i].price;
@@ -156,7 +159,7 @@ QString BuyDecision3::makeDecision(
                 }
             }
 
-            for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+            for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); i -= mStep)
             {
                 const qint64 timestamp = stockData[i].timestamp;
                 const float  prevPrice = stockData[i].price;

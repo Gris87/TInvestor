@@ -25,4 +25,14 @@ public:
         float                 avgPrice,
         float                 commission
     ) override;
+
+#ifdef TESTING_MODE
+    void testSetStep(int step)
+    {
+        mStep = step;
+    }
+#endif
+
+private:
+    int mStep;
 };

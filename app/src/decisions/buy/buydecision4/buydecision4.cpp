@@ -6,6 +6,7 @@
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
+constexpr int    STEP                    = 60;
 constexpr int    MINUTES_TO_DOUBLE_CHECK = 5;
 constexpr float  HUNDRED_PERCENT         = 100.0f;
 constexpr qint64 MS_IN_SECOND            = 1000LL;
@@ -16,7 +17,8 @@ constexpr qint64 ONE_DAY                 = 24LL * ONE_HOUR;
 
 
 BuyDecision4::BuyDecision4() :
-    IActionDecision()
+    IActionDecision(),
+    mStep(STEP)
 {
     qDebug() << "Create BuyDecision4";
 }
@@ -53,7 +55,7 @@ QString BuyDecision4::makeDecision(
         {
             const qint64 limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_DAY);
 
-            for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+            for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); i -= mStep)
             {
                 const qint64 timestamp = stockData[i].timestamp;
                 const float  prevPrice = stockData[i].price;
@@ -87,7 +89,7 @@ QString BuyDecision4::makeDecision(
                     {
                         const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
 
-                        for (j = dataIndex - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+                        for (j = dataIndex - 1; j >= 0 && !parentThread->isInterruptionRequested(); j -= mStep)
                         {
                             const float prevPrice2 = stockData[j].price;
 
@@ -127,7 +129,8 @@ QString BuyDecision4::makeDecision(
 
             const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
 
-            for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+            for (int i  = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested();
+                 i     -= mStep)
             {
                 const qint64 timestamp = stockOperationalData[i].timestamp;
                 const float  prevPrice = stockOperationalData[i].price;
@@ -161,8 +164,8 @@ QString BuyDecision4::makeDecision(
                     {
                         const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
 
-                        for (j = stock->operational.detailedData.size() - 2; j >= 0 && !parentThread->isInterruptionRequested();
-                             --j)
+                        for (j  = stock->operational.detailedData.size() - 2; j >= 0 && !parentThread->isInterruptionRequested();
+                             j -= mStep)
                         {
                             const float prevPrice2 = stockOperationalData[j].price;
 
@@ -197,7 +200,7 @@ QString BuyDecision4::makeDecision(
                 }
             }
 
-            for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+            for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); i -= mStep)
             {
                 const qint64 timestamp = stockData[i].timestamp;
                 const float  prevPrice = stockData[i].price;
@@ -231,7 +234,7 @@ QString BuyDecision4::makeDecision(
                     {
                         const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
 
-                        for (j = stock->data.size() - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+                        for (j = stock->data.size() - 1; j >= 0 && !parentThread->isInterruptionRequested(); j -= mStep)
                         {
                             const float prevPrice2 = stockData[j].price;
 
