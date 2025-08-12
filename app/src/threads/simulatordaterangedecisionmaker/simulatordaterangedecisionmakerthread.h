@@ -265,8 +265,8 @@ private:
         qint64  currentMinute,
         qint64  totalMinutes
     );
-    void        optimizeOperations();
-    void        optimizeLogs();
+    void optimizeOperations();
+    void optimizeLogs();
 
     IDirFactory*         mDirFactory;
     IFileFactory*        mFileFactory;
