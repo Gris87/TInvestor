@@ -847,7 +847,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     InstrumentsForTrading instrumentsForTrading4 = instrumentsForTrading3;
 
-    tradingInfo.price        = 220.0f;
+    tradingInfo.price        = 2000.0f;
     tradingInfo.expectedCost = 0.0;
     tradingInfo.cause        = "I want to sell";
 
@@ -859,32 +859,32 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     operation.instrumentTicker                = "ABBA";
     operation.instrumentName                  = "Abstract Basics";
     operation.description                     = "Sale of shares";
-    operation.price                           = 220.0f;
+    operation.price                           = 2000.0f;
     operation.avgPriceFifo                    = 200.0f;
     operation.avgPriceWavg                    = 200.0f;
     operation.quantity                        = 500;
     operation.remainedQuantity                = 0;
-    operation.payment                         = 110000.0f;
+    operation.payment                         = 100000.0f;
     operation.avgCostFifo                     = 100000.0f;
     operation.costFifo.units                  = 0;
     operation.costFifo.nano                   = 0;
     operation.costWavg.units                  = 0;
     operation.costWavg.nano                   = 0;
-    operation.commission                      = -44.0f;
-    operation.yield                           = 10000.0f;
-    operation.yieldWithCommission             = 9956.0f;
-    operation.yieldWithCommissionPercent      = 9.956f;
+    operation.commission                      = 0.0f;
+    operation.yield                           = 0.0f;
+    operation.yieldWithCommission             = 0.0f;
+    operation.yieldWithCommissionPercent      = 0.0f;
     operation.inputMoney.units                = 1000000;
     operation.inputMoney.nano                 = 0;
     operation.maxInputMoney.units             = 1000000;
     operation.maxInputMoney.nano              = 0;
-    operation.totalYieldWithCommission.units  = 84766;
-    operation.totalYieldWithCommission.nano   = 5911;
-    operation.totalYieldWithCommissionPercent = 8.4766f;
-    operation.remainedMoney.units             = 1084766;
-    operation.remainedMoney.nano              = 5911;
-    operation.totalMoney.units                = 1084766;
-    operation.totalMoney.nano                 = 5911;
+    operation.totalYieldWithCommission.units  = 74810;
+    operation.totalYieldWithCommission.nano   = 4799;
+    operation.totalYieldWithCommissionPercent = 7.481f;
+    operation.remainedMoney.units             = 1074810;
+    operation.remainedMoney.nano              = 4799;
+    operation.totalMoney.units                = 1074810;
+    operation.totalMoney.nano                 = 4799;
     operation.pricePrecision                  = 1;
     operation.paymentPrecision                = 1;
     operation.commissionPrecision             = 1;
@@ -905,7 +905,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     sellEntry2.instrumentLogo   = &logo;
     sellEntry2.instrumentTicker = "ABBA";
     sellEntry2.instrumentName   = "Abstract Basics";
-    sellEntry2.message          = "Order to sell 500 created with a price 220.0 \u20BD";
+    sellEntry2.message          = "Order to sell 500 created with a price 2000.0 \u20BD";
 
     sellEntry3.timestamp        = 1704056580004;
     sellEntry3.level            = LOG_LEVEL_VERBOSE;
@@ -913,7 +913,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     sellEntry3.instrumentLogo   = &logo;
     sellEntry3.instrumentTicker = "ABBA";
     sellEntry3.instrumentName   = "Abstract Basics";
-    sellEntry3.message          = "Order completed. 500 sold with a price 220.0 \u20BD";
+    sellEntry3.message          = "Order completed. 500 sold with a price 2000.0 \u20BD";
 
     sellEntry4.timestamp        = 1704056580005;
     sellEntry4.level            = LOG_LEVEL_VERBOSE;
@@ -938,11 +938,11 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     sellItem3.instrumentTicker   = "RUBLE";
     sellItem3.instrumentName     = "Ruble";
     sellItem3.showPrices         = false;
-    sellItem3.available          = 1084766.0;
+    sellItem3.available          = 1074810.0;
     sellItem3.price              = 1.0f;
     sellItem3.avgPriceFifo       = 1.0f;
     sellItem3.avgPriceWavg       = 1.0f;
-    sellItem3.cost               = 1084766.0;
+    sellItem3.cost               = 1074810.0;
     sellItem3.part               = 100.0;
     sellItem3.yield              = 0.0f;
     sellItem3.yieldPercent       = 0.0f;
@@ -1215,5 +1215,34 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_terminateThread)
 {
     thread->terminateThread();
+}
+
+TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_notifyResult)
+{
+    thread->notifyResult(1000000, 10000000);
+    thread->notifyResult(1000000, 1000000);
+    thread->notifyResult(1000000, 100000);
+}
+
+TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_notifyBestResult)
+{
+    thread->notifyBestResult(1000000, 10000000);
+    thread->notifyBestResult(1000000, 1000000);
+    thread->notifyBestResult(1000000, 100000);
+}
+
+TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_splitConfigVariants)
+{
+    thread->splitConfigVariants("{Bad content ::::: 555");
+}
+
+TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_applyToConfig)
+{
+    const InSequence seq;
+
+    StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(&simulatorConfigMock));
+
+    thread->applyToConfig(configMock, "{Bad content ::::: 555");
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init)

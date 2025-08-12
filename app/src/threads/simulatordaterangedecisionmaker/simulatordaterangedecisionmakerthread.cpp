@@ -590,7 +590,7 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
 
         if (!parentThread->isInterruptionRequested())
         {
-            notifyResult(totalMoney);
+            notifyResult(mStartMoney, totalMoney);
 
             mutex->lock();
 
@@ -612,7 +612,7 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
                 {
                     *bestGlobalTotalMoney = totalMoney;
 
-                    notifyBestResult(totalMoney);
+                    notifyBestResult(mStartMoney, totalMoney);
                 }
             }
 
@@ -762,7 +762,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep1(
             {
                 bestGlobalTotalMoney = bestLocalTotalMoney;
 
-                notifyBestResult(bestGlobalTotalMoney);
+                notifyBestResult(mStartMoney, bestGlobalTotalMoney);
             }
         }
 
@@ -834,7 +834,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(
         }
     }
 
-    notifyBestResult(bestGlobalTotalMoney);
+    notifyBestResult(mStartMoney, bestGlobalTotalMoney);
 
     const std::shared_ptr<IFile> configsFile =
         mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
@@ -1600,10 +1600,10 @@ void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
     );
 }
 
-void SimulatorDateRangeDecisionMakerThread::notifyResult(double totalMoney)
+void SimulatorDateRangeDecisionMakerThread::notifyResult(double startMoney, double totalMoney)
 {
-    const double totalYieldWithCommission        = totalMoney - mStartMoney;
-    const double totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
+    const double totalYieldWithCommission        = totalMoney - startMoney;
+    const double totalYieldWithCommissionPercent = (totalYieldWithCommission / startMoney) * HUNDRED_PERCENT;
 
     const QString prefix = totalYieldWithCommissionPercent > 0 ? "+" : "";
     const QString result = prefix + QString::number(totalYieldWithCommissionPercent, 'f', 2) + "%";
@@ -1629,10 +1629,10 @@ void SimulatorDateRangeDecisionMakerThread::notifyResult(double totalMoney)
     emit resultFound(result, color);
 }
 
-void SimulatorDateRangeDecisionMakerThread::notifyBestResult(double bestTotalMoney)
+void SimulatorDateRangeDecisionMakerThread::notifyBestResult(double startMoney, double bestTotalMoney)
 {
-    const double totalYieldWithCommission        = bestTotalMoney - mStartMoney;
-    const double totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
+    const double totalYieldWithCommission        = bestTotalMoney - startMoney;
+    const double totalYieldWithCommissionPercent = (totalYieldWithCommission / startMoney) * HUNDRED_PERCENT;
 
     const QString prefix = totalYieldWithCommissionPercent > 0 ? "+" : "";
     const QString result = prefix + QString::number(totalYieldWithCommissionPercent, 'f', 2) + "%";
@@ -1656,24 +1656,6 @@ void SimulatorDateRangeDecisionMakerThread::notifyBestResult(double bestTotalMon
     }
 
     emit bestResultChanged(result, color);
-}
-
-void SimulatorDateRangeDecisionMakerThread::optimizeOperations()
-{
-    if (mBestOperations.size() > mLimitOperations)
-    {
-        mBestOperations = mOptimizer->optimizeOperations(mBestOperations, mOptimizeOperationsSize, QStringList());
-        mOperationsDatabase->writeOperations(mBestOperations);
-    }
-}
-
-void SimulatorDateRangeDecisionMakerThread::optimizeLogs()
-{
-    if (mBestEntries.size() > mLimitLogs)
-    {
-        mBestEntries = mOptimizer->optimizeLogs(mBestEntries, mOptimizeLogsSize);
-        mLogsDatabase->writeLogs(mBestEntries);
-    }
 }
 
 QStringList SimulatorDateRangeDecisionMakerThread::splitConfigVariants(const QString& configVariants)
@@ -1721,5 +1703,23 @@ void SimulatorDateRangeDecisionMakerThread::applyToConfig(IConfig* config, const
     catch (...)
     {
         qWarning() << "Failed to parse config";
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::optimizeOperations()
+{
+    if (mBestOperations.size() > mLimitOperations)
+    {
+        mBestOperations = mOptimizer->optimizeOperations(mBestOperations, mOptimizeOperationsSize, QStringList());
+        mOperationsDatabase->writeOperations(mBestOperations);
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::optimizeLogs()
+{
+    if (mBestEntries.size() > mLimitLogs)
+    {
+        mBestEntries = mOptimizer->optimizeLogs(mBestEntries, mOptimizeLogsSize);
+        mLogsDatabase->writeLogs(mBestEntries);
     }
 }

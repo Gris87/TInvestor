@@ -110,6 +110,11 @@ public:
         qint64*              currentMinuteArray
     );
 
+    void        notifyResult(double startMoney, double totalMoney);
+    void        notifyBestResult(double startMoney, double bestTotalMoney);
+    QStringList splitConfigVariants(const QString& configVariants);
+    void        applyToConfig(IConfig* config, const QString& configVariant);
+
 #ifdef TESTING_MODE
     void testSetLimitOperations(int limitOperations)
     {
@@ -260,12 +265,8 @@ private:
         qint64  currentMinute,
         qint64  totalMinutes
     );
-    void        notifyResult(double totalMoney);
-    void        notifyBestResult(double bestTotalMoney);
     void        optimizeOperations();
     void        optimizeLogs();
-    QStringList splitConfigVariants(const QString& configVariants);
-    void        applyToConfig(IConfig* config, const QString& configVariant);
 
     IDirFactory*         mDirFactory;
     IFileFactory*        mFileFactory;
