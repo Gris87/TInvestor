@@ -50,7 +50,7 @@ TEST_F(Test_OrderBookThread, Test_run)
 
     Stock stock;
     stock.meta.instrumentId = "aaaaa";
-    stock.operational.detailedData.append(stockData);
+    stock.operational.detailedData << stockData;
 
     thread->setStock(&stock);
 

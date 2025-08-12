@@ -897,17 +897,68 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="104"/>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="179"/>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="248"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="106"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="182"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="251"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 and lost yield %4 from the minimum price %5 at %6 within last %7 days and the fall is %8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="89"/>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="144"/>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="193"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="91"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="147"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="196"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 days and the fall is %5</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="40"/>
+        <source>Input money</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="121"/>
+        <source>Currency and metals</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="127"/>
+        <source>Share</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="166"/>
+        <source>Sale of shares</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="224"/>
+        <source>Order to sell %1 created with a price %2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="232"/>
+        <source>Order completed. %1 sold with a price %2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="240"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="436"/>
+        <source>Trade completed successfully</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="364"/>
+        <source>Purchase of shares</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="420"/>
+        <source>Order to buy %1 created with a price %2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="428"/>
+        <source>Order completed. %1 bought with a price %2</source>
         <translation></translation>
     </message>
 </context>
@@ -1104,114 +1155,6 @@
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="203"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="226"/>
         <source>Decision maker</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>SimulatorDateRangeDecisionMakerThread</name>
-    <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="232"/>
-        <source>Input money</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="307"/>
-        <source>Currency and metals</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="313"/>
-        <source>Share</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="1086"/>
-        <source>Sale of shares</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="1144"/>
-        <source>Order to sell %1 created with a price %2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="1152"/>
-        <source>Order completed. %1 sold with a price %2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="1160"/>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="1353"/>
-        <source>Trade completed successfully</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="1281"/>
-        <source>Purchase of shares</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="1337"/>
-        <source>Order to buy %1 created with a price %2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="1345"/>
-        <source>Order completed. %1 bought with a price %2</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>SimulatorDecisionMakerThread</name>
-    <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="160"/>
-        <source>Input money</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="245"/>
-        <source>Currency and metals</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="251"/>
-        <source>Share</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="451"/>
-        <source>Sale of shares</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="509"/>
-        <source>Order to sell %1 created with a price %2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="517"/>
-        <source>Order completed. %1 sold with a price %2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="627"/>
-        <source>Purchase of shares</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="683"/>
-        <source>Order to buy %1 created with a price %2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="691"/>
-        <source>Order completed. %1 bought with a price %2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="525"/>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="699"/>
-        <source>Trade completed successfully</source>
         <translation></translation>
     </message>
 </context>

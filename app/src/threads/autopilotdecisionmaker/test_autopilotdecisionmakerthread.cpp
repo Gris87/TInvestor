@@ -158,10 +158,10 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     item2.cost         = 400000.0;
 
     category1.name = "currency";
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.name = "share";
-    category2.items.append(item2);
+    category2.items << item2;
 
     portfolio.positions << category1 << category2;
 

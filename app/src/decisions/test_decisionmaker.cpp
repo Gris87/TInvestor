@@ -144,14 +144,13 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     category1.name = "Currency and metals";
     category1.cost = 100000.0;
     category1.part = 10.0;
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.id   = 1;
     category2.name = "Share";
     category2.cost = 900000.0;
     category2.part = 90.0;
-    category2.items.append(item2);
-    category2.items.append(item3);
+    category2.items << item2 << item3;
 
     portfolio.positions << category1 << category2;
 

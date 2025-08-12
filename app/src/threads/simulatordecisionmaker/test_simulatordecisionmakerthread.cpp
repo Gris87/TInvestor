@@ -203,7 +203,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     operation.paymentPrecision                = 2;
     operation.commissionPrecision             = 2;
 
-    operations.append(operation);
+    operations << operation;
 
     QList<LogEntry> entries;
 
@@ -235,7 +235,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     category1.name = "Currency and metals";
     category1.cost = 1000000;
     category1.part = 100.0;
-    category1.items.append(item);
+    category1.items << item;
 
     category2.id   = 1;
     category2.name = "Share";
@@ -331,7 +331,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     buyOperation.paymentPrecision                = 1;
     buyOperation.commissionPrecision             = 1;
 
-    buyOperations.append(buyOperation);
+    buyOperations << buyOperation;
 
     LogEntry buyEntry1;
     LogEntry buyEntry2;
@@ -418,13 +418,13 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     buyCategory1.name = "Currency and metals";
     buyCategory1.cost = 899960.0;
     buyCategory1.part = 89.9996f;
-    buyCategory1.items.append(buyItem1);
+    buyCategory1.items << buyItem1;
 
     buyCategory2.id   = 1;
     buyCategory2.name = "Share";
     buyCategory2.cost = 100000.0;
     buyCategory2.part = 10.0004f;
-    buyCategory2.items.append(buyItem2);
+    buyCategory2.items << buyItem2;
 
     buyPortfolio.positions << buyCategory1 << buyCategory2;
 
@@ -525,7 +525,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     buyOperation2.paymentPrecision                = 2;
     buyOperation2.commissionPrecision             = 2;
 
-    buyOperations2.append(buyOperation2);
+    buyOperations2 << buyOperation2;
 
     buyEntry1.timestamp        = QDateTime::currentMSecsSinceEpoch();
     buyEntry1.level            = LOG_LEVEL_DEBUG;
@@ -627,14 +627,13 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     buyCategory3.name = "Currency and metals";
     buyCategory3.cost = 749900.0;
     buyCategory3.part = 74.9975f;
-    buyCategory3.items.append(buyItem3);
+    buyCategory3.items << buyItem3;
 
     buyCategory4.id   = 1;
     buyCategory4.name = "Share";
     buyCategory4.cost = 250000.0;
     buyCategory4.part = 25.0025f;
-    buyCategory4.items.append(buyItem4);
-    buyCategory4.items.append(buyItem5);
+    buyCategory4.items << buyItem4 << buyItem5;
 
     buyPortfolio2.positions << buyCategory3 << buyCategory4;
 
@@ -713,7 +712,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     sellOperation.paymentPrecision                = 2;
     sellOperation.commissionPrecision             = 2;
 
-    sellOperations.append(sellOperation);
+    sellOperations << sellOperation;
 
     LogEntry sellEntry1;
     LogEntry sellEntry2;
@@ -800,13 +799,13 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     sellCategory1.name = "Currency and metals";
     sellCategory1.cost = 974810.0;
     sellCategory1.part = 90.696f;
-    sellCategory1.items.append(sellItem1);
+    sellCategory1.items << sellItem1;
 
     sellCategory2.id   = 1;
     sellCategory2.name = "Share";
     sellCategory2.cost = 100000.0;
     sellCategory2.part = 9.30397f;
-    sellCategory2.items.append(sellItem2);
+    sellCategory2.items << sellItem2;
 
     sellPortfolio.positions << sellCategory1 << sellCategory2;
 
@@ -882,7 +881,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     sellOperation2.paymentPrecision                = 1;
     sellOperation2.commissionPrecision             = 1;
 
-    sellOperations2.append(sellOperation2);
+    sellOperations2 << sellOperation2;
 
     sellEntry1.timestamp        = QDateTime::currentMSecsSinceEpoch();
     sellEntry1.level            = LOG_LEVEL_DEBUG;
@@ -944,7 +943,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     sellCategory3.name = "Currency and metals";
     sellCategory3.cost = 1074810.0;
     sellCategory3.part = 100.0f;
-    sellCategory3.items.append(sellItem3);
+    sellCategory3.items << sellItem3;
 
     sellCategory4.id   = 1;
     sellCategory4.name = "Share";
@@ -1235,13 +1234,13 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
     category1.name = "Currency and metals";
     category1.cost = 899960.0;
     category1.part = 89.9996f;
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.id   = 1;
     category2.name = "Share";
     category2.cost = 100000.0;
     category2.part = 10.0004f;
-    category2.items.append(item2);
+    category2.items << item2;
 
     portfolio.positions << category1 << category2;
 

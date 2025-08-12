@@ -545,7 +545,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
             stockData.quantity  = quantities[i][j].toLongLong();
             stockData.price     = prices[i][j].toFloat();
 
-            stock->data.append(stockData);
+            stock->data << stockData;
         }
     }
 
@@ -875,7 +875,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
             stockData.timestamp = timestamps[i][j].toLongLong();
             stockData.price     = prices[i][j].toFloat();
 
-            stock->operational.detailedData.append(stockData);
+            stock->operational.detailedData << stockData;
         }
     }
 

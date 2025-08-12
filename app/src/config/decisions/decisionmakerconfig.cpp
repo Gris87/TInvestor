@@ -224,18 +224,18 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
 {
     QStringList res;
 
-    QList<QStringList> buyVariants;
-    QList<QStringList> sellVariants;
-
-    buyVariants.append(mBuyDecision1Config->variantsAsJson());
-    buyVariants.append(mBuyDecision2Config->variantsAsJson());
-    buyVariants.append(mBuyDecision3Config->variantsAsJson());
-    buyVariants.append(mBuyDecision4Config->variantsAsJson());
-    sellVariants.append(mSellDecision1Config->variantsAsJson());
-    sellVariants.append(mSellDecision2Config->variantsAsJson());
-    // Do not add sell decisions 3 and 4
-    // sellVariants.append(mSellDecision3Config->variantsAsJson());
-    // sellVariants.append(mSellDecision4Config->variantsAsJson());
+    QList<QStringList> buyVariants = {
+        mBuyDecision1Config->variantsAsJson(),
+        mBuyDecision2Config->variantsAsJson(),
+        mBuyDecision3Config->variantsAsJson(),
+        mBuyDecision4Config->variantsAsJson(),
+    };
+    QList<QStringList> sellVariants = {
+        mSellDecision1Config->variantsAsJson(), mSellDecision2Config->variantsAsJson(),
+        // Do not add sell decisions 3 and 4
+        // mSellDecision3Config->variantsAsJson(),
+        // mSellDecision4Config->variantsAsJson(),
+    };
 
     const QString s3 = R"({"enabled":false})";
     const QString s4 = R"({"enabled":false})";

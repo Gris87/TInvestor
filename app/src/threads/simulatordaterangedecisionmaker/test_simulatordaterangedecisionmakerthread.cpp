@@ -270,7 +270,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     operation.paymentPrecision                = 2;
     operation.commissionPrecision             = 2;
 
-    bestLocalOperations.append(operation);
+    bestLocalOperations << operation;
 
     QList<LogEntry> bestLocalEntries;
 
@@ -302,7 +302,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     bestLocalCategory1.name = "Currency and metals";
     bestLocalCategory1.cost = 1000000;
     bestLocalCategory1.part = 100.0;
-    bestLocalCategory1.items.append(bestLocalItem);
+    bestLocalCategory1.items << bestLocalItem;
 
     bestLocalCategory2.id   = 1;
     bestLocalCategory2.name = "Share";
@@ -381,7 +381,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     category1.name = "Currency and metals";
     category1.cost = 1000000;
     category1.part = 100.0;
-    category1.items.append(item);
+    category1.items << item;
 
     category2.id   = 1;
     category2.name = "Share";
@@ -527,13 +527,13 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     buyCategory1.name = "Currency and metals";
     buyCategory1.cost = 1000000.0;
     buyCategory1.part = 100.0;
-    buyCategory1.items.append(buyItem1);
+    buyCategory1.items << buyItem1;
 
     buyCategory2.id   = 1;
     buyCategory2.name = "Share";
     buyCategory2.cost = 0.0;
     buyCategory2.part = 0.0;
-    buyCategory2.items.append(buyItem2);
+    buyCategory2.items << buyItem2;
 
     buyPortfolio.positions << buyCategory1 << buyCategory2;
 
@@ -694,14 +694,13 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     buyCategory3.name = "Currency and metals";
     buyCategory3.cost = 1000000.0;
     buyCategory3.part = 100.0;
-    buyCategory3.items.append(buyItem3);
+    buyCategory3.items << buyItem3;
 
     buyCategory4.id   = 1;
     buyCategory4.name = "Share";
     buyCategory4.cost = 0.0;
     buyCategory4.part = 0.0;
-    buyCategory4.items.append(buyItem4);
-    buyCategory4.items.append(buyItem5);
+    buyCategory4.items << buyItem4 << buyItem5;
 
     buyPortfolio2.positions << buyCategory3 << buyCategory4;
 
@@ -841,13 +840,13 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     sellCategory1.name = "Currency and metals";
     sellCategory1.cost = 1000000.0;
     sellCategory1.part = 100.0;
-    sellCategory1.items.append(sellItem1);
+    sellCategory1.items << sellItem1;
 
     sellCategory2.id   = 1;
     sellCategory2.name = "Share";
     sellCategory2.cost = 0.0;
     sellCategory2.part = 0.0;
-    sellCategory2.items.append(sellItem2);
+    sellCategory2.items << sellItem2;
 
     sellPortfolio.positions << sellCategory1 << sellCategory2;
 
@@ -962,7 +961,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     sellCategory3.name = "Currency and metals";
     sellCategory3.cost = 1000000.0;
     sellCategory3.part = 100.0f;
-    sellCategory3.items.append(sellItem3);
+    sellCategory3.items << sellItem3;
 
     sellCategory4.id   = 1;
     sellCategory4.name = "Share";
@@ -1624,13 +1623,13 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
     category1.name = "Currency and metals";
     category1.cost = 899960.0;
     category1.part = 89.9996f;
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.id   = 1;
     category2.name = "Share";
     category2.cost = 100000.0;
     category2.part = 10.0004f;
-    category2.items.append(item2);
+    category2.items << item2;
 
     portfolio.positions << category1 << category2;
 

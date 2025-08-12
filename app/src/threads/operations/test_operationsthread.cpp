@@ -276,7 +276,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     item.cost.units = 2533;
     item.cost.nano  = 0;
 
-    operation1.fifoItems.append(item);
+    operation1.fifoItems << item;
 
     operation2.timestamp                       = 1704056400000;
     operation2.instrumentId                    = RUBLE_UID;
@@ -313,8 +313,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     operation2.paymentPrecision                = 2;
     operation2.commissionPrecision             = 2;
 
-    operations.append(operation1);
-    operations.append(operation2);
+    operations << operation1 << operation2;
 
     EXPECT_CALL(
         *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Gt(1704056400000), QString(""))
@@ -437,7 +436,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     operation3.paymentPrecision                = 2;
     operation3.commissionPrecision             = 2;
 
-    operations.append(operation3);
+    operations << operation3;
 
     EXPECT_CALL(
         *grpcClientMock,

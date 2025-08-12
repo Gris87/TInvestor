@@ -162,8 +162,8 @@ TEST_F(Test_PortfolioDatabase, Test_writePortfolio)
     item.dailyYieldPercent  = 15.0f;
     item.pricePrecision     = 16;
 
-    category.items.append(item);
-    portfolio.positions.append(category);
+    category.items << item;
+    portfolio.positions << category;
 
     const QString portfolioStr =
         R"([{"cost":"2.00","id":1,"items":[{"available":"4.00","avgPriceFifo":"6.0000000000000000","avgPriceWavg":"7.0000000000000000","cost":"8.00","costForDailyYield":"14.00","dailyYield":"12.00","dailyYieldPercent":"15.00","instrumentId":"b","instrumentName":"d","instrumentTicker":"c","part":"9.00","price":"5.0000000000000000","priceForDailyYield":"13.00","pricePrecision":16,"showPrices":true,"yield":"10.00","yieldPercent":"11.00"}],"name":"a","part":"3.00"}])";

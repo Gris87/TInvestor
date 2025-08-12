@@ -14,6 +14,7 @@ constexpr int CURRENCY_ID = 0;
 constexpr int SHARE_ID    = 1;
 
 
+
 QList<Operation>
 createInitOperations(IInstrumentsStorage* instrumentsStorage, ILogosStorage* logosStorage, qint64 timestamp, double startMoney)
 {

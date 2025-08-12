@@ -366,14 +366,14 @@ TEST_F(Test_OperationsDatabase, Test_writeOperations)
     item.cost.units = 32;
     item.cost.nano  = 33;
 
-    operation.fifoItems.append(item);
-    operations.append(operation);
+    operation.fifoItems << item;
+    operations << operation;
 
     operation.timestamp = 2000;
-    operations.append(operation);
+    operations << operation;
 
     operation.timestamp = 1000;
-    operations.append(operation);
+    operations << operation;
 
     const QString operationsStr =
         "{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{"
@@ -479,14 +479,14 @@ TEST_F(Test_OperationsDatabase, Test_appendOperations)
     item.cost.units = 32;
     item.cost.nano  = 33;
 
-    operation.fifoItems.append(item);
-    operations.append(operation);
+    operation.fifoItems << item;
+    operations << operation;
 
     operation.timestamp = 5000;
-    operations.append(operation);
+    operations << operation;
 
     operation.timestamp = 4000;
-    operations.append(operation);
+    operations << operation;
 
     const QString operation1Str =
         "{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{"

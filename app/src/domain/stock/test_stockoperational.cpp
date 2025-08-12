@@ -30,7 +30,7 @@ TEST(Test_StockOperational, Test_copy_constructor)
     stockOperational.dayStartPrice       = 2.0f;
     stockOperational.specifiedDatePrice  = 3.0f;
     stockOperational.payback             = 4.0f;
-    stockOperational.detailedData.append(stockData);
+    stockOperational.detailedData << stockData;
 
     const StockOperational stockOperational2(stockOperational);
 
@@ -58,7 +58,7 @@ TEST(Test_StockOperational, Test_assign)
     stockOperational.dayStartPrice       = 2.0f;
     stockOperational.specifiedDatePrice  = 3.0f;
     stockOperational.payback             = 4.0f;
-    stockOperational.detailedData.append(stockData);
+    stockOperational.detailedData << stockData;
 
     stockOperational2 = stockOperational;
 

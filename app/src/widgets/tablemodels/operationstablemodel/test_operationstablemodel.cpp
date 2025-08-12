@@ -1124,7 +1124,7 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     newOperation.paymentPrecision                = 2;
     newOperation.commissionPrecision             = 4;
 
-    newOperations.append(newOperation);
+    newOperations << newOperation;
 
     model->operationsAdded(newOperations);
     ASSERT_EQ(model->rowCount(), 4);

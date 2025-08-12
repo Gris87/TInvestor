@@ -44,8 +44,8 @@ TEST(Test_Portfolio, Test_copy_constructor)
     item.dailyYieldPercent  = 15.0f;
     item.pricePrecision     = 16;
 
-    category.items.append(item);
-    portfolio.positions.append(category);
+    category.items << item;
+    portfolio.positions << category;
 
     const Portfolio portfolio2(portfolio);
 
@@ -109,8 +109,8 @@ TEST(Test_Portfolio, Test_assign)
     item.dailyYieldPercent  = 15.0f;
     item.pricePrecision     = 16;
 
-    category.items.append(item);
-    portfolio.positions.append(category);
+    category.items << item;
+    portfolio.positions << category;
 
     portfolio2 = portfolio;
 
@@ -217,8 +217,8 @@ TEST(Test_Portfolio, Test_toJsonArray)
     item.dailyYieldPercent  = 15.0f;
     item.pricePrecision     = 16;
 
-    category.items.append(item);
-    portfolio.positions.append(category);
+    category.items << item;
+    portfolio.positions << category;
 
     const QJsonArray    jsonArray = portfolio.toJsonArray();
     const QJsonDocument jsonDoc(jsonArray);
@@ -262,8 +262,8 @@ TEST(Test_Portfolio, Test_equals)
     item.dailyYieldPercent  = 15.0f;
     item.pricePrecision     = 16;
 
-    category.items.append(item);
-    portfolio.positions.append(category);
+    category.items << item;
+    portfolio.positions << category;
 
     PortfolioCategoryItem category2;
 
@@ -292,8 +292,8 @@ TEST(Test_Portfolio, Test_equals)
     item2.dailyYieldPercent  = 15.0f;
     item2.pricePrecision     = 16;
 
-    category2.items.append(item2);
-    portfolio2.positions.append(category2);
+    category2.items << item2;
+    portfolio2.positions << category2;
 
     ASSERT_EQ(portfolio, portfolio2);
 

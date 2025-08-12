@@ -1,8 +1,8 @@
 Investigate simulation results
-Replace append with <<
 Fix display issue with instrument name popup
 Fix fade out for floating label
 Script to send notifications via WhatsApp
+Script for following based on operations.json
 Improve coverage
 Create release
 

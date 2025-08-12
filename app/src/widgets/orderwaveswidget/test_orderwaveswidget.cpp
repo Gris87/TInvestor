@@ -89,7 +89,7 @@ TEST_F(Test_OrderWavesWidget, Test_orderBookChanged)
         bid2.quantity = 5 + i;
         bid2.price    = 998.25f - 0.01f * i;
 
-        orderBook2.bids.append(bid2);
+        orderBook2.bids << bid2;
     }
 
     for (int i = 0; i < 50; ++i)
@@ -99,7 +99,7 @@ TEST_F(Test_OrderWavesWidget, Test_orderBookChanged)
         ask2.quantity = 15 + i;
         ask2.price    = 1001.05f + 0.01f * i;
 
-        orderBook2.asks.append(ask2);
+        orderBook2.asks << ask2;
     }
 
     orderWavesWidget->orderBookChanged(orderBook2);
@@ -116,7 +116,7 @@ TEST_F(Test_OrderWavesWidget, Test_orderBookChanged)
         bid3.quantity = 25 + i;
         bid3.price    = 999.95f - 0.01f * i;
 
-        orderBook3.bids.append(bid3);
+        orderBook3.bids << bid3;
     }
 
     for (int i = 0; i < 50; ++i)
@@ -126,7 +126,7 @@ TEST_F(Test_OrderWavesWidget, Test_orderBookChanged)
         ask3.quantity = 15 + i;
         ask3.price    = 1000.25f + 0.01f * i;
 
-        orderBook3.asks.append(ask3);
+        orderBook3.asks << ask3;
     }
 
     orderWavesWidget->orderBookChanged(orderBook3);
@@ -143,7 +143,7 @@ TEST_F(Test_OrderWavesWidget, Test_orderBookChanged)
         bid4.quantity = 25 + i;
         bid4.price    = 999.95f - 0.01f * i;
 
-        orderBook4.bids.append(bid4);
+        orderBook4.bids << bid4;
     }
 
     for (int i = 0; i < 50; ++i)
@@ -153,7 +153,7 @@ TEST_F(Test_OrderWavesWidget, Test_orderBookChanged)
         ask4.quantity = 35 + i;
         ask4.price    = 1000.05f + 0.01f * i;
 
-        orderBook4.asks.append(ask4);
+        orderBook4.asks << ask4;
     }
 
     orderWavesWidget->orderBookChanged(orderBook4);
@@ -167,7 +167,7 @@ TEST_F(Test_OrderWavesWidget, Test_orderBookChanged)
 
     orderBook5.timestamp = 100;
     orderBook5.price     = 1000.0f;
-    orderBook5.bids.append(bid5);
+    orderBook5.bids << bid5;
 
     orderWavesWidget->orderBookChanged(orderBook5);
 
@@ -180,7 +180,7 @@ TEST_F(Test_OrderWavesWidget, Test_orderBookChanged)
 
     orderBook6.timestamp = 100;
     orderBook6.price     = 1000.0f;
-    orderBook6.asks.append(ask6);
+    orderBook6.asks << ask6;
 
     orderWavesWidget->orderBookChanged(orderBook6);
 

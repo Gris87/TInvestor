@@ -137,7 +137,7 @@ TEST_F(Test_StocksTableModel, Test_data)
 
     StockOperationalData data1;
     data1.price = 100.0f;
-    stock1->operational.detailedData.append(data1);
+    stock1->operational.detailedData << data1;
 
     stock2->meta.instrumentId              = "bbbbb";
     stock2->meta.instrumentLogo            = nullptr;
@@ -152,7 +152,7 @@ TEST_F(Test_StocksTableModel, Test_data)
 
     StockOperationalData data2;
     data2.price = 250.0f;
-    stock2->operational.detailedData.append(data2);
+    stock2->operational.detailedData << data2;
 
     stock3->meta.instrumentId              = "ccccc";
     stock3->meta.instrumentLogo            = &logo;
@@ -167,7 +167,7 @@ TEST_F(Test_StocksTableModel, Test_data)
 
     StockOperationalData data3;
     data3.price = 500.0f;
-    stock3->operational.detailedData.append(data3);
+    stock3->operational.detailedData << data3;
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
@@ -281,7 +281,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
 
     StockOperationalData data1;
     data1.price = 100.0f;
-    stock1->operational.detailedData.append(data1);
+    stock1->operational.detailedData << data1;
 
     stock2->meta.instrumentId              = "bbbbb";
     stock2->meta.instrumentLogo            = nullptr;
@@ -296,7 +296,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
 
     StockOperationalData data2;
     data2.price = 250.0f;
-    stock2->operational.detailedData.append(data2);
+    stock2->operational.detailedData << data2;
 
     stock3->meta.instrumentId              = "ccccc";
     stock3->meta.instrumentLogo            = &logo;
@@ -311,7 +311,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
 
     StockOperationalData data3;
     data3.price = 500.0f;
-    stock3->operational.detailedData.append(data3);
+    stock3->operational.detailedData << data3;
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
@@ -490,7 +490,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
 
     StockOperationalData data1;
     data1.price = 100.0f;
-    stock1->operational.detailedData.append(data1);
+    stock1->operational.detailedData << data1;
 
     stock2->meta.instrumentId              = "bbbbb";
     stock2->meta.instrumentLogo            = nullptr;
@@ -505,7 +505,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
 
     StockOperationalData data2;
     data2.price = 250.0f;
-    stock2->operational.detailedData.append(data2);
+    stock2->operational.detailedData << data2;
 
     stock3->meta.instrumentId              = "ccccc";
     stock3->meta.instrumentLogo            = &logo;
@@ -520,7 +520,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
 
     StockOperationalData data3;
     data3.price = 500.0f;
-    stock3->operational.detailedData.append(data3);
+    stock3->operational.detailedData << data3;
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
@@ -596,7 +596,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
 
     StockOperationalData data1;
     data1.price = 100.0f;
-    stock1->operational.detailedData.append(data1);
+    stock1->operational.detailedData << data1;
 
     stock2->meta.instrumentId              = "bbbbb";
     stock2->meta.instrumentLogo            = nullptr;
@@ -611,7 +611,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
 
     StockOperationalData data2;
     data2.price = 250.0f;
-    stock2->operational.detailedData.append(data2);
+    stock2->operational.detailedData << data2;
 
     stock3->meta.instrumentId              = "ccccc";
     stock3->meta.instrumentLogo            = &logo;
@@ -626,7 +626,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
 
     StockOperationalData data3;
     data3.price = 500.0f;
-    stock3->operational.detailedData.append(data3);
+    stock3->operational.detailedData << data3;
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
@@ -924,7 +924,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
 
     StockOperationalData data1;
     data1.price = 100.0f;
-    stock1->operational.detailedData.append(data1);
+    stock1->operational.detailedData << data1;
 
     stock2->meta.instrumentId              = "bbbbb";
     stock2->meta.instrumentLogo            = nullptr;
@@ -939,7 +939,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
 
     StockOperationalData data2;
     data2.price = 250.0f;
-    stock2->operational.detailedData.append(data2);
+    stock2->operational.detailedData << data2;
 
     stock3->meta.instrumentId              = "ccccc";
     stock3->meta.instrumentLogo            = &logo;
@@ -954,7 +954,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
 
     StockOperationalData data3;
     data3.price = 500.0f;
-    stock3->operational.detailedData.append(data3);
+    stock3->operational.detailedData << data3;
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
@@ -1268,7 +1268,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
 
     StockOperationalData data1;
     data1.price = 100.0f;
-    stock1->operational.detailedData.append(data1);
+    stock1->operational.detailedData << data1;
 
     stock2->meta.instrumentId              = "bbbbb";
     stock2->meta.instrumentLogo            = nullptr;
@@ -1283,7 +1283,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
 
     StockOperationalData data2;
     data2.price = 250.0f;
-    stock2->operational.detailedData.append(data2);
+    stock2->operational.detailedData << data2;
 
     stock3->meta.instrumentId              = "ccccc";
     stock3->meta.instrumentLogo            = &logo;
@@ -1298,7 +1298,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
 
     StockOperationalData data3;
     data3.price = 500.0f;
-    stock3->operational.detailedData.append(data3);
+    stock3->operational.detailedData << data3;
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
@@ -1590,7 +1590,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
 
     StockOperationalData data1;
     data1.price = 100.0f;
-    stock1->operational.detailedData.append(data1);
+    stock1->operational.detailedData << data1;
 
     stock2->meta.instrumentId              = "bbbbb";
     stock2->meta.instrumentLogo            = nullptr;
@@ -1605,7 +1605,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
 
     StockOperationalData data2;
     data2.price = 250.0f;
-    stock2->operational.detailedData.append(data2);
+    stock2->operational.detailedData << data2;
 
     stock3->meta.instrumentId              = "ccccc";
     stock3->meta.instrumentLogo            = &logo;
@@ -1620,7 +1620,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
 
     StockOperationalData data3;
     data3.price = 500.0f;
-    stock3->operational.detailedData.append(data3);
+    stock3->operational.detailedData << data3;
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
@@ -1912,7 +1912,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
 
     StockOperationalData data1;
     data1.price = 100.0f;
-    stock1->operational.detailedData.append(data1);
+    stock1->operational.detailedData << data1;
 
     stock2->meta.instrumentId              = "bbbbb";
     stock2->meta.instrumentLogo            = nullptr;
@@ -1927,7 +1927,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
 
     StockOperationalData data2;
     data2.price = 250.0f;
-    stock2->operational.detailedData.append(data2);
+    stock2->operational.detailedData << data2;
 
     stock3->meta.instrumentId              = "ccccc";
     stock3->meta.instrumentLogo            = &logo;
@@ -1942,7 +1942,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
 
     StockOperationalData data3;
     data3.price = 500.0f;
-    stock3->operational.detailedData.append(data3);
+    stock3->operational.detailedData << data3;
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 

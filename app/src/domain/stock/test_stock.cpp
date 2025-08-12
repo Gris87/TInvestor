@@ -51,8 +51,8 @@ TEST(Test_Stock, Test_copy_constructor)
     stock.operational.dayStartPrice       = 5.0f;
     stock.operational.specifiedDatePrice  = 6.0f;
     stock.operational.payback             = 7.0f;
-    stock.operational.detailedData.append(stockData1);
-    stock.data.append(stockData2);
+    stock.operational.detailedData << stockData1;
+    stock.data << stockData2;
 
     const Stock stock2(stock);
 
@@ -104,8 +104,8 @@ TEST(Test_Stock, Test_assign)
     stock.operational.dayStartPrice       = 5.0f;
     stock.operational.specifiedDatePrice  = 6.0f;
     stock.operational.payback             = 7.0f;
-    stock.operational.detailedData.append(stockData1);
-    stock.data.append(stockData2);
+    stock.operational.detailedData << stockData1;
+    stock.data << stockData2;
 
     stock2 = stock;
 
@@ -157,10 +157,10 @@ TEST(Test_Stock, Test_lastPrice)
     stockData2.timestamp = 4;
     stockData2.price     = 5.0f;
 
-    stock.data.append(stockData1);
+    stock.data << stockData1;
     ASSERT_NEAR(stock.lastPrice(), 3.0f, 0.0001f);
 
-    stock.operational.detailedData.append(stockData2);
+    stock.operational.detailedData << stockData2;
     ASSERT_NEAR(stock.lastPrice(), 5.0f, 0.0001f);
 }
 

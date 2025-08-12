@@ -41,7 +41,7 @@ TEST_F(Test_PortfolioTreeModel, Test_parent)
     category.id = 0;
     category.items.resize(2);
 
-    portfolio.positions.append(category);
+    portfolio.positions << category;
 
     model->portfolioChanged(portfolio);
 
@@ -76,7 +76,7 @@ TEST_F(Test_PortfolioTreeModel, Test_rowCount)
     category.id = 0;
     category.items.resize(2);
 
-    portfolio.positions.append(category);
+    portfolio.positions << category;
 
     model->portfolioChanged(portfolio);
     ASSERT_EQ(model->rowCount(model->index(0, 0)), 2);
@@ -203,14 +203,13 @@ TEST_F(Test_PortfolioTreeModel, Test_data)
     category1.name = "Currency and metals";
     category1.cost = 100000.0;
     category1.part = 10.0;
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.id   = 1;
     category2.name = "Share";
     category2.cost = 900000.0;
     category2.part = 90.0;
-    category2.items.append(item2);
-    category2.items.append(item3);
+    category2.items << item2 << item3;
 
     portfolio.positions << category1 << category2;
 
@@ -441,14 +440,13 @@ TEST_F(Test_PortfolioTreeModel, Test_sort)
     category1.name = "Currency and metals";
     category1.cost = 100000.0;
     category1.part = 10.0;
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.id   = 1;
     category2.name = "Share";
     category2.cost = 900000.0;
     category2.part = 90.0;
-    category2.items.append(item2);
-    category2.items.append(item3);
+    category2.items << item2 << item3;
 
     portfolio.positions << category1 << category2;
 
@@ -878,14 +876,13 @@ TEST_F(Test_PortfolioTreeModel, Test_updateLastPrices)
     category1.name = "Currency and metals";
     category1.cost = 100000.0;
     category1.part = 10.0;
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.id   = 1;
     category2.name = "Share";
     category2.cost = 900000.0;
     category2.part = 90.0;
-    category2.items.append(item2);
-    category2.items.append(item3);
+    category2.items << item2 << item3;
 
     portfolio.positions << category1 << category2;
 
@@ -1167,14 +1164,13 @@ TEST_F(Test_PortfolioTreeModel, Test_exportToExcel)
     category1.name = "Currency and metals";
     category1.cost = 100000.0;
     category1.part = 10.0;
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.id   = 1;
     category2.name = "Share";
     category2.cost = 900000.0;
     category2.part = 90.0;
-    category2.items.append(item2);
-    category2.items.append(item3);
+    category2.items << item2 << item3;
 
     portfolio.positions << category1 << category2;
 
@@ -1415,14 +1411,13 @@ TEST_F(Test_PortfolioTreeModel, Test_totalYield)
     category1.name = "Currency and metals";
     category1.cost = 100000.0;
     category1.part = 10.0;
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.id   = 1;
     category2.name = "Share";
     category2.cost = 900000.0;
     category2.part = 90.0;
-    category2.items.append(item2);
-    category2.items.append(item3);
+    category2.items << item2 << item3;
 
     portfolio.positions << category1 << category2;
 
@@ -1506,14 +1501,13 @@ TEST_F(Test_PortfolioTreeModel, Test_totalDailyCost)
     category1.name = "Currency and metals";
     category1.cost = 100000.0;
     category1.part = 10.0;
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.id   = 1;
     category2.name = "Share";
     category2.cost = 900000.0;
     category2.part = 90.0;
-    category2.items.append(item2);
-    category2.items.append(item3);
+    category2.items << item2 << item3;
 
     portfolio.positions << category1 << category2;
 
@@ -1597,14 +1591,13 @@ TEST_F(Test_PortfolioTreeModel, Test_totalDailyYield)
     category1.name = "Currency and metals";
     category1.cost = 100000.0;
     category1.part = 10.0;
-    category1.items.append(item1);
+    category1.items << item1;
 
     category2.id   = 1;
     category2.name = "Share";
     category2.cost = 900000.0;
     category2.part = 90.0;
-    category2.items.append(item2);
-    category2.items.append(item3);
+    category2.items << item2 << item3;
 
     portfolio.positions << category1 << category2;
 

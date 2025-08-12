@@ -58,8 +58,8 @@ TEST_F(Test_PortfolioLastPriceThread, Test_run)
     item.instrumentId = "aaaaa";
     item.showPrices   = true;
 
-    category.items.append(item);
-    portfolio.positions.append(category);
+    category.items << item;
+    portfolio.positions << category;
 
     thread->portfolioChanged(portfolio);
 
@@ -112,8 +112,8 @@ TEST_F(Test_PortfolioLastPriceThread, Test_portfolioChanged)
     item.instrumentId = "aaaaa";
     item.showPrices   = true;
 
-    category.items.append(item);
-    portfolio.positions.append(category);
+    category.items << item;
+    portfolio.positions << category;
 
     EXPECT_CALL(*grpcClientMock, unsubscribeLastPrices(marketDataStream)).WillOnce(Return(true));
     EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "aaaaa")).WillOnce(Return(true));

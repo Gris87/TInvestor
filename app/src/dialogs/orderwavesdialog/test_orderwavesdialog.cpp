@@ -101,8 +101,8 @@ TEST_F(Test_OrderWavesDialog, Test_orderBookChanged)
     ask.price    = 1500.9f;
     ask.quantity = 100;
 
-    orderBook.bids.append(bid);
-    orderBook.asks.append(ask);
+    orderBook.bids << bid;
+    orderBook.asks << ask;
 
     EXPECT_CALL(*orderWavesWidgetMock, orderBookChanged(Ref(orderBook)));
 

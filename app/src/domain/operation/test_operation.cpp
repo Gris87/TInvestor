@@ -98,7 +98,7 @@ TEST(Test_Operation, Test_copy_constructor)
     item.cost.units = 32;
     item.cost.nano  = 33;
 
-    operation.fifoItems.append(item);
+    operation.fifoItems << item;
 
     const Operation operation2(operation);
 
@@ -191,7 +191,7 @@ TEST(Test_Operation, Test_assign)
     item.cost.units = 32;
     item.cost.nano  = 33;
 
-    operation.fifoItems.append(item);
+    operation.fifoItems << item;
 
     operation2 = operation;
 
@@ -386,7 +386,7 @@ TEST(Test_Operation, Test_toJsonObject)
     item.cost.units = 32;
     item.cost.nano  = 33;
 
-    operation.fifoItems.append(item);
+    operation.fifoItems << item;
 
     const QJsonObject   jsonObject = operation.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
@@ -479,7 +479,7 @@ TEST(Test_Operation, Test_equals)
     item.cost.units = 32;
     item.cost.nano  = 33;
 
-    operation.fifoItems.append(item);
+    operation.fifoItems << item;
 
     OperationFifoItem item2;
 
@@ -487,7 +487,7 @@ TEST(Test_Operation, Test_equals)
     item2.cost.units = 32;
     item2.cost.nano  = 33;
 
-    operation2.fifoItems.append(item2);
+    operation2.fifoItems << item2;
 
     ASSERT_EQ(operation, operation2);
 

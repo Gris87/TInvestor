@@ -31,8 +31,8 @@ TEST(Test_OrderBook, Test_copy_constructor)
 
     orderbook.timestamp = 1;
     orderbook.price     = 2.0f;
-    orderbook.bids.append(orderbookData1);
-    orderbook.asks.append(orderbookData2);
+    orderbook.bids << orderbookData1;
+    orderbook.asks << orderbookData2;
 
     const OrderBook orderbook2(orderbook);
 
@@ -63,8 +63,8 @@ TEST(Test_OrderBook, Test_assign)
 
     orderbook.timestamp = 1;
     orderbook.price     = 2.0f;
-    orderbook.bids.append(orderbookData1);
-    orderbook.asks.append(orderbookData2);
+    orderbook.bids << orderbookData1;
+    orderbook.asks << orderbookData2;
 
     orderbook2 = orderbook;
 

@@ -211,13 +211,13 @@ TEST_F(Test_LogsDatabase, Test_writeLogs)
     entry.instrumentTicker = "VOVA";
     entry.instrumentName   = "Vovin papka";
     entry.message          = "Start annihilation";
-    entries.append(entry);
+    entries << entry;
 
     entry.timestamp = 2000;
-    entries.append(entry);
+    entries << entry;
 
     entry.timestamp = 1000;
-    entries.append(entry);
+    entries << entry;
 
     const QString entriesStr =
         "{\"instrumentId\":\"aaaaa\",\"instrumentName\":\"Vovin "

@@ -59,7 +59,7 @@ TEST_F(Test_LastPriceThread, Test_run)
     Stock stock;
     stock.meta.instrumentId = "aaaa";
 
-    stocks.append(&stock);
+    stocks << &stock;
 
     const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse(new tinkoff::MarketDataResponse());
 
@@ -132,7 +132,7 @@ TEST_F(Test_LastPriceThread, Test_stocksChanged)
     Stock stock;
     stock.meta.instrumentId = "bbbb";
 
-    stocks.append(&stock);
+    stocks << &stock;
 
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
 
