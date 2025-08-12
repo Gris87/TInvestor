@@ -7,6 +7,7 @@
 
 #include "src/grpc/utils.h"
 #include "src/threads/parallelhelper/parallelhelperthread.h"
+#include "src/utils/tradesimulation/tradesimulation.h"
 
 
 
@@ -21,7 +22,6 @@ constexpr int    OPTIMIZE_OPERATIONS_SIZE = 10000;
 constexpr int    LIMIT_LOGS               = 1000000;
 constexpr int    OPTIMIZE_LOGS_SIZE       = 10000;
 constexpr float  ZERO_LIMIT               = 0.0001f;
-constexpr double INCREDIBLE_SELL_COEF     = 3.0;
 constexpr float  HUNDRED_PERCENT          = 100.0f;
 constexpr qint64 MS_IN_SECOND             = 1000LL;
 constexpr qint64 ONE_MINUTE               = 60LL * MS_IN_SECOND;
@@ -49,8 +49,7 @@ constexpr double DURATION_COEFFICIENTS[AMOUNT_OF_BUY_DECISIONS] = {
     DURATION_ONE_DAY_STEP_4 / DURATION_ONE_DAY_STEP_3
 };
 
-constexpr int CURRENCY_ID = 0;
-constexpr int SHARE_ID    = 1;
+constexpr int SHARE_ID = 1;
 
 
 
@@ -210,112 +209,17 @@ void SimulatorDateRangeDecisionMakerThread::readSimulationConfig()
 
 void SimulatorDateRangeDecisionMakerThread::initOperations()
 {
-    mInstrumentsStorage->readLock();
-    Instrument instrument = mInstrumentsStorage->getInstruments().value(RUBLE_UID);
-    mInstrumentsStorage->readUnlock();
-
-    instrument.resetIfNotFound(RUBLE_UID);
-
-    mLogosStorage->readLock();
-    Logo* logo = mLogosStorage->getLogo(RUBLE_UID);
-    mLogosStorage->readUnlock();
-
-    mInitOperations.clear();
-
-    Operation operation;
-
-    operation.timestamp                       = mStartTimestamp;
-    operation.instrumentId                    = RUBLE_UID;
-    operation.instrumentLogo                  = logo;
-    operation.instrumentTicker                = instrument.ticker;
-    operation.instrumentName                  = instrument.name;
-    operation.description                     = tr("Input money");
-    operation.price                           = 0.0f;
-    operation.avgPriceFifo                    = 0.0f;
-    operation.avgPriceWavg                    = 0.0f;
-    operation.quantity                        = 0;
-    operation.remainedQuantity                = 0;
-    operation.payment                         = mStartMoney;
-    operation.avgCostFifo                     = 0.0f;
-    operation.costFifo.units                  = 0;
-    operation.costFifo.nano                   = 0;
-    operation.costWavg.units                  = 0;
-    operation.costWavg.nano                   = 0;
-    operation.commission                      = 0.0f;
-    operation.yield                           = 0.0f;
-    operation.yieldWithCommission             = 0.0f;
-    operation.yieldWithCommissionPercent      = 0.0f;
-    operation.inputMoney.units                = mStartMoney;
-    operation.inputMoney.nano                 = 0;
-    operation.maxInputMoney.units             = mStartMoney;
-    operation.maxInputMoney.nano              = 0;
-    operation.totalYieldWithCommission.units  = 0;
-    operation.totalYieldWithCommission.nano   = 0;
-    operation.totalYieldWithCommissionPercent = 0.0f;
-    operation.remainedMoney.units             = mStartMoney;
-    operation.remainedMoney.nano              = 0;
-    operation.totalMoney.units                = mStartMoney;
-    operation.totalMoney.nano                 = 0;
-    operation.pricePrecision                  = instrument.pricePrecision;
-    operation.paymentPrecision                = instrument.pricePrecision;
-    operation.commissionPrecision             = instrument.pricePrecision;
-
-    mInitOperations.append(operation);
+    mInitOperations = createInitOperations(mInstrumentsStorage, mLogosStorage, mStartTimestamp, mStartMoney);
 }
 
 void SimulatorDateRangeDecisionMakerThread::initLogs()
 {
-    mInitEntries.clear();
+    mInitEntries = createInitEntries();
 }
 
 void SimulatorDateRangeDecisionMakerThread::initPortfolio()
 {
-    mInstrumentsStorage->readLock();
-    Instrument instrument = mInstrumentsStorage->getInstruments().value(RUBLE_UID);
-    mInstrumentsStorage->readUnlock();
-
-    instrument.resetIfNotFound(RUBLE_UID);
-
-    mLogosStorage->readLock();
-    Logo* logo = mLogosStorage->getLogo(RUBLE_UID);
-    mLogosStorage->readUnlock();
-
-    PortfolioCategoryItem category1;
-    PortfolioCategoryItem category2;
-    PortfolioItem         item;
-
-    item.instrumentId       = RUBLE_UID;
-    item.instrumentLogo     = logo;
-    item.instrumentTicker   = instrument.ticker;
-    item.instrumentName     = instrument.name;
-    item.showPrices         = false;
-    item.available          = mStartMoney;
-    item.price              = 1.0f;
-    item.avgPriceFifo       = 1.0f;
-    item.avgPriceWavg       = 1.0f;
-    item.cost               = mStartMoney;
-    item.part               = 100.0;
-    item.yield              = 0.0f;
-    item.yieldPercent       = 0.0f;
-    item.dailyYield         = 0.0f;
-    item.priceForDailyYield = 0.0f;
-    item.costForDailyYield  = 0.0;
-    item.dailyYieldPercent  = 0.0f;
-    item.pricePrecision     = instrument.pricePrecision;
-
-    category1.id   = 0;
-    category1.name = tr("Currency and metals");
-    category1.cost = mStartMoney;
-    category1.part = 100.0;
-    category1.items.append(item);
-
-    category2.id   = 1;
-    category2.name = tr("Share");
-    category2.cost = 0.0;
-    category2.part = 0.0;
-
-    mInitPortfolio.positions.clear();
-    mInitPortfolio.positions << category1 << category2;
+    mInitPortfolio = createInitPortfolio(mInstrumentsStorage, mLogosStorage, mStartMoney);
 }
 
 void SimulatorDateRangeDecisionMakerThread::initConfigs()
@@ -693,7 +597,19 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
 
         if (!instrumentsForTrading.isEmpty())
         {
-            simulateTrading(timestamp + 1, instrumentsForTrading, totalMoney, operations, entries, portfolio, instruments);
+            simulateTrading(
+                timestamp + 1,
+                mInstrumentsStorage,
+                mLogosStorage,
+                mUserStorage,
+                instrumentsForTrading,
+                mStartMoney,
+                totalMoney,
+                operations,
+                entries,
+                portfolio,
+                instruments
+            );
         }
 
         timestamp += ONE_MINUTE;
@@ -934,7 +850,19 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig()
 
         if (!instrumentsForTrading.isEmpty())
         {
-            simulateTrading(timestamp + 1, instrumentsForTrading, totalMoney, operations, entries, portfolio, instruments);
+            simulateTrading(
+                timestamp + 1,
+                mInstrumentsStorage,
+                mLogosStorage,
+                mUserStorage,
+                instrumentsForTrading,
+                mStartMoney,
+                totalMoney,
+                operations,
+                entries,
+                portfolio,
+                instruments
+            );
         }
 
         timestamp += ONE_MINUTE;
@@ -952,459 +880,6 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig()
 
         mSettingsEditor->setValue("Options/LastConfigId", 1);
     }
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateTrading(
-    qint64                            timestamp,
-    const InstrumentsForTrading&      instrumentsForTrading,
-    double&                           totalMoney,
-    QList<Operation>&                 operations,
-    QList<LogEntry>&                  entries,
-    Portfolio&                        portfolio,
-    QuantityAndCostDoubleInstruments& instruments
-) const
-{
-    InstrumentsForTrading instrumentsForSell;
-    InstrumentsForTrading instrumentsForBuy;
-
-    for (auto it = instrumentsForTrading.constBegin(); it != instrumentsForTrading.constEnd(); ++it)
-    {
-        if (it.value().expectedCost > 0)
-        {
-            instrumentsForBuy[it.key()] = it.value();
-        }
-        else
-        {
-            instrumentsForSell[it.key()] = it.value();
-        }
-    }
-
-    for (auto it = instrumentsForSell.constBegin(); it != instrumentsForSell.constEnd(); ++it)
-    {
-        simulateSell(timestamp, it.key(), it.value(), totalMoney, operations, entries, portfolio, instruments);
-    }
-
-    for (auto it = instrumentsForBuy.constBegin(); it != instrumentsForBuy.constEnd(); ++it)
-    {
-        simulateBuy(timestamp, it.key(), it.value(), totalMoney, operations, entries, portfolio, instruments);
-    }
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateSell(
-    qint64&                           timestamp,
-    const QString&                    instrumentId,
-    const TradingInfo&                tradingInfo,
-    double&                           totalMoney,
-    QList<Operation>&                 operations,
-    QList<LogEntry>&                  entries,
-    Portfolio&                        portfolio,
-    QuantityAndCostDoubleInstruments& instruments
-) const
-{
-    if (!instruments.contains(instrumentId))
-    {
-        return;
-    }
-
-    mInstrumentsStorage->readLock();
-    Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
-    mInstrumentsStorage->readUnlock();
-
-    instrument.resetIfNotFound(instrumentId);
-
-    const QuantityAndCostDouble quantityAndCost = instruments.value(instrumentId);
-
-    mUserStorage->readLock();
-    const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
-    mUserStorage->readUnlock();
-
-    double cost            = quantityAndCost.quantity * tradingInfo.price;
-    double totalCommission = cost * commission;
-
-    if (cost > quantityAndCost.cost * INCREDIBLE_SELL_COEF)
-    {
-        qWarning() << "Incredible selling detected. Trying to negotiate it";
-
-        cost            = quantityAndCost.cost;
-        totalCommission = 0;
-    }
-
-    mLogosStorage->readLock();
-    Logo* logo = mLogosStorage->getLogo(instrumentId);
-    mLogosStorage->readUnlock();
-
-    simulateSellForOperations(
-        timestamp,
-        instrumentId,
-        logo,
-        instrument,
-        quantityAndCost.quantity,
-        quantityAndCost.cost,
-        tradingInfo.price,
-        cost,
-        totalCommission,
-        totalMoney,
-        operations,
-        portfolio
-    );
-    simulateSellForLogs(
-        timestamp, instrumentId, logo, instrument, tradingInfo.cause, quantityAndCost.quantity, tradingInfo.price, entries
-    );
-    simulateSellForPortfolio(instrumentId, cost, totalCommission, portfolio);
-    simulateSellForInstruments(instrumentId, instruments);
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateSellForOperations(
-    qint64&           timestamp,
-    const QString&    instrumentId,
-    Logo*             logo,
-    const Instrument& instrument,
-    qint64            quantity,
-    double            costFifo,
-    float             price,
-    double            cost,
-    double            totalCommission,
-    double&           totalMoney,
-    QList<Operation>& operations,
-    Portfolio&        portfolio
-) const
-{
-    const double avgPrice            = costFifo / quantity;
-    const double yield               = cost - costFifo;
-    const double yieldWithCommission = yield - totalCommission;
-
-    totalMoney                            += yieldWithCommission;
-    const double totalYieldWithCommission  = totalMoney - mStartMoney;
-
-    Operation operation;
-
-    operation.timestamp                       = timestamp;
-    operation.instrumentId                    = instrumentId;
-    operation.instrumentLogo                  = logo;
-    operation.instrumentTicker                = instrument.ticker;
-    operation.instrumentName                  = instrument.name;
-    operation.description                     = tr("Sale of shares");
-    operation.price                           = price;
-    operation.avgPriceFifo                    = avgPrice;
-    operation.avgPriceWavg                    = avgPrice;
-    operation.quantity                        = quantity;
-    operation.remainedQuantity                = 0;
-    operation.payment                         = cost;
-    operation.avgCostFifo                     = costFifo;
-    operation.costFifo.units                  = 0;
-    operation.costFifo.nano                   = 0;
-    operation.costWavg.units                  = 0;
-    operation.costWavg.nano                   = 0;
-    operation.commission                      = -totalCommission;
-    operation.yield                           = yield;
-    operation.yieldWithCommission             = yieldWithCommission;
-    operation.yieldWithCommissionPercent      = (yieldWithCommission / costFifo) * HUNDRED_PERCENT;
-    operation.inputMoney.units                = mStartMoney;
-    operation.inputMoney.nano                 = 0;
-    operation.maxInputMoney.units             = mStartMoney;
-    operation.maxInputMoney.nano              = 0;
-    operation.totalYieldWithCommission        = quotationFromDouble(totalYieldWithCommission);
-    operation.totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
-    operation.remainedMoney  = quotationFromDouble(portfolio.positions[CURRENCY_ID].items.first().cost + cost - totalCommission);
-    operation.totalMoney     = quotationFromDouble(totalMoney);
-    operation.pricePrecision = instrument.pricePrecision;
-    operation.paymentPrecision    = instrument.pricePrecision;
-    operation.commissionPrecision = instrument.pricePrecision;
-
-    operations.append(operation);
-    ++timestamp;
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateSellForLogs(
-    qint64&           timestamp,
-    const QString&    instrumentId,
-    Logo*             logo,
-    const Instrument& instrument,
-    const QString&    cause,
-    qint64            quantity,
-    float             price,
-    QList<LogEntry>&  entries
-) const
-{
-    LogEntry entry;
-
-    entry.timestamp        = timestamp;
-    entry.level            = LOG_LEVEL_DEBUG;
-    entry.instrumentId     = instrumentId;
-    entry.instrumentLogo   = logo;
-    entry.instrumentTicker = instrument.ticker;
-    entry.instrumentName   = instrument.name;
-    entry.message          = cause;
-
-    entries.append(entry);
-    ++timestamp;
-
-    entry.timestamp = timestamp;
-    entry.level     = LOG_LEVEL_VERBOSE;
-    entry.message   = tr("Order to sell %1 created with a price %2")
-                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
-
-    entries.append(entry);
-    ++timestamp;
-
-    entry.timestamp = timestamp;
-    entry.level     = LOG_LEVEL_VERBOSE;
-    entry.message   = tr("Order completed. %1 sold with a price %2")
-                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
-
-    entries.append(entry);
-    ++timestamp;
-
-    entry.timestamp = timestamp;
-    entry.level     = LOG_LEVEL_VERBOSE;
-    entry.message   = tr("Trade completed successfully");
-
-    entries.append(entry);
-    ++timestamp;
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateSellForPortfolio(
-    const QString& instrumentId, double cost, double totalCommission, Portfolio& portfolio
-) const
-{
-    PortfolioCategoryItem& category = portfolio.positions[SHARE_ID]; // clazy:exclude=detaching-member
-
-    for (int i = 0; i < category.items.size(); ++i)
-    {
-        if (category.items.at(i).instrumentId == instrumentId)
-        {
-            const double costWithCommission = cost - totalCommission;
-
-            portfolio.positions[CURRENCY_ID].items.first().available += costWithCommission;
-            portfolio.positions[CURRENCY_ID].items.first().cost      += costWithCommission;
-            category.items.removeAt(i);
-
-            break;
-        }
-    }
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateSellForInstruments(
-    const QString& instrumentId, QuantityAndCostDoubleInstruments& instruments
-) const
-{
-    instruments.remove(instrumentId);
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateBuy(
-    qint64&                           timestamp,
-    const QString&                    instrumentId,
-    const TradingInfo&                tradingInfo,
-    double&                           totalMoney,
-    QList<Operation>&                 operations,
-    QList<LogEntry>&                  entries,
-    Portfolio&                        portfolio,
-    QuantityAndCostDoubleInstruments& instruments
-) const
-{
-    if (instruments.contains(instrumentId))
-    {
-        return;
-    }
-
-    mInstrumentsStorage->readLock();
-    Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
-    mInstrumentsStorage->readUnlock();
-
-    instrument.resetIfNotFound(instrumentId);
-
-    mUserStorage->readLock();
-    const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
-    mUserStorage->readUnlock();
-
-    const double lotPrice               = instrument.lot * tradingInfo.price;
-    const double lotPriceWithCommission = lotPrice * (1 + commission);
-
-    const qint64 amountOfLots = qMin(
-        qRound64(tradingInfo.expectedCost / lotPrice),
-        static_cast<qint64>(portfolio.positions.at(CURRENCY_ID).items.constFirst().cost / lotPriceWithCommission)
-    );
-
-    if (amountOfLots > 0)
-    {
-        const qint64 quantity        = amountOfLots * instrument.lot;
-        const double cost            = quantity * tradingInfo.price;
-        const double totalCommission = cost * commission;
-
-        mLogosStorage->readLock();
-        Logo* logo = mLogosStorage->getLogo(instrumentId);
-        mLogosStorage->readUnlock();
-
-        simulateBuyForOperations(
-            timestamp,
-            instrumentId,
-            logo,
-            instrument,
-            quantity,
-            tradingInfo.price,
-            cost,
-            totalCommission,
-            totalMoney,
-            operations,
-            portfolio
-        );
-        simulateBuyForLogs(timestamp, instrumentId, logo, instrument, tradingInfo.cause, quantity, tradingInfo.price, entries);
-        simulateBuyForPortfolio(instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission, portfolio);
-        simulateBuyForInstruments(instrumentId, quantity, cost, instruments);
-    }
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateBuyForOperations(
-    qint64&           timestamp,
-    const QString&    instrumentId,
-    Logo*             logo,
-    const Instrument& instrument,
-    qint64            quantity,
-    float             price,
-    double            cost,
-    double            totalCommission,
-    double&           totalMoney,
-    QList<Operation>& operations,
-    Portfolio&        portfolio
-) const
-{
-    totalMoney                            -= totalCommission;
-    const double totalYieldWithCommission  = totalMoney - mStartMoney;
-
-    Operation operation;
-
-    operation.timestamp                       = timestamp;
-    operation.instrumentId                    = instrumentId;
-    operation.instrumentLogo                  = logo;
-    operation.instrumentTicker                = instrument.ticker;
-    operation.instrumentName                  = instrument.name;
-    operation.description                     = tr("Purchase of shares");
-    operation.price                           = price;
-    operation.avgPriceFifo                    = price;
-    operation.avgPriceWavg                    = price;
-    operation.quantity                        = quantity;
-    operation.remainedQuantity                = quantity;
-    operation.payment                         = -cost;
-    operation.avgCostFifo                     = cost;
-    operation.costFifo                        = quotationFromDouble(cost);
-    operation.costWavg                        = quotationFromDouble(cost);
-    operation.commission                      = -totalCommission;
-    operation.yield                           = 0.0f;
-    operation.yieldWithCommission             = -totalCommission;
-    operation.yieldWithCommissionPercent      = -(totalCommission / cost) * HUNDRED_PERCENT;
-    operation.inputMoney.units                = mStartMoney;
-    operation.inputMoney.nano                 = 0;
-    operation.maxInputMoney.units             = mStartMoney;
-    operation.maxInputMoney.nano              = 0;
-    operation.totalYieldWithCommission        = quotationFromDouble(totalYieldWithCommission);
-    operation.totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
-    operation.remainedMoney  = quotationFromDouble(portfolio.positions[CURRENCY_ID].items.first().cost - cost - totalCommission);
-    operation.totalMoney     = quotationFromDouble(totalMoney);
-    operation.pricePrecision = instrument.pricePrecision;
-    operation.paymentPrecision    = instrument.pricePrecision;
-    operation.commissionPrecision = instrument.pricePrecision;
-
-    operations.append(operation);
-    ++timestamp;
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateBuyForLogs(
-    qint64&           timestamp,
-    const QString&    instrumentId,
-    Logo*             logo,
-    const Instrument& instrument,
-    const QString&    cause,
-    qint64            quantity,
-    float             price,
-    QList<LogEntry>&  entries
-) const
-{
-    LogEntry entry;
-
-    entry.timestamp        = timestamp;
-    entry.level            = LOG_LEVEL_DEBUG;
-    entry.instrumentId     = instrumentId;
-    entry.instrumentLogo   = logo;
-    entry.instrumentTicker = instrument.ticker;
-    entry.instrumentName   = instrument.name;
-    entry.message          = cause;
-
-    entries.append(entry);
-    ++timestamp;
-
-    entry.timestamp = timestamp;
-    entry.level     = LOG_LEVEL_VERBOSE;
-    entry.message   = tr("Order to buy %1 created with a price %2")
-                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
-
-    entries.append(entry);
-    ++timestamp;
-
-    entry.timestamp = timestamp;
-    entry.level     = LOG_LEVEL_VERBOSE;
-    entry.message   = tr("Order completed. %1 bought with a price %2")
-                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
-
-    entries.append(entry);
-    ++timestamp;
-
-    entry.timestamp = timestamp;
-    entry.level     = LOG_LEVEL_VERBOSE;
-    entry.message   = tr("Trade completed successfully");
-
-    entries.append(entry);
-    ++timestamp;
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateBuyForPortfolio(
-    const QString&    instrumentId,
-    Logo*             logo,
-    const Instrument& instrument,
-    qint64            quantity,
-    float             price,
-    double            cost,
-    double            totalCommission,
-    Portfolio&        portfolio
-) const
-{
-    PortfolioItem item;
-
-    item.instrumentId       = instrumentId;
-    item.instrumentLogo     = logo;
-    item.instrumentTicker   = instrument.ticker;
-    item.instrumentName     = instrument.name;
-    item.showPrices         = true;
-    item.available          = quantity;
-    item.price              = price;
-    item.avgPriceFifo       = price;
-    item.avgPriceWavg       = price;
-    item.cost               = cost;
-    item.part               = 0.0;
-    item.yield              = 0.0f;
-    item.yieldPercent       = 0.0f;
-    item.dailyYield         = 0.0f;
-    item.priceForDailyYield = price;
-    item.costForDailyYield  = cost;
-    item.dailyYieldPercent  = 0.0f;
-    item.pricePrecision     = instrument.pricePrecision;
-
-    const double costWithCommission = cost + totalCommission;
-
-    portfolio.positions[CURRENCY_ID].items.first().available -= costWithCommission;
-    portfolio.positions[CURRENCY_ID].items.first().cost      -= costWithCommission;
-    portfolio.positions[SHARE_ID].items.append(item);
-}
-
-void SimulatorDateRangeDecisionMakerThread::simulateBuyForInstruments(
-    const QString& instrumentId, qint64 quantity, double cost, QuantityAndCostDoubleInstruments& instruments
-) const
-{
-    QuantityAndCostDouble quantityAndCost;
-
-    quantityAndCost.quantity = quantity;
-    quantityAndCost.cost     = cost;
-
-    instruments[instrumentId] = quantityAndCost;
 }
 
 struct ReverseOperationsInfo

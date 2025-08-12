@@ -836,7 +836,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
 
     thread->run();
 
-    tradingInfo.price        = 220.0f;
+    tradingInfo.price        = 2000.0f;
     tradingInfo.expectedCost = 0.0;
     tradingInfo.cause        = "I want to sell";
 
@@ -852,32 +852,32 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     sellOperation2.instrumentTicker                = "ABBA";
     sellOperation2.instrumentName                  = "Abstract Basics";
     sellOperation2.description                     = "Sale of shares";
-    sellOperation2.price                           = 220.0f;
+    sellOperation2.price                           = 2000.0f;
     sellOperation2.avgPriceFifo                    = 200.0f;
     sellOperation2.avgPriceWavg                    = 200.0f;
     sellOperation2.quantity                        = 500;
     sellOperation2.remainedQuantity                = 0;
-    sellOperation2.payment                         = 110000.0f;
+    sellOperation2.payment                         = 100000.0f;
     sellOperation2.avgCostFifo                     = 100000.0f;
     sellOperation2.costFifo.units                  = 0;
     sellOperation2.costFifo.nano                   = 0;
     sellOperation2.costWavg.units                  = 0;
     sellOperation2.costWavg.nano                   = 0;
-    sellOperation2.commission                      = -44.0f;
-    sellOperation2.yield                           = 10000.0f;
-    sellOperation2.yieldWithCommission             = 9956.0f;
-    sellOperation2.yieldWithCommissionPercent      = 9.956f;
+    sellOperation2.commission                      = 0.0f;
+    sellOperation2.yield                           = 0.0f;
+    sellOperation2.yieldWithCommission             = 0.0f;
+    sellOperation2.yieldWithCommissionPercent      = 0.0f;
     sellOperation2.inputMoney.units                = 1000000;
     sellOperation2.inputMoney.nano                 = 0;
     sellOperation2.maxInputMoney.units             = 1000000;
     sellOperation2.maxInputMoney.nano              = 0;
-    sellOperation2.totalYieldWithCommission.units  = 84766;
-    sellOperation2.totalYieldWithCommission.nano   = 5911;
-    sellOperation2.totalYieldWithCommissionPercent = 8.4766f;
-    sellOperation2.remainedMoney.units             = 1084766;
-    sellOperation2.remainedMoney.nano              = 5911;
-    sellOperation2.totalMoney.units                = 1084766;
-    sellOperation2.totalMoney.nano                 = 5911;
+    sellOperation2.totalYieldWithCommission.units  = 74810;
+    sellOperation2.totalYieldWithCommission.nano   = 4799;
+    sellOperation2.totalYieldWithCommissionPercent = 7.481f;
+    sellOperation2.remainedMoney.units             = 1074810;
+    sellOperation2.remainedMoney.nano              = 4799;
+    sellOperation2.totalMoney.units                = 1074810;
+    sellOperation2.totalMoney.nano                 = 4799;
     sellOperation2.pricePrecision                  = 1;
     sellOperation2.paymentPrecision                = 1;
     sellOperation2.commissionPrecision             = 1;
@@ -898,7 +898,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     sellEntry2.instrumentLogo   = &logo;
     sellEntry2.instrumentTicker = "ABBA";
     sellEntry2.instrumentName   = "Abstract Basics";
-    sellEntry2.message          = "Order to sell 500 created with a price 220.0 \u20BD";
+    sellEntry2.message          = "Order to sell 500 created with a price 2000.0 \u20BD";
 
     sellEntry3.timestamp        = QDateTime::currentMSecsSinceEpoch();
     sellEntry3.level            = LOG_LEVEL_VERBOSE;
@@ -906,7 +906,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     sellEntry3.instrumentLogo   = &logo;
     sellEntry3.instrumentTicker = "ABBA";
     sellEntry3.instrumentName   = "Abstract Basics";
-    sellEntry3.message          = "Order completed. 500 sold with a price 220.0 \u20BD";
+    sellEntry3.message          = "Order completed. 500 sold with a price 2000.0 \u20BD";
 
     sellEntry4.timestamp        = QDateTime::currentMSecsSinceEpoch();
     sellEntry4.level            = LOG_LEVEL_VERBOSE;
@@ -926,11 +926,11 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     sellItem3.instrumentTicker   = "RUBLE";
     sellItem3.instrumentName     = "Ruble";
     sellItem3.showPrices         = false;
-    sellItem3.available          = 1084766.0;
+    sellItem3.available          = 1074810.0;
     sellItem3.price              = 1.0f;
     sellItem3.avgPriceFifo       = 1.0f;
     sellItem3.avgPriceWavg       = 1.0f;
-    sellItem3.cost               = 1084766.0;
+    sellItem3.cost               = 1074810.0;
     sellItem3.part               = 100.0;
     sellItem3.yield              = 0.0f;
     sellItem3.yieldPercent       = 0.0f;
@@ -942,7 +942,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
 
     sellCategory3.id   = 0;
     sellCategory3.name = "Currency and metals";
-    sellCategory3.cost = 1084766.0;
+    sellCategory3.cost = 1074810.0;
     sellCategory3.part = 100.0f;
     sellCategory3.items.append(sellItem3);
 

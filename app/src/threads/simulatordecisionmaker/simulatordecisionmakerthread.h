@@ -70,85 +70,15 @@ public:
 #endif
 
 private:
-    void init();
-    void readSimulationConfig();
-    void initOperations();
-    void initLogs();
-    void initPortfolio();
-    void load();
-    void loadOperations();
-    void loadLogs();
-    void loadPortfolio();
-    void simulateTrading(qint64 timestamp, const InstrumentsForTrading& instrumentsForTrading);
-    void simulateSell(
-        qint64&            timestamp,
-        const QString&     instrumentId,
-        const TradingInfo& tradingInfo,
-        QList<Operation>&  operations,
-        QList<LogEntry>&   entries
-    );
-    void simulateSellForOperations(
-        QList<Operation>& operations,
-        qint64&           timestamp,
-        const QString&    instrumentId,
-        Logo*             logo,
-        const Instrument& instrument,
-        qint64            quantity,
-        double            costFifo,
-        float             price,
-        double            cost,
-        double            totalCommission
-    );
-    void simulateSellForLogs(
-        QList<LogEntry>&  entries,
-        qint64&           timestamp,
-        const QString&    instrumentId,
-        Logo*             logo,
-        const Instrument& instrument,
-        const QString&    cause,
-        qint64            quantity,
-        float             price
-    );
-    void simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission);
-    void simulateSellForInstruments(const QString& instrumentId);
-    void simulateBuy(
-        qint64&            timestamp,
-        const QString&     instrumentId,
-        const TradingInfo& tradingInfo,
-        QList<Operation>&  operations,
-        QList<LogEntry>&   entries
-    );
-    void simulateBuyForOperations(
-        QList<Operation>& operations,
-        qint64&           timestamp,
-        const QString&    instrumentId,
-        Logo*             logo,
-        const Instrument& instrument,
-        qint64            quantity,
-        float             price,
-        double            cost,
-        double            totalCommission
-    );
-    void simulateBuyForLogs(
-        QList<LogEntry>&  entries,
-        qint64&           timestamp,
-        const QString&    instrumentId,
-        Logo*             logo,
-        const Instrument& instrument,
-        const QString&    cause,
-        qint64            quantity,
-        float             price
-    );
-    void simulateBuyForPortfolio(
-        const QString&    instrumentId,
-        Logo*             logo,
-        const Instrument& instrument,
-        qint64            quantity,
-        float             price,
-        double            cost,
-        double            totalCommission
-    );
-    void             simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost);
+    void             init();
+    void             readSimulationConfig();
+    void             initOperations();
+    void             initLogs();
+    void             initPortfolio();
+    void             load();
+    void             loadOperations();
+    void             loadLogs();
+    void             loadPortfolio();
     QList<Operation> reverseOperations(const QList<Operation>& operations);
     void             updateCostAndPart();
     void             updatePrice();

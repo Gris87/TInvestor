@@ -13,6 +13,11 @@
 
 
 
+QList<Operation>
+createInitOperations(IInstrumentsStorage* instrumentsStorage, ILogosStorage* logosStorage, qint64 timestamp, double startMoney);
+QList<LogEntry> createInitEntries();
+Portfolio       createInitPortfolio(IInstrumentsStorage* instrumentsStorage, ILogosStorage* logosStorage, double startMoney);
+
 void simulateTrading(
     qint64                            timestamp,
     IInstrumentsStorage*              instrumentsStorage,
