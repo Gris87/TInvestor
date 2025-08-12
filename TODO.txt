@@ -1,6 +1,3 @@
-Improve coverage
-Create release
-
 Investigate simulation results
 Extract simulateTrading function
 Replace append with <<
