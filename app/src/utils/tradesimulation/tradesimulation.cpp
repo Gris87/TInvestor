@@ -267,6 +267,11 @@ static void simulateSellForInstruments(const QString& instrumentId, QuantityAndC
     instruments.remove(instrumentId);
 }
 
+static void simulateSellForInstrumentSells(qint64 timestamp, const QString& instrumentId, InstrumentSells& instrumentSells)
+{
+    instrumentSells[instrumentId] = timestamp;
+}
+
 static void simulateSell(
     qint64&                           timestamp,
     IInstrumentsStorage*              instrumentsStorage,
@@ -279,7 +284,8 @@ static void simulateSell(
     QList<Operation>&                 operations,
     QList<LogEntry>&                  entries,
     Portfolio&                        portfolio,
-    QuantityAndCostDoubleInstruments& instruments
+    QuantityAndCostDoubleInstruments& instruments,
+    InstrumentSells&                  instrumentSells
 )
 {
     if (!instruments.contains(instrumentId))
@@ -334,6 +340,7 @@ static void simulateSell(
     );
     simulateSellForPortfolio(instrumentId, cost, totalCommission, portfolio);
     simulateSellForInstruments(instrumentId, instruments);
+    simulateSellForInstrumentSells(timestamp, instrumentId, instrumentSells);
 }
 
 static void simulateBuyForOperations(
@@ -569,7 +576,8 @@ void simulateTrading(
     QList<Operation>&                 operations,
     QList<LogEntry>&                  entries,
     Portfolio&                        portfolio,
-    QuantityAndCostDoubleInstruments& instruments
+    QuantityAndCostDoubleInstruments& instruments,
+    InstrumentSells&                  instrumentSells
 )
 {
     InstrumentsForTrading instrumentsForSell;
@@ -601,7 +609,8 @@ void simulateTrading(
             operations,
             entries,
             portfolio,
-            instruments
+            instruments,
+            instrumentSells
         );
     }
 

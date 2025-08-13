@@ -203,82 +203,8 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     operationItem2->set_allocated_payment(payment2);
     operationItem2->set_allocated_commission(commission2);
 
-    QList<Operation> operations;
-
-    Operation operation1;
-    Operation operation2;
-
-    operation1.timestamp                       = 1704056460000;
-    operation1.instrumentId                    = "aaaaa";
-    operation1.instrumentTicker                = "";
-    operation1.instrumentName                  = "";
-    operation1.description                     = "";
-    operation1.price                           = 0.0f;
-    operation1.avgPriceFifo                    = 0.0f;
-    operation1.avgPriceWavg                    = 0.0f;
-    operation1.quantity                        = 0;
-    operation1.remainedQuantity                = 0;
-    operation1.payment                         = 0.0f;
-    operation1.avgCostFifo                     = 0.0f;
-    operation1.costFifo.units                  = 0;
-    operation1.costFifo.nano                   = 0;
-    operation1.costWavg.units                  = 0;
-    operation1.costWavg.nano                   = 0;
-    operation1.commission                      = 0.0f;
-    operation1.yield                           = 0.0f;
-    operation1.yieldWithCommission             = 0.0f;
-    operation1.yieldWithCommissionPercent      = 0.0f;
-    operation1.inputMoney.units                = 0;
-    operation1.inputMoney.nano                 = 0;
-    operation1.maxInputMoney.units             = 0;
-    operation1.maxInputMoney.nano              = 0;
-    operation1.totalYieldWithCommission.units  = 0;
-    operation1.totalYieldWithCommission.nano   = 0;
-    operation1.totalYieldWithCommissionPercent = 0.0f;
-    operation1.remainedMoney.units             = 0;
-    operation1.remainedMoney.nano              = 0;
-    operation1.totalMoney.units                = 0;
-    operation1.totalMoney.nano                 = 0;
-    operation1.pricePrecision                  = 0;
-    operation1.paymentPrecision                = 0;
-    operation1.commissionPrecision             = 0;
-
-    operation2.timestamp                       = 1704056400000;
-    operation2.instrumentId                    = "aaaaa";
-    operation2.instrumentTicker                = "";
-    operation2.instrumentName                  = "";
-    operation2.description                     = "";
-    operation2.price                           = 0.0f;
-    operation2.avgPriceFifo                    = 0.0f;
-    operation2.avgPriceWavg                    = 0.0f;
-    operation2.quantity                        = 0;
-    operation2.remainedQuantity                = 1;
-    operation2.payment                         = 0.0f;
-    operation2.avgCostFifo                     = 0.0f;
-    operation2.costFifo.units                  = 0;
-    operation2.costFifo.nano                   = 0;
-    operation2.costWavg.units                  = 0;
-    operation2.costWavg.nano                   = 0;
-    operation2.commission                      = 0.0f;
-    operation2.yield                           = 0.0f;
-    operation2.yieldWithCommission             = 0.0f;
-    operation2.yieldWithCommissionPercent      = 0.0f;
-    operation2.inputMoney.units                = 0;
-    operation2.inputMoney.nano                 = 0;
-    operation2.maxInputMoney.units             = 0;
-    operation2.maxInputMoney.nano              = 0;
-    operation2.totalYieldWithCommission.units  = 0;
-    operation2.totalYieldWithCommission.nano   = 0;
-    operation2.totalYieldWithCommissionPercent = 0.0f;
-    operation2.remainedMoney.units             = 0;
-    operation2.remainedMoney.nano              = 0;
-    operation2.totalMoney.units                = 0;
-    operation2.totalMoney.nano                 = 0;
-    operation2.pricePrecision                  = 0;
-    operation2.paymentPrecision                = 0;
-    operation2.commissionPrecision             = 0;
-
-    operations << operation1 << operation2;
+    InstrumentSells instrumentSells;
+    instrumentSells["aaaaa"] = 1704056460000;
 
     Portfolio             portfolio;
     PortfolioCategoryItem category1;
@@ -322,14 +248,17 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     instrumentsForTrading["aaa-aaa"] = tradingInfo;
 
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("aaaaa"))).WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*grpcClientMock, getOperations(QThread::currentThread(), QString("aaaaa"), 0, Ge(1704056400000), QString("")))
+    EXPECT_CALL(
+        *grpcClientMock,
+        getOperations(QThread::currentThread(), QString("aaaaa"), Ge(1704056400000), Ge(1704056400000), QString(""))
+    )
         .WillOnce(Return(getOperationsByCursorResponse));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(), Ge(1704056400000), configMock, operations, portfolio, stocks, true, 10000, false, true
+            QThread::currentThread(), Ge(1704056400000), configMock, instrumentSells, portfolio, stocks, true, 10000, false, true
         )
     )
         .WillOnce(Return(instrumentsForTrading));

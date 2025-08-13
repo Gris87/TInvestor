@@ -44,7 +44,6 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mConfig(config),
     mDecisionMaker(decisionMaker),
     mOptimizer(optimizer),
-    mOperations(),
     mPortfolio(),
     mAmountOfOperations(),
     mAmountOfLogs(),
@@ -54,6 +53,7 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mOptimizeLogsSize(OPTIMIZE_LOGS_SIZE),
     mStocksMap(),
     mInstruments(),
+    mInstrumentSells(),
     mResetted(),
     mLoaded(),
     mStartMoney(),
@@ -90,7 +90,7 @@ void SimulatorDecisionMakerThread::run()
         QThread::currentThread(),
         QDateTime::currentMSecsSinceEpoch(),
         mConfig,
-        mOperations,
+        mInstrumentSells,
         mPortfolio,
         mStocksStorage->getStocks(),
         false,
@@ -116,7 +116,8 @@ void SimulatorDecisionMakerThread::run()
             operations,
             entries,
             mPortfolio,
-            mInstruments
+            mInstruments,
+            mInstrumentSells
         );
 
         mAmountOfOperations += operations.size();
@@ -124,7 +125,6 @@ void SimulatorDecisionMakerThread::run()
 
         if (!operations.isEmpty())
         {
-            mOperations.append(operations);
             operations = reverseOperations(operations);
 
             emit operationsAdded(operations);
@@ -177,11 +177,14 @@ void SimulatorDecisionMakerThread::readSimulationConfig()
 
 void SimulatorDecisionMakerThread::initOperations()
 {
-    mOperations = createInitOperations(mInstrumentsStorage, mLogosStorage, QDateTime::currentMSecsSinceEpoch(), mStartMoney);
+    QList<Operation> operations =
+        createInitOperations(mInstrumentsStorage, mLogosStorage, QDateTime::currentMSecsSinceEpoch(), mStartMoney);
 
-    emit operationsRead(mOperations);
-    mOperationsDatabase->writeOperations(mOperations);
-    mAmountOfOperations = mOperations.size();
+    emit operationsRead(operations);
+    mOperationsDatabase->writeOperations(operations);
+    mAmountOfOperations = operations.size();
+
+    mInstrumentSells.clear();
 
     mTotalMoney = mStartMoney;
 }
@@ -215,15 +218,27 @@ void SimulatorDecisionMakerThread::load()
 
 void SimulatorDecisionMakerThread::loadOperations()
 {
-    mOperations = mOperationsDatabase->readOperations();
-    emit operationsRead(mOperations);
-    mAmountOfOperations = mOperations.size();
+    const QList<Operation> operations = mOperationsDatabase->readOperations();
+    emit operationsRead(operations);
+    mAmountOfOperations = operations.size();
+
+    mInstrumentSells.clear();
 
     if (mAmountOfOperations > 0)
     {
-        mOperations = reverseOperations(mOperations);
+        for (int i = operations.size() - 1; i >= 0; --i)
+        {
+            const Operation& operation = operations.at(i);
 
-        mTotalMoney = quotationToDouble(mOperations.constLast().totalMoney);
+            if (operation.remainedQuantity == 0)
+            {
+                mInstrumentSells[operation.instrumentId] = operation.timestamp;
+            }
+        }
+
+        const Operation& lastOperation = operations.constFirst(); // Since it reversed
+
+        mTotalMoney = quotationToDouble(lastOperation.totalMoney);
     }
 }
 
@@ -359,13 +374,11 @@ void SimulatorDecisionMakerThread::optimizeOperations()
     if (mAmountOfOperations > mLimitOperations)
     {
         QList<Operation> newOperations =
-            mOptimizer->optimizeOperations(reverseOperations(mOperations), mOptimizeOperationsSize, mInstruments.keys());
+            mOptimizer->optimizeOperations(mOperationsDatabase->readOperations(), mOptimizeOperationsSize, mInstruments.keys());
         mAmountOfOperations = newOperations.size();
 
         emit operationsRead(newOperations);
         mOperationsDatabase->writeOperations(newOperations);
-
-        mOperations = reverseOperations(newOperations);
     }
 }
 

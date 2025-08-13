@@ -1,6 +1,5 @@
 #include "src/threads/simulatordecisionmaker/simulatordecisionmakerthread.h"
 
-#include <algorithm>
 #include <gtest/gtest.h>
 
 #include "src/config/iconfig_mock.h"
@@ -23,6 +22,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 using ::testing::Ge;
 using ::testing::InSequence;
+using ::testing::Ne;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ::testing::StrictMock;
@@ -245,6 +245,8 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
 
     portfolio.positions << category1 << category2;
 
+    InstrumentSells instrumentSells;
+
     QList<Stock*> stocks;
 
     Stock stock1;
@@ -429,6 +431,8 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
 
     buyPortfolio.positions << buyCategory1 << buyCategory2;
 
+    InstrumentSells buyInstrumentSells;
+
     EXPECT_CALL(*settingsEditorMock, value(QString("Options/StartMoney"), QVariant(0))).WillOnce(Return(QVariant(1000000)));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
@@ -450,16 +454,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(),
-            Ge(1704056400000),
-            configMock,
-            IsOperationsEqWithoutTimeout(operations),
-            portfolio,
-            stocks,
-            false,
-            0,
-            false,
-            true
+            QThread::currentThread(), Ge(1704056400000), configMock, instrumentSells, portfolio, stocks, false, 0, false, true
         )
     )
         .WillOnce(Return(instrumentsForTrading));
@@ -538,7 +533,6 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     buyOperation2.commissionPrecision             = 2;
 
     buyOperations2 << buyOperation2;
-    operations.append(buyOperations);
 
     buyEntry1.timestamp        = QDateTime::currentMSecsSinceEpoch();
     buyEntry1.level            = LOG_LEVEL_DEBUG;
@@ -650,6 +644,8 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
 
     buyPortfolio2.positions << buyCategory3 << buyCategory4;
 
+    InstrumentSells buyInstrumentSells2;
+
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(
@@ -658,7 +654,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
             QThread::currentThread(),
             Ge(1704056400000),
             configMock,
-            IsOperationsEqWithoutTimeout(operations),
+            buyInstrumentSells,
             buyPortfolio,
             stocks,
             false,
@@ -737,7 +733,6 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     sellOperation.commissionPrecision             = 2;
 
     sellOperations << sellOperation;
-    operations.append(buyOperations2);
 
     LogEntry sellEntry1;
     LogEntry sellEntry2;
@@ -842,7 +837,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
             QThread::currentThread(),
             Ge(1704056400000),
             configMock,
-            IsOperationsEqWithoutTimeout(operations),
+            buyInstrumentSells2,
             buyPortfolio2,
             stocks,
             false,
@@ -918,7 +913,6 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     sellOperation2.commissionPrecision             = 1;
 
     sellOperations2 << sellOperation2;
-    operations.append(sellOperations);
 
     sellEntry1.timestamp        = QDateTime::currentMSecsSinceEpoch();
     sellEntry1.level            = LOG_LEVEL_DEBUG;
@@ -997,7 +991,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
             QThread::currentThread(),
             Ge(1704056400000),
             configMock,
-            IsOperationsEqWithoutTimeout(operations),
+            Ne(buyInstrumentSells2),
             sellPortfolio,
             stocks,
             false,
@@ -1199,9 +1193,6 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
         operation2.commissionPrecision             = 4;
     }
 
-    QList<Operation> reversedOperations = operations;
-    std::reverse(reversedOperations.begin(), reversedOperations.end());
-
     QList<LogEntry> entries;
     QList<LogEntry> optimizedEntries;
 
@@ -1311,11 +1302,21 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(), Ge(1704056400000), configMock, reversedOperations, portfolio, stocks, false, 0, false, true
+            QThread::currentThread(),
+            Ge(1704056400000),
+            configMock,
+            Ne(InstrumentSells()),
+            portfolio,
+            stocks,
+            false,
+            0,
+            false,
+            true
         )
     )
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*optimizerMock, optimizeOperations(operations, 5, QStringList() << "aaaaa"))
         .WillOnce(Return(optimizedOperations));
     EXPECT_CALL(*operationsDatabaseMock, writeOperations(optimizedOperations, -1));

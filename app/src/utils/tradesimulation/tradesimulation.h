@@ -2,6 +2,7 @@
 
 
 
+#include "src/decisions/idecisionmaker.h"
 #include "src/domain/log/logentry.h"
 #include "src/domain/operation/operation.h"
 #include "src/domain/portfolio/portfolio.h"
@@ -29,5 +30,6 @@ void simulateTrading(
     QList<Operation>&                 operations,
     QList<LogEntry>&                  entries,
     Portfolio&                        portfolio,
-    QuantityAndCostDoubleInstruments& instruments
+    QuantityAndCostDoubleInstruments& instruments,
+    InstrumentSells&                  instrumentSells
 );

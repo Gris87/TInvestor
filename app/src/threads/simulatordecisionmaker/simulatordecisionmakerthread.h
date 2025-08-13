@@ -96,7 +96,6 @@ private:
     IConfig*                         mConfig;
     IDecisionMaker*                  mDecisionMaker;
     IOptimizer*                      mOptimizer;
-    QList<Operation>                 mOperations;
     Portfolio                        mPortfolio;
     int                              mAmountOfOperations;
     int                              mAmountOfLogs;
@@ -106,6 +105,7 @@ private:
     int                              mOptimizeLogsSize;
     QMap<QString, Stock*>            mStocksMap; // Instrument Id => Stock
     QuantityAndCostDoubleInstruments mInstruments;
+    InstrumentSells                  mInstrumentSells;
     bool                             mResetted;
     bool                             mLoaded;
     int                              mStartMoney;

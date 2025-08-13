@@ -12,7 +12,6 @@
 
 
 const char* const DATE_FORMAT  = "yyyy-MM-dd";
-const char* const RUBLE_UID    = "a92e2e25-a698-45cc-a781-167cf465257c";
 const QColor      GREEN_COLOR  = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
 const QColor      RED_COLOR    = QColor("#ED6F7E"); // clazy:exclude=non-pod-global-static
 const QColor      NORMAL_COLOR = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
@@ -569,6 +568,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
     entries    = mInitEntries;
     portfolio  = mInitPortfolio;
     QuantityAndCostDoubleInstruments instruments;
+    InstrumentSells                  instrumentSells;
 
     qint64 timestamp = mStartTimestamp;
 
@@ -592,8 +592,9 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
             );
         }
 
-        const InstrumentsForTrading& instrumentsForTrading =
-            mDecisionMaker->makeDecision(parentThread, timestamp, config, operations, portfolio, stocks, false, 0, true, false);
+        const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
+            parentThread, timestamp, config, instrumentSells, portfolio, stocks, false, 0, true, false
+        );
 
         if (!instrumentsForTrading.isEmpty())
         {
@@ -608,7 +609,8 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
                 operations,
                 entries,
                 portfolio,
-                instruments
+                instruments,
+                instrumentSells
             );
         }
 
@@ -808,6 +810,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig()
     QList<LogEntry>                  entries    = mInitEntries;
     Portfolio                        portfolio  = mInitPortfolio;
     QuantityAndCostDoubleInstruments instruments;
+    InstrumentSells                  instrumentSells;
 
     qint64 timestamp = mStartTimestamp;
 
@@ -846,7 +849,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig()
         }
 
         const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
-            QThread::currentThread(), timestamp, mConfig, operations, portfolio, stocks, false, 0, true, true
+            QThread::currentThread(), timestamp, mConfig, instrumentSells, portfolio, stocks, false, 0, true, true
         );
 
         if (!instrumentsForTrading.isEmpty())
@@ -862,7 +865,8 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig()
                 operations,
                 entries,
                 portfolio,
-                instruments
+                instruments,
+                instrumentSells
             );
         }
 
