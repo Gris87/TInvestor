@@ -22,10 +22,9 @@ public:
     FloatingLabel& operator=(const FloatingLabel& another) = delete;
 
 private:
-    QTimer                 mDeathTimer;
-    QGraphicsOpacityEffect mOpacityEffect;
-    QPropertyAnimation     mOpacityAnimation;
-    QPropertyAnimation     mPositionAnimation;
+    QTimer             mDeathTimer;
+    QPropertyAnimation mOpacityAnimation;
+    QPropertyAnimation mPositionAnimation;
 
 public slots:
     void deathTimerTicked();

@@ -779,7 +779,7 @@ void MainWindow::simulatorResultFound(const QString& result, const QColor& color
 
         // NOLINTBEGIN(readability-magic-numbers)
         const QPoint startPoint = ui->simulatorBestResultLabel->mapToGlobal(QPoint(0, 20));
-        const QPoint endPoint   = startPoint + QPoint(generator->bounded(-100, 100), generator->bounded(150, 200));
+        const QPoint endPoint   = startPoint + QPoint(generator->bounded(-200, 200), generator->bounded(250, 300));
         // NOLINTEND(readability-magic-numbers)
 
         FloatingLabel* label = new FloatingLabel(result, startPoint, endPoint, this);

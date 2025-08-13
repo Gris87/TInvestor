@@ -6,7 +6,7 @@
 
 
 constexpr qint64 MS_IN_SECOND   = 1000LL;
-constexpr qint64 DEATH_INTERVAL = 3 * MS_IN_SECOND; // 3 seconds
+constexpr qint64 DEATH_INTERVAL = 5 * MS_IN_SECOND; // 5 seconds
 
 
 
@@ -18,13 +18,11 @@ FloatingLabel::FloatingLabel(const QString& text, const QPoint& startPoint, cons
 
     setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowTransparentForInput);
 
-    mOpacityEffect.setOpacity(0.0f);
-    mOpacityAnimation.setTargetObject(&mOpacityEffect);
-    mOpacityAnimation.setPropertyName("opacity");
+    mOpacityAnimation.setTargetObject(this);
+    mOpacityAnimation.setPropertyName("windowOpacity");
     mOpacityAnimation.setDuration(DEATH_INTERVAL);
     mOpacityAnimation.setStartValue(1.0f);
     mOpacityAnimation.setEndValue(0.0f);
-    setGraphicsEffect(&mOpacityEffect);
 
     mPositionAnimation.setTargetObject(this);
     mPositionAnimation.setPropertyName("pos");
