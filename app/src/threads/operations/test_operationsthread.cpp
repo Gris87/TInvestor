@@ -14,7 +14,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 
-using ::testing::Gt;
+using ::testing::Ge;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -111,12 +111,12 @@ TEST_F(Test_OperationsThread, Test_run)
         .WillOnce(Return(positionsResponse));
     EXPECT_CALL(*grpcClientMock, createPositionsStream(QString("account-id"))).WillOnce(Return(positionsStream));
     EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Gt(1704056400000), QString(""))
+        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(nullptr));
     EXPECT_CALL(*grpcClientMock, readPositionsStream(positionsStream)).WillOnce(Return(positionsStreamResponse));
     EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Gt(1704056400000), QString(""))
+        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(nullptr));
     EXPECT_CALL(*grpcClientMock, readPositionsStream(positionsStream)).WillOnce(Return(nullptr));
@@ -316,12 +316,12 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     operations << operation1 << operation2;
 
     EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Gt(1704056400000), QString(""))
+        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(getOperationsByCursorResponse1));
     EXPECT_CALL(
         *grpcClientMock,
-        getOperations(QThread::currentThread(), QString("account-id"), 0, Gt(1704056400000), QString("next-cursor"))
+        getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString("next-cursor"))
     )
         .WillOnce(Return(getOperationsByCursorResponse2));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -440,7 +440,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
 
     EXPECT_CALL(
         *grpcClientMock,
-        getOperations(QThread::currentThread(), QString("account-id"), 1704056461000, Gt(1704056461000), QString(""))
+        getOperations(QThread::currentThread(), QString("account-id"), 1704056461000, Ge(1704056461000), QString(""))
     )
         .WillOnce(Return(getOperationsByCursorResponse3));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1579,7 +1579,7 @@ TEST_F(Test_OperationsThread, Test_optimize)
         .WillOnce(Return(positionsResponse));
     EXPECT_CALL(*grpcClientMock, createPositionsStream(QString("account-id"))).WillOnce(Return(positionsStream));
     EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1011, Gt(1704056400000), QString(""))
+        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1011, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(nullptr));
     EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));

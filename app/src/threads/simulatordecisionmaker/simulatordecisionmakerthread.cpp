@@ -8,8 +8,6 @@
 
 
 
-const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
-
 constexpr int   LIMIT_OPERATIONS         = 100000;
 constexpr int   OPTIMIZE_OPERATIONS_SIZE = 10000;
 constexpr int   LIMIT_LOGS               = 1000000;
@@ -46,6 +44,7 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mConfig(config),
     mDecisionMaker(decisionMaker),
     mOptimizer(optimizer),
+    mOperations(),
     mPortfolio(),
     mAmountOfOperations(),
     mAmountOfLogs(),
@@ -91,6 +90,7 @@ void SimulatorDecisionMakerThread::run()
         QThread::currentThread(),
         QDateTime::currentMSecsSinceEpoch(),
         mConfig,
+        mOperations,
         mPortfolio,
         mStocksStorage->getStocks(),
         false,
@@ -124,6 +124,7 @@ void SimulatorDecisionMakerThread::run()
 
         if (!operations.isEmpty())
         {
+            mOperations.append(operations);
             operations = reverseOperations(operations);
 
             emit operationsAdded(operations);
@@ -176,12 +177,11 @@ void SimulatorDecisionMakerThread::readSimulationConfig()
 
 void SimulatorDecisionMakerThread::initOperations()
 {
-    QList<Operation> operations =
-        createInitOperations(mInstrumentsStorage, mLogosStorage, QDateTime::currentMSecsSinceEpoch(), mStartMoney);
+    mOperations = createInitOperations(mInstrumentsStorage, mLogosStorage, QDateTime::currentMSecsSinceEpoch(), mStartMoney);
 
-    emit operationsRead(operations);
-    mOperationsDatabase->writeOperations(operations);
-    mAmountOfOperations = operations.size();
+    emit operationsRead(mOperations);
+    mOperationsDatabase->writeOperations(mOperations);
+    mAmountOfOperations = mOperations.size();
 
     mTotalMoney = mStartMoney;
 }
@@ -215,15 +215,15 @@ void SimulatorDecisionMakerThread::load()
 
 void SimulatorDecisionMakerThread::loadOperations()
 {
-    const QList<Operation> operations = mOperationsDatabase->readOperations();
-    emit operationsRead(operations);
-    mAmountOfOperations = operations.size();
+    mOperations = mOperationsDatabase->readOperations();
+    emit operationsRead(mOperations);
+    mAmountOfOperations = mOperations.size();
 
     if (mAmountOfOperations > 0)
     {
-        const Operation& lastOperation = operations.constFirst(); // Since it reversed
+        mOperations = reverseOperations(mOperations);
 
-        mTotalMoney = quotationToDouble(lastOperation.totalMoney);
+        mTotalMoney = quotationToDouble(mOperations.constLast().totalMoney);
     }
 }
 
@@ -359,11 +359,13 @@ void SimulatorDecisionMakerThread::optimizeOperations()
     if (mAmountOfOperations > mLimitOperations)
     {
         QList<Operation> newOperations =
-            mOptimizer->optimizeOperations(mOperationsDatabase->readOperations(), mOptimizeOperationsSize, mInstruments.keys());
+            mOptimizer->optimizeOperations(reverseOperations(mOperations), mOptimizeOperationsSize, mInstruments.keys());
         mAmountOfOperations = newOperations.size();
 
         emit operationsRead(newOperations);
         mOperationsDatabase->writeOperations(newOperations);
+
+        mOperations = reverseOperations(newOperations);
     }
 }
 

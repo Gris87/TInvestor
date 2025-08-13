@@ -7,6 +7,7 @@ Improve coverage
 Create release
 
 Use readonly grpc streams
+Add asserts on each function argument
 Double check mutexes
 Use TEST_F tests everywhere
 Improve all readability-function-cognitive-complexity

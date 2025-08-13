@@ -135,6 +135,151 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     position2->set_allocated_average_position_price(tinkoffAvgPriceWavg2);
     position2->set_allocated_daily_yield(tinkoffDailyYield2);
 
+    const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperationsByCursorResponse(
+        new tinkoff::GetOperationsByCursorResponse()
+    );
+    tinkoff::OperationItem* operationItem1 =
+        getOperationsByCursorResponse->add_items(); // getOperationsByCursorResponse will take ownership
+    tinkoff::OperationItem* operationItem2 =
+        getOperationsByCursorResponse->add_items(); // getOperationsByCursorResponse will take ownership
+
+    google::protobuf::Timestamp* dateTimestamp1 = new google::protobuf::Timestamp(); // operationItem1 will take ownership
+
+    dateTimestamp1->set_seconds(1704056460);
+    dateTimestamp1->set_nanos(0);
+
+    tinkoff::MoneyValue* price1 = new tinkoff::MoneyValue(); // operationItem1 will take ownership
+
+    price1->set_units(280);
+    price1->set_nano(0);
+
+    tinkoff::MoneyValue* payment1 = new tinkoff::MoneyValue(); // operationItem1 will take ownership
+
+    payment1->set_units(2800);
+    payment1->set_nano(0);
+
+    tinkoff::MoneyValue* commission1 = new tinkoff::MoneyValue(); // operationItem1 will take ownership
+
+    commission1->set_units(-1);
+    commission1->set_nano(-400000000);
+
+    operationItem1->set_allocated_date(dateTimestamp1);
+    operationItem1->set_type(tinkoff::OPERATION_TYPE_SELL);
+    operationItem1->set_instrument_uid("aaaaa");
+    operationItem1->set_position_uid("position-id");
+    operationItem1->set_description("Sell 10 ivashka durashka shares");
+    operationItem1->set_allocated_price(price1);
+    operationItem1->set_quantity_done(10);
+    operationItem1->set_allocated_payment(payment1);
+    operationItem1->set_allocated_commission(commission1);
+
+    google::protobuf::Timestamp* dateTimestamp2 = new google::protobuf::Timestamp(); // operationItem2 will take ownership
+
+    dateTimestamp2->set_seconds(1704056400);
+    dateTimestamp2->set_nanos(0);
+
+    tinkoff::MoneyValue* price2 = new tinkoff::MoneyValue(); // operationItem2 will take ownership
+
+    price2->set_units(253);
+    price2->set_nano(300000000);
+
+    tinkoff::MoneyValue* payment2 = new tinkoff::MoneyValue(); // operationItem2 will take ownership
+
+    payment2->set_units(-2533);
+    payment2->set_nano(0);
+
+    tinkoff::MoneyValue* commission2 = new tinkoff::MoneyValue(); // operationItem2 will take ownership
+
+    commission2->set_units(-1);
+    commission2->set_nano(-266500000);
+
+    operationItem2->set_allocated_date(dateTimestamp2);
+    operationItem2->set_type(tinkoff::OPERATION_TYPE_BUY);
+    operationItem2->set_instrument_uid("aaaaa");
+    operationItem2->set_position_uid("position-id");
+    operationItem2->set_description("Buy 10 ivashka durashka shares");
+    operationItem2->set_allocated_price(price2);
+    operationItem2->set_quantity_done(10);
+    operationItem2->set_allocated_payment(payment2);
+    operationItem2->set_allocated_commission(commission2);
+
+    QList<Operation> operations;
+
+    Operation operation1;
+    Operation operation2;
+
+    operation1.timestamp                       = 1704056460000;
+    operation1.instrumentId                    = "aaaaa";
+    operation1.instrumentTicker                = "";
+    operation1.instrumentName                  = "";
+    operation1.description                     = "";
+    operation1.price                           = 0.0f;
+    operation1.avgPriceFifo                    = 0.0f;
+    operation1.avgPriceWavg                    = 0.0f;
+    operation1.quantity                        = 0;
+    operation1.remainedQuantity                = 0;
+    operation1.payment                         = 0.0f;
+    operation1.avgCostFifo                     = 0.0f;
+    operation1.costFifo.units                  = 0;
+    operation1.costFifo.nano                   = 0;
+    operation1.costWavg.units                  = 0;
+    operation1.costWavg.nano                   = 0;
+    operation1.commission                      = 0.0f;
+    operation1.yield                           = 0.0f;
+    operation1.yieldWithCommission             = 0.0f;
+    operation1.yieldWithCommissionPercent      = 0.0f;
+    operation1.inputMoney.units                = 0;
+    operation1.inputMoney.nano                 = 0;
+    operation1.maxInputMoney.units             = 0;
+    operation1.maxInputMoney.nano              = 0;
+    operation1.totalYieldWithCommission.units  = 0;
+    operation1.totalYieldWithCommission.nano   = 0;
+    operation1.totalYieldWithCommissionPercent = 0.0f;
+    operation1.remainedMoney.units             = 0;
+    operation1.remainedMoney.nano              = 0;
+    operation1.totalMoney.units                = 0;
+    operation1.totalMoney.nano                 = 0;
+    operation1.pricePrecision                  = 0;
+    operation1.paymentPrecision                = 0;
+    operation1.commissionPrecision             = 0;
+
+    operation2.timestamp                       = 1704056400000;
+    operation2.instrumentId                    = "aaaaa";
+    operation2.instrumentTicker                = "";
+    operation2.instrumentName                  = "";
+    operation2.description                     = "";
+    operation2.price                           = 0.0f;
+    operation2.avgPriceFifo                    = 0.0f;
+    operation2.avgPriceWavg                    = 0.0f;
+    operation2.quantity                        = 0;
+    operation2.remainedQuantity                = 1;
+    operation2.payment                         = 0.0f;
+    operation2.avgCostFifo                     = 0.0f;
+    operation2.costFifo.units                  = 0;
+    operation2.costFifo.nano                   = 0;
+    operation2.costWavg.units                  = 0;
+    operation2.costWavg.nano                   = 0;
+    operation2.commission                      = 0.0f;
+    operation2.yield                           = 0.0f;
+    operation2.yieldWithCommission             = 0.0f;
+    operation2.yieldWithCommissionPercent      = 0.0f;
+    operation2.inputMoney.units                = 0;
+    operation2.inputMoney.nano                 = 0;
+    operation2.maxInputMoney.units             = 0;
+    operation2.maxInputMoney.nano              = 0;
+    operation2.totalYieldWithCommission.units  = 0;
+    operation2.totalYieldWithCommission.nano   = 0;
+    operation2.totalYieldWithCommissionPercent = 0.0f;
+    operation2.remainedMoney.units             = 0;
+    operation2.remainedMoney.nano              = 0;
+    operation2.totalMoney.units                = 0;
+    operation2.totalMoney.nano                 = 0;
+    operation2.pricePrecision                  = 0;
+    operation2.paymentPrecision                = 0;
+    operation2.commissionPrecision             = 0;
+
+    operations << operation1 << operation2;
+
     Portfolio             portfolio;
     PortfolioCategoryItem category1;
     PortfolioCategoryItem category2;
@@ -177,11 +322,15 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     instrumentsForTrading["aaa-aaa"] = tradingInfo;
 
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("aaaaa"))).WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*grpcClientMock, getOperations(QThread::currentThread(), QString("aaaaa"), 0, Ge(1704056400000), QString("")))
+        .WillOnce(Return(getOperationsByCursorResponse));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), Ge(1704056400000), configMock, portfolio, stocks, true, 10000, false, true)
+        makeDecision(
+            QThread::currentThread(), Ge(1704056400000), configMock, operations, portfolio, stocks, true, 10000, false, true
+        )
     )
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());

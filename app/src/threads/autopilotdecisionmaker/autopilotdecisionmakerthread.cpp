@@ -8,6 +8,11 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
+constexpr qint64 MS_IN_SECOND = 1000LL;
+constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR     = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY      = 24LL * ONE_HOUR;
+
 
 
 AutoPilotDecisionMakerThread::AutoPilotDecisionMakerThread(
@@ -45,23 +50,33 @@ void AutoPilotDecisionMakerThread::run()
     {
         const Portfolio portfolio = handlePortfolioResponse(*tinkoffPortfolio);
 
-        mStocksStorage->readLock();
-        const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
-            QThread::currentThread(),
-            QDateTime::currentMSecsSinceEpoch(),
-            mConfig,
-            portfolio,
-            mStocksStorage->getStocks(),
-            true,
-            keepMoney(),
-            false,
-            true
+        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations = mGrpcClient->getOperations(
+            QThread::currentThread(), mAccountId, 0, QDateTime::currentMSecsSinceEpoch() + ONE_DAY, ""
         );
-        mStocksStorage->readUnlock();
 
-        if (!instrumentsForTrading.isEmpty())
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOperations != nullptr)
         {
-            emit tradeInstruments(instrumentsForTrading);
+            const QList<Operation> operations = handleGetOperationsByCursorResponse(*tinkoffOperations);
+
+            mStocksStorage->readLock();
+            const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
+                QThread::currentThread(),
+                QDateTime::currentMSecsSinceEpoch(),
+                mConfig,
+                operations,
+                portfolio,
+                mStocksStorage->getStocks(),
+                true,
+                keepMoney(),
+                false,
+                true
+            );
+            mStocksStorage->readUnlock();
+
+            if (!instrumentsForTrading.isEmpty())
+            {
+                emit tradeInstruments(instrumentsForTrading);
+            }
         }
     }
 
@@ -133,4 +148,51 @@ Portfolio AutoPilotDecisionMakerThread::handlePortfolioResponse(const tinkoff::P
     }
 
     return portfolio;
+}
+
+QList<Operation>
+AutoPilotDecisionMakerThread::handleGetOperationsByCursorResponse(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations)
+{
+    QList<Operation> res;
+
+    int totalOperations = 0;
+
+    for (int i = tinkoffOperations.items_size() - 1; i >= 0; --i)
+    {
+        const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations.items(i);
+
+        if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
+        {
+            ++totalOperations;
+        }
+    }
+
+    if (totalOperations > 0)
+    {
+        res.resizeForOverwrite(totalOperations);
+        int curOperation = totalOperations - 1;
+
+        for (int i = tinkoffOperations.items_size() - 1; i >= 0; --i)
+        {
+            const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations.items(i);
+
+            if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
+            {
+                handleOperationItem(tinkoffOperation, &res[curOperation]);
+                --curOperation;
+            }
+        }
+    }
+
+    return res;
+}
+
+void AutoPilotDecisionMakerThread::handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res)
+{
+    const QString instrumentId = QString::fromStdString(tinkoffOperation.instrument_uid());
+    const qint64  timestamp    = timeToTimestamp(tinkoffOperation.date());
+
+    res->timestamp        = timestamp;
+    res->instrumentId     = instrumentId;
+    res->remainedQuantity = tinkoffOperation.type() == tinkoff::OPERATION_TYPE_SELL ? 0 : 1;
 }

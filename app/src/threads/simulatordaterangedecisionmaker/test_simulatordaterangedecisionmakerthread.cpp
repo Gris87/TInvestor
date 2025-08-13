@@ -1,6 +1,7 @@
 #include "src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.h"
 
 #include <QCoreApplication>
+#include <algorithm>
 #include <gtest/gtest.h>
 
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
@@ -312,6 +313,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     bestLocalPortfolio.positions << bestLocalCategory1 << bestLocalCategory2;
 
     QList<Operation> bestOperations;
+    QList<Operation> operations;
 
     operation.timestamp                       = 1704056400000;
     operation.instrumentId                    = RUBLE_UID;
@@ -349,7 +351,8 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     operation.paymentPrecision                = 2;
     operation.commissionPrecision             = 2;
 
-    bestOperations.prepend(operation);
+    bestOperations << operation;
+    operations = bestOperations;
 
     QList<LogEntry> bestEntries;
 
@@ -399,43 +402,48 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     instrumentsForTrading1["aaaaa"] = tradingInfo;
 
-    operation.timestamp                       = 1704056400001;
-    operation.instrumentId                    = "aaaaa";
-    operation.instrumentLogo                  = &logo;
-    operation.instrumentTicker                = "ABBA";
-    operation.instrumentName                  = "Abstract Basics";
-    operation.description                     = "Purchase of shares";
-    operation.price                           = 200.0f;
-    operation.avgPriceFifo                    = 200.0f;
-    operation.avgPriceWavg                    = 200.0f;
-    operation.quantity                        = 500;
-    operation.remainedQuantity                = 500;
-    operation.payment                         = -100000.0f;
-    operation.avgCostFifo                     = 100000.0f;
-    operation.costFifo.units                  = 100000;
-    operation.costFifo.nano                   = 0;
-    operation.costWavg.units                  = 100000;
-    operation.costWavg.nano                   = 0;
-    operation.commission                      = -40.0f;
-    operation.yield                           = 0.0f;
-    operation.yieldWithCommission             = -40.0f;
-    operation.yieldWithCommissionPercent      = -0.04f;
-    operation.inputMoney.units                = 1000000;
-    operation.inputMoney.nano                 = 0;
-    operation.maxInputMoney.units             = 1000000;
-    operation.maxInputMoney.nano              = 0;
-    operation.totalYieldWithCommission.units  = -39;
-    operation.totalYieldWithCommission.nano   = -999998989;
-    operation.totalYieldWithCommissionPercent = -0.004f;
-    operation.remainedMoney.units             = 899960;
-    operation.remainedMoney.nano              = 1010;
-    operation.totalMoney.units                = 999960;
-    operation.totalMoney.nano                 = 1010;
-    operation.pricePrecision                  = 1;
-    operation.paymentPrecision                = 1;
-    operation.commissionPrecision             = 1;
+    QList<Operation> buyOperations;
 
-    bestOperations.prepend(operation);
+    Operation buyOperation;
+
+    buyOperation.timestamp                       = 1704056400001;
+    buyOperation.instrumentId                    = "aaaaa";
+    buyOperation.instrumentLogo                  = &logo;
+    buyOperation.instrumentTicker                = "ABBA";
+    buyOperation.instrumentName                  = "Abstract Basics";
+    buyOperation.description                     = "Purchase of shares";
+    buyOperation.price                           = 200.0f;
+    buyOperation.avgPriceFifo                    = 200.0f;
+    buyOperation.avgPriceWavg                    = 200.0f;
+    buyOperation.quantity                        = 500;
+    buyOperation.remainedQuantity                = 500;
+    buyOperation.payment                         = -100000.0f;
+    buyOperation.avgCostFifo                     = 100000.0f;
+    buyOperation.costFifo.units                  = 100000;
+    buyOperation.costFifo.nano                   = 0;
+    buyOperation.costWavg.units                  = 100000;
+    buyOperation.costWavg.nano                   = 0;
+    buyOperation.commission                      = -40.0f;
+    buyOperation.yield                           = 0.0f;
+    buyOperation.yieldWithCommission             = -40.0f;
+    buyOperation.yieldWithCommissionPercent      = -0.04f;
+    buyOperation.inputMoney.units                = 1000000;
+    buyOperation.inputMoney.nano                 = 0;
+    buyOperation.maxInputMoney.units             = 1000000;
+    buyOperation.maxInputMoney.nano              = 0;
+    buyOperation.totalYieldWithCommission.units  = -39;
+    buyOperation.totalYieldWithCommission.nano   = -999998989;
+    buyOperation.totalYieldWithCommissionPercent = -0.004f;
+    buyOperation.remainedMoney.units             = 899960;
+    buyOperation.remainedMoney.nano              = 1010;
+    buyOperation.totalMoney.units                = 999960;
+    buyOperation.totalMoney.nano                 = 1010;
+    buyOperation.pricePrecision                  = 1;
+    buyOperation.paymentPrecision                = 1;
+    buyOperation.commissionPrecision             = 1;
+
+    bestOperations << buyOperation;
+    buyOperations = bestOperations;
 
     LogEntry buyEntry1;
     LogEntry buyEntry2;
@@ -551,43 +559,48 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     instrumentsForTrading2["bbbbb"] = tradingInfo;
 
-    operation.timestamp                       = 1704056460001;
-    operation.instrumentId                    = "bbbbb";
-    operation.instrumentLogo                  = &logo;
-    operation.instrumentTicker                = "BASE";
-    operation.instrumentName                  = "Basketball enhancement";
-    operation.description                     = "Purchase of shares";
-    operation.price                           = 200.0f;
-    operation.avgPriceFifo                    = 200.0f;
-    operation.avgPriceWavg                    = 200.0f;
-    operation.quantity                        = 750;
-    operation.remainedQuantity                = 750;
-    operation.payment                         = -150000.0f;
-    operation.avgCostFifo                     = 150000.0f;
-    operation.costFifo.units                  = 150000;
-    operation.costFifo.nano                   = 0;
-    operation.costWavg.units                  = 150000;
-    operation.costWavg.nano                   = 0;
-    operation.commission                      = -60.0f;
-    operation.yield                           = 0.0f;
-    operation.yieldWithCommission             = -60.0f;
-    operation.yieldWithCommissionPercent      = -0.04f;
-    operation.inputMoney.units                = 1000000;
-    operation.inputMoney.nano                 = 0;
-    operation.maxInputMoney.units             = 1000000;
-    operation.maxInputMoney.nano              = 0;
-    operation.totalYieldWithCommission.units  = -99;
-    operation.totalYieldWithCommission.nano   = -999997473;
-    operation.totalYieldWithCommissionPercent = -0.01f;
-    operation.remainedMoney.units             = 749900;
-    operation.remainedMoney.nano              = 2526;
-    operation.totalMoney.units                = 999900;
-    operation.totalMoney.nano                 = 2526;
-    operation.pricePrecision                  = 2;
-    operation.paymentPrecision                = 2;
-    operation.commissionPrecision             = 2;
+    QList<Operation> buyOperations2;
 
-    bestOperations.prepend(operation);
+    Operation buyOperation2;
+
+    buyOperation2.timestamp                       = 1704056460001;
+    buyOperation2.instrumentId                    = "bbbbb";
+    buyOperation2.instrumentLogo                  = &logo;
+    buyOperation2.instrumentTicker                = "BASE";
+    buyOperation2.instrumentName                  = "Basketball enhancement";
+    buyOperation2.description                     = "Purchase of shares";
+    buyOperation2.price                           = 200.0f;
+    buyOperation2.avgPriceFifo                    = 200.0f;
+    buyOperation2.avgPriceWavg                    = 200.0f;
+    buyOperation2.quantity                        = 750;
+    buyOperation2.remainedQuantity                = 750;
+    buyOperation2.payment                         = -150000.0f;
+    buyOperation2.avgCostFifo                     = 150000.0f;
+    buyOperation2.costFifo.units                  = 150000;
+    buyOperation2.costFifo.nano                   = 0;
+    buyOperation2.costWavg.units                  = 150000;
+    buyOperation2.costWavg.nano                   = 0;
+    buyOperation2.commission                      = -60.0f;
+    buyOperation2.yield                           = 0.0f;
+    buyOperation2.yieldWithCommission             = -60.0f;
+    buyOperation2.yieldWithCommissionPercent      = -0.04f;
+    buyOperation2.inputMoney.units                = 1000000;
+    buyOperation2.inputMoney.nano                 = 0;
+    buyOperation2.maxInputMoney.units             = 1000000;
+    buyOperation2.maxInputMoney.nano              = 0;
+    buyOperation2.totalYieldWithCommission.units  = -99;
+    buyOperation2.totalYieldWithCommission.nano   = -999997473;
+    buyOperation2.totalYieldWithCommissionPercent = -0.01f;
+    buyOperation2.remainedMoney.units             = 749900;
+    buyOperation2.remainedMoney.nano              = 2526;
+    buyOperation2.totalMoney.units                = 999900;
+    buyOperation2.totalMoney.nano                 = 2526;
+    buyOperation2.pricePrecision                  = 2;
+    buyOperation2.paymentPrecision                = 2;
+    buyOperation2.commissionPrecision             = 2;
+
+    bestOperations << buyOperation2;
+    buyOperations2 = bestOperations;
 
     buyEntry1.timestamp        = 1704056460002;
     buyEntry1.level            = LOG_LEVEL_DEBUG;
@@ -712,43 +725,48 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     instrumentsForTrading3["bbbbb"] = tradingInfo;
 
-    operation.timestamp                       = 1704056520001;
-    operation.instrumentId                    = "bbbbb";
-    operation.instrumentLogo                  = &logo;
-    operation.instrumentTicker                = "BASE";
-    operation.instrumentName                  = "Basketball enhancement";
-    operation.description                     = "Sale of shares";
-    operation.price                           = 300.0f;
-    operation.avgPriceFifo                    = 200.0f;
-    operation.avgPriceWavg                    = 200.0f;
-    operation.quantity                        = 750;
-    operation.remainedQuantity                = 0;
-    operation.payment                         = 225000.0f;
-    operation.avgCostFifo                     = 150000.0f;
-    operation.costFifo.units                  = 0;
-    operation.costFifo.nano                   = 0;
-    operation.costWavg.units                  = 0;
-    operation.costWavg.nano                   = 0;
-    operation.commission                      = -90.0f;
-    operation.yield                           = 75000.0f;
-    operation.yieldWithCommission             = 74910.0f;
-    operation.yieldWithCommissionPercent      = 49.94f;
-    operation.inputMoney.units                = 1000000;
-    operation.inputMoney.nano                 = 0;
-    operation.maxInputMoney.units             = 1000000;
-    operation.maxInputMoney.nano              = 0;
-    operation.totalYieldWithCommission.units  = 74810;
-    operation.totalYieldWithCommission.nano   = 4799;
-    operation.totalYieldWithCommissionPercent = 7.481f;
-    operation.remainedMoney.units             = 974810;
-    operation.remainedMoney.nano              = 4799;
-    operation.totalMoney.units                = 1074810;
-    operation.totalMoney.nano                 = 4799;
-    operation.pricePrecision                  = 2;
-    operation.paymentPrecision                = 2;
-    operation.commissionPrecision             = 2;
+    QList<Operation> sellOperations;
 
-    bestOperations.prepend(operation);
+    Operation sellOperation;
+
+    sellOperation.timestamp                       = 1704056520001;
+    sellOperation.instrumentId                    = "bbbbb";
+    sellOperation.instrumentLogo                  = &logo;
+    sellOperation.instrumentTicker                = "BASE";
+    sellOperation.instrumentName                  = "Basketball enhancement";
+    sellOperation.description                     = "Sale of shares";
+    sellOperation.price                           = 300.0f;
+    sellOperation.avgPriceFifo                    = 200.0f;
+    sellOperation.avgPriceWavg                    = 200.0f;
+    sellOperation.quantity                        = 750;
+    sellOperation.remainedQuantity                = 0;
+    sellOperation.payment                         = 225000.0f;
+    sellOperation.avgCostFifo                     = 150000.0f;
+    sellOperation.costFifo.units                  = 0;
+    sellOperation.costFifo.nano                   = 0;
+    sellOperation.costWavg.units                  = 0;
+    sellOperation.costWavg.nano                   = 0;
+    sellOperation.commission                      = -90.0f;
+    sellOperation.yield                           = 75000.0f;
+    sellOperation.yieldWithCommission             = 74910.0f;
+    sellOperation.yieldWithCommissionPercent      = 49.94f;
+    sellOperation.inputMoney.units                = 1000000;
+    sellOperation.inputMoney.nano                 = 0;
+    sellOperation.maxInputMoney.units             = 1000000;
+    sellOperation.maxInputMoney.nano              = 0;
+    sellOperation.totalYieldWithCommission.units  = 74810;
+    sellOperation.totalYieldWithCommission.nano   = 4799;
+    sellOperation.totalYieldWithCommissionPercent = 7.481f;
+    sellOperation.remainedMoney.units             = 974810;
+    sellOperation.remainedMoney.nano              = 4799;
+    sellOperation.totalMoney.units                = 1074810;
+    sellOperation.totalMoney.nano                 = 4799;
+    sellOperation.pricePrecision                  = 2;
+    sellOperation.paymentPrecision                = 2;
+    sellOperation.commissionPrecision             = 2;
+
+    bestOperations << sellOperation;
+    sellOperations = bestOperations;
 
     LogEntry sellEntry1;
     LogEntry sellEntry2;
@@ -858,43 +876,48 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     instrumentsForTrading4["aaaaa"] = tradingInfo;
 
-    operation.timestamp                       = 1704056580001;
-    operation.instrumentId                    = "aaaaa";
-    operation.instrumentLogo                  = &logo;
-    operation.instrumentTicker                = "ABBA";
-    operation.instrumentName                  = "Abstract Basics";
-    operation.description                     = "Sale of shares";
-    operation.price                           = 2000.0f;
-    operation.avgPriceFifo                    = 200.0f;
-    operation.avgPriceWavg                    = 200.0f;
-    operation.quantity                        = 500;
-    operation.remainedQuantity                = 0;
-    operation.payment                         = 100000.0f;
-    operation.avgCostFifo                     = 100000.0f;
-    operation.costFifo.units                  = 0;
-    operation.costFifo.nano                   = 0;
-    operation.costWavg.units                  = 0;
-    operation.costWavg.nano                   = 0;
-    operation.commission                      = 0.0f;
-    operation.yield                           = 0.0f;
-    operation.yieldWithCommission             = 0.0f;
-    operation.yieldWithCommissionPercent      = 0.0f;
-    operation.inputMoney.units                = 1000000;
-    operation.inputMoney.nano                 = 0;
-    operation.maxInputMoney.units             = 1000000;
-    operation.maxInputMoney.nano              = 0;
-    operation.totalYieldWithCommission.units  = 74810;
-    operation.totalYieldWithCommission.nano   = 4799;
-    operation.totalYieldWithCommissionPercent = 7.481f;
-    operation.remainedMoney.units             = 1074810;
-    operation.remainedMoney.nano              = 4799;
-    operation.totalMoney.units                = 1074810;
-    operation.totalMoney.nano                 = 4799;
-    operation.pricePrecision                  = 1;
-    operation.paymentPrecision                = 1;
-    operation.commissionPrecision             = 1;
+    QList<Operation> sellOperations2;
 
-    bestOperations.prepend(operation);
+    Operation sellOperation2;
+
+    sellOperation2.timestamp                       = 1704056580001;
+    sellOperation2.instrumentId                    = "aaaaa";
+    sellOperation2.instrumentLogo                  = &logo;
+    sellOperation2.instrumentTicker                = "ABBA";
+    sellOperation2.instrumentName                  = "Abstract Basics";
+    sellOperation2.description                     = "Sale of shares";
+    sellOperation2.price                           = 2000.0f;
+    sellOperation2.avgPriceFifo                    = 200.0f;
+    sellOperation2.avgPriceWavg                    = 200.0f;
+    sellOperation2.quantity                        = 500;
+    sellOperation2.remainedQuantity                = 0;
+    sellOperation2.payment                         = 100000.0f;
+    sellOperation2.avgCostFifo                     = 100000.0f;
+    sellOperation2.costFifo.units                  = 0;
+    sellOperation2.costFifo.nano                   = 0;
+    sellOperation2.costWavg.units                  = 0;
+    sellOperation2.costWavg.nano                   = 0;
+    sellOperation2.commission                      = 0.0f;
+    sellOperation2.yield                           = 0.0f;
+    sellOperation2.yieldWithCommission             = 0.0f;
+    sellOperation2.yieldWithCommissionPercent      = 0.0f;
+    sellOperation2.inputMoney.units                = 1000000;
+    sellOperation2.inputMoney.nano                 = 0;
+    sellOperation2.maxInputMoney.units             = 1000000;
+    sellOperation2.maxInputMoney.nano              = 0;
+    sellOperation2.totalYieldWithCommission.units  = 74810;
+    sellOperation2.totalYieldWithCommission.nano   = 4799;
+    sellOperation2.totalYieldWithCommissionPercent = 7.481f;
+    sellOperation2.remainedMoney.units             = 1074810;
+    sellOperation2.remainedMoney.nano              = 4799;
+    sellOperation2.totalMoney.units                = 1074810;
+    sellOperation2.totalMoney.nano                 = 4799;
+    sellOperation2.pricePrecision                  = 1;
+    sellOperation2.paymentPrecision                = 1;
+    sellOperation2.commissionPrecision             = 1;
+
+    bestOperations << sellOperation2;
+    sellOperations2 = bestOperations;
 
     sellEntry1.timestamp        = 1704056580002;
     sellEntry1.level            = LOG_LEVEL_DEBUG;
@@ -970,6 +993,8 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     sellPortfolio2.positions << sellCategory3 << sellCategory4;
 
+    std::reverse(bestOperations.begin(), bestOperations.end());
+
     InstrumentsForTrading emptyInstrumentsForTrading;
 
     QStringList bestConfigs = {
@@ -1044,7 +1069,9 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), 1704056400000, &clonedConfigMock, portfolio, stocks, false, 0, true, false)
+        makeDecision(
+            QThread::currentThread(), 1704056400000, &clonedConfigMock, operations, portfolio, stocks, false, 0, true, false
+        )
     )
         .WillOnce(Return(instrumentsForTrading1));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1059,7 +1086,9 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), 1704056460000, &clonedConfigMock, buyPortfolio, stocks, false, 0, true, false)
+        makeDecision(
+            QThread::currentThread(), 1704056460000, &clonedConfigMock, buyOperations, buyPortfolio, stocks, false, 0, true, false
+        )
     )
         .WillOnce(Return(instrumentsForTrading2));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1074,7 +1103,18 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), 1704056520000, &clonedConfigMock, buyPortfolio2, stocks, false, 0, true, false)
+        makeDecision(
+            QThread::currentThread(),
+            1704056520000,
+            &clonedConfigMock,
+            buyOperations2,
+            buyPortfolio2,
+            stocks,
+            false,
+            0,
+            true,
+            false
+        )
     )
         .WillOnce(Return(instrumentsForTrading3));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1089,7 +1129,18 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), 1704056580000, &clonedConfigMock, sellPortfolio, stocks, false, 0, true, false)
+        makeDecision(
+            QThread::currentThread(),
+            1704056580000,
+            &clonedConfigMock,
+            sellOperations,
+            sellPortfolio,
+            stocks,
+            false,
+            0,
+            true,
+            false
+        )
     )
         .WillOnce(Return(instrumentsForTrading4));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1105,7 +1156,16 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(), Ge(1704056640000), &clonedConfigMock, sellPortfolio2, stocks, false, 0, true, false
+            QThread::currentThread(),
+            Ge(1704056640000),
+            &clonedConfigMock,
+            sellOperations2,
+            sellPortfolio2,
+            stocks,
+            false,
+            0,
+            true,
+            false
         )
     )
         .Times(24 * 60 - 4) // Amount of minutes in a day and skip previous steps
@@ -1261,7 +1321,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), 1704056400000, configMock, portfolio, stocks, false, 0, true, true)
+        makeDecision(QThread::currentThread(), 1704056400000, configMock, operations, portfolio, stocks, false, 0, true, true)
     )
         .WillOnce(Return(instrumentsForTrading1));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1276,7 +1336,9 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), 1704056460000, configMock, buyPortfolio, stocks, false, 0, true, true)
+        makeDecision(
+            QThread::currentThread(), 1704056460000, configMock, buyOperations, buyPortfolio, stocks, false, 0, true, true
+        )
     )
         .WillOnce(Return(instrumentsForTrading2));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1291,7 +1353,9 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), 1704056520000, configMock, buyPortfolio2, stocks, false, 0, true, true)
+        makeDecision(
+            QThread::currentThread(), 1704056520000, configMock, buyOperations2, buyPortfolio2, stocks, false, 0, true, true
+        )
     )
         .WillOnce(Return(instrumentsForTrading3));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1306,7 +1370,9 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), 1704056580000, configMock, sellPortfolio, stocks, false, 0, true, true)
+        makeDecision(
+            QThread::currentThread(), 1704056580000, configMock, sellOperations, sellPortfolio, stocks, false, 0, true, true
+        )
     )
         .WillOnce(Return(instrumentsForTrading4));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1321,7 +1387,9 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), Ge(1704056640000), configMock, sellPortfolio2, stocks, false, 0, true, true)
+        makeDecision(
+            QThread::currentThread(), Ge(1704056640000), configMock, sellOperations2, sellPortfolio2, stocks, false, 0, true, true
+        )
     )
         .Times(24 * 60 - 4) // Amount of minutes in a day and skip previous steps
         .WillRepeatedly(Return(emptyInstrumentsForTrading));

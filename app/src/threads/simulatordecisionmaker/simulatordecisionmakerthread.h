@@ -96,6 +96,7 @@ private:
     IConfig*                         mConfig;
     IDecisionMaker*                  mDecisionMaker;
     IOptimizer*                      mOptimizer;
+    QList<Operation>                 mOperations;
     Portfolio                        mPortfolio;
     int                              mAmountOfOperations;
     int                              mAmountOfLogs;

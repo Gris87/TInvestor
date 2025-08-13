@@ -40,7 +40,9 @@ public:
     void terminateThread() override;
 
 private:
-    Portfolio handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    Portfolio        handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    QList<Operation> handleGetOperationsByCursorResponse(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations);
+    void             handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
 
     QMutex*         mMutex;
     IStocksStorage* mStocksStorage;

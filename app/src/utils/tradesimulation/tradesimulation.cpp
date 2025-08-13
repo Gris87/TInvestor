@@ -391,7 +391,7 @@ static void simulateBuyForOperations(
     ++timestamp;
 }
 
-static oid simulateBuyForLogs(
+static void simulateBuyForLogs(
     qint64&           timestamp,
     const QString&    instrumentId,
     Logo*             logo,

@@ -42,15 +42,16 @@ public:
     DecisionMaker& operator=(const DecisionMaker& another) = delete;
 
     InstrumentsForTrading makeDecision(
-        QThread*             parentThread,
-        qint64               timestamp,
-        IConfig*             config,
-        const Portfolio&     portfolio,
-        const QList<Stock*>& stocks,
-        bool                 autoPilot,
-        int                  keepMoney,
-        bool                 dateRange,
-        bool                 useParallel
+        QThread*                parentThread,
+        qint64                  timestamp,
+        IConfig*                config,
+        const QList<Operation>& operations,
+        const Portfolio&        portfolio,
+        const QList<Stock*>&    stocks,
+        bool                    autoPilot,
+        int                     keepMoney,
+        bool                    dateRange,
+        bool                    useParallel
     ) override;
 
 private:
@@ -63,6 +64,7 @@ private:
         IConfig*                  config,
         IDecisionMakerConfig*     decisionConfig,
         qint64                    timestamp,
+        const QList<Operation>&   operations,
         const Portfolio&          portfolio,
         QList<StockWithAvgPrice>& stocksWithAvgPrice,
         int                       keepMoney,

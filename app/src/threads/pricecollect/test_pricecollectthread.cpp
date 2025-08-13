@@ -25,7 +25,7 @@
 
 
 using ::testing::_;
-using ::testing::Gt;
+using ::testing::Ge;
 using ::testing::InSequence;
 using ::testing::Ne;
 using ::testing::NotNull;
@@ -416,7 +416,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*qZipMock3, open(QuaZip::mdUnzip)).WillOnce(Return(false));
 
     EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 2));
-    EXPECT_CALL(*grpcClientMock, getCandles(QThread::currentThread(), QString("aaaaa"), 60000, Gt(1704056400000)))
+    EXPECT_CALL(*grpcClientMock, getCandles(QThread::currentThread(), QString("aaaaa"), 60000, Ge(1704056400000)))
         .WillOnce(Return(getCandlesResponse));
     EXPECT_CALL(*grpcClientMock, getCandles(QThread::currentThread(), QString("aaaaa"), 60000, 1000000))
         .WillOnce(Return(emptyCandlesResponse));
@@ -426,10 +426,10 @@ TEST_F(Test_PriceCollectThread, Test_run)
         .WillOnce(Return(std::shared_ptr<IDir>(dirMock2)));
     EXPECT_CALL(*dirMock2, removeRecursively()).WillOnce(Return(true));
 
-    EXPECT_CALL(*stocksStorageMock, cleanupOperationalData(Gt(1704056400000)));
-    EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1704056400000)));
-    EXPECT_CALL(*stocksStorageMock, obtainTurnover(Gt(1704056400000)));
-    EXPECT_CALL(*stocksStorageMock, obtainPayback(Gt(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, cleanupOperationalData(Ge(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Ge(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, obtainTurnover(Ge(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, obtainPayback(Ge(1704056400000)));
 
     thread->run();
 }
@@ -443,7 +443,7 @@ TEST_F(Test_PriceCollectThread, Test_obtainStocksDayStartPrice)
 {
     const InSequence seq;
 
-    EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Ge(1704056400000)));
 
     ASSERT_EQ(thread->obtainStocksDayStartPrice(), true);
     ASSERT_EQ(thread->obtainStocksDayStartPrice(), false);

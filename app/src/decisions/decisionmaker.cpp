@@ -35,15 +35,16 @@ DecisionMaker::~DecisionMaker()
 }
 
 InstrumentsForTrading DecisionMaker::makeDecision(
-    QThread*             parentThread,
-    qint64               timestamp,
-    IConfig*             config,
-    const Portfolio&     portfolio,
-    const QList<Stock*>& stocks,
-    bool                 autoPilot,
-    int                  keepMoney,
-    bool                 dateRange,
-    bool                 useParallel
+    QThread*                parentThread,
+    qint64                  timestamp,
+    IConfig*                config,
+    const QList<Operation>& operations,
+    const Portfolio&        portfolio,
+    const QList<Stock*>&    stocks,
+    bool                    autoPilot,
+    int                     keepMoney,
+    bool                    dateRange,
+    bool                    useParallel
 )
 {
     InstrumentsForTrading res;
@@ -78,7 +79,17 @@ InstrumentsForTrading DecisionMaker::makeDecision(
     QList<StockWithAvgPrice> stocksWithAvgPrice = getStocksWithAvgPrice(parentThread, portfolio, stocks);
 
     makeDecisions(
-        parentThread, config, decisionConfig, timestamp, portfolio, stocksWithAvgPrice, keepMoney, dateRange, useParallel, res
+        parentThread,
+        config,
+        decisionConfig,
+        timestamp,
+        operations,
+        portfolio,
+        stocksWithAvgPrice,
+        keepMoney,
+        dateRange,
+        useParallel,
+        res
     );
 
     return res;
@@ -180,6 +191,7 @@ struct MakeDecisionsInfo
     explicit MakeDecisionsInfo(
         IDecisionMakerConfig*          _decisionConfig,
         qint64                         _timestamp,
+        const QList<Operation>&        _operations,
         bool                           _dateRange,
         float                          _money,
         float                          _commission,
@@ -193,6 +205,8 @@ struct MakeDecisionsInfo
         money(_money),
         commission(_commission)
     {
+        operationsArray    = _operations.constData();
+        operationsSize     = _operations.size();
         buyDecisionsArray  = _buyDecisions.constData();
         buyDecisionsSize   = _buyDecisions.size();
         sellDecisionsArray = _sellDecisions.constData();
@@ -207,6 +221,8 @@ struct MakeDecisionsInfo
 
     IDecisionMakerConfig*        decisionConfig;
     qint64                       timestamp;
+    const Operation*             operationsArray;
+    int                          operationsSize;
     bool                         dateRange;
     float                        money;
     float                        commission;
@@ -232,6 +248,8 @@ static void makeDecisionsForParallel(
     const bool              dateRange          = makeDecisionsInfo->dateRange;
     const float             money              = makeDecisionsInfo->money;
     const float             commission         = makeDecisionsInfo->commission;
+    const Operation*        operationsArray    = makeDecisionsInfo->operationsArray;
+    const int               operationsSize     = makeDecisionsInfo->operationsSize;
     IActionDecision* const* buyDecisionsArray  = makeDecisionsInfo->buyDecisionsArray;
     const int               buyDecisionsSize   = makeDecisionsInfo->buyDecisionsSize;
     IActionDecision* const* sellDecisionsArray = makeDecisionsInfo->sellDecisionsArray;
@@ -281,10 +299,24 @@ static void makeDecisionsForParallel(
         {
             if (money >= price)
             {
+                qint64 limitTimestamp = 0;
+
+                for (int j = operationsSize - 1; j >= 0; --j)
+                {
+                    const Operation& operation = operationsArray[j];
+
+                    if (operation.instrumentId == stock->meta.instrumentId && operation.remainedQuantity == 0)
+                    {
+                        limitTimestamp = operation.timestamp;
+
+                        break;
+                    }
+                }
+
                 for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
                 {
                     cause = buyDecisionsArray[j]->makeDecision(
-                        parentThread, decisionConfig, 0, stock, dateRange, dataIndex, price, avgPrice, commission
+                        parentThread, decisionConfig, limitTimestamp, stock, dateRange, dataIndex, price, avgPrice, commission
                     );
                 }
 
@@ -331,6 +363,7 @@ void DecisionMaker::makeDecisions(
     IConfig*                  config,
     IDecisionMakerConfig*     decisionConfig,
     qint64                    timestamp,
+    const QList<Operation>&   operations,
     const Portfolio&          portfolio,
     QList<StockWithAvgPrice>& stocksWithAvgPrice,
     int                       keepMoney,
@@ -350,7 +383,15 @@ void DecisionMaker::makeDecisions(
     mUserStorage->readUnlock();
 
     MakeDecisionsInfo makeDecisionsInfo(
-        decisionConfig, timestamp, dateRange, money, commission, mBuyDecisions, mSellDecisions, useParallel ? getCpuCount() : 1
+        decisionConfig,
+        timestamp,
+        operations,
+        dateRange,
+        money,
+        commission,
+        mBuyDecisions,
+        mSellDecisions,
+        useParallel ? getCpuCount() : 1
     );
 
     if (useParallel)

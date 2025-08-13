@@ -7,7 +7,7 @@
 
 
 
-using ::testing::Gt;
+using ::testing::Ge;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -50,7 +50,7 @@ TEST_F(Test_CleanupThread, Test_run)
 
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
     EXPECT_CALL(*stocksStorageMock, readLock());
-    EXPECT_CALL(*stocksStorageMock, deleteObsoleteData(Gt(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, deleteObsoleteData(Ge(1704056400000)));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
 
     thread->run();

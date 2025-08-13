@@ -24,14 +24,15 @@ public:
         InstrumentsForTrading,
         makeDecision,
         (QThread * parentThread,
-         qint64               timestamp,
-         IConfig*             config,
-         const Portfolio&     portfolio,
-         const QList<Stock*>& stocks,
-         bool                 autoPilot,
-         int                  keepMoney,
-         bool                 dateRange,
-         bool                 useParallel),
+         qint64                  timestamp,
+         IConfig*                config,
+         const QList<Operation>& operations,
+         const Portfolio&        portfolio,
+         const QList<Stock*>&    stocks,
+         bool                    autoPilot,
+         int                     keepMoney,
+         bool                    dateRange,
+         bool                    useParallel),
         (override)
     );
 };
