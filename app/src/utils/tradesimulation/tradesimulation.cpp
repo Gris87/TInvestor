@@ -133,7 +133,7 @@ Portfolio createInitPortfolio(IInstrumentsStorage* instrumentsStorage, ILogosSto
     return res;
 }
 
-void simulateSellForOperations(
+static void simulateSellForOperations(
     qint64&           timestamp,
     const QString&    instrumentId,
     Logo*             logo,
@@ -195,7 +195,7 @@ void simulateSellForOperations(
     ++timestamp;
 }
 
-void simulateSellForLogs(
+static void simulateSellForLogs(
     qint64&           timestamp,
     const QString&    instrumentId,
     Logo*             logo,
@@ -243,7 +243,7 @@ void simulateSellForLogs(
     ++timestamp;
 }
 
-void simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission, Portfolio& portfolio)
+static void simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission, Portfolio& portfolio)
 {
     PortfolioCategoryItem& category = portfolio.positions[SHARE_ID]; // clazy:exclude=detaching-member
 
@@ -262,12 +262,12 @@ void simulateSellForPortfolio(const QString& instrumentId, double cost, double t
     }
 }
 
-void simulateSellForInstruments(const QString& instrumentId, QuantityAndCostDoubleInstruments& instruments)
+static void simulateSellForInstruments(const QString& instrumentId, QuantityAndCostDoubleInstruments& instruments)
 {
     instruments.remove(instrumentId);
 }
 
-void simulateSell(
+static void simulateSell(
     qint64&                           timestamp,
     IInstrumentsStorage*              instrumentsStorage,
     ILogosStorage*                    logosStorage,
@@ -336,7 +336,7 @@ void simulateSell(
     simulateSellForInstruments(instrumentId, instruments);
 }
 
-void simulateBuyForOperations(
+static void simulateBuyForOperations(
     qint64&           timestamp,
     const QString&    instrumentId,
     Logo*             logo,
@@ -391,7 +391,7 @@ void simulateBuyForOperations(
     ++timestamp;
 }
 
-void simulateBuyForLogs(
+static oid simulateBuyForLogs(
     qint64&           timestamp,
     const QString&    instrumentId,
     Logo*             logo,
@@ -439,7 +439,7 @@ void simulateBuyForLogs(
     ++timestamp;
 }
 
-void simulateBuyForPortfolio(
+static void simulateBuyForPortfolio(
     const QString&    instrumentId,
     Logo*             logo,
     const Instrument& instrument,
@@ -478,7 +478,7 @@ void simulateBuyForPortfolio(
     portfolio.positions[SHARE_ID].items.append(item);
 }
 
-void simulateBuyForInstruments(
+static void simulateBuyForInstruments(
     const QString& instrumentId, qint64 quantity, double cost, QuantityAndCostDoubleInstruments& instruments
 )
 {
@@ -490,7 +490,7 @@ void simulateBuyForInstruments(
     instruments[instrumentId] = quantityAndCost;
 }
 
-void simulateBuy(
+static void simulateBuy(
     qint64&                           timestamp,
     IInstrumentsStorage*              instrumentsStorage,
     ILogosStorage*                    logosStorage,

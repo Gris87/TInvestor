@@ -21,6 +21,7 @@ public:
     virtual QString makeDecision(
         QThread*              parentThread,
         IDecisionMakerConfig* config,
+        qint64                limitTimestamp,
         Stock*                stock,
         bool                  dateRange,
         int                   dataIndex,

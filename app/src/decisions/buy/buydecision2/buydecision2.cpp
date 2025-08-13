@@ -28,6 +28,7 @@ BuyDecision2::~BuyDecision2()
 QString BuyDecision2::makeDecision(
     QThread*              parentThread,
     IDecisionMakerConfig* config,
+    qint64                limitTimestamp,
     Stock*                stock,
     bool                  dateRange,
     int                   dataIndex,
@@ -49,7 +50,7 @@ QString BuyDecision2::makeDecision(
 
         if (dateRange)
         {
-            const qint64 limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
+            limitTimestamp = qMax(limitTimestamp, stockData[dataIndex].timestamp - (duration * ONE_MINUTE));
 
             for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
@@ -121,7 +122,7 @@ QString BuyDecision2::makeDecision(
         }
         else
         {
-            const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE);
+            limitTimestamp = qMax(limitTimestamp, QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE));
 
             const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
 

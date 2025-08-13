@@ -32,6 +32,7 @@ BuyDecision3::~BuyDecision3()
 QString BuyDecision3::makeDecision(
     QThread*              parentThread,
     IDecisionMakerConfig* config,
+    qint64                limitTimestamp,
     Stock*                stock,
     bool                  dateRange,
     int                   dataIndex,
@@ -52,7 +53,7 @@ QString BuyDecision3::makeDecision(
 
         if (dateRange)
         {
-            const qint64 limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_DAY);
+            limitTimestamp = qMax(limitTimestamp, stockData[dataIndex].timestamp - (duration * ONE_DAY));
 
             for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); i -= mStep)
             {
@@ -105,7 +106,7 @@ QString BuyDecision3::makeDecision(
         }
         else
         {
-            const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_DAY);
+            limitTimestamp = qMax(limitTimestamp, QDateTime::currentMSecsSinceEpoch() - (duration * ONE_DAY));
 
             const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
 

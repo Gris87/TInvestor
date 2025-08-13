@@ -25,12 +25,13 @@ SellDecision2::~SellDecision2()
 QString SellDecision2::makeDecision(
     QThread*              parentThread,
     IDecisionMakerConfig* config,
-    Stock*                stock,
-    bool                  dateRange,
-    int                   dataIndex,
-    float                 price,
-    float                 avgPrice,
-    float                 commission
+    qint64 /*limitTimestamp*/,
+    Stock* stock,
+    bool   dateRange,
+    int    dataIndex,
+    float  price,
+    float  avgPrice,
+    float  commission
 )
 {
     ISellDecision2Config* sellConfig = config->getSellDecision2Config();

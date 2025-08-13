@@ -284,7 +284,7 @@ static void makeDecisionsForParallel(
                 for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
                 {
                     cause = buyDecisionsArray[j]->makeDecision(
-                        parentThread, decisionConfig, stock, dateRange, dataIndex, price, avgPrice, commission
+                        parentThread, decisionConfig, 0, stock, dateRange, dataIndex, price, avgPrice, commission
                     );
                 }
 
@@ -305,7 +305,7 @@ static void makeDecisionsForParallel(
             for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
             {
                 cause = sellDecisionsArray[j]->makeDecision(
-                    parentThread, decisionConfig, stock, dateRange, dataIndex, price, avgPrice, commission
+                    parentThread, decisionConfig, 0, stock, dateRange, dataIndex, price, avgPrice, commission
                 );
             }
 

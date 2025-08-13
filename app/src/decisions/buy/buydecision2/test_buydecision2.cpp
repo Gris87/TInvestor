@@ -67,7 +67,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(configMock, getBuyDecision2Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(false));
 
-    QString cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, true, 4, 100.0f, -1.0f, 0.04f);
+    QString cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 4, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -90,7 +90,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, true, 4, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 4, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -113,7 +113,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, true, 4, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 4, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -136,7 +136,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, true, 4, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 4, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -159,7 +159,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, true, 4, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 4, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(
         cause,
@@ -188,7 +188,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -213,7 +213,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -238,7 +238,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -263,7 +263,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(
         cause,
@@ -297,7 +297,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -321,7 +321,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -345,7 +345,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -369,7 +369,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
 
-    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(
         cause,

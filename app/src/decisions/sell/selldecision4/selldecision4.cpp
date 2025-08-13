@@ -22,7 +22,8 @@ SellDecision4::~SellDecision4()
 QString SellDecision4::makeDecision(
     QThread* /*parentThread*/,
     IDecisionMakerConfig* config,
-    Stock*                stock,
+    qint64 /*limitTimestamp*/,
+    Stock* stock,
     bool /*dateRange*/,
     int /*dataIndex*/,
     float price,

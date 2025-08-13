@@ -224,13 +224,13 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
 {
     QStringList res;
 
-    QList<QStringList> buyVariants = {
+    const QList<QStringList> buyVariants = {
         mBuyDecision1Config->variantsAsJson(),
         mBuyDecision2Config->variantsAsJson(),
         mBuyDecision3Config->variantsAsJson(),
         mBuyDecision4Config->variantsAsJson(),
     };
-    QList<QStringList> sellVariants = {
+    const QList<QStringList> sellVariants = {
         mSellDecision1Config->variantsAsJson(), mSellDecision2Config->variantsAsJson(),
         // Do not add sell decisions 3 and 4
         // mSellDecision3Config->variantsAsJson(),
