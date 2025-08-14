@@ -92,7 +92,18 @@ void LastPriceThread::run()
                 Stock* stock = stocksMap[instrumentId];
 
                 stock->writeLock();
-                stock->operational.detailedData.append(stockData);
+                stock->operational.detailedData.insert(
+                    std::distance(
+                        stock->operational.detailedData.constBegin(),
+                        std::lower_bound(
+                            stock->operational.detailedData.constBegin(),
+                            stock->operational.detailedData.constEnd(),
+                            stockData.timestamp,
+                            [](const StockOperationalData& stockData, qint64 value) { return stockData.timestamp < value; }
+                        )
+                    ),
+                    stockData
+                );
 
                 Q_ASSERT_X(
                     std::is_sorted(

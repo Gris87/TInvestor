@@ -296,7 +296,7 @@ static void makeDecisionsForParallel(
         {
             if (money >= price)
             {
-                qint64 limitTimestamp = instrumentSells->value(stock->meta.instrumentId, 0);
+                const qint64 limitTimestamp = instrumentSells->value(stock->meta.instrumentId, 0);
 
                 for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
                 {
