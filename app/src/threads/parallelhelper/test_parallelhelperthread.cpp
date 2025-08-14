@@ -39,7 +39,21 @@ action(QThread* /*parentThread*/, int /*threadId*/, int* array, int /*size*/, in
 
 
 
-TEST(Test_ParallelHelperThread, Test_processInParallel)
+class Test_ParallelHelperThread : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_ParallelHelperThread, Test_processInParallel)
 {
     QList<int> array;
     array << 1 << 2 << 3;
@@ -63,5 +77,14 @@ TEST(Test_ParallelHelperThread, Test_processInParallel)
     processInParallel(QThread::currentThread(), array, action, &sumResult);
 
     ASSERT_EQ(sumResult.result, 499500);
+}
+
+TEST_F(Test_ParallelHelperThread, Test_setCpuCount_and_getCpuCount)
+{
+    ASSERT_EQ(getCpuCount(), 1);
+    setCpuCount("NORMAL");
+    ASSERT_EQ(getCpuCount(), 1);
+    setCpuCount("OPTIMAL");
+    ASSERT_EQ(getCpuCount(), 1);
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init)

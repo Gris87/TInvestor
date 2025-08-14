@@ -206,6 +206,15 @@ def _execute_command(command):
             cwd="build/Desktop-Debug/test/build"
         )
 
+        lines = []
+
+        encoding = os.device_encoding(1)
+        if encoding is None:
+            encoding = "utf-8"
+
+        for line in iter(process.stdout.readline, b''):
+            lines.append(line.rstrip().decode(encoding))
+
         process.wait()
 
         if process.returncode != 0:

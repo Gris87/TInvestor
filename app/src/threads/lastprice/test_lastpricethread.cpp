@@ -61,24 +61,43 @@ TEST_F(Test_LastPriceThread, Test_run)
 
     stocks << &stock;
 
-    const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse(new tinkoff::MarketDataResponse());
+    const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse1(new tinkoff::MarketDataResponse());
 
-    tinkoff::LastPrice* lastPrice = new tinkoff::LastPrice(); // marketDataResponse will take ownership
-    tinkoff::Quotation* price     = new tinkoff::Quotation(); // marketDataResponse will take ownership
+    tinkoff::LastPrice* lastPrice1 = new tinkoff::LastPrice(); // marketDataResponse1 will take ownership
+    tinkoff::Quotation* price1     = new tinkoff::Quotation(); // marketDataResponse1 will take ownership
 
-    price->set_units(100);
-    price->set_nano(500000000);
+    price1->set_units(100);
+    price1->set_nano(500000000);
 
-    google::protobuf::Timestamp* time = new google::protobuf::Timestamp(); // marketDataResponse will take ownership
+    google::protobuf::Timestamp* time1 = new google::protobuf::Timestamp(); // marketDataResponse1 will take ownership
 
-    time->set_seconds(1000);
-    time->set_nanos(123000000);
+    time1->set_seconds(2000);
+    time1->set_nanos(123000000);
 
-    lastPrice->set_allocated_price(price);
-    lastPrice->set_allocated_time(time);
-    lastPrice->set_instrument_uid("aaaa");
+    lastPrice1->set_allocated_price(price1);
+    lastPrice1->set_allocated_time(time1);
+    lastPrice1->set_instrument_uid("aaaa");
 
-    marketDataResponse->set_allocated_last_price(lastPrice);
+    marketDataResponse1->set_allocated_last_price(lastPrice1);
+
+    const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse2(new tinkoff::MarketDataResponse());
+
+    tinkoff::LastPrice* lastPrice2 = new tinkoff::LastPrice(); // marketDataResponse2 will take ownership
+    tinkoff::Quotation* price2     = new tinkoff::Quotation(); // marketDataResponse2 will take ownership
+
+    price2->set_units(100);
+    price2->set_nano(400000000);
+
+    google::protobuf::Timestamp* time2 = new google::protobuf::Timestamp(); // marketDataResponse2 will take ownership
+
+    time2->set_seconds(1000);
+    time2->set_nanos(123000000);
+
+    lastPrice2->set_allocated_price(price2);
+    lastPrice2->set_allocated_time(time2);
+    lastPrice2->set_instrument_uid("aaaa");
+
+    marketDataResponse2->set_allocated_last_price(lastPrice2);
 
     ASSERT_EQ(stock.operational.detailedData.size(), 0);
 
@@ -90,16 +109,19 @@ TEST_F(Test_LastPriceThread, Test_run)
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(marketDataResponse));
+    EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(marketDataResponse1));
+    EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(marketDataResponse2));
     EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(nullptr));
     EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
 
     thread->run();
 
     // clang-format off
-    ASSERT_EQ(stock.operational.detailedData.size(),          1);
+    ASSERT_EQ(stock.operational.detailedData.size(),          2);
     ASSERT_EQ(stock.operational.detailedData.at(0).timestamp, 1000123);
-    ASSERT_NEAR(stock.operational.detailedData.at(0).price,   100.5f, 0.0001f);
+    ASSERT_NEAR(stock.operational.detailedData.at(0).price,   100.4f, 0.0001f);
+    ASSERT_EQ(stock.operational.detailedData.at(1).timestamp, 2000123);
+    ASSERT_NEAR(stock.operational.detailedData.at(1).price,   100.5f, 0.0001f);
     // clang-format on
 }
 
