@@ -1403,6 +1403,10 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
         .WillOnce(Return(QVariant(SIMULATOR_MODE_DATERANGE)));
     EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, run());
+    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/FromDate"), QVariant("")))
+        .WillOnce(Return(QVariant("2024-01-01")));
+    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/ToDate"), QVariant("")))
+        .WillOnce(Return(QVariant("2025-01-01")));
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/BestConfig"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*configForSimulationMock, assign(configMock));

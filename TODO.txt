@@ -1,4 +1,3 @@
-Display simulation date range on a screen
 Floating label makes main window inactive
 Fix display issue with instrument name popup
 Adapt column widths

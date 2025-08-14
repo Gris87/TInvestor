@@ -403,7 +403,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="628"/>
+        <location filename="../../src/main/mainwindow.cpp" line="631"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -414,73 +414,78 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="300"/>
+        <source>Date range:</source>
+        <translation>Временной диапазон:</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="334"/>
         <source>Remaining time:</source>
         <translation>Осталось времени:</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="368"/>
+        <location filename="../../src/main/mainwindow.ui" line="402"/>
         <source>Best result:</source>
         <translation>Лучший результат:</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="486"/>
-        <location filename="../../src/main/mainwindow.cpp" line="721"/>
+        <location filename="../../src/main/mainwindow.ui" line="520"/>
+        <location filename="../../src/main/mainwindow.cpp" line="724"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="551"/>
+        <location filename="../../src/main/mainwindow.ui" line="585"/>
         <source>Auto-pilot active</source>
         <translation>Авто-пилот активен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="574"/>
+        <location filename="../../src/main/mainwindow.ui" line="608"/>
         <source>Keep money on account:</source>
         <translation>Оставлять деньги на счёте:</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="632"/>
+        <location filename="../../src/main/mainwindow.ui" line="666"/>
         <source>Authorization</source>
         <translation>Авторизация</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="635"/>
+        <location filename="../../src/main/mainwindow.ui" line="669"/>
         <source>Authorize user (Ctrl+L)</source>
         <translation>Авторизовать пользователя (Ctrl+L)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="656"/>
+        <location filename="../../src/main/mainwindow.ui" line="690"/>
         <source>Stocks (Ctrl+1)</source>
         <translation>Акции (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="659"/>
+        <location filename="../../src/main/mainwindow.ui" line="693"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation>Показать страницу с акциями (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="677"/>
+        <location filename="../../src/main/mainwindow.ui" line="711"/>
         <source>Simulation (Ctrl+2)</source>
         <translation>Симуляция (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="680"/>
+        <location filename="../../src/main/mainwindow.ui" line="714"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation>Показать страницу с режимом симулаяции (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="698"/>
+        <location filename="../../src/main/mainwindow.ui" line="732"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation>Авто-пилот (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="701"/>
+        <location filename="../../src/main/mainwindow.ui" line="735"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation>Показать страницу с режимом авто-пилота (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="716"/>
-        <location filename="../../src/main/mainwindow.ui" line="719"/>
+        <location filename="../../src/main/mainwindow.ui" line="750"/>
+        <location filename="../../src/main/mainwindow.ui" line="753"/>
         <source>Settings (F6)</source>
         <translation>Настройки (F6)</translation>
     </message>
@@ -501,34 +506,34 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="573"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1174"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1177"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="590"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1028"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1031"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="709"/>
+        <location filename="../../src/main/mainwindow.cpp" line="712"/>
         <source>Auto-pilot started</source>
         <translation>Авто-пилот запущен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="715"/>
+        <location filename="../../src/main/mainwindow.cpp" line="718"/>
         <source>Auto-pilot stopped</source>
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1028"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1031"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="672"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1059"/>
+        <location filename="../../src/main/mainwindow.cpp" line="675"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1062"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
@@ -543,7 +548,7 @@
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1059"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1062"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -859,54 +864,54 @@
         <translation>Средняя цена по WAVG: %1</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="42"/>
+        <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="43"/>
         <source>Decided to sell because the price reached %1 with yield %2 from the price %3</source>
         <translation>Решено продать, потому что цена достигла %1 с доходностью %2 от цены %3</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="66"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="98"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="126"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="67"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="99"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="127"/>
         <source>Decided to sell because the price reached %1 with yield %2 from the price %3 and lost yield %4 from the maximum price %5 at %6</source>
         <translation>Решено продать, потому что цена достигла %1 с доходностью %2 от цены %3 и потеряла доход в %4 от максимальной цены %5 в %6</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="42"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="43"/>
         <source>Decided to sell because the price fall to %1 with yield %2 from the price %3</source>
         <translation>Решено продать, потому что цена упала до %1 с доходностью %2 от цены %3</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="67"/>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="104"/>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="135"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="68"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="105"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="136"/>
         <source>Decided to sell because the price reached %1 with yield %2 from the price %3 and lost yield %4 from the price %5 at %6 within last %7 minutes</source>
         <translation>Решено продать, потому что цена достигла %1 с доходностью %2 от цены %3 и потеряла доход в %4 от цены %5 в %6 за последние %7 минут</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="87"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="142"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="191"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="88"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="143"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="192"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the fall is %5</source>
         <translation>Решено покупать, потому что цена упала до %1 от %2 в %3 за последние %4 минут и падение составило %5</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="102"/>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="177"/>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="246"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="103"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="178"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="247"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 and lost yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8</source>
         <translation>Решено покупать, потому что цена упала до %1 от %2 в %3 и потеряла доход в %4 от минимальной цены %5 в %6 за последние %7 минут и падение составило %8</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="106"/>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="182"/>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="251"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="107"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="183"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="252"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 and lost yield %4 from the minimum price %5 at %6 within last %7 days and the fall is %8</source>
         <translation>Решено покупать, потому что цена упала до %1 от %2 в %3 и потеряла доход в %4 от минимальной цены %5 в %6 за последние %7 дней и падение составило %8</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="91"/>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="147"/>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="196"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="92"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="148"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="197"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 days and the fall is %5</source>
         <translation>Решено покупать, потому что цена упала до %1 от %2 в %3 за последние %4 дней и падение составило %5</translation>
     </message>
@@ -942,22 +947,22 @@
     </message>
     <message>
         <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="240"/>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="436"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="443"/>
         <source>Trade completed successfully</source>
         <translation>Торговля успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="364"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="371"/>
         <source>Purchase of shares</source>
         <translation>Покупка ЦБ</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="420"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="427"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation>Заявка создана на покупку %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="428"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="435"/>
         <source>Order completed. %1 bought with a price %2</source>
         <translation>Заявка выполнена. %1 куплено по цене %2</translation>
     </message>
