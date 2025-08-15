@@ -99,8 +99,8 @@ TEST(Test_BuyDecision3Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceFall(), 1.0f);
-    ASSERT_EQ(config.getDuration(),  5);
+    ASSERT_EQ(config.getPriceFall(), 10.0f);
+    ASSERT_EQ(config.getDuration(),  14);
     // clang-format on
 }
 
@@ -217,26 +217,44 @@ TEST(Test_BuyDecision3Config, Test_variantsAsJson)
 
     QStringList variants = config.variantsAsJson();
 
-    ASSERT_EQ(variants.size(), 19);
+    ASSERT_EQ(variants.size(), 37);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
-    ASSERT_EQ(variants.at(1), R"({"enabled":true,"priceFall":"10.00","duration":3})");
-    ASSERT_EQ(variants.at(2), R"({"enabled":true,"priceFall":"10.00","duration":7})");
-    ASSERT_EQ(variants.at(3), R"({"enabled":true,"priceFall":"10.00","duration":14})");
-    ASSERT_EQ(variants.at(4), R"({"enabled":true,"priceFall":"10.00","duration":30})");
-    ASSERT_EQ(variants.at(5), R"({"enabled":true,"priceFall":"10.00","duration":60})");
-    ASSERT_EQ(variants.at(6), R"({"enabled":true,"priceFall":"10.00","duration":90})");
-    ASSERT_EQ(variants.at(7), R"({"enabled":true,"priceFall":"15.00","duration":3})");
-    ASSERT_EQ(variants.at(8), R"({"enabled":true,"priceFall":"15.00","duration":7})");
-    ASSERT_EQ(variants.at(9), R"({"enabled":true,"priceFall":"15.00","duration":14})");
-    ASSERT_EQ(variants.at(10), R"({"enabled":true,"priceFall":"15.00","duration":30})");
-    ASSERT_EQ(variants.at(11), R"({"enabled":true,"priceFall":"15.00","duration":60})");
-    ASSERT_EQ(variants.at(12), R"({"enabled":true,"priceFall":"15.00","duration":90})");
-    ASSERT_EQ(variants.at(13), R"({"enabled":true,"priceFall":"20.00","duration":3})");
-    ASSERT_EQ(variants.at(14), R"({"enabled":true,"priceFall":"20.00","duration":7})");
-    ASSERT_EQ(variants.at(15), R"({"enabled":true,"priceFall":"20.00","duration":14})");
-    ASSERT_EQ(variants.at(16), R"({"enabled":true,"priceFall":"20.00","duration":30})");
-    ASSERT_EQ(variants.at(17), R"({"enabled":true,"priceFall":"20.00","duration":60})");
-    ASSERT_EQ(variants.at(18), R"({"enabled":true,"priceFall":"20.00","duration":90})");
+    ASSERT_EQ(variants.at(1), R"({"enabled":true,"priceFall":"5.00","duration":3})");
+    ASSERT_EQ(variants.at(2), R"({"enabled":true,"priceFall":"5.00","duration":7})");
+    ASSERT_EQ(variants.at(3), R"({"enabled":true,"priceFall":"5.00","duration":14})");
+    ASSERT_EQ(variants.at(4), R"({"enabled":true,"priceFall":"5.00","duration":30})");
+    ASSERT_EQ(variants.at(5), R"({"enabled":true,"priceFall":"5.00","duration":60})");
+    ASSERT_EQ(variants.at(6), R"({"enabled":true,"priceFall":"5.00","duration":90})");
+    ASSERT_EQ(variants.at(7), R"({"enabled":true,"priceFall":"10.00","duration":3})");
+    ASSERT_EQ(variants.at(8), R"({"enabled":true,"priceFall":"10.00","duration":7})");
+    ASSERT_EQ(variants.at(9), R"({"enabled":true,"priceFall":"10.00","duration":14})");
+    ASSERT_EQ(variants.at(10), R"({"enabled":true,"priceFall":"10.00","duration":30})");
+    ASSERT_EQ(variants.at(11), R"({"enabled":true,"priceFall":"10.00","duration":60})");
+    ASSERT_EQ(variants.at(12), R"({"enabled":true,"priceFall":"10.00","duration":90})");
+    ASSERT_EQ(variants.at(13), R"({"enabled":true,"priceFall":"15.00","duration":3})");
+    ASSERT_EQ(variants.at(14), R"({"enabled":true,"priceFall":"15.00","duration":7})");
+    ASSERT_EQ(variants.at(15), R"({"enabled":true,"priceFall":"15.00","duration":14})");
+    ASSERT_EQ(variants.at(16), R"({"enabled":true,"priceFall":"15.00","duration":30})");
+    ASSERT_EQ(variants.at(17), R"({"enabled":true,"priceFall":"15.00","duration":60})");
+    ASSERT_EQ(variants.at(18), R"({"enabled":true,"priceFall":"15.00","duration":90})");
+    ASSERT_EQ(variants.at(19), R"({"enabled":true,"priceFall":"20.00","duration":3})");
+    ASSERT_EQ(variants.at(20), R"({"enabled":true,"priceFall":"20.00","duration":7})");
+    ASSERT_EQ(variants.at(21), R"({"enabled":true,"priceFall":"20.00","duration":14})");
+    ASSERT_EQ(variants.at(22), R"({"enabled":true,"priceFall":"20.00","duration":30})");
+    ASSERT_EQ(variants.at(23), R"({"enabled":true,"priceFall":"20.00","duration":60})");
+    ASSERT_EQ(variants.at(24), R"({"enabled":true,"priceFall":"20.00","duration":90})");
+    ASSERT_EQ(variants.at(25), R"({"enabled":true,"priceFall":"25.00","duration":3})");
+    ASSERT_EQ(variants.at(26), R"({"enabled":true,"priceFall":"25.00","duration":7})");
+    ASSERT_EQ(variants.at(27), R"({"enabled":true,"priceFall":"25.00","duration":14})");
+    ASSERT_EQ(variants.at(28), R"({"enabled":true,"priceFall":"25.00","duration":30})");
+    ASSERT_EQ(variants.at(29), R"({"enabled":true,"priceFall":"25.00","duration":60})");
+    ASSERT_EQ(variants.at(30), R"({"enabled":true,"priceFall":"25.00","duration":90})");
+    ASSERT_EQ(variants.at(31), R"({"enabled":true,"priceFall":"30.00","duration":3})");
+    ASSERT_EQ(variants.at(32), R"({"enabled":true,"priceFall":"30.00","duration":7})");
+    ASSERT_EQ(variants.at(33), R"({"enabled":true,"priceFall":"30.00","duration":14})");
+    ASSERT_EQ(variants.at(34), R"({"enabled":true,"priceFall":"30.00","duration":30})");
+    ASSERT_EQ(variants.at(35), R"({"enabled":true,"priceFall":"30.00","duration":60})");
+    ASSERT_EQ(variants.at(36), R"({"enabled":true,"priceFall":"30.00","duration":90})");
 }
 
 TEST(Test_BuyDecision3Config, Test_setEnabled_and_isEnabled)

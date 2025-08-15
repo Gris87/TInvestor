@@ -6,9 +6,10 @@
 
 
 
+// For 2024 year
 constexpr bool  ENABLED_DEFAULT    = true;
-constexpr float PRICE_FALL_DEFAULT = 1.0f;
-constexpr int   DURATION_DEFAULT   = 5;
+constexpr float PRICE_FALL_DEFAULT = 10.0f;
+constexpr int   DURATION_DEFAULT   = 14;
 
 
 
@@ -148,7 +149,7 @@ QStringList BuyDecision3Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList priceFallVariants = {"10.00", "15.00", "20.00"};
+    const QStringList priceFallVariants = {"5.00", "10.00", "15.00", "20.00", "25.00", "30.00"};
     const QStringList durationVariants  = {"3", "7", "14", "30", "60", "90"};
 
     for (const QString& priceFall : priceFallVariants)

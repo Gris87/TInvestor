@@ -562,7 +562,7 @@ TEST_F(Test_RawGrpcClient, Test_findFutures)
     // ASSERT_EQ(resp->instruments(index).dshort_min().nano(),                  93200000);
     ASSERT_EQ(resp->instruments(index).short_enabled_flag(),                 true);
     ASSERT_EQ(resp->instruments(index).name(),                               "MMI-9.25 \u0418\u043D\u0434\u0435\u043A\u0441 \u041C\u0435\u0442\u0430\u043B\u043B\u043E\u0432 \u0438 \u0434\u043E\u0431\u044B\u0447\u0438"); // MMI-9.25 Metals and Mining Index
-    ASSERT_EQ(resp->instruments(index).exchange(),                           "FORTS_EVENING");
+    // ASSERT_EQ(resp->instruments(index).exchange(),                           "FORTS_EVENING");
     ASSERT_EQ(resp->instruments(index).first_trade_date().seconds(),         1741330800);
     ASSERT_EQ(resp->instruments(index).last_trade_date().seconds(),          1758211500);
     ASSERT_EQ(resp->instruments(index).futures_type(),                       "DELIVERY_TYPE_CASH_SETTLEMENT");

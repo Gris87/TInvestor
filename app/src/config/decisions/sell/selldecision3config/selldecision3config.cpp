@@ -6,8 +6,9 @@
 
 
 
+// For 2024 year
 constexpr bool  ENABLED_DEFAULT    = true;
-constexpr float LOSE_YIELD_DEFAULT = 5.0f;
+constexpr float LOSE_YIELD_DEFAULT = 10.0f;
 constexpr int   DURATION_DEFAULT   = 5;
 
 
@@ -148,7 +149,7 @@ QStringList SellDecision3Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList loseYieldVariants = {"5.00", "7.00", "10.00"};
+    const QStringList loseYieldVariants = {"5.00", "7.00", "10.00", "12.00", "15.00"};
     const QStringList durationVariants  = {"5", "15", "30"};
 
     for (const QString& loseYield : loseYieldVariants)

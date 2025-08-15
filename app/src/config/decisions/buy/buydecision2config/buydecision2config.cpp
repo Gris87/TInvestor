@@ -6,10 +6,11 @@
 
 
 
+// For 2024 year
 constexpr bool  ENABLED_DEFAULT    = true;
-constexpr float PRICE_FALL_DEFAULT = 1.0f;
-constexpr float LOSE_YIELD_DEFAULT = 0.1f;
-constexpr int   DURATION_DEFAULT   = 5;
+constexpr float PRICE_FALL_DEFAULT = 4.0f;
+constexpr float LOSE_YIELD_DEFAULT = 0.5f;
+constexpr int   DURATION_DEFAULT   = 120;
 
 
 
@@ -167,7 +168,7 @@ QStringList BuyDecision2Config::variantsAsJson() const
 
     const QStringList priceFallVariants = {"2.00", "3.00", "4.00", "5.00"};
     const QStringList loseYieldVariants = {"0.3", "0.5", "0.7"};
-    const QStringList durationVariants  = {"5", "15", "30", "60", "120"};
+    const QStringList durationVariants  = {"5", "15", "30", "60", "120", "180", "240"};
 
     for (const QString& priceFall : priceFallVariants)
     {

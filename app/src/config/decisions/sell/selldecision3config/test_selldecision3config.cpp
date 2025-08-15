@@ -99,7 +99,7 @@ TEST(Test_SellDecision3Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getLoseYield(), 5.0f);
+    ASSERT_EQ(config.getLoseYield(), 10.0f);
     ASSERT_EQ(config.getDuration(),  5);
     // clang-format on
 }
@@ -217,7 +217,7 @@ TEST(Test_SellDecision3Config, Test_variantsAsJson)
 
     QStringList variants = config.variantsAsJson();
 
-    ASSERT_EQ(variants.size(), 10);
+    ASSERT_EQ(variants.size(), 16);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
     ASSERT_EQ(variants.at(1), R"({"enabled":true,"loseYield":"5.00","duration":5})");
     ASSERT_EQ(variants.at(2), R"({"enabled":true,"loseYield":"5.00","duration":15})");
@@ -228,6 +228,12 @@ TEST(Test_SellDecision3Config, Test_variantsAsJson)
     ASSERT_EQ(variants.at(7), R"({"enabled":true,"loseYield":"10.00","duration":5})");
     ASSERT_EQ(variants.at(8), R"({"enabled":true,"loseYield":"10.00","duration":15})");
     ASSERT_EQ(variants.at(9), R"({"enabled":true,"loseYield":"10.00","duration":30})");
+    ASSERT_EQ(variants.at(10), R"({"enabled":true,"loseYield":"12.00","duration":5})");
+    ASSERT_EQ(variants.at(11), R"({"enabled":true,"loseYield":"12.00","duration":15})");
+    ASSERT_EQ(variants.at(12), R"({"enabled":true,"loseYield":"12.00","duration":30})");
+    ASSERT_EQ(variants.at(13), R"({"enabled":true,"loseYield":"15.00","duration":5})");
+    ASSERT_EQ(variants.at(14), R"({"enabled":true,"loseYield":"15.00","duration":15})");
+    ASSERT_EQ(variants.at(15), R"({"enabled":true,"loseYield":"15.00","duration":30})");
 }
 
 TEST(Test_SellDecision3Config, Test_setEnabled_and_isEnabled)

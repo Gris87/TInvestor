@@ -87,7 +87,7 @@ TEST(Test_SellDecision1Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),     true);
-    ASSERT_EQ(config.getYieldAbove(), 1.0f);
+    ASSERT_EQ(config.getYieldAbove(), 0.5f);
     // clang-format on
 }
 
@@ -194,13 +194,11 @@ TEST(Test_SellDecision1Config, Test_variantsAsJson)
 
     QStringList variants = config.variantsAsJson();
 
-    ASSERT_EQ(variants.size(), 6);
+    ASSERT_EQ(variants.size(), 4);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
     ASSERT_EQ(variants.at(1), R"({"enabled":true,"yieldAbove":"0.50"})");
     ASSERT_EQ(variants.at(2), R"({"enabled":true,"yieldAbove":"1.00"})");
     ASSERT_EQ(variants.at(3), R"({"enabled":true,"yieldAbove":"2.00"})");
-    ASSERT_EQ(variants.at(4), R"({"enabled":true,"yieldAbove":"3.00"})");
-    ASSERT_EQ(variants.at(5), R"({"enabled":true,"yieldAbove":"4.00"})");
 }
 
 TEST(Test_SellDecision1Config, Test_setEnabled_and_isEnabled)

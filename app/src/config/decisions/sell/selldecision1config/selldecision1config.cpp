@@ -6,8 +6,9 @@
 
 
 
+// For 2024 year
 constexpr bool  ENABLED_DEFAULT     = true;
-constexpr float YIELD_ABOVE_DEFAULT = 1.0f;
+constexpr float YIELD_ABOVE_DEFAULT = 0.5f;
 
 
 
@@ -135,7 +136,7 @@ QStringList SellDecision1Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList yieldAboveVariants = {"0.50", "1.00", "2.00", "3.00", "4.00"};
+    const QStringList yieldAboveVariants = {"0.50", "1.00", "2.00"};
 
     for (const QString& yieldAbove : yieldAboveVariants)
     {
