@@ -6,10 +6,20 @@
 
 
 
-// For 2024 year
+// For 2020-2024 years
 constexpr bool  ENABLED_DEFAULT    = true;
 constexpr float PRICE_FALL_DEFAULT = 3.0f;
-constexpr int   DURATION_DEFAULT   = 120;
+constexpr int   DURATION_DEFAULT   = 30;
+
+// For 2024 year
+// constexpr bool  ENABLED_DEFAULT    = true;
+// constexpr float PRICE_FALL_DEFAULT = 3.0f;
+// constexpr int   DURATION_DEFAULT   = 120;
+
+// For 2019 year
+// constexpr bool  ENABLED_DEFAULT    = true;
+// constexpr float PRICE_FALL_DEFAULT = 2.0f;
+// constexpr int   DURATION_DEFAULT   = 240;
 
 
 

@@ -11,6 +11,11 @@ constexpr bool  ENABLED_DEFAULT     = false;
 constexpr float YIELD_ABOVE_DEFAULT = 1.0f;
 constexpr float LOSE_YIELD_DEFAULT  = 0.1f;
 
+// For 2024 year
+// constexpr bool  ENABLED_DEFAULT     = false;
+// constexpr float YIELD_ABOVE_DEFAULT = 1.0f;
+// constexpr float LOSE_YIELD_DEFAULT  = 0.1f;
+
 
 
 SellDecision2Config::SellDecision2Config() :

@@ -85,12 +85,12 @@ TEST(Test_SellDecision3Config, Test_makeDefault)
 {
     SellDecision3Config config;
 
-    config.setEnabled(false);
+    config.setEnabled(true);
     config.setLoseYield(4.2f);
     config.setDuration(2);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),    false);
+    ASSERT_EQ(config.isEnabled(),    true);
     ASSERT_EQ(config.getLoseYield(), 4.2f);
     ASSERT_EQ(config.getDuration(),  2);
     // clang-format on
@@ -98,7 +98,7 @@ TEST(Test_SellDecision3Config, Test_makeDefault)
     config.makeDefault();
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),    true);
+    ASSERT_EQ(config.isEnabled(),    false);
     ASSERT_EQ(config.getLoseYield(), 10.0f);
     ASSERT_EQ(config.getDuration(),  5);
     // clang-format on

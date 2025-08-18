@@ -10,6 +10,10 @@
 constexpr bool  ENABLED_DEFAULT     = true;
 constexpr float YIELD_ABOVE_DEFAULT = 0.5f;
 
+// For 2019 year
+// constexpr bool  ENABLED_DEFAULT     = true;
+// constexpr float YIELD_ABOVE_DEFAULT = 0.5f;
+
 
 
 SellDecision1Config::SellDecision1Config() :

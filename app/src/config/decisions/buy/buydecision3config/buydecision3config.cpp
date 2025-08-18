@@ -8,8 +8,13 @@
 
 // For 2024 year
 constexpr bool  ENABLED_DEFAULT    = true;
-constexpr float PRICE_FALL_DEFAULT = 10.0f;
-constexpr int   DURATION_DEFAULT   = 14;
+constexpr float PRICE_FALL_DEFAULT = 5.0f;
+constexpr int   DURATION_DEFAULT   = 7;
+
+// For 2019 year
+// constexpr bool  ENABLED_DEFAULT    = true;
+// constexpr float PRICE_FALL_DEFAULT = 5.0f;
+// constexpr int   DURATION_DEFAULT   = 7;
 
 
 

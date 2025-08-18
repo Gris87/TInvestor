@@ -8,7 +8,12 @@
 
 // For 2024 year
 constexpr bool  ENABLED_DEFAULT    = true;
-constexpr float LOSE_YIELD_DEFAULT = 10.0f;
+constexpr float LOSE_YIELD_DEFAULT = 5.0f;
+//constexpr float LOSE_YIELD_DEFAULT = 10.0f;
+
+// For 2019 year
+// constexpr bool  ENABLED_DEFAULT    = true;
+// constexpr float LOSE_YIELD_DEFAULT = 7.0f;
 
 
 

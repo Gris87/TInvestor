@@ -111,9 +111,9 @@ TEST(Test_BuyDecision4Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceFall(), 20.0f);
-    ASSERT_EQ(config.getLoseYield(), 3.0f);
-    ASSERT_EQ(config.getDuration(),  30);
+    ASSERT_EQ(config.getPriceFall(), 10.0f);
+    ASSERT_EQ(config.getLoseYield(), 1.0f);
+    ASSERT_EQ(config.getDuration(),  3);
     // clang-format on
 }
 

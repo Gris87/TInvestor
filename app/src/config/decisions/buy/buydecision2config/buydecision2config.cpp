@@ -12,6 +12,12 @@ constexpr float PRICE_FALL_DEFAULT = 4.0f;
 constexpr float LOSE_YIELD_DEFAULT = 0.5f;
 constexpr int   DURATION_DEFAULT   = 120;
 
+// For 2019 year
+// constexpr bool  ENABLED_DEFAULT    = true;
+// constexpr float PRICE_FALL_DEFAULT = 2.0f;
+// constexpr float LOSE_YIELD_DEFAULT = 0.3f;
+// constexpr int   DURATION_DEFAULT   = 240;
+
 
 
 BuyDecision2Config::BuyDecision2Config() :

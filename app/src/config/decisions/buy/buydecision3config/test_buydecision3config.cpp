@@ -99,8 +99,8 @@ TEST(Test_BuyDecision3Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceFall(), 10.0f);
-    ASSERT_EQ(config.getDuration(),  14);
+    ASSERT_EQ(config.getPriceFall(), 5.0f);
+    ASSERT_EQ(config.getDuration(),  7);
     // clang-format on
 }
 
