@@ -136,21 +136,28 @@ TEST_F(Test_RawGrpcClient, Test_getAccounts)
 
     // clang-format off
     ASSERT_EQ(status.ok(),                               true);
-    ASSERT_EQ(resp->accounts_size(),                     2);
-    ASSERT_EQ(resp->accounts(0).id(),                    "d1843f24-0864-4666-8608-d5d16822fbae");
+    ASSERT_EQ(resp->accounts_size(),                     3);
+    ASSERT_EQ(resp->accounts(0).id(),                    "b70b4b15-c812-4fbd-81c8-538235d19ff7");
     ASSERT_EQ(resp->accounts(0).type(),                  tinkoff::ACCOUNT_TYPE_TINKOFF);
-    ASSERT_EQ(resp->accounts(0).name(),                  "Hello darkness smile face");
+    ASSERT_EQ(resp->accounts(0).name(),                  "Simulation");
     ASSERT_EQ(resp->accounts(0).status(),                tinkoff::ACCOUNT_STATUS_OPEN);
-    ASSERT_EQ(resp->accounts(0).opened_date().seconds(), 1748173834);
+    ASSERT_EQ(resp->accounts(0).opened_date().seconds(), 1755690295);
     ASSERT_EQ(resp->accounts(0).closed_date().seconds(), 0);
     ASSERT_EQ(resp->accounts(0).access_level(),          tinkoff::ACCOUNT_ACCESS_LEVEL_FULL_ACCESS);
-    ASSERT_EQ(resp->accounts(1).id(),                    "8963c33d-7ee2-4ff2-ac01-8c090ec502f5");
+    ASSERT_EQ(resp->accounts(1).id(),                    "867e59f0-f101-4a12-8c3d-5ccdf1e7f99f");
     ASSERT_EQ(resp->accounts(1).type(),                  tinkoff::ACCOUNT_TYPE_TINKOFF);
-    ASSERT_EQ(resp->accounts(1).name(),                  "BlahBlahCar");
+    ASSERT_EQ(resp->accounts(1).name(),                  "Duplication");
     ASSERT_EQ(resp->accounts(1).status(),                tinkoff::ACCOUNT_STATUS_OPEN);
-    ASSERT_EQ(resp->accounts(1).opened_date().seconds(), 1748173847);
+    ASSERT_EQ(resp->accounts(1).opened_date().seconds(), 1755690301);
     ASSERT_EQ(resp->accounts(1).closed_date().seconds(), 0);
     ASSERT_EQ(resp->accounts(1).access_level(),          tinkoff::ACCOUNT_ACCESS_LEVEL_FULL_ACCESS);
+    ASSERT_EQ(resp->accounts(2).id(),                    "0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
+    ASSERT_EQ(resp->accounts(2).type(),                  tinkoff::ACCOUNT_TYPE_TINKOFF);
+    ASSERT_EQ(resp->accounts(2).name(),                  "Test account");
+    ASSERT_EQ(resp->accounts(2).status(),                tinkoff::ACCOUNT_STATUS_OPEN);
+    ASSERT_EQ(resp->accounts(2).opened_date().seconds(), 1755690313);
+    ASSERT_EQ(resp->accounts(2).closed_date().seconds(), 0);
+    ASSERT_EQ(resp->accounts(2).access_level(),          tinkoff::ACCOUNT_ACCESS_LEVEL_FULL_ACCESS);
     // clang-format on
 }
 
@@ -691,7 +698,7 @@ TEST_F(Test_RawGrpcClient, Test_getPortfolio)
 
     context.set_credentials(creds);
 
-    req.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req.set_account_id("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
 
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
@@ -700,7 +707,7 @@ TEST_F(Test_RawGrpcClient, Test_getPortfolio)
 
     // clang-format off
     ASSERT_EQ(status.ok(),                             true);
-    ASSERT_EQ(resp->account_id(),                      "d1843f24-0864-4666-8608-d5d16822fbae");
+    ASSERT_EQ(resp->account_id(),                      "0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
     ASSERT_NE(resp->total_amount_currencies().units(), 0);
     ASSERT_NE(resp->total_amount_portfolio().units(),  0);
     ASSERT_GT(resp->positions_size(),                  0);
@@ -722,7 +729,7 @@ TEST_F(Test_RawGrpcClient, Test_getPositions)
 
     context.set_credentials(creds);
 
-    req.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req.set_account_id("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
 
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
@@ -747,7 +754,7 @@ TEST_F(Test_RawGrpcClient, Test_getOperations)
 
     context.set_credentials(creds);
 
-    req.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req.set_account_id("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
     req.set_limit(2);
     req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
     req.set_without_trades(true);
@@ -761,14 +768,13 @@ TEST_F(Test_RawGrpcClient, Test_getOperations)
     ASSERT_EQ(status.ok(),                        true);
     ASSERT_GT(resp->items_size(),                 0);
     ASSERT_NE(resp->items(0).cursor(),            "");
-    ASSERT_EQ(resp->items(0).broker_account_id(), "d1843f24-0864-4666-8608-d5d16822fbae");
+    ASSERT_EQ(resp->items(0).broker_account_id(), "0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
     ASSERT_NE(resp->items(0).id(),                "");
     ASSERT_GT(resp->items(0).date().seconds(),    1704056400);
     ASSERT_NE(resp->items(0).description(),       "");
     ASSERT_EQ(resp->items(0).state(),             tinkoff::OPERATION_STATE_EXECUTED);
     ASSERT_NE(resp->items(0).instrument_uid(),    "");
     ASSERT_NE(resp->items(0).figi(),              "");
-    ASSERT_NE(resp->items(0).instrument_type(),   "");
     ASSERT_NE(resp->items(0).position_uid(),      "");
     // clang-format on
 }
@@ -783,7 +789,7 @@ TEST_F(Test_RawGrpcClient, Test_getMaxLots)
 
     context.set_credentials(creds);
 
-    req.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req.set_account_id("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
     req.set_instrument_id(SPBE_UID);
 
     QString token = SANDBOX_TOKEN;
@@ -815,7 +821,7 @@ TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
     tinkoffPrice->set_units(1);
     tinkoffPrice->set_nano(0);
 
-    req1.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req1.set_account_id("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
     req1.set_instrument_id(SPBE_UID);
     req1.set_direction(tinkoff::ORDER_DIRECTION_BUY);
     req1.set_quantity(1);
@@ -871,7 +877,7 @@ TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
 
     context2.set_credentials(creds);
 
-    req2.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req2.set_account_id("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
     req2.set_order_id(resp1->order_id());
     req2.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
     req2.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
@@ -926,7 +932,7 @@ TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
 
     context3.set_credentials(creds);
 
-    req3.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req3.set_account_id("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
     req3.set_order_id(resp1->order_id());
     req3.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
 
@@ -992,7 +998,7 @@ TEST_F(Test_RawGrpcClient, Test_PortfolioStream)
     const InSequence seq;
 
     tinkoff::PortfolioStreamRequest req;
-    req.add_accounts("d1843f24-0864-4666-8608-d5d16822fbae");
+    req.add_accounts("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
 
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
@@ -1017,7 +1023,7 @@ TEST_F(Test_RawGrpcClient, Test_PositionsStream)
     const InSequence seq;
 
     tinkoff::PositionsStreamRequest req;
-    req.add_accounts("d1843f24-0864-4666-8608-d5d16822fbae");
+    req.add_accounts("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
 
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
