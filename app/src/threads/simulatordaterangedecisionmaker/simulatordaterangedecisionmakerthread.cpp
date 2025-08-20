@@ -29,11 +29,11 @@ constexpr qint64 NOTIFY_PROGRESS_STEP     = 1LL * ONE_HOUR;
 const int        SECONDS_IN_MINUTE        = 60;
 const int        MINUTES_IN_HOUR          = 60;
 
-constexpr double DURATION_ONE_DAY_STEP_0 = 25190.0;
-constexpr double DURATION_ONE_DAY_STEP_1 = 71665.0;
-constexpr double DURATION_ONE_DAY_STEP_2 = 51865.0;
-constexpr double DURATION_ONE_DAY_STEP_3 = 172878.0;
-constexpr double DURATION_ONE_DAY_STEP_4 = 22391.0;
+constexpr double DURATION_ONE_DAY_STEP_0 = 25290.0;
+constexpr double DURATION_ONE_DAY_STEP_1 = 69129.0;
+constexpr double DURATION_ONE_DAY_STEP_2 = 49084.0;
+constexpr double DURATION_ONE_DAY_STEP_3 = 154165.0;
+constexpr double DURATION_ONE_DAY_STEP_4 = 23754.0;
 
 constexpr int    AMOUNT_OF_BUY_DECISIONS                        = 4;
 constexpr double DURATION_COEFFICIENTS[AMOUNT_OF_BUY_DECISIONS] = {
@@ -175,6 +175,10 @@ void SimulatorDateRangeDecisionMakerThread::init()
     initLogs();
     initPortfolio();
     initConfigs();
+
+    mBestOperations.clear();
+    mBestEntries.clear();
+    mBestPortfolio.positions.clear();
 
     mOperationsDatabase->deleteOperations();
     mLogsDatabase->deleteLogs();
