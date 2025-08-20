@@ -258,7 +258,7 @@ TEST(Test_Config, Test_makeDefault)
     config.setLimitStockPurchase(false);
     config.setLimitStockPurchasePart(50.0f);
     config.setLimitByTurnover(false);
-    config.setLimitByTurnoverPercent(5.0f);
+    config.setLimitByTurnoverPercent(15.0f);
     config.setStorageMonthLimit(36);
     config.setSimulatorConfigCommon(false);
     config.setAutoPilotConfigCommon(true);
@@ -275,7 +275,7 @@ TEST(Test_Config, Test_makeDefault)
     ASSERT_EQ(config.isLimitStockPurchase(),        false);
     ASSERT_NEAR(config.getLimitStockPurchasePart(), 50.0f, 0.0001f);
     ASSERT_EQ(config.isLimitByTurnover(),           false);
-    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 15.0f, 0.0001f);
     ASSERT_EQ(config.getStorageMonthLimit(),        36);
     ASSERT_EQ(config.isSimulatorConfigCommon(),     false);
     ASSERT_EQ(config.isAutoPilotConfigCommon(),     true);
@@ -298,7 +298,7 @@ TEST(Test_Config, Test_makeDefault)
     ASSERT_EQ(config.isLimitStockPurchase(),        true);
     ASSERT_NEAR(config.getLimitStockPurchasePart(), 10.0f, 0.0001f);
     ASSERT_EQ(config.isLimitByTurnover(),           true);
-    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 1.0f, 0.0001f);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
     ASSERT_EQ(config.getStorageMonthLimit(),        12);
     ASSERT_EQ(config.isSimulatorConfigCommon(),     true);
     ASSERT_EQ(config.isAutoPilotConfigCommon(),     false);

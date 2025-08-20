@@ -6,12 +6,17 @@
 
 
 
-// For 2024 year
+// For 2020-2024 years
 constexpr bool  ENABLED_DEFAULT     = false;
 constexpr float YIELD_ABOVE_DEFAULT = 1.0f;
 constexpr float LOSE_YIELD_DEFAULT  = 0.1f;
 
 // For 2024 year
+// constexpr bool  ENABLED_DEFAULT     = false;
+// constexpr float YIELD_ABOVE_DEFAULT = 1.0f;
+// constexpr float LOSE_YIELD_DEFAULT  = 0.1f;
+
+// For 2019 year
 // constexpr bool  ENABLED_DEFAULT     = false;
 // constexpr float YIELD_ABOVE_DEFAULT = 1.0f;
 // constexpr float LOSE_YIELD_DEFAULT  = 0.1f;

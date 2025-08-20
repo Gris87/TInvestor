@@ -6,11 +6,17 @@
 
 
 
-// For 2024 year
+// For 2020-2024 years
 constexpr bool  ENABLED_DEFAULT    = true;
 constexpr float PRICE_FALL_DEFAULT = 10.0f;
 constexpr float LOSE_YIELD_DEFAULT = 1.0f;
-constexpr int   DURATION_DEFAULT   = 3;
+constexpr int   DURATION_DEFAULT   = 7;
+
+// For 2024 year
+// constexpr bool  ENABLED_DEFAULT    = true;
+// constexpr float PRICE_FALL_DEFAULT = 10.0f;
+// constexpr float LOSE_YIELD_DEFAULT = 1.0f;
+// constexpr int   DURATION_DEFAULT   = 3;
 
 // For 2019 year
 // constexpr bool  ENABLED_DEFAULT    = true;
@@ -172,7 +178,7 @@ QStringList BuyDecision4Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList priceFallVariants = {"5.00", "10.00", "15.00", "20.00", "25.00", "30.00"};
+    const QStringList priceFallVariants = {"5.00", "7.00", "10.00", "12.00", "15.00"};
     const QStringList loseYieldVariants = {"1.0", "2.0", "3.0"};
     const QStringList durationVariants  = {"3", "7", "14", "30", "60", "90"};
 
