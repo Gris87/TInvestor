@@ -105,6 +105,10 @@
 
 const char* const VERSION = "v0.7.1";
 
+constexpr int    DETECT_TRAY_ATTEMPTS = 5;
+constexpr qint64 MS_IN_SECOND         = 1000LL;
+constexpr qint64 DETECT_TRAY_DELAY    = MS_IN_SECOND; // 1 second
+
 
 
 static bool isHelpNeeded(int argc, char* argv[])
@@ -170,7 +174,7 @@ static int runApplication(QApplication* app)
 
     bool trayFound = false;
 
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < DETECT_TRAY_ATTEMPTS; ++i)
     {
         if (QSystemTrayIcon::isSystemTrayAvailable())
         {
@@ -179,7 +183,7 @@ static int runApplication(QApplication* app)
             break;
         }
 
-        QThread::msleep(1000);
+        QThread::msleep(DETECT_TRAY_DELAY);
     }
 
     if (!trayFound)

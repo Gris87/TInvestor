@@ -106,7 +106,9 @@ void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
             if (hoverTextWidget == nullptr)
             {
                 hoverTextWidget = new QLabel();
-                hoverTextWidget->setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowStaysOnTopHint);
+                hoverTextWidget->setWindowFlags(
+                    Qt::ToolTip | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowStaysOnTopHint
+                );
             }
 
             hoverTextWidget->hide();
