@@ -1,7 +1,6 @@
 Script to send notifications via WhatsApp
 Script for following based on operations.json
 Store token encrypted in file
-Publish python scripts
 Improve coverage
 Create release
 

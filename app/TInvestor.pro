@@ -44,13 +44,20 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 win32* {
     copy_dist_files.commands =  $(COPY_FILE) "$$shell_path($${PWD}/dist/windows/post_install.bat)" "$$shell_path($${OUT_PWD}/build)" &&
-    copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/windows/tbank.ru.crt)" "$$shell_path($${OUT_PWD}/build)"
+    copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/windows/tbank.ru.crt)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_dist_files.commands += (if exist "$$shell_path($${OUT_PWD}/build/tools)" rmdir /S /Q "$$shell_path($${OUT_PWD}/build/tools)") &&
 }
 
 linux* {
     copy_dist_files.commands =  $(COPY_FILE) "$$shell_path($${PWD}/dist/linux/icon.png)" "$$shell_path($${OUT_PWD}/build)" &&
-    copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/linux/post_install.sh)" "$$shell_path($${OUT_PWD}/build)"
+    copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/linux/post_install.sh)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_dist_files.commands += rm -rf "$$shell_path($${OUT_PWD}/build/tools)" &&
 }
+
+copy_dist_files.commands += $(MKDIR) "$$shell_path($${OUT_PWD}/build/tools)" &&
+copy_dist_files.commands += $(MKDIR) "$$shell_path($${OUT_PWD}/build/tools/py3)" &&
+copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-follower)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-follower)" &&
+copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinvestor-telegram-bot)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinvestor-telegram-bot)"
 
 
 

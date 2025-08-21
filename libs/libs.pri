@@ -19,9 +19,9 @@ win32* {
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Network$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Sql$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Core5Compat$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
-    copy_qt_files.commands += $(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/platforms)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/platforms)" &&
-    copy_qt_files.commands += $(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/sqldrivers)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/sqldrivers)" &&
-    copy_qt_files.commands += $(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/tls)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/tls)" &&
+    copy_qt_files.commands += ($(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/platforms)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/platforms)") &&
+    copy_qt_files.commands += ($(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/sqldrivers)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/sqldrivers)") &&
+    copy_qt_files.commands += ($(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/tls)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/tls)") &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/platforms/qwindows$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/platforms)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/sqldrivers/qsqlite$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/sqldrivers)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/tls/qopensslbackend$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/tls)" &&
