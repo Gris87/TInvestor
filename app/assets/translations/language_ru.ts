@@ -829,22 +829,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="162"/>
+        <location filename="../../src/main.cpp" line="166"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="162"/>
+        <location filename="../../src/main.cpp" line="166"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="174"/>
+        <location filename="../../src/main.cpp" line="192"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="174"/>
+        <location filename="../../src/main.cpp" line="192"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -1052,11 +1052,6 @@
         <translation>Основное</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="60"/>
-        <source>Autorun on Windows startup</source>
-        <translation>Автозапускать при запуске Windows</translation>
-    </message>
-    <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="75"/>
         <source>CPU usage</source>
         <translation>Использование ядер процессора</translation>
@@ -1103,8 +1098,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="419"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="208"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="232"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="213"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="237"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
@@ -1141,8 +1136,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="383"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="209"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="231"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="214"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="236"/>
         <source>Simulation</source>
         <translation>Симуляция</translation>
     </message>
@@ -1157,8 +1152,13 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="203"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="226"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="82"/>
+        <source>Autorun on %1 startup</source>
+        <translation>Автозапускать при запуске %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="208"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="231"/>
         <source>Decision maker</source>
         <translation>Принятие решений</translation>
     </message>

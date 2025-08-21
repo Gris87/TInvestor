@@ -10,7 +10,7 @@
 #ifdef Q_OS_WINDOWS
 const QSize DEFAULT_MAXIMUM_SIZE = QSize(250, 16777215);
 #else
-const QSize DEFAULT_MAXIMUM_SIZE = QSize(270, 16777215);
+const QSize DEFAULT_MAXIMUM_SIZE = QSize(310, 16777215);
 #endif
 
 

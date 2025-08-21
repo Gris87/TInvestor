@@ -64,9 +64,9 @@ createInitOperations(IInstrumentsStorage* instrumentsStorage, ILogosStorage* log
     operation.remainedMoney.nano              = 0;
     operation.totalMoney.units                = startMoney;
     operation.totalMoney.nano                 = 0;
-    operation.pricePrecision                  = instrument.pricePrecision;
-    operation.paymentPrecision                = instrument.pricePrecision;
-    operation.commissionPrecision             = instrument.pricePrecision;
+    operation.pricePrecision                  = 2;
+    operation.paymentPrecision                = 2;
+    operation.commissionPrecision             = 2;
 
     res.append(operation);
 

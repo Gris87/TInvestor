@@ -57,7 +57,7 @@
        <item>
         <widget class="QCheckBox" name="autorunCheckBox">
          <property name="text">
-          <string>Autorun on Windows startup</string>
+          <string notr="true">Autorun on Windows startup</string>
          </property>
          <property name="checked">
           <bool>true</bool>

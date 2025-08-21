@@ -2,6 +2,7 @@
 #include "ui_settingsdialog.h"
 
 #include <QDebug>
+#include <QSysInfo>
 
 
 
@@ -76,6 +77,10 @@ SettingsDialog::SettingsDialog(
 
     ui->layoutForSimulatorConfigWidget->addWidget(mSimulatorConfigWidget);
     ui->layoutForAutoPilotConfigWidget->addWidget(mAutoPilotConfigWidget);
+
+    ui->autorunCheckBox->setText(
+        tr("Autorun on %1 startup").arg(QSysInfo::productType().at(0).toUpper() + QSysInfo::productType().mid(1))
+    );
 }
 
 SettingsDialog::~SettingsDialog()
