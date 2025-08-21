@@ -168,7 +168,21 @@ static int runApplication(QApplication* app)
     app->installTranslator(&translator);
     qDebug() << "Localization applied";
 
-    if (!QSystemTrayIcon::isSystemTrayAvailable())
+    bool trayFound = false;
+
+    for (int i = 0; i < 5; ++i)
+    {
+        if (QSystemTrayIcon::isSystemTrayAvailable())
+        {
+            trayFound = true;
+
+            break;
+        }
+
+        QThread::msleep(1000);
+    }
+
+    if (!trayFound)
     {
         QMessageBox::critical(
             nullptr, QObject::tr("Systray"), QObject::tr("Failed to detect any system tray on this system"), QMessageBox::Close
