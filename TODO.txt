@@ -1,6 +1,6 @@
+Fix autorun
 Floating label makes main window inactive
 Fix display issue with instrument name popup
-Adapt column widths
 Script to send notifications via WhatsApp
 Script for following based on operations.json
 Improve coverage

@@ -19,7 +19,7 @@ constexpr int    MAXIMUM_HEIGHT      = 16777215;
 #ifdef Q_OS_WINDOWS
 constexpr int VISIBLE_WIDTH = 250;
 #else
-constexpr int VISIBLE_WIDTH = 270;
+constexpr int VISIBLE_WIDTH = 310;
 #endif
 
 
