@@ -1,7 +1,9 @@
 import asyncio
 import argparse
 import logging
+import os
 import sys
+import time
 from aiostream import stream
 from decimal import Decimal
 from loguru import logger
@@ -28,10 +30,12 @@ async def follow(args):
 
     logger.info("Connecting to server")
 
+    src_token = _get_token(args.src_token, args.src_token_file)
+    dest_token = _get_token(args.dest_token, args.dest_token_file)
     retry_settings = RetryClientSettings(use_retry=True, max_retry_attempt=10)
 
-    async with AsyncRetryingClient(args.src_token, settings=retry_settings, target=INVEST_GRPC_API if args.official_src else INVEST_GRPC_API_SANDBOX) as src_client:
-        async with AsyncRetryingClient(args.dest_token, settings=retry_settings, target=INVEST_GRPC_API if args.official_dest else INVEST_GRPC_API_SANDBOX) as dest_client:
+    async with AsyncRetryingClient(src_token, settings=retry_settings, target=INVEST_GRPC_API if args.official_src else INVEST_GRPC_API_SANDBOX) as src_client:
+        async with AsyncRetryingClient(dest_token, settings=retry_settings, target=INVEST_GRPC_API if args.official_dest else INVEST_GRPC_API_SANDBOX) as dest_client:
             logger.info("Verifying accounts")
 
             if not await _validate_account(src_client, args.src_account, "Source"):
@@ -40,9 +44,20 @@ async def follow(args):
             if not await _validate_account(dest_client, args.dest_account, "Destination"):
                 return
 
-            await _start_follow(src_client, dest_client, args.src_account, args.dest_account)
+            if args.mode == "stream":
+                await _start_follow_stream_mode(src_client, dest_client, args.src_account, args.dest_account)
+            else:
+                await _start_follow_poll_mode(src_client, dest_client, args.src_account, args.dest_account, args.polling_file)
 
     return
+
+
+def _get_token(token, token_file):
+    if token != "":
+        return token
+
+    with open(token_file, "r") as f:
+        return f.read().strip()
 
 
 async def _validate_account(client, account_id, direction):
@@ -64,7 +79,7 @@ async def _validate_account(client, account_id, direction):
     return True
 
 
-async def _start_follow(src_client, dest_client, src_account, dest_account):
+async def _start_follow_stream_mode(src_client, dest_client, src_account, dest_account):
     src_portfolio = await src_client.operations.get_portfolio(account_id=src_account)
     dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
 
@@ -84,6 +99,28 @@ async def _start_follow(src_client, dest_client, src_account, dest_account):
                     raise Exception(f"Unexpected account ID = {x.portfolio.account_id}")
 
                 await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
+
+
+async def _start_follow_poll_mode(src_client, dest_client, src_account, dest_account, polling_file):
+    last_modified = os.path.getmtime(polling_file)
+
+    src_portfolio = await src_client.operations.get_portfolio(account_id=src_account)
+    dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
+
+    await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
+
+    while True:
+        current_modified = os.path.getmtime(polling_file)
+
+        if current_modified != last_modified:
+            last_modified = current_modified
+
+            src_portfolio = await src_client.operations.get_portfolio(account_id=src_account)
+            dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
+
+            await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
+
+        time.sleep(1)
 
 
 async def _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio):
@@ -316,30 +353,89 @@ def main():
         "--src-token",
         dest="src_token",
         type=str,
-        default="t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ",
+        default="",
         help="Token for Tinkoff API (Source account)",
     )
     parser.add_argument(
         "--dest-token",
         dest="dest_token",
         type=str,
-        default="t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ",
+        default="",
         help="Token for Tinkoff API (Destination account)",
+    )
+    parser.add_argument(
+        "--src-token-file",
+        dest="src_token_file",
+        type=str,
+        default="",
+        help="Path to file with token for Tinkoff API (Source account)",
+    )
+    parser.add_argument(
+        "--dest-token-file",
+        dest="dest_token_file",
+        type=str,
+        default="",
+        help="Path to file with token for Tinkoff API (Destination account)",
     )
     parser.add_argument(
         "--src-account",
         dest="src_account",
         type=str,
-        default="b70b4b15-c812-4fbd-81c8-538235d19ff7",
+        default="",
         help="Source account ID",
     )
     parser.add_argument(
         "--dest-account",
         dest="dest_account",
         type=str,
-        default="867e59f0-f101-4a12-8c3d-5ccdf1e7f99f",
+        default="",
         help="Destination account ID",
     )
+    parser.add_argument(
+        "--mode",
+        dest="mode",
+        type=str,
+        choices=["stream", "poll"],
+        default="stream",
+        help="Mode for detecting portfolio changes",
+    )
+    parser.add_argument(
+        "--polling-file",
+        dest="polling_file",
+        type=str,
+        default="",
+        help="Path to file for polling (only for --mode poll)",
+    )
     args = parser.parse_args()
+
+    if (args.src_token == "" and args.src_token_file == "") or (args.src_token != "" and args.src_token_file != ""):
+        logger.error("Please specify source token with --src-token or --src-token-file")
+
+        sys.exit(1)
+
+    if (args.dest_token == "" and args.dest_token_file == "") or (args.dest_token != "" and args.dest_token_file != ""):
+        logger.error("Please specify destination token with --dest-token or --dest-token-file")
+
+        sys.exit(1)
+
+    if args.src_account == "":
+        logger.error("Please specify source account ID with --src-account")
+
+        sys.exit(1)
+
+    if args.dest_account == "":
+        logger.error("Please specify destination account ID with --dest-account")
+
+        sys.exit(1)
+
+    if args.mode == "poll" and args.polling_file == "":
+        logger.error("Please specify path to file for polling with --polling-file")
+
+        sys.exit(1)
+
+    if args.mode != "poll" and args.polling_file != "":
+        logger.error("Path to file for polling specified without --mode poll")
+
+        sys.exit(1)
 
     asyncio.run(follow(args))

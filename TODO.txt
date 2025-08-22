@@ -1,6 +1,5 @@
 Script to send notifications via WhatsApp
-Script for following based on operations.json
-Store token encrypted in file
+Improve trading in tinkoff-follower
 Improve coverage
 Create release
 

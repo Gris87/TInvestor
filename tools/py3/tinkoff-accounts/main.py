@@ -18,7 +18,9 @@ def collect_tinkoff_data(args):
 
     logger.info("Connecting to server")
 
-    with Client(args.token, target=INVEST_GRPC_API if args.official else INVEST_GRPC_API_SANDBOX) as client:
+    token = _get_token(args.token, args.token_file)
+
+    with Client(token, target=INVEST_GRPC_API if args.official else INVEST_GRPC_API_SANDBOX) as client:
         accounts, portfolios, operations = _collect_data(client)
         results = _handle_accounts(accounts, portfolios, operations)
 
@@ -36,6 +38,14 @@ def collect_tinkoff_data(args):
         for i, result_by_account in enumerate(results):
             with open(f"{args.output}/result_{i}.json", "w", encoding='utf-8') as f:
                 f.write(json.dumps(result_by_account, indent=4, ensure_ascii=False))
+
+
+def _get_token(token, token_file):
+    if token != "":
+        return token
+
+    with open(token_file, "r") as f:
+        return f.read().strip()
 
 
 def _collect_data(client):
@@ -505,8 +515,15 @@ def main():
         "--token",
         dest="token",
         type=str,
-        default="t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ",
+        default="",
         help="Token for Tinkoff API",
+    )
+    parser.add_argument(
+        "--token-file",
+        dest="token_file",
+        type=str,
+        default="",
+        help="Path to file with token for Tinkoff API",
     )
     parser.add_argument(
         "--output",
@@ -516,5 +533,10 @@ def main():
         help="Output directory",
     )
     args = parser.parse_args()
+
+    if (args.token == "" and args.token_file == "") or (args.token != "" and args.token_file != ""):
+        logger.error("Please specify token with --token or --token-file")
+
+        sys.exit(1)
 
     sys.exit(0 if collect_tinkoff_data(args) else 1)

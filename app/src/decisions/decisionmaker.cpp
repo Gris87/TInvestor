@@ -444,6 +444,7 @@ void DecisionMaker::makeDecisions(
                     cost = totalCost * limitStockPurchasePart;
                 }
 
+                cost         = qMax(cost, lotPrice);
                 amountOfLots = qMin(qRound64(cost / lotPrice), static_cast<qint64>(money / lotPriceWithCommission));
             }
             else
