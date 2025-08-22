@@ -1,9 +1,13 @@
 import argparse
 import json
+import os
+import psutil
 import requests
+import subprocess
 import sys
 import time
 from loguru import logger
+from pathlib import Path
 
 from localization import *
 
@@ -37,11 +41,29 @@ def _check_operations_json(args):
 
 
 def _check_core_file(args):
-    pass
+    core_file = Path(args.path_to_operations).parent.parent.parent.parent / "core"
+
+    if core_file.exists():
+        _send_message(args, msg_core_file_found)
+
+        now = round(time.time() * 1000)
+        os.rename(core_file, f"{core_file}_{now}")
 
 
 def _check_app_running(args):
-    pass
+    found = False
+
+    for proc in psutil.process_iter(['name']):
+        if proc.info['name'] == "TInvestor":
+            found = True
+
+            break
+
+    if not found:
+        _send_message(args, msg_app_restart)
+
+        home_directory = Path.home()
+        subprocess.Popen(["xdg-open", f"{home_directory}/Desktop/TInvestor.desktop"], close_fds=True)
 
 
 def _send_message(args, msg):

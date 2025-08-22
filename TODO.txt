@@ -1,4 +1,4 @@
-Script to send notifications via WhatsApp
+Double check start/stop simulator/autopilot on authFailed and login
 Improve coverage
 Create release
 

@@ -116,14 +116,14 @@ def _execute_commands(commands):
 
 
 def _execute_command(command):
-    env = os.environ.copy()
-    env["CLAZY_CHECKS_AS_ERRORS"] = command[1].split("=")[1]
+    my_env = os.environ.copy()
+    my_env["CLAZY_CHECKS_AS_ERRORS"] = command[1].split("=")[1]
 
     process = subprocess.Popen(
         command,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-        env=env,
+        env=my_env,
     )
 
     lines = []
