@@ -8,10 +8,11 @@ from aiostream import stream
 from decimal import Decimal
 from loguru import logger
 
-from tinkoff.invest import InstrumentIdType, GetMaxLotsRequest, OrderDirection, OrderType, PriceType, TimeInForceType
+from tinkoff.invest import InstrumentIdType, GetMaxLotsRequest, OrderDirection, OrderExecutionReportStatus, OrderType, PriceType, TimeInForceType
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
+from tinkoff.invest.schemas import OrderIdType
 from tinkoff.invest.utils import quotation_to_decimal
 
 
@@ -199,10 +200,10 @@ async def _build_instruments_for_trading(dest_client, src_instrument_to_cost, de
 async def _trade_instruments(dest_client, dest_account, instruments):
     tasks = []
 
+    dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
+
     for instrument_id, expected_cost in instruments.items():
         current_cost = Decimal(0)
-
-        dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
 
         for position in dest_portfolio.positions:
             if position.instrument_uid == instrument_id:
@@ -223,45 +224,73 @@ async def _trade_instruments(dest_client, dest_account, instruments):
 async def _sell_instrument(dest_client, dest_account, instrument_id, delta, sell_all):
     lot = await _get_instrument_lot(dest_client, instrument_id)
 
+    order_id = None
+    order_price = None
+
     while True:
+        if order_id is not None:
+            resp = await dest_client.orders.get_order_state(
+                account_id=dest_account,
+                order_id=order_id,
+                price_type=PriceType.PRICE_TYPE_CURRENCY,
+                order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+            )
+
+            if resp.execution_report_status == OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_FILL:
+                break
+
         order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
 
-        if order_book.bids and order_book.asks:
-            bid = order_book.bids[0]
+        if order_book.asks:
             ask = order_book.asks[0]
 
-            bid_decimal = quotation_to_decimal(bid.price)
-            ask_decimal = quotation_to_decimal(ask.price)
+            if ask.price != order_price:
+                if order_id is not None:
+                    resp = await dest_client.orders.get_order_state(
+                        account_id=dest_account,
+                        order_id=order_id,
+                        price_type=PriceType.PRICE_TYPE_CURRENCY,
+                        order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                    )
 
-            spread = (ask_decimal / bid_decimal - 1) * 100
+                    delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
 
-            if spread < 0.5:
-                lot_price = lot * bid_decimal
+                    await dest_client.orders.cancel_order(
+                        account_id=dest_account,
+                        order_id=order_id,
+                        order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                    )
 
-                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=bid.price)
+                    order_id = None
+                    order_price = None
+
+                ask_decimal = quotation_to_decimal(ask.price)
+                lot_price = lot * ask_decimal
+
+                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=ask.price)
                 max_lots = await dest_client.orders.get_max_lots(req)
 
                 if sell_all:
-                    amount_to_sell = min(bid.quantity, max_lots.sell_limits.sell_max_lots)
+                    amount_to_sell = max_lots.sell_limits.sell_max_lots
                 else:
                     delta_quantity = round(delta / lot_price)
-                    amount_to_sell = min(min(delta_quantity, bid.quantity), max_lots.sell_limits.sell_max_lots)
+                    amount_to_sell = min(delta_quantity, max_lots.sell_limits.sell_max_lots)
 
                 if amount_to_sell > 0:
                     resp = await dest_client.orders.post_order(
                         quantity=amount_to_sell,
+                        price=ask.price,
                         direction=OrderDirection.ORDER_DIRECTION_SELL,
                         account_id=dest_account,
-                        order_type=OrderType.ORDER_TYPE_MARKET,
+                        order_type=OrderType.ORDER_TYPE_LIMIT,
                         instrument_id=instrument_id,
                         time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
                         price_type=PriceType.PRICE_TYPE_CURRENCY
                     )
 
-                    delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
-
-                    if delta < lot_price:
-                        break
+                    if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                        order_id = resp.order_id
+                        order_price = ask.price
                 else:
                     break
 
@@ -271,42 +300,70 @@ async def _sell_instrument(dest_client, dest_account, instrument_id, delta, sell
 async def _buy_instrument(dest_client, dest_account, instrument_id, delta):
     lot = await _get_instrument_lot(dest_client, instrument_id)
 
+    order_id = None
+    order_price = None
+
     while True:
+        if order_id is not None:
+            resp = await dest_client.orders.get_order_state(
+                account_id=dest_account,
+                order_id=order_id,
+                price_type=PriceType.PRICE_TYPE_CURRENCY,
+                order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+            )
+
+            if resp.execution_report_status == OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_FILL:
+                break
+
         order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
 
-        if order_book.bids and order_book.asks:
+        if order_book.bids:
             bid = order_book.bids[0]
-            ask = order_book.asks[0]
 
-            bid_decimal = quotation_to_decimal(bid.price)
-            ask_decimal = quotation_to_decimal(ask.price)
+            if bid.price != order_price:
+                if order_id is not None:
+                    resp = await dest_client.orders.get_order_state(
+                        account_id=dest_account,
+                        order_id=order_id,
+                        price_type=PriceType.PRICE_TYPE_CURRENCY,
+                        order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                    )
 
-            spread = (ask_decimal / bid_decimal - 1) * 100
+                    delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
 
-            if spread < 0.5:
-                lot_price = lot * ask_decimal
+                    await dest_client.orders.cancel_order(
+                        account_id=dest_account,
+                        order_id=order_id,
+                        order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                    )
 
-                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=ask.price)
+                    order_id = None
+                    order_price = None
+
+                bid_decimal = quotation_to_decimal(bid.price)
+                lot_price = lot * bid_decimal
+
+                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=bid.price)
                 max_lots = await dest_client.orders.get_max_lots(req)
 
                 delta_quantity = round(delta / lot_price)
-                amount_to_buy = min(min(delta_quantity, ask.quantity), max_lots.buy_limits.buy_max_lots)
+                amount_to_buy = min(delta_quantity, max_lots.buy_limits.buy_max_lots)
 
                 if amount_to_buy > 0:
                     resp = await dest_client.orders.post_order(
                         quantity=amount_to_buy,
+                        price=bid.price,
                         direction=OrderDirection.ORDER_DIRECTION_BUY,
                         account_id=dest_account,
-                        order_type=OrderType.ORDER_TYPE_MARKET,
+                        order_type=OrderType.ORDER_TYPE_LIMIT,
                         instrument_id=instrument_id,
                         time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
                         price_type=PriceType.PRICE_TYPE_CURRENCY
                     )
 
-                    delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
-
-                    if delta < lot_price:
-                        break
+                    if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                        order_id = resp.order_id
+                        order_price = bid.price
                 else:
                     break
 

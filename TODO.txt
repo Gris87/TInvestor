@@ -1,5 +1,4 @@
 Script to send notifications via WhatsApp
-Improve trading in tinkoff-follower
 Improve coverage
 Create release
 
