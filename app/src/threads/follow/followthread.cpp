@@ -12,7 +12,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 FollowThread::FollowThread(IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent) :
     IFollowThread(parent),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
     mGrpcClient(grpcClient),
     mAccountId(),
@@ -27,7 +27,7 @@ FollowThread::~FollowThread()
 {
     qDebug() << "Destroy FollowThread";
 
-    delete mMutex;
+    delete mRwMutex;
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
@@ -45,40 +45,44 @@ void FollowThread::run()
     {
         handlePortfolios(portfolio, anotherPortfolio);
 
-        createPortfolioStream();
-
-        while (true)
+        if (createPortfolioStream())
         {
-            const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
-                mGrpcClient->readPortfolioStream(mPortfolioStream);
-
-            if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
+            while (true)
             {
-                break;
-            }
+                const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
+                    mGrpcClient->readPortfolioStream(mPortfolioStream);
 
-            if (portfolioStreamResponse->has_portfolio())
-            {
-                const tinkoff::PortfolioResponse tinkoffPortfolio = portfolioStreamResponse->portfolio();
-                const QString                    accountId        = QString::fromStdString(tinkoffPortfolio.account_id());
-
-                Q_ASSERT_X(accountId == mAccountId || accountId == mAnotherAccountId, __FUNCTION__, "Unexpected account ID");
-
-                if (accountId == mAccountId)
+                if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
                 {
-                    *portfolio = tinkoffPortfolio;
-                }
-                else
-                {
-                    *anotherPortfolio = tinkoffPortfolio;
+                    break;
                 }
 
-                handlePortfolios(portfolio, anotherPortfolio);
+                if (portfolioStreamResponse->has_portfolio())
+                {
+                    const tinkoff::PortfolioResponse tinkoffPortfolio = portfolioStreamResponse->portfolio();
+                    const QString                    accountId        = QString::fromStdString(tinkoffPortfolio.account_id());
+
+                    Q_ASSERT_X(accountId == mAccountId || accountId == mAnotherAccountId, __FUNCTION__, "Unexpected account ID");
+
+                    if (accountId == mAccountId)
+                    {
+                        *portfolio = tinkoffPortfolio;
+                    }
+                    else
+                    {
+                        *anotherPortfolio = tinkoffPortfolio;
+                    }
+
+                    handlePortfolios(portfolio, anotherPortfolio);
+                }
             }
         }
 
-        mGrpcClient->finishPortfolioStream(mPortfolioStream);
-        mPortfolioStream = nullptr;
+        if (mPortfolioStream != nullptr)
+        {
+            mGrpcClient->finishPortfolioStream(mPortfolioStream);
+            mPortfolioStream = nullptr;
+        }
     }
 
     qDebug() << "Finish FollowThread";
@@ -94,14 +98,14 @@ void FollowThread::setAccounts(const QString& accountId, const QString& anotherA
 
 void FollowThread::setKeepMoney(int value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mKeepMoney = value;
 }
 
 int FollowThread::keepMoney() const
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mKeepMoney;
 }
@@ -109,6 +113,8 @@ int FollowThread::keepMoney() const
 void FollowThread::terminateThread()
 {
     blockSignals(true);
+
+    const QReadLocker lock(mRwMutex);
 
     if (mPortfolioStream != nullptr)
     {
@@ -118,9 +124,20 @@ void FollowThread::terminateThread()
     requestInterruption();
 }
 
-void FollowThread::createPortfolioStream()
+bool FollowThread::createPortfolioStream()
 {
-    mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId, mAnotherAccountId);
+    bool res = false;
+
+    const QWriteLocker lock(mRwMutex);
+
+    if (!QThread::currentThread()->isInterruptionRequested())
+    {
+        mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId, mAnotherAccountId);
+
+        res = true;
+    }
+
+    return res;
 }
 
 void FollowThread::handlePortfolios(

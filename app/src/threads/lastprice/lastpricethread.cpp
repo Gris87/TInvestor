@@ -13,6 +13,7 @@ constexpr qint64 SLEEP_DELAY  = 5LL * MS_IN_SECOND; // 5 seconds
 
 LastPriceThread::LastPriceThread(IStocksStorage* stocksStorage, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent) :
     ILastPriceThread(parent),
+    mRwMutex(new QReadWriteLock()),
     mStocksStorage(stocksStorage),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
@@ -25,6 +26,8 @@ LastPriceThread::LastPriceThread(IStocksStorage* stocksStorage, ITimeUtils* time
 LastPriceThread::~LastPriceThread()
 {
     qDebug() << "Destroy LastPriceThread";
+
+    delete mRwMutex;
 }
 
 void LastPriceThread::run()
@@ -58,9 +61,7 @@ void LastPriceThread::run()
     QMap<QString, Stock*> stocksMap;
     mNeedToRebuildStocksMap = true;
 
-    createMarketDataStream();
-
-    if (mGrpcClient->subscribeLastPrices(mMarketDataStream, stocks))
+    if (createMarketDataStream(stocks))
     {
         while (true)
         {
@@ -121,8 +122,11 @@ void LastPriceThread::run()
         }
     }
 
-    mGrpcClient->finishMarketDataStream(mMarketDataStream);
-    mMarketDataStream = nullptr;
+    if (mMarketDataStream != nullptr)
+    {
+        mGrpcClient->finishMarketDataStream(mMarketDataStream);
+        mMarketDataStream = nullptr;
+    }
 
     qDebug() << "Finish LastPriceThread";
 }
@@ -163,6 +167,8 @@ QMap<QString, Stock*> LastPriceThread::buildStocksMap()
 
 void LastPriceThread::stocksChanged()
 {
+    const QReadLocker lock(mRwMutex);
+
     if (mMarketDataStream != nullptr)
     {
         if (mGrpcClient->unsubscribeLastPrices(mMarketDataStream))
@@ -177,6 +183,8 @@ void LastPriceThread::terminateThread()
 {
     blockSignals(true);
 
+    const QReadLocker lock(mRwMutex);
+
     if (mMarketDataStream != nullptr)
     {
         mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
@@ -186,7 +194,18 @@ void LastPriceThread::terminateThread()
     requestInterruption();
 }
 
-void LastPriceThread::createMarketDataStream()
+bool LastPriceThread::createMarketDataStream(const QStringList& stocks)
 {
-    mMarketDataStream = mGrpcClient->createMarketDataStream();
+    bool res = false;
+
+    const QWriteLocker lock(mRwMutex);
+
+    if (!QThread::currentThread()->isInterruptionRequested())
+    {
+        mMarketDataStream = mGrpcClient->createMarketDataStream();
+
+        res = mGrpcClient->subscribeLastPrices(mMarketDataStream, stocks);
+    }
+
+    return res;
 }

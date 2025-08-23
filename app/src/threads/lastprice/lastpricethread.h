@@ -4,6 +4,8 @@
 
 #include "src/threads/lastprice/ilastpricethread.h"
 
+#include <QReadWriteLock>
+
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/utils/timeutils/itimeutils.h"
@@ -28,12 +30,13 @@ public:
     void stocksChanged() override;
     void terminateThread() override;
 
-    void createMarketDataStream();
+    bool createMarketDataStream(const QStringList& stocks);
 
 private:
     QStringList           getStockUIDs();
     QMap<QString, Stock*> buildStocksMap();
 
+    QReadWriteLock*                   mRwMutex;
     IStocksStorage*                   mStocksStorage;
     ITimeUtils*                       mTimeUtils;
     IGrpcClient*                      mGrpcClient;

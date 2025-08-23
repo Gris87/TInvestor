@@ -293,7 +293,7 @@ TEST_F(Test_FollowThread, Test_terminateThread)
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"), QString("another-account-id")))
         .WillOnce(Return(portfolioStream));
 
-    thread->createPortfolioStream();
+    ASSERT_EQ(thread->createPortfolioStream(), true);
 
     EXPECT_CALL(*grpcClientMock, cancelPortfolioStream(portfolioStream));
 

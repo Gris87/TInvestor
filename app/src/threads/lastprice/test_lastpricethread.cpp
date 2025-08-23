@@ -157,8 +157,9 @@ TEST_F(Test_LastPriceThread, Test_stocksChanged)
     stocks << &stock;
 
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "aaaa")).WillOnce(Return(true));
 
-    thread->createMarketDataStream();
+    thread->createMarketDataStream(QStringList() << "aaaa");
 
     EXPECT_CALL(*grpcClientMock, unsubscribeLastPrices(marketDataStream)).WillOnce(Return(true));
     EXPECT_CALL(*stocksStorageMock, readLock());
@@ -175,8 +176,9 @@ TEST_F(Test_LastPriceThread, Test_terminateThread)
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "aaaa")).WillOnce(Return(true));
 
-    thread->createMarketDataStream();
+    thread->createMarketDataStream(QStringList() << "aaaa");
 
     EXPECT_CALL(*grpcClientMock, closeWriteMarketDataStream(marketDataStream)).WillOnce(Return(true));
     EXPECT_CALL(*grpcClientMock, cancelMarketDataStream(marketDataStream));

@@ -4,7 +4,7 @@
 
 #include "src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread.h"
 
-#include <QMutex>
+#include <QReadWriteLock>
 
 #include "src/decisions/idecisionmaker.h"
 #include "src/grpc/igrpcclient.h"
@@ -43,7 +43,7 @@ private:
     Portfolio       handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     InstrumentSells handleGetOperationsByCursorResponse(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations);
 
-    QMutex*         mMutex;
+    QReadWriteLock* mRwMutex;
     IStocksStorage* mStocksStorage;
     IConfig*        mConfig;
     IDecisionMaker* mDecisionMaker;

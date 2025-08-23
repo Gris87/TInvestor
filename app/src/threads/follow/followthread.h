@@ -4,7 +4,7 @@
 
 #include "src/threads/follow/ifollowthread.h"
 
-#include <QMutex>
+#include <QReadWriteLock>
 
 #include "src/domain/portfolio/portfoliominitem.h"
 #include "src/grpc/igrpcclient.h"
@@ -33,7 +33,7 @@ public:
 
     void terminateThread() override;
 
-    void createPortfolioStream();
+    bool createPortfolioStream();
 
 private:
     void handlePortfolios(
@@ -51,7 +51,7 @@ private:
                      InstrumentsForTrading&   instrumentsForBuy
                  );
 
-    QMutex*                          mMutex;
+    QReadWriteLock*                  mRwMutex;
     IInstrumentsStorage*             mInstrumentsStorage;
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;

@@ -20,7 +20,7 @@ AutoPilotDecisionMakerThread::AutoPilotDecisionMakerThread(
     IStocksStorage* stocksStorage, IConfig* config, IDecisionMaker* decisionMaker, IGrpcClient* grpcClient, QObject* parent
 ) :
     IAutoPilotDecisionMakerThread(parent),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mStocksStorage(stocksStorage),
     mConfig(config),
     mDecisionMaker(decisionMaker),
@@ -35,7 +35,7 @@ AutoPilotDecisionMakerThread::~AutoPilotDecisionMakerThread()
 {
     qDebug() << "Destroy AutoPilotDecisionMakerThread";
 
-    delete mMutex;
+    delete mRwMutex;
 }
 
 void AutoPilotDecisionMakerThread::run()
@@ -87,21 +87,19 @@ void AutoPilotDecisionMakerThread::run()
 
 void AutoPilotDecisionMakerThread::setAccountId(const QString& accountId)
 {
-    const QMutexLocker lock(mMutex);
-
     mAccountId = accountId;
 }
 
 void AutoPilotDecisionMakerThread::setKeepMoney(int value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mKeepMoney = value;
 }
 
 int AutoPilotDecisionMakerThread::keepMoney() const
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mKeepMoney;
 }
