@@ -242,11 +242,7 @@ void FollowThread::buildInstrumentsForTrading(
             continue;
         }
 
-        mInstrumentsStorage->readLock();
-        const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
-        Q_ASSERT_X(instrumentsData.contains(instrumentId), __FUNCTION__, "Data about instrument not found");
-        const qint32 lot = instrumentsData.value(instrumentId).lot;
-        mInstrumentsStorage->readUnlock();
+        const qint32 lot = getInstrumentLot(instrumentId);
 
         const PortfolioMinItem& item     = instruments[instrumentId];
         const double            delta    = expectedCost - item.cost;
@@ -285,4 +281,17 @@ void FollowThread::buildInstrumentsForTrading(
             );
         }
     }
+}
+
+qint32 FollowThread::getInstrumentLot(const QString& instrumentId) const
+{
+    mInstrumentsStorage->readLock();
+
+    const Instruments& instruments = mInstrumentsStorage->getInstruments();
+    Q_ASSERT_X(instruments.contains(instrumentId), __FUNCTION__, "Data about instrument not found");
+    const qint32 res = instruments.value(instrumentId).lot;
+
+    mInstrumentsStorage->readUnlock();
+
+    return res;
 }

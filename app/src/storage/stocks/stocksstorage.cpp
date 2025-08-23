@@ -13,9 +13,9 @@ constexpr float  TWO_COMMISSIONS_IN_PERCENT = 2 / 100.0f;
 
 StocksStorage::StocksStorage(IStocksDatabase* stocksDatabase, IUserStorage* userStorage) :
     IStocksStorage(),
+    mRwMutex(new QReadWriteLock()),
     mStocksDatabase(stocksDatabase),
     mUserStorage(userStorage),
-    mRwMutex(new QReadWriteLock()),
     mStocks()
 {
     qDebug() << "Create StocksStorage";

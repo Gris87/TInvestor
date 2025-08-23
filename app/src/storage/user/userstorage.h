@@ -33,8 +33,8 @@ public:
     const Accounts& getAccounts() override;
 
 private:
-    IUserDatabase*  mUserDatabase;
     QReadWriteLock* mRwMutex;
+    IUserDatabase*  mUserDatabase;
     User            mUser;
     Accounts        mAccounts;
 };

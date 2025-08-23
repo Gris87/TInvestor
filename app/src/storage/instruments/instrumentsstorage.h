@@ -28,7 +28,7 @@ public:
     void               mergeInstruments(const Instruments& instruments) override;
 
 private:
-    IInstrumentsDatabase* mInstrumentsDatabase;
     QReadWriteLock*       mRwMutex;
+    IInstrumentsDatabase* mInstrumentsDatabase;
     Instruments           mInstruments;
 };

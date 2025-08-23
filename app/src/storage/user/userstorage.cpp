@@ -6,8 +6,8 @@
 
 UserStorage::UserStorage(IUserDatabase* userDatabase) :
     IUserStorage(),
-    mUserDatabase(userDatabase),
     mRwMutex(new QReadWriteLock()),
+    mUserDatabase(userDatabase),
     mUser(),
     mAccounts()
 {

@@ -586,7 +586,9 @@ TEST_F(Test_MainWindow, Test_authFailed)
         .WillOnce(Return(std::shared_ptr<IAuthDialog>(authDialogMock)));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*authDialogMock, getToken()).WillOnce(Return("CoolToken"));
+    EXPECT_CALL(*userStorageMock, writeLock());
     EXPECT_CALL(*userStorageMock, setToken(QString("CoolToken")));
+    EXPECT_CALL(*userStorageMock, writeUnlock());
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(false)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
@@ -1752,14 +1754,22 @@ TEST_F(Test_MainWindow, Test_init)
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
     // clang-format on
 
+    EXPECT_CALL(*userStorageMock, writeLock());
     EXPECT_CALL(*userStorageMock, readFromDatabase());
+    EXPECT_CALL(*userStorageMock, writeUnlock());
+    EXPECT_CALL(*stocksStorageMock, writeLock());
     EXPECT_CALL(*stocksStorageMock, readFromDatabase());
+    EXPECT_CALL(*stocksStorageMock, writeUnlock());
+    EXPECT_CALL(*instrumentsStorageMock, writeLock());
     EXPECT_CALL(*instrumentsStorageMock, readFromDatabase());
+    EXPECT_CALL(*instrumentsStorageMock, writeUnlock());
+    EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, readFromDatabase());
+    EXPECT_CALL(*logosStorageMock, writeUnlock());
+    EXPECT_CALL(*stocksStorageMock, readLock()).Times(2);
     EXPECT_CALL(*stocksStorageMock, assignLogos());
-    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*stocksStorageMock, readUnlock()).Times(2);
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(false)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))

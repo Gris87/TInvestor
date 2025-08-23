@@ -4,7 +4,7 @@
 
 #include "src/threads/trading/itradingthread.h"
 
-#include <QMutex>
+#include <QReadWriteLock>
 
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
@@ -73,7 +73,7 @@ private:
     void cancelOrder();
     void informAboutOrderState(const tinkoff::OrderState& tinkoffOrder);
 
-    QMutex*              mMutex;
+    QReadWriteLock*      mRwMutex;
     IInstrumentsStorage* mInstrumentsStorage;
     IGrpcClient*         mGrpcClient;
     ILogsThread*         mLogsThread;

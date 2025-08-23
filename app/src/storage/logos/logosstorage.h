@@ -28,8 +28,8 @@ public:
     Logo* getLogo(const QString& instrumentId) override;
 
 private:
-    ILogosDatabase* mLogosDatabase;
     QReadWriteLock* mRwMutex;
+    ILogosDatabase* mLogosDatabase;
     Logos           mLogos;
     Logo            mNotFoundLogo;
 };

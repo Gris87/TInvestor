@@ -24,7 +24,7 @@ TradingThread::TradingThread(
     QObject*             parent
 ) :
     ITradingThread(parent),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
     mGrpcClient(grpcClient),
     mLogsThread(logsThread),
@@ -47,7 +47,7 @@ TradingThread::~TradingThread()
 {
     qDebug() << "Destroy TradingThread";
 
-    delete mMutex;
+    delete mRwMutex;
 }
 
 void TradingThread::run()
@@ -68,7 +68,7 @@ void TradingThread::run()
 
 void TradingThread::setExpectedCost(double expectedCost, const QString& cause)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     if (mExpectedCost != expectedCost)
     {
@@ -80,7 +80,7 @@ void TradingThread::setExpectedCost(double expectedCost, const QString& cause)
 
 double TradingThread::expectedCost() const
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mExpectedCost;
 }
@@ -140,9 +140,9 @@ void TradingThread::getInstrumentData()
 {
     mInstrumentsStorage->readLock();
 
-    const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
-    Q_ASSERT_X(instrumentsData.contains(mInstrumentId), __FUNCTION__, "Data about instrument not found");
-    const Instrument& instrument = instrumentsData.value(mInstrumentId);
+    const Instruments& instruments = mInstrumentsStorage->getInstruments();
+    Q_ASSERT_X(instruments.contains(mInstrumentId), __FUNCTION__, "Data about instrument not found");
+    const Instrument& instrument = instruments.value(mInstrumentId);
 
     mInstrumentLot  = instrument.lot;
     mPricePrecision = instrument.pricePrecision;

@@ -442,7 +442,9 @@ void MainWindow::authFailed(
 
     if (dialog->exec() == QDialog::Accepted)
     {
+        mUserStorage->writeLock();
         mUserStorage->setToken(dialog->getToken());
+        mUserStorage->writeUnlock();
 
         on_actionAuth_triggered();
     }
@@ -1121,19 +1123,27 @@ static void readDatabasesForParallel(
 
         if (dbType == DATABASE_TYPE_USER)
         {
+            readDatabasesInfo->userStorage->writeLock();
             readDatabasesInfo->userStorage->readFromDatabase();
+            readDatabasesInfo->userStorage->writeUnlock();
         }
         else if (dbType == DATABASE_TYPE_STOCKS)
         {
+            readDatabasesInfo->stocksStorage->writeLock();
             readDatabasesInfo->stocksStorage->readFromDatabase();
+            readDatabasesInfo->stocksStorage->writeUnlock();
         }
         else if (dbType == DATABASE_TYPE_INSTRUMENT)
         {
+            readDatabasesInfo->instrumentsStorage->writeLock();
             readDatabasesInfo->instrumentsStorage->readFromDatabase();
+            readDatabasesInfo->instrumentsStorage->writeUnlock();
         }
         else if (dbType == DATABASE_TYPE_LOGOS)
         {
+            readDatabasesInfo->logosStorage->writeLock();
             readDatabasesInfo->logosStorage->readFromDatabase();
+            readDatabasesInfo->logosStorage->writeUnlock();
         }
     }
 }
@@ -1148,7 +1158,10 @@ void MainWindow::init()
     ReadDatabasesInfo readDatabasesInfo(mUserStorage, mStocksStorage, mInstrumentsStorage, mLogosStorage);
     processInParallel(QThread::currentThread(), databases, readDatabasesForParallel, &readDatabasesInfo);
 
+    mStocksStorage->readLock();
     mStocksStorage->assignLogos();
+    mStocksStorage->readUnlock();
+
     updateStocksTableWidget();
 
     cleanupTimer.start(CLEANUP_INTERVAL);

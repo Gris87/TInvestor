@@ -91,7 +91,9 @@ TEST_F(Test_RawGrpcClient, Test_getUserInfo)
     context.set_credentials(creds);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->getUserInfo(usersService, &context, req, resp.get());
 
@@ -130,7 +132,9 @@ TEST_F(Test_RawGrpcClient, Test_getAccounts)
     req.set_status(tinkoff::ACCOUNT_STATUS_OPEN);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->getAccounts(usersService, &context, req, resp.get());
 
@@ -172,7 +176,9 @@ TEST_F(Test_RawGrpcClient, Test_findStocks)
     context.set_credentials(creds);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->findStocks(instrumentsService, &context, req, resp.get());
 
@@ -260,7 +266,9 @@ TEST_F(Test_RawGrpcClient, Test_findBonds)
     context.set_credentials(creds);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->findBonds(instrumentsService, &context, req, resp.get());
 
@@ -365,7 +373,9 @@ TEST_F(Test_RawGrpcClient, Test_findCurrencies)
     context.set_credentials(creds);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->findCurrencies(instrumentsService, &context, req, resp.get());
 
@@ -447,7 +457,9 @@ TEST_F(Test_RawGrpcClient, Test_findEtfs)
     context.set_credentials(creds);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->findEtfs(instrumentsService, &context, req, resp.get());
 
@@ -534,7 +546,9 @@ TEST_F(Test_RawGrpcClient, Test_findFutures)
     context.set_credentials(creds);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->findFutures(instrumentsService, &context, req, resp.get());
 
@@ -641,7 +655,9 @@ TEST_F(Test_RawGrpcClient, Test_getCandles)
     req.set_limit(MAX_LIMIT_FOR_INTERVAL_1_MIN);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->getCandles(marketDataService, &context, req, resp.get());
 
@@ -677,7 +693,9 @@ TEST_F(Test_RawGrpcClient, Test_getOrderBook)
     req.set_depth(50);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->getOrderBook(marketDataService, &context, req, resp.get());
 
@@ -701,7 +719,9 @@ TEST_F(Test_RawGrpcClient, Test_getPortfolio)
     req.set_account_id("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->getPortfolio(operationsService, &context, req, resp.get());
 
@@ -732,7 +752,9 @@ TEST_F(Test_RawGrpcClient, Test_getPositions)
     req.set_account_id("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->getPositions(operationsService, &context, req, resp.get());
 
@@ -760,7 +782,9 @@ TEST_F(Test_RawGrpcClient, Test_getOperations)
     req.set_without_trades(true);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->getOperations(operationsService, &context, req, resp.get());
 
@@ -793,7 +817,9 @@ TEST_F(Test_RawGrpcClient, Test_getMaxLots)
     req.set_instrument_id(SPBE_UID);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status = client->getMaxLots(ordersService, &context, req, resp.get());
 
@@ -831,7 +857,9 @@ TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
     req1.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status1 = client->postOrder(ordersService, &context1, req1, resp1.get());
 
@@ -882,7 +910,9 @@ TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
     req2.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
     req2.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status2 = client->getOrderState(ordersService, &context2, req2, resp2.get());
 
@@ -936,7 +966,9 @@ TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
     req3.set_order_id(resp1->order_id());
     req3.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const grpc::Status status3 = client->cancelOrder(ordersService, &context3, req3, resp3.get());
 
@@ -953,7 +985,9 @@ TEST_F(Test_RawGrpcClient, Test_MarketDataStream)
     const InSequence seq;
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
 
@@ -1001,7 +1035,9 @@ TEST_F(Test_RawGrpcClient, Test_PortfolioStream)
     req.add_accounts("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
 
@@ -1026,7 +1062,9 @@ TEST_F(Test_RawGrpcClient, Test_PositionsStream)
     req.add_accounts("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
 
     QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     std::shared_ptr<PositionsStream> positionsStream(new PositionsStream());
 

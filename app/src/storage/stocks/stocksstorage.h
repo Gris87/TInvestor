@@ -37,8 +37,8 @@ public:
     void                 obtainPayback(qint64 timestamp) override;
 
 private:
+    QReadWriteLock*  mRwMutex;
     IStocksDatabase* mStocksDatabase;
     IUserStorage*    mUserStorage;
-    QReadWriteLock*  mRwMutex;
     QList<Stock*>    mStocks;
 };

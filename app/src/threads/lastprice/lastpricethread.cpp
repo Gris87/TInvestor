@@ -167,7 +167,7 @@ QMap<QString, Stock*> LastPriceThread::buildStocksMap()
 
 void LastPriceThread::stocksChanged()
 {
-    const QReadLocker lock(mRwMutex);
+    const QWriteLocker lock(mRwMutex);
 
     if (mMarketDataStream != nullptr)
     {

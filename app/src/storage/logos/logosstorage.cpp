@@ -6,8 +6,8 @@
 
 LogosStorage::LogosStorage(ILogosDatabase* logosDatabase) :
     ILogosStorage(),
-    mLogosDatabase(logosDatabase),
     mRwMutex(new QReadWriteLock()),
+    mLogosDatabase(logosDatabase),
     mLogos(),
     mNotFoundLogo()
 {

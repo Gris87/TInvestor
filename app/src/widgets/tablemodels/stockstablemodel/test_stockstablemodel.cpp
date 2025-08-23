@@ -56,21 +56,27 @@ TEST_F(Test_StocksTableModel, Test_rowCount)
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 3);
 
     stocks << stock4.get() << stock5.get();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 5);
 
     stocks.clear();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 0);
@@ -171,7 +177,9 @@ TEST_F(Test_StocksTableModel, Test_data)
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 3);
@@ -315,7 +323,9 @@ TEST_F(Test_StocksTableModel, Test_sort)
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 3);
@@ -524,7 +534,9 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 3);
@@ -630,7 +642,9 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 3);
@@ -713,7 +727,9 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->operational.payback               = 87.0f;
     stock3->meta.pricePrecision               = 3;
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateAll();
     ASSERT_EQ(model->rowCount(), 3);
@@ -796,7 +812,9 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->operational.payback               = 97.0f;
     stock3->meta.pricePrecision               = 2;
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateAll();
     ASSERT_EQ(model->rowCount(), 3);
@@ -876,7 +894,9 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->operational.payback               = 37.0f;
     stock3->meta.pricePrecision               = 3;
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateAll();
     ASSERT_EQ(model->rowCount(), 2);
@@ -958,7 +978,9 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 3);
@@ -1302,7 +1324,9 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 3);
@@ -1624,7 +1648,9 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 3);
@@ -1946,7 +1972,9 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
 
     stocks << stock1.get() << stock2.get() << stock3.get();
 
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     model->updateTable(stocks);
     ASSERT_EQ(model->rowCount(), 3);

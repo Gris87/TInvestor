@@ -636,7 +636,9 @@ static void getCandlesWithHttp(
             url.setQuery(query.query());
 
             IHttpClient::Headers headers;
+            userStorage->readLock();
             headers["Authorization"] = QString("Bearer %1").arg(userStorage->getToken());
+            userStorage->readUnlock();
 
             while (true)
             {
@@ -801,7 +803,10 @@ void PriceCollectThread::obtainStocksData()
         QDateTime::currentMSecsSinceEpoch()
     );
 
+    mStocksStorage->readLock();
     QList<Stock*> stocks = mStocksStorage->getStocks();
+    mStocksStorage->readUnlock();
+
     processInParallel(QThread::currentThread(), stocks, getCandlesForParallel, &getCandlesInfo);
 
     const std::shared_ptr<IDir> deleteDir = mDirFactory->newInstance(qApp->applicationDirPath() + "/cache/stocks");
@@ -812,7 +817,9 @@ void PriceCollectThread::obtainStocksData()
 
 void PriceCollectThread::cleanupOperationalData()
 {
+    mStocksStorage->readLock();
     mStocksStorage->cleanupOperationalData(QDateTime::currentMSecsSinceEpoch() - ONE_HOUR);
+    mStocksStorage->readUnlock();
 }
 
 bool PriceCollectThread::obtainStocksDayStartPrice()
@@ -824,7 +831,9 @@ bool PriceCollectThread::obtainStocksDayStartPrice()
     {
         mDayStartTimestamp = newDayStartTimestamp;
 
+        mStocksStorage->readLock();
         mStocksStorage->obtainStocksDayStartPrice(mDayStartTimestamp);
+        mStocksStorage->readUnlock();
 
         return true;
     }
@@ -834,12 +843,16 @@ bool PriceCollectThread::obtainStocksDayStartPrice()
 
 void PriceCollectThread::obtainTurnover()
 {
+    mStocksStorage->readLock();
     mStocksStorage->obtainTurnover(QDateTime::currentMSecsSinceEpoch() - ONE_MONTH);
+    mStocksStorage->readUnlock();
 }
 
 void PriceCollectThread::obtainPayback()
 {
+    mStocksStorage->readLock();
     mStocksStorage->obtainPayback(QDateTime::currentMSecsSinceEpoch() - ONE_DAY);
+    mStocksStorage->readUnlock();
 }
 
 void PriceCollectThread::notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate)

@@ -457,7 +457,11 @@ void StocksTableModel::updateTable(const QList<Stock*>& stocks)
     mEntriesUnfiltered = std::make_shared<QList<StockTableEntry>>();
     mEntriesUnfiltered->resizeForOverwrite(stocks.size());
 
-    FillEntriesInfo fillEntriesInfo(stocks, mUserStorage->isQualified());
+    mUserStorage->readLock();
+    const bool qualifiedUser = mUserStorage->isQualified();
+    mUserStorage->readUnlock();
+
+    FillEntriesInfo fillEntriesInfo(stocks, qualifiedUser);
     processInParallel(QThread::currentThread(), *mEntriesUnfiltered, fillEntriesForParallel, &fillEntriesInfo);
 
     mStocks.clear();
@@ -551,7 +555,11 @@ void StocksTableModel::updateAll()
         emit layoutAboutToBeChanged();
     }
 
-    UpdateAllInfo updateAllInfo(this, &mStocks, !mFilter.isActive() && !needToSort, mUserStorage->isQualified());
+    mUserStorage->readLock();
+    const bool qualifiedUser = mUserStorage->isQualified();
+    mUserStorage->readUnlock();
+
+    UpdateAllInfo updateAllInfo(this, &mStocks, !mFilter.isActive() && !needToSort, qualifiedUser);
     processInParallel(QThread::currentThread(), *mEntriesUnfiltered, updateAllForParallel, &updateAllInfo);
 
     if (mFilter.isActive())

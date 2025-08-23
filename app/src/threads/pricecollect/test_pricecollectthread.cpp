@@ -356,13 +356,17 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock1)));
     EXPECT_CALL(*dirMock1, mkpath(appDir + "/cache/stocks")).WillOnce(Return(true));
 
+    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(24));
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/cache/stocks/aaaaa_2023.zip").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(zipFileMock1)));
     EXPECT_CALL(*zipFileMock1, exists()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
         *httpClientMock, download(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2023"), headers)
     )
@@ -394,7 +398,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/cache/stocks/aaaaa_2024.zip").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(zipFileMock2)));
     EXPECT_CALL(*zipFileMock2, exists()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
         *httpClientMock, download(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), headers)
     )
@@ -405,7 +411,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/cache/stocks/aaaaa_2025.zip").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(zipFileMock3)));
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
         *httpClientMock, download(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2025"), headers)
     )
@@ -426,10 +434,18 @@ TEST_F(Test_PriceCollectThread, Test_run)
         .WillOnce(Return(std::shared_ptr<IDir>(dirMock2)));
     EXPECT_CALL(*dirMock2, removeRecursively()).WillOnce(Return(true));
 
+    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, cleanupOperationalData(Ge(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Ge(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, obtainTurnover(Ge(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, obtainPayback(Ge(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
 
     thread->run();
 }
@@ -443,7 +459,9 @@ TEST_F(Test_PriceCollectThread, Test_obtainStocksDayStartPrice)
 {
     const InSequence seq;
 
+    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Ge(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
 
     ASSERT_EQ(thread->obtainStocksDayStartPrice(), true);
     ASSERT_EQ(thread->obtainStocksDayStartPrice(), false);

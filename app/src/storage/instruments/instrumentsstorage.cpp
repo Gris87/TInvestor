@@ -6,8 +6,8 @@
 
 InstrumentsStorage::InstrumentsStorage(IInstrumentsDatabase* instrumentsDatabase) :
     IInstrumentsStorage(),
-    mInstrumentsDatabase(instrumentsDatabase),
     mRwMutex(new QReadWriteLock()),
+    mInstrumentsDatabase(instrumentsDatabase),
     mInstruments()
 {
     qDebug() << "Create InstrumentsStorage";
