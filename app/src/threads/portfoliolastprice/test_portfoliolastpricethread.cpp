@@ -102,8 +102,9 @@ TEST_F(Test_PortfolioLastPriceThread, Test_portfolioChanged)
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList())).WillOnce(Return(true));
 
-    thread->createMarketDataStream();
+    ASSERT_EQ(thread->createMarketDataStream(), true);
 
     Portfolio             portfolio;
     PortfolioCategoryItem category;
@@ -134,8 +135,9 @@ TEST_F(Test_PortfolioLastPriceThread, Test_terminateThread)
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList())).WillOnce(Return(true));
 
-    thread->createMarketDataStream();
+    ASSERT_EQ(thread->createMarketDataStream(), true);
 
     EXPECT_CALL(*grpcClientMock, closeWriteMarketDataStream(marketDataStream)).WillOnce(Return(true));
     EXPECT_CALL(*grpcClientMock, cancelMarketDataStream(marketDataStream));

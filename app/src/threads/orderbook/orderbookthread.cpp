@@ -12,6 +12,7 @@ constexpr int ORDER_BOOK_DEPTH = 50;
 
 OrderBookThread::OrderBookThread(IGrpcClient* grpcClient, QObject* parent) :
     IOrderBookThread(parent),
+    mRwMutex(new QReadWriteLock()),
     mGrpcClient(grpcClient),
     mStock(),
     mMarketDataStream()
@@ -22,6 +23,8 @@ OrderBookThread::OrderBookThread(IGrpcClient* grpcClient, QObject* parent) :
 OrderBookThread::~OrderBookThread()
 {
     qDebug() << "Destroy OrderBookThread";
+
+    delete mRwMutex;
 }
 
 void OrderBookThread::run()
@@ -37,9 +40,7 @@ void OrderBookThread::run()
     {
         handleGetOrderBookResponse(tinkoffOrderBook);
 
-        createMarketDataStream();
-
-        if (mGrpcClient->subscribeOrderBook(mMarketDataStream, mStock->meta.instrumentId, ORDER_BOOK_DEPTH))
+        if (createMarketDataStream())
         {
             while (true)
             {
@@ -58,8 +59,11 @@ void OrderBookThread::run()
             }
         }
 
-        mGrpcClient->finishMarketDataStream(mMarketDataStream);
-        mMarketDataStream = nullptr;
+        if (mMarketDataStream != nullptr)
+        {
+            mGrpcClient->finishMarketDataStream(mMarketDataStream);
+            mMarketDataStream = nullptr;
+        }
     }
 
     qDebug() << "Finish OrderBookThread";
@@ -74,6 +78,8 @@ void OrderBookThread::terminateThread()
 {
     blockSignals(true);
 
+    const QReadLocker lock(mRwMutex);
+
     if (mMarketDataStream != nullptr)
     {
         mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
@@ -83,9 +89,20 @@ void OrderBookThread::terminateThread()
     requestInterruption();
 }
 
-void OrderBookThread::createMarketDataStream()
+bool OrderBookThread::createMarketDataStream()
 {
-    mMarketDataStream = mGrpcClient->createMarketDataStream();
+    bool res = false;
+
+    const QWriteLocker lock(mRwMutex);
+
+    if (!QThread::currentThread()->isInterruptionRequested())
+    {
+        mMarketDataStream = mGrpcClient->createMarketDataStream();
+
+        res = mGrpcClient->subscribeOrderBook(mMarketDataStream, mStock->meta.instrumentId, ORDER_BOOK_DEPTH);
+    }
+
+    return res;
 }
 
 void OrderBookThread::handleGetOrderBookResponse(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinkoffOrderBook)

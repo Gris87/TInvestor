@@ -4,6 +4,8 @@
 
 #include "src/threads/portfolio/iportfoliothread.h"
 
+#include <QReadWriteLock>
+
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
@@ -28,11 +30,12 @@ public:
     void setAccountId(const QString& accountId) override;
     void terminateThread() override;
 
-    void createPortfolioStream();
+    bool createPortfolioStream();
 
 private:
     void handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
 
+    QReadWriteLock*                  mRwMutex;
     IInstrumentsStorage*             mInstrumentsStorage;
     ILogosStorage*                   mLogosStorage;
     IGrpcClient*                     mGrpcClient;

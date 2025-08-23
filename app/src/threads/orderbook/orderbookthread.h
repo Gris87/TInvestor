@@ -4,6 +4,8 @@
 
 #include "src/threads/orderbook/iorderbookthread.h"
 
+#include <QReadWriteLock>
+
 #include "src/grpc/igrpcclient.h"
 
 
@@ -24,11 +26,13 @@ public:
     void setStock(Stock* stock) override;
     void terminateThread() override;
 
-    void createMarketDataStream();
+    bool createMarketDataStream();
+
+private:
     void handleGetOrderBookResponse(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinkoffOrderBook);
     void handleOrderBook(const tinkoff::OrderBook& tinkoffOrderBook);
 
-private:
+    QReadWriteLock*                   mRwMutex;
     IGrpcClient*                      mGrpcClient;
     Stock*                            mStock;
     std::shared_ptr<MarketDataStream> mMarketDataStream;

@@ -120,10 +120,16 @@ TEST_F(Test_OrderBookThread, Test_terminateThread)
 {
     const InSequence seq;
 
+    Stock stock;
+    stock.meta.instrumentId = "aaaaa";
+
+    thread->setStock(&stock);
+
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, subscribeOrderBook(marketDataStream, QString("aaaaa"), 50)).WillOnce(Return(true));
 
-    thread->createMarketDataStream();
+    ASSERT_EQ(thread->createMarketDataStream(), true);
 
     EXPECT_CALL(*grpcClientMock, closeWriteMarketDataStream(marketDataStream)).WillOnce(Return(true));
     EXPECT_CALL(*grpcClientMock, cancelMarketDataStream(marketDataStream));

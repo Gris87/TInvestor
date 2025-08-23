@@ -15,6 +15,7 @@ PortfolioThread::PortfolioThread(
     IInstrumentsStorage* instrumentsStorage, ILogosStorage* logosStorage, IGrpcClient* grpcClient, QObject* parent
 ) :
     IPortfolioThread(parent),
+    mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
     mGrpcClient(grpcClient),
@@ -38,6 +39,8 @@ PortfolioThread::PortfolioThread(
 PortfolioThread::~PortfolioThread()
 {
     qDebug() << "Destroy PortfolioThread";
+
+    delete mRwMutex;
 }
 
 void PortfolioThread::run()
@@ -53,26 +56,30 @@ void PortfolioThread::run()
     {
         handlePortfolioResponse(*tinkoffPortfolio);
 
-        createPortfolioStream();
-
-        while (true)
+        if (createPortfolioStream())
         {
-            const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
-                mGrpcClient->readPortfolioStream(mPortfolioStream);
-
-            if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
+            while (true)
             {
-                break;
-            }
+                const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
+                    mGrpcClient->readPortfolioStream(mPortfolioStream);
 
-            if (portfolioStreamResponse->has_portfolio())
-            {
-                handlePortfolioResponse(portfolioStreamResponse->portfolio());
+                if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
+                {
+                    break;
+                }
+
+                if (portfolioStreamResponse->has_portfolio())
+                {
+                    handlePortfolioResponse(portfolioStreamResponse->portfolio());
+                }
             }
         }
 
-        mGrpcClient->finishPortfolioStream(mPortfolioStream);
-        mPortfolioStream = nullptr;
+        if (mPortfolioStream != nullptr)
+        {
+            mGrpcClient->finishPortfolioStream(mPortfolioStream);
+            mPortfolioStream = nullptr;
+        }
     }
 
     qDebug() << "Finish PortfolioThread";
@@ -87,6 +94,8 @@ void PortfolioThread::terminateThread()
 {
     blockSignals(true);
 
+    const QReadLocker lock(mRwMutex);
+
     if (mPortfolioStream != nullptr)
     {
         mGrpcClient->cancelPortfolioStream(mPortfolioStream);
@@ -95,9 +104,20 @@ void PortfolioThread::terminateThread()
     requestInterruption();
 }
 
-void PortfolioThread::createPortfolioStream()
+bool PortfolioThread::createPortfolioStream()
 {
-    mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId);
+    bool res = false;
+
+    const QWriteLocker lock(mRwMutex);
+
+    if (!QThread::currentThread()->isInterruptionRequested())
+    {
+        mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId);
+
+        res = true;
+    }
+
+    return res;
 }
 
 void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)

@@ -13,6 +13,7 @@ constexpr qint64 SLEEP_DELAY  = 5LL * MS_IN_SECOND; // 5 seconds
 
 PortfolioLastPriceThread::PortfolioLastPriceThread(ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent) :
     IPortfolioLastPriceThread(parent),
+    mRwMutex(new QReadWriteLock()),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mMarketDataStream(),
@@ -24,6 +25,8 @@ PortfolioLastPriceThread::PortfolioLastPriceThread(ITimeUtils* timeUtils, IGrpcC
 PortfolioLastPriceThread::~PortfolioLastPriceThread()
 {
     qDebug() << "Destroy PortfolioLastPriceThread";
+
+    delete mRwMutex;
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
@@ -37,9 +40,7 @@ void PortfolioLastPriceThread::run()
     {
         if (!mInstrumentIds.isEmpty())
         {
-            createMarketDataStream();
-
-            const bool needToTerminate = !mGrpcClient->subscribeLastPrices(mMarketDataStream, mInstrumentIds);
+            const bool needToTerminate = !createMarketDataStream();
 
             if (!needToTerminate)
             {
@@ -65,8 +66,11 @@ void PortfolioLastPriceThread::run()
                 }
             }
 
-            mGrpcClient->finishMarketDataStream(mMarketDataStream);
-            mMarketDataStream = nullptr;
+            if (mMarketDataStream != nullptr)
+            {
+                mGrpcClient->finishMarketDataStream(mMarketDataStream);
+                mMarketDataStream = nullptr;
+            }
 
             if (needToTerminate)
             {
@@ -101,6 +105,8 @@ void PortfolioLastPriceThread::portfolioChanged(const Portfolio& portfolio)
         }
     }
 
+    const QWriteLocker lock(mRwMutex);
+
     if (mInstrumentIds != instrumentIds)
     {
         mInstrumentIds = instrumentIds;
@@ -127,6 +133,8 @@ void PortfolioLastPriceThread::terminateThread()
 {
     blockSignals(true);
 
+    const QReadLocker lock(mRwMutex);
+
     if (mMarketDataStream != nullptr)
     {
         mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
@@ -136,7 +144,18 @@ void PortfolioLastPriceThread::terminateThread()
     requestInterruption();
 }
 
-void PortfolioLastPriceThread::createMarketDataStream()
+bool PortfolioLastPriceThread::createMarketDataStream()
 {
-    mMarketDataStream = mGrpcClient->createMarketDataStream();
+    bool res = false;
+
+    const QWriteLocker lock(mRwMutex);
+
+    if (!QThread::currentThread()->isInterruptionRequested())
+    {
+        mMarketDataStream = mGrpcClient->createMarketDataStream();
+
+        res = mGrpcClient->subscribeLastPrices(mMarketDataStream, mInstrumentIds);
+    }
+
+    return res;
 }

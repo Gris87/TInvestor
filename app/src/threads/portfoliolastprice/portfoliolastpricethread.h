@@ -4,6 +4,8 @@
 
 #include "src/threads/portfoliolastprice/iportfoliolastpricethread.h"
 
+#include <QReadWriteLock>
+
 #include "src/grpc/igrpcclient.h"
 #include "src/utils/timeutils/itimeutils.h"
 
@@ -25,9 +27,10 @@ public:
     void portfolioChanged(const Portfolio& portfolio) override;
     void terminateThread() override;
 
-    void createMarketDataStream();
+    bool createMarketDataStream();
 
 private:
+    QReadWriteLock*                   mRwMutex;
     ITimeUtils*                       mTimeUtils;
     IGrpcClient*                      mGrpcClient;
     std::shared_ptr<MarketDataStream> mMarketDataStream;

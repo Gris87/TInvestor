@@ -164,11 +164,12 @@ TEST_F(Test_PortfolioThread, Test_terminateThread)
 {
     const InSequence seq;
 
+    thread->setAccountId("aaaaa");
+
     std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("aaaaa"))).WillOnce(Return(portfolioStream));
 
-    thread->setAccountId("aaaaa");
-    thread->createPortfolioStream();
+    ASSERT_EQ(thread->createPortfolioStream(), true);
 
     EXPECT_CALL(*grpcClientMock, cancelPortfolioStream(portfolioStream));
 

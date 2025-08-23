@@ -159,7 +159,7 @@ TEST_F(Test_LastPriceThread, Test_stocksChanged)
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
     EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "aaaa")).WillOnce(Return(true));
 
-    thread->createMarketDataStream(QStringList() << "aaaa");
+    ASSERT_EQ(thread->createMarketDataStream(QStringList() << "aaaa"), true);
 
     EXPECT_CALL(*grpcClientMock, unsubscribeLastPrices(marketDataStream)).WillOnce(Return(true));
     EXPECT_CALL(*stocksStorageMock, readLock());
@@ -178,7 +178,7 @@ TEST_F(Test_LastPriceThread, Test_terminateThread)
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
     EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "aaaa")).WillOnce(Return(true));
 
-    thread->createMarketDataStream(QStringList() << "aaaa");
+    ASSERT_EQ(thread->createMarketDataStream(QStringList() << "aaaa"), true);
 
     EXPECT_CALL(*grpcClientMock, closeWriteMarketDataStream(marketDataStream)).WillOnce(Return(true));
     EXPECT_CALL(*grpcClientMock, cancelMarketDataStream(marketDataStream));

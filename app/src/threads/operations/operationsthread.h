@@ -4,6 +4,8 @@
 
 #include "src/threads/operations/ioperationsthread.h"
 
+#include <QReadWriteLock>
+
 #include "src/db/operations/ioperationsdatabase.h"
 #include "src/domain/quantityandcost/quantityandcost.h"
 #include "src/domain/quotation/quotation.h"
@@ -37,7 +39,7 @@ public:
     void setAccountId(const QString& account, const QString& accountId) override;
     void terminateThread() override;
 
-    void createPositionsStream();
+    bool createPositionsStream();
 
     void requestOperations();
     void handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
@@ -64,6 +66,7 @@ private:
     [[nodiscard]]
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;
 
+    QReadWriteLock*                  mRwMutex;
     IOperationsDatabase*             mOperationsDatabase;
     IInstrumentsStorage*             mInstrumentsStorage;
     ILogosStorage*                   mLogosStorage;

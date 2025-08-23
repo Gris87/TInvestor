@@ -28,6 +28,7 @@ OperationsThread::OperationsThread(
     QObject*             parent
 ) :
     IOperationsThread(parent),
+    mRwMutex(new QReadWriteLock()),
     mOperationsDatabase(operationsDatabase),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
@@ -55,6 +56,8 @@ OperationsThread::OperationsThread(
 OperationsThread::~OperationsThread()
 {
     qDebug() << "Destroy OperationsThread";
+
+    delete mRwMutex;
 }
 
 void OperationsThread::run()
@@ -71,36 +74,41 @@ void OperationsThread::run()
     {
         Quotation money = handlePositionsResponse(*tinkoffPositions);
 
-        createPositionsStream();
-        requestOperations();
-
-        while (true)
+        if (createPositionsStream())
         {
-            optimize();
+            requestOperations();
 
-            const std::shared_ptr<tinkoff::PositionsStreamResponse> positionsStreamResponse =
-                mGrpcClient->readPositionsStream(mPositionsStream);
-
-            if (QThread::currentThread()->isInterruptionRequested() || positionsStreamResponse == nullptr)
+            while (true)
             {
-                break;
-            }
+                optimize();
 
-            if (positionsStreamResponse->has_position())
-            {
-                const Quotation newMoney = handlePositionsResponse(positionsStreamResponse->position());
+                const std::shared_ptr<tinkoff::PositionsStreamResponse> positionsStreamResponse =
+                    mGrpcClient->readPositionsStream(mPositionsStream);
 
-                if (money != newMoney)
+                if (QThread::currentThread()->isInterruptionRequested() || positionsStreamResponse == nullptr)
                 {
-                    money = newMoney;
+                    break;
+                }
 
-                    requestOperations();
+                if (positionsStreamResponse->has_position())
+                {
+                    const Quotation newMoney = handlePositionsResponse(positionsStreamResponse->position());
+
+                    if (money != newMoney)
+                    {
+                        money = newMoney;
+
+                        requestOperations();
+                    }
                 }
             }
         }
 
-        mGrpcClient->finishPositionsStream(mPositionsStream);
-        mPositionsStream = nullptr;
+        if (mPositionsStream != nullptr)
+        {
+            mGrpcClient->finishPositionsStream(mPositionsStream);
+            mPositionsStream = nullptr;
+        }
     }
 
     qDebug() << "Finish OperationsThread";
@@ -117,6 +125,8 @@ void OperationsThread::terminateThread()
 {
     blockSignals(true);
 
+    const QReadLocker lock(mRwMutex);
+
     if (mPositionsStream != nullptr)
     {
         mGrpcClient->cancelPositionsStream(mPositionsStream);
@@ -125,9 +135,20 @@ void OperationsThread::terminateThread()
     requestInterruption();
 }
 
-void OperationsThread::createPositionsStream()
+bool OperationsThread::createPositionsStream()
 {
-    mPositionsStream = mGrpcClient->createPositionsStream(mAccountId);
+    bool res = false;
+
+    const QWriteLocker lock(mRwMutex);
+
+    if (!QThread::currentThread()->isInterruptionRequested())
+    {
+        mPositionsStream = mGrpcClient->createPositionsStream(mAccountId);
+
+        res = true;
+    }
+
+    return res;
 }
 
 void OperationsThread::readOperations()

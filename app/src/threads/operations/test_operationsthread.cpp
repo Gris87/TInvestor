@@ -136,7 +136,7 @@ TEST_F(Test_OperationsThread, Test_terminateThread)
     std::shared_ptr<PositionsStream> positionsStream(new PositionsStream());
     EXPECT_CALL(*grpcClientMock, createPositionsStream(QString("account-id"))).WillOnce(Return(positionsStream));
 
-    thread->createPositionsStream();
+    ASSERT_EQ(thread->createPositionsStream(), true);
 
     EXPECT_CALL(*grpcClientMock, cancelPositionsStream(positionsStream));
 
