@@ -8,6 +8,24 @@ TInvestor is a T-Bank Investment trading robot
 
 ---
 
+<table>
+    <tbody>
+        <tr>
+            <td><img src="https://github.com/Gris87/TInvestor/blob/master/docs/images/screen1.png" /></td>
+            <td><img src="https://github.com/Gris87/TInvestor/blob/master/docs/images/screen2.png" /></td>
+        </tr>
+        <tr>
+            <td><img src="https://github.com/Gris87/TInvestor/blob/master/docs/images/screen3.png" /></td>
+            <td><img src="https://github.com/Gris87/TInvestor/blob/master/docs/images/screen4.png" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><img src="https://github.com/Gris87/TInvestor/blob/master/docs/images/tinvestor.jpg" width="200px" /></td>
+        </tr>
+    </tbody>
+</table>
+
+---
+
 ## Minimal system requirements
 
 - 2 cores Intel Core i5-6400 2.70GHz
@@ -26,7 +44,9 @@ TInvestor is a T-Bank Investment trading robot
 
 You have to install prerequisites in order to build TInvestor.
 
-### Install prerequisites on Windows
+<details>
+
+<summary>Install prerequisites on Windows</summary>
 
 1. Install MSVC 2022
 
@@ -145,8 +165,11 @@ GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: C:\Qt\googletest)
 ```
 
 9. Run QT Creator and compile project
+</details>
 
-### Install prerequisites on Ubuntu
+<details>
+
+<summary>Install prerequisites on Ubuntu</summary>
 
 1. Install packages
 
@@ -271,23 +294,31 @@ GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: /home/user/Qt/googletest)
 ```
 
 8. Run QT Creator and compile project
+</details>
 
 ---
 
 ## How to install
 
-### Installing on Windows
+<details>
+
+<summary>Installing on Windows</summary>
 
 - Please go to [release page](https://github.com/Gris87/TInvestor/releases)
 - Download and extract latest release
 - Execute `post_install.bat` script with admin rights (It will install certificate for tbank.ru server)
 - Run TInvestor.exe
+</details>
 
-### Installing on Ubuntu
+<details>
+
+<summary>Installing on Ubuntu</summary>
 
 - Please go to [release page](https://github.com/Gris87/TInvestor/releases)
 - Download and extract latest release
 - Execute `post_install.sh` script (It will create desktop file for application in order to let you start TInvestor from launcher menu and will create desktop file on your desktop)
 - Run TInvestor from launcher menu
+</details>
 
-**!!!Please note that development is ongoing. So, it doesn't work yet!!!**
+> [!WARNING]
+> !!!Please note that development is ongoing. So, it doesn't work yet!!!
