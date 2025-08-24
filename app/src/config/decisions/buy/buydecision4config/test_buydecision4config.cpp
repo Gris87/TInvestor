@@ -14,34 +14,49 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_BuyDecision4Config, Test_constructor_and_destructor)
+class Test_BuyDecision4Config : public ::testing::Test
 {
-    const BuyDecision4Config config;
+protected:
+    void SetUp() override
+    {
+        config = new BuyDecision4Config();
+    }
+
+    void TearDown() override
+    {
+        delete config;
+    }
+
+    BuyDecision4Config* config;
+};
+
+
+
+TEST_F(Test_BuyDecision4Config, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_BuyDecision4Config, Test_clone_and_deleteRecursively)
+TEST_F(Test_BuyDecision4Config, Test_clone_and_deleteRecursively)
 {
-    BuyDecision4Config config;
-
-    config.setEnabled(false);
-    config.setPriceFall(2.5f);
-    config.setLoseYield(3.7f);
-    config.setDuration(123);
+    config->setEnabled(false);
+    config->setPriceFall(2.5f);
+    config->setLoseYield(3.7f);
+    config->setDuration(123);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),    false);
-    ASSERT_EQ(config.getPriceFall(), 2.5f);
-    ASSERT_EQ(config.getLoseYield(), 3.7f);
-    ASSERT_EQ(config.getDuration(),  123);
+    ASSERT_EQ(config->isEnabled(),    false);
+    ASSERT_EQ(config->getPriceFall(), 2.5f);
+    ASSERT_EQ(config->getLoseYield(), 3.7f);
+    ASSERT_EQ(config->getDuration(),  123);
     // clang-format on
 
-    IBuyDecision4Config* config2 = config.clone();
+    IBuyDecision4Config* config2 = config->clone();
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),      false);
-    ASSERT_EQ(config.getPriceFall(),   2.5f);
-    ASSERT_EQ(config.getLoseYield(),   3.7f);
-    ASSERT_EQ(config.getDuration(),    123);
+    ASSERT_EQ(config->isEnabled(),     false);
+    ASSERT_EQ(config->getPriceFall(),  2.5f);
+    ASSERT_EQ(config->getLoseYield(),  3.7f);
+    ASSERT_EQ(config->getDuration(),   123);
     ASSERT_EQ(config2->isEnabled(),    false);
     ASSERT_EQ(config2->getPriceFall(), 2.5f);
     ASSERT_EQ(config2->getLoseYield(), 3.7f);
@@ -51,15 +66,14 @@ TEST(Test_BuyDecision4Config, Test_clone_and_deleteRecursively)
     config2->deleteRecursively();
 }
 
-TEST(Test_BuyDecision4Config, Test_assign)
+TEST_F(Test_BuyDecision4Config, Test_assign)
 {
-    BuyDecision4Config config;
     BuyDecision4Config config2;
 
-    config.setEnabled(false);
-    config.setPriceFall(2.5f);
-    config.setLoseYield(3.7f);
-    config.setDuration(123);
+    config->setEnabled(false);
+    config->setPriceFall(2.5f);
+    config->setLoseYield(3.7f);
+    config->setDuration(123);
 
     config2.setEnabled(true);
     config2.setPriceFall(1.6f);
@@ -67,23 +81,23 @@ TEST(Test_BuyDecision4Config, Test_assign)
     config2.setDuration(321);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),     false);
-    ASSERT_EQ(config.getPriceFall(),  2.5f);
-    ASSERT_EQ(config.getLoseYield(),  3.7f);
-    ASSERT_EQ(config.getDuration(),   123);
+    ASSERT_EQ(config->isEnabled(),    false);
+    ASSERT_EQ(config->getPriceFall(), 2.5f);
+    ASSERT_EQ(config->getLoseYield(), 3.7f);
+    ASSERT_EQ(config->getDuration(),  123);
     ASSERT_EQ(config2.isEnabled(),    true);
     ASSERT_EQ(config2.getPriceFall(), 1.6f);
     ASSERT_EQ(config2.getLoseYield(), 4.2f);
     ASSERT_EQ(config2.getDuration(),  321);
     // clang-format on
 
-    config.assign(&config2);
+    config->assign(&config2);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),     true);
-    ASSERT_EQ(config.getPriceFall(),  1.6f);
-    ASSERT_EQ(config.getLoseYield(),  4.2f);
-    ASSERT_EQ(config.getDuration(),   321);
+    ASSERT_EQ(config->isEnabled(),    true);
+    ASSERT_EQ(config->getPriceFall(), 1.6f);
+    ASSERT_EQ(config->getLoseYield(), 4.2f);
+    ASSERT_EQ(config->getDuration(),  321);
     ASSERT_EQ(config2.isEnabled(),    true);
     ASSERT_EQ(config2.getPriceFall(), 1.6f);
     ASSERT_EQ(config2.getLoseYield(), 4.2f);
@@ -91,48 +105,44 @@ TEST(Test_BuyDecision4Config, Test_assign)
     // clang-format on
 }
 
-TEST(Test_BuyDecision4Config, Test_makeDefault)
+TEST_F(Test_BuyDecision4Config, Test_makeDefault)
 {
-    BuyDecision4Config config;
-
-    config.setEnabled(false);
-    config.setPriceFall(2.5f);
-    config.setLoseYield(4.2f);
-    config.setDuration(123);
+    config->setEnabled(false);
+    config->setPriceFall(2.5f);
+    config->setLoseYield(4.2f);
+    config->setDuration(123);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),    false);
-    ASSERT_EQ(config.getPriceFall(), 2.5f);
-    ASSERT_EQ(config.getLoseYield(), 4.2f);
-    ASSERT_EQ(config.getDuration(),  123);
+    ASSERT_EQ(config->isEnabled(),    false);
+    ASSERT_EQ(config->getPriceFall(), 2.5f);
+    ASSERT_EQ(config->getLoseYield(), 4.2f);
+    ASSERT_EQ(config->getDuration(),  123);
     // clang-format on
 
-    config.makeDefault();
+    config->makeDefault();
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceFall(), 10.0f);
-    ASSERT_EQ(config.getLoseYield(), 1.0f);
-    ASSERT_EQ(config.getDuration(),  7);
+    ASSERT_EQ(config->isEnabled(),    true);
+    ASSERT_EQ(config->getPriceFall(), 10.0f);
+    ASSERT_EQ(config->getLoseYield(), 1.0f);
+    ASSERT_EQ(config->getDuration(),  7);
     // clang-format on
 }
 
-TEST(Test_BuyDecision4Config, Test_save)
+TEST_F(Test_BuyDecision4Config, Test_save)
 {
     const InSequence seq;
 
-    BuyDecision4Config config;
-
-    config.setEnabled(false);
-    config.setPriceFall(2.5f);
-    config.setLoseYield(4.2f);
-    config.setDuration(123);
+    config->setEnabled(false);
+    config->setPriceFall(2.5f);
+    config->setLoseYield(4.2f);
+    config->setDuration(123);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),    false);
-    ASSERT_EQ(config.getPriceFall(), 2.5f);
-    ASSERT_EQ(config.getLoseYield(), 4.2f);
-    ASSERT_EQ(config.getDuration(),  123);
+    ASSERT_EQ(config->isEnabled(),    false);
+    ASSERT_EQ(config->getPriceFall(), 2.5f);
+    ASSERT_EQ(config->getLoseYield(), 4.2f);
+    ASSERT_EQ(config->getDuration(),  123);
     // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
@@ -144,25 +154,23 @@ TEST(Test_BuyDecision4Config, Test_save)
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Duration"),  QVariant(123)));
     // clang-format on
 
-    config.save(&settingsEditorMock, "BLAH");
+    config->save(&settingsEditorMock, "BLAH");
 }
 
-TEST(Test_BuyDecision4Config, Test_load)
+TEST_F(Test_BuyDecision4Config, Test_load)
 {
     const InSequence seq;
 
-    BuyDecision4Config config;
-
-    config.setEnabled(false);
-    config.setPriceFall(2.5f);
-    config.setLoseYield(4.2f);
-    config.setDuration(123);
+    config->setEnabled(false);
+    config->setPriceFall(2.5f);
+    config->setLoseYield(4.2f);
+    config->setDuration(123);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),    false);
-    ASSERT_EQ(config.getPriceFall(), 2.5f);
-    ASSERT_EQ(config.getLoseYield(), 4.2f);
-    ASSERT_EQ(config.getDuration(),  123);
+    ASSERT_EQ(config->isEnabled(),    false);
+    ASSERT_EQ(config->getPriceFall(), 2.5f);
+    ASSERT_EQ(config->getLoseYield(), 4.2f);
+    ASSERT_EQ(config->getDuration(),  123);
     // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
@@ -174,20 +182,18 @@ TEST(Test_BuyDecision4Config, Test_load)
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Duration"),  QVariant(123))).WillOnce(Return(QVariant(321)));
     // clang-format on
 
-    config.load(&settingsEditorMock, "BLAH");
+    config->load(&settingsEditorMock, "BLAH");
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceFall(), 1.7f);
-    ASSERT_EQ(config.getLoseYield(), 8.9f);
-    ASSERT_EQ(config.getDuration(),  321);
+    ASSERT_EQ(config->isEnabled(),    true);
+    ASSERT_EQ(config->getPriceFall(), 1.7f);
+    ASSERT_EQ(config->getLoseYield(), 8.9f);
+    ASSERT_EQ(config->getDuration(),  321);
     // clang-format on
 }
 
-TEST(Test_BuyDecision4Config, Test_fromJsonObject)
+TEST_F(Test_BuyDecision4Config, Test_fromJsonObject)
 {
-    BuyDecision4Config config;
-
     const QString content = R"({"enabled":true,"priceFall":"1.70","loseYield":"8.90","duration":321})";
 
     const simdjson::padded_string jsonData(content.toStdString());
@@ -195,50 +201,46 @@ TEST(Test_BuyDecision4Config, Test_fromJsonObject)
     simdjson::ondemand::parser   parser;
     simdjson::ondemand::document doc = parser.iterate(jsonData);
 
-    config.fromJsonObject(doc.get_object());
+    config->fromJsonObject(doc.get_object());
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceFall(), 1.7f);
-    ASSERT_EQ(config.getLoseYield(), 8.9f);
-    ASSERT_EQ(config.getDuration(),  321);
+    ASSERT_EQ(config->isEnabled(),    true);
+    ASSERT_EQ(config->getPriceFall(), 1.7f);
+    ASSERT_EQ(config->getLoseYield(), 8.9f);
+    ASSERT_EQ(config->getDuration(),  321);
     // clang-format on
 
     const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
     doc                                     = parser.iterate(jsonData2);
 
     lastThrownException = "";
-    config.fromJsonObject(doc.get_object());
+    config->fromJsonObject(doc.get_object());
     ASSERT_EQ(lastThrownException, "Unknown parameter");
 }
 
-TEST(Test_BuyDecision4Config, Test_toJsonString)
+TEST_F(Test_BuyDecision4Config, Test_toJsonString)
 {
-    BuyDecision4Config config;
-
-    config.setEnabled(true);
-    config.setPriceFall(1.7f);
-    config.setLoseYield(8.9f);
-    config.setDuration(321);
+    config->setEnabled(true);
+    config->setPriceFall(1.7f);
+    config->setLoseYield(8.9f);
+    config->setDuration(321);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceFall(), 1.7f);
-    ASSERT_EQ(config.getLoseYield(), 8.9f);
-    ASSERT_EQ(config.getDuration(),  321);
+    ASSERT_EQ(config->isEnabled(),    true);
+    ASSERT_EQ(config->getPriceFall(), 1.7f);
+    ASSERT_EQ(config->getLoseYield(), 8.9f);
+    ASSERT_EQ(config->getDuration(),  321);
     // clang-format on
 
-    const QString content         = config.toJsonString();
+    const QString content         = config->toJsonString();
     const QString expectedContent = R"({"enabled":true,"priceFall":"1.70","loseYield":"8.90","duration":321})";
 
     ASSERT_EQ(content, expectedContent);
 }
 
-TEST(Test_BuyDecision4Config, Test_variantsAsJson)
+TEST_F(Test_BuyDecision4Config, Test_variantsAsJson)
 {
-    BuyDecision4Config config;
-
-    QStringList variants = config.variantsAsJson();
+    QStringList variants = config->variantsAsJson();
 
     ASSERT_EQ(variants.size(), 91);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
@@ -334,47 +336,39 @@ TEST(Test_BuyDecision4Config, Test_variantsAsJson)
     ASSERT_EQ(variants.at(90), R"({"enabled":true,"priceFall":"15.00","loseYield":"3.0","duration":90})");
 }
 
-TEST(Test_BuyDecision4Config, Test_setEnabled_and_isEnabled)
+TEST_F(Test_BuyDecision4Config, Test_setEnabled_and_isEnabled)
 {
-    BuyDecision4Config config;
+    config->setEnabled(false);
+    ASSERT_EQ(config->isEnabled(), false);
 
-    config.setEnabled(false);
-    ASSERT_EQ(config.isEnabled(), false);
-
-    config.setEnabled(true);
-    ASSERT_EQ(config.isEnabled(), true);
+    config->setEnabled(true);
+    ASSERT_EQ(config->isEnabled(), true);
 }
 
-TEST(Test_BuyDecision4Config, Test_setPriceFall_and_getPriceFall)
+TEST_F(Test_BuyDecision4Config, Test_setPriceFall_and_getPriceFall)
 {
-    BuyDecision4Config config;
+    config->setPriceFall(0.1f);
+    ASSERT_EQ(config->getPriceFall(), 0.1f);
 
-    config.setPriceFall(0.1f);
-    ASSERT_EQ(config.getPriceFall(), 0.1f);
-
-    config.setPriceFall(0.5f);
-    ASSERT_EQ(config.getPriceFall(), 0.5f);
+    config->setPriceFall(0.5f);
+    ASSERT_EQ(config->getPriceFall(), 0.5f);
 }
 
-TEST(Test_BuyDecision4Config, Test_setLoseYield_and_getLoseYield)
+TEST_F(Test_BuyDecision4Config, Test_setLoseYield_and_getLoseYield)
 {
-    BuyDecision4Config config;
+    config->setLoseYield(0.1f);
+    ASSERT_EQ(config->getLoseYield(), 0.1f);
 
-    config.setLoseYield(0.1f);
-    ASSERT_EQ(config.getLoseYield(), 0.1f);
-
-    config.setLoseYield(0.5f);
-    ASSERT_EQ(config.getLoseYield(), 0.5f);
+    config->setLoseYield(0.5f);
+    ASSERT_EQ(config->getLoseYield(), 0.5f);
 }
 
-TEST(Test_BuyDecision4Config, Test_setDuration_and_getDuration)
+TEST_F(Test_BuyDecision4Config, Test_setDuration_and_getDuration)
 {
-    BuyDecision4Config config;
+    config->setDuration(100);
+    ASSERT_EQ(config->getDuration(), 100);
 
-    config.setDuration(100);
-    ASSERT_EQ(config.getDuration(), 100);
-
-    config.setDuration(20);
-    ASSERT_EQ(config.getDuration(), 20);
+    config->setDuration(20);
+    ASSERT_EQ(config->getDuration(), 20);
 }
 // NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)
