@@ -17,16 +17,31 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_OrderWavesDialogFactory, Test_constructor_and_destructor)
+class Test_OrderWavesDialogFactory : public ::testing::Test
 {
-    const OrderWavesDialogFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new OrderWavesDialogFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    OrderWavesDialogFactory* factory;
+};
+
+
+
+TEST_F(Test_OrderWavesDialogFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_OrderWavesDialogFactory, Test_newInstance)
+TEST_F(Test_OrderWavesDialogFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const OrderWavesDialogFactory factory;
 
     StrictMock<OrderWavesWidgetFactoryMock> orderWavesWidgetFactoryMock;
     StrictMock<OrderBookThreadMock>         orderBookThreadMock;
@@ -45,7 +60,7 @@ TEST(Test_OrderWavesDialogFactory, Test_newInstance)
     EXPECT_CALL(orderBookThreadMock, terminateThread());
 
     const std::shared_ptr<IOrderWavesDialog> dialog =
-        factory.newInstance(&orderWavesWidgetFactoryMock, &orderBookThreadMock, &stock, nullptr);
+        factory->newInstance(&orderWavesWidgetFactoryMock, &orderBookThreadMock, &stock, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 
     orderBookThreadMock.wait();

@@ -19,16 +19,31 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_OperationsTableWidgetFactory, Test_constructor_and_destructor)
+class Test_OperationsTableWidgetFactory : public ::testing::Test
 {
-    const OperationsTableWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new OperationsTableWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    OperationsTableWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_OperationsTableWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_OperationsTableWidgetFactory, Test_newInstance)
+TEST_F(Test_OperationsTableWidgetFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const OperationsTableWidgetFactory factory;
 
     StrictMock<OperationsTableModelFactoryMock> operationsTableModelFactoryMock;
     StrictMock<FileDialogFactoryMock>           fileDialogFactoryMock;
@@ -41,7 +56,7 @@ TEST(Test_OperationsTableWidgetFactory, Test_newInstance)
     EXPECT_CALL(operationsTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
     const IOperationsTableWidget* widget =
-        factory.newInstance(&operationsTableModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
+        factory->newInstance(&operationsTableModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

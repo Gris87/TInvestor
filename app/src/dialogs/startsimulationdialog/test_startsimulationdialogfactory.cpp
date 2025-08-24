@@ -13,16 +13,31 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_StartSimulationDialogFactory, Test_constructor_and_destructor)
+class Test_StartSimulationDialogFactory : public ::testing::Test
 {
-    const StartSimulationDialogFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new StartSimulationDialogFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    StartSimulationDialogFactory* factory;
+};
+
+
+
+TEST_F(Test_StartSimulationDialogFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_StartSimulationDialogFactory, Test_newInstance)
+TEST_F(Test_StartSimulationDialogFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const StartSimulationDialogFactory factory;
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
@@ -34,7 +49,7 @@ TEST(Test_StartSimulationDialogFactory, Test_newInstance)
     EXPECT_CALL(settingsEditorMock, value(QString("StartSimulationDialog/bestConfig"), QVariant(false))).WillOnce(Return(QVariant(false)));
     // clang-format on
 
-    const std::shared_ptr<IStartSimulationDialog> dialog = factory.newInstance(&settingsEditorMock, nullptr);
+    const std::shared_ptr<IStartSimulationDialog> dialog = factory->newInstance(&settingsEditorMock, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 }
 // NOLINTEND(readability-magic-numbers)

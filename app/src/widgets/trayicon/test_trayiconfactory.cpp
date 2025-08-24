@@ -4,16 +4,31 @@
 
 
 
-TEST(Test_TrayIconFactory, Test_constructor_and_destructor)
+class Test_TrayIconFactory : public ::testing::Test
 {
-    const TrayIconFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new TrayIconFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    TrayIconFactory* factory;
+};
+
+
+
+TEST_F(Test_TrayIconFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_TrayIconFactory, Test_newInstance)
+TEST_F(Test_TrayIconFactory, Test_newInstance)
 {
-    const TrayIconFactory factory;
-
-    const ITrayIcon* trayIcon = factory.newInstance(nullptr);
+    const ITrayIcon* trayIcon = factory->newInstance(nullptr);
     ASSERT_TRUE(trayIcon != nullptr);
 
     delete trayIcon;

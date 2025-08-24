@@ -4,16 +4,31 @@
 
 
 
-TEST(Test_LogsFilterWidgetFactory, Test_constructor_and_destructor)
+class Test_LogsFilterWidgetFactory : public ::testing::Test
 {
-    const LogsFilterWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new LogsFilterWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    LogsFilterWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_LogsFilterWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_LogsFilterWidgetFactory, Test_newInstance)
+TEST_F(Test_LogsFilterWidgetFactory, Test_newInstance)
 {
-    const LogsFilterWidgetFactory factory;
-
-    const ILogsFilterWidget* widget = factory.newInstance(nullptr);
+    const ILogsFilterWidget* widget = factory->newInstance(nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

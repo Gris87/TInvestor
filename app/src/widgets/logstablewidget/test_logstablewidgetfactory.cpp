@@ -17,16 +17,31 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_LogsTableWidgetFactory, Test_constructor_and_destructor)
+class Test_LogsTableWidgetFactory : public ::testing::Test
 {
-    const LogsTableWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new LogsTableWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    LogsTableWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_LogsTableWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_LogsTableWidgetFactory, Test_newInstance)
+TEST_F(Test_LogsTableWidgetFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const LogsTableWidgetFactory factory;
 
     StrictMock<LogsTableModelFactoryMock> logsTableModelFactoryMock;
     StrictMock<FileDialogFactoryMock>     fileDialogFactoryMock;
@@ -39,7 +54,7 @@ TEST(Test_LogsTableWidgetFactory, Test_newInstance)
     EXPECT_CALL(logsTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
     const ILogsTableWidget* widget =
-        factory.newInstance(&logsTableModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
+        factory->newInstance(&logsTableModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

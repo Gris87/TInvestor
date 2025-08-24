@@ -4,16 +4,31 @@
 
 
 
-TEST(Test_LogsTableModelFactory, Test_constructor_and_destructor)
+class Test_LogsTableModelFactory : public ::testing::Test
 {
-    const LogsTableModelFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new LogsTableModelFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    LogsTableModelFactory* factory;
+};
+
+
+
+TEST_F(Test_LogsTableModelFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_LogsTableModelFactory, Test_newInstance)
+TEST_F(Test_LogsTableModelFactory, Test_newInstance)
 {
-    const LogsTableModelFactory factory;
-
-    const ILogsTableModel* model = factory.newInstance(nullptr);
+    const ILogsTableModel* model = factory->newInstance(nullptr);
     ASSERT_TRUE(model != nullptr);
 
     delete model;

@@ -17,16 +17,31 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_PortfolioTreeWidgetFactory, Test_constructor_and_destructor)
+class Test_PortfolioTreeWidgetFactory : public ::testing::Test
 {
-    const PortfolioTreeWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new PortfolioTreeWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    PortfolioTreeWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_PortfolioTreeWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_PortfolioTreeWidgetFactory, Test_newInstance)
+TEST_F(Test_PortfolioTreeWidgetFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const PortfolioTreeWidgetFactory factory;
 
     StrictMock<PortfolioTreeModelFactoryMock> portfolioTreeModelFactoryMock;
     StrictMock<FileDialogFactoryMock>         fileDialogFactoryMock;
@@ -39,7 +54,7 @@ TEST(Test_PortfolioTreeWidgetFactory, Test_newInstance)
     EXPECT_CALL(portfolioTreeModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
     const IPortfolioTreeWidget* widget =
-        factory.newInstance(&portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
+        factory->newInstance(&portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

@@ -14,22 +14,37 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_ActionsTableItemWidgetFactory, Test_constructor_and_destructor)
+class Test_ActionsTableItemWidgetFactory : public ::testing::Test
 {
-    const ActionsTableItemWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new ActionsTableItemWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    ActionsTableItemWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_ActionsTableItemWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_ActionsTableItemWidgetFactory, Test_newInstance)
+TEST_F(Test_ActionsTableItemWidgetFactory, Test_newInstance)
 {
-    const ActionsTableItemWidgetFactory factory;
-
     StrictMock<OrderWavesDialogFactoryMock> orderWavesDialogFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock> orderWavesWidgetFactoryMock;
     StrictMock<OrderBookThreadMock>         orderBookThreadMock;
     StrictMock<HttpClientMock>              httpClientMock;
     StrictMock<StocksTableModelMock>        stocksTableModelMock;
 
-    const IActionsTableItemWidget* widget = factory.newInstance(
+    const IActionsTableItemWidget* widget = factory->newInstance(
         &orderWavesDialogFactoryMock,
         &orderWavesWidgetFactoryMock,
         &orderBookThreadMock,

@@ -11,19 +11,34 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_AccountChartWidgetFactory, Test_constructor_and_destructor)
+class Test_AccountChartWidgetFactory : public ::testing::Test
 {
-    const AccountChartWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new AccountChartWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    AccountChartWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_AccountChartWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_AccountChartWidgetFactory, Test_newInstance)
+TEST_F(Test_AccountChartWidgetFactory, Test_newInstance)
 {
-    const AccountChartWidgetFactory factory;
-
     StrictMock<FileDialogFactoryMock> fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>    settingsEditorMock;
 
-    const IAccountChartWidget* widget = factory.newInstance(&fileDialogFactoryMock, &settingsEditorMock, nullptr);
+    const IAccountChartWidget* widget = factory->newInstance(&fileDialogFactoryMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

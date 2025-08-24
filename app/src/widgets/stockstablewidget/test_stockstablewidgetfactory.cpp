@@ -23,16 +23,31 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_StocksTableWidgetFactory, Test_constructor_and_destructor)
+class Test_StocksTableWidgetFactory : public ::testing::Test
 {
-    const StocksTableWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new StocksTableWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    StocksTableWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_StocksTableWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_StocksTableWidgetFactory, Test_newInstance)
+TEST_F(Test_StocksTableWidgetFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const StocksTableWidgetFactory factory;
 
     StrictMock<StocksTableModelFactoryMock>       stocksTableModelFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
@@ -50,7 +65,7 @@ TEST(Test_StocksTableWidgetFactory, Test_newInstance)
     EXPECT_CALL(stocksTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
     EXPECT_CALL(stocksTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
-    const IStocksTableWidget* widget = factory.newInstance(
+    const IStocksTableWidget* widget = factory->newInstance(
         &stocksTableModelFactoryMock,
         &actionsTableItemWidgetFactoryMock,
         &orderWavesDialogFactoryMock,

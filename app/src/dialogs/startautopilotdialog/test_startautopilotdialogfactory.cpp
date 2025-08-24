@@ -15,16 +15,31 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_StartAutoPilotDialogFactory, Test_constructor_and_destructor)
+class Test_StartAutoPilotDialogFactory : public ::testing::Test
 {
-    const StartAutoPilotDialogFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new StartAutoPilotDialogFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    StartAutoPilotDialogFactory* factory;
+};
+
+
+
+TEST_F(Test_StartAutoPilotDialogFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
+TEST_F(Test_StartAutoPilotDialogFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const StartAutoPilotDialogFactory factory;
 
     StrictMock<UserStorageMock>     userStorageMock;
     StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
@@ -57,6 +72,6 @@ TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
     // clang-format on
 
     const std::shared_ptr<IStartAutoPilotDialog> dialog =
-        factory.newInstance(&userStorageMock, &messageBoxUtilsMock, &settingsEditorMock, nullptr);
+        factory->newInstance(&userStorageMock, &messageBoxUtilsMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 }

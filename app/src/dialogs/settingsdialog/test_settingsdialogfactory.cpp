@@ -24,16 +24,31 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_SettingsDialogFactory, Test_constructor_and_destructor)
+class Test_SettingsDialogFactory : public ::testing::Test
 {
-    const SettingsDialogFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new SettingsDialogFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    SettingsDialogFactory* factory;
+};
+
+
+
+TEST_F(Test_SettingsDialogFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_SettingsDialogFactory, Test_newInstance)
+TEST_F(Test_SettingsDialogFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const SettingsDialogFactory factory;
 
     StrictMock<ConfigMock>                           configMock;
     StrictMock<DecisionMakerConfigMock>              simulatorConfigMock;
@@ -88,7 +103,7 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
     )
         .WillOnce(Return(autoPilotConfigWidgetMock));
 
-    const std::shared_ptr<ISettingsDialog> dialog = factory.newInstance(
+    const std::shared_ptr<ISettingsDialog> dialog = factory->newInstance(
         &configMock,
         &decisionMakerConfigWidgetFactoryMock,
         &buyDecision1ConfigWidgetFactoryMock,

@@ -11,18 +11,33 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_AuthDialogFactory, Test_constructor_and_destructor)
+class Test_AuthDialogFactory : public ::testing::Test
 {
-    const AuthDialogFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new AuthDialogFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    AuthDialogFactory* factory;
+};
+
+
+
+TEST_F(Test_AuthDialogFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_AuthDialogFactory, Test_newInstance)
+TEST_F(Test_AuthDialogFactory, Test_newInstance)
 {
-    const AuthDialogFactory factory;
-
     StrictMock<UserStorageMock>     userStorageMock;
     StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
 
-    const std::shared_ptr<IAuthDialog> dialog = factory.newInstance(&userStorageMock, &messageBoxUtilsMock, nullptr);
+    const std::shared_ptr<IAuthDialog> dialog = factory->newInstance(&userStorageMock, &messageBoxUtilsMock, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 }

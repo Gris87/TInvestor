@@ -5,16 +5,31 @@
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_OrderWavesWidgetFactory, Test_constructor_and_destructor)
+class Test_OrderWavesWidgetFactory : public ::testing::Test
 {
-    const OrderWavesWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new OrderWavesWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    OrderWavesWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_OrderWavesWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_OrderWavesWidgetFactory, Test_newInstance)
+TEST_F(Test_OrderWavesWidgetFactory, Test_newInstance)
 {
-    const OrderWavesWidgetFactory factory;
-
-    const IOrderWavesWidget* widget = factory.newInstance(2, 0.01f, nullptr);
+    const IOrderWavesWidget* widget = factory->newInstance(2, 0.01f, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

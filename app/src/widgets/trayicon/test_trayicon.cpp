@@ -5,12 +5,28 @@
 
 
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
-TEST(Test_TrayIcon, Test_constructor_and_destructor)
+class Test_TrayIcon : public ::testing::Test
 {
-    const TrayIcon trayIcon;
+protected:
+    void SetUp() override
+    {
+        trayIcon = new TrayIcon();
+    }
 
-    QMenu* trayIconMenu = trayIcon.contextMenu();
+    void TearDown() override
+    {
+        delete trayIcon;
+    }
+
+    TrayIcon* trayIcon;
+};
+
+
+
+// NOLINTBEGIN(readability-function-cognitive-complexity)
+TEST_F(Test_TrayIcon, Test_constructor_and_destructor)
+{
+    QMenu* trayIconMenu = trayIcon->contextMenu();
     ASSERT_TRUE(trayIconMenu != nullptr);
 
     const QList<QAction*> actions = trayIconMenu->actions();
@@ -25,6 +41,6 @@ TEST(Test_TrayIcon, Test_constructor_and_destructor)
 
     ASSERT_EQ(trayIconMenu->defaultAction(), actions.at(0));
 
-    ASSERT_EQ(trayIcon.toolTip(), "TInvestor");
+    ASSERT_EQ(trayIcon->toolTip(), "TInvestor");
 }
 // NOLINTEND(readability-function-cognitive-complexity)

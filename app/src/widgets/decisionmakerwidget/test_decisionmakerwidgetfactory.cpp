@@ -40,16 +40,31 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_DecisionMakerWidgetFactory, Test_constructor_and_destructor)
+class Test_DecisionMakerWidgetFactory : public ::testing::Test
 {
-    const DecisionMakerWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new DecisionMakerWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    DecisionMakerWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_DecisionMakerWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
+TEST_F(Test_DecisionMakerWidgetFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const DecisionMakerWidgetFactory factory;
 
     StrictMock<OperationsTableWidgetFactoryMock>     operationsTableWidgetFactoryMock;
     StrictMock<AccountChartWidgetFactoryMock>        accountChartWidgetFactoryMock;
@@ -124,7 +139,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
     EXPECT_CALL(*bestConfigWidgetMock, makeReadOnly());
 
-    const IDecisionMakerWidget* widget = factory.newInstance(
+    const IDecisionMakerWidget* widget = factory->newInstance(
         DecisionMakerWidgetFactoryNewInstanceArgsMore15(
             &operationsTableWidgetFactoryMock,
             &accountChartWidgetFactoryMock,

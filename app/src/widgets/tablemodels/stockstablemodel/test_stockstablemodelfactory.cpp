@@ -10,18 +10,33 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_StocksTableModelFactory, Test_constructor_and_destructor)
+class Test_StocksTableModelFactory : public ::testing::Test
 {
-    const StocksTableModelFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new StocksTableModelFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    StocksTableModelFactory* factory;
+};
+
+
+
+TEST_F(Test_StocksTableModelFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_StocksTableModelFactory, Test_newInstance)
+TEST_F(Test_StocksTableModelFactory, Test_newInstance)
 {
-    const StocksTableModelFactory factory;
-
     StrictMock<UserStorageMock> userStorageMock;
 
-    const IStocksTableModel* model = factory.newInstance(&userStorageMock, nullptr);
+    const IStocksTableModel* model = factory->newInstance(&userStorageMock, nullptr);
     ASSERT_TRUE(model != nullptr);
 
     delete model;

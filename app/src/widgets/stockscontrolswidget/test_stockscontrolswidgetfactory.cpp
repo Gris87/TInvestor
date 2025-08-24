@@ -10,18 +10,33 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_StocksControlsWidgetFactory, Test_constructor_and_destructor)
+class Test_StocksControlsWidgetFactory : public ::testing::Test
 {
-    const StocksControlsWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new StocksControlsWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    StocksControlsWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_StocksControlsWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_StocksControlsWidgetFactory, Test_newInstance)
+TEST_F(Test_StocksControlsWidgetFactory, Test_newInstance)
 {
-    const StocksControlsWidgetFactory factory;
-
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
-    const IStocksControlsWidget* widget = factory.newInstance(&settingsEditorMock, nullptr);
+    const IStocksControlsWidget* widget = factory->newInstance(&settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

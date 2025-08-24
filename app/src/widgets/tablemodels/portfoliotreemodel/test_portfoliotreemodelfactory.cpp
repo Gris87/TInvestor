@@ -4,16 +4,31 @@
 
 
 
-TEST(Test_PortfolioTreeModelFactory, Test_constructor_and_destructor)
+class Test_PortfolioTreeModelFactory : public ::testing::Test
 {
-    const PortfolioTreeModelFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new PortfolioTreeModelFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    PortfolioTreeModelFactory* factory;
+};
+
+
+
+TEST_F(Test_PortfolioTreeModelFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_PortfolioTreeModelFactory, Test_newInstance)
+TEST_F(Test_PortfolioTreeModelFactory, Test_newInstance)
 {
-    const PortfolioTreeModelFactory factory;
-
-    const IPortfolioTreeModel* model = factory.newInstance(nullptr);
+    const IPortfolioTreeModel* model = factory->newInstance(nullptr);
     ASSERT_TRUE(model != nullptr);
 
     delete model;
