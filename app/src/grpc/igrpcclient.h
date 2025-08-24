@@ -58,10 +58,10 @@ public:
 
     virtual std::shared_ptr<MarketDataStream> createMarketDataStreamForLastPrice(const QStringList& instrumentIds)       = 0;
     virtual std::shared_ptr<MarketDataStream> createMarketDataStreamForOrderBook(const QString& instrumentId, int depth) = 0;
-    virtual std::shared_ptr<tinkoff::MarketDataResponse> readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream
-    )                                                                                                                    = 0;
-    virtual void cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                             = 0;
-    virtual void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                             = 0;
+    virtual std::shared_ptr<tinkoff::MarketDataResponse>
+                 readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)   = 0;
+    virtual void cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) = 0;
+    virtual void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) = 0;
 
     virtual std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId)                                  = 0;
     virtual std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId, const QString& anotherAccountId) = 0;

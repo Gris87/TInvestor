@@ -13,6 +13,7 @@ check_modules = [
     "include_headers",
     "insequence",
     "nolint",
+    "test_fixture",
 ]
 
 

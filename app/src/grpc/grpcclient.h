@@ -105,8 +105,8 @@ public:
 
     std::shared_ptr<MarketDataStream> createMarketDataStreamForLastPrice(const QStringList& instrumentIds) override;
     std::shared_ptr<MarketDataStream> createMarketDataStreamForOrderBook(const QString& instrumentId, int depth) override;
-    std::shared_ptr<tinkoff::MarketDataResponse> readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream
-    ) override;
+    std::shared_ptr<tinkoff::MarketDataResponse>
+         readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     void cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
 

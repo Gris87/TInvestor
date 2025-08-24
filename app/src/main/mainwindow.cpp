@@ -776,7 +776,7 @@ void MainWindow::simulatorProgressChanged(int current, int maximum, const QStrin
 
 void MainWindow::simulatorResultFound(const QString& result, const QColor& color)
 {
-    qInfo() << "Intermediate simulation result:" << result; // TODO: Use debug
+    qDebug() << "Intermediate simulation result:" << result;
 
     if (isActiveWindow() && ui->stackedWidget->currentWidget() == ui->simulationPage)
     {
