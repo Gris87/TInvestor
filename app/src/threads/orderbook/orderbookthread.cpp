@@ -44,7 +44,7 @@ void OrderBookThread::run()
     {
         handleGetOrderBookResponse(tinkoffOrderBook);
 
-        if (createMarketDataStream())
+        if (createMarketDataStream(instrumentId))
         {
             while (true)
             {
@@ -61,10 +61,9 @@ void OrderBookThread::run()
                     handleOrderBook(marketDataResponse->orderbook());
                 }
             }
-        }
 
-        if (mMarketDataStream != nullptr)
-        {
+            const QWriteLocker lock(mRwMutex);
+
             mGrpcClient->finishMarketDataStream(mMarketDataStream);
             mMarketDataStream = nullptr;
         }
@@ -86,14 +85,13 @@ void OrderBookThread::terminateThread()
 
     if (mMarketDataStream != nullptr)
     {
-        mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
         mGrpcClient->cancelMarketDataStream(mMarketDataStream);
     }
 
     requestInterruption();
 }
 
-bool OrderBookThread::createMarketDataStream()
+bool OrderBookThread::createMarketDataStream(const QString& instrumentId)
 {
     bool res = false;
 
@@ -101,13 +99,9 @@ bool OrderBookThread::createMarketDataStream()
 
     if (!QThread::currentThread()->isInterruptionRequested())
     {
-        mMarketDataStream = mGrpcClient->createMarketDataStream();
+        mMarketDataStream = mGrpcClient->createMarketDataStreamForOrderBook(instrumentId, ORDER_BOOK_DEPTH);
 
-        mStock->readLock();
-        const QString instrumentId = mStock->meta.instrumentId;
-        mStock->readUnlock();
-
-        res = mGrpcClient->subscribeOrderBook(mMarketDataStream, instrumentId, ORDER_BOOK_DEPTH);
+        res = mMarketDataStream != nullptr;
     }
 
     return res;

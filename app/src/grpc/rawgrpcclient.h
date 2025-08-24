@@ -115,12 +115,11 @@ public:
     ) override;
 
     MarketDataStream::Stream createMarketDataStream(
-        const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context
+        const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service,
+        grpc::ClientContext*                                           context,
+        const tinkoff::MarketDataServerSideStreamRequest&              req
     ) override;
-    bool
-    writeMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream, const tinkoff::MarketDataRequest& req) override;
     bool readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream, tinkoff::MarketDataResponse* resp) override;
-    bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     grpc::Status finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
 
     PortfolioStream::Stream createPortfolioStream(

@@ -56,17 +56,12 @@ public:
     virtual std::shared_ptr<tinkoff::CancelOrderResponse>
     cancelOrder(QThread* parentThread, const QString& accountId, const QString& orderId) = 0;
 
-    virtual std::shared_ptr<MarketDataStream> createMarketDataStream()                                                      = 0;
-    virtual bool subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& instrumentIds) = 0;
-    virtual bool unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream)                                 = 0;
-    virtual bool
-    subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId, int depth) = 0;
-    virtual bool unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream)                          = 0;
-    virtual std::shared_ptr<tinkoff::MarketDataResponse>
-                 readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)       = 0;
-    virtual bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) = 0;
-    virtual void cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)     = 0;
-    virtual void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)     = 0;
+    virtual std::shared_ptr<MarketDataStream> createMarketDataStreamForLastPrice(const QStringList& instrumentIds)       = 0;
+    virtual std::shared_ptr<MarketDataStream> createMarketDataStreamForOrderBook(const QString& instrumentId, int depth) = 0;
+    virtual std::shared_ptr<tinkoff::MarketDataResponse> readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream
+    )                                                                                                                    = 0;
+    virtual void cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                             = 0;
+    virtual void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                             = 0;
 
     virtual std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId)                                  = 0;
     virtual std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId, const QString& anotherAccountId) = 0;

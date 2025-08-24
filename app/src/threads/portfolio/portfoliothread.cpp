@@ -73,10 +73,9 @@ void PortfolioThread::run()
                     handlePortfolioResponse(portfolioStreamResponse->portfolio());
                 }
             }
-        }
 
-        if (mPortfolioStream != nullptr)
-        {
+            const QWriteLocker lock(mRwMutex);
+
             mGrpcClient->finishPortfolioStream(mPortfolioStream);
             mPortfolioStream = nullptr;
         }
@@ -114,7 +113,7 @@ bool PortfolioThread::createPortfolioStream()
     {
         mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId);
 
-        res = true;
+        res = mPortfolioStream != nullptr;
     }
 
     return res;

@@ -102,10 +102,9 @@ void OperationsThread::run()
                     }
                 }
             }
-        }
 
-        if (mPositionsStream != nullptr)
-        {
+            const QWriteLocker lock(mRwMutex);
+
             mGrpcClient->finishPositionsStream(mPositionsStream);
             mPositionsStream = nullptr;
         }
@@ -145,7 +144,7 @@ bool OperationsThread::createPositionsStream()
     {
         mPositionsStream = mGrpcClient->createPositionsStream(mAccountId);
 
-        res = true;
+        res = mPositionsStream != nullptr;
     }
 
     return res;

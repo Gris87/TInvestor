@@ -88,28 +88,21 @@ public:
         (override)
     );
 
-    MOCK_METHOD(std::shared_ptr<MarketDataStream>, createMarketDataStream, (), (override));
     MOCK_METHOD(
-        bool,
-        subscribeLastPrices,
-        (std::shared_ptr<MarketDataStream> & marketDataStream, const QStringList& instrumentIds),
+        std::shared_ptr<MarketDataStream>, createMarketDataStreamForLastPrice, (const QStringList& instrumentIds), (override)
+    );
+    MOCK_METHOD(
+        std::shared_ptr<MarketDataStream>,
+        createMarketDataStreamForOrderBook,
+        (const QString& instrumentId, int depth),
         (override)
     );
-    MOCK_METHOD(bool, unsubscribeLastPrices, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
-    MOCK_METHOD(
-        bool,
-        subscribeOrderBook,
-        (std::shared_ptr<MarketDataStream> & marketDataStream, const QString& instrumentId, int depth),
-        (override)
-    );
-    MOCK_METHOD(bool, unsubscribeOrderBook, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
     MOCK_METHOD(
         std::shared_ptr<tinkoff::MarketDataResponse>,
         readMarketDataStream,
         (std::shared_ptr<MarketDataStream> & marketDataStream),
         (override)
     );
-    MOCK_METHOD(bool, closeWriteMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
     MOCK_METHOD(void, cancelMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
     MOCK_METHOD(void, finishMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
 

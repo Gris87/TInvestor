@@ -40,9 +40,7 @@ void PortfolioLastPriceThread::run()
     {
         if (!mInstrumentIds.isEmpty())
         {
-            const bool needToTerminate = !createMarketDataStream();
-
-            if (!needToTerminate)
+            if (createMarketDataStream())
             {
                 while (true)
                 {
@@ -64,15 +62,13 @@ void PortfolioLastPriceThread::run()
                         emit lastPriceChanged(instrumentId, price);
                     }
                 }
-            }
 
-            if (mMarketDataStream != nullptr)
-            {
+                const QWriteLocker lock(mRwMutex);
+
                 mGrpcClient->finishMarketDataStream(mMarketDataStream);
                 mMarketDataStream = nullptr;
             }
-
-            if (needToTerminate)
+            else
             {
                 break;
             }
@@ -113,18 +109,7 @@ void PortfolioLastPriceThread::portfolioChanged(const Portfolio& portfolio)
 
         if (mMarketDataStream != nullptr)
         {
-            if (!mInstrumentIds.isEmpty())
-            {
-                if (mGrpcClient->unsubscribeLastPrices(mMarketDataStream))
-                {
-                    mGrpcClient->subscribeLastPrices(mMarketDataStream, mInstrumentIds);
-                }
-            }
-            else
-            {
-                mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
-                mGrpcClient->cancelMarketDataStream(mMarketDataStream);
-            }
+            mGrpcClient->cancelMarketDataStream(mMarketDataStream);
         }
     }
 }
@@ -137,7 +122,6 @@ void PortfolioLastPriceThread::terminateThread()
 
     if (mMarketDataStream != nullptr)
     {
-        mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
         mGrpcClient->cancelMarketDataStream(mMarketDataStream);
     }
 
@@ -152,9 +136,9 @@ bool PortfolioLastPriceThread::createMarketDataStream()
 
     if (!QThread::currentThread()->isInterruptionRequested())
     {
-        mMarketDataStream = mGrpcClient->createMarketDataStream();
+        mMarketDataStream = mGrpcClient->createMarketDataStreamForLastPrice(mInstrumentIds);
 
-        res = mGrpcClient->subscribeLastPrices(mMarketDataStream, mInstrumentIds);
+        res = mMarketDataStream != nullptr;
     }
 
     return res;

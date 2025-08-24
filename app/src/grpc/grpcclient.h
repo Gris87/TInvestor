@@ -103,14 +103,10 @@ public:
     std::shared_ptr<tinkoff::CancelOrderResponse>
     cancelOrder(QThread* parentThread, const QString& accountId, const QString& orderId) override;
 
-    std::shared_ptr<MarketDataStream> createMarketDataStream() override;
-    bool subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& instrumentIds) override;
-    bool unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream) override;
-    bool subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId, int depth) override;
-    bool unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream) override;
-    std::shared_ptr<tinkoff::MarketDataResponse>
-         readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
-    bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
+    std::shared_ptr<MarketDataStream> createMarketDataStreamForLastPrice(const QStringList& instrumentIds) override;
+    std::shared_ptr<MarketDataStream> createMarketDataStreamForOrderBook(const QString& instrumentId, int depth) override;
+    std::shared_ptr<tinkoff::MarketDataResponse> readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream
+    ) override;
     void cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
 

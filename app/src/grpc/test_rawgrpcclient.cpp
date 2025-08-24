@@ -984,6 +984,15 @@ TEST_F(Test_RawGrpcClient, Test_MarketDataStream)
 {
     const InSequence seq;
 
+    tinkoff::MarketDataServerSideStreamRequest req;
+    tinkoff::SubscribeLastPriceRequest*        subscribeLastPriceRequest =
+        new tinkoff::SubscribeLastPriceRequest(); // req will take ownership
+
+    subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
+    subscribeLastPriceRequest->add_instruments()->set_instrument_id(SPBE_UID);
+
+    req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
+
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
@@ -992,38 +1001,15 @@ TEST_F(Test_RawGrpcClient, Test_MarketDataStream)
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
 
     marketDataStream->context.set_credentials(creds);
-    marketDataStream->stream = client->createMarketDataStream(marketDataStreamService, &marketDataStream->context);
+    marketDataStream->stream = client->createMarketDataStream(marketDataStreamService, &marketDataStream->context, req);
 
     ASSERT_NE(marketDataStream->stream, nullptr);
 
-    tinkoff::MarketDataRequest          subscribeRequest;
-    tinkoff::SubscribeLastPriceRequest* subscribeLastPriceRequest =
-        new tinkoff::SubscribeLastPriceRequest(); // subscribeRequest will take ownership
-
-    subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
-    subscribeLastPriceRequest->add_instruments()->set_instrument_id(SPBE_UID);
-
-    subscribeRequest.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
-
-    ASSERT_EQ(client->writeMarketDataStream(marketDataStream, subscribeRequest), true);
-
-    tinkoff::MarketDataResponse subscribeResponse;
-
-    ASSERT_EQ(client->readMarketDataStream(marketDataStream, &subscribeResponse), true);
-
-    // clang-format off
-    ASSERT_EQ(subscribeResponse.has_subscribe_last_price_response(),                                               true);
-    ASSERT_NE(subscribeResponse.subscribe_last_price_response().tracking_id(),                                     "");
-    ASSERT_EQ(subscribeResponse.subscribe_last_price_response().last_price_subscriptions_size(),                   1);
-    ASSERT_EQ(subscribeResponse.subscribe_last_price_response().last_price_subscriptions(0).figi(),                "TCS60A0JQ9P9");
-    ASSERT_EQ(subscribeResponse.subscribe_last_price_response().last_price_subscriptions(0).subscription_status(), tinkoff::SUBSCRIPTION_STATUS_SUCCESS);
-    ASSERT_EQ(subscribeResponse.subscribe_last_price_response().last_price_subscriptions(0).instrument_uid(),      SPBE_UID);
-    ASSERT_NE(subscribeResponse.subscribe_last_price_response().last_price_subscriptions(0).stream_id(),           "");
-    ASSERT_NE(subscribeResponse.subscribe_last_price_response().last_price_subscriptions(0).subscription_id(),     "");
-    // clang-format on
-
-    ASSERT_EQ(client->closeWriteMarketDataStream(marketDataStream), true);
     marketDataStream->context.TryCancel();
+
+    tinkoff::MarketDataResponse resp;
+    ASSERT_EQ(client->readMarketDataStream(marketDataStream, &resp), false);
+
     ASSERT_EQ(client->finishMarketDataStream(marketDataStream).error_code(), grpc::StatusCode::CANCELLED);
 }
 

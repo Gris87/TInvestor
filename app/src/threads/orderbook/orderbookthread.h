@@ -26,7 +26,7 @@ public:
     void setStock(Stock* stock) override;
     void terminateThread() override;
 
-    bool createMarketDataStream();
+    bool createMarketDataStream(const QString& instrumentId);
 
 private:
     void handleGetOrderBookResponse(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinkoffOrderBook);

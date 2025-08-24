@@ -3,7 +3,6 @@ Create release
 
 Do not sell ASAP if you want to get rich
 
-Use readonly grpc streams
 Use TEST_F tests everywhere
 Make experiments with non Moscow timezone
 Improve all readability-function-cognitive-complexity

@@ -41,5 +41,4 @@ private:
     ITimeUtils*                       mTimeUtils;
     IGrpcClient*                      mGrpcClient;
     std::shared_ptr<MarketDataStream> mMarketDataStream;
-    bool                              mNeedToRebuildStocksMap;
 };

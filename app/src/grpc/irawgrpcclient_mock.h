@@ -168,13 +168,9 @@ public:
     MOCK_METHOD(
         MarketDataStream::Stream,
         createMarketDataStream,
-        (const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context),
-        (override)
-    );
-    MOCK_METHOD(
-        bool,
-        writeMarketDataStream,
-        (std::shared_ptr<MarketDataStream> & marketDataStream, const tinkoff::MarketDataRequest& req),
+        (const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service,
+         grpc::ClientContext*                                           context,
+         const tinkoff::MarketDataServerSideStreamRequest&              req),
         (override)
     );
     MOCK_METHOD(
@@ -183,7 +179,6 @@ public:
         (std::shared_ptr<MarketDataStream> & marketDataStream, tinkoff::MarketDataResponse* resp),
         (override)
     );
-    MOCK_METHOD(bool, closeWriteMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
     MOCK_METHOD(grpc::Status, finishMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
 
     MOCK_METHOD(

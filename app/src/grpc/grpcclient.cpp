@@ -520,20 +520,12 @@ GrpcClient::cancelOrder(QThread* parentThread, const QString& accountId, const Q
     return repeatRequest(parentThread, cancelOrderAction, mOrdersService, &context, req, resp, false);
 }
 
-std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()
+std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStreamForLastPrice(const QStringList& instrumentIds)
 {
     std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
 
-    res->context.set_credentials(mCreds);
-    res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context);
-
-    return res;
-}
-
-bool GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& instrumentIds)
-{
-    tinkoff::MarketDataRequest          req;
-    tinkoff::SubscribeLastPriceRequest* subscribeLastPriceRequest =
+    tinkoff::MarketDataServerSideStreamRequest req;
+    tinkoff::SubscribeLastPriceRequest*        subscribeLastPriceRequest =
         new tinkoff::SubscribeLastPriceRequest(); // req will take ownership
 
     subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
@@ -545,40 +537,18 @@ bool GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDa
 
     req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
 
-    const bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
-
-    if (!res)
-    {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::subscribeLastPrices()");
-    }
+    res->context.set_credentials(mCreds);
+    res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context, req);
 
     return res;
 }
 
-bool GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream)
+std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStreamForOrderBook(const QString& instrumentId, int depth)
 {
-    tinkoff::MarketDataRequest          req;
-    tinkoff::SubscribeLastPriceRequest* subscribeLastPriceRequest =
-        new tinkoff::SubscribeLastPriceRequest(); // req will take ownership
+    std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
 
-    subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_UNSUBSCRIBE);
-
-    req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
-
-    const bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
-
-    if (!res)
-    {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::unsubscribeLastPrices()");
-    }
-
-    return res;
-}
-
-bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId, int depth)
-{
-    tinkoff::MarketDataRequest          req;
-    tinkoff::SubscribeOrderBookRequest* subscribeOrderBookRequest =
+    tinkoff::MarketDataServerSideStreamRequest req;
+    tinkoff::SubscribeOrderBookRequest*        subscribeOrderBookRequest =
         new tinkoff::SubscribeOrderBookRequest(); // req will take ownership
 
     subscribeOrderBookRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
@@ -590,32 +560,8 @@ bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDat
 
     req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
 
-    const bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
-
-    if (!res)
-    {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::subscribeOrderBook()");
-    }
-
-    return res;
-}
-
-bool GrpcClient::unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream)
-{
-    tinkoff::MarketDataRequest          req;
-    tinkoff::SubscribeOrderBookRequest* subscribeOrderBookRequest =
-        new tinkoff::SubscribeOrderBookRequest(); // req will take ownership
-
-    subscribeOrderBookRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_UNSUBSCRIBE);
-
-    req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
-
-    const bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
-
-    if (!res)
-    {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::unsubscribeOrderBook()");
-    }
+    res->context.set_credentials(mCreds);
+    res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context, req);
 
     return res;
 }
@@ -632,18 +578,6 @@ std::shared_ptr<tinkoff::MarketDataResponse> GrpcClient::readMarketDataStream(st
     }
 
     return resp;
-}
-
-bool GrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
-{
-    const bool res = mRawGrpcClient->closeWriteMarketDataStream(marketDataStream);
-
-    if (!res)
-    {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::closeWriteMarketDataStream()");
-    }
-
-    return res;
 }
 
 void GrpcClient::cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)

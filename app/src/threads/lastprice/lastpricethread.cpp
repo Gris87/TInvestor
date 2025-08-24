@@ -17,8 +17,7 @@ LastPriceThread::LastPriceThread(IStocksStorage* stocksStorage, ITimeUtils* time
     mStocksStorage(stocksStorage),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
-    mMarketDataStream(),
-    mNeedToRebuildStocksMap()
+    mMarketDataStream()
 {
     qDebug() << "Create LastPriceThread";
 }
@@ -36,96 +35,85 @@ void LastPriceThread::run()
 
     blockSignals(false);
 
-    QStringList stocks;
-
     while (!QThread::currentThread()->isInterruptionRequested())
     {
-        stocks = getStockUIDs();
+        QStringList stocks = getStockUIDs();
 
         if (!stocks.isEmpty())
         {
-            break;
-        }
-
-        if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
-        {
-            break;
-        }
-    }
-
-    if (stocks.isEmpty())
-    {
-        return;
-    }
-
-    QMap<QString, Stock*> stocksMap;
-    mNeedToRebuildStocksMap = true;
-
-    if (createMarketDataStream(stocks))
-    {
-        while (true)
-        {
-            if (mNeedToRebuildStocksMap)
+            if (createMarketDataStream(stocks))
             {
-                stocksMap               = buildStocksMap();
-                mNeedToRebuildStocksMap = false;
+                QMap<QString, Stock*> stocksMap = buildStocksMap();
+
+                while (true)
+                {
+                    const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse =
+                        mGrpcClient->readMarketDataStream(mMarketDataStream);
+
+                    if (QThread::currentThread()->isInterruptionRequested() || marketDataResponse == nullptr)
+                    {
+                        break;
+                    }
+
+                    if (marketDataResponse->has_last_price())
+                    {
+                        const tinkoff::LastPrice& lastPriceResp = marketDataResponse->last_price();
+
+                        StockOperationalData stockData; // NOLINT(cppcoreguidelines-pro-type-member-init)
+
+                        stockData.timestamp = timeToTimestamp(lastPriceResp.time());
+                        stockData.price     = quotationToFloat(lastPriceResp.price());
+
+                        const QString instrumentId = QString::fromStdString(lastPriceResp.instrument_uid());
+
+                        Stock* stock = stocksMap[instrumentId];
+
+                        stock->writeLock();
+                        stock->operational.detailedData.insert(
+                            std::distance(
+                                stock->operational.detailedData.constBegin(),
+                                std::lower_bound(
+                                    stock->operational.detailedData.constBegin(),
+                                    stock->operational.detailedData.constEnd(),
+                                    stockData.timestamp,
+                                    [](const StockOperationalData& stockData, qint64 value) {
+                                        return stockData.timestamp < value;
+                                    }
+                                )
+                            ),
+                            stockData
+                        );
+
+                        Q_ASSERT_X(
+                            std::is_sorted(
+                                stock->operational.detailedData.constBegin(),
+                                stock->operational.detailedData.constEnd(),
+                                [](const StockOperationalData& l, const StockOperationalData& r) {
+                                    return l.timestamp < r.timestamp;
+                                }
+                            ),
+                            __FUNCTION__,
+                            "Stock data is unsorted"
+                        );
+                        stock->writeUnlock();
+
+                        emit lastPriceChanged(instrumentId);
+                    }
+                }
+
+                const QWriteLocker lock(mRwMutex);
+
+                mGrpcClient->finishMarketDataStream(mMarketDataStream);
+                mMarketDataStream = nullptr;
             }
-
-            const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse =
-                mGrpcClient->readMarketDataStream(mMarketDataStream);
-
-            if (QThread::currentThread()->isInterruptionRequested() || marketDataResponse == nullptr)
+        }
+        else
+        {
+            if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
             {
                 break;
             }
-
-            if (marketDataResponse->has_last_price())
-            {
-                const tinkoff::LastPrice& lastPriceResp = marketDataResponse->last_price();
-
-                StockOperationalData stockData; // NOLINT(cppcoreguidelines-pro-type-member-init)
-
-                stockData.timestamp = timeToTimestamp(lastPriceResp.time());
-                stockData.price     = quotationToFloat(lastPriceResp.price());
-
-                const QString instrumentId = QString::fromStdString(lastPriceResp.instrument_uid());
-
-                Stock* stock = stocksMap[instrumentId];
-
-                stock->writeLock();
-                stock->operational.detailedData.insert(
-                    std::distance(
-                        stock->operational.detailedData.constBegin(),
-                        std::lower_bound(
-                            stock->operational.detailedData.constBegin(),
-                            stock->operational.detailedData.constEnd(),
-                            stockData.timestamp,
-                            [](const StockOperationalData& stockData, qint64 value) { return stockData.timestamp < value; }
-                        )
-                    ),
-                    stockData
-                );
-
-                Q_ASSERT_X(
-                    std::is_sorted(
-                        stock->operational.detailedData.constBegin(),
-                        stock->operational.detailedData.constEnd(),
-                        [](const StockOperationalData& l, const StockOperationalData& r) { return l.timestamp < r.timestamp; }
-                    ),
-                    __FUNCTION__,
-                    "Stock data is unsorted"
-                );
-                stock->writeUnlock();
-
-                emit lastPriceChanged(instrumentId);
-            }
         }
-    }
-
-    if (mMarketDataStream != nullptr)
-    {
-        mGrpcClient->finishMarketDataStream(mMarketDataStream);
-        mMarketDataStream = nullptr;
     }
 
     qDebug() << "Finish LastPriceThread";
@@ -173,15 +161,11 @@ QMap<QString, Stock*> LastPriceThread::buildStocksMap()
 
 void LastPriceThread::stocksChanged()
 {
-    const QWriteLocker lock(mRwMutex);
+    const QReadLocker lock(mRwMutex);
 
     if (mMarketDataStream != nullptr)
     {
-        if (mGrpcClient->unsubscribeLastPrices(mMarketDataStream))
-        {
-            mNeedToRebuildStocksMap = true;
-            mGrpcClient->subscribeLastPrices(mMarketDataStream, getStockUIDs());
-        }
+        mGrpcClient->cancelMarketDataStream(mMarketDataStream);
     }
 }
 
@@ -193,7 +177,6 @@ void LastPriceThread::terminateThread()
 
     if (mMarketDataStream != nullptr)
     {
-        mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
         mGrpcClient->cancelMarketDataStream(mMarketDataStream);
     }
 
@@ -208,9 +191,9 @@ bool LastPriceThread::createMarketDataStream(const QStringList& stocks)
 
     if (!QThread::currentThread()->isInterruptionRequested())
     {
-        mMarketDataStream = mGrpcClient->createMarketDataStream();
+        mMarketDataStream = mGrpcClient->createMarketDataStreamForLastPrice(stocks);
 
-        res = mGrpcClient->subscribeLastPrices(mMarketDataStream, stocks);
+        res = mMarketDataStream != nullptr;
     }
 
     return res;
