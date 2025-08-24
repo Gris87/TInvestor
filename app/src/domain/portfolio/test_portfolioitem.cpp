@@ -8,7 +8,21 @@
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_PortfolioItem, Test_constructor_and_destructor)
+class Test_PortfolioItem : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_PortfolioItem, Test_constructor_and_destructor)
 {
     const PortfolioItem item;
 
@@ -34,7 +48,7 @@ TEST(Test_PortfolioItem, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_PortfolioItem, Test_copy_constructor)
+TEST_F(Test_PortfolioItem, Test_copy_constructor)
 {
     PortfolioItem item;
 
@@ -80,7 +94,7 @@ TEST(Test_PortfolioItem, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_PortfolioItem, Test_assign)
+TEST_F(Test_PortfolioItem, Test_assign)
 {
     PortfolioItem item;
     PortfolioItem item2;
@@ -127,7 +141,7 @@ TEST(Test_PortfolioItem, Test_assign)
     // clang-format on
 }
 
-TEST(Test_PortfolioItem, Test_fromJsonObject)
+TEST_F(Test_PortfolioItem, Test_fromJsonObject)
 {
     PortfolioItem item;
 
@@ -191,7 +205,7 @@ TEST(Test_PortfolioItem, Test_fromJsonObject)
     ASSERT_EQ(lastThrownException, "Unknown parameter");
 }
 
-TEST(Test_PortfolioItem, Test_toJsonObject)
+TEST_F(Test_PortfolioItem, Test_toJsonObject)
 {
     PortfolioItem item;
 
@@ -223,7 +237,7 @@ TEST(Test_PortfolioItem, Test_toJsonObject)
     ASSERT_EQ(content, expectedContent);
 }
 
-TEST(Test_PortfolioItem, Test_equals)
+TEST_F(Test_PortfolioItem, Test_equals)
 {
     PortfolioItem item;
     PortfolioItem item2;

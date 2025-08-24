@@ -9,7 +9,21 @@
 
 
 // NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_StockMeta, Test_constructor_and_destructor)
+class Test_StockMeta : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_StockMeta, Test_constructor_and_destructor)
 {
     const StockMeta stockMeta;
 
@@ -25,7 +39,7 @@ TEST(Test_StockMeta, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_StockMeta, Test_copy_constructor)
+TEST_F(Test_StockMeta, Test_copy_constructor)
 {
     StockMeta stockMeta;
 
@@ -51,7 +65,7 @@ TEST(Test_StockMeta, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_StockMeta, Test_assign)
+TEST_F(Test_StockMeta, Test_assign)
 {
     StockMeta stockMeta;
     StockMeta stockMeta2;
@@ -78,7 +92,7 @@ TEST(Test_StockMeta, Test_assign)
     // clang-format on
 }
 
-TEST(Test_StockMeta, Test_fromJsonObject)
+TEST_F(Test_StockMeta, Test_fromJsonObject)
 {
     StockMeta stockMeta;
 
@@ -122,7 +136,7 @@ TEST(Test_StockMeta, Test_fromJsonObject)
     ASSERT_EQ(lastThrownException, "Unknown parameter");
 }
 
-TEST(Test_StockMeta, Test_toJsonObject)
+TEST_F(Test_StockMeta, Test_toJsonObject)
 {
     StockMeta stockMeta;
 
@@ -144,7 +158,7 @@ TEST(Test_StockMeta, Test_toJsonObject)
     ASSERT_EQ(content, expectedContent);
 }
 
-TEST(Test_StockMeta, Test_equals)
+TEST_F(Test_StockMeta, Test_equals)
 {
     StockMeta stockMeta;
     StockMeta stockMeta2;

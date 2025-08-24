@@ -5,7 +5,21 @@
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_OrderBook, Test_constructor_and_destructor)
+class Test_OrderBook : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_OrderBook, Test_constructor_and_destructor)
 {
     const OrderBook orderbook;
 
@@ -17,7 +31,7 @@ TEST(Test_OrderBook, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_OrderBook, Test_copy_constructor)
+TEST_F(Test_OrderBook, Test_copy_constructor)
 {
     OrderBook orderbook;
 
@@ -48,7 +62,7 @@ TEST(Test_OrderBook, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_OrderBook, Test_assign)
+TEST_F(Test_OrderBook, Test_assign)
 {
     OrderBook orderbook;
     OrderBook orderbook2;

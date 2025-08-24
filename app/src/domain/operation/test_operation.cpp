@@ -9,7 +9,21 @@
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_Operation, Test_constructor_and_destructor)
+class Test_Operation : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_Operation, Test_constructor_and_destructor)
 {
     const Operation operation;
 
@@ -53,7 +67,7 @@ TEST(Test_Operation, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_Operation, Test_copy_constructor)
+TEST_F(Test_Operation, Test_copy_constructor)
 {
     Operation operation;
 
@@ -145,7 +159,7 @@ TEST(Test_Operation, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_Operation, Test_assign)
+TEST_F(Test_Operation, Test_assign)
 {
     Operation operation;
     Operation operation2;
@@ -238,7 +252,7 @@ TEST(Test_Operation, Test_assign)
     // clang-format on
 }
 
-TEST(Test_Operation, Test_fromJsonObject)
+TEST_F(Test_Operation, Test_fromJsonObject)
 {
     Operation operation;
 
@@ -341,7 +355,7 @@ TEST(Test_Operation, Test_fromJsonObject)
     ASSERT_EQ(lastThrownException, "Unknown parameter");
 }
 
-TEST(Test_Operation, Test_toJsonObject)
+TEST_F(Test_Operation, Test_toJsonObject)
 {
     Operation operation;
 
@@ -398,7 +412,7 @@ TEST(Test_Operation, Test_toJsonObject)
     ASSERT_EQ(content, expectedContent);
 }
 
-TEST(Test_Operation, Test_equals)
+TEST_F(Test_Operation, Test_equals)
 {
     Operation operation;
     Operation operation2;

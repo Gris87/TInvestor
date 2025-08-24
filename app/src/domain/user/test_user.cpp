@@ -5,7 +5,21 @@
 
 
 // NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_User, Test_constructor_and_destructor)
+class Test_User : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_User, Test_constructor_and_destructor)
 {
     const User user;
 
@@ -17,7 +31,7 @@ TEST(Test_User, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_User, Test_copy_constructor)
+TEST_F(Test_User, Test_copy_constructor)
 {
     User user;
 
@@ -36,7 +50,7 @@ TEST(Test_User, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_User, Test_assign)
+TEST_F(Test_User, Test_assign)
 {
     User user;
     User user2;
@@ -56,7 +70,7 @@ TEST(Test_User, Test_assign)
     // clang-format on
 }
 
-TEST(Test_User, Test_setTariff)
+TEST_F(Test_User, Test_setTariff)
 {
     User user;
 
@@ -89,7 +103,7 @@ TEST(Test_User, Test_setTariff)
     ASSERT_NEAR(user.commission, 0.00f, 0.0001f);
 }
 
-TEST(Test_User, Test_equals)
+TEST_F(Test_User, Test_equals)
 {
     User user;
     User user2;

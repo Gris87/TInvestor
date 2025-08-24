@@ -8,6 +8,7 @@ Do not sell ASAP if you want to get rich
 For the best times
 =======================================
 
+Refresh clang-tidy ignores for tests
 Improve all readability-function-cognitive-complexity
 Add asserts on each function argument
 Add more logs

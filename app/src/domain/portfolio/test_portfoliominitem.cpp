@@ -6,7 +6,21 @@
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_PortfolioMinItem, Test_constructor_and_destructor)
+class Test_PortfolioMinItem : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_PortfolioMinItem, Test_constructor_and_destructor)
 {
     const PortfolioMinItem item;
 
@@ -16,7 +30,7 @@ TEST(Test_PortfolioMinItem, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_PortfolioMinItem, Test_copy_constructor)
+TEST_F(Test_PortfolioMinItem, Test_copy_constructor)
 {
     PortfolioMinItem item;
 
@@ -31,7 +45,7 @@ TEST(Test_PortfolioMinItem, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_PortfolioMinItem, Test_assign)
+TEST_F(Test_PortfolioMinItem, Test_assign)
 {
     PortfolioMinItem item;
     PortfolioMinItem item2;
@@ -47,7 +61,7 @@ TEST(Test_PortfolioMinItem, Test_assign)
     // clang-format on
 }
 
-TEST(Test_PortfolioMinItem, Test_equals)
+TEST_F(Test_PortfolioMinItem, Test_equals)
 {
     PortfolioMinItem item;
     PortfolioMinItem item2;

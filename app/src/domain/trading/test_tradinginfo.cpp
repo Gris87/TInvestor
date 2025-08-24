@@ -5,7 +5,21 @@
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_TradingInfo, Test_constructor_and_destructor)
+class Test_TradingInfo : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_TradingInfo, Test_constructor_and_destructor)
 {
     const TradingInfo info;
 
@@ -24,7 +38,7 @@ TEST(Test_TradingInfo, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_TradingInfo, Test_copy_constructor)
+TEST_F(Test_TradingInfo, Test_copy_constructor)
 {
     TradingInfo info;
 
@@ -41,7 +55,7 @@ TEST(Test_TradingInfo, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_TradingInfo, Test_assign)
+TEST_F(Test_TradingInfo, Test_assign)
 {
     TradingInfo info;
     TradingInfo info2;

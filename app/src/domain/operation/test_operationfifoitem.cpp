@@ -9,7 +9,21 @@
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_OperationFifoItem, Test_constructor_and_destructor)
+class Test_OperationFifoItem : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_OperationFifoItem, Test_constructor_and_destructor)
 {
     const OperationFifoItem item;
 
@@ -20,7 +34,7 @@ TEST(Test_OperationFifoItem, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_OperationFifoItem, Test_copy_constructor)
+TEST_F(Test_OperationFifoItem, Test_copy_constructor)
 {
     OperationFifoItem item;
 
@@ -37,7 +51,7 @@ TEST(Test_OperationFifoItem, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_OperationFifoItem, Test_assign)
+TEST_F(Test_OperationFifoItem, Test_assign)
 {
     OperationFifoItem item;
     OperationFifoItem item2;
@@ -55,7 +69,7 @@ TEST(Test_OperationFifoItem, Test_assign)
     // clang-format on
 }
 
-TEST(Test_OperationFifoItem, Test_fromJsonObject)
+TEST_F(Test_OperationFifoItem, Test_fromJsonObject)
 {
     OperationFifoItem item;
 
@@ -88,7 +102,7 @@ TEST(Test_OperationFifoItem, Test_fromJsonObject)
     ASSERT_EQ(lastThrownException, "Unknown parameter");
 }
 
-TEST(Test_OperationFifoItem, Test_toJsonObject)
+TEST_F(Test_OperationFifoItem, Test_toJsonObject)
 {
     OperationFifoItem item;
 
@@ -105,7 +119,7 @@ TEST(Test_OperationFifoItem, Test_toJsonObject)
     ASSERT_EQ(content, expectedContent);
 }
 
-TEST(Test_OperationFifoItem, Test_equals)
+TEST_F(Test_OperationFifoItem, Test_equals)
 {
     OperationFifoItem item;
     OperationFifoItem item2;

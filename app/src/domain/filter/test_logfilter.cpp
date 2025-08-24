@@ -5,7 +5,21 @@
 
 
 // NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_LogFilter, Test_constructor_and_destructor)
+class Test_LogFilter : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_LogFilter, Test_constructor_and_destructor)
 {
     const LogFilter filter;
 
@@ -15,7 +29,7 @@ TEST(Test_LogFilter, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_LogFilter, Test_copy_constructor)
+TEST_F(Test_LogFilter, Test_copy_constructor)
 {
     LogFilter filter;
 
@@ -30,7 +44,7 @@ TEST(Test_LogFilter, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_LogFilter, Test_assign)
+TEST_F(Test_LogFilter, Test_assign)
 {
     LogFilter filter;
     LogFilter filter2;
@@ -46,7 +60,7 @@ TEST(Test_LogFilter, Test_assign)
     // clang-format on
 }
 
-TEST(Test_LogFilter, Test_isActive)
+TEST_F(Test_LogFilter, Test_isActive)
 {
     LogFilter filter;
 
@@ -63,7 +77,7 @@ TEST(Test_LogFilter, Test_isActive)
     ASSERT_EQ(filter.isActive(), false);
 }
 
-TEST(Test_LogFilter, Test_isFiltered)
+TEST_F(Test_LogFilter, Test_isFiltered)
 {
     LogFilter filter;
     LogEntry  entry;
@@ -90,7 +104,7 @@ TEST(Test_LogFilter, Test_isFiltered)
     ASSERT_EQ(filter.isFiltered(entry), false);
 }
 
-TEST(Test_LogFilter, Test_equals)
+TEST_F(Test_LogFilter, Test_equals)
 {
     LogFilter filter;
     LogFilter filter2;

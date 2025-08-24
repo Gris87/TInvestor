@@ -5,7 +5,21 @@
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_StockOperational, Test_constructor_and_destructor)
+class Test_StockOperational : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_StockOperational, Test_constructor_and_destructor)
 {
     const StockOperational stockOperational;
 
@@ -18,7 +32,7 @@ TEST(Test_StockOperational, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_StockOperational, Test_copy_constructor)
+TEST_F(Test_StockOperational, Test_copy_constructor)
 {
     StockOperational stockOperational;
 
@@ -45,7 +59,7 @@ TEST(Test_StockOperational, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_StockOperational, Test_assign)
+TEST_F(Test_StockOperational, Test_assign)
 {
     StockOperational stockOperational;
     StockOperational stockOperational2;

@@ -4,7 +4,21 @@
 
 
 
-TEST(Test_QuantityAndCost, Test_constructor_and_destructor)
+class Test_QuantityAndCost : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_QuantityAndCost, Test_constructor_and_destructor)
 {
     const QuantityAndCost       quantityAndCost1;
     const QuantityAndCostDouble quantityAndCost2;

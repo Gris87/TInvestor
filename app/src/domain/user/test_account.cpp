@@ -5,7 +5,21 @@
 
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
-TEST(Test_Account, Test_constructor_and_destructor)
+class Test_Account : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_Account, Test_constructor_and_destructor)
 {
     const Account account;
 
@@ -16,7 +30,7 @@ TEST(Test_Account, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_Account, Test_copy_constructor)
+TEST_F(Test_Account, Test_copy_constructor)
 {
     Account account;
 
@@ -33,7 +47,7 @@ TEST(Test_Account, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_Account, Test_assign)
+TEST_F(Test_Account, Test_assign)
 {
     Account account;
     Account account2;
@@ -51,7 +65,7 @@ TEST(Test_Account, Test_assign)
     // clang-format on
 }
 
-TEST(Test_Account, Test_hash)
+TEST_F(Test_Account, Test_hash)
 {
     Account account;
 
@@ -64,7 +78,7 @@ TEST(Test_Account, Test_hash)
     ASSERT_EQ(account.hash(), "a21075a36eeddd084e17611a238c7101");
 }
 
-TEST(Test_Account, Test_equals)
+TEST_F(Test_Account, Test_equals)
 {
     Account account;
     Account account2;
@@ -95,7 +109,7 @@ TEST(Test_Account, Test_equals)
     ASSERT_EQ(account, account2);
 }
 
-TEST(Test_Account, Test_less)
+TEST_F(Test_Account, Test_less)
 {
     Account account;
     Account account2;

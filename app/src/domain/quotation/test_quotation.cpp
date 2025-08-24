@@ -9,7 +9,21 @@
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_Quotation, Test_constructor_and_destructor)
+class Test_Quotation : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_Quotation, Test_constructor_and_destructor)
 {
     const Quotation quotation;
 
@@ -17,7 +31,7 @@ TEST(Test_Quotation, Test_constructor_and_destructor)
     ASSERT_EQ(quotation.nano, 0);
 }
 
-TEST(Test_Quotation, Test_copy_constructor)
+TEST_F(Test_Quotation, Test_copy_constructor)
 {
     Quotation quotation;
 
@@ -30,7 +44,7 @@ TEST(Test_Quotation, Test_copy_constructor)
     ASSERT_EQ(quotation2.nano, 2);
 }
 
-TEST(Test_Quotation, Test_assign)
+TEST_F(Test_Quotation, Test_assign)
 {
     Quotation quotation;
     Quotation quotation2;
@@ -44,7 +58,7 @@ TEST(Test_Quotation, Test_assign)
     ASSERT_EQ(quotation2.nano, 2);
 }
 
-TEST(Test_Quotation, Test_fromJsonObject)
+TEST_F(Test_Quotation, Test_fromJsonObject)
 {
     Quotation quotation;
 
@@ -71,7 +85,7 @@ TEST(Test_Quotation, Test_fromJsonObject)
     ASSERT_EQ(lastThrownException, "Unknown parameter");
 }
 
-TEST(Test_Quotation, Test_toJsonObject)
+TEST_F(Test_Quotation, Test_toJsonObject)
 {
     Quotation quotation;
 
@@ -87,7 +101,7 @@ TEST(Test_Quotation, Test_toJsonObject)
     ASSERT_EQ(content, expectedContent);
 }
 
-TEST(Test_Quotation, Test_less)
+TEST_F(Test_Quotation, Test_less)
 {
     Quotation quotation;
     Quotation quotation2;
@@ -108,7 +122,7 @@ TEST(Test_Quotation, Test_less)
     ASSERT_LT(quotation, quotation2);
 }
 
-TEST(Test_Quotation, Test_equals)
+TEST_F(Test_Quotation, Test_equals)
 {
     Quotation quotation;
     Quotation quotation2;
@@ -132,7 +146,7 @@ TEST(Test_Quotation, Test_equals)
     ASSERT_EQ(quotation, quotation2);
 }
 
-TEST(Test_Quotation, Test_more)
+TEST_F(Test_Quotation, Test_more)
 {
     Quotation quotation;
     Quotation quotation2;

@@ -5,7 +5,21 @@
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_StockTableEntry, Test_constructor_and_destructor)
+class Test_StockTableEntry : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_StockTableEntry, Test_constructor_and_destructor)
 {
     const StockTableEntry entry;
 
@@ -27,7 +41,7 @@ TEST(Test_StockTableEntry, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_StockTableEntry, Test_copy_constructor)
+TEST_F(Test_StockTableEntry, Test_copy_constructor)
 {
     StockTableEntry entry;
 
@@ -65,7 +79,7 @@ TEST(Test_StockTableEntry, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_StockTableEntry, Test_assign)
+TEST_F(Test_StockTableEntry, Test_assign)
 {
     StockTableEntry entry;
     StockTableEntry entry2;
@@ -104,7 +118,7 @@ TEST(Test_StockTableEntry, Test_assign)
     // clang-format on
 }
 
-TEST(Test_StockTableEntry, Test_equals)
+TEST_F(Test_StockTableEntry, Test_equals)
 {
     StockTableEntry entry;
     StockTableEntry entry2;

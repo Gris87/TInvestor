@@ -6,14 +6,28 @@
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_Portfolio, Test_constructor_and_destructor)
+class Test_Portfolio : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_Portfolio, Test_constructor_and_destructor)
 {
     const Portfolio portfolio;
 
     ASSERT_EQ(portfolio.positions.size(), 0);
 }
 
-TEST(Test_Portfolio, Test_copy_constructor)
+TEST_F(Test_Portfolio, Test_copy_constructor)
 {
     Portfolio portfolio;
 
@@ -77,7 +91,7 @@ TEST(Test_Portfolio, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_Portfolio, Test_assign)
+TEST_F(Test_Portfolio, Test_assign)
 {
     Portfolio portfolio;
     Portfolio portfolio2;
@@ -142,7 +156,7 @@ TEST(Test_Portfolio, Test_assign)
     // clang-format on
 }
 
-TEST(Test_Portfolio, Test_fromJsonArray)
+TEST_F(Test_Portfolio, Test_fromJsonArray)
 {
     Portfolio portfolio;
 
@@ -186,7 +200,7 @@ TEST(Test_Portfolio, Test_fromJsonArray)
     // clang-format on
 }
 
-TEST(Test_Portfolio, Test_toJsonArray)
+TEST_F(Test_Portfolio, Test_toJsonArray)
 {
     Portfolio portfolio;
 
@@ -230,7 +244,7 @@ TEST(Test_Portfolio, Test_toJsonArray)
     ASSERT_EQ(content, expectedContent);
 }
 
-TEST(Test_Portfolio, Test_equals)
+TEST_F(Test_Portfolio, Test_equals)
 {
     Portfolio portfolio;
     Portfolio portfolio2;

@@ -5,7 +5,21 @@
 
 
 // NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_StockFilter, Test_constructor_and_destructor)
+class Test_StockFilter : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_StockFilter, Test_constructor_and_destructor)
 {
     const StockFilter filter;
 
@@ -32,7 +46,7 @@ TEST(Test_StockFilter, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_StockFilter, Test_copy_constructor)
+TEST_F(Test_StockFilter, Test_copy_constructor)
 {
     StockFilter filter;
 
@@ -81,7 +95,7 @@ TEST(Test_StockFilter, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_StockFilter, Test_assign)
+TEST_F(Test_StockFilter, Test_assign)
 {
     StockFilter filter;
     StockFilter filter2;
@@ -131,7 +145,7 @@ TEST(Test_StockFilter, Test_assign)
     // clang-format on
 }
 
-TEST(Test_StockFilter, Test_isActive)
+TEST_F(Test_StockFilter, Test_isActive)
 {
     StockFilter filter;
 
@@ -181,7 +195,7 @@ TEST(Test_StockFilter, Test_isActive)
     ASSERT_EQ(filter.isActive(), false);
 }
 
-TEST(Test_StockFilter, Test_isFiltered)
+TEST_F(Test_StockFilter, Test_isFiltered)
 {
     StockFilter     filter;
     StockTableEntry entry;
@@ -372,7 +386,7 @@ TEST(Test_StockFilter, Test_isFiltered)
     ASSERT_EQ(filter.isFiltered(entry), false);
 }
 
-TEST(Test_StockFilter, Test_equals)
+TEST_F(Test_StockFilter, Test_equals)
 {
     StockFilter filter;
     StockFilter filter2;
