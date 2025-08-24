@@ -4,7 +4,21 @@
 
 
 
-TEST(Test_Exception, Test_throwException)
+class Test_Exception : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_Exception, Test_throwException)
 {
     lastThrownException = "";
     throwException("Blah-Blah");

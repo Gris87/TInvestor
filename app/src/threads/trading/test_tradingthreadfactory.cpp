@@ -14,16 +14,31 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_TradingThreadFactory, Test_constructor_and_destructor)
+class Test_TradingThreadFactory : public ::testing::Test
 {
-    const TradingThreadFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new TradingThreadFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    TradingThreadFactory* factory;
+};
+
+
+
+TEST_F(Test_TradingThreadFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_TradingThreadFactory, Test_newInstance)
+TEST_F(Test_TradingThreadFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const TradingThreadFactory factory;
 
     StrictMock<InstrumentsStorageMock> instrumentsStorageMock;
     StrictMock<GrpcClientMock>         grpcClientMock;
@@ -32,7 +47,7 @@ TEST(Test_TradingThreadFactory, Test_newInstance)
 
     EXPECT_CALL(logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("bbbbb"), QString("But why")));
 
-    const ITradingThread* thread = factory.newInstance(
+    const ITradingThread* thread = factory->newInstance(
         &instrumentsStorageMock, &grpcClientMock, &logsThreadMock, &timeUtilsMock, "aaaaa", "bbbbb", 1000.0, "But why", nullptr
     );
     ASSERT_TRUE(thread != nullptr);

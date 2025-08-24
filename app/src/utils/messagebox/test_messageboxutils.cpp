@@ -4,17 +4,34 @@
 
 
 
-TEST(Test_MessageBoxUtils, Test_constructor_and_destructor)
+class Test_MessageBoxUtils : public ::testing::Test
 {
-    const MessageBoxUtils messageBoxUtils;
+protected:
+    void SetUp() override
+    {
+        messageBoxUtils = new MessageBoxUtils();
+    }
+
+    void TearDown() override
+    {
+        delete messageBoxUtils;
+    }
+
+    MessageBoxUtils* messageBoxUtils;
+};
+
+
+
+TEST_F(Test_MessageBoxUtils, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_MessageBoxUtils, Test_warning)
+TEST_F(Test_MessageBoxUtils, Test_warning)
 {
     // Nothing
 }
 
-TEST(Test_MessageBoxUtils, Test_question)
+TEST_F(Test_MessageBoxUtils, Test_question)
 {
     // Nothing
 }

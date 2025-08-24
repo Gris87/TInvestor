@@ -4,7 +4,24 @@
 
 
 
-TEST(Test_DarkPalette, Test_constructor_and_destructor)
+class Test_DarkPalette : public ::testing::Test
 {
-    const DarkPalette palette;
+protected:
+    void SetUp() override
+    {
+        palette = new DarkPalette();
+    }
+
+    void TearDown() override
+    {
+        delete palette;
+    }
+
+    DarkPalette* palette;
+};
+
+
+
+TEST_F(Test_DarkPalette, Test_constructor_and_destructor)
+{
 }

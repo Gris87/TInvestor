@@ -4,15 +4,30 @@
 
 
 
-TEST(Test_FileFactory, Test_constructor_and_destructor)
+class Test_FileFactory : public ::testing::Test
 {
-    const FileFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new FileFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    FileFactory* factory;
+};
+
+
+
+TEST_F(Test_FileFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_FileFactory, Test_newInstance)
+TEST_F(Test_FileFactory, Test_newInstance)
 {
-    const FileFactory factory;
-
-    const std::shared_ptr<IFile> file = factory.newInstance("test.txt");
+    const std::shared_ptr<IFile> file = factory->newInstance("test.txt");
     ASSERT_TRUE(file != nullptr);
 }

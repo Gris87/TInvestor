@@ -7,12 +7,26 @@
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_SettingsEditor, Test_constructor_and_destructor)
+class Test_SettingsEditor : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+
+
+TEST_F(Test_SettingsEditor, Test_constructor_and_destructor)
 {
     const SettingsEditor editor("GrisCom", "TInvestor_Test");
 }
 
-TEST(Test_SettingsEditor, Test_setValue_and_value)
+TEST_F(Test_SettingsEditor, Test_setValue_and_value)
 {
     SettingsEditor editor("GrisCom", "TInvestor_Test");
 
@@ -21,7 +35,7 @@ TEST(Test_SettingsEditor, Test_setValue_and_value)
     ASSERT_EQ(editor.value("TestKey", 44).toInt(), 123);
 }
 
-TEST(Test_SettingsEditor, Test_remove)
+TEST_F(Test_SettingsEditor, Test_remove)
 {
     SettingsEditor editor("GrisCom", "TInvestor_Test");
 
@@ -34,7 +48,7 @@ TEST(Test_SettingsEditor, Test_remove)
     ASSERT_EQ(editor.value("TestKey", 44).toInt(), 44);
 }
 
-TEST(Test_SettingsEditor, Test_ini_format)
+TEST_F(Test_SettingsEditor, Test_ini_format)
 {
     const QString appDir = qApp->applicationDirPath();
 

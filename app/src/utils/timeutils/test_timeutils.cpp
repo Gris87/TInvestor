@@ -4,14 +4,29 @@
 
 
 
-TEST(Test_TimeUtils, Test_constructor_and_destructor)
+class Test_TimeUtils : public ::testing::Test
 {
-    const TimeUtils timeUtils;
+protected:
+    void SetUp() override
+    {
+        timeUtils = new TimeUtils();
+    }
+
+    void TearDown() override
+    {
+        delete timeUtils;
+    }
+
+    TimeUtils* timeUtils;
+};
+
+
+
+TEST_F(Test_TimeUtils, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_TimeUtils, Test_interruptibleSleep)
+TEST_F(Test_TimeUtils, Test_interruptibleSleep)
 {
-    TimeUtils timeUtils;
-
-    ASSERT_EQ(timeUtils.interruptibleSleep(100, QThread::currentThread()), false);
+    ASSERT_EQ(timeUtils->interruptibleSleep(100, QThread::currentThread()), false);
 }

@@ -5,21 +5,36 @@
 
 
 
-TEST(Test_Dir, Test_constructor_and_destructor)
+class Test_Dir : public ::testing::Test
 {
-    const Dir dir;
+protected:
+    void SetUp() override
+    {
+        dir = new Dir();
+    }
+
+    void TearDown() override
+    {
+        delete dir;
+    }
+
+    Dir* dir;
+};
+
+
+
+TEST_F(Test_Dir, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_Dir, Test_mkpath_and_entryList_and_removeRecursively)
+TEST_F(Test_Dir, Test_mkpath_and_entryList_and_removeRecursively)
 {
-    Dir dir;
-
     const QString appDir = qApp->applicationDirPath();
 
     QDir qDir(appDir + "/test/some_dir");
     ASSERT_TRUE(!qDir.exists());
 
-    ASSERT_TRUE(dir.mkpath(appDir + "/test/some_dir"));
+    ASSERT_TRUE(dir->mkpath(appDir + "/test/some_dir"));
     ASSERT_TRUE(qDir.exists());
 
     QFile qFile1(appDir + "/test/some_dir/a.png");

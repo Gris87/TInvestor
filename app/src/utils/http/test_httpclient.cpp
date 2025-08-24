@@ -8,15 +8,30 @@
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_HttpClient, Test_constructor_and_destructor)
+class Test_HttpClient : public ::testing::Test
 {
-    const HttpClient client;
+protected:
+    void SetUp() override
+    {
+        client = new HttpClient();
+    }
+
+    void TearDown() override
+    {
+        delete client;
+    }
+
+    HttpClient* client;
+};
+
+
+
+TEST_F(Test_HttpClient, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_HttpClient, Test_download)
+TEST_F(Test_HttpClient, Test_download)
 {
-    HttpClient client;
-
     QUrl url = QUrl("https://httpbin.org/anything");
 
     QUrlQuery query;
@@ -28,7 +43,7 @@ TEST(Test_HttpClient, Test_download)
 
     for (int attempts = 0; attempts < 10; ++attempts)
     {
-        const HttpResult result = client.download(url, headers);
+        const HttpResult result = client->download(url, headers);
 
         if (result.statusCode == 200)
         {
@@ -48,7 +63,7 @@ TEST(Test_HttpClient, Test_download)
     }
 }
 
-TEST(Test_HttpClient, Test_openInBrowser)
+TEST_F(Test_HttpClient, Test_openInBrowser)
 {
     // Nothing
 }

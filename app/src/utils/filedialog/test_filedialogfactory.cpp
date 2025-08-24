@@ -4,15 +4,30 @@
 
 
 
-TEST(Test_FileDialogFactory, Test_constructor_and_destructor)
+class Test_FileDialogFactory : public ::testing::Test
 {
-    const FileDialogFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new FileDialogFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    FileDialogFactory* factory;
+};
+
+
+
+TEST_F(Test_FileDialogFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_FileDialogFactory, Test_newInstance)
+TEST_F(Test_FileDialogFactory, Test_newInstance)
 {
-    const FileDialogFactory factory;
-
-    const std::shared_ptr<IFileDialog> dialog = factory.newInstance(nullptr, "", "", "");
+    const std::shared_ptr<IFileDialog> dialog = factory->newInstance(nullptr, "", "", "");
     ASSERT_TRUE(dialog != nullptr);
 }

@@ -5,17 +5,32 @@
 
 
 
-TEST(Test_QZipFactory, Test_constructor_and_destructor)
+class Test_QZipFactory : public ::testing::Test
 {
-    const QZipFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new QZipFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    QZipFactory* factory;
+};
+
+
+
+TEST_F(Test_QZipFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_QZipFactory, Test_newInstance)
+TEST_F(Test_QZipFactory, Test_newInstance)
 {
-    const QZipFactory factory;
-
     QBuffer zipBuffer;
 
-    const std::shared_ptr<IQZip> QZip = factory.newInstance(&zipBuffer);
+    const std::shared_ptr<IQZip> QZip = factory->newInstance(&zipBuffer);
     ASSERT_TRUE(QZip != nullptr);
 }
