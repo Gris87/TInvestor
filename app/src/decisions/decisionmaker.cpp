@@ -24,6 +24,7 @@ DecisionMaker::DecisionMaker(
     mUserStorage(userStorage),
     mBuyDecisions(buyDecisions),
     mSellDecisions(sellDecisions),
+    mMoscowTimezone("Europe/Moscow"),
     mStocksMap()
 {
     qDebug() << "Create DecisionMaker";
@@ -53,7 +54,7 @@ InstrumentsForTrading DecisionMaker::makeDecision(
 
     if (config->isUseSchedule())
     {
-        const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp); // TODO: Moscow time?
+        const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
         const int       dayOfWeek = dateTime.date().dayOfWeek();
 
         if (dayOfWeek == Qt::Saturday || dayOfWeek == Qt::Sunday)

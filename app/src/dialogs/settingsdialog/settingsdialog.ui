@@ -209,6 +209,13 @@
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>in Moscow time</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>

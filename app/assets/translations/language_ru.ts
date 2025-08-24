@@ -332,14 +332,14 @@
 <context>
     <name>FollowThread</name>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="243"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="267"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="255"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="279"/>
         <source>Decided to sell up to cost %1 due to following account &quot;%2&quot;</source>
         <translation>Решено продать до стоимости %1 из-за следования за аккаунтом &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="221"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="252"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="237"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="264"/>
         <source>Decided to buy up to cost %1 due to following account &quot;%2&quot;</source>
         <translation>Решено покупать до стоимости %1 из-за следования за аккаунтом &quot;%2&quot;</translation>
     </message>
@@ -403,7 +403,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="631"/>
+        <location filename="../../src/main/mainwindow.cpp" line="633"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -429,7 +429,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="520"/>
-        <location filename="../../src/main/mainwindow.cpp" line="724"/>
+        <location filename="../../src/main/mainwindow.cpp" line="726"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -505,35 +505,35 @@
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="573"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1177"/>
+        <location filename="../../src/main/mainwindow.cpp" line="575"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1190"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="590"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1031"/>
+        <location filename="../../src/main/mainwindow.cpp" line="592"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1033"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="712"/>
+        <location filename="../../src/main/mainwindow.cpp" line="714"/>
         <source>Auto-pilot started</source>
         <translation>Авто-пилот запущен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="718"/>
+        <location filename="../../src/main/mainwindow.cpp" line="720"/>
         <source>Auto-pilot stopped</source>
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1031"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1033"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="675"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1062"/>
+        <location filename="../../src/main/mainwindow.cpp" line="677"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1064"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
@@ -548,7 +548,7 @@
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1062"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1064"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -672,7 +672,7 @@
         <translation>Биржевые волны (стакан)</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.cpp" line="74"/>
+        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.cpp" line="82"/>
         <source>%1 / Spread: %2</source>
         <translation>%1 / Спред: %2</translation>
     </message>
@@ -680,32 +680,32 @@
 <context>
     <name>PortfolioThread</name>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="30"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="31"/>
         <source>Currency and metals</source>
         <translation>Валюта и металлы</translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="31"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="32"/>
         <source>Share</source>
         <translation>Акции</translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="32"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="33"/>
         <source>ETF</source>
         <translation>Фонды</translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="33"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="34"/>
         <source>Bond</source>
         <translation>Облигации</translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="34"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="35"/>
         <source>Futures</source>
         <translation>Фьючерсы</translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="35"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="36"/>
         <source>Options</source>
         <translation>Опционы</translation>
     </message>
@@ -820,8 +820,8 @@
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="775"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="783"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="777"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="785"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>
@@ -1082,35 +1082,40 @@
         <translation>Торговать акциями в будни в интервале</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="301"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="214"/>
+        <source>in Moscow time</source>
+        <translation>по московскому времени</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="308"/>
         <source>of average daily turnover</source>
         <translation>от среднего дневного оборота</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="331"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="338"/>
         <source>Store stocks data for</source>
         <translation>Хранить данные об акциях</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="338"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="345"/>
         <source> months</source>
         <translation> месяцев</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="419"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="426"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="213"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="237"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="519"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="526"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="404"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="440"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="411"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="447"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
     </message>
@@ -1125,29 +1130,29 @@
         <translation> минут</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="234"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="241"/>
         <source>Limit stock purchase part less than</source>
         <translation>Не покупать акции с долей больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="278"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="285"/>
         <source>and less than</source>
         <translation>и больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="383"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="390"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="214"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="236"/>
         <source>Simulation</source>
         <translation>Симуляция</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="476"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="483"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="499"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="506"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>

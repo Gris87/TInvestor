@@ -332,14 +332,14 @@
 <context>
     <name>FollowThread</name>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="243"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="267"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="255"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="279"/>
         <source>Decided to sell up to cost %1 due to following account &quot;%2&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="221"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="252"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="237"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="264"/>
         <source>Decided to buy up to cost %1 due to following account &quot;%2&quot;</source>
         <translation></translation>
     </message>
@@ -403,7 +403,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="631"/>
+        <location filename="../../src/main/mainwindow.cpp" line="633"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -429,7 +429,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="520"/>
-        <location filename="../../src/main/mainwindow.cpp" line="724"/>
+        <location filename="../../src/main/mainwindow.cpp" line="726"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -505,35 +505,35 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="573"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1177"/>
+        <location filename="../../src/main/mainwindow.cpp" line="575"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1190"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="590"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1031"/>
+        <location filename="../../src/main/mainwindow.cpp" line="592"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1033"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="712"/>
+        <location filename="../../src/main/mainwindow.cpp" line="714"/>
         <source>Auto-pilot started</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="718"/>
+        <location filename="../../src/main/mainwindow.cpp" line="720"/>
         <source>Auto-pilot stopped</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1031"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1033"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="675"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1062"/>
+        <location filename="../../src/main/mainwindow.cpp" line="677"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1064"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
@@ -548,7 +548,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1062"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1064"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -672,7 +672,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.cpp" line="74"/>
+        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.cpp" line="82"/>
         <source>%1 / Spread: %2</source>
         <translation></translation>
     </message>
@@ -680,32 +680,32 @@
 <context>
     <name>PortfolioThread</name>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="30"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="31"/>
         <source>Currency and metals</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="31"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="32"/>
         <source>Share</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="32"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="33"/>
         <source>ETF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="33"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="34"/>
         <source>Bond</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="34"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="35"/>
         <source>Futures</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="35"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="36"/>
         <source>Options</source>
         <translation></translation>
     </message>
@@ -820,8 +820,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="775"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="783"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="777"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="785"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>
@@ -1092,62 +1092,67 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="234"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="214"/>
+        <source>in Moscow time</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="241"/>
         <source>Limit stock purchase part less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="278"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="285"/>
         <source>and less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="301"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="308"/>
         <source>of average daily turnover</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="331"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="338"/>
         <source>Store stocks data for</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="338"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="345"/>
         <source> months</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="383"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="390"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="214"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="236"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="404"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="440"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="411"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="447"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="419"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="426"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="213"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="237"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="476"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="483"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="499"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="506"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="519"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="526"/>
         <source>Default</source>
         <translation></translation>
     </message>

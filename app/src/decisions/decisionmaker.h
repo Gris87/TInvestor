@@ -5,6 +5,7 @@
 #include "src/decisions/idecisionmaker.h"
 
 #include <QReadWriteLock>
+#include <QTimeZone>
 
 #include "src/config/iconfig.h"
 #include "src/decisions/iactiondecision.h"
@@ -79,5 +80,6 @@ private:
     IUserStorage*           mUserStorage;
     QList<IActionDecision*> mBuyDecisions;
     QList<IActionDecision*> mSellDecisions;
+    QTimeZone               mMoscowTimezone;
     QMap<QString, Stock*>   mStocksMap;
 };

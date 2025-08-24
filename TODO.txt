@@ -1,10 +1,14 @@
+check-style for TEST_F
+Use TEST_F tests everywhere
 Improve coverage
 Create release
 
 Do not sell ASAP if you want to get rich
 
-Use TEST_F tests everywhere
-Make experiments with non Moscow timezone
+=======================================
+For the best times
+=======================================
+
 Improve all readability-function-cognitive-complexity
 Add asserts on each function argument
 Add more logs
@@ -18,7 +22,4 @@ Follow for the crowd (Buy if price raises and sell if price fall)
 Rezko rastet, znachit budet rezko padat (2-3 times)
 Buy and sell on extremums (AI assisted)
 
-=======================================
-For the best times
-=======================================
 Allow to select/deselect stocks for trading
