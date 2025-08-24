@@ -50,6 +50,8 @@ private:
                      InstrumentsForTrading&   instrumentsForSale,
                      InstrumentsForTrading&   instrumentsForBuy
                  );
+
+    [[nodiscard]]
     qint32 getInstrumentLot(const QString& instrumentId) const;
 
     QReadWriteLock*                  mRwMutex;

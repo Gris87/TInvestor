@@ -112,7 +112,7 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
     for (const StockMeta* newMeta : newMetas)
     {
         Stock* stock = new Stock(); // StocksStorage will take ownership
-        stock->meta = *newMeta;
+        stock->meta  = *newMeta;
 
         mStocks.append(stock);
     }
