@@ -468,7 +468,9 @@ void StocksTableModel::updateTable(const QList<Stock*>& stocks)
 
     for (Stock* stock : stocks)
     {
+        stock->readLock();
         mStocks[stock->meta.instrumentId] = stock;
+        stock->readUnlock();
     }
 
     sortEntries();

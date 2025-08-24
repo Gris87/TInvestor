@@ -30,6 +30,8 @@ OrderWavesDialog::OrderWavesDialog(
     );
     setWindowModality(Qt::ApplicationModal);
 
+    mStock->readLock();
+
     ui->nameLabel->setText(mStock->meta.instrumentName);
 
     mOrderWavesWidget = orderWavesWidgetFactory->newInstance(mStock->meta.pricePrecision, mStock->meta.minPriceIncrement, this);
@@ -40,6 +42,8 @@ OrderWavesDialog::OrderWavesDialog(
 
     mOrderBookThread->setStock(mStock);
     mOrderBookThread->start();
+
+    mStock->readUnlock();
 }
 
 OrderWavesDialog::~OrderWavesDialog()
@@ -54,6 +58,8 @@ OrderWavesDialog::~OrderWavesDialog()
 
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
+    mStock->readLock();
+
     const QString price = QString::number(orderBook.price, 'f', mStock->meta.pricePrecision) + " \u20BD";
     QString       spread;
 
@@ -69,6 +75,8 @@ void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
     {
         spread = "-";
     }
+
+    mStock->readUnlock();
 
     ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString(DATETIME_FORMAT));
     ui->priceLabel->setText(tr("%1 / Spread: %2").arg(price, spread));

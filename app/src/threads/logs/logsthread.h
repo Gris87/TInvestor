@@ -4,7 +4,7 @@
 
 #include "src/threads/logs/ilogsthread.h"
 
-#include <QMutex>
+#include <QReadWriteLock>
 #include <QSemaphore>
 
 #include "src/db/logs/ilogsdatabase.h"
@@ -59,7 +59,7 @@ private:
     void     optimize();
 
     QSemaphore           mSemaphore;
-    QMutex*              mMutex;
+    QReadWriteLock*      mRwMutex;
     ILogsDatabase*       mLogsDatabase;
     IInstrumentsStorage* mInstrumentsStorage;
     ILogosStorage*       mLogosStorage;

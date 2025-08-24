@@ -1,16 +1,13 @@
-Double check start/stop simulator/autopilot on authFailed and login
 Improve coverage
 Create release
 
 Do not sell ASAP if you want to get rich
 
-Sync common data between threads and main thread
 Use readonly grpc streams
-Add asserts on each function argument
-Double check mutexes
 Use TEST_F tests everywhere
-Improve all readability-function-cognitive-complexity
 Make experiments with non Moscow timezone
+Improve all readability-function-cognitive-complexity
+Add asserts on each function argument
 Add more logs
 
 Buy if price fall and raise several times in price range

@@ -24,6 +24,6 @@ public:
     void     remove(const QString& key) override;
 
 private:
-    QReadWriteLock mRwMutex;
-    QSettings      mSettings;
+    QReadWriteLock* mRwMutex;
+    QSettings       mSettings;
 };

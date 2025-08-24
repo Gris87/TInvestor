@@ -995,7 +995,11 @@ void SimulatorDateRangeDecisionMakerThread::updatePrice()
 
         for (Stock* s : stocks)
         {
-            if (s->meta.instrumentId == item.instrumentId)
+            s->readLock();
+            const QString instrumentId = s->meta.instrumentId;
+            s->readUnlock();
+
+            if (instrumentId == item.instrumentId)
             {
                 stock = s;
 

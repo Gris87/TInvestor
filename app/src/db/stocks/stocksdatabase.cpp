@@ -193,7 +193,9 @@ void StocksDatabase::writeStocksMeta(const QList<Stock*>& stocks)
 
     for (Stock* stock : stocks)
     {
+        stock->readLock();
         jsonStocks.append(stock->meta.toJsonObject());
+        stock->readUnlock();
     }
 
     const QJsonDocument jsonDoc(jsonStocks);

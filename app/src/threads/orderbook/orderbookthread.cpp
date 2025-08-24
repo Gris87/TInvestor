@@ -33,8 +33,12 @@ void OrderBookThread::run()
 
     blockSignals(false);
 
+    mStock->readLock();
+    const QString instrumentId = mStock->meta.instrumentId;
+    mStock->readUnlock();
+
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-        mGrpcClient->getOrderBook(QThread::currentThread(), mStock->meta.instrumentId, ORDER_BOOK_DEPTH);
+        mGrpcClient->getOrderBook(QThread::currentThread(), instrumentId, ORDER_BOOK_DEPTH);
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrderBook != nullptr)
     {
@@ -99,7 +103,11 @@ bool OrderBookThread::createMarketDataStream()
     {
         mMarketDataStream = mGrpcClient->createMarketDataStream();
 
-        res = mGrpcClient->subscribeOrderBook(mMarketDataStream, mStock->meta.instrumentId, ORDER_BOOK_DEPTH);
+        mStock->readLock();
+        const QString instrumentId = mStock->meta.instrumentId;
+        mStock->readUnlock();
+
+        res = mGrpcClient->subscribeOrderBook(mMarketDataStream, instrumentId, ORDER_BOOK_DEPTH);
     }
 
     return res;
@@ -109,8 +117,12 @@ void OrderBookThread::handleGetOrderBookResponse(const std::shared_ptr<tinkoff::
 {
     OrderBook orderBook;
 
+    mStock->readLock();
+    const float price = mStock->lastPrice();
+    mStock->readUnlock();
+
     orderBook.timestamp = QDateTime::currentMSecsSinceEpoch();
-    orderBook.price     = mStock->lastPrice();
+    orderBook.price     = price;
 
     orderBook.bids.resizeForOverwrite(tinkoffOrderBook->bids_size());
     orderBook.asks.resizeForOverwrite(tinkoffOrderBook->asks_size());
@@ -141,8 +153,12 @@ void OrderBookThread::handleOrderBook(const tinkoff::OrderBook& tinkoffOrderBook
 {
     OrderBook orderBook;
 
+    mStock->readLock();
+    const float price = mStock->lastPrice();
+    mStock->readUnlock();
+
     orderBook.timestamp = timeToTimestamp(tinkoffOrderBook.time());
-    orderBook.price     = mStock->lastPrice();
+    orderBook.price     = price;
 
     orderBook.bids.resizeForOverwrite(tinkoffOrderBook.bids_size());
     orderBook.asks.resizeForOverwrite(tinkoffOrderBook.asks_size());

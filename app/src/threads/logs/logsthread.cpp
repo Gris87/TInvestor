@@ -20,7 +20,7 @@ LogsThread::LogsThread(
 ) :
     ILogsThread(parent),
     mSemaphore(),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mLogsDatabase(logsDatabase),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
@@ -40,7 +40,7 @@ LogsThread::~LogsThread()
 {
     qDebug() << "Destroy LogsThread";
 
-    delete mMutex;
+    delete mRwMutex;
 }
 
 void LogsThread::run()
@@ -106,9 +106,9 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
             entry.instrumentName   = instrument.name;
         }
 
-        mMutex->lock();
+        mRwMutex->lockForWrite();
         mIncomingEntries.append(entry);
-        mMutex->unlock();
+        mRwMutex->unlock();
 
         mSemaphore.release();
     }
@@ -122,9 +122,9 @@ void LogsThread::terminateThread()
 
         requestInterruption();
 
-        mMutex->lock();
+        mRwMutex->lockForWrite();
         mIncomingEntries.append(LogEntry());
-        mMutex->unlock();
+        mRwMutex->unlock();
 
         mSemaphore.release();
     }
@@ -133,9 +133,9 @@ void LogsThread::terminateThread()
 #ifdef TESTING_MODE
 void LogsThread::testTerminateWithoutTerminate()
 {
-    mMutex->lock();
+    mRwMutex->lockForWrite();
     mIncomingEntries.append(LogEntry());
-    mMutex->unlock();
+    mRwMutex->unlock();
 
     mSemaphore.release();
 }
@@ -166,7 +166,7 @@ void LogsThread::readLogs()
 
 LogEntry LogsThread::takeIncomingEntry()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mIncomingEntries.takeFirst();
 }

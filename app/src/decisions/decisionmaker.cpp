@@ -19,9 +19,9 @@ DecisionMaker::DecisionMaker(
     const QList<IActionDecision*>& sellDecisions
 ) :
     IDecisionMaker(),
+    mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
     mUserStorage(userStorage),
-    mRwMutex(),
     mBuyDecisions(buyDecisions),
     mSellDecisions(sellDecisions),
     mStocksMap()
@@ -32,6 +32,8 @@ DecisionMaker::DecisionMaker(
 DecisionMaker::~DecisionMaker()
 {
     qDebug() << "Destroy DecisionMaker";
+
+    delete mRwMutex;
 }
 
 InstrumentsForTrading DecisionMaker::makeDecision(
@@ -112,13 +114,13 @@ IDecisionMakerConfig* DecisionMaker::chooseDecisionConfig(IConfig* config, bool 
 
 void DecisionMaker::updateStocksMap(QThread* parentThread, const QList<Stock*>& stocks)
 {
-    mRwMutex.lockForRead();
+    mRwMutex->lockForRead();
     const int mapSize = mStocksMap.size();
-    mRwMutex.unlock();
+    mRwMutex->unlock();
 
     if (mapSize != stocks.size())
     {
-        mRwMutex.lockForWrite();
+        mRwMutex->lockForWrite();
 
         for (int i = 0; i < stocks.size() && !parentThread->isInterruptionRequested(); ++i)
         {
@@ -129,7 +131,7 @@ void DecisionMaker::updateStocksMap(QThread* parentThread, const QList<Stock*>& 
             stock->readUnlock();
         }
 
-        mRwMutex.unlock();
+        mRwMutex->unlock();
     }
 }
 
@@ -142,7 +144,7 @@ DecisionMaker::getStocksWithAvgPrice(QThread* parentThread, const Portfolio& por
     const bool qualifiedUser = mUserStorage->isQualified();
     mUserStorage->readUnlock();
 
-    mRwMutex.lockForRead();
+    mRwMutex->lockForRead();
     QMap<QString, float> existingStocks; // Instrument UID => Average price
 
     for (int i = 0; i < portfolio.positions.size() && !parentThread->isInterruptionRequested(); ++i)
@@ -159,7 +161,7 @@ DecisionMaker::getStocksWithAvgPrice(QThread* parentThread, const Portfolio& por
             }
         }
     }
-    mRwMutex.unlock();
+    mRwMutex->unlock();
 
     for (int i = 0; i < stocks.size() && !parentThread->isInterruptionRequested(); ++i)
     {

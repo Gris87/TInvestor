@@ -73,29 +73,33 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
 {
     bool changed = false;
 
-    QMap<QString, StockMeta*> existingMetas; // UID => Stock meta
-    QList<const StockMeta*>   newMetas;
+    QMap<QString, Stock*>   existingStocks; // UID => Stock
+    QList<const StockMeta*> newMetas;
 
     newMetas.reserve(stocksMeta.size());
 
-    for (Stock* stock : std::as_const(mStocks))
+    for (Stock* stock : mStocks)
     {
-        StockMeta* existingMeta                   = &stock->meta;
-        existingMetas[existingMeta->instrumentId] = existingMeta;
+        stock->readLock();
+        existingStocks[stock->meta.instrumentId] = stock;
+        stock->readUnlock();
     }
 
     for (const StockMeta& newMeta : stocksMeta)
     {
-        if (existingMetas.contains(newMeta.instrumentId))
+        if (existingStocks.contains(newMeta.instrumentId))
         {
-            StockMeta* existingMeta = existingMetas[newMeta.instrumentId];
+            Stock* stock = existingStocks[newMeta.instrumentId];
+            stock->writeLock();
 
-            if (*existingMeta != newMeta)
+            if (stock->meta != newMeta)
             {
                 changed = true;
 
-                *existingMeta = newMeta;
+                stock->meta = newMeta;
             }
+
+            stock->writeUnlock();
         }
         else
         {
@@ -108,7 +112,6 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
     for (const StockMeta* newMeta : newMetas)
     {
         Stock* stock = new Stock(); // StocksStorage will take ownership
-
         stock->meta = *newMeta;
 
         mStocks.append(stock);

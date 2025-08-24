@@ -74,9 +74,9 @@ private:
     );
     void calculateTotalCostAndMoney(QThread* parentThread, const Portfolio& portfolio, double& totalCost, double& money);
 
+    QReadWriteLock*         mRwMutex;
     IInstrumentsStorage*    mInstrumentsStorage;
     IUserStorage*           mUserStorage;
-    QReadWriteLock          mRwMutex;
     QList<IActionDecision*> mBuyDecisions;
     QList<IActionDecision*> mSellDecisions;
     QMap<QString, Stock*>   mStocksMap;
