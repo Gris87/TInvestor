@@ -14,109 +14,112 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_SellDecision4ConfigWidget, Test_constructor_and_destructor)
+class Test_SellDecision4ConfigWidget : public ::testing::Test
 {
-    StrictMock<SellDecision4ConfigMock> sellDecision4ConfigMock;
+protected:
+    void SetUp() override
+    {
+        sellDecision4ConfigMock = new StrictMock<SellDecision4ConfigMock>();
 
-    const SellDecision4ConfigWidget configWidget(&sellDecision4ConfigMock);
+        configWidget = new SellDecision4ConfigWidget(sellDecision4ConfigMock);
+    }
+
+    void TearDown() override
+    {
+        delete configWidget;
+        delete sellDecision4ConfigMock;
+    }
+
+    SellDecision4ConfigWidget*           configWidget;
+    StrictMock<SellDecision4ConfigMock>* sellDecision4ConfigMock;
+};
+
+
+
+TEST_F(Test_SellDecision4ConfigWidget, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_SellDecision4ConfigWidget, Test_updateUiFromConfig)
+TEST_F(Test_SellDecision4ConfigWidget, Test_updateUiFromConfig)
 {
     const InSequence seq;
 
-    StrictMock<SellDecision4ConfigMock> sellDecision4ConfigMock;
+    configWidget->ui->enabledCheckBox->blockSignals(true);
+    configWidget->ui->loseYieldDoubleSpinBox->blockSignals(true);
 
-    const SellDecision4ConfigWidget configWidget(&sellDecision4ConfigMock);
+    EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(3.1f));
 
-    configWidget.ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->loseYieldDoubleSpinBox->blockSignals(true);
-
-    EXPECT_CALL(sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(3.1f));
-
-    configWidget.updateUiFromConfig();
+    configWidget->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),       true);
-    ASSERT_NEAR(configWidget.ui->loseYieldDoubleSpinBox->value(),  3.1f, 0.0001f);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),      true);
+    ASSERT_NEAR(configWidget->ui->loseYieldDoubleSpinBox->value(), 3.1f, 0.0001f);
     // clang-format on
 
-    EXPECT_CALL(sellDecision4ConfigMock, isEnabled()).WillOnce(Return(false));
-    EXPECT_CALL(sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(6.3f));
+    EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(false));
+    EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(6.3f));
 
-    configWidget.updateUiFromConfig();
+    configWidget->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),       false);
-    ASSERT_NEAR(configWidget.ui->loseYieldDoubleSpinBox->value(),  6.3f, 0.0001f);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),      false);
+    ASSERT_NEAR(configWidget->ui->loseYieldDoubleSpinBox->value(), 6.3f, 0.0001f);
     // clang-format on
 }
 
-TEST(Test_SellDecision4ConfigWidget, Test_makeReadOnly)
+TEST_F(Test_SellDecision4ConfigWidget, Test_makeReadOnly)
 {
-    StrictMock<SellDecision4ConfigMock> sellDecision4ConfigMock;
-
-    const SellDecision4ConfigWidget configWidget(&sellDecision4ConfigMock);
-
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
-    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isReadOnly(),                             false);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
+    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isReadOnly(),                             false);
     // clang-format on
 
-    configWidget.makeReadOnly();
+    configWidget->makeReadOnly();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
-    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isReadOnly(),                             true);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
+    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isReadOnly(),                             true);
     // clang-format on
 }
 
-TEST(Test_SellDecision4ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
+TEST_F(Test_SellDecision4ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
     const InSequence seq;
 
-    StrictMock<SellDecision4ConfigMock> sellDecision4ConfigMock;
+    configWidget->ui->enabledCheckBox->blockSignals(true);
+    configWidget->ui->enabledCheckBox->setChecked(false);
+    configWidget->ui->enabledCheckBox->blockSignals(false);
 
-    const SellDecision4ConfigWidget configWidget(&sellDecision4ConfigMock);
-
-    configWidget.ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->enabledCheckBox->setChecked(false);
-    configWidget.ui->enabledCheckBox->blockSignals(false);
-
-    EXPECT_CALL(sellDecision4ConfigMock, setEnabled(true));
-    configWidget.ui->enabledCheckBox->setChecked(true);
+    EXPECT_CALL(*sellDecision4ConfigMock, setEnabled(true));
+    configWidget->ui->enabledCheckBox->setChecked(true);
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isEnabled(), true);
+    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isEnabled(), true);
     // clang-format on
 
-    EXPECT_CALL(sellDecision4ConfigMock, setEnabled(false));
-    configWidget.ui->enabledCheckBox->setChecked(false);
+    EXPECT_CALL(*sellDecision4ConfigMock, setEnabled(false));
+    configWidget->ui->enabledCheckBox->setChecked(false);
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isEnabled(), false);
+    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isEnabled(), false);
     // clang-format on
 }
 
-TEST(Test_SellDecision4ConfigWidget, Test_on_loseYieldDoubleSpinBox_valueChanged)
+TEST_F(Test_SellDecision4ConfigWidget, Test_on_loseYieldDoubleSpinBox_valueChanged)
 {
     const InSequence seq;
 
-    StrictMock<SellDecision4ConfigMock> sellDecision4ConfigMock;
+    configWidget->ui->loseYieldDoubleSpinBox->blockSignals(true);
+    configWidget->ui->loseYieldDoubleSpinBox->setValue(1.0f);
+    configWidget->ui->loseYieldDoubleSpinBox->blockSignals(false);
 
-    const SellDecision4ConfigWidget configWidget(&sellDecision4ConfigMock);
+    EXPECT_CALL(*sellDecision4ConfigMock, setLoseYield(2.0f));
+    configWidget->ui->loseYieldDoubleSpinBox->setValue(2.0f);
 
-    configWidget.ui->loseYieldDoubleSpinBox->blockSignals(true);
-    configWidget.ui->loseYieldDoubleSpinBox->setValue(1.0f);
-    configWidget.ui->loseYieldDoubleSpinBox->blockSignals(false);
-
-    EXPECT_CALL(sellDecision4ConfigMock, setLoseYield(2.0f));
-    configWidget.ui->loseYieldDoubleSpinBox->setValue(2.0f);
-
-    EXPECT_CALL(sellDecision4ConfigMock, setLoseYield(3.0f));
-    configWidget.ui->loseYieldDoubleSpinBox->setValue(3.0f);
+    EXPECT_CALL(*sellDecision4ConfigMock, setLoseYield(3.0f));
+    configWidget->ui->loseYieldDoubleSpinBox->setValue(3.0f);
 }
 // NOLINTEND(readability-magic-numbers)

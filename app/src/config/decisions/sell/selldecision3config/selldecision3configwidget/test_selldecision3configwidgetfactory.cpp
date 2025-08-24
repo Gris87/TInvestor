@@ -10,18 +10,33 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_SellDecision3ConfigWidgetFactory, Test_constructor_and_destructor)
+class Test_SellDecision3ConfigWidgetFactory : public ::testing::Test
 {
-    const SellDecision3ConfigWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new SellDecision3ConfigWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    SellDecision3ConfigWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_SellDecision3ConfigWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_SellDecision3ConfigWidgetFactory, Test_newInstance)
+TEST_F(Test_SellDecision3ConfigWidgetFactory, Test_newInstance)
 {
-    const SellDecision3ConfigWidgetFactory factory;
-
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
-    ISellDecision3ConfigWidget* widget = factory.newInstance(&sellDecision3ConfigMock, nullptr);
+    ISellDecision3ConfigWidget* widget = factory->newInstance(&sellDecision3ConfigMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

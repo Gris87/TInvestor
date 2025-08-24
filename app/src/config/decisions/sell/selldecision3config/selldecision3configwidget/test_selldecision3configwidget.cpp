@@ -14,137 +14,136 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_SellDecision3ConfigWidget, Test_constructor_and_destructor)
+class Test_SellDecision3ConfigWidget : public ::testing::Test
 {
-    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
+protected:
+    void SetUp() override
+    {
+        sellDecision3ConfigMock = new StrictMock<SellDecision3ConfigMock>();
 
-    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
+        configWidget = new SellDecision3ConfigWidget(sellDecision3ConfigMock);
+    }
+
+    void TearDown() override
+    {
+        delete configWidget;
+        delete sellDecision3ConfigMock;
+    }
+
+    SellDecision3ConfigWidget*           configWidget;
+    StrictMock<SellDecision3ConfigMock>* sellDecision3ConfigMock;
+};
+
+
+
+TEST_F(Test_SellDecision3ConfigWidget, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
+TEST_F(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
 {
     const InSequence seq;
 
-    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
+    configWidget->ui->enabledCheckBox->blockSignals(true);
+    configWidget->ui->loseYieldDoubleSpinBox->blockSignals(true);
+    configWidget->ui->durationSpinBox->blockSignals(true);
 
-    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
+    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision3ConfigMock, getDuration()).WillOnce(Return(4));
+    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(2.1f));
 
-    configWidget.ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->loseYieldDoubleSpinBox->blockSignals(true);
-    configWidget.ui->durationSpinBox->blockSignals(true);
-
-    EXPECT_CALL(sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(sellDecision3ConfigMock, getDuration()).WillOnce(Return(4));
-    EXPECT_CALL(sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(2.1f));
-
-    configWidget.updateUiFromConfig();
+    configWidget->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      true);
-    ASSERT_NEAR(configWidget.ui->loseYieldDoubleSpinBox->value(), 2.1f, 0.0001f);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          4);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),      true);
+    ASSERT_NEAR(configWidget->ui->loseYieldDoubleSpinBox->value(), 2.1f, 0.0001f);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->value(),          4);
     // clang-format on
 
-    EXPECT_CALL(sellDecision3ConfigMock, isEnabled()).WillOnce(Return(false));
-    EXPECT_CALL(sellDecision3ConfigMock, getDuration()).WillOnce(Return(7));
-    EXPECT_CALL(sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.3f));
+    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(false));
+    EXPECT_CALL(*sellDecision3ConfigMock, getDuration()).WillOnce(Return(7));
+    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.3f));
 
-    configWidget.updateUiFromConfig();
+    configWidget->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      false);
-    ASSERT_NEAR(configWidget.ui->loseYieldDoubleSpinBox->value(), 5.3f, 0.0001f);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          7);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),      false);
+    ASSERT_NEAR(configWidget->ui->loseYieldDoubleSpinBox->value(), 5.3f, 0.0001f);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->value(),          7);
     // clang-format on
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_makeReadOnly)
+TEST_F(Test_SellDecision3ConfigWidget, Test_makeReadOnly)
 {
-    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
-
-    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
-
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isReadOnly(),                                    false);
-    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isReadOnly(),                             false);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isReadOnly(),                                    false);
+    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isReadOnly(),                             false);
     // clang-format on
 
-    configWidget.makeReadOnly();
+    configWidget->makeReadOnly();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isReadOnly(),                                    true);
-    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isReadOnly(),                             true);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isReadOnly(),                                    true);
+    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isReadOnly(),                             true);
     // clang-format on
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
+TEST_F(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
     const InSequence seq;
 
-    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
+    configWidget->ui->enabledCheckBox->blockSignals(true);
+    configWidget->ui->enabledCheckBox->setChecked(false);
+    configWidget->ui->enabledCheckBox->blockSignals(false);
 
-    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
-
-    configWidget.ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->enabledCheckBox->setChecked(false);
-    configWidget.ui->enabledCheckBox->blockSignals(false);
-
-    EXPECT_CALL(sellDecision3ConfigMock, setEnabled(true));
-    configWidget.ui->enabledCheckBox->setChecked(true);
+    EXPECT_CALL(*sellDecision3ConfigMock, setEnabled(true));
+    configWidget->ui->enabledCheckBox->setChecked(true);
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isEnabled(), true);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        true);
+    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isEnabled(), true);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isEnabled(),        true);
     // clang-format on
 
-    EXPECT_CALL(sellDecision3ConfigMock, setEnabled(false));
-    configWidget.ui->enabledCheckBox->setChecked(false);
+    EXPECT_CALL(*sellDecision3ConfigMock, setEnabled(false));
+    configWidget->ui->enabledCheckBox->setChecked(false);
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        false);
+    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isEnabled(), false);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isEnabled(),        false);
     // clang-format on
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_on_loseYieldDoubleSpinBox_valueChanged)
+TEST_F(Test_SellDecision3ConfigWidget, Test_on_loseYieldDoubleSpinBox_valueChanged)
 {
     const InSequence seq;
 
-    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
+    configWidget->ui->loseYieldDoubleSpinBox->blockSignals(true);
+    configWidget->ui->loseYieldDoubleSpinBox->setValue(1.0f);
+    configWidget->ui->loseYieldDoubleSpinBox->blockSignals(false);
 
-    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
+    EXPECT_CALL(*sellDecision3ConfigMock, setLoseYield(2.0f));
+    configWidget->ui->loseYieldDoubleSpinBox->setValue(2.0f);
 
-    configWidget.ui->loseYieldDoubleSpinBox->blockSignals(true);
-    configWidget.ui->loseYieldDoubleSpinBox->setValue(1.0f);
-    configWidget.ui->loseYieldDoubleSpinBox->blockSignals(false);
-
-    EXPECT_CALL(sellDecision3ConfigMock, setLoseYield(2.0f));
-    configWidget.ui->loseYieldDoubleSpinBox->setValue(2.0f);
-
-    EXPECT_CALL(sellDecision3ConfigMock, setLoseYield(3.0f));
-    configWidget.ui->loseYieldDoubleSpinBox->setValue(3.0f);
+    EXPECT_CALL(*sellDecision3ConfigMock, setLoseYield(3.0f));
+    configWidget->ui->loseYieldDoubleSpinBox->setValue(3.0f);
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)
+TEST_F(Test_SellDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)
 {
     const InSequence seq;
 
-    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
+    configWidget->ui->durationSpinBox->blockSignals(true);
+    configWidget->ui->durationSpinBox->setValue(1);
+    configWidget->ui->durationSpinBox->blockSignals(false);
 
-    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
+    EXPECT_CALL(*sellDecision3ConfigMock, setDuration(2));
+    configWidget->ui->durationSpinBox->setValue(2);
 
-    configWidget.ui->durationSpinBox->blockSignals(true);
-    configWidget.ui->durationSpinBox->setValue(1);
-    configWidget.ui->durationSpinBox->blockSignals(false);
-
-    EXPECT_CALL(sellDecision3ConfigMock, setDuration(2));
-    configWidget.ui->durationSpinBox->setValue(2);
-
-    EXPECT_CALL(sellDecision3ConfigMock, setDuration(3));
-    configWidget.ui->durationSpinBox->setValue(3);
+    EXPECT_CALL(*sellDecision3ConfigMock, setDuration(3));
+    configWidget->ui->durationSpinBox->setValue(3);
 }
 // NOLINTEND(readability-magic-numbers)

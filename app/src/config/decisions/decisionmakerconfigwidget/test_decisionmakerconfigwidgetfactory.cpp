@@ -37,16 +37,31 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_DecisionMakerConfigWidgetFactory, Test_constructor_and_destructor)
+class Test_DecisionMakerConfigWidgetFactory : public ::testing::Test
 {
-    const DecisionMakerConfigWidgetFactory factory;
+protected:
+    void SetUp() override
+    {
+        factory = new DecisionMakerConfigWidgetFactory();
+    }
+
+    void TearDown() override
+    {
+        delete factory;
+    }
+
+    DecisionMakerConfigWidgetFactory* factory;
+};
+
+
+
+TEST_F(Test_DecisionMakerConfigWidgetFactory, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
+TEST_F(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
 {
     const InSequence seq;
-
-    const DecisionMakerConfigWidgetFactory factory;
 
     StrictMock<DecisionMakerConfigMock>              decisionMakerConfigMock;
     StrictMock<BuyDecision1ConfigMock>               buyDecision1ConfigMock;
@@ -108,7 +123,7 @@ TEST(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
     EXPECT_CALL(sellDecision4ConfigWidgetFactoryMock, newInstance(&sellDecision4ConfigMock, NotNull()))
         .WillOnce(Return(sellDecision4ConfigWidgetMock));
 
-    IDecisionMakerConfigWidget* widget = factory.newInstance(
+    IDecisionMakerConfigWidget* widget = factory->newInstance(
         &decisionMakerConfigMock,
         &buyDecision1ConfigWidgetFactoryMock,
         &buyDecision2ConfigWidgetFactoryMock,

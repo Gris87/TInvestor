@@ -14,137 +14,136 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_BuyDecision1ConfigWidget, Test_constructor_and_destructor)
+class Test_BuyDecision1ConfigWidget : public ::testing::Test
 {
-    StrictMock<BuyDecision1ConfigMock> buyDecision1ConfigMock;
+protected:
+    void SetUp() override
+    {
+        buyDecision1ConfigMock = new StrictMock<BuyDecision1ConfigMock>();
 
-    const BuyDecision1ConfigWidget configWidget(&buyDecision1ConfigMock);
+        configWidget = new BuyDecision1ConfigWidget(buyDecision1ConfigMock);
+    }
+
+    void TearDown() override
+    {
+        delete configWidget;
+        delete buyDecision1ConfigMock;
+    }
+
+    BuyDecision1ConfigWidget*           configWidget;
+    StrictMock<BuyDecision1ConfigMock>* buyDecision1ConfigMock;
+};
+
+
+
+TEST_F(Test_BuyDecision1ConfigWidget, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_BuyDecision1ConfigWidget, Test_updateUiFromConfig)
+TEST_F(Test_BuyDecision1ConfigWidget, Test_updateUiFromConfig)
 {
     const InSequence seq;
 
-    StrictMock<BuyDecision1ConfigMock> buyDecision1ConfigMock;
+    configWidget->ui->enabledCheckBox->blockSignals(true);
+    configWidget->ui->priceFallDoubleSpinBox->blockSignals(true);
+    configWidget->ui->durationSpinBox->blockSignals(true);
 
-    const BuyDecision1ConfigWidget configWidget(&buyDecision1ConfigMock);
+    EXPECT_CALL(*buyDecision1ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*buyDecision1ConfigMock, getPriceFall()).WillOnce(Return(2.1f));
+    EXPECT_CALL(*buyDecision1ConfigMock, getDuration()).WillOnce(Return(3));
 
-    configWidget.ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->priceFallDoubleSpinBox->blockSignals(true);
-    configWidget.ui->durationSpinBox->blockSignals(true);
-
-    EXPECT_CALL(buyDecision1ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(buyDecision1ConfigMock, getPriceFall()).WillOnce(Return(2.1f));
-    EXPECT_CALL(buyDecision1ConfigMock, getDuration()).WillOnce(Return(3));
-
-    configWidget.updateUiFromConfig();
+    configWidget->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      true);
-    ASSERT_NEAR(configWidget.ui->priceFallDoubleSpinBox->value(), 2.1f, 0.01f);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          3);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),      true);
+    ASSERT_NEAR(configWidget->ui->priceFallDoubleSpinBox->value(), 2.1f, 0.01f);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->value(),          3);
     // clang-format on
 
-    EXPECT_CALL(buyDecision1ConfigMock, isEnabled()).WillOnce(Return(false));
-    EXPECT_CALL(buyDecision1ConfigMock, getPriceFall()).WillOnce(Return(5.3f));
-    EXPECT_CALL(buyDecision1ConfigMock, getDuration()).WillOnce(Return(2));
+    EXPECT_CALL(*buyDecision1ConfigMock, isEnabled()).WillOnce(Return(false));
+    EXPECT_CALL(*buyDecision1ConfigMock, getPriceFall()).WillOnce(Return(5.3f));
+    EXPECT_CALL(*buyDecision1ConfigMock, getDuration()).WillOnce(Return(2));
 
-    configWidget.updateUiFromConfig();
+    configWidget->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      false);
-    ASSERT_NEAR(configWidget.ui->priceFallDoubleSpinBox->value(), 5.3f, 0.01f);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          2);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),      false);
+    ASSERT_NEAR(configWidget->ui->priceFallDoubleSpinBox->value(), 5.3f, 0.01f);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->value(),          2);
     // clang-format on
 }
 
-TEST(Test_BuyDecision1ConfigWidget, Test_makeReadOnly)
+TEST_F(Test_BuyDecision1ConfigWidget, Test_makeReadOnly)
 {
-    StrictMock<BuyDecision1ConfigMock> buyDecision1ConfigMock;
-
-    const BuyDecision1ConfigWidget configWidget(&buyDecision1ConfigMock);
-
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
-    ASSERT_EQ(configWidget.ui->priceFallDoubleSpinBox->isReadOnly(),                             false);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isReadOnly(),                                    false);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
+    ASSERT_EQ(configWidget->ui->priceFallDoubleSpinBox->isReadOnly(),                             false);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isReadOnly(),                                    false);
     // clang-format on
 
-    configWidget.makeReadOnly();
+    configWidget->makeReadOnly();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
-    ASSERT_EQ(configWidget.ui->priceFallDoubleSpinBox->isReadOnly(),                             true);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isReadOnly(),                                    true);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
+    ASSERT_EQ(configWidget->ui->priceFallDoubleSpinBox->isReadOnly(),                             true);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isReadOnly(),                                    true);
     // clang-format on
 }
 
-TEST(Test_BuyDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
+TEST_F(Test_BuyDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
     const InSequence seq;
 
-    StrictMock<BuyDecision1ConfigMock> buyDecision1ConfigMock;
+    configWidget->ui->enabledCheckBox->blockSignals(true);
+    configWidget->ui->enabledCheckBox->setChecked(false);
+    configWidget->ui->enabledCheckBox->blockSignals(false);
 
-    const BuyDecision1ConfigWidget configWidget(&buyDecision1ConfigMock);
-
-    configWidget.ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->enabledCheckBox->setChecked(false);
-    configWidget.ui->enabledCheckBox->blockSignals(false);
-
-    EXPECT_CALL(buyDecision1ConfigMock, setEnabled(true));
-    configWidget.ui->enabledCheckBox->setChecked(true);
+    EXPECT_CALL(*buyDecision1ConfigMock, setEnabled(true));
+    configWidget->ui->enabledCheckBox->setChecked(true);
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->priceFallDoubleSpinBox->isEnabled(), true);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        true);
+    ASSERT_EQ(configWidget->ui->priceFallDoubleSpinBox->isEnabled(), true);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isEnabled(),        true);
     // clang-format on
 
-    EXPECT_CALL(buyDecision1ConfigMock, setEnabled(false));
-    configWidget.ui->enabledCheckBox->setChecked(false);
+    EXPECT_CALL(*buyDecision1ConfigMock, setEnabled(false));
+    configWidget->ui->enabledCheckBox->setChecked(false);
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->priceFallDoubleSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        false);
+    ASSERT_EQ(configWidget->ui->priceFallDoubleSpinBox->isEnabled(), false);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isEnabled(),        false);
     // clang-format on
 }
 
-TEST(Test_BuyDecision1ConfigWidget, Test_on_priceFallDoubleSpinBox_valueChanged)
+TEST_F(Test_BuyDecision1ConfigWidget, Test_on_priceFallDoubleSpinBox_valueChanged)
 {
     const InSequence seq;
 
-    StrictMock<BuyDecision1ConfigMock> buyDecision1ConfigMock;
+    configWidget->ui->priceFallDoubleSpinBox->blockSignals(true);
+    configWidget->ui->priceFallDoubleSpinBox->setValue(1.0f);
+    configWidget->ui->priceFallDoubleSpinBox->blockSignals(false);
 
-    const BuyDecision1ConfigWidget configWidget(&buyDecision1ConfigMock);
+    EXPECT_CALL(*buyDecision1ConfigMock, setPriceFall(2.0f));
+    configWidget->ui->priceFallDoubleSpinBox->setValue(2.0f);
 
-    configWidget.ui->priceFallDoubleSpinBox->blockSignals(true);
-    configWidget.ui->priceFallDoubleSpinBox->setValue(1.0f);
-    configWidget.ui->priceFallDoubleSpinBox->blockSignals(false);
-
-    EXPECT_CALL(buyDecision1ConfigMock, setPriceFall(2.0f));
-    configWidget.ui->priceFallDoubleSpinBox->setValue(2.0f);
-
-    EXPECT_CALL(buyDecision1ConfigMock, setPriceFall(3.0f));
-    configWidget.ui->priceFallDoubleSpinBox->setValue(3.0f);
+    EXPECT_CALL(*buyDecision1ConfigMock, setPriceFall(3.0f));
+    configWidget->ui->priceFallDoubleSpinBox->setValue(3.0f);
 }
 
-TEST(Test_BuyDecision1ConfigWidget, Test_on_durationSpinBox_valueChanged)
+TEST_F(Test_BuyDecision1ConfigWidget, Test_on_durationSpinBox_valueChanged)
 {
     const InSequence seq;
 
-    StrictMock<BuyDecision1ConfigMock> buyDecision1ConfigMock;
+    configWidget->ui->durationSpinBox->blockSignals(true);
+    configWidget->ui->durationSpinBox->setValue(1);
+    configWidget->ui->durationSpinBox->blockSignals(false);
 
-    const BuyDecision1ConfigWidget configWidget(&buyDecision1ConfigMock);
+    EXPECT_CALL(*buyDecision1ConfigMock, setDuration(2));
+    configWidget->ui->durationSpinBox->setValue(2);
 
-    configWidget.ui->durationSpinBox->blockSignals(true);
-    configWidget.ui->durationSpinBox->setValue(1);
-    configWidget.ui->durationSpinBox->blockSignals(false);
-
-    EXPECT_CALL(buyDecision1ConfigMock, setDuration(2));
-    configWidget.ui->durationSpinBox->setValue(2);
-
-    EXPECT_CALL(buyDecision1ConfigMock, setDuration(3));
-    configWidget.ui->durationSpinBox->setValue(3);
+    EXPECT_CALL(*buyDecision1ConfigMock, setDuration(3));
+    configWidget->ui->durationSpinBox->setValue(3);
 }
 // NOLINTEND(readability-magic-numbers)

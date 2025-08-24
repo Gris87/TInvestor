@@ -1,4 +1,3 @@
-Use TEST_F tests everywhere
 Improve coverage
 Create release
 
