@@ -103,7 +103,7 @@
 
 
 
-const char* const VERSION = "v0.8.0";
+const char* const VERSION = "v0.9.0";
 
 constexpr int    DETECT_TRAY_ATTEMPTS = 5;
 constexpr qint64 MS_IN_SECOND         = 1000LL;
