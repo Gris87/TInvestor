@@ -107,7 +107,6 @@ private:
     QuantityAndCostDoubleInstruments mInstruments;
     InstrumentSells                  mInstrumentSells;
     bool                             mResetted;
-    bool                             mLoaded;
     int                              mStartMoney;
     double                           mTotalMoney;
 };

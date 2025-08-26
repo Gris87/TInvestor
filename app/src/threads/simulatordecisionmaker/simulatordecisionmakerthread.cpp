@@ -55,7 +55,6 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mInstruments(),
     mInstrumentSells(),
     mResetted(),
-    mLoaded(),
     mStartMoney(),
     mTotalMoney()
 {
@@ -77,12 +76,10 @@ void SimulatorDecisionMakerThread::run()
     {
         init();
         mResetted = false;
-        mLoaded   = true;
     }
-    else if (!mLoaded)
+    else
     {
         load();
-        mLoaded = true;
     }
 
     mStocksStorage->readLock();

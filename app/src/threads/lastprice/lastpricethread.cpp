@@ -29,6 +29,7 @@ LastPriceThread::~LastPriceThread()
     delete mRwMutex;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void LastPriceThread::run()
 {
     qDebug() << "Running LastPriceThread";
@@ -37,7 +38,7 @@ void LastPriceThread::run()
 
     while (!QThread::currentThread()->isInterruptionRequested())
     {
-        QStringList stocks = getStockUIDs();
+        const QStringList stocks = getStockUIDs();
 
         if (!stocks.isEmpty())
         {
@@ -118,6 +119,7 @@ void LastPriceThread::run()
 
     qDebug() << "Finish LastPriceThread";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 QStringList LastPriceThread::getStockUIDs()
 {
