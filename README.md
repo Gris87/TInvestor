@@ -319,6 +319,3 @@ GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: /home/user/Qt/googletest)
 - Execute `post_install.sh` script (It will create desktop file for application in order to let you start TInvestor from launcher menu and will create desktop file on your desktop)
 - Run TInvestor from launcher menu
 </details>
-
-> [!WARNING]
-> !!!Please note that development is ongoing. So, it doesn't work yet!!!
