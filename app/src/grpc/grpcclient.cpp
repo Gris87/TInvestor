@@ -462,6 +462,17 @@ std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
     req.set_time_in_force(tinkoff::TIME_IN_FORCE_DAY);
     req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
 
+    // TODO: Remove it
+    qWarning() << "req.account_id:" << req.account_id();
+    qWarning() << "req.instrument_id:" << req.instrument_id();
+    qWarning() << "req.direction:" << req.direction();
+    qWarning() << "req.quantity:" << req.quantity();
+    qWarning() << "req.price.units:" << req.price().units();
+    qWarning() << "req.price.nano:" << req.price().nano();
+    qWarning() << "req.order_type:" << req.order_type();
+    qWarning() << "req.time_in_force:" << req.time_in_force();
+    qWarning() << "req.price_type:" << req.price_type();
+
     return repeatRequest(parentThread, postOrderAction, mOrdersService, &context, req, resp, true);
 }
 
