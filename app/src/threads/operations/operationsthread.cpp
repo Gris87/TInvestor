@@ -531,6 +531,11 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
 
     instrument.resetIfNotFound(instrumentId);
 
+    if (instrumentId == RUBLE_UID)
+    {
+        instrument.pricePrecision = 2; // Price precision for ruble is 4 while we want 2
+    }
+
     mLogosStorage->readLock();
     res->instrumentLogo = mLogosStorage->getLogo(instrumentId);
     mLogosStorage->readUnlock();

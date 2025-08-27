@@ -918,7 +918,7 @@
     <message>
         <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="40"/>
         <source>Input money</source>
-        <translation>Завод денежных средств</translation>
+        <translation>Пополнение счета</translation>
     </message>
     <message>
         <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="121"/>
