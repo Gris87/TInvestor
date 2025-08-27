@@ -1175,6 +1175,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
         .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
     EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, run());
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, isLoaded()).WillOnce(Return(false));
     EXPECT_CALL(*simulatorDecisionMakerWidgetMock, showSpinners());
     EXPECT_CALL(*simulatorDecisionMakerThreadMock, run());
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
@@ -1344,6 +1345,7 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
         .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
     EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, run());
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, isLoaded()).WillOnce(Return(false));
     EXPECT_CALL(*simulatorDecisionMakerWidgetMock, showSpinners());
     EXPECT_CALL(*simulatorDecisionMakerThreadMock, run());
 

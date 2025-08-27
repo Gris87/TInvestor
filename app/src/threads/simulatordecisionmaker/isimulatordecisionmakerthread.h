@@ -24,6 +24,8 @@ public:
     ISimulatorDecisionMakerThread(const ISimulatorDecisionMakerThread& another)            = delete;
     ISimulatorDecisionMakerThread& operator=(const ISimulatorDecisionMakerThread& another) = delete;
 
+    [[nodiscard]]
+    virtual bool isLoaded() const  = 0;
     virtual void reset()           = 0;
     virtual void terminateThread() = 0;
 

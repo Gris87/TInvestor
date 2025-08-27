@@ -597,7 +597,11 @@ void MainWindow::startSimulator()
     {
         ui->simulatorWaitingStackedWidget->setCurrentWidget(ui->simulatorWorkingPage);
 
-        mSimulatorDecisionMakerWidget->showSpinners();
+        if (!mSimulatorDecisionMakerThread->isLoaded())
+        {
+            mSimulatorDecisionMakerWidget->showSpinners();
+        }
+
         mSimulatorDecisionMakerThread->start();
     }
     else if (mode == SIMULATOR_MODE_DATERANGE)

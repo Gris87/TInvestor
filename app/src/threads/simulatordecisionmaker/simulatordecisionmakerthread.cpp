@@ -55,6 +55,7 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mInstruments(),
     mInstrumentSells(),
     mResetted(),
+    mLoaded(),
     mStartMoney(),
     mTotalMoney()
 {
@@ -76,10 +77,12 @@ void SimulatorDecisionMakerThread::run()
     {
         init();
         mResetted = false;
+        mLoaded   = true;
     }
-    else
+    else if (!mLoaded)
     {
         load();
+        mLoaded = true;
     }
 
     mStocksStorage->readLock();
@@ -145,6 +148,11 @@ void SimulatorDecisionMakerThread::run()
     optimizeLogs();
 
     qDebug() << "Finish SimulatorDecisionMakerThread";
+}
+
+bool SimulatorDecisionMakerThread::isLoaded() const
+{
+    return mLoaded;
 }
 
 void SimulatorDecisionMakerThread::reset()

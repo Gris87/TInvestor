@@ -44,6 +44,9 @@ public:
 
     void run() override;
 
+    [[nodiscard]]
+    bool isLoaded() const override;
+
     void reset() override;
     void terminateThread() override;
 
@@ -107,6 +110,7 @@ private:
     QuantityAndCostDoubleInstruments mInstruments;
     InstrumentSells                  mInstrumentSells;
     bool                             mResetted;
+    bool                             mLoaded;
     int                              mStartMoney;
     double                           mTotalMoney;
 };

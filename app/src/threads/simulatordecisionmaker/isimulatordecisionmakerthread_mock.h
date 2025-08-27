@@ -22,6 +22,7 @@ public:
     SimulatorDecisionMakerThreadMock(const SimulatorDecisionMakerThreadMock& another)            = delete;
     SimulatorDecisionMakerThreadMock& operator=(const SimulatorDecisionMakerThreadMock& another) = delete;
 
+    MOCK_METHOD(bool, isLoaded, (), (const, override));
     MOCK_METHOD(void, run, (), (override));
     MOCK_METHOD(void, reset, (), (override));
     MOCK_METHOD(void, terminateThread, (), (override));
