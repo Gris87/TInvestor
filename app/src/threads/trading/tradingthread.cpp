@@ -190,6 +190,16 @@ bool TradingThread::sellWithPrice(double expected, double delta, const Quotation
 {
     if (mOrderId == "" || mLastOrderPrice != price || mLastExpectedCost != expected)
     {
+        // TODO: Remove it
+        qWarning() << "mOrderId:" << mOrderId;
+        qWarning() << "mLastOrderPrice.units:" << mLastOrderPrice.units;
+        qWarning() << "mLastOrderPrice.nano:" << mLastOrderPrice.nano;
+        qWarning() << "price.units:" << price.units;
+        qWarning() << "price.nano:" << price.nano;
+        qWarning() << "mLastExpectedCost:" << mLastExpectedCost;
+        qWarning() << "expected:" << expected;
+        qWarning() << "mLastExpectedCost - expected:" << mLastExpectedCost - expected;
+
         cancelOrder();
 
         return sellWithPriceOptimalAmount(expected, delta, price);
@@ -330,6 +340,16 @@ bool TradingThread::buyWithPrice(double expected, double delta, const Quotation&
 {
     if (mOrderId == "" || mLastOrderPrice != price || mLastExpectedCost != expected)
     {
+        // TODO: Remove it
+        qWarning() << "mOrderId:" << mOrderId;
+        qWarning() << "mLastOrderPrice.units:" << mLastOrderPrice.units;
+        qWarning() << "mLastOrderPrice.nano:" << mLastOrderPrice.nano;
+        qWarning() << "price.units:" << price.units;
+        qWarning() << "price.nano:" << price.nano;
+        qWarning() << "mLastExpectedCost:" << mLastExpectedCost;
+        qWarning() << "expected:" << expected;
+        qWarning() << "mLastExpectedCost - expected:" << mLastExpectedCost - expected;
+
         cancelOrder();
 
         return buyWithPriceOptimalAmount(expected, delta, price);

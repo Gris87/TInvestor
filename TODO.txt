@@ -1,3 +1,4 @@
+Fix issue with total yield and today yield
 Do not sell ASAP if you want to get rich
 
 =======================================
