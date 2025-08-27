@@ -57,6 +57,8 @@ public:
                     continue;
                 }
 
+                qWarning() << status.error_code() << status.error_message() << status.error_details(); // TODO: Remove it
+
                 if (status.error_code() != grpc::StatusCode::CANCELLED && status.error_code() != grpc::StatusCode::NOT_FOUND &&
                     (!ignoreInvalidArg || status.error_code() != grpc::StatusCode::INVALID_ARGUMENT))
                 {
