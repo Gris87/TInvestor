@@ -12,12 +12,6 @@ RESOURCES += Resources.qrc
 
 
 
-CONFIG (debug, debug|release) {
-    DEFINES += USE_SANDBOX
-}
-
-
-
 # Warnings as errors - BEGIN
 win32-msvc* {
     QMAKE_CXXFLAGS += /WX
