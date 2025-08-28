@@ -93,18 +93,28 @@ void OperationsThread::run()
                     break;
                 }
 
+                qWarning() << "Positions changed"; // TODO: Delete it
+
                 if (positionsStreamResponse->has_position())
                 {
+                    qWarning() << "YESSSS!!! Positions changed"; // TODO: Delete it
+
                     const Quotation newMoney = handlePositionsResponse(positionsStreamResponse->position());
+
+                    qWarning() << "New money" << newMoney.units << newMoney.nano; // TODO: Delete it
 
                     if (money != newMoney)
                     {
                         money = newMoney;
 
+                        qWarning() << "Sleep"; // TODO: Delete it
+
                         if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
                         {
                             break;
                         }
+
+                        qWarning() << "Ask for operations"; // TODO: Delete it
 
                         requestOperations();
                     }
@@ -292,6 +302,8 @@ void OperationsThread::requestOperations()
 
         cursor = QString::fromStdString(tinkoffOperations->next_cursor());
     }
+
+    qWarning() << "totalOperations" << totalOperations; // TODO: Delete it
 
     if (!QThread::currentThread()->isInterruptionRequested() && totalOperations > 0)
     {
