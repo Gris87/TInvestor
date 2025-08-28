@@ -48,7 +48,7 @@ PortfolioTreeWidget::PortfolioTreeWidget(
 
     ui->treeView->setModel(mPortfolioTreeModel);
     ui->treeView->setItemDelegateForColumn(PORTFOLIO_NAME_COLUMN, new InstrumentItemDelegate(ui->treeView));
-    ui->treeView->sortByColumn(PORTFOLIO_NAME_COLUMN, Qt::AscendingOrder);
+    ui->treeView->sortByColumn(PORTFOLIO_YIELD_PERCENT_COLUMN, Qt::AscendingOrder);
 }
 
 PortfolioTreeWidget::~PortfolioTreeWidget()

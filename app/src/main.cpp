@@ -415,7 +415,9 @@ static int runApplication(QApplication* app)
     );
     LastPriceThread          lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     PortfolioLastPriceThread simulatorPortfolioLastPriceThread(&timeUtils, &grpcClient);
-    OperationsThread operationsThread(&autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &grpcClient, &optimizer);
+    OperationsThread         operationsThread(
+        &autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &timeUtils, &grpcClient, &optimizer
+    );
     LogsThread       logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage, &optimizer);
     PortfolioThread  portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
     PortfolioLastPriceThread     autoPilotPortfolioLastPriceThread(&timeUtils, &grpcClient);

@@ -21,9 +21,9 @@ public:
 
     virtual ITradingThread* newInstance(
         IInstrumentsStorage* instrumentsStorage,
+        ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
         ILogsThread*         logsThread,
-        ITimeUtils*          timeUtils,
         const QString&       accountId,
         const QString&       instrumentId,
         double               expectedCost,

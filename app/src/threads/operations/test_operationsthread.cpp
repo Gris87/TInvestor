@@ -7,6 +7,7 @@
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/optimizer/ioptimizer_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
 
 
 
@@ -31,11 +32,13 @@ protected:
         operationsDatabaseMock = new StrictMock<OperationsDatabaseMock>();
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         logosStorageMock       = new StrictMock<LogosStorageMock>();
+        timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
         optimizerMock          = new StrictMock<OptimizerMock>();
 
-        thread =
-            new OperationsThread(operationsDatabaseMock, instrumentsStorageMock, logosStorageMock, grpcClientMock, optimizerMock);
+        thread = new OperationsThread(
+            operationsDatabaseMock, instrumentsStorageMock, logosStorageMock, timeUtilsMock, grpcClientMock, optimizerMock
+        );
     }
 
     void TearDown() override
@@ -44,6 +47,7 @@ protected:
         delete operationsDatabaseMock;
         delete instrumentsStorageMock;
         delete logosStorageMock;
+        delete timeUtilsMock;
         delete grpcClientMock;
         delete optimizerMock;
     }
@@ -52,6 +56,7 @@ protected:
     StrictMock<OperationsDatabaseMock>* operationsDatabaseMock;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
     StrictMock<LogosStorageMock>*       logosStorageMock;
+    StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
     StrictMock<OptimizerMock>*          optimizerMock;
 };
@@ -118,6 +123,7 @@ TEST_F(Test_OperationsThread, Test_run)
     )
         .WillOnce(Return(nullptr));
     EXPECT_CALL(*grpcClientMock, readPositionsStream(positionsStream)).WillOnce(Return(positionsStreamResponse));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(
         *grpcClientMock,
         getOperations(

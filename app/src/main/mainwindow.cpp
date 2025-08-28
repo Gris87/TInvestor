@@ -881,9 +881,9 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
         {
             tradingThread = mTradingThreadFactory->newInstance(
                 mInstrumentsStorage,
+                mTimeUtils,
                 mGrpcClient,
                 mLogsThread,
-                mTimeUtils,
                 mAutoPilotAccountId,
                 it.key(),
                 it.value().expectedCost,

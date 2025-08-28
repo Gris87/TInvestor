@@ -13,6 +13,7 @@
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/optimizer/ioptimizer.h"
+#include "src/utils/timeutils/itimeutils.h"
 
 
 
@@ -25,6 +26,7 @@ public:
         IOperationsDatabase* operationsDatabase,
         IInstrumentsStorage* instrumentsStorage,
         ILogosStorage*       logosStorage,
+        ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
         IOptimizer*          optimizer,
         QObject*             parent = nullptr
@@ -70,6 +72,7 @@ private:
     IOperationsDatabase*             mOperationsDatabase;
     IInstrumentsStorage*             mInstrumentsStorage;
     ILogosStorage*                   mLogosStorage;
+    ITimeUtils*                      mTimeUtils;
     IGrpcClient*                     mGrpcClient;
     IOptimizer*                      mOptimizer;
     QString                          mAccountId;

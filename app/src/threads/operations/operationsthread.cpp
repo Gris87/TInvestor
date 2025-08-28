@@ -9,13 +9,14 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr int    LIMIT_OPERATIONS = 100000;
-constexpr int    OPTIMIZE_SIZE    = 10000;
-constexpr float  HUNDRED_PERCENT  = 100.0f;
-constexpr qint64 MS_IN_SECOND     = 1000LL;
-constexpr qint64 ONE_MINUTE       = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR         = 60LL * ONE_MINUTE;
-constexpr qint64 ONE_DAY          = 24LL * ONE_HOUR;
+constexpr int    LIMIT_OPERATIONS     = 100000;
+constexpr int    OPTIMIZE_SIZE        = 10000;
+constexpr float  HUNDRED_PERCENT      = 100.0f;
+constexpr qint64 MS_IN_SECOND         = 1000LL;
+constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY              = 24LL * ONE_HOUR;
+constexpr qint64 SLEEP_BEFORE_REQUEST = 5LL * MS_IN_SECOND; // 5 seconds
 
 
 
@@ -23,6 +24,7 @@ OperationsThread::OperationsThread(
     IOperationsDatabase* operationsDatabase,
     IInstrumentsStorage* instrumentsStorage,
     ILogosStorage*       logosStorage,
+    ITimeUtils*          timeUtils,
     IGrpcClient*         grpcClient,
     IOptimizer*          optimizer,
     QObject*             parent
@@ -32,6 +34,7 @@ OperationsThread::OperationsThread(
     mOperationsDatabase(operationsDatabase),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
+    mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mOptimizer(optimizer),
     mAccountId(),
@@ -97,6 +100,11 @@ void OperationsThread::run()
                     if (money != newMoney)
                     {
                         money = newMoney;
+
+                        if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                        {
+                            break;
+                        }
 
                         requestOperations();
                     }

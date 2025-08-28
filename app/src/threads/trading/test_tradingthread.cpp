@@ -24,14 +24,14 @@ protected:
         const InSequence seq;
 
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
         logsThreadMock         = new StrictMock<LogsThreadMock>();
-        timeUtilsMock          = new StrictMock<TimeUtilsMock>();
 
         EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaaaa"), QString("But why")));
 
         thread = new TradingThread(
-            instrumentsStorageMock, grpcClientMock, logsThreadMock, timeUtilsMock, "account-id", "aaaaa", 10000.0, "But why"
+            instrumentsStorageMock, timeUtilsMock, grpcClientMock, logsThreadMock, "account-id", "aaaaa", 10000.0, "But why"
         );
     }
 
@@ -39,16 +39,16 @@ protected:
     {
         delete thread;
         delete instrumentsStorageMock;
+        delete timeUtilsMock;
         delete grpcClientMock;
         delete logsThreadMock;
-        delete timeUtilsMock;
     }
 
     TradingThread*                      thread;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
     StrictMock<LogsThreadMock>*         logsThreadMock;
-    StrictMock<TimeUtilsMock>*          timeUtilsMock;
 };
 
 

@@ -41,14 +41,14 @@ TEST_F(Test_TradingThreadFactory, Test_newInstance)
     const InSequence seq;
 
     StrictMock<InstrumentsStorageMock> instrumentsStorageMock;
+    StrictMock<TimeUtilsMock>          timeUtilsMock;
     StrictMock<GrpcClientMock>         grpcClientMock;
     StrictMock<LogsThreadMock>         logsThreadMock;
-    StrictMock<TimeUtilsMock>          timeUtilsMock;
 
     EXPECT_CALL(logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("bbbbb"), QString("But why")));
 
     const ITradingThread* thread = factory->newInstance(
-        &instrumentsStorageMock, &grpcClientMock, &logsThreadMock, &timeUtilsMock, "aaaaa", "bbbbb", 1000.0, "But why", nullptr
+        &instrumentsStorageMock, &timeUtilsMock, &grpcClientMock, &logsThreadMock, "aaaaa", "bbbbb", 1000.0, "But why", nullptr
     );
     ASSERT_TRUE(thread != nullptr);
 

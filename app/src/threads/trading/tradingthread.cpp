@@ -15,9 +15,9 @@ constexpr double DOUBLE_EPSILON    = 0.0001;
 
 TradingThread::TradingThread(
     IInstrumentsStorage* instrumentsStorage,
+    ITimeUtils*          timeUtils,
     IGrpcClient*         grpcClient,
     ILogsThread*         logsThread,
-    ITimeUtils*          timeUtils,
     const QString&       accountId,
     const QString&       instrumentId,
     double               expectedCost,
@@ -27,9 +27,9 @@ TradingThread::TradingThread(
     ITradingThread(parent),
     mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
+    mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mLogsThread(logsThread),
-    mTimeUtils(timeUtils),
     mAccountId(accountId),
     mInstrumentId(instrumentId),
     mExpectedCost(expectedCost),

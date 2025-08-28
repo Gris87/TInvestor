@@ -1080,9 +1080,9 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
         *tradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            timeUtilsMock,
             grpcClientMock,
             logsThreadMock,
-            timeUtilsMock,
             QString(""),
             QString("aaaaa"),
             DoubleEq(10000.0),
@@ -1096,9 +1096,9 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
         *tradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            timeUtilsMock,
             grpcClientMock,
             logsThreadMock,
-            timeUtilsMock,
             QString(""),
             QString("bbbbb"),
             DoubleEq(15000.0),
@@ -1553,9 +1553,9 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         *tradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            timeUtilsMock,
             grpcClientMock,
             logsThreadMock,
-            timeUtilsMock,
             QString("aaaaaa"),
             QString("aaa-aaa"),
             DoubleEq(10000.0),
@@ -1669,9 +1669,9 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         *tradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            timeUtilsMock,
             grpcClientMock,
             logsThreadMock,
-            timeUtilsMock,
             QString("aaaaaa"),
             QString("aaa-aaa"),
             DoubleEq(10000.0),

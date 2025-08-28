@@ -20,9 +20,9 @@ class TradingThread : public ITradingThread
 public:
     explicit TradingThread(
         IInstrumentsStorage* instrumentsStorage,
+        ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
         ILogsThread*         logsThread,
-        ITimeUtils*          timeUtils,
         const QString&       accountId,
         const QString&       instrumentId,
         double               expectedCost,
@@ -75,9 +75,9 @@ private:
 
     QReadWriteLock*      mRwMutex;
     IInstrumentsStorage* mInstrumentsStorage;
+    ITimeUtils*          mTimeUtils;
     IGrpcClient*         mGrpcClient;
     ILogsThread*         mLogsThread;
-    ITimeUtils*          mTimeUtils;
     QString              mAccountId;
     QString              mInstrumentId;
     double               mExpectedCost;
