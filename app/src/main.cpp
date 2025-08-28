@@ -418,8 +418,8 @@ static int runApplication(QApplication* app)
     OperationsThread         operationsThread(
         &autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &timeUtils, &grpcClient, &optimizer
     );
-    LogsThread       logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage, &optimizer);
-    PortfolioThread  portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
+    LogsThread                   logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage, &optimizer);
+    PortfolioThread              portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
     PortfolioLastPriceThread     autoPilotPortfolioLastPriceThread(&timeUtils, &grpcClient);
     SimulatorDecisionMakerThread simulatorDecisionMakerThread(
         &simulatorSettingsEditor,

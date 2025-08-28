@@ -68,8 +68,8 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
     mPortfolioTreeModel->portfolioChanged(portfolio);
     ui->treeView->expandAll();
 
-    mTotalCost             = mPortfolioTreeModel->totalCost();
-    mTotalDailyCost        = mPortfolioTreeModel->totalDailyCost();
+    mTotalCost      = mPortfolioTreeModel->totalCost();
+    mTotalDailyCost = mPortfolioTreeModel->totalDailyCost();
 
     ui->costLabel->setText(QString::number(mTotalCost, 'f', 2) + " \u20BD");
     updateAllTimeLabel();
