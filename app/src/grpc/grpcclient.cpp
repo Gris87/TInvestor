@@ -588,10 +588,11 @@ void GrpcClient::cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marke
 
 void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    const grpc::Status status = mRawGrpcClient->finishMarketDataStream(marketDataStream);
+    const grpc::Status     status    = mRawGrpcClient->finishMarketDataStream(marketDataStream);
+    const grpc::StatusCode errorCode = status.error_code();
 
-    if (!status.ok() && status.error_code() != grpc::StatusCode::RESOURCE_EXHAUSTED &&
-        status.error_code() != grpc::StatusCode::CANCELLED)
+    if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
+        errorCode != grpc::StatusCode::CANCELLED)
     {
         emitAuthFailed(status);
     }
@@ -646,10 +647,11 @@ void GrpcClient::cancelPortfolioStream(std::shared_ptr<PortfolioStream>& portfol
 
 void GrpcClient::finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
 {
-    const grpc::Status status = mRawGrpcClient->finishPortfolioStream(portfolioStream);
+    const grpc::Status     status    = mRawGrpcClient->finishPortfolioStream(portfolioStream);
+    const grpc::StatusCode errorCode = status.error_code();
 
-    if (!status.ok() && status.error_code() != grpc::StatusCode::RESOURCE_EXHAUSTED &&
-        status.error_code() != grpc::StatusCode::CANCELLED)
+    if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
+        errorCode != grpc::StatusCode::CANCELLED)
     {
         emitAuthFailed(status);
     }
@@ -690,10 +692,11 @@ void GrpcClient::cancelPositionsStream(std::shared_ptr<PositionsStream>& positio
 
 void GrpcClient::finishPositionsStream(std::shared_ptr<PositionsStream>& positionsStream)
 {
-    const grpc::Status status = mRawGrpcClient->finishPositionsStream(positionsStream);
+    const grpc::Status     status    = mRawGrpcClient->finishPositionsStream(positionsStream);
+    const grpc::StatusCode errorCode = status.error_code();
 
-    if (!status.ok() && status.error_code() != grpc::StatusCode::RESOURCE_EXHAUSTED &&
-        status.error_code() != grpc::StatusCode::CANCELLED)
+    if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
+        errorCode != grpc::StatusCode::CANCELLED)
     {
         emitAuthFailed(status);
     }

@@ -51,7 +51,7 @@ public:
 
             if (!parentThread->isInterruptionRequested() && !status.ok())
             {
-                grpc::StatusCode errorCode = status.error_code();
+                const grpc::StatusCode errorCode = status.error_code();
 
                 if (errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::CANCELLED)
                 {
