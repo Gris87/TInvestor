@@ -49,7 +49,7 @@ void PortfolioThread::run()
 
     blockSignals(false);
 
-    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+    std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
         mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
@@ -70,7 +70,12 @@ void PortfolioThread::run()
 
                 if (portfolioStreamResponse->has_portfolio())
                 {
-                    handlePortfolioResponse(portfolioStreamResponse->portfolio());
+                    tinkoffPortfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+
+                    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+                    {
+                        handlePortfolioResponse(*tinkoffPortfolio);
+                    }
                 }
             }
 

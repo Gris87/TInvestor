@@ -56,6 +56,7 @@ TEST_F(Test_PortfolioThread, Test_run)
     const InSequence seq;
 
     const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
+    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse2(new tinkoff::PortfolioResponse());
 
     tinkoff::PortfolioPosition* position = portfolioResponse->add_positions(); // portfolioResponse will take ownership
 
@@ -92,16 +93,7 @@ TEST_F(Test_PortfolioThread, Test_run)
     position->set_allocated_average_position_price(tinkoffAvgPriceWavg);
     position->set_allocated_daily_yield(tinkoffDailyYield);
 
-    Instruments instruments;
-    Logo        logo;
-
-    std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
-
-    const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse(new tinkoff::PortfolioStreamResponse());
-    tinkoff::PortfolioResponse*                             portfolioResponse2 =
-        new tinkoff::PortfolioResponse(); // portfolioStreamResponse will take ownership
-
-    tinkoff::PortfolioPosition* position2 = portfolioResponse2->add_positions(); // portfolioResponse will take ownership
+    tinkoff::PortfolioPosition* position2 = portfolioResponse2->add_positions(); // portfolioResponse2 will take ownership
 
     tinkoff::Quotation*  tinkoffQuantity2     = new tinkoff::Quotation();  // position will take ownership
     tinkoff::MoneyValue* tinkoffCurrentPrice2 = new tinkoff::MoneyValue(); // position will take ownership
@@ -136,7 +128,16 @@ TEST_F(Test_PortfolioThread, Test_run)
     position2->set_allocated_average_position_price(tinkoffAvgPriceWavg2);
     position2->set_allocated_daily_yield(tinkoffDailyYield2);
 
-    portfolioStreamResponse->set_allocated_portfolio(portfolioResponse2);
+    Instruments instruments;
+    Logo        logo;
+
+    std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
+
+    const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse(new tinkoff::PortfolioStreamResponse());
+    tinkoff::PortfolioResponse*                             portfolioResponse3 =
+        new tinkoff::PortfolioResponse(); // portfolioStreamResponse will take ownership
+
+    portfolioStreamResponse->set_allocated_portfolio(portfolioResponse3);
 
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("aaaaa"))).WillOnce(Return(portfolioResponse));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -147,6 +148,7 @@ TEST_F(Test_PortfolioThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("aaaaa"))).WillOnce(Return(portfolioStream));
     EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(portfolioStreamResponse));
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("aaaaa"))).WillOnce(Return(portfolioResponse2));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
