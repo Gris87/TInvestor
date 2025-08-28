@@ -249,6 +249,7 @@ TEST_F(Test_TradingThread, Test_sell)
         *logsThreadMock,
         addLog(LOG_LEVEL_WARNING, QString("aaaaa"), QString("Failed to create order to sell 50 with a price 10.500 \u20BD"))
     );
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(thread->sell(10000, 40000), false);
 
@@ -507,6 +508,7 @@ TEST_F(Test_TradingThread, Test_buy)
         *logsThreadMock,
         addLog(LOG_LEVEL_WARNING, QString("aaaaa"), QString("Failed to create order to buy 50 with a price 10.500 \u20BD"))
     );
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(thread->buy(10000, 40000), false);
 

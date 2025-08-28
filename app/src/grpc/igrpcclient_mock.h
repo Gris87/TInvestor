@@ -55,7 +55,12 @@ public:
     MOCK_METHOD(
         std::shared_ptr<tinkoff::GetOperationsByCursorResponse>,
         getOperations,
-        (QThread * parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor),
+        (QThread * parentThread,
+         const QString&          accountId,
+         qint64                  from,
+         qint64                  to,
+         const QString&          cursor,
+         tinkoff::OperationState state),
         (override)
     );
     MOCK_METHOD(

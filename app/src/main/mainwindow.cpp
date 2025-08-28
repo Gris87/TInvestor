@@ -250,49 +250,49 @@ MainWindow::MainWindow(
     mTrayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(mTrayIcon,                                SIGNAL(activated(QSystemTrayIcon::ActivationReason)),                                         this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(mTrayIcon,                                SIGNAL(trayIconShowClicked()),                                                                this, SLOT(trayIconShowClicked()));
-    connect(mTrayIcon,                                SIGNAL(trayIconExitClicked()),                                                                this, SLOT(trayIconExitClicked()));
-    connect(mGrpcClient,                              SIGNAL(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)));
-    connect(&cleanupTimer,                            SIGNAL(timeout()),                                                                            this, SLOT(cleanupTimerTicked()));
-    connect(&userUpdateTimer,                         SIGNAL(timeout()),                                                                            this, SLOT(userUpdateTimerTicked()));
-    connect(&priceCollectTimer,                       SIGNAL(timeout()),                                                                            this, SLOT(priceCollectTimerTicked()));
-    connect(&makeDecisionTimer,                       SIGNAL(timeout()),                                                                            this, SLOT(makeDecisionTimerTicked()));
-    connect(&stocksTableUpdateAllTimer,               SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
-    connect(&stocksTableUpdateLastPricesTimer,        SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
-    connect(&keepMoneyChangeDelayTimer,               SIGNAL(timeout()),                                                                            this, SLOT(keepMoneyChangeDelayTimerTicked()));
-    connect(&simulatorPortfolioUpdateLastPricesTimer, SIGNAL(timeout()),                                                                            this, SLOT(simulatorPortfolioUpdateLastPricesTimerTicked()));
-    connect(&autoPilotPortfolioUpdateLastPricesTimer, SIGNAL(timeout()),                                                                            this, SLOT(autoPilotPortfolioUpdateLastPricesTimerTicked()));
-    connect(mPriceCollectThread,                      SIGNAL(notifyInstrumentsProgress(const QString&)),                                            this, SLOT(notifyInstrumentsProgress(const QString&)));
-    connect(mPriceCollectThread,                      SIGNAL(stocksChanged()),                                                                      this, SLOT(stocksChanged()));
-    connect(mPriceCollectThread,                      SIGNAL(pricesChanged()),                                                                      this, SLOT(pricesChanged()));
-    connect(mPriceCollectThread,                      SIGNAL(periodicDataChanged()),                                                                this, SLOT(periodicDataChanged()));
-    connect(mLastPriceThread,                         SIGNAL(lastPriceChanged(const QString&)),                                                     this, SLOT(lastPriceChanged(const QString&)));
-    connect(mSimulatorPortfolioLastPriceThread,       SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(simulatorPortfolioLastPriceChanged(const QString&, float)));
-    connect(mOperationsThread,                        SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(autoPilotOperationsRead(const QList<Operation>&)));
-    connect(mOperationsThread,                        SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(autoPilotOperationsAdded(const QList<Operation>&)));
-    connect(mLogsThread,                              SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(autoPilotLogsRead(const QList<LogEntry>&)));
-    connect(mLogsThread,                              SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(autoPilotLogAdded(const LogEntry&)));
-    connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
-    connect(mAutoPilotPortfolioLastPriceThread,       SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
-    connect(mSimulatorDecisionMakerThread,            SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
-    connect(mSimulatorDecisionMakerThread,            SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(simulatorOperationsAdded(const QList<Operation>&)));
-    connect(mSimulatorDecisionMakerThread,            SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
-    connect(mSimulatorDecisionMakerThread,            SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(simulatorLogAdded(const LogEntry&)));
-    connect(mSimulatorDecisionMakerThread,            SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(stepProgressChanged(int, int)),                                                        this, SLOT(simulatorStepProgressChanged(int, int)));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(totalProgressChanged(int, int)),                                                       this, SLOT(simulatorTotalProgressChanged(int, int)));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(progressChanged(int, int, const QString&)),                                            this, SLOT(simulatorProgressChanged(int, int, const QString&)));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(resultFound(const QString&, const QColor&)),                                           this, SLOT(simulatorResultFound(const QString&, const QColor&)));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestResultChanged(const QString&, const QColor&)),                                     this, SLOT(simulatorBestResultChanged(const QString&, const QColor&)));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestConfigFound()),                                                                    this, SLOT(simulatorBestConfigFound()));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
-    connect(mAutoPilotDecisionMakerThread,            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
-    connect(mFollowThread,                            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
-    connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
-    connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const StockFilter&)),                                                    this, SLOT(stockFilterChanged(const StockFilter&)));
+    connect(mTrayIcon,                                SIGNAL(activated(QSystemTrayIcon::ActivationReason)),     this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(mTrayIcon,                                SIGNAL(trayIconShowClicked()),                            this, SLOT(trayIconShowClicked()));
+    connect(mTrayIcon,                                SIGNAL(trayIconExitClicked()),                            this, SLOT(trayIconExitClicked()));
+    connect(mGrpcClient,                              SIGNAL(authFailed(const QString&)),                       this, SLOT(authFailed(const QString&)));
+    connect(&cleanupTimer,                            SIGNAL(timeout()),                                        this, SLOT(cleanupTimerTicked()));
+    connect(&userUpdateTimer,                         SIGNAL(timeout()),                                        this, SLOT(userUpdateTimerTicked()));
+    connect(&priceCollectTimer,                       SIGNAL(timeout()),                                        this, SLOT(priceCollectTimerTicked()));
+    connect(&makeDecisionTimer,                       SIGNAL(timeout()),                                        this, SLOT(makeDecisionTimerTicked()));
+    connect(&stocksTableUpdateAllTimer,               SIGNAL(timeout()),                                        this, SLOT(stocksTableUpdateAllTimerTicked()));
+    connect(&stocksTableUpdateLastPricesTimer,        SIGNAL(timeout()),                                        this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
+    connect(&keepMoneyChangeDelayTimer,               SIGNAL(timeout()),                                        this, SLOT(keepMoneyChangeDelayTimerTicked()));
+    connect(&simulatorPortfolioUpdateLastPricesTimer, SIGNAL(timeout()),                                        this, SLOT(simulatorPortfolioUpdateLastPricesTimerTicked()));
+    connect(&autoPilotPortfolioUpdateLastPricesTimer, SIGNAL(timeout()),                                        this, SLOT(autoPilotPortfolioUpdateLastPricesTimerTicked()));
+    connect(mPriceCollectThread,                      SIGNAL(notifyInstrumentsProgress(const QString&)),        this, SLOT(notifyInstrumentsProgress(const QString&)));
+    connect(mPriceCollectThread,                      SIGNAL(stocksChanged()),                                  this, SLOT(stocksChanged()));
+    connect(mPriceCollectThread,                      SIGNAL(pricesChanged()),                                  this, SLOT(pricesChanged()));
+    connect(mPriceCollectThread,                      SIGNAL(periodicDataChanged()),                            this, SLOT(periodicDataChanged()));
+    connect(mLastPriceThread,                         SIGNAL(lastPriceChanged(const QString&)),                 this, SLOT(lastPriceChanged(const QString&)));
+    connect(mSimulatorPortfolioLastPriceThread,       SIGNAL(lastPriceChanged(const QString&, float)),          this, SLOT(simulatorPortfolioLastPriceChanged(const QString&, float)));
+    connect(mOperationsThread,                        SIGNAL(operationsRead(const QList<Operation>&)),          this, SLOT(autoPilotOperationsRead(const QList<Operation>&)));
+    connect(mOperationsThread,                        SIGNAL(operationsAdded(const QList<Operation>&)),         this, SLOT(autoPilotOperationsAdded(const QList<Operation>&)));
+    connect(mLogsThread,                              SIGNAL(logsRead(const QList<LogEntry>&)),                 this, SLOT(autoPilotLogsRead(const QList<LogEntry>&)));
+    connect(mLogsThread,                              SIGNAL(logAdded(const LogEntry&)),                        this, SLOT(autoPilotLogAdded(const LogEntry&)));
+    connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),               this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
+    connect(mAutoPilotPortfolioLastPriceThread,       SIGNAL(lastPriceChanged(const QString&, float)),          this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
+    connect(mSimulatorDecisionMakerThread,            SIGNAL(operationsRead(const QList<Operation>&)),          this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
+    connect(mSimulatorDecisionMakerThread,            SIGNAL(operationsAdded(const QList<Operation>&)),         this, SLOT(simulatorOperationsAdded(const QList<Operation>&)));
+    connect(mSimulatorDecisionMakerThread,            SIGNAL(logsRead(const QList<LogEntry>&)),                 this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
+    connect(mSimulatorDecisionMakerThread,            SIGNAL(logAdded(const LogEntry&)),                        this, SLOT(simulatorLogAdded(const LogEntry&)));
+    connect(mSimulatorDecisionMakerThread,            SIGNAL(portfolioChanged(const Portfolio&)),               this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(stepProgressChanged(int, int)),                    this, SLOT(simulatorStepProgressChanged(int, int)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(totalProgressChanged(int, int)),                   this, SLOT(simulatorTotalProgressChanged(int, int)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(progressChanged(int, int, const QString&)),        this, SLOT(simulatorProgressChanged(int, int, const QString&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(resultFound(const QString&, const QColor&)),       this, SLOT(simulatorResultFound(const QString&, const QColor&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestResultChanged(const QString&, const QColor&)), this, SLOT(simulatorBestResultChanged(const QString&, const QColor&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestConfigFound()),                                this, SLOT(simulatorBestConfigFound()));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(operationsRead(const QList<Operation>&)),          this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(logsRead(const QList<LogEntry>&)),                 this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(portfolioChanged(const Portfolio&)),               this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
+    connect(mAutoPilotDecisionMakerThread,            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),   this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
+    connect(mFollowThread,                            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),   this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
+    connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),      this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
+    connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const StockFilter&)),                this, SLOT(stockFilterChanged(const StockFilter&)));
     // clang-format on
 
     mTrayIcon->show();
@@ -401,13 +401,8 @@ void MainWindow::trayIconExitClicked()
     QCoreApplication::quit();
 }
 
-void MainWindow::authFailed(
-    grpc::StatusCode errorCode, const QString& errorCodeString, const std::string& errorMessage, const std::string& errorDetails
-)
+void MainWindow::authFailed(const QString& errorCodeString)
 {
-    qWarning() << "Authorization failed with code:" << errorCode << errorCodeString
-               << "message:" << QString::fromStdString(errorMessage) << "details:" << QString::fromStdString(errorDetails);
-
     if (authFailedDialogShown)
     {
         return;

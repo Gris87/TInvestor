@@ -9,6 +9,7 @@
 constexpr qint64 MS_IN_SECOND      = 1000LL;
 constexpr qint64 SLEEP_DELAY       = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_RETRY_DELAY = 1LL * MS_IN_SECOND;  // 1 second
+constexpr double DOUBLE_EPSILON    = 0.0001;
 
 
 
@@ -188,18 +189,8 @@ bool TradingThread::sell(double expected, double delta)
 
 bool TradingThread::sellWithPrice(double expected, double delta, const Quotation& price)
 {
-    if (mOrderId == "" || mLastOrderPrice != price || mLastExpectedCost != expected)
+    if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
-        // TODO: Remove it
-        qWarning() << "mOrderId:" << mOrderId;
-        qWarning() << "mLastOrderPrice.units:" << mLastOrderPrice.units;
-        qWarning() << "mLastOrderPrice.nano:" << mLastOrderPrice.nano;
-        qWarning() << "price.units:" << price.units;
-        qWarning() << "price.nano:" << price.nano;
-        qWarning() << "mLastExpectedCost:" << mLastExpectedCost;
-        qWarning() << "expected:" << expected;
-        qWarning() << "mLastExpectedCost - expected:" << mLastExpectedCost - expected;
-
         cancelOrder();
 
         return sellWithPriceOptimalAmount(expected, delta, price);
@@ -272,7 +263,12 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
                         )
                 );
 
-                return false;
+                if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
+                {
+                    return false;
+                }
+
+                continue;
             }
 
             if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
@@ -338,18 +334,8 @@ bool TradingThread::buy(double expected, double delta)
 
 bool TradingThread::buyWithPrice(double expected, double delta, const Quotation& price)
 {
-    if (mOrderId == "" || mLastOrderPrice != price || mLastExpectedCost != expected)
+    if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
-        // TODO: Remove it
-        qWarning() << "mOrderId:" << mOrderId;
-        qWarning() << "mLastOrderPrice.units:" << mLastOrderPrice.units;
-        qWarning() << "mLastOrderPrice.nano:" << mLastOrderPrice.nano;
-        qWarning() << "price.units:" << price.units;
-        qWarning() << "price.nano:" << price.nano;
-        qWarning() << "mLastExpectedCost:" << mLastExpectedCost;
-        qWarning() << "expected:" << expected;
-        qWarning() << "mLastExpectedCost - expected:" << mLastExpectedCost - expected;
-
         cancelOrder();
 
         return buyWithPriceOptimalAmount(expected, delta, price);
@@ -417,7 +403,12 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
                         )
                 );
 
-                return false;
+                if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
+                {
+                    return false;
+                }
+
+                continue;
             }
 
             if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)

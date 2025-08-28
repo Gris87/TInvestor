@@ -53,8 +53,14 @@ void AutoPilotDecisionMakerThread::run()
 
         const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
 
-        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
-            mGrpcClient->getOperations(QThread::currentThread(), mAccountId, timestamp - DATE_RANGE, timestamp + ONE_DAY, "");
+        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations = mGrpcClient->getOperations(
+            QThread::currentThread(),
+            mAccountId,
+            timestamp - DATE_RANGE,
+            timestamp + ONE_DAY,
+            "",
+            tinkoff::OPERATION_STATE_UNSPECIFIED
+        );
 
         if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOperations != nullptr)
         {

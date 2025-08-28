@@ -9,6 +9,10 @@
 
 
 
+extern const QMap<grpc::StatusCode, QString> GRPC_STATUS_CODE_TO_STRING;
+
+
+
 class GrpcClient : public IGrpcClient
 {
     Q_OBJECT
@@ -47,7 +51,16 @@ public:
 
             if (!parentThread->isInterruptionRequested() && !status.ok())
             {
-                if (status.error_code() == grpc::StatusCode::RESOURCE_EXHAUSTED)
+                grpc::StatusCode errorCode = status.error_code();
+
+                if (errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::CANCELLED)
+                {
+                    qWarning() << "GRPC error with code:" << errorCode << GRPC_STATUS_CODE_TO_STRING[errorCode]
+                               << "message:" << QString::fromStdString(status.error_message())
+                               << "details:" << QString::fromStdString(status.error_details());
+                }
+
+                if (errorCode == grpc::StatusCode::RESOURCE_EXHAUSTED || errorCode == grpc::StatusCode::UNKNOWN)
                 {
                     if (mTimeUtils->interruptibleSleep(5000, parentThread)) // 5 seconds // NOLINT(readability-magic-numbers)
                     {
@@ -57,10 +70,8 @@ public:
                     continue;
                 }
 
-                qWarning() << status.error_code() << status.error_message() << status.error_details(); // TODO: Remove it
-
-                if (status.error_code() != grpc::StatusCode::CANCELLED && status.error_code() != grpc::StatusCode::NOT_FOUND &&
-                    (!ignoreInvalidArg || status.error_code() != grpc::StatusCode::INVALID_ARGUMENT))
+                if (errorCode != grpc::StatusCode::CANCELLED && errorCode != grpc::StatusCode::NOT_FOUND &&
+                    (!ignoreInvalidArg || errorCode != grpc::StatusCode::INVALID_ARGUMENT))
                 {
                     emitAuthFailed(status);
                 }
@@ -88,8 +99,14 @@ public:
     getOrderBook(QThread* parentThread, const QString& instrumentId, int depth) override;
     std::shared_ptr<tinkoff::PortfolioResponse> getPortfolio(QThread* parentThread, const QString& accountId) override;
     std::shared_ptr<tinkoff::PositionsResponse> getPositions(QThread* parentThread, const QString& accountId) override;
-    std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
-    getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor) override;
+    std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperations(
+        QThread*                parentThread,
+        const QString&          accountId,
+        qint64                  from,
+        qint64                  to,
+        const QString&          cursor,
+        tinkoff::OperationState state
+    ) override;
     std::shared_ptr<tinkoff::GetMaxLotsResponse>
     getMaxLots(QThread* parentThread, const QString& accountId, const QString& instrumentId, const Quotation& price) override;
     std::shared_ptr<tinkoff::PostOrderResponse> postOrder(

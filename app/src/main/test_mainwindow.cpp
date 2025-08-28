@@ -597,7 +597,7 @@ TEST_F(Test_MainWindow, Test_authFailed)
     EXPECT_CALL(*priceCollectThreadMock, run());
     EXPECT_CALL(*lastPriceThreadMock, run());
 
-    mainWindow->authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "Test_authFailed");
+    mainWindow->authFailed("UNKNOWN");
 
     userUpdateThreadMock->wait();
     priceCollectThreadMock->wait();
@@ -605,7 +605,7 @@ TEST_F(Test_MainWindow, Test_authFailed)
 
     mainWindow->authFailedDialogShown = true;
 
-    mainWindow->authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "Test_authFailed");
+    mainWindow->authFailed("UNKNOWN");
 }
 
 TEST_F(Test_MainWindow, Test_cleanupTimerTicked)

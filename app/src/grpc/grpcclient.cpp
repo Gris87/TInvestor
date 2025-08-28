@@ -21,7 +21,7 @@ constexpr qint64 MS_IN_SECOND                 = 1000LL;
 
 
 // clang-format off
-static const QMap<grpc::StatusCode, QString> GRPC_STATUS_CODE_TO_STRING{ // clazy:exclude=non-pod-global-static
+const QMap<grpc::StatusCode, QString> GRPC_STATUS_CODE_TO_STRING{ // clazy:exclude=non-pod-global-static
     {grpc::StatusCode::OK,                  "OK"                 },
     {grpc::StatusCode::CANCELLED,           "CANCELLED"          },
     {grpc::StatusCode::UNKNOWN,             "UNKNOWN"            },
@@ -361,8 +361,9 @@ static grpc::Status getOperationsAction(
     return rawGrpcClient->getOperations(service, context, req, resp.get());
 }
 
-std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
-GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor)
+std::shared_ptr<tinkoff::GetOperationsByCursorResponse> GrpcClient::getOperations(
+    QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor, tinkoff::OperationState state
+)
 {
     grpc::ClientContext                                           context;
     tinkoff::GetOperationsByCursorRequest                         req;
@@ -384,7 +385,7 @@ GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint6
     req.set_allocated_to(toTimestamp);
     req.set_cursor(cursor.toStdString());
     req.set_limit(OPERATIONS_LIMIT);
-    req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
+    req.set_state(state);
     req.set_without_trades(true);
 
     return repeatRequest(parentThread, getOperationsAction, mOperationsService, &context, req, resp, false);
@@ -461,17 +462,6 @@ std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
     req.set_order_type(tinkoff::ORDER_TYPE_LIMIT);
     req.set_time_in_force(tinkoff::TIME_IN_FORCE_DAY);
     req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
-
-    // TODO: Remove it
-    qWarning() << "req.account_id:" << req.account_id();
-    qWarning() << "req.instrument_id:" << req.instrument_id();
-    qWarning() << "req.direction:" << req.direction();
-    qWarning() << "req.quantity:" << req.quantity();
-    qWarning() << "req.price.units:" << req.price().units();
-    qWarning() << "req.price.nano:" << req.price().nano();
-    qWarning() << "req.order_type:" << req.order_type();
-    qWarning() << "req.time_in_force:" << req.time_in_force();
-    qWarning() << "req.price_type:" << req.price_type();
 
     return repeatRequest(parentThread, postOrderAction, mOrdersService, &context, req, resp, true);
 }
@@ -711,7 +701,5 @@ void GrpcClient::finishPositionsStream(std::shared_ptr<PositionsStream>& positio
 
 void GrpcClient::emitAuthFailed(const grpc::Status& status)
 {
-    emit authFailed(
-        status.error_code(), GRPC_STATUS_CODE_TO_STRING[status.error_code()], status.error_message(), status.error_details()
-    );
+    emit authFailed(GRPC_STATUS_CODE_TO_STRING[status.error_code()]);
 }

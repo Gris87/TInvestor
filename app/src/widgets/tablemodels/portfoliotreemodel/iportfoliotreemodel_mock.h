@@ -34,7 +34,6 @@ public:
     MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc), (const, override));
 
     MOCK_METHOD(double, totalCost, (), (const, override));
-    MOCK_METHOD(double, totalCostWithoutMoney, (), (const, override));
     MOCK_METHOD(double, totalYield, (), (const, override));
     MOCK_METHOD(double, totalDailyCost, (), (const, override));
     MOCK_METHOD(double, totalDailyYield, (), (const, override));

@@ -91,9 +91,8 @@ TEST_F(Test_PortfolioTreeWidget, Test_portfolioChanged)
 
     EXPECT_CALL(*portfolioTreeModelMock, portfolioChanged(portfolio));
     EXPECT_CALL(*portfolioTreeModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
-    EXPECT_CALL(*portfolioTreeModelMock, totalCostWithoutMoney()).WillOnce(Return(100000.0));
-    EXPECT_CALL(*portfolioTreeModelMock, totalDailyCost()).WillOnce(Return(105000.0));
     EXPECT_CALL(*portfolioTreeModelMock, totalCost()).WillOnce(Return(100000.0));
+    EXPECT_CALL(*portfolioTreeModelMock, totalDailyCost()).WillOnce(Return(105000.0));
     EXPECT_CALL(*portfolioTreeModelMock, totalYield()).WillOnce(Return(10000.0));
     EXPECT_CALL(*portfolioTreeModelMock, totalDailyYield()).WillOnce(Return(5000.0));
 
@@ -125,9 +124,8 @@ TEST_F(Test_PortfolioTreeWidget, Test_updateLastPrices)
 
     EXPECT_CALL(*portfolioTreeModelMock, portfolioChanged(portfolio));
     EXPECT_CALL(*portfolioTreeModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
-    EXPECT_CALL(*portfolioTreeModelMock, totalCostWithoutMoney()).WillOnce(Return(100000.0));
-    EXPECT_CALL(*portfolioTreeModelMock, totalDailyCost()).WillOnce(Return(105000.0));
     EXPECT_CALL(*portfolioTreeModelMock, totalCost()).WillOnce(Return(100000.0));
+    EXPECT_CALL(*portfolioTreeModelMock, totalDailyCost()).WillOnce(Return(105000.0));
     EXPECT_CALL(*portfolioTreeModelMock, totalYield()).WillOnce(Return(10000.0));
     EXPECT_CALL(*portfolioTreeModelMock, totalDailyYield()).WillOnce(Return(5000.0));
 

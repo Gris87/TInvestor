@@ -250,7 +250,14 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("aaaaa"))).WillOnce(Return(portfolioResponse));
     EXPECT_CALL(
         *grpcClientMock,
-        getOperations(QThread::currentThread(), QString("aaaaa"), Ge(1704056400000), Ge(1704056400000), QString(""))
+        getOperations(
+            QThread::currentThread(),
+            QString("aaaaa"),
+            Ge(1704056400000),
+            Ge(1704056400000),
+            QString(""),
+            tinkoff::OPERATION_STATE_UNSPECIFIED
+        )
     )
         .WillOnce(Return(getOperationsByCursorResponse));
     EXPECT_CALL(*stocksStorageMock, readLock());

@@ -48,9 +48,6 @@ public:
     virtual double totalCost() const = 0;
 
     [[nodiscard]]
-    virtual double totalCostWithoutMoney() const = 0;
-
-    [[nodiscard]]
     virtual double totalYield() const = 0;
 
     [[nodiscard]]

@@ -323,18 +323,33 @@ TEST_F(Test_GrpcClient, Test_getOperations)
 
     EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
 
-    ASSERT_NE(client->getOperations(QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, ""), nullptr);
+    ASSERT_NE(
+        client->getOperations(
+            QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, "", tinkoff::OPERATION_STATE_EXECUTED
+        ),
+        nullptr
+    );
 
     EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
-    ASSERT_EQ(client->getOperations(QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, ""), nullptr);
+    ASSERT_EQ(
+        client->getOperations(
+            QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, "", tinkoff::OPERATION_STATE_EXECUTED
+        ),
+        nullptr
+    );
 
     EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
 
-    ASSERT_EQ(client->getOperations(QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, ""), nullptr);
+    ASSERT_EQ(
+        client->getOperations(
+            QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, "", tinkoff::OPERATION_STATE_EXECUTED
+        ),
+        nullptr
+    );
 }
 
 TEST_F(Test_GrpcClient, Test_getMaxLots)
