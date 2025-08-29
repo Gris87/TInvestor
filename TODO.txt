@@ -1,12 +1,12 @@
 Limit trading buy different percents in non-working hours
-Store min price increment for instruments
 Do not sell ASAP if you want to get rich
+Invalid argument on requesting state for deleted order
 nan price in operations?
 Periodical operations clean refresh?
 Improve coverage
 Create release
 
-Fight for the price to sell???
+Do not buy on extremal price raise and fall
 Split order into chunks
 
 =======================================

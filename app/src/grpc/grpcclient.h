@@ -53,14 +53,16 @@ public:
             {
                 const grpc::StatusCode errorCode = status.error_code();
 
-                if (errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::CANCELLED)
+                if (errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNAVAILABLE &&
+                    errorCode != grpc::StatusCode::CANCELLED)
                 {
                     qWarning() << "GRPC error with code:" << errorCode << GRPC_STATUS_CODE_TO_STRING[errorCode]
                                << "message:" << QString::fromStdString(status.error_message())
                                << "details:" << QString::fromStdString(status.error_details());
                 }
 
-                if (errorCode == grpc::StatusCode::RESOURCE_EXHAUSTED || errorCode == grpc::StatusCode::UNKNOWN)
+                if (errorCode == grpc::StatusCode::RESOURCE_EXHAUSTED || errorCode == grpc::StatusCode::UNAVAILABLE ||
+                    errorCode == grpc::StatusCode::UNKNOWN)
                 {
                     if (mTimeUtils->interruptibleSleep(5000, parentThread)) // 5 seconds // NOLINT(readability-magic-numbers)
                     {

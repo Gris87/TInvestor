@@ -501,10 +501,12 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     Instruments instruments;
     Instrument  instrument;
 
-    instrument.ticker         = "LETO";
-    instrument.name           = "Leto & arbalety";
-    instrument.lot            = 1000;
-    instrument.pricePrecision = 4;
+    instrument.ticker                  = "LETO";
+    instrument.name                    = "Leto & arbalety";
+    instrument.lot                     = 1000;
+    instrument.pricePrecision          = 4;
+    instrument.minPriceIncrement.units = 0;
+    instrument.minPriceIncrement.nano  = 100000;
 
     instruments["aaaaa"] = instrument;
 

@@ -8,7 +8,8 @@ Instrument::Instrument() :
     ticker(),
     name(),
     lot(),
-    pricePrecision()
+    pricePrecision(),
+    minPriceIncrement()
 {
 }
 
@@ -45,6 +46,11 @@ static void instrumentPricePrecisionParse(Instrument* instrument, simdjson::onde
     instrument->pricePrecision = value.get_int64();
 }
 
+static void instrumentMinPriceIncrementParse(Instrument* instrument, simdjson::ondemand::value value)
+{
+    instrument->minPriceIncrement.fromJsonObject(value.get_object());
+}
+
 static void instrumentThrowParseException(
     Instrument* /*instrument*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
@@ -56,10 +62,11 @@ using ParseHandler = void (*)(Instrument* instrument, simdjson::ondemand::value 
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"ticker",         instrumentTickerParse        },
-    {"name",           instrumentNameParse          },
-    {"lot",            instrumentLotParse           },
-    {"pricePrecision", instrumentPricePrecisionParse}
+    {"ticker",            instrumentTickerParse           },
+    {"name",              instrumentNameParse             },
+    {"lot",               instrumentLotParse              },
+    {"pricePrecision",    instrumentPricePrecisionParse   },
+    {"minPriceIncrement", instrumentMinPriceIncrementParse}
 };
 // clang-format on
 
@@ -78,15 +85,19 @@ QJsonObject Instrument::toJsonObject() const
 {
     QJsonObject res;
 
-    res.insert("ticker", ticker);
-    res.insert("name", name);
-    res.insert("lot", lot);
-    res.insert("pricePrecision", pricePrecision);
+    // clang-format off
+    res.insert("ticker",            ticker);
+    res.insert("name",              name);
+    res.insert("lot",               lot);
+    res.insert("pricePrecision",    pricePrecision);
+    res.insert("minPriceIncrement", minPriceIncrement.toJsonObject());
+    // clang-format on
 
     return res;
 }
 
 bool operator==(const Instrument& lhs, const Instrument& rhs)
 {
-    return lhs.ticker == rhs.ticker && lhs.name == rhs.name && lhs.lot == rhs.lot && lhs.pricePrecision == rhs.pricePrecision;
+    return lhs.ticker == rhs.ticker && lhs.name == rhs.name && lhs.lot == rhs.lot && lhs.pricePrecision == rhs.pricePrecision &&
+           lhs.minPriceIncrement == rhs.minPriceIncrement;
 }

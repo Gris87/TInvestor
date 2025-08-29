@@ -225,20 +225,26 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     Instrument  instrument2;
     Instrument  instrument3;
 
-    instrument1.ticker         = "ABBA";
-    instrument1.name           = "Abstract Basics";
-    instrument1.lot            = 5;
-    instrument1.pricePrecision = 1;
+    instrument1.ticker                  = "ABBA";
+    instrument1.name                    = "Abstract Basics";
+    instrument1.lot                     = 5;
+    instrument1.pricePrecision          = 1;
+    instrument1.minPriceIncrement.units = 0;
+    instrument1.minPriceIncrement.nano  = 100000000;
 
-    instrument2.ticker         = "BASE";
-    instrument2.name           = "Basketball enhancement";
-    instrument2.lot            = 10;
-    instrument2.pricePrecision = 2;
+    instrument2.ticker                  = "BASE";
+    instrument2.name                    = "Basketball enhancement";
+    instrument2.lot                     = 10;
+    instrument2.pricePrecision          = 2;
+    instrument2.minPriceIncrement.units = 0;
+    instrument2.minPriceIncrement.nano  = 10000000;
 
-    instrument3.ticker         = "HNYA";
-    instrument3.name           = "The best of the best";
-    instrument3.lot            = 100;
-    instrument3.pricePrecision = 3;
+    instrument3.ticker                  = "HNYA";
+    instrument3.name                    = "The best of the best";
+    instrument3.lot                     = 100;
+    instrument3.pricePrecision          = 3;
+    instrument3.minPriceIncrement.units = 0;
+    instrument3.minPriceIncrement.nano  = 5000000;
 
     instruments["aaaaa"] = instrument1;
     instruments["bbbbb"] = instrument2;

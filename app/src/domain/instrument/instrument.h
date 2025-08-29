@@ -4,6 +4,7 @@
 
 #include <QJsonObject>
 
+#include "src/domain/quotation/quotation.h"
 #include "src/simdjson/simdjson_wrapped.h"
 
 
@@ -23,10 +24,11 @@ struct Instrument
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 
-    QString ticker;
-    QString name;
-    qint32  lot;
-    qint8   pricePrecision;
+    QString   ticker;
+    QString   name;
+    qint32    lot;
+    qint8     pricePrecision;
+    Quotation minPriceIncrement;
 };
 
 using Instruments = QMap<QString, Instrument>; // UID => Instrument

@@ -45,10 +45,12 @@ TEST_F(Test_TradeSimulation, Test_createInitOperations)
     Instruments instrumentsMap;
     Instrument  instrument;
 
-    instrument.ticker         = "RUBLE";
-    instrument.name           = "Ruble";
-    instrument.lot            = 1;
-    instrument.pricePrecision = 2;
+    instrument.ticker                  = "RUBLE";
+    instrument.name                    = "Ruble";
+    instrument.lot                     = 1;
+    instrument.pricePrecision          = 2;
+    instrument.minPriceIncrement.units = 0;
+    instrument.minPriceIncrement.nano  = 10000000;
 
     instrumentsMap[RUBLE_UID] = instrument;
 
@@ -170,10 +172,12 @@ TEST_F(Test_TradeSimulation, Test_createInitPortfolio)
     Instruments instrumentsMap;
     Instrument  instrument;
 
-    instrument.ticker         = "RUBLE";
-    instrument.name           = "Ruble";
-    instrument.lot            = 1;
-    instrument.pricePrecision = 2;
+    instrument.ticker                  = "RUBLE";
+    instrument.name                    = "Ruble";
+    instrument.lot                     = 1;
+    instrument.pricePrecision          = 2;
+    instrument.minPriceIncrement.units = 0;
+    instrument.minPriceIncrement.nano  = 10000000;
 
     instrumentsMap[RUBLE_UID] = instrument;
 
@@ -285,20 +289,26 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     Instrument  instrument2;
     Instrument  instrument3;
 
-    instrument1.ticker         = "RUBLE";
-    instrument1.name           = "Ruble";
-    instrument1.lot            = 1;
-    instrument1.pricePrecision = 2;
+    instrument1.ticker                  = "RUBLE";
+    instrument1.name                    = "Ruble";
+    instrument1.lot                     = 1;
+    instrument1.pricePrecision          = 2;
+    instrument1.minPriceIncrement.units = 0;
+    instrument1.minPriceIncrement.nano  = 10000000;
 
-    instrument2.ticker         = "ABBA";
-    instrument2.name           = "Abstract Basics";
-    instrument2.lot            = 5;
-    instrument2.pricePrecision = 1;
+    instrument2.ticker                  = "ABBA";
+    instrument2.name                    = "Abstract Basics";
+    instrument2.lot                     = 5;
+    instrument2.pricePrecision          = 1;
+    instrument2.minPriceIncrement.units = 0;
+    instrument2.minPriceIncrement.nano  = 100000000;
 
-    instrument3.ticker         = "BASE";
-    instrument3.name           = "Basketball enhancement";
-    instrument3.lot            = 10;
-    instrument3.pricePrecision = 2;
+    instrument3.ticker                  = "BASE";
+    instrument3.name                    = "Basketball enhancement";
+    instrument3.lot                     = 10;
+    instrument3.pricePrecision          = 2;
+    instrument3.minPriceIncrement.units = 0;
+    instrument3.minPriceIncrement.nano  = 10000000;
 
     instrumentsMap[RUBLE_UID] = instrument1;
     instrumentsMap["aaaaa"]   = instrument2;

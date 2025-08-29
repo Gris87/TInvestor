@@ -42,9 +42,12 @@ protected:
     {
         const QString instrumentsStr =
             "{"
-            "    \"aaaaa\": {\"ticker\": \"BANA\", \"name\": \"Banana\",       \"lot\": 1,  \"pricePrecision\": 2},"
-            "    \"bbbbb\": {\"ticker\": \"BODO\", \"name\": \"BODO NE BODO\", \"lot\": 5,  \"pricePrecision\": 3},"
-            "    \"ccccc\": {\"ticker\": \"ZARA\", \"name\": \"Zaraza\",       \"lot\": 10, \"pricePrecision\": 4}"
+            "    \"aaaaa\": {\"ticker\": \"BANA\", \"name\": \"Banana\",       \"lot\": 1,  \"pricePrecision\": 2, "
+            "\"minPriceIncrement\": {\"units\": 0, \"nano\": 100000000}},"
+            "    \"bbbbb\": {\"ticker\": \"BODO\", \"name\": \"BODO NE BODO\", \"lot\": 5,  \"pricePrecision\": 3, "
+            "\"minPriceIncrement\": {\"units\": 0, \"nano\": 1000000}},"
+            "    \"ccccc\": {\"ticker\": \"ZARA\", \"name\": \"Zaraza\",       \"lot\": 10, \"pricePrecision\": 4, "
+            "\"minPriceIncrement\": {\"units\": 0, \"nano\": 500000}}"
             "}";
 
         testInstruments = instrumentsStr.toUtf8();
@@ -99,19 +102,25 @@ TEST_F(Test_InstrumentsDatabase, Test_readInstruments)
     instruments = database->readInstruments();
 
     // clang-format off
-    ASSERT_EQ(instruments.size(),                  3);
-    ASSERT_EQ(instruments["aaaaa"].ticker,         "BANA");
-    ASSERT_EQ(instruments["aaaaa"].name,           "Banana");
-    ASSERT_EQ(instruments["aaaaa"].lot,            1);
-    ASSERT_EQ(instruments["aaaaa"].pricePrecision, 2);
-    ASSERT_EQ(instruments["bbbbb"].ticker,         "BODO");
-    ASSERT_EQ(instruments["bbbbb"].name,           "BODO NE BODO");
-    ASSERT_EQ(instruments["bbbbb"].lot,            5);
-    ASSERT_EQ(instruments["bbbbb"].pricePrecision, 3);
-    ASSERT_EQ(instruments["ccccc"].ticker,         "ZARA");
-    ASSERT_EQ(instruments["ccccc"].name,           "Zaraza");
-    ASSERT_EQ(instruments["ccccc"].lot,            10);
-    ASSERT_EQ(instruments["ccccc"].pricePrecision, 4);
+    ASSERT_EQ(instruments.size(),                           3);
+    ASSERT_EQ(instruments["aaaaa"].ticker,                  "BANA");
+    ASSERT_EQ(instruments["aaaaa"].name,                    "Banana");
+    ASSERT_EQ(instruments["aaaaa"].lot,                     1);
+    ASSERT_EQ(instruments["aaaaa"].pricePrecision,          2);
+    ASSERT_EQ(instruments["aaaaa"].minPriceIncrement.units, 0);
+    ASSERT_EQ(instruments["aaaaa"].minPriceIncrement.nano,  100000000);
+    ASSERT_EQ(instruments["bbbbb"].ticker,                  "BODO");
+    ASSERT_EQ(instruments["bbbbb"].name,                    "BODO NE BODO");
+    ASSERT_EQ(instruments["bbbbb"].lot,                     5);
+    ASSERT_EQ(instruments["bbbbb"].pricePrecision,          3);
+    ASSERT_EQ(instruments["bbbbb"].minPriceIncrement.units, 0);
+    ASSERT_EQ(instruments["bbbbb"].minPriceIncrement.nano,  1000000);
+    ASSERT_EQ(instruments["ccccc"].ticker,                  "ZARA");
+    ASSERT_EQ(instruments["ccccc"].name,                    "Zaraza");
+    ASSERT_EQ(instruments["ccccc"].lot,                     10);
+    ASSERT_EQ(instruments["ccccc"].pricePrecision,          4);
+    ASSERT_EQ(instruments["ccccc"].minPriceIncrement.units, 0);
+    ASSERT_EQ(instruments["ccccc"].minPriceIncrement.nano,  500000);
     // clang-format on
 }
 
@@ -125,27 +134,33 @@ TEST_F(Test_InstrumentsDatabase, Test_writeInstruments)
     Instrument instrument2;
     Instrument instrument3;
 
-    instrument1.ticker         = "BANA";
-    instrument1.name           = "Banana";
-    instrument1.lot            = 1;
-    instrument1.pricePrecision = 2;
+    instrument1.ticker                  = "BANA";
+    instrument1.name                    = "Banana";
+    instrument1.lot                     = 1;
+    instrument1.pricePrecision          = 2;
+    instrument1.minPriceIncrement.units = 0;
+    instrument1.minPriceIncrement.nano  = 100000000;
 
-    instrument2.ticker         = "BODO";
-    instrument2.name           = "BODO NE BODO";
-    instrument2.lot            = 5;
-    instrument2.pricePrecision = 3;
+    instrument2.ticker                  = "BODO";
+    instrument2.name                    = "BODO NE BODO";
+    instrument2.lot                     = 5;
+    instrument2.pricePrecision          = 3;
+    instrument2.minPriceIncrement.units = 0;
+    instrument2.minPriceIncrement.nano  = 1000000;
 
-    instrument3.ticker         = "ZARA";
-    instrument3.name           = "Zaraza";
-    instrument3.lot            = 10;
-    instrument3.pricePrecision = 4;
+    instrument3.ticker                  = "ZARA";
+    instrument3.name                    = "Zaraza";
+    instrument3.lot                     = 10;
+    instrument3.pricePrecision          = 4;
+    instrument3.minPriceIncrement.units = 0;
+    instrument3.minPriceIncrement.nano  = 500000;
 
     instruments["aaaaa"] = instrument1;
     instruments["bbbbb"] = instrument2;
     instruments["ccccc"] = instrument3;
 
     const QString instrumentsStr =
-        R"({"aaaaa":{"lot":1,"name":"Banana","pricePrecision":2,"ticker":"BANA"},"bbbbb":{"lot":5,"name":"BODO NE BODO","pricePrecision":3,"ticker":"BODO"},"ccccc":{"lot":10,"name":"Zaraza","pricePrecision":4,"ticker":"ZARA"}})";
+        R"({"aaaaa":{"lot":1,"minPriceIncrement":{"nano":100000000,"units":0},"name":"Banana","pricePrecision":2,"ticker":"BANA"},"bbbbb":{"lot":5,"minPriceIncrement":{"nano":1000000,"units":0},"name":"BODO NE BODO","pricePrecision":3,"ticker":"BODO"},"ccccc":{"lot":10,"minPriceIncrement":{"nano":500000,"units":0},"name":"Zaraza","pricePrecision":4,"ticker":"ZARA"}})";
     const QByteArray instrumentsBytes = instrumentsStr.toUtf8();
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeInstruments
