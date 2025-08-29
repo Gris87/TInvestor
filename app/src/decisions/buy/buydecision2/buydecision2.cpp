@@ -6,7 +6,10 @@
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
-constexpr int    MINUTES_TO_DOUBLE_CHECK = 5;
+constexpr int    MINUTES_TO_DOUBLE_CHECK = 3;
+constexpr int    HOURS_TO_TRIPLE_CHECK   = 3;
+constexpr int    STEP_FOR_TRIPLE_CHECK   = 60;
+constexpr float  TRIPLE_MINIMUM_COEF     = 2.0f;
 constexpr float  HUNDRED_PERCENT         = 100.0f;
 constexpr qint64 MS_IN_SECOND            = 1000LL;
 constexpr qint64 ONE_MINUTE              = 60LL * MS_IN_SECOND;
@@ -52,10 +55,11 @@ QString BuyDecision2::makeDecision(
 
     if (buyConfig->isEnabled())
     {
-        const float priceFall    = -buyConfig->getPriceFall();
-        const float loseYield    = buyConfig->getLoseYield();
-        const int   duration     = buyConfig->getDuration();
-        const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
+        const float priceFall          = -buyConfig->getPriceFall();
+        const float loseYield          = buyConfig->getLoseYield();
+        const int   duration           = buyConfig->getDuration();
+        const float tripleMinimumPrice = price / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
+        const float maximumPrice       = price / (1 + (priceFall / HUNDRED_PERCENT));
 
         const StockData* stockData = stock->data.constData();
 
@@ -95,36 +99,54 @@ QString BuyDecision2::makeDecision(
 
                     if (good)
                     {
-                        const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
+                        int j         = i - STEP_FOR_TRIPLE_CHECK;
+                        int hoursLeft = HOURS_TO_TRIPLE_CHECK;
 
-                        for (j = dataIndex - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+                        while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
                         {
-                            const float prevPrice2 = stockData[j].price;
-
-                            if (prevPrice2 >= maximumPrice)
+                            if (stockData[j].price < tripleMinimumPrice)
                             {
+                                good = false;
+
                                 break;
                             }
 
-                            if (prevPrice2 <= minimumPrice)
-                            {
-                                const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-                                const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                            j -= STEP_FOR_TRIPLE_CHECK;
+                            --hoursLeft;
+                        }
 
-                                return QObject::tr(
-                                           "Decided to buy because the price fall to %1 from %2 at %3 and lost "
-                                           "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8"
-                                )
-                                    .arg(
-                                        QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                        QString::number(lostYield, 'f', 2) + "%",
-                                        QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(stockData[j].timestamp).toString(DATETIME_FORMAT),
-                                        QString::number(duration),
-                                        QString::number(fall, 'f', 2) + "%"
-                                    );
+                        if (good)
+                        {
+                            const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
+
+                            for (j = dataIndex - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+                            {
+                                const float prevPrice2 = stockData[j].price;
+
+                                if (prevPrice2 >= maximumPrice)
+                                {
+                                    break;
+                                }
+
+                                if (prevPrice2 <= minimumPrice)
+                                {
+                                    const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                                    const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                                    return QObject::
+                                        tr("Decided to buy because the price fall to %1 from %2 at %3 and lost "
+                                           "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8")
+                                            .arg(
+                                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                                QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                                QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                                                QString::number(lostYield, 'f', 2) + "%",
+                                                QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                                QDateTime::fromMSecsSinceEpoch(stockData[j].timestamp).toString(DATETIME_FORMAT),
+                                                QString::number(duration),
+                                                QString::number(fall, 'f', 2) + "%"
+                                            );
+                                }
                             }
                         }
                     }
@@ -169,38 +191,57 @@ QString BuyDecision2::makeDecision(
 
                     if (good)
                     {
-                        const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
+                        int j         = stock->data.size() - 1;
+                        int hoursLeft = HOURS_TO_TRIPLE_CHECK;
 
-                        for (j = stock->operational.detailedData.size() - 2; j >= 0 && !parentThread->isInterruptionRequested();
-                             --j)
+                        while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
                         {
-                            const float prevPrice2 = stockOperationalData[j].price;
-
-                            if (prevPrice2 >= maximumPrice)
+                            if (stockData[j].price < tripleMinimumPrice)
                             {
+                                good = false;
+
                                 break;
                             }
 
-                            if (prevPrice2 <= minimumPrice)
-                            {
-                                const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-                                const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                            j -= STEP_FOR_TRIPLE_CHECK;
+                            --hoursLeft;
+                        }
 
-                                return QObject::tr(
-                                           "Decided to buy because the price fall to %1 from %2 at %3 and lost "
-                                           "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8"
-                                )
-                                    .arg(
-                                        QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                        QString::number(lostYield, 'f', 2) + "%",
-                                        QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(stockOperationalData[j].timestamp)
-                                            .toString(DATETIME_FORMAT),
-                                        QString::number(duration),
-                                        QString::number(fall, 'f', 2) + "%"
-                                    );
+                        if (good)
+                        {
+                            const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
+
+                            for (j = stock->operational.detailedData.size() - 2;
+                                 j >= 0 && !parentThread->isInterruptionRequested();
+                                 --j)
+                            {
+                                const float prevPrice2 = stockOperationalData[j].price;
+
+                                if (prevPrice2 >= maximumPrice)
+                                {
+                                    break;
+                                }
+
+                                if (prevPrice2 <= minimumPrice)
+                                {
+                                    const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                                    const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                                    return QObject::
+                                        tr("Decided to buy because the price fall to %1 from %2 at %3 and lost "
+                                           "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8")
+                                            .arg(
+                                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                                QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                                QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                                                QString::number(lostYield, 'f', 2) + "%",
+                                                QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                                QDateTime::fromMSecsSinceEpoch(stockOperationalData[j].timestamp)
+                                                    .toString(DATETIME_FORMAT),
+                                                QString::number(duration),
+                                                QString::number(fall, 'f', 2) + "%"
+                                            );
+                                }
                             }
                         }
                     }
@@ -239,36 +280,54 @@ QString BuyDecision2::makeDecision(
 
                     if (good)
                     {
-                        const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
+                        int j         = i - STEP_FOR_TRIPLE_CHECK;
+                        int hoursLeft = HOURS_TO_TRIPLE_CHECK;
 
-                        for (j = stock->data.size() - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+                        while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
                         {
-                            const float prevPrice2 = stockData[j].price;
-
-                            if (prevPrice2 >= maximumPrice)
+                            if (stockData[j].price < tripleMinimumPrice)
                             {
+                                good = false;
+
                                 break;
                             }
 
-                            if (prevPrice2 <= minimumPrice)
-                            {
-                                const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-                                const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                            j -= STEP_FOR_TRIPLE_CHECK;
+                            --hoursLeft;
+                        }
 
-                                return QObject::tr(
-                                           "Decided to buy because the price fall to %1 from %2 at %3 and lost "
-                                           "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8"
-                                )
-                                    .arg(
-                                        QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                        QString::number(lostYield, 'f', 2) + "%",
-                                        QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(stockData[j].timestamp).toString(DATETIME_FORMAT),
-                                        QString::number(duration),
-                                        QString::number(fall, 'f', 2) + "%"
-                                    );
+                        if (good)
+                        {
+                            const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
+
+                            for (j = stock->data.size() - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+                            {
+                                const float prevPrice2 = stockData[j].price;
+
+                                if (prevPrice2 >= maximumPrice)
+                                {
+                                    break;
+                                }
+
+                                if (prevPrice2 <= minimumPrice)
+                                {
+                                    const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                                    const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                                    return QObject::
+                                        tr("Decided to buy because the price fall to %1 from %2 at %3 and lost "
+                                           "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8")
+                                            .arg(
+                                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                                QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                                QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                                                QString::number(lostYield, 'f', 2) + "%",
+                                                QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                                QDateTime::fromMSecsSinceEpoch(stockData[j].timestamp).toString(DATETIME_FORMAT),
+                                                QString::number(duration),
+                                                QString::number(fall, 'f', 2) + "%"
+                                            );
+                                }
                             }
                         }
                     }

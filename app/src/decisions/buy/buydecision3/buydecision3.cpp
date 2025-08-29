@@ -7,7 +7,7 @@
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
 constexpr int    STEP                    = 60;
-constexpr int    MINUTES_TO_DOUBLE_CHECK = 5;
+constexpr int    MINUTES_TO_DOUBLE_CHECK = 3;
 constexpr float  HUNDRED_PERCENT         = 100.0f;
 constexpr qint64 MS_IN_SECOND            = 1000LL;
 constexpr qint64 ONE_MINUTE              = 60LL * MS_IN_SECOND;

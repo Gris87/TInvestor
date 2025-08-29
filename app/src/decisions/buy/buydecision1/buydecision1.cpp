@@ -6,7 +6,10 @@
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
-constexpr int    MINUTES_TO_DOUBLE_CHECK = 5;
+constexpr int    MINUTES_TO_DOUBLE_CHECK = 3;
+constexpr int    HOURS_TO_TRIPLE_CHECK   = 3;
+constexpr int    STEP_FOR_TRIPLE_CHECK   = 60;
+constexpr float  TRIPLE_MINIMUM_COEF     = 2.0f;
 constexpr float  HUNDRED_PERCENT         = 100.0f;
 constexpr qint64 MS_IN_SECOND            = 1000LL;
 constexpr qint64 ONE_MINUTE              = 60LL * MS_IN_SECOND;
@@ -52,9 +55,10 @@ QString BuyDecision1::makeDecision(
 
     if (buyConfig->isEnabled())
     {
-        const float priceFall    = -buyConfig->getPriceFall();
-        const int   duration     = buyConfig->getDuration();
-        const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
+        const float priceFall          = -buyConfig->getPriceFall();
+        const int   duration           = buyConfig->getDuration();
+        const float tripleMinimumPrice = price / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
+        const float maximumPrice       = price / (1 + (priceFall / HUNDRED_PERCENT));
 
         const StockData* stockData = stock->data.constData();
 
@@ -94,19 +98,38 @@ QString BuyDecision1::makeDecision(
 
                     if (good)
                     {
-                        const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                        int j         = i - STEP_FOR_TRIPLE_CHECK;
+                        int hoursLeft = HOURS_TO_TRIPLE_CHECK;
 
-                        return QObject::tr(
-                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
-                                   "fall is %5"
-                        )
-                            .arg(
-                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                QString::number(duration),
-                                QString::number(fall, 'f', 2) + "%"
-                            );
+                        while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
+                        {
+                            if (stockData[j].price < tripleMinimumPrice)
+                            {
+                                good = false;
+
+                                break;
+                            }
+
+                            j -= STEP_FOR_TRIPLE_CHECK;
+                            --hoursLeft;
+                        }
+
+                        if (good)
+                        {
+                            const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                            return QObject::tr(
+                                       "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
+                                       "fall is %5"
+                            )
+                                .arg(
+                                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                    QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                    QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                                    QString::number(duration),
+                                    QString::number(fall, 'f', 2) + "%"
+                                );
+                        }
                     }
                 }
             }
@@ -149,19 +172,38 @@ QString BuyDecision1::makeDecision(
 
                     if (good)
                     {
-                        const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                        int j         = stock->data.size() - 1;
+                        int hoursLeft = HOURS_TO_TRIPLE_CHECK;
 
-                        return QObject::tr(
-                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
-                                   "fall is %5"
-                        )
-                            .arg(
-                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                QString::number(duration),
-                                QString::number(fall, 'f', 2) + "%"
-                            );
+                        while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
+                        {
+                            if (stockData[j].price < tripleMinimumPrice)
+                            {
+                                good = false;
+
+                                break;
+                            }
+
+                            j -= STEP_FOR_TRIPLE_CHECK;
+                            --hoursLeft;
+                        }
+
+                        if (good)
+                        {
+                            const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                            return QObject::tr(
+                                       "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
+                                       "fall is %5"
+                            )
+                                .arg(
+                                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                    QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                    QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                                    QString::number(duration),
+                                    QString::number(fall, 'f', 2) + "%"
+                                );
+                        }
                     }
                 }
             }
@@ -198,19 +240,38 @@ QString BuyDecision1::makeDecision(
 
                     if (good)
                     {
-                        const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                        int j         = i - STEP_FOR_TRIPLE_CHECK;
+                        int hoursLeft = HOURS_TO_TRIPLE_CHECK;
 
-                        return QObject::tr(
-                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
-                                   "fall is %5"
-                        )
-                            .arg(
-                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                QString::number(duration),
-                                QString::number(fall, 'f', 2) + "%"
-                            );
+                        while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
+                        {
+                            if (stockData[j].price < tripleMinimumPrice)
+                            {
+                                good = false;
+
+                                break;
+                            }
+
+                            j -= STEP_FOR_TRIPLE_CHECK;
+                            --hoursLeft;
+                        }
+
+                        if (good)
+                        {
+                            const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                            return QObject::tr(
+                                       "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
+                                       "fall is %5"
+                            )
+                                .arg(
+                                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                    QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                    QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                                    QString::number(duration),
+                                    QString::number(fall, 'f', 2) + "%"
+                                );
+                        }
                     }
                 }
             }
