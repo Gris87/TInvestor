@@ -875,7 +875,15 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
 {
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {
-        ITradingThread* tradingThread = tradingThreads.value(it.key());
+        const QString&     instrumentId = it.key();
+        const TradingInfo& tradingInfo  = it.value();
+
+        if (tradingInfo.expectedCost == 0)
+        {
+            mAutoPilotDecisionMakerThread->notifyAboutSell(instrumentId);
+        }
+
+        ITradingThread* tradingThread = tradingThreads.value(instrumentId);
 
         if (tradingThread == nullptr)
         {
@@ -885,9 +893,9 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
                 mGrpcClient,
                 mLogsThread,
                 mAutoPilotAccountId,
-                it.key(),
-                it.value().expectedCost,
-                it.value().cause,
+                instrumentId,
+                tradingInfo.expectedCost,
+                tradingInfo.cause,
                 this
             );
 
@@ -895,12 +903,12 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
                 tradingThread, SIGNAL(tradingCompleted(const QString&)), this, SLOT(autoPilotTradingCompleted(const QString&))
             );
 
-            tradingThreads[it.key()] = tradingThread;
+            tradingThreads[instrumentId] = tradingThread;
             tradingThread->start();
         }
         else
         {
-            tradingThread->setExpectedCost(it.value().expectedCost, it.value().cause);
+            tradingThread->setExpectedCost(tradingInfo.expectedCost, tradingInfo.cause);
         }
     }
 }

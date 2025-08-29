@@ -27,6 +27,9 @@ public:
     [[nodiscard]]
     float lastPrice() const;
 
+    [[nodiscard]]
+    float lastOperationalPrice() const;
+
     StockMeta        meta;
     StockOperational operational;
     QList<StockData> data;

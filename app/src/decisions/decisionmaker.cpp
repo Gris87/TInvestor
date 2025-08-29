@@ -290,7 +290,7 @@ static void makeDecisionsForParallel(
         else
         {
             dataIndex = -1;
-            price     = stock->lastPrice();
+            price     = stock->lastOperationalPrice();
         }
 
         QString cause;

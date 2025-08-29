@@ -22,9 +22,10 @@ public:
     IAutoPilotDecisionMakerThread(const IAutoPilotDecisionMakerThread& another)            = delete;
     IAutoPilotDecisionMakerThread& operator=(const IAutoPilotDecisionMakerThread& another) = delete;
 
-    virtual void setAccountId(const QString& accountId) = 0;
-    virtual void setKeepMoney(int value)                = 0;
-    virtual void terminateThread()                      = 0;
+    virtual void setAccountId(const QString& accountId)       = 0;
+    virtual void setKeepMoney(int value)                      = 0;
+    virtual void notifyAboutSell(const QString& instrumentId) = 0;
+    virtual void terminateThread()                            = 0;
 
 signals:
     void tradeInstruments(const InstrumentsForTrading& instruments); // Instrument UID => TradingInfo

@@ -39,14 +39,8 @@ public:
     getOrderBook(QThread* parentThread, const QString& instrumentId, int depth)                                       = 0;
     virtual std::shared_ptr<tinkoff::PortfolioResponse> getPortfolio(QThread* parentThread, const QString& accountId) = 0;
     virtual std::shared_ptr<tinkoff::PositionsResponse> getPositions(QThread* parentThread, const QString& accountId) = 0;
-    virtual std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperations(
-        QThread*                parentThread,
-        const QString&          accountId,
-        qint64                  from,
-        qint64                  to,
-        const QString&          cursor,
-        tinkoff::OperationState state
-    ) = 0;
+    virtual std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
+    getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor) = 0;
     virtual std::shared_ptr<tinkoff::GetMaxLotsResponse>
     getMaxLots(QThread* parentThread, const QString& accountId, const QString& instrumentId, const Quotation& price) = 0;
     virtual std::shared_ptr<tinkoff::PostOrderResponse> postOrder(

@@ -1120,6 +1120,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
     ASSERT_EQ(mainWindow->tradingThreads["bbbbb"], tradingThreadMock2);
     // clang-format on
 
+    EXPECT_CALL(*autoPilotDecisionMakerThreadMock, notifyAboutSell(QString("aaaaa")));
     EXPECT_CALL(*tradingThreadMock1, setExpectedCost(DoubleEq(0.0), QString("Sell ASAP")));
 
     mainWindow->autoPilotTradeInstruments(instruments2);

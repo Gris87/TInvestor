@@ -271,9 +271,8 @@ void OperationsThread::requestOperations()
 
     while (true)
     {
-        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations = mGrpcClient->getOperations(
-            QThread::currentThread(), mAccountId, mLastRequestTimestamp, endTimestamp, cursor, tinkoff::OPERATION_STATE_EXECUTED
-        );
+        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
+            mGrpcClient->getOperations(QThread::currentThread(), mAccountId, mLastRequestTimestamp, endTimestamp, cursor);
 
         if (QThread::currentThread()->isInterruptionRequested() || tinkoffOperations == nullptr)
         {

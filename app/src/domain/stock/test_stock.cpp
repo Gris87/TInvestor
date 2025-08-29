@@ -178,4 +178,19 @@ TEST_F(Test_Stock, Test_lastPrice)
     ASSERT_NEAR(stock.lastPrice(), 5.0f, 0.0001f);
 }
 
+TEST_F(Test_Stock, Test_lastOperationalPrice)
+{
+    Stock stock;
+
+    ASSERT_NEAR(stock.lastOperationalPrice(), 0.0f, 0.0001f);
+
+    StockOperationalData stockData;
+
+    stockData.timestamp = 1;
+    stockData.price     = 2.0f;
+
+    stock.operational.detailedData << stockData;
+    ASSERT_NEAR(stock.lastOperationalPrice(), 2.0f, 0.0001f);
+}
+
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

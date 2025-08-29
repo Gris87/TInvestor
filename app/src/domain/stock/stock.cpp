@@ -60,3 +60,8 @@ float Stock::lastPrice() const
     return !operational.detailedData.isEmpty() ? operational.detailedData.constLast().price
                                                : (!data.isEmpty() ? data.constLast().price : 0);
 }
+
+float Stock::lastOperationalPrice() const
+{
+    return !operational.detailedData.isEmpty() ? operational.detailedData.constLast().price : 0;
+}

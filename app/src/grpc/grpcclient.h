@@ -99,14 +99,8 @@ public:
     getOrderBook(QThread* parentThread, const QString& instrumentId, int depth) override;
     std::shared_ptr<tinkoff::PortfolioResponse> getPortfolio(QThread* parentThread, const QString& accountId) override;
     std::shared_ptr<tinkoff::PositionsResponse> getPositions(QThread* parentThread, const QString& accountId) override;
-    std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperations(
-        QThread*                parentThread,
-        const QString&          accountId,
-        qint64                  from,
-        qint64                  to,
-        const QString&          cursor,
-        tinkoff::OperationState state
-    ) override;
+    std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
+    getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor) override;
     std::shared_ptr<tinkoff::GetMaxLotsResponse>
     getMaxLots(QThread* parentThread, const QString& accountId, const QString& instrumentId, const Quotation& price) override;
     std::shared_ptr<tinkoff::PostOrderResponse> postOrder(

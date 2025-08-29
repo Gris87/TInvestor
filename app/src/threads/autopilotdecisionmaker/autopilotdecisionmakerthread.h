@@ -33,6 +33,7 @@ public:
 
     void setAccountId(const QString& accountId) override;
     void setKeepMoney(int value) override;
+    void notifyAboutSell(const QString& instrumentId) override;
 
     [[nodiscard]]
     int keepMoney() const;
@@ -42,6 +43,7 @@ public:
 private:
     Portfolio       handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     InstrumentSells handleGetOperationsByCursorResponse(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations);
+    InstrumentSells mergeInstrumentSells(InstrumentSells instrumentsFromOperations);
 
     QReadWriteLock* mRwMutex;
     IStocksStorage* mStocksStorage;
@@ -50,4 +52,5 @@ private:
     IGrpcClient*    mGrpcClient;
     QString         mAccountId;
     int             mKeepMoney;
+    InstrumentSells mSellNotifications;
 };

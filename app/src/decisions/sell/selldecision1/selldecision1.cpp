@@ -4,7 +4,8 @@
 
 
 
-constexpr float HUNDRED_PERCENT = 100.0f;
+constexpr double INCREDIBLE_SELL_COEF = 3.0;
+constexpr float  HUNDRED_PERCENT      = 100.0f;
 
 
 
@@ -35,17 +36,22 @@ QString SellDecision1::makeDecision(
 
     if (sellConfig->isEnabled())
     {
-        const float yield      = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-        const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
+        const float coef = price / avgPrice;
 
-        if (yield >= yieldAbove)
+        if (coef < INCREDIBLE_SELL_COEF)
         {
-            return QObject::tr("Decided to sell because the price reached %1 with yield %2 from the price %3")
-                .arg(
-                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                    "+" + QString::number(yield, 'f', 2) + "%",
-                    QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
-                );
+            const float yield      = (coef * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+            const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
+
+            if (yield >= yieldAbove)
+            {
+                return QObject::tr("Decided to sell because the price reached %1 with yield %2 from the price %3")
+                    .arg(
+                        QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                        "+" + QString::number(yield, 'f', 2) + "%",
+                        QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
+                    );
+            }
         }
     }
 

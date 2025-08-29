@@ -26,7 +26,8 @@ AutoPilotDecisionMakerThread::AutoPilotDecisionMakerThread(
     mDecisionMaker(decisionMaker),
     mGrpcClient(grpcClient),
     mAccountId(),
-    mKeepMoney()
+    mKeepMoney(),
+    mSellNotifications()
 {
     qDebug() << "Create AutoPilotDecisionMakerThread";
 }
@@ -53,14 +54,8 @@ void AutoPilotDecisionMakerThread::run()
 
         const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
 
-        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations = mGrpcClient->getOperations(
-            QThread::currentThread(),
-            mAccountId,
-            timestamp - DATE_RANGE,
-            timestamp + ONE_DAY,
-            "",
-            tinkoff::OPERATION_STATE_UNSPECIFIED
-        );
+        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
+            mGrpcClient->getOperations(QThread::currentThread(), mAccountId, timestamp - DATE_RANGE, timestamp + ONE_DAY, "");
 
         if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOperations != nullptr)
         {
@@ -101,6 +96,13 @@ void AutoPilotDecisionMakerThread::setKeepMoney(int value)
     const QWriteLocker lock(mRwMutex);
 
     mKeepMoney = value;
+}
+
+void AutoPilotDecisionMakerThread::notifyAboutSell(const QString& instrumentId)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mSellNotifications[instrumentId] = QDateTime::currentMSecsSinceEpoch();
 }
 
 int AutoPilotDecisionMakerThread::keepMoney() const
@@ -174,5 +176,25 @@ AutoPilotDecisionMakerThread::handleGetOperationsByCursorResponse(const tinkoff:
         }
     }
 
-    return res;
+    return mergeInstrumentSells(res);
+}
+
+InstrumentSells AutoPilotDecisionMakerThread::mergeInstrumentSells(InstrumentSells instrumentsFromOperations)
+{
+    const QReadLocker lock(mRwMutex);
+
+    for (auto it = mSellNotifications.constBegin(), end = mSellNotifications.constEnd(); it != end; ++it)
+    {
+        const QString& instrumentId = it.key();
+        const qint64   timestamp    = it.value();
+
+        const qint64 timestampFromOperations = instrumentsFromOperations.value(instrumentId);
+
+        if (timestamp > timestampFromOperations)
+        {
+            instrumentsFromOperations[instrumentId] = timestamp;
+        }
+    }
+
+    return instrumentsFromOperations;
 }

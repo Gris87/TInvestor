@@ -487,7 +487,7 @@ static void getCandlesWithGrpc(
     endTimestamp   = (endTimestamp / ONE_MINUTE + 1) * ONE_MINUTE;
 
     QList<StockData> data;
-    data.resize((endTimestamp - startTimestamp) / ONE_MINUTE);
+    data.resizeForOverwrite((endTimestamp - startTimestamp) / ONE_MINUTE);
     StockData* dataArray = data.data();
 
     int lastIndex = data.size() - 1;
@@ -609,7 +609,7 @@ static void getCandlesWithHttp(
     endTimestamp   = (endTimestamp / ONE_MINUTE + 1) * ONE_MINUTE;
 
     QList<StockData> data;
-    data.resize((endTimestamp - startTimestamp) / ONE_MINUTE);
+    data.resizeForOverwrite((endTimestamp - startTimestamp) / ONE_MINUTE);
     StockData* dataArray = data.data();
 
     int indexOffset = 0;
@@ -768,6 +768,18 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, Stock** stocks, i
         }
 
         getCandlesWithGrpc(parentThread, stocksStorage, grpcClient, stock, startTimestamp, currentTimestamp);
+
+        if (!stock->data.isEmpty() && (stock->operational.detailedData.isEmpty() ||
+                                       stock->data.constLast().timestamp > stock->operational.detailedData.constLast().timestamp))
+        {
+            const StockData&     stockData = stock->data.constLast();
+            StockOperationalData stockOperationalData;
+
+            stockOperationalData.timestamp = stockData.timestamp;
+            stockOperationalData.price     = stockData.price;
+
+            stock->operational.detailedData.append(stockOperationalData);
+        }
 
         stock->writeUnlock();
 

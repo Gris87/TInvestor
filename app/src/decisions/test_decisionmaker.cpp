@@ -178,6 +178,18 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stockData2.price = 0.2f;
     stockData3.price = 0.3f;
 
+    StockOperationalData stockOperationalData1;
+    StockOperationalData stockOperationalData2;
+    StockOperationalData stockOperationalData3;
+
+    stockOperationalData1.timestamp = 1704110400000;
+    stockOperationalData2.timestamp = 1704110400000;
+    stockOperationalData3.timestamp = 1704110400000;
+
+    stockOperationalData1.price = 0.1f;
+    stockOperationalData2.price = 0.2f;
+    stockOperationalData3.price = 0.3f;
+
     stock1.meta.instrumentId        = "aaaaa";
     stock1.meta.instrumentTicker    = "ABBA";
     stock1.meta.instrumentName      = "Abstract Basics";
@@ -186,6 +198,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock1.meta.turnover            = 2000000;
     stock1.meta.pricePrecision      = 1;
     stock1.data << stockData1;
+    stock1.operational.detailedData << stockOperationalData1;
     stock2.meta.instrumentId        = "bbbbb";
     stock2.meta.instrumentTicker    = "BASE";
     stock2.meta.instrumentName      = "Basketball enhancement";
@@ -194,6 +207,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock2.meta.turnover            = 5000000;
     stock2.meta.pricePrecision      = 2;
     stock2.data << stockData2;
+    stock2.operational.detailedData << stockOperationalData2;
     stock3.meta.instrumentId        = "ccccc";
     stock3.meta.instrumentTicker    = "HNYA";
     stock3.meta.instrumentName      = "The best of the best";
@@ -202,6 +216,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock3.meta.turnover            = 9000000000;
     stock3.meta.pricePrecision      = 3;
     stock3.data << stockData3;
+    stock3.operational.detailedData << stockOperationalData3;
 
     stocks << &stock1 << &stock2 << &stock3;
 

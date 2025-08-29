@@ -361,9 +361,8 @@ static grpc::Status getOperationsAction(
     return rawGrpcClient->getOperations(service, context, req, resp.get());
 }
 
-std::shared_ptr<tinkoff::GetOperationsByCursorResponse> GrpcClient::getOperations(
-    QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor, tinkoff::OperationState state
-)
+std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
+GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor)
 {
     grpc::ClientContext                                           context;
     tinkoff::GetOperationsByCursorRequest                         req;
@@ -385,7 +384,7 @@ std::shared_ptr<tinkoff::GetOperationsByCursorResponse> GrpcClient::getOperation
     req.set_allocated_to(toTimestamp);
     req.set_cursor(cursor.toStdString());
     req.set_limit(OPERATIONS_LIMIT);
-    req.set_state(state);
+    req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
     req.set_without_trades(true);
 
     return repeatRequest(parentThread, getOperationsAction, mOperationsService, &context, req, resp, false);
