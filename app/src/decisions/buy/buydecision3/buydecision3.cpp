@@ -41,6 +41,17 @@ QString BuyDecision3::makeDecision(
     float /*commission*/
 )
 {
+    Q_ASSERT_X(parentThread != nullptr, __FUNCTION__, "parentThread is invalid");
+    Q_ASSERT_X(config != nullptr, __FUNCTION__, "config is invalid");
+    Q_ASSERT_X(limitTimestamp >= 0, __FUNCTION__, "limitTimestamp is invalid");
+    Q_ASSERT_X(stock != nullptr, __FUNCTION__, "stock is invalid");
+    Q_ASSERT_X(
+        (dateRange && dataIndex >= 0 && dataIndex < stock->data.size()) || (!dateRange && dataIndex == -1),
+        __FUNCTION__,
+        "dateRange and dataIndex are invalid"
+    );
+    Q_ASSERT_X(price > 0, __FUNCTION__, "price is invalid");
+
     IBuyDecision3Config* buyConfig = config->getBuyDecision3Config();
 
     if (buyConfig->isEnabled())

@@ -64,6 +64,19 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     StockOperationalData stockOperationalData4;
     StockOperationalData stockOperationalData5;
 
+    stockData1.timestamp = 1704056400000;
+    stockData1.price     = 101.0f;
+    stockData2.timestamp = 1704056460000;
+    stockData2.price     = 101.0f;
+    stockData3.timestamp = 1704056520000;
+    stockData3.price     = 101.0f;
+    stockData4.timestamp = 1704056580000;
+    stockData4.price     = 101.0f;
+    stockData5.timestamp = 1704056640000;
+    stockData5.price     = 101.0f;
+    stock.data.clear();
+    stock.data << stockData1 << stockData2 << stockData3 << stockData4 << stockData5;
+
     EXPECT_CALL(configMock, getBuyDecision2Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(false));
 

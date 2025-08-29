@@ -295,16 +295,39 @@ static void makeDecisionsForParallel(
 
         QString cause;
 
-        if (avgPrice < 0)
+        if (price > 0)
         {
-            if (money >= price)
+            if (avgPrice < 0)
             {
-                const qint64 limitTimestamp = instrumentSells->value(stock->meta.instrumentId, 0);
-
-                for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
+                if (money >= price)
                 {
-                    cause = buyDecisionsArray[j]->makeDecision(
-                        parentThread, decisionConfig, limitTimestamp, stock, dateRange, dataIndex, price, avgPrice, commission
+                    const qint64 limitTimestamp = instrumentSells->value(stock->meta.instrumentId, 0);
+
+                    for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
+                    {
+                        cause = buyDecisionsArray[j]->makeDecision(
+                            parentThread, decisionConfig, limitTimestamp, stock, dateRange, dataIndex, price, avgPrice, commission
+                        );
+                    }
+
+                    if (cause != "")
+                    {
+                        TradingInfo tradingInfo;
+
+                        tradingInfo.price        = price;
+                        tradingInfo.expectedCost = stock->meta.turnover;
+                        tradingInfo.cause        = cause;
+
+                        buyResultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
+                    }
+                }
+            }
+            else
+            {
+                for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
+                {
+                    cause = sellDecisionsArray[j]->makeDecision(
+                        parentThread, decisionConfig, 0, stock, dateRange, dataIndex, price, avgPrice, commission
                     );
                 }
 
@@ -313,31 +336,11 @@ static void makeDecisionsForParallel(
                     TradingInfo tradingInfo;
 
                     tradingInfo.price        = price;
-                    tradingInfo.expectedCost = stock->meta.turnover;
+                    tradingInfo.expectedCost = 0.0;
                     tradingInfo.cause        = cause;
 
-                    buyResultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
+                    sellResultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
                 }
-            }
-        }
-        else
-        {
-            for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
-            {
-                cause = sellDecisionsArray[j]->makeDecision(
-                    parentThread, decisionConfig, 0, stock, dateRange, dataIndex, price, avgPrice, commission
-                );
-            }
-
-            if (cause != "")
-            {
-                TradingInfo tradingInfo;
-
-                tradingInfo.price        = price;
-                tradingInfo.expectedCost = 0.0;
-                tradingInfo.cause        = cause;
-
-                sellResultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
             }
         }
 

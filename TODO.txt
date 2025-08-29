@@ -1,13 +1,13 @@
-Infinity yield percent? Huge yield? Current price in portfolio is zero. Add delay before requesting?
-nan price in operations?
 Limit trading buy different percents in non-working hours
+Store min price increment for instruments
+Do not sell ASAP if you want to get rich
+nan price in operations?
 Periodical operations clean refresh?
 Improve coverage
 Create release
 
 Fight for the price to sell???
 Split order into chunks
-Do not sell ASAP if you want to get rich
 
 =======================================
 For the best times

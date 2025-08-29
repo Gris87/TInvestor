@@ -64,12 +64,38 @@ TEST_F(Test_SellDecision2, Test_makeDecision)
     StockOperationalData stockOperationalData4;
     StockOperationalData stockOperationalData5;
 
+    stockData1.timestamp = 1704056400000;
+    stockData1.price     = 101.0f;
+    stockData2.timestamp = 1704056460000;
+    stockData2.price     = 101.0f;
+    stockData3.timestamp = 1704056520000;
+    stockData3.price     = 101.0f;
+    stockData4.timestamp = 1704056580000;
+    stockData4.price     = 101.0f;
+    stockData5.timestamp = 1704056640000;
+    stockData5.price     = 120.0f;
+    stock.data.clear();
+    stock.data << stockData1 << stockData2 << stockData3 << stockData4 << stockData5;
+
     EXPECT_CALL(configMock, getSellDecision2Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(false));
 
     QString cause = sellDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 4, 100.0f, 100.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
+
+    stockData1.timestamp = 1704056400000;
+    stockData1.price     = 101.0f;
+    stockData2.timestamp = 1704056460000;
+    stockData2.price     = 101.0f;
+    stockData3.timestamp = 1704056520000;
+    stockData3.price     = 101.0f;
+    stockData4.timestamp = 1704056580000;
+    stockData4.price     = 101.0f;
+    stockData5.timestamp = 1704056640000;
+    stockData5.price     = 120.0f;
+    stock.data.clear();
+    stock.data << stockData1 << stockData2 << stockData3 << stockData4 << stockData5;
 
     EXPECT_CALL(configMock, getSellDecision2Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
