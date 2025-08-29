@@ -1,6 +1,5 @@
 Limit trading buy different percents in non-working hours
 Do not sell ASAP if you want to get rich
-Invalid argument on requesting state for deleted order
 nan price in operations?
 Periodical operations clean refresh?
 Improve coverage

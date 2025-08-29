@@ -465,23 +465,15 @@ void TradingThread::cancelOrder()
         {
             informAboutOrderState(*tinkoffOrder);
 
-            if (tinkoffOrder->execution_report_status() == tinkoff::EXECUTION_REPORT_STATUS_FILL)
-            {
-                mOrderId = "";
-            }
-            else
+            if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_FILL)
             {
                 mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Order cancelled"));
 
-                const std::shared_ptr<tinkoff::CancelOrderResponse> tinkoffCancel =
-                    mGrpcClient->cancelOrder(QThread::currentThread(), mAccountId, mOrderId);
-
-                if (!QThread::currentThread()->isInterruptionRequested() && tinkoffCancel != nullptr)
-                {
-                    mOrderId = "";
-                }
+                mGrpcClient->cancelOrder(QThread::currentThread(), mAccountId, mOrderId);
             }
         }
+
+        mOrderId = "";
     }
 }
 

@@ -490,7 +490,7 @@ GrpcClient::getOrderState(QThread* parentThread, const QString& accountId, const
     req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
     req.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
 
-    return repeatRequest(parentThread, getOrderStateAction, mOrdersService, &context, req, resp, false);
+    return repeatRequest(parentThread, getOrderStateAction, mOrdersService, &context, req, resp, true);
 }
 
 static grpc::Status cancelOrderAction(
@@ -517,7 +517,7 @@ GrpcClient::cancelOrder(QThread* parentThread, const QString& accountId, const Q
     req.set_order_id(orderId.toStdString());
     req.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
 
-    return repeatRequest(parentThread, cancelOrderAction, mOrdersService, &context, req, resp, false);
+    return repeatRequest(parentThread, cancelOrderAction, mOrdersService, &context, req, resp, true);
 }
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStreamForLastPrice(const QStringList& instrumentIds)

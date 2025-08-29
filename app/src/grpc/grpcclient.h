@@ -54,7 +54,8 @@ public:
                 const grpc::StatusCode errorCode = status.error_code();
 
                 if (errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNAVAILABLE &&
-                    errorCode != grpc::StatusCode::CANCELLED)
+                    errorCode != grpc::StatusCode::CANCELLED &&
+                    (!ignoreInvalidArg || errorCode != grpc::StatusCode::INVALID_ARGUMENT))
                 {
                     qWarning() << "GRPC error with code:" << errorCode << GRPC_STATUS_CODE_TO_STRING[errorCode]
                                << "message:" << QString::fromStdString(status.error_message())
