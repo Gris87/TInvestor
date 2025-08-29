@@ -103,7 +103,8 @@
 
 
 
-const char* const VERSION = "v1.0.1";
+const char* const VERSION  = "v1.0.1";
+const char* const GIT_HASH = "Dev build";
 
 constexpr int    DETECT_TRAY_ATTEMPTS = 5;
 constexpr qint64 MS_IN_SECOND         = 1000LL;
@@ -554,7 +555,7 @@ int main(int argc, char* argv[])
     {
         QTextStream out(stdout);
 
-        out << VERSION << Qt::endl;
+        out << VERSION << "-" << GIT_HASH << Qt::endl;
 
         return 0;
     }
