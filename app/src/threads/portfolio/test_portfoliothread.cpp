@@ -152,6 +152,7 @@ TEST_F(Test_PortfolioThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("aaaaa"))).WillOnce(Return(portfolioStream));
     EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(portfolioStreamResponse));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("aaaaa"))).WillOnce(Return(portfolioResponse2));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, readLock());

@@ -299,10 +299,14 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
+    ASSERT_EQ(result["ccccc"].asap,           true);
+    ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 45000.00286, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
     ASSERT_EQ(result.contains("bbbbb"),       true);
+    ASSERT_EQ(result["bbbbb"].asap,           false);
+    ASSERT_NEAR(result["bbbbb"].avgPrice,     203.0f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].price,        0.2f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");
@@ -373,10 +377,14 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
+    ASSERT_EQ(result["ccccc"].asap,           true);
+    ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 69990.00445, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
     ASSERT_EQ(result.contains("bbbbb"),       true);
+    ASSERT_EQ(result["bbbbb"].asap,           false);
+    ASSERT_NEAR(result["bbbbb"].avgPrice,     203.0f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].price,        0.2f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");
@@ -425,10 +433,14 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
+    ASSERT_EQ(result["ccccc"].asap,           true);
+    ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 99960.00635, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
     ASSERT_EQ(result.contains("bbbbb"),       true);
+    ASSERT_EQ(result["bbbbb"].asap,           false);
+    ASSERT_NEAR(result["bbbbb"].avgPrice,     203.0f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].price,        0.2f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");
@@ -466,6 +478,8 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     // clang-format off
     ASSERT_EQ(result.size(),                  1);
     ASSERT_EQ(result.contains("bbbbb"),       true);
+    ASSERT_EQ(result["bbbbb"].asap,           false);
+    ASSERT_NEAR(result["bbbbb"].avgPrice,     203.0f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].price,        0.2f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");
@@ -514,10 +528,14 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
+    ASSERT_EQ(result["ccccc"].asap,           true);
+    ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 99960.00635, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
     ASSERT_EQ(result.contains("bbbbb"),       true);
+    ASSERT_EQ(result["bbbbb"].asap,           false);
+    ASSERT_NEAR(result["bbbbb"].avgPrice,     203.0f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].price,        0.2f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");

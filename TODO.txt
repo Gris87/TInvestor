@@ -1,10 +1,11 @@
-Do not sell ASAP if you want to get rich
 nan price in operations?
 Periodical operations clean refresh?
 Limit trading buy different percents in non-working hours
 Improve coverage
 Create release
 
+Change best config search algorithm
+Different defaults based on commission
 Do not buy on extremal price raise and fall
 Split order into chunks
 

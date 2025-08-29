@@ -4,6 +4,7 @@
 
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
 
@@ -41,6 +42,7 @@ TEST_F(Test_TradingThreadFactory, Test_newInstance)
     const InSequence seq;
 
     StrictMock<InstrumentsStorageMock> instrumentsStorageMock;
+    StrictMock<UserStorageMock>        userStorageMock;
     StrictMock<TimeUtilsMock>          timeUtilsMock;
     StrictMock<GrpcClientMock>         grpcClientMock;
     StrictMock<LogsThreadMock>         logsThreadMock;
@@ -48,7 +50,18 @@ TEST_F(Test_TradingThreadFactory, Test_newInstance)
     EXPECT_CALL(logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("bbbbb"), QString("But why")));
 
     const ITradingThread* thread = factory->newInstance(
-        &instrumentsStorageMock, &timeUtilsMock, &grpcClientMock, &logsThreadMock, "aaaaa", "bbbbb", 1000.0, "But why", nullptr
+        &instrumentsStorageMock,
+        &userStorageMock,
+        &timeUtilsMock,
+        &grpcClientMock,
+        &logsThreadMock,
+        "aaaaa",
+        "bbbbb",
+        true,
+        10.0f,
+        1000.0,
+        "But why",
+        nullptr
     );
     ASSERT_TRUE(thread != nullptr);
 

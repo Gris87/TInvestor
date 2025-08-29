@@ -72,6 +72,11 @@ void PortfolioThread::run()
 
                 if (portfolioStreamResponse->has_portfolio())
                 {
+                    if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                    {
+                        break;
+                    }
+
                     requestPortfolio();
                 }
             }

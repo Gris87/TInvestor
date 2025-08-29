@@ -19,17 +19,31 @@ TradingThreadFactory::~TradingThreadFactory()
 
 ITradingThread* TradingThreadFactory::newInstance(
     IInstrumentsStorage* instrumentsStorage,
+    IUserStorage*        userStorage,
     ITimeUtils*          timeUtils,
     IGrpcClient*         grpcClient,
     ILogsThread*         logsThread,
     const QString&       accountId,
     const QString&       instrumentId,
+    bool                 asap,
+    float                avgPrice,
     double               expectedCost,
     const QString&       cause,
     QObject*             parent
 ) const
 {
     return new TradingThread(
-        instrumentsStorage, timeUtils, grpcClient, logsThread, accountId, instrumentId, expectedCost, cause, parent
+        instrumentsStorage,
+        userStorage,
+        timeUtils,
+        grpcClient,
+        logsThread,
+        accountId,
+        instrumentId,
+        asap,
+        avgPrice,
+        expectedCost,
+        cause,
+        parent
     );
 }

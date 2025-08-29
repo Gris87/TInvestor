@@ -20,6 +20,8 @@ public:
     ITradingThread(const ITradingThread& another)            = delete;
     ITradingThread& operator=(const ITradingThread& another) = delete;
 
+    virtual void setAsap(bool asap)                                         = 0;
+    virtual void setAvgPrice(float avgPrice)                                = 0;
     virtual void setExpectedCost(double expectedCost, const QString& cause) = 0;
     virtual void terminateThread()                                          = 0;
 

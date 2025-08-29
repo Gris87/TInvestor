@@ -17,11 +17,14 @@ public:
 
     ITradingThread* newInstance(
         IInstrumentsStorage* instrumentsStorage,
+        IUserStorage*        userStorage,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,
+        bool                 asap,
+        float                avgPrice,
         double               expectedCost,
         const QString&       cause,
         QObject*             parent

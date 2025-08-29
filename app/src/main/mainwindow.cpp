@@ -889,11 +889,14 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
         {
             tradingThread = mTradingThreadFactory->newInstance(
                 mInstrumentsStorage,
+                mUserStorage,
                 mTimeUtils,
                 mGrpcClient,
                 mLogsThread,
                 mAutoPilotAccountId,
                 instrumentId,
+                tradingInfo.asap,
+                tradingInfo.avgPrice,
                 tradingInfo.expectedCost,
                 tradingInfo.cause,
                 this
@@ -908,6 +911,8 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
         }
         else
         {
+            tradingThread->setAsap(tradingInfo.asap);
+            tradingThread->setAvgPrice(tradingInfo.avgPrice);
             tradingThread->setExpectedCost(tradingInfo.expectedCost, tradingInfo.cause);
         }
     }

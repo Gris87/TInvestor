@@ -4,6 +4,7 @@
 
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
 
@@ -24,6 +25,7 @@ protected:
         const InSequence seq;
 
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        userStorageMock        = new StrictMock<UserStorageMock>();
         timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
         logsThreadMock         = new StrictMock<LogsThreadMock>();
@@ -31,7 +33,17 @@ protected:
         EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaaaa"), QString("But why")));
 
         thread = new TradingThread(
-            instrumentsStorageMock, timeUtilsMock, grpcClientMock, logsThreadMock, "account-id", "aaaaa", 10000.0, "But why"
+            instrumentsStorageMock,
+            userStorageMock,
+            timeUtilsMock,
+            grpcClientMock,
+            logsThreadMock,
+            "account-id",
+            "aaaaa",
+            true,
+            10.0f,
+            10000.0,
+            "But why"
         );
     }
 
@@ -39,6 +51,7 @@ protected:
     {
         delete thread;
         delete instrumentsStorageMock;
+        delete userStorageMock;
         delete timeUtilsMock;
         delete grpcClientMock;
         delete logsThreadMock;
@@ -46,6 +59,7 @@ protected:
 
     TradingThread*                      thread;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<UserStorageMock>*        userStorageMock;
     StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
     StrictMock<LogsThreadMock>*         logsThreadMock;
@@ -64,8 +78,12 @@ TEST_F(Test_TradingThread, Test_run)
     Instruments instruments;
     Instrument  instrument;
 
-    instrument.lot            = 10;
-    instrument.pricePrecision = 3;
+    instrument.ticker                  = "ABBA";
+    instrument.name                    = "Abstract Basics";
+    instrument.lot                     = 10;
+    instrument.pricePrecision          = 3;
+    instrument.minPriceIncrement.units = 0;
+    instrument.minPriceIncrement.nano  = 1000000;
 
     instruments["aaaaa"] = instrument;
 
@@ -175,8 +193,12 @@ TEST_F(Test_TradingThread, Test_sell)
     Instruments instruments;
     Instrument  instrument;
 
-    instrument.lot            = 10;
-    instrument.pricePrecision = 3;
+    instrument.ticker                  = "ABBA";
+    instrument.name                    = "Abstract Basics";
+    instrument.lot                     = 10;
+    instrument.pricePrecision          = 3;
+    instrument.minPriceIncrement.units = 0;
+    instrument.minPriceIncrement.nano  = 1000000;
 
     instruments["aaaaa"] = instrument;
 
@@ -434,8 +456,12 @@ TEST_F(Test_TradingThread, Test_buy)
     Instruments instruments;
     Instrument  instrument;
 
-    instrument.lot            = 10;
-    instrument.pricePrecision = 3;
+    instrument.ticker                  = "ABBA";
+    instrument.name                    = "Abstract Basics";
+    instrument.lot                     = 10;
+    instrument.pricePrecision          = 3;
+    instrument.minPriceIncrement.units = 0;
+    instrument.minPriceIncrement.nano  = 1000000;
 
     instruments["aaaaa"] = instrument;
 

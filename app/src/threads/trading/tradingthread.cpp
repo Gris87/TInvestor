@@ -6,20 +6,25 @@
 
 
 
-constexpr qint64 MS_IN_SECOND      = 1000LL;
-constexpr qint64 SLEEP_DELAY       = 30LL * MS_IN_SECOND; // 30 seconds
-constexpr qint64 ORDER_RETRY_DELAY = 1LL * MS_IN_SECOND;  // 1 second
-constexpr double DOUBLE_EPSILON    = 0.0001;
+constexpr float  HUNDRED_PERCENT       = 100.0f;
+constexpr float  MINIMUM_YIELD_PERCENT = 0.30f;
+constexpr qint64 MS_IN_SECOND          = 1000LL;
+constexpr qint64 SLEEP_DELAY           = 30LL * MS_IN_SECOND; // 30 seconds
+constexpr qint64 ORDER_RETRY_DELAY     = 1LL * MS_IN_SECOND;  // 1 second
+constexpr double DOUBLE_EPSILON        = 0.0001;
 
 
 
 TradingThread::TradingThread(
     IInstrumentsStorage* instrumentsStorage,
+    IUserStorage*        userStorage,
     ITimeUtils*          timeUtils,
     IGrpcClient*         grpcClient,
     ILogsThread*         logsThread,
     const QString&       accountId,
     const QString&       instrumentId,
+    bool                 asap,
+    float                avgPrice,
     double               expectedCost,
     const QString&       cause,
     QObject*             parent
@@ -27,14 +32,18 @@ TradingThread::TradingThread(
     ITradingThread(parent),
     mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
+    mUserStorage(userStorage),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mLogsThread(logsThread),
     mAccountId(accountId),
     mInstrumentId(instrumentId),
+    mAsap(asap),
+    mAvgPrice(avgPrice),
     mExpectedCost(expectedCost),
     mInstrumentLot(),
     mPricePrecision(),
+    mMinPriceIncrement(),
     mOrderId(),
     mLastOrderPrice(),
     mLastExpectedCost()
@@ -67,6 +76,26 @@ void TradingThread::run()
     qDebug() << "Finish TradingThread";
 }
 
+void TradingThread::setAsap(bool asap)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    if (mAsap != asap)
+    {
+        mAsap = asap;
+    }
+}
+
+void TradingThread::setAvgPrice(float avgPrice)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    if (mAvgPrice != avgPrice)
+    {
+        mAvgPrice = avgPrice;
+    }
+}
+
 void TradingThread::setExpectedCost(double expectedCost, const QString& cause)
 {
     const QWriteLocker lock(mRwMutex);
@@ -77,6 +106,20 @@ void TradingThread::setExpectedCost(double expectedCost, const QString& cause)
 
         mLogsThread->addLog(LOG_LEVEL_DEBUG, mInstrumentId, cause);
     }
+}
+
+bool TradingThread::asap() const
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mAsap;
+}
+
+float TradingThread::avgPrice() const
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mAvgPrice;
 }
 
 double TradingThread::expectedCost() const
@@ -145,8 +188,9 @@ void TradingThread::getInstrumentData()
     Q_ASSERT_X(instruments.contains(mInstrumentId), __FUNCTION__, "Data about instrument not found");
     const Instrument& instrument = instruments.value(mInstrumentId);
 
-    mInstrumentLot  = instrument.lot;
-    mPricePrecision = instrument.pricePrecision;
+    mInstrumentLot     = instrument.lot;
+    mPricePrecision    = instrument.pricePrecision;
+    mMinPriceIncrement = instrument.minPriceIncrement;
 
     mInstrumentsStorage->readUnlock();
 }
@@ -181,7 +225,20 @@ bool TradingThread::sell(double expected, double delta)
 
     if (tinkoffOrderBook->asks_size() > 0)
     {
-        return sellWithPrice(expected, delta, quotationConvert(tinkoffOrderBook->asks(0).price()));
+        double price = quotationToDouble(tinkoffOrderBook->asks(0).price());
+
+        if (!asap())
+        {
+            mUserStorage->readLock();
+            const float commission = mUserStorage->getCommission();
+            mUserStorage->readUnlock();
+
+            price = qMax(price, avgPrice() * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
+        }
+
+        const qint64 coef = qRound64(price / quotationToDouble(mMinPriceIncrement));
+
+        return sellWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef));
     }
 
     return false;
@@ -326,7 +383,10 @@ bool TradingThread::buy(double expected, double delta)
 
     if (tinkoffOrderBook->bids_size() > 0)
     {
-        return buyWithPrice(expected, delta, quotationConvert(tinkoffOrderBook->bids(0).price()));
+        const double price = quotationToDouble(tinkoffOrderBook->bids(0).price());
+        const qint64 coef  = qRound64(price / quotationToDouble(mMinPriceIncrement));
+
+        return buyWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef));
     }
 
     return false;

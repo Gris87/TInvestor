@@ -8,7 +8,8 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr float HUNDRED_PERCENT = 100.0f;
+constexpr float HUNDRED_PERCENT          = 100.0f;
+constexpr int   ASAP_SELL_DECISION_INDEX = 2;
 
 
 
@@ -312,19 +313,16 @@ static void makeDecisionsForParallel(
 
                     if (cause != "")
                     {
-                        TradingInfo tradingInfo;
-
-                        tradingInfo.price        = price;
-                        tradingInfo.expectedCost = stock->meta.turnover;
-                        tradingInfo.cause        = cause;
-
-                        buyResultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
+                        buyResultsArray[threadId][stock->meta.instrumentId] =
+                            TradingInfo(true, avgPrice, price, stock->meta.turnover, cause);
                     }
                 }
             }
             else
             {
-                for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
+                int j;
+
+                for (j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
                 {
                     cause = sellDecisionsArray[j]->makeDecision(
                         parentThread, decisionConfig, 0, stock, dateRange, dataIndex, price, avgPrice, commission
@@ -333,13 +331,8 @@ static void makeDecisionsForParallel(
 
                 if (cause != "")
                 {
-                    TradingInfo tradingInfo;
-
-                    tradingInfo.price        = price;
-                    tradingInfo.expectedCost = 0.0;
-                    tradingInfo.cause        = cause;
-
-                    sellResultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
+                    sellResultsArray[threadId][stock->meta.instrumentId] =
+                        TradingInfo(j >= ASAP_SELL_DECISION_INDEX, avgPrice, price, 0.0, cause);
                 }
             }
         }
