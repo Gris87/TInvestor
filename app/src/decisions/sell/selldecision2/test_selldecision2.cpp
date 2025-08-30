@@ -72,24 +72,6 @@ protected:
         }
     }
 
-    // TODO: Delete it
-    void printData(Stock* stock)
-    {
-        qInfo() << "Operational data:";
-
-        for (const StockOperationalData& stockData : stock->operational.detailedData)
-        {
-            qInfo() << stockData.timestamp << "-" << stockData.price;
-        }
-
-        qInfo() << "Data:";
-
-        for (const StockData& stockData : stock->data)
-        {
-            qInfo() << stockData.timestamp << "-" << stockData.price;
-        }
-    }
-
     SellDecision2* sellDecision2;
 };
 
@@ -109,6 +91,10 @@ TEST_F(Test_SellDecision2, Test_makeDecision)
 
     Stock stock;
     stock.meta.pricePrecision = 2;
+
+    // ====================================================================
+    // TEST CASE: Decision is disabled
+    // ====================================================================
 
     StockData            stockData1;
     StockData            stockData2;

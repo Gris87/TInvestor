@@ -70,24 +70,6 @@ protected:
         }
     }
 
-    // TODO: Delete it
-    void printData(Stock* stock)
-    {
-        qInfo() << "Operational data:";
-
-        for (const StockOperationalData& stockData : stock->operational.detailedData)
-        {
-            qInfo() << stockData.timestamp << "-" << stockData.price;
-        }
-
-        qInfo() << "Data:";
-
-        for (const StockData& stockData : stock->data)
-        {
-            qInfo() << stockData.timestamp << "-" << stockData.price;
-        }
-    }
-
     SellDecision4* sellDecision4;
 };
 
@@ -99,7 +81,6 @@ TEST_F(Test_SellDecision4, Test_constructor_and_destructor)
 
 TEST_F(Test_SellDecision4, Test_makeDecision)
 {
-    /*
     const InSequence seq;
 
     StrictMock<DecisionMakerConfigMock> configMock;
@@ -107,6 +88,10 @@ TEST_F(Test_SellDecision4, Test_makeDecision)
 
     Stock stock;
     stock.meta.pricePrecision = 2;
+
+    // ====================================================================
+    // TEST CASE: Decision is disabled
+    // ====================================================================
 
     EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(false));
@@ -116,6 +101,162 @@ TEST_F(Test_SellDecision4, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
+    // ====================================================================
+    // TEST CASE: Nothing happened to the price
+    // ====================================================================
+    //
+    //
+    // -------------------------------------------------------------------X
+    //
+
+    fillWithData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
+
+    cause = sellDecision4->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, 100.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: Normal fall without double check
+    // ====================================================================
+    //
+    // ----------------------------------------------\
+    //                                               |
+    //                                               \-------\
+    //                                                        \
+    //                                                         \
+    //                                                          \-----\
+    //                                                                 \
+    //                                                                  \
+    //                                                                   \X
+    //
+
+    fillWithData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            80.0f,
+            80.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
+
+    cause = sellDecision4->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 80.0f, 100.0f, 0.04f);
+
+    // ====================================================================
+    // TEST CASE: Normal fall with double check
+    // ====================================================================
+    //
+    // --------------------------------------------\
+    //                                             |
+    //                                             \-------\
+    //                                                      \
+    //                                                       \
+    //                                                        \-----\
+    //                                                               \
+    //                                                                \
+    //                                                                 \--X
+    //
+
+    fillWithData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            80.0f,
+            80.0f,
+            80.0f,
+            80.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
+
+    cause = sellDecision4->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 80.0f, 100.0f, 0.04f);
+
+    ASSERT_EQ(cause, "Decided to sell because the price fall to 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD");
+
+    // ====================================================================
+    // TEST CASE: Nothing happened to the price
+    // ====================================================================
+    //
+    //
+    // -------------------------------------------------------------------X
+    //
+
+    fillWithData(&stock, {}, false);
+    fillWithOperationalData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        }
+    );
+
     EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
@@ -124,6 +265,86 @@ TEST_F(Test_SellDecision4, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
+    // ====================================================================
+    // TEST CASE: Normal fall without double check
+    // ====================================================================
+    //
+    // ----------------------------------------------\
+    //                                               |
+    //                                               \-------\
+    //                                                        \
+    //                                                         \
+    //                                                          \-----\
+    //                                                                 \
+    //                                                                  \
+    //                                                                   \X
+    //
+
+    fillWithData(&stock, {}, false);
+    fillWithOperationalData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            80.0f,
+            80.0f,
+        }
+    );
+
+    EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
+
+    cause = sellDecision4->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 80.0f, 100.0f, 0.04f);
+
+    // ====================================================================
+    // TEST CASE: Normal fall with double check
+    // ====================================================================
+    //
+    // --------------------------------------------\
+    //                                             |
+    //                                             \-------\
+    //                                                      \
+    //                                                       \
+    //                                                        \-----\
+    //                                                               \
+    //                                                                \
+    //                                                                 \--X
+    //
+
+    fillWithData(&stock, {}, false);
+    fillWithOperationalData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            80.0f,
+            80.0f,
+            80.0f,
+            80.0f,
+        }
+    );
+
     EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
@@ -131,5 +352,4 @@ TEST_F(Test_SellDecision4, Test_makeDecision)
     cause = sellDecision4->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 80.0f, 100.0f, 0.04f);
 
     ASSERT_EQ(cause, "Decided to sell because the price fall to 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD");
-    */
 }

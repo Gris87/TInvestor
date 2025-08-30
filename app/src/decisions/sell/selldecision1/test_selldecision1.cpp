@@ -46,6 +46,10 @@ TEST_F(Test_SellDecision1, Test_makeDecision)
     Stock stock;
     stock.meta.pricePrecision = 2;
 
+    // ====================================================================
+    // TEST CASE: Decision is disabled
+    // ====================================================================
+
     EXPECT_CALL(configMock, getSellDecision1Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(false));
 
@@ -54,6 +58,14 @@ TEST_F(Test_SellDecision1, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
+    // ====================================================================
+    // TEST CASE: Nothing happened to the price
+    // ====================================================================
+    //
+    //
+    // -------------------------------------------------------------------X
+    //
+
     EXPECT_CALL(configMock, getSellDecision1Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2));
@@ -61,6 +73,17 @@ TEST_F(Test_SellDecision1, Test_makeDecision)
     cause = sellDecision1->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, 100.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: Price raise with a good yield
+    // ====================================================================
+    //
+    //                                                                   /X
+    //                                                                  /
+    //                                                                 /
+    //                                                                /
+    // --------------------------------------------------------------/
+    //
 
     EXPECT_CALL(configMock, getSellDecision1Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
