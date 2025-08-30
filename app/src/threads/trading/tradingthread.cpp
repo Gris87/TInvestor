@@ -80,7 +80,7 @@ void TradingThread::setAsap(bool asap)
 {
     const QWriteLocker lock(mRwMutex);
 
-    if (mAsap != asap)
+    if (mAsap == false && asap == true)
     {
         mAsap = asap;
     }

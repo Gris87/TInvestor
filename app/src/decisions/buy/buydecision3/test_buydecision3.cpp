@@ -59,21 +59,6 @@ protected:
         }
     }
 
-    void fillWithOperationalData(Stock* stock, QList<float> data)
-    {
-        stock->operational.detailedData.clear();
-
-        for (int i = 0; i < data.size(); ++i)
-        {
-            StockOperationalData stockData;
-
-            stockData.timestamp = QDateTime::currentMSecsSinceEpoch() - (data.size() - i - 1) * ONE_DAY;
-            stockData.price     = data.at(i);
-
-            stock->operational.detailedData.append(stockData);
-        }
-    }
-
     BuyDecision3* buyDecision3;
 };
 
@@ -85,7 +70,6 @@ TEST_F(Test_BuyDecision3, Test_constructor_and_destructor)
 
 TEST_F(Test_BuyDecision3, Test_makeDecision)
 {
-    /*
     const InSequence seq;
 
     StrictMock<DecisionMakerConfigMock> configMock;
@@ -96,6 +80,10 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
     Stock stock;
     stock.meta.pricePrecision = 2;
 
+    // ====================================================================
+    // TEST CASE: Decision is disabled
+    // ====================================================================
+
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(false));
 
@@ -103,14 +91,32 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
+    // ====================================================================
+    // TEST CASE: Nothing happened to the price within 10 days
+    // ====================================================================
+    //
+    //
+    // -------------------------------------------------------------------X
+    //
+
     fillWithData(
         &stock,
         {
-            101.0f,
-            101.0f,
-            101.0f,
-            101.0f,
-            101.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
         },
         true
     );
@@ -118,20 +124,41 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceFall()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
 
-    cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 4, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: Unexpected maximum
+    // ====================================================================
+    //
+    //                                                                /\
+    //                                                                ||
+    //                                                               /  \
+    //                                                               |  |
+    // -------------------------------------------------------------/    \X
+    //
 
     fillWithData(
         &stock,
         {
-            101.0f,
-            101.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
             150.0f,
-            101.0f,
-            101.0f,
+            150.0f,
+            150.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
         },
         true
     );
@@ -139,20 +166,45 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceFall()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
 
-    cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 4, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: Normal fall
+    // ====================================================================
+    //
+    // ----------------------------------------------\
+    //                                               |
+    //                                               \-------\
+    //                                                        \
+    //                                                         \
+    //                                                          \-----\
+    //                                                                 \
+    //                                                                  \
+    //                                                                   \X
+    //
 
     fillWithData(
         &stock,
         {
-            123.0f,
-            122.0f,
-            121.0f,
-            120.0f,
-            101.0f,
+            160.0f,
+            159.0f,
+            158.0f,
+            157.0f,
+            156.0f,
+            155.0f,
+            154.0f,
+            153.0f,
+            152.0f,
+            151.0f,
+            150.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
         },
         true
     );
@@ -160,115 +212,84 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceFall()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
 
-    cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 4, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(
         cause,
-        "Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at 2024-01-04 00:00:00 within last 3 days "
-        "and the fall is -16.67%"
+        "Decided to buy because the price fall to 100.00 \u20BD from 150.00 \u20BD at 2024-01-11 00:00:00 within last 10 days "
+        "and the fall is -33.33%"
     );
 
-    fillWithData(&stock, {}, false);
-    fillWithOperationalData(
+    // ====================================================================
+    // TEST CASE: Nothing happened to the price within 10 days
+    // ====================================================================
+    //
+    //
+    // -------------------------------------------------------------------X
+    //
+
+    fillWithData(
         &stock,
         {
-            101.0f,
-            101.0f,
-            101.0f,
-            101.0f,
-            101.0f,
-        }
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        false
     );
 
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceFall()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
 
     cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
-    fillWithData(&stock, {}, false);
-    fillWithOperationalData(
+    // ====================================================================
+    // TEST CASE: Unexpected maximum
+    // ====================================================================
+    //
+    //                                                                /\
+    //                                                                ||
+    //                                                               /  \
+    //                                                               |  |
+    // -------------------------------------------------------------/    \X
+    //
+
+    fillWithData(
         &stock,
         {
-            101.0f,
-            101.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
             150.0f,
-            101.0f,
-            101.0f,
-        }
-    );
-
-    EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
-    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getPriceFall()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
-
-    cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
-
-    ASSERT_EQ(cause, "");
-
-    fillWithData(&stock, {}, false);
-    fillWithOperationalData(
-        &stock,
-        {
-            123.0f,
-            122.0f,
-            121.0f,
-            120.0f,
-            101.0f,
-        }
-    );
-
-    EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
-    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getPriceFall()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
-
-    cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
-
-    ASSERT_EQ(
-        cause,
-        QString("Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at %1 within last 3 days and the "
-                "fall is -16.67%")
-            .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(3).timestamp).toString(DATETIME_FORMAT))
-    );
-
-    fillWithOperationalData(&stock, {});
-    fillWithData(
-        &stock,
-        {
-            101.0f,
-            101.0f,
-            101.0f,
-            101.0f,
-            101.0f,
-        },
-        false
-    );
-
-    EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
-    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getPriceFall()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
-
-    cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
-
-    ASSERT_EQ(cause, "");
-
-    fillWithOperationalData(&stock, {});
-    fillWithData(
-        &stock,
-        {
-            101.0f,
-            101.0f,
             150.0f,
-            101.0f,
-            101.0f,
+            150.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
         },
         false
     );
@@ -276,21 +297,45 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceFall()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
 
     cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
-    fillWithOperationalData(&stock, {});
+    // ====================================================================
+    // TEST CASE: Normal fall
+    // ====================================================================
+    //
+    // ----------------------------------------------\
+    //                                               |
+    //                                               \-------\
+    //                                                        \
+    //                                                         \
+    //                                                          \-----\
+    //                                                                 \
+    //                                                                  \
+    //                                                                   \X
+    //
+
     fillWithData(
         &stock,
         {
-            123.0f,
-            122.0f,
-            121.0f,
-            120.0f,
-            101.0f,
+            160.0f,
+            159.0f,
+            158.0f,
+            157.0f,
+            156.0f,
+            155.0f,
+            154.0f,
+            153.0f,
+            152.0f,
+            151.0f,
+            150.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
         },
         false
     );
@@ -298,15 +343,14 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceFall()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(3));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
 
     cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(
         cause,
-        QString("Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at %1 within last 3 days and the "
-                "fall is -16.67%")
-            .arg(QDateTime::fromMSecsSinceEpoch(stock.data.at(3).timestamp).toString(DATETIME_FORMAT))
+        QString("Decided to buy because the price fall to 100.00 \u20BD from 150.00 \u20BD at %1 within last 10 days and the "
+                "fall is -33.33%")
+            .arg(QDateTime::fromMSecsSinceEpoch(stock.data.at(10).timestamp).toString(DATETIME_FORMAT))
     );
-    */
 }
