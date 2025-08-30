@@ -897,6 +897,7 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
                 instrumentId,
                 tradingInfo.asap,
                 tradingInfo.avgPrice,
+                tradingInfo.price,
                 tradingInfo.expectedCost,
                 tradingInfo.cause,
                 this

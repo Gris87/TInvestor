@@ -29,6 +29,7 @@ public:
         const QString&       instrumentId,
         bool                 asap,
         float                avgPrice,
+        float                price,
         double               expectedCost,
         const QString&       cause,
         QObject*             parent = nullptr
@@ -95,6 +96,7 @@ private:
     QString              mInstrumentId;
     bool                 mAsap;
     float                mAvgPrice;
+    float                mPrice;
     double               mExpectedCost;
     qint32               mInstrumentLot;
     qint8                mPricePrecision;

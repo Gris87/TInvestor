@@ -1,6 +1,4 @@
 Fix tests for decisions
-Terminate buy if order price is more than requested (> 0.50 %)
-Why sell completed on order cancel
 Collect operations by using historical daily data (last day) and append non processed operations
 Limit trading buy different percents in non-working hours
 Trade instruments with huge spread (detect periodically among all stocks). Buy few / sell few (average?)

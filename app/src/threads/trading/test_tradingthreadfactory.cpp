@@ -59,6 +59,7 @@ TEST_F(Test_TradingThreadFactory, Test_newInstance)
         "bbbbb",
         true,
         10.0f,
+        100.0f,
         1000.0,
         "But why",
         nullptr

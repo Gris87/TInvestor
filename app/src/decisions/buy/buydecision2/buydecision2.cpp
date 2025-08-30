@@ -56,10 +56,10 @@ QString BuyDecision2::makeDecision(
 
     if (buyConfig->isEnabled())
     {
-        const float priceFall          = -buyConfig->getPriceFall();
-        const float loseYield          = buyConfig->getLoseYield();
-        const int   duration           = buyConfig->getDuration();
-        const float maximumPrice       = price / (1 + (priceFall / HUNDRED_PERCENT));
+        const float priceFall    = -buyConfig->getPriceFall();
+        const float loseYield    = buyConfig->getLoseYield();
+        const int   duration     = buyConfig->getDuration();
+        const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
 
         const StockData* stockData = stock->data.constData();
 

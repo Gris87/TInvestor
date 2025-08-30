@@ -30,6 +30,7 @@ public:
         const QString&       instrumentId,
         bool                 asap,
         float                avgPrice,
+        float                price,
         double               expectedCost,
         const QString&       cause,
         QObject*             parent

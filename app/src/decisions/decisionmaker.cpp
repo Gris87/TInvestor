@@ -314,7 +314,7 @@ static void makeDecisionsForParallel(
                     if (cause != "")
                     {
                         buyResultsArray[threadId][stock->meta.instrumentId] =
-                            TradingInfo(true, avgPrice, price, stock->meta.turnover, cause);
+                            TradingInfo(false, avgPrice, price, stock->meta.turnover, cause);
                     }
                 }
             }

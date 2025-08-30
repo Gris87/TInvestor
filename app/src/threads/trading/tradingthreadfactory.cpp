@@ -27,6 +27,7 @@ ITradingThread* TradingThreadFactory::newInstance(
     const QString&       instrumentId,
     bool                 asap,
     float                avgPrice,
+    float                price,
     double               expectedCost,
     const QString&       cause,
     QObject*             parent
@@ -42,6 +43,7 @@ ITradingThread* TradingThreadFactory::newInstance(
         instrumentId,
         asap,
         avgPrice,
+        price,
         expectedCost,
         cause,
         parent

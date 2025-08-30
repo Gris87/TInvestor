@@ -6,12 +6,14 @@
 
 
 
-constexpr float  HUNDRED_PERCENT       = 100.0f;
-constexpr float  MINIMUM_YIELD_PERCENT = 0.30f;
-constexpr qint64 MS_IN_SECOND          = 1000LL;
-constexpr qint64 SLEEP_DELAY           = 30LL * MS_IN_SECOND; // 30 seconds
-constexpr qint64 ORDER_RETRY_DELAY     = 1LL * MS_IN_SECOND;  // 1 second
-constexpr double DOUBLE_EPSILON        = 0.0001;
+constexpr float  HUNDRED_PERCENT             = 100.0f;
+constexpr float  MAXIMUM_PRICE_RAISE_PERCENT = 0.50f;
+constexpr float  MINIMUM_YIELD_PERCENT       = 0.30f;
+constexpr qint64 MS_IN_SECOND                = 1000LL;
+constexpr qint64 SLEEP_DELAY                 = 30LL * MS_IN_SECOND; // 30 seconds
+constexpr qint64 ORDER_CANCEL_DELAY          = 3LL * MS_IN_SECOND;  // 3 seconds
+constexpr qint64 ORDER_RETRY_DELAY           = 1LL * MS_IN_SECOND;  // 1 second
+constexpr double DOUBLE_EPSILON              = 0.0001;
 
 
 
@@ -25,6 +27,7 @@ TradingThread::TradingThread(
     const QString&       instrumentId,
     bool                 asap,
     float                avgPrice,
+    float                price,
     double               expectedCost,
     const QString&       cause,
     QObject*             parent
@@ -40,6 +43,7 @@ TradingThread::TradingThread(
     mInstrumentId(instrumentId),
     mAsap(asap),
     mAvgPrice(avgPrice),
+    mPrice(price),
     mExpectedCost(expectedCost),
     mInstrumentLot(),
     mPricePrecision(),
@@ -248,7 +252,15 @@ bool TradingThread::sellWithPrice(double expected, double delta, const Quotation
 {
     if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
-        cancelOrder();
+        if (mOrderId != "")
+        {
+            cancelOrder();
+
+            if (mTimeUtils->interruptibleSleep(ORDER_CANCEL_DELAY, QThread::currentThread()))
+            {
+                return false;
+            }
+        }
 
         return sellWithPriceOptimalAmount(expected, delta, price);
     }
@@ -384,7 +396,31 @@ bool TradingThread::buy(double expected, double delta)
     if (tinkoffOrderBook->bids_size() > 0)
     {
         const double price = quotationToDouble(tinkoffOrderBook->bids(0).price());
-        const qint64 coef  = qRound64(price / quotationToDouble(mMinPriceIncrement));
+
+        if (!asap())
+        {
+            const double priceRaise = ((price / mPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+            if (priceRaise > MAXIMUM_PRICE_RAISE_PERCENT)
+            {
+                mLogsThread->addLog(
+                    LOG_LEVEL_DEBUG,
+                    mInstrumentId,
+                    tr("Trade interrupted because the price reached %1 with raise %2 from the price %3")
+                        .arg(
+                            QString::number(price, 'f', mPricePrecision) + " \u20BD",
+                            "+" + QString::number(priceRaise, 'f', 2) + "%",
+                            QString::number(mPrice, 'f', mPricePrecision) + " \u20BD"
+                        )
+                );
+
+                cancelOrder();
+
+                return true;
+            }
+        }
+
+        const qint64 coef = qRound64(price / quotationToDouble(mMinPriceIncrement));
 
         return buyWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef));
     }
@@ -396,7 +432,15 @@ bool TradingThread::buyWithPrice(double expected, double delta, const Quotation&
 {
     if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
-        cancelOrder();
+        if (mOrderId != "")
+        {
+            cancelOrder();
+
+            if (mTimeUtils->interruptibleSleep(ORDER_CANCEL_DELAY, QThread::currentThread()))
+            {
+                return false;
+            }
+        }
 
         return buyWithPriceOptimalAmount(expected, delta, price);
     }

@@ -405,7 +405,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     InstrumentsForTrading instrumentsForTrading;
     TradingInfo           tradingInfo;
 
-    tradingInfo.asap         = true;
+    tradingInfo.asap         = false;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 200.0f;
     tradingInfo.expectedCost = 100000.0;
@@ -590,7 +590,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     ASSERT_EQ(instrumentSells.size(),        0);
     // clang-format on
 
-    tradingInfo.asap         = true;
+    tradingInfo.asap         = false;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 200.0f;
     tradingInfo.expectedCost = 100000.0;
@@ -598,7 +598,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
 
     instrumentsForTrading["aaaaa"] = tradingInfo;
 
-    tradingInfo.asap         = true;
+    tradingInfo.asap         = false;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 200.0f;
     tradingInfo.expectedCost = 150000.0;

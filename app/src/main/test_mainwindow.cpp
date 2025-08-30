@@ -1056,13 +1056,13 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
     TradingInfo tradingInfo2;
     TradingInfo tradingInfo3;
 
-    tradingInfo1.asap         = true;
+    tradingInfo1.asap         = false;
     tradingInfo1.avgPrice     = -1.0f;
     tradingInfo1.price        = 10.0f;
     tradingInfo1.expectedCost = 10000.0;
     tradingInfo1.cause        = "Need to buy";
 
-    tradingInfo2.asap         = true;
+    tradingInfo2.asap         = false;
     tradingInfo2.avgPrice     = -1.0f;
     tradingInfo2.price        = 100.0f;
     tradingInfo2.expectedCost = 15000.0;
@@ -1092,8 +1092,9 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
             logsThreadMock,
             QString(""),
             QString("aaaaa"),
-            true,
+            false,
             FloatEq(-1.0f),
+            FloatEq(10.0f),
             DoubleEq(10000.0),
             QString("Need to buy"),
             mainWindow
@@ -1111,8 +1112,9 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
             logsThreadMock,
             QString(""),
             QString("bbbbb"),
-            true,
+            false,
             FloatEq(-1.0f),
+            FloatEq(100.0f),
             DoubleEq(15000.0),
             QString("Need to buy more"),
             mainWindow
@@ -1558,7 +1560,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     InstrumentsForTrading instruments;
     TradingInfo           tradingInfo;
 
-    tradingInfo.asap         = true;
+    tradingInfo.asap         = false;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 100.0f;
     tradingInfo.expectedCost = 10000.0;
@@ -1576,8 +1578,9 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             logsThreadMock,
             QString("aaaaaa"),
             QString("aaa-aaa"),
-            true,
+            false,
             FloatEq(-1.0f),
+            FloatEq(100.0f),
             DoubleEq(10000.0),
             QString("Need to buy"),
             mainWindow
@@ -1695,8 +1698,9 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             logsThreadMock,
             QString("aaaaaa"),
             QString("aaa-aaa"),
-            true,
+            false,
             FloatEq(-1.0f),
+            FloatEq(100.0f),
             DoubleEq(10000.0),
             QString("Need to buy"),
             mainWindow

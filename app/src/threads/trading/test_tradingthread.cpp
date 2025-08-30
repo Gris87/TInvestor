@@ -42,6 +42,7 @@ protected:
             "aaaaa",
             true,
             10.0f,
+            100.0f,
             10000.0,
             "But why"
         );
@@ -354,6 +355,7 @@ TEST_F(Test_TradingThread, Test_sell)
         *logsThreadMock,
         addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50 sold with a price 10.500 \u20BD"))
     );
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(3000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), price))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(
@@ -383,6 +385,7 @@ TEST_F(Test_TradingThread, Test_sell)
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order cancelled")));
     EXPECT_CALL(*grpcClientMock, cancelOrder(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(cancelOrderResponse));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(3000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), price))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(
@@ -613,6 +616,7 @@ TEST_F(Test_TradingThread, Test_buy)
         *logsThreadMock,
         addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50 bought with a price 10.500 \u20BD"))
     );
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(3000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), price))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(
@@ -642,6 +646,7 @@ TEST_F(Test_TradingThread, Test_buy)
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order cancelled")));
     EXPECT_CALL(*grpcClientMock, cancelOrder(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(cancelOrderResponse));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(3000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), price))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(
