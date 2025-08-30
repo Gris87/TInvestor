@@ -9,7 +9,7 @@ const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 constexpr int    MINUTES_TO_DOUBLE_CHECK = 3;
 constexpr int    HOURS_TO_TRIPLE_CHECK   = 3;
 constexpr int    STEP_FOR_TRIPLE_CHECK   = 60;
-constexpr float  TRIPLE_MINIMUM_COEF     = 2.0f;
+constexpr float  TRIPLE_MINIMUM_COEF     = 3.0f;
 constexpr float  HUNDRED_PERCENT         = 100.0f;
 constexpr qint64 MS_IN_SECOND            = 1000LL;
 constexpr qint64 ONE_MINUTE              = 60LL * MS_IN_SECOND;
@@ -17,7 +17,8 @@ constexpr qint64 ONE_MINUTE              = 60LL * MS_IN_SECOND;
 
 
 BuyDecision1::BuyDecision1() :
-    IActionDecision()
+    IActionDecision(),
+    mStepForTripleCheck(STEP_FOR_TRIPLE_CHECK)
 {
     qDebug() << "Create BuyDecision1";
 }
@@ -55,10 +56,9 @@ QString BuyDecision1::makeDecision(
 
     if (buyConfig->isEnabled())
     {
-        const float priceFall          = -buyConfig->getPriceFall();
-        const int   duration           = buyConfig->getDuration();
-        const float tripleMinimumPrice = price / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
-        const float maximumPrice       = price / (1 + (priceFall / HUNDRED_PERCENT));
+        const float priceFall    = -buyConfig->getPriceFall();
+        const int   duration     = buyConfig->getDuration();
+        const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
 
         const StockData* stockData = stock->data.constData();
 
@@ -98,7 +98,9 @@ QString BuyDecision1::makeDecision(
 
                     if (good)
                     {
-                        int j         = i - STEP_FOR_TRIPLE_CHECK;
+                        const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
+
+                        int j         = i - mStepForTripleCheck;
                         int hoursLeft = HOURS_TO_TRIPLE_CHECK;
 
                         while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
@@ -110,7 +112,7 @@ QString BuyDecision1::makeDecision(
                                 break;
                             }
 
-                            j -= STEP_FOR_TRIPLE_CHECK;
+                            j -= mStepForTripleCheck;
                             --hoursLeft;
                         }
 
@@ -174,6 +176,9 @@ QString BuyDecision1::makeDecision(
 
                         if (good)
                         {
+                            const float tripleMinimumPrice =
+                                prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
+
                             int j         = stock->data.size() - 1;
                             int hoursLeft = HOURS_TO_TRIPLE_CHECK;
 
@@ -186,7 +191,7 @@ QString BuyDecision1::makeDecision(
                                     break;
                                 }
 
-                                j -= STEP_FOR_TRIPLE_CHECK;
+                                j -= mStepForTripleCheck;
                                 --hoursLeft;
                             }
 
@@ -242,7 +247,9 @@ QString BuyDecision1::makeDecision(
 
                     if (good)
                     {
-                        int j         = i - STEP_FOR_TRIPLE_CHECK;
+                        const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
+
+                        int j         = i - mStepForTripleCheck;
                         int hoursLeft = HOURS_TO_TRIPLE_CHECK;
 
                         while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
@@ -254,7 +261,7 @@ QString BuyDecision1::makeDecision(
                                 break;
                             }
 
-                            j -= STEP_FOR_TRIPLE_CHECK;
+                            j -= mStepForTripleCheck;
                             --hoursLeft;
                         }
 

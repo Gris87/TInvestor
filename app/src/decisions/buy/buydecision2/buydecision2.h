@@ -26,4 +26,14 @@ public:
         float                 avgPrice,
         float                 commission
     ) override;
+
+#ifdef TESTING_MODE
+    void testSetStepForTripleCheck(int step)
+    {
+        mStepForTripleCheck = step;
+    }
+#endif
+
+private:
+    int mStepForTripleCheck;
 };
