@@ -387,6 +387,7 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
             res.append("-Wall")
             res.append("-Wextra")
             res.append("-Werror")
+            res.append("-Wno-comment")
 
     if app_or_test or "/libs/investapi/" in file_path:
         res.append("-fclang-abi-compat=17")
