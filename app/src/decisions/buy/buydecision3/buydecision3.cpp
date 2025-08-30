@@ -119,58 +119,6 @@ QString BuyDecision3::makeDecision(
         {
             limitTimestamp = qMax(limitTimestamp, QDateTime::currentMSecsSinceEpoch() - (duration * ONE_DAY));
 
-            const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
-
-            for (int i  = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested();
-                 i     -= mStep)
-            {
-                const qint64 timestamp = stockOperationalData[i].timestamp;
-                const float  prevPrice = stockOperationalData[i].price;
-
-                if (timestamp < limitTimestamp)
-                {
-                    break;
-                }
-
-                if (prevPrice >= maximumPrice)
-                {
-                    bool good = true;
-
-                    int j           = i - 1;
-                    int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-                    {
-                        if (stockOperationalData[j].price < maximumPrice)
-                        {
-                            good = false;
-
-                            break;
-                        }
-
-                        --j;
-                        --minutesLeft;
-                    }
-
-                    if (good)
-                    {
-                        const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                        return QObject::tr(
-                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 days and the "
-                                   "fall is %5"
-                        )
-                            .arg(
-                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                QString::number(duration),
-                                QString::number(fall, 'f', 2) + "%"
-                            );
-                    }
-                }
-            }
-
             for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); i -= mStep)
             {
                 const qint64 timestamp = stockData[i].timestamp;

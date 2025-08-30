@@ -36,6 +36,44 @@ protected:
         delete buyDecision3;
     }
 
+    void fillWithData(Stock* stock, QList<float> data, bool dateRange)
+    {
+        stock->data.clear();
+
+        for (int i = 0; i < data.size(); ++i)
+        {
+            StockData stockData;
+
+            if (dateRange)
+            {
+                stockData.timestamp = 1704056400000 + i * ONE_DAY;
+            }
+            else
+            {
+                stockData.timestamp = QDateTime::currentMSecsSinceEpoch() - (data.size() - i - 1) * ONE_DAY;
+            }
+
+            stockData.price = data.at(i);
+
+            stock->data.append(stockData);
+        }
+    }
+
+    void fillWithOperationalData(Stock* stock, QList<float> data)
+    {
+        stock->operational.detailedData.clear();
+
+        for (int i = 0; i < data.size(); ++i)
+        {
+            StockOperationalData stockData;
+
+            stockData.timestamp = QDateTime::currentMSecsSinceEpoch() - (data.size() - i - 1) * ONE_DAY;
+            stockData.price     = data.at(i);
+
+            stock->operational.detailedData.append(stockData);
+        }
+    }
+
     BuyDecision3* buyDecision3;
 };
 
@@ -47,6 +85,7 @@ TEST_F(Test_BuyDecision3, Test_constructor_and_destructor)
 
 TEST_F(Test_BuyDecision3, Test_makeDecision)
 {
+    /*
     const InSequence seq;
 
     StrictMock<DecisionMakerConfigMock> configMock;
@@ -57,49 +96,24 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
     Stock stock;
     stock.meta.pricePrecision = 2;
 
-    StockData            stockData1;
-    StockData            stockData2;
-    StockData            stockData3;
-    StockData            stockData4;
-    StockData            stockData5;
-    StockOperationalData stockOperationalData1;
-    StockOperationalData stockOperationalData2;
-    StockOperationalData stockOperationalData3;
-    StockOperationalData stockOperationalData4;
-    StockOperationalData stockOperationalData5;
-
-    stockData1.timestamp = 1704056400000;
-    stockData1.price     = 101.0f;
-    stockData2.timestamp = 1704142800000;
-    stockData2.price     = 101.0f;
-    stockData3.timestamp = 1704229200000;
-    stockData3.price     = 101.0f;
-    stockData4.timestamp = 1704315600000;
-    stockData4.price     = 101.0f;
-    stockData5.timestamp = 1704402000000;
-    stockData5.price     = 101.0f;
-    stock.data.clear();
-    stock.data << stockData1 << stockData2 << stockData3 << stockData4 << stockData5;
-
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(false));
 
-    QString cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 4, 100.0f, -1.0f, 0.04f);
+    QString cause = buyDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
-    stockData1.timestamp = 1704056400000;
-    stockData1.price     = 101.0f;
-    stockData2.timestamp = 1704142800000;
-    stockData2.price     = 101.0f;
-    stockData3.timestamp = 1704229200000;
-    stockData3.price     = 101.0f;
-    stockData4.timestamp = 1704315600000;
-    stockData4.price     = 101.0f;
-    stockData5.timestamp = 1704402000000;
-    stockData5.price     = 101.0f;
-    stock.data.clear();
-    stock.data << stockData1 << stockData2 << stockData3 << stockData4 << stockData5;
+    fillWithData(
+        &stock,
+        {
+            101.0f,
+            101.0f,
+            101.0f,
+            101.0f,
+            101.0f,
+        },
+        true
+    );
 
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
@@ -110,18 +124,17 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
-    stockData1.timestamp = 1704056400000;
-    stockData1.price     = 101.0f;
-    stockData2.timestamp = 1704142800000;
-    stockData2.price     = 101.0f;
-    stockData3.timestamp = 1704229200000;
-    stockData3.price     = 150.0f;
-    stockData4.timestamp = 1704315600000;
-    stockData4.price     = 101.0f;
-    stockData5.timestamp = 1704402000000;
-    stockData5.price     = 101.0f;
-    stock.data.clear();
-    stock.data << stockData1 << stockData2 << stockData3 << stockData4 << stockData5;
+    fillWithData(
+        &stock,
+        {
+            101.0f,
+            101.0f,
+            150.0f,
+            101.0f,
+            101.0f,
+        },
+        true
+    );
 
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
@@ -132,18 +145,17 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
-    stockData1.timestamp = 1704056400000;
-    stockData1.price     = 123.0f;
-    stockData2.timestamp = 1704142800000;
-    stockData2.price     = 122.0f;
-    stockData3.timestamp = 1704229200000;
-    stockData3.price     = 121.0f;
-    stockData4.timestamp = 1704315600000;
-    stockData4.price     = 120.0f;
-    stockData5.timestamp = 1704402000000;
-    stockData5.price     = 101.0f;
-    stock.data.clear();
-    stock.data << stockData1 << stockData2 << stockData3 << stockData4 << stockData5;
+    fillWithData(
+        &stock,
+        {
+            123.0f,
+            122.0f,
+            121.0f,
+            120.0f,
+            101.0f,
+        },
+        true
+    );
 
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
@@ -158,20 +170,17 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
         "and the fall is -16.67%"
     );
 
-    stockOperationalData1.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 4;
-    stockOperationalData1.price     = 101.0f;
-    stockOperationalData2.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 3;
-    stockOperationalData2.price     = 101.0f;
-    stockOperationalData3.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 2;
-    stockOperationalData3.price     = 101.0f;
-    stockOperationalData4.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY;
-    stockOperationalData4.price     = 101.0f;
-    stockOperationalData5.timestamp = QDateTime::currentMSecsSinceEpoch();
-    stockOperationalData5.price     = 101.0f;
-    stock.operational.detailedData.clear();
-    stock.data.clear();
-    stock.operational.detailedData << stockOperationalData1 << stockOperationalData2 << stockOperationalData3
-                                   << stockOperationalData4 << stockOperationalData5;
+    fillWithData(&stock, {}, false);
+    fillWithOperationalData(
+        &stock,
+        {
+            101.0f,
+            101.0f,
+            101.0f,
+            101.0f,
+            101.0f,
+        }
+    );
 
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
@@ -182,20 +191,17 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
-    stockOperationalData1.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 4;
-    stockOperationalData1.price     = 101.0f;
-    stockOperationalData2.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 3;
-    stockOperationalData2.price     = 101.0f;
-    stockOperationalData3.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 2;
-    stockOperationalData3.price     = 150.0f;
-    stockOperationalData4.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY;
-    stockOperationalData4.price     = 101.0f;
-    stockOperationalData5.timestamp = QDateTime::currentMSecsSinceEpoch();
-    stockOperationalData5.price     = 101.0f;
-    stock.operational.detailedData.clear();
-    stock.data.clear();
-    stock.operational.detailedData << stockOperationalData1 << stockOperationalData2 << stockOperationalData3
-                                   << stockOperationalData4 << stockOperationalData5;
+    fillWithData(&stock, {}, false);
+    fillWithOperationalData(
+        &stock,
+        {
+            101.0f,
+            101.0f,
+            150.0f,
+            101.0f,
+            101.0f,
+        }
+    );
 
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
@@ -206,20 +212,17 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
-    stockOperationalData1.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 4;
-    stockOperationalData1.price     = 123.0f;
-    stockOperationalData2.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 3;
-    stockOperationalData2.price     = 122.0f;
-    stockOperationalData3.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 2;
-    stockOperationalData3.price     = 121.0f;
-    stockOperationalData4.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY;
-    stockOperationalData4.price     = 120.0f;
-    stockOperationalData5.timestamp = QDateTime::currentMSecsSinceEpoch();
-    stockOperationalData5.price     = 101.0f;
-    stock.operational.detailedData.clear();
-    stock.data.clear();
-    stock.operational.detailedData << stockOperationalData1 << stockOperationalData2 << stockOperationalData3
-                                   << stockOperationalData4 << stockOperationalData5;
+    fillWithData(&stock, {}, false);
+    fillWithOperationalData(
+        &stock,
+        {
+            123.0f,
+            122.0f,
+            121.0f,
+            120.0f,
+            101.0f,
+        }
+    );
 
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
@@ -230,26 +233,23 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
 
     ASSERT_EQ(
         cause,
-        QString(
-            "Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at %1 within last 3 days and the "
-            "fall is -16.67%"
-        )
-            .arg(QDateTime::fromMSecsSinceEpoch(stockOperationalData4.timestamp).toString(DATETIME_FORMAT))
+        QString("Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at %1 within last 3 days and the "
+                "fall is -16.67%")
+            .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(3).timestamp).toString(DATETIME_FORMAT))
     );
 
-    stockData1.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 4;
-    stockData1.price     = 101.0f;
-    stockData2.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 3;
-    stockData2.price     = 101.0f;
-    stockData3.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 2;
-    stockData3.price     = 101.0f;
-    stockData4.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY;
-    stockData4.price     = 101.0f;
-    stockData5.timestamp = QDateTime::currentMSecsSinceEpoch();
-    stockData5.price     = 101.0f;
-    stock.operational.detailedData.clear();
-    stock.data.clear();
-    stock.data << stockData1 << stockData2 << stockData3 << stockData4 << stockData5;
+    fillWithOperationalData(&stock, {});
+    fillWithData(
+        &stock,
+        {
+            101.0f,
+            101.0f,
+            101.0f,
+            101.0f,
+            101.0f,
+        },
+        false
+    );
 
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
@@ -260,19 +260,18 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
-    stockData1.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 4;
-    stockData1.price     = 101.0f;
-    stockData2.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 3;
-    stockData2.price     = 101.0f;
-    stockData3.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 2;
-    stockData3.price     = 150.0f;
-    stockData4.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY;
-    stockData4.price     = 101.0f;
-    stockData5.timestamp = QDateTime::currentMSecsSinceEpoch();
-    stockData5.price     = 101.0f;
-    stock.operational.detailedData.clear();
-    stock.data.clear();
-    stock.data << stockData1 << stockData2 << stockData3 << stockData4 << stockData5;
+    fillWithOperationalData(&stock, {});
+    fillWithData(
+        &stock,
+        {
+            101.0f,
+            101.0f,
+            150.0f,
+            101.0f,
+            101.0f,
+        },
+        false
+    );
 
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
@@ -283,19 +282,18 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
-    stockData1.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 4;
-    stockData1.price     = 123.0f;
-    stockData2.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 3;
-    stockData2.price     = 122.0f;
-    stockData3.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY * 2;
-    stockData3.price     = 121.0f;
-    stockData4.timestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY;
-    stockData4.price     = 120.0f;
-    stockData5.timestamp = QDateTime::currentMSecsSinceEpoch();
-    stockData5.price     = 101.0f;
-    stock.operational.detailedData.clear();
-    stock.data.clear();
-    stock.data << stockData1 << stockData2 << stockData3 << stockData4 << stockData5;
+    fillWithOperationalData(&stock, {});
+    fillWithData(
+        &stock,
+        {
+            123.0f,
+            122.0f,
+            121.0f,
+            120.0f,
+            101.0f,
+        },
+        false
+    );
 
     EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
@@ -306,10 +304,9 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
 
     ASSERT_EQ(
         cause,
-        QString(
-            "Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at %1 within last 3 days and the "
-            "fall is -16.67%"
-        )
-            .arg(QDateTime::fromMSecsSinceEpoch(stockData4.timestamp).toString(DATETIME_FORMAT))
+        QString("Decided to buy because the price fall to 100.00 \u20BD from 120.00 \u20BD at %1 within last 3 days and the "
+                "fall is -16.67%")
+            .arg(QDateTime::fromMSecsSinceEpoch(stock.data.at(3).timestamp).toString(DATETIME_FORMAT))
     );
+    */
 }

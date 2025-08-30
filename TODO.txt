@@ -1,12 +1,13 @@
-nan price in operations?
-Periodical operations clean refresh?
+Collect operations by using historical daily data (last day) and append non processed operations
+Terminate buy if order price is more than requested (> 0.50 %)
 Limit trading buy different percents in non-working hours
+Trade instruments with huge spread (detect periodically among all stocks). Buy few / sell few (average?)
 Improve coverage
 Create release
 
 Change best config search algorithm
+Find best configs
 Different defaults based on commission
-Do not buy on extremal price raise and fall
 Split order into chunks
 
 =======================================
