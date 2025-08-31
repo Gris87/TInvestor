@@ -43,7 +43,8 @@ public:
 
     bool createPortfolioStream();
 
-    void requestOperations();
+    bool requestOperations();
+    bool validateOperations(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations);
     void handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
     void alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation);
 
@@ -82,6 +83,7 @@ private:
     int                              mLimitOperations;
     int                              mOptimizeSize;
     QString                          mLastPositionUidForExtAccount;
+    QSet<QString>                    mOperationsLastDay;
     QuantityAndCostInstruments       mInstruments;
     Quotation                        mInputMoney;
     Quotation                        mMaxInputMoney;

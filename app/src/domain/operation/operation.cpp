@@ -12,6 +12,7 @@ constexpr float FLOAT_EPSILON = 0.0001f;
 
 Operation::Operation() :
     timestamp(),
+    originalTimestamp(),
     instrumentId(),
     instrumentLogo(),
     instrumentTicker(),
@@ -46,6 +47,11 @@ Operation::Operation() :
 static void operationTimestampParse(Operation* operation, simdjson::ondemand::value value)
 {
     operation->timestamp = value.get_int64();
+}
+
+static void operationOriginalTimestampParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->originalTimestamp = value.get_int64();
 }
 
 static void operationInstrumentIdParse(Operation* operation, simdjson::ondemand::value value)
@@ -208,6 +214,7 @@ using ParseHandler = void (*)(Operation* operation, simdjson::ondemand::value va
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"timestamp",                       operationTimestampParse                      },
+    {"originalTimestamp",               operationOriginalTimestampParse              },
     {"instrumentId",                    operationInstrumentIdParse                   },
     {"instrumentTicker",                operationInstrumentTickerParse               },
     {"instrumentName",                  operationInstrumentNameParse                 },
@@ -262,6 +269,7 @@ QJsonObject Operation::toJsonObject() const
 
     // clang-format off
     res.insert("timestamp",                       timestamp);
+    res.insert("originalTimestamp",               originalTimestamp);
     res.insert("instrumentId",                    instrumentId);
     res.insert("instrumentTicker",                instrumentTicker);
     res.insert("instrumentName",                  instrumentName);
@@ -296,9 +304,10 @@ QJsonObject Operation::toJsonObject() const
 
 bool operator==(const Operation& lhs, const Operation& rhs)
 {
-    return lhs.timestamp == rhs.timestamp && lhs.instrumentId == rhs.instrumentId &&
-           lhs.instrumentTicker == rhs.instrumentTicker && lhs.instrumentName == rhs.instrumentName &&
-           lhs.description == rhs.description && qAbs(lhs.price - rhs.price) < FLOAT_EPSILON && lhs.fifoItems == rhs.fifoItems &&
+    return lhs.timestamp == rhs.timestamp && lhs.originalTimestamp == rhs.originalTimestamp &&
+           lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
+           lhs.instrumentName == rhs.instrumentName && lhs.description == rhs.description &&
+           qAbs(lhs.price - rhs.price) < FLOAT_EPSILON && lhs.fifoItems == rhs.fifoItems &&
            qAbs(lhs.avgPriceFifo - rhs.avgPriceFifo) < FLOAT_EPSILON &&
            qAbs(lhs.avgPriceWavg - rhs.avgPriceWavg) < FLOAT_EPSILON && lhs.quantity == rhs.quantity &&
            lhs.remainedQuantity == rhs.remainedQuantity && qAbs(lhs.payment - rhs.payment) < FLOAT_EPSILON &&

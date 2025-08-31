@@ -240,7 +240,7 @@ bool TradingThread::sell(double expected, double delta)
             price = qMax(price, avgPrice() * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
         }
 
-        const qint64 coef = qRound64(price / quotationToDouble(mMinPriceIncrement));
+        const qint64 coef = static_cast<qint64>(std::ceil(price / quotationToDouble(mMinPriceIncrement)));
 
         return sellWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef));
     }
@@ -420,7 +420,7 @@ bool TradingThread::buy(double expected, double delta)
             }
         }
 
-        const qint64 coef = qRound64(price / quotationToDouble(mMinPriceIncrement));
+        const qint64 coef = static_cast<qint64>(std::floor(price / quotationToDouble(mMinPriceIncrement)));
 
         return buyWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef));
     }

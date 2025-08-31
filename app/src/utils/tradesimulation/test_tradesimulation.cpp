@@ -61,6 +61,7 @@ TEST_F(Test_TradeSimulation, Test_createInitOperations)
     Operation operation;
 
     operation.timestamp                       = 500;
+    operation.originalTimestamp               = 500;
     operation.instrumentId                    = RUBLE_UID;
     operation.instrumentLogo                  = &logo;
     operation.instrumentTicker                = "RUBLE";
@@ -101,6 +102,7 @@ TEST_F(Test_TradeSimulation, Test_createInitOperations)
     QList<Operation> operations2;
 
     operation.timestamp                       = 5500;
+    operation.originalTimestamp               = 5500;
     operation.instrumentId                    = RUBLE_UID;
     operation.instrumentLogo                  = &logo;
     operation.instrumentTicker                = "RUBLE";
@@ -321,6 +323,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     Operation operation;
 
     operation.timestamp                       = 500;
+    operation.originalTimestamp               = 500;
     operation.instrumentId                    = RUBLE_UID;
     operation.instrumentLogo                  = &logo;
     operation.instrumentTicker                = "RUBLE";
@@ -418,6 +421,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     Operation buyOperation;
 
     buyOperation.timestamp                       = 1000;
+    buyOperation.originalTimestamp               = 1000;
     buyOperation.instrumentId                    = "aaaaa";
     buyOperation.instrumentLogo                  = &logo;
     buyOperation.instrumentTicker                = "ABBA";
@@ -611,6 +615,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     Operation buyOperation2;
 
     buyOperation2.timestamp                       = 2000;
+    buyOperation2.originalTimestamp               = 2000;
     buyOperation2.instrumentId                    = "bbbbb";
     buyOperation2.instrumentLogo                  = &logo;
     buyOperation2.instrumentTicker                = "BASE";
@@ -813,6 +818,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     Operation sellOperation;
 
     sellOperation.timestamp                       = 3000;
+    sellOperation.originalTimestamp               = 3000;
     sellOperation.instrumentId                    = "bbbbb";
     sellOperation.instrumentLogo                  = &logo;
     sellOperation.instrumentTicker                = "BASE";
@@ -999,6 +1005,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     Operation sellOperation2;
 
     sellOperation2.timestamp                       = 4000;
+    sellOperation2.originalTimestamp               = 4000;
     sellOperation2.instrumentId                    = "aaaaa";
     sellOperation2.instrumentLogo                  = &logo;
     sellOperation2.instrumentTicker                = "ABBA";

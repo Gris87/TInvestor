@@ -77,29 +77,53 @@ TEST_F(Test_OperationsThread, Test_run)
 
     QList<Operation> operations;
 
-    std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
+    std::shared_ptr<PortfolioStream> portfolioStream1(new PortfolioStream());
+    std::shared_ptr<PortfolioStream> portfolioStream2(new PortfolioStream());
 
-    const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse(new tinkoff::PortfolioStreamResponse());
+    const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperationsByCursorResponse1(
+        new tinkoff::GetOperationsByCursorResponse()
+    );
+    const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperationsByCursorResponse2(
+        new tinkoff::GetOperationsByCursorResponse()
+    );
 
-    tinkoff::PortfolioResponse* portfolioResponse =
-        new tinkoff::PortfolioResponse(); // portfolioStreamResponse will take ownership
+    const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse1(new tinkoff::PortfolioStreamResponse());
+    const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse2(new tinkoff::PortfolioStreamResponse());
 
-    portfolioStreamResponse->set_allocated_portfolio(portfolioResponse);
+    tinkoff::PortfolioResponse* portfolioResponse1 =
+        new tinkoff::PortfolioResponse(); // portfolioStreamResponse1 will take ownership
+    tinkoff::PortfolioResponse* portfolioResponse2 =
+        new tinkoff::PortfolioResponse(); // portfolioStreamResponse2 will take ownership
+
+    portfolioStreamResponse1->set_allocated_portfolio(portfolioResponse1);
+    portfolioStreamResponse2->set_allocated_portfolio(portfolioResponse2);
 
     EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
-    EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
+    EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream1));
     EXPECT_CALL(
         *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
-        .WillOnce(Return(nullptr));
-    EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(portfolioStreamResponse));
+        .WillOnce(Return(getOperationsByCursorResponse1));
+    EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream1)).WillOnce(Return(portfolioStreamResponse1));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(
         *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(nullptr));
-    EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(nullptr));
-    EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream));
+    EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream1)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream1));
+
+    thread->run();
+
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
+    EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream2));
+    EXPECT_CALL(
+        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
+    )
+        .WillOnce(Return(getOperationsByCursorResponse2));
+    EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream2)).WillOnce(Return(portfolioStreamResponse2));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream2));
 
     thread->run();
 }
@@ -215,6 +239,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     Operation operation2;
 
     operation1.timestamp                       = 1704056460000;
+    operation1.originalTimestamp               = 1704056460000;
     operation1.instrumentId                    = "aaaaa";
     operation1.instrumentTicker                = "aaaaa";
     operation1.instrumentName                  = "?????";
@@ -258,6 +283,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     operation1.fifoItems << item;
 
     operation2.timestamp                       = 1704056400000;
+    operation2.originalTimestamp               = 1704056400000;
     operation2.instrumentId                    = RUBLE_UID;
     operation2.instrumentTicker                = RUBLE_UID;
     operation2.instrumentName                  = "?????";
@@ -381,6 +407,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     Operation operation3;
 
     operation3.timestamp                       = 1704056460001;
+    operation3.originalTimestamp               = 1704056460000;
     operation3.instrumentId                    = "aaaaa";
     operation3.instrumentTicker                = "aaaaa";
     operation3.instrumentName                  = "?????";
@@ -419,7 +446,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
 
     EXPECT_CALL(
         *grpcClientMock,
-        getOperations(QThread::currentThread(), QString("account-id"), 1704056461000, Ge(1704056461000), QString(""))
+        getOperations(QThread::currentThread(), QString("account-id"), 1703970060000, Ge(1704056461000), QString(""))
     )
         .WillOnce(Return(getOperationsByCursorResponse3));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -498,6 +525,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400000);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      RUBLE_UID);
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  RUBLE_UID);
@@ -561,6 +589,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400001);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      "aaaaa");
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  "LETO");
@@ -627,6 +656,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400002);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      "aaaaa");
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  "LETO");
@@ -696,6 +726,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400003);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      "aaaaa");
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  "LETO");
@@ -768,6 +799,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400004);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      "aaaaa");
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  "LETO");
@@ -837,6 +869,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400005);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      "aaaaa");
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  "LETO");
@@ -900,6 +933,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400006);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      RUBLE_UID);
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  RUBLE_UID);
@@ -963,6 +997,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400007);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      "aaaaa");
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  "LETO");
@@ -1029,6 +1064,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400008);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      "aaaaa");
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  "LETO");
@@ -1095,6 +1131,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400009);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      "aaaaa");
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  "LETO");
@@ -1161,6 +1198,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1704056400010);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      "aaaaa");
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
     ASSERT_EQ(operation.instrumentTicker,                  "LETO");
@@ -1319,6 +1357,7 @@ TEST_F(Test_OperationsThread, Test_optimize)
         Operation& operation2 = operations[i + 1];
 
         operation1.timestamp                       = operations.size() - i;
+        operation1.originalTimestamp               = operations.size() - i;
         operation1.instrumentId                    = "aaaaa";
         operation1.instrumentTicker                = "aaaaa";
         operation1.instrumentName                  = "?????";
@@ -1354,6 +1393,7 @@ TEST_F(Test_OperationsThread, Test_optimize)
         operation1.commissionPrecision             = 2;
 
         operation2.timestamp                       = operations.size() - i - 1;
+        operation2.originalTimestamp               = operations.size() - i - 1;
         operation2.instrumentId                    = "aaaaa";
         operation2.instrumentTicker                = "aaaaa";
         operation2.instrumentName                  = "?????";
@@ -1395,6 +1435,7 @@ TEST_F(Test_OperationsThread, Test_optimize)
         Operation& operation2 = optimizedOperations[i + 1];
 
         operation1.timestamp                       = operations.size() - i;
+        operation1.originalTimestamp               = operations.size() - i;
         operation1.instrumentId                    = "aaaaa";
         operation1.instrumentTicker                = "aaaaa";
         operation1.instrumentName                  = "?????";
@@ -1430,6 +1471,7 @@ TEST_F(Test_OperationsThread, Test_optimize)
         operation1.commissionPrecision             = 2;
 
         operation2.timestamp                       = operations.size() - i - 1;
+        operation2.originalTimestamp               = operations.size() - i - 1;
         operation2.instrumentId                    = "aaaaa";
         operation2.instrumentTicker                = "aaaaa";
         operation2.instrumentName                  = "?????";
@@ -1469,6 +1511,7 @@ TEST_F(Test_OperationsThread, Test_optimize)
     Operation& lastOperation2 = operations[operations.size() - 2];
 
     lastOperation1.timestamp                       = 1;
+    lastOperation1.originalTimestamp               = 1;
     lastOperation1.instrumentId                    = "bbbbb";
     lastOperation1.instrumentTicker                = "bbbbb";
     lastOperation1.instrumentName                  = "?????";
@@ -1504,6 +1547,7 @@ TEST_F(Test_OperationsThread, Test_optimize)
     lastOperation1.commissionPrecision             = 4;
 
     lastOperation2.timestamp                       = 2;
+    lastOperation2.originalTimestamp               = 2;
     lastOperation2.instrumentId                    = "ccccc";
     lastOperation2.instrumentTicker                = "ccccc";
     lastOperation2.instrumentName                  = "?????";
@@ -1543,12 +1587,16 @@ TEST_F(Test_OperationsThread, Test_optimize)
 
     std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
 
+    const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperationsByCursorResponse(
+        new tinkoff::GetOperationsByCursorResponse()
+    );
+
     EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
     EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1011, Ge(1704056400000), QString(""))
+        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
-        .WillOnce(Return(nullptr));
+        .WillOnce(Return(getOperationsByCursorResponse));
     EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*optimizerMock, optimizeOperations(operations, 3, QStringList() << "bbbbb" << "ccccc"))
         .WillOnce(Return(optimizedOperations));

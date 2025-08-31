@@ -30,7 +30,7 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-MATCHER_P(IsOperationsEqWithoutTimeout, another, "")
+MATCHER_P(IsOperationsEqWithoutTimestamp, another, "")
 {
     if (arg.size() != another.size())
     {
@@ -42,7 +42,8 @@ MATCHER_P(IsOperationsEqWithoutTimeout, another, "")
         Operation        operation        = arg.at(i);
         const Operation& anotherOperation = another.at(i);
 
-        operation.timestamp = anotherOperation.timestamp;
+        operation.timestamp         = anotherOperation.timestamp;
+        operation.originalTimestamp = anotherOperation.originalTimestamp;
 
         if (operation != anotherOperation)
         {
@@ -53,7 +54,7 @@ MATCHER_P(IsOperationsEqWithoutTimeout, another, "")
     return true;
 }
 
-MATCHER_P(IsLogEntryEqWithoutTimeout, another, "")
+MATCHER_P(IsLogEntryEqWithoutTimestamp, another, "")
 {
     LogEntry entry = arg;
 
@@ -175,6 +176,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     Operation operation;
 
     operation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    operation.originalTimestamp               = QDateTime::currentMSecsSinceEpoch();
     operation.instrumentId                    = RUBLE_UID;
     operation.instrumentLogo                  = &logo;
     operation.instrumentTicker                = "RUBLE";
@@ -307,6 +309,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     Operation buyOperation;
 
     buyOperation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    buyOperation.originalTimestamp               = QDateTime::currentMSecsSinceEpoch();
     buyOperation.instrumentId                    = "aaaaa";
     buyOperation.instrumentLogo                  = &logo;
     buyOperation.instrumentTicker                = "ABBA";
@@ -448,7 +451,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString(RUBLE_UID))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, writeOperations(IsOperationsEqWithoutTimeout(operations), -1));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(IsOperationsEqWithoutTimestamp(operations), -1));
     EXPECT_CALL(*logsDatabaseMock, writeLogs(entries, -1));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
@@ -476,11 +479,11 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(buyOperations), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry1), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry2), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry3), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry4), -1));
+    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimestamp(buyOperations), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(buyEntry1), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(buyEntry2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(buyEntry3), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(buyEntry4), -1));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
@@ -509,6 +512,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     Operation buyOperation2;
 
     buyOperation2.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    buyOperation2.originalTimestamp               = QDateTime::currentMSecsSinceEpoch();
     buyOperation2.instrumentId                    = "bbbbb";
     buyOperation2.instrumentLogo                  = &logo;
     buyOperation2.instrumentTicker                = "BASE";
@@ -686,11 +690,11 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("bbbbb"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(buyOperations2), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry1), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry2), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry3), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry4), -1));
+    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimestamp(buyOperations2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(buyEntry1), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(buyEntry2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(buyEntry3), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(buyEntry4), -1));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
@@ -711,6 +715,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     Operation sellOperation;
 
     sellOperation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    sellOperation.originalTimestamp               = QDateTime::currentMSecsSinceEpoch();
     sellOperation.instrumentId                    = "bbbbb";
     sellOperation.instrumentLogo                  = &logo;
     sellOperation.instrumentTicker                = "BASE";
@@ -871,11 +876,11 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("bbbbb"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(sellOperations), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry1), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry2), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry3), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry4), -1));
+    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimestamp(sellOperations), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(sellEntry1), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(sellEntry2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(sellEntry3), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(sellEntry4), -1));
     EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(sellPortfolio, -1));
 
     thread->run();
@@ -893,6 +898,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     Operation sellOperation2;
 
     sellOperation2.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    sellOperation2.originalTimestamp               = QDateTime::currentMSecsSinceEpoch();
     sellOperation2.instrumentId                    = "aaaaa";
     sellOperation2.instrumentLogo                  = &logo;
     sellOperation2.instrumentTicker                = "ABBA";
@@ -1027,11 +1033,11 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(sellOperations2), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry1), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry2), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry3), -1));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry4), -1));
+    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimestamp(sellOperations2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(sellEntry1), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(sellEntry2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(sellEntry3), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimestamp(sellEntry4), -1));
     EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(sellPortfolio2, -1));
 
     thread->run();
@@ -1063,6 +1069,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
         Operation& operation2 = operations[i + 1];
 
         operation1.timestamp                       = operations.size() - i;
+        operation1.originalTimestamp               = operations.size() - i;
         operation1.instrumentId                    = "aaaaa";
         operation1.instrumentTicker                = "aaaaa";
         operation1.instrumentName                  = "?????";
@@ -1098,6 +1105,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
         operation1.commissionPrecision             = 2;
 
         operation2.timestamp                       = operations.size() - i - 1;
+        operation2.originalTimestamp               = operations.size() - i - 1;
         operation2.instrumentId                    = "aaaaa";
         operation2.instrumentTicker                = "aaaaa";
         operation2.instrumentName                  = "?????";
@@ -1139,6 +1147,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
         Operation& operation2 = optimizedOperations[i + 1];
 
         operation1.timestamp                       = operations.size() - i;
+        operation1.originalTimestamp               = operations.size() - i;
         operation1.instrumentId                    = "aaaaa";
         operation1.instrumentTicker                = "aaaaa";
         operation1.instrumentName                  = "?????";
@@ -1174,6 +1183,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
         operation1.commissionPrecision             = 2;
 
         operation2.timestamp                       = operations.size() - i - 1;
+        operation2.originalTimestamp               = operations.size() - i - 1;
         operation2.instrumentId                    = "aaaaa";
         operation2.instrumentTicker                = "aaaaa";
         operation2.instrumentName                  = "?????";

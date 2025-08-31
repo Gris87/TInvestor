@@ -24,6 +24,7 @@ struct Operation
     QJsonObject toJsonObject() const;
 
     qint64                   timestamp;
+    qint64                   originalTimestamp;
     QString                  instrumentId;
     Logo*                    instrumentLogo;
     QString                  instrumentTicker;

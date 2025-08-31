@@ -555,7 +555,7 @@ int main(int argc, char* argv[])
     {
         QTextStream out(stdout);
 
-        out << VERSION << "-" << GIT_HASH << Qt::endl;
+        out << VERSION << " - " << GIT_HASH << Qt::endl;
 
         return 0;
     }

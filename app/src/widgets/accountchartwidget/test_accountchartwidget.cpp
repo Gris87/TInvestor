@@ -108,12 +108,14 @@ TEST_F(Test_AccountChartWidget, Test_operationsRead_and_operationsAdded)
 
     Operation operation;
     operation.timestamp                       = 1704056400000;
+    operation.originalTimestamp               = 1704056400000;
     operation.totalYieldWithCommissionPercent = 1.0f;
     operations << operation;
 
     accountChartWidget->operationsRead(operations);
 
     operations[0].timestamp                       = 1704056460000;
+    operations[0].originalTimestamp               = 1704056460000;
     operations[0].totalYieldWithCommissionPercent = 2.0f;
 
     accountChartWidget->operationsAdded(operations);
@@ -134,6 +136,7 @@ TEST_F(Test_AccountChartWidget, Test_actionExportToExcelTriggered)
 
     Operation operation;
     operation.timestamp                       = 1704056400000;
+    operation.originalTimestamp               = 1704056400000;
     operation.totalYieldWithCommissionPercent = 1.0f;
     operations << operation;
 
@@ -183,6 +186,7 @@ TEST_F(Test_AccountChartWidget, Test_lineSeriesHovered)
 
     Operation operation;
     operation.timestamp                       = 1704056460000;
+    operation.originalTimestamp               = 1704056460000;
     operation.totalYieldWithCommissionPercent = -3.0f;
     operation.remainedMoney.units             = 50;
     operation.remainedMoney.nano              = 0;
@@ -191,6 +195,7 @@ TEST_F(Test_AccountChartWidget, Test_lineSeriesHovered)
     operations << operation;
 
     operation.timestamp                       = 1704056430000;
+    operation.originalTimestamp               = 1704056430000;
     operation.totalYieldWithCommissionPercent = 2.0f;
     operation.remainedMoney.units             = 2000;
     operation.remainedMoney.nano              = 0;
@@ -199,6 +204,7 @@ TEST_F(Test_AccountChartWidget, Test_lineSeriesHovered)
     operations << operation;
 
     operation.timestamp                       = 1704056400000;
+    operation.originalTimestamp               = 1704056400000;
     operation.totalYieldWithCommissionPercent = 1.0f;
     operation.remainedMoney.units             = 5000;
     operation.remainedMoney.nano              = 0;
@@ -299,6 +305,7 @@ TEST_F(Test_AccountChartWidget, Test_barSeriesHovered)
 
     Operation operation;
     operation.timestamp                       = 1706821200000;
+    operation.originalTimestamp               = 1706821200000;
     operation.totalYieldWithCommissionPercent = -3.0f;
     operation.remainedMoney.units             = 50;
     operation.remainedMoney.nano              = 0;
@@ -307,6 +314,7 @@ TEST_F(Test_AccountChartWidget, Test_barSeriesHovered)
     operations << operation;
 
     operation.timestamp                       = 1704056430000;
+    operation.originalTimestamp               = 1704056430000;
     operation.totalYieldWithCommissionPercent = 2.0f;
     operation.remainedMoney.units             = 2000;
     operation.remainedMoney.nano              = 0;
@@ -315,6 +323,7 @@ TEST_F(Test_AccountChartWidget, Test_barSeriesHovered)
     operations << operation;
 
     operation.timestamp                       = 1704056400000;
+    operation.originalTimestamp               = 1704056400000;
     operation.totalYieldWithCommissionPercent = 1.0f;
     operation.remainedMoney.units             = 5000;
     operation.remainedMoney.nano              = 0;

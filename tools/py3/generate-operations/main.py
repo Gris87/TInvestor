@@ -36,6 +36,7 @@ def _generate_operations(last_timestamp, output_path):
 
     operation = {
         "timestamp": last_timestamp,
+        "originalTimestamp": last_timestamp,
         "instrumentId": "15dc2120-29d2-48b8-87c0-da1d95255f68",  # SPBE
         "instrumentTicker": "SPBE",
         "instrumentName": "SPBEmushka",
@@ -70,6 +71,7 @@ def _generate_operations(last_timestamp, output_path):
 
     operation = {
         "timestamp": last_timestamp,
+        "originalTimestamp": last_timestamp,
         "instrumentId": "15dc2120-29d2-48b8-87c0-da1d95255f68",  # SPBE
         "instrumentTicker": "SPBE",
         "instrumentName": "SPBEmushka",
@@ -104,6 +106,7 @@ def _generate_operations(last_timestamp, output_path):
 
     operation = {
         "timestamp": last_timestamp,
+        "originalTimestamp": last_timestamp,
         "instrumentId": "48bd9002-43be-4528-abf4-dc8135ad4550",  # UGLD
         "instrumentTicker": "UGLD",
         "instrumentName": "UGLDushka",
@@ -138,6 +141,7 @@ def _generate_operations(last_timestamp, output_path):
 
     operation = {
         "timestamp": last_timestamp,
+        "originalTimestamp": last_timestamp,
         "instrumentId": "48bd9002-43be-4528-abf4-dc8135ad4550",  # UGLD
         "instrumentTicker": "UGLD",
         "instrumentName": "UGLDushka",

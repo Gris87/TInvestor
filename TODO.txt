@@ -1,5 +1,8 @@
-Collect operations by using historical daily data (last day) and append non processed operations
 Limit trading buy different percents in non-working hours
+Notify about market price on trading
+Add methods for detecting asap/super asap to decisions
+Super ASAP buying for BuyDecision1 with trading based on asks with price raise < 0.50%
+Super ASAP selling for SellDecision1 with trading based on bids with yield > 0.38%
 Trade instruments with huge spread (detect periodically among all stocks). Buy few / sell few (average?)
 Improve coverage
 Create release

@@ -69,27 +69,26 @@ TEST_F(Test_OperationsDatabase, Test_readOperations)
         "{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{"
         "\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,\"units\":11},\"description\":\"d\",\"fifoItems\":[{\"cost\":{"
         "\"nano\":33,\"units\":32},\"quantity\":31}],\"inputMoney\":{\"nano\":18,\"units\":17},\"instrumentId\":\"aaaaa\","
-        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"payment\":7,"
-        "\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":25,\"units\":24},"
-        "\"remainedQuantity\":6,\"timestamp\":1000,\"totalMoney\":{\"nano\":27,\"units\":26},\"totalYieldWithCommission\":{"
-        "\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,\"yieldWithCommission\":15,"
-        "\"yieldWithCommissionPercent\":16},\n{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,"
-        "\"commissionPrecision\":30,\"costFifo\":{\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,\"units\":11},"
-        "\"description\":\"d\",\"fifoItems\":[{\"cost\":{\"nano\":33,\"units\":32},\"quantity\":31}],\"inputMoney\":{\"nano\":18,"
-        "\"units\":17},\"instrumentId\":\"aaaaa\",\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{"
-        "\"nano\":20,"
-        "\"units\":19},\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{"
-        "\"nano\":25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":2000,\"totalMoney\":{\"nano\":27,\"units\":26},"
+        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"originalTimestamp\":"
+        "1000,\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":"
+        "25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":1000,\"totalMoney\":{\"nano\":27,\"units\":26},"
         "\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,"
         "\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16},\n{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":"
         "4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,"
         "\"units\":11},\"description\":\"d\",\"fifoItems\":[{\"cost\":{\"nano\":33,\"units\":32},\"quantity\":31}],"
         "\"inputMoney\":{\"nano\":18,\"units\":17},\"instrumentId\":\"aaaaa\",\"instrumentName\":\"c\",\"instrumentTicker\":"
-        "\"b\","
-        "\"maxInputMoney\":{\"nano\":20,\"units\":19},\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,"
-        "\"quantity\":5,\"remainedMoney\":{\"nano\":25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":3000,\"totalMoney\":{"
-        "\"nano\":27,\"units\":26},\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":"
-        "23,\"yield\":14,\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16}";
+        "\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"originalTimestamp\":2000,\"payment\":7,\"paymentPrecision\":29,"
+        "\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":25,\"units\":24},\"remainedQuantity\":6,"
+        "\"timestamp\":2000,\"totalMoney\":{\"nano\":27,\"units\":26},\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},"
+        "\"totalYieldWithCommissionPercent\":23,\"yield\":14,\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16},\n{"
+        "\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{"
+        "\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,\"units\":11},\"description\":\"d\",\"fifoItems\":[{\"cost\":{"
+        "\"nano\":33,\"units\":32},\"quantity\":31}],\"inputMoney\":{\"nano\":18,\"units\":17},\"instrumentId\":\"aaaaa\","
+        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"originalTimestamp\":"
+        "3000,\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":"
+        "25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":3000,\"totalMoney\":{\"nano\":27,\"units\":26},"
+        "\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,"
+        "\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16}";
     QByteArray operationsBytes = operationsStr.toUtf8();
 
     EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/autopilot/ACCOUNT_ID/operations.json"))
@@ -112,6 +111,7 @@ TEST_F(Test_OperationsDatabase, Test_readOperations)
     {
         // clang-format off
         ASSERT_EQ(operations.at(i).timestamp,                         3000 - i * 1000);
+        ASSERT_EQ(operations.at(i).originalTimestamp,                 3000 - i * 1000);
         ASSERT_EQ(operations.at(i).instrumentId,                      "aaaaa");
         ASSERT_EQ(operations.at(i).instrumentLogo,                    &logo);
         ASSERT_EQ(operations.at(i).instrumentTicker,                  "b");
@@ -168,10 +168,11 @@ TEST_F(Test_OperationsDatabase, Test_readOperations)
                 "\"costFifo\":{\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,\"units\":11},\"description\":\"d\","
                 "\"fifoItems\":[{\"cost\":{\"nano\":33,\"units\":32},\"quantity\":31}],\"inputMoney\":{\"nano\":18,\"units\":17},"
                 "\"instrumentId\":\"aaaaa\",\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,"
-                "\"units\":19},\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,"
-                "\"remainedMoney\":{\"nano\":25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":%1,\"totalMoney\":{\"nano\":"
-                "27,\"units\":26},\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,"
-                "\"yield\":14,\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16}"
+                "\"units\":19},\"originalTimestamp\":%1,\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,"
+                "\"quantity\":5,\"remainedMoney\":{\"nano\":25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":%1,"
+                "\"totalMoney\":{\"nano\":27,\"units\":26},\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},"
+                "\"totalYieldWithCommissionPercent\":23,\"yield\":14,\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":"
+                "16}"
             )
                 .arg(i * 1000);
     }
@@ -195,6 +196,7 @@ TEST_F(Test_OperationsDatabase, Test_readOperations)
     {
         // clang-format off
         ASSERT_EQ(operations.at(i).timestamp,                         999000 - i * 1000);
+        ASSERT_EQ(operations.at(i).originalTimestamp,                 999000 - i * 1000);
         ASSERT_EQ(operations.at(i).instrumentId,                      "aaaaa");
         ASSERT_EQ(operations.at(i).instrumentLogo,                    &logo);
         ASSERT_EQ(operations.at(i).instrumentTicker,                  "b");
@@ -271,6 +273,7 @@ TEST_F(Test_OperationsDatabase, Test_readOperations)
     {
         // clang-format off
         ASSERT_EQ(operations.at(i).timestamp,                         1000000 - i * 1000);
+        ASSERT_EQ(operations.at(i).originalTimestamp,                 1000000 - i * 1000);
         ASSERT_EQ(operations.at(i).instrumentId,                      "aaaaa");
         ASSERT_EQ(operations.at(i).instrumentLogo,                    &logo);
         ASSERT_EQ(operations.at(i).instrumentTicker,                  "b");
@@ -326,6 +329,7 @@ TEST_F(Test_OperationsDatabase, Test_writeOperations)
     Operation        operation;
 
     operation.timestamp                       = 3000;
+    operation.originalTimestamp               = 3000;
     operation.instrumentId                    = "aaaaa";
     operation.instrumentTicker                = "b";
     operation.instrumentName                  = "c";
@@ -369,37 +373,38 @@ TEST_F(Test_OperationsDatabase, Test_writeOperations)
     operation.fifoItems << item;
     operations << operation;
 
-    operation.timestamp = 2000;
+    operation.timestamp         = 2000;
+    operation.originalTimestamp = 2000;
     operations << operation;
 
-    operation.timestamp = 1000;
+    operation.timestamp         = 1000;
+    operation.originalTimestamp = 1000;
     operations << operation;
 
     const QString operationsStr =
         "{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{"
         "\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,\"units\":11},\"description\":\"d\",\"fifoItems\":[{\"cost\":{"
         "\"nano\":33,\"units\":32},\"quantity\":31}],\"inputMoney\":{\"nano\":18,\"units\":17},\"instrumentId\":\"aaaaa\","
-        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"payment\":7,"
-        "\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":25,\"units\":24},"
-        "\"remainedQuantity\":6,\"timestamp\":1000,\"totalMoney\":{\"nano\":27,\"units\":26},\"totalYieldWithCommission\":{"
-        "\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,\"yieldWithCommission\":15,"
-        "\"yieldWithCommissionPercent\":16},\n{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,"
-        "\"commissionPrecision\":30,\"costFifo\":{\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,\"units\":11},"
-        "\"description\":\"d\",\"fifoItems\":[{\"cost\":{\"nano\":33,\"units\":32},\"quantity\":31}],\"inputMoney\":{\"nano\":18,"
-        "\"units\":17},\"instrumentId\":\"aaaaa\",\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{"
-        "\"nano\":20,"
-        "\"units\":19},\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{"
-        "\"nano\":25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":2000,\"totalMoney\":{\"nano\":27,\"units\":26},"
+        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"originalTimestamp\":"
+        "1000,\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":"
+        "25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":1000,\"totalMoney\":{\"nano\":27,\"units\":26},"
         "\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,"
         "\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16},\n{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":"
         "4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,"
         "\"units\":11},\"description\":\"d\",\"fifoItems\":[{\"cost\":{\"nano\":33,\"units\":32},\"quantity\":31}],"
         "\"inputMoney\":{\"nano\":18,\"units\":17},\"instrumentId\":\"aaaaa\",\"instrumentName\":\"c\",\"instrumentTicker\":"
-        "\"b\","
-        "\"maxInputMoney\":{\"nano\":20,\"units\":19},\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,"
-        "\"quantity\":5,\"remainedMoney\":{\"nano\":25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":3000,\"totalMoney\":{"
-        "\"nano\":27,\"units\":26},\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":"
-        "23,\"yield\":14,\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16}";
+        "\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"originalTimestamp\":2000,\"payment\":7,\"paymentPrecision\":29,"
+        "\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":25,\"units\":24},\"remainedQuantity\":6,"
+        "\"timestamp\":2000,\"totalMoney\":{\"nano\":27,\"units\":26},\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},"
+        "\"totalYieldWithCommissionPercent\":23,\"yield\":14,\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16},\n{"
+        "\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{"
+        "\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,\"units\":11},\"description\":\"d\",\"fifoItems\":[{\"cost\":{"
+        "\"nano\":33,\"units\":32},\"quantity\":31}],\"inputMoney\":{\"nano\":18,\"units\":17},\"instrumentId\":\"aaaaa\","
+        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"originalTimestamp\":"
+        "3000,\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":"
+        "25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":3000,\"totalMoney\":{\"nano\":27,\"units\":26},"
+        "\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,"
+        "\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16}";
     const QByteArray operationsBytes = operationsStr.toUtf8();
 
     EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock1)));
@@ -439,6 +444,7 @@ TEST_F(Test_OperationsDatabase, Test_appendOperations)
     Operation        operation;
 
     operation.timestamp                       = 6000;
+    operation.originalTimestamp               = 6000;
     operation.instrumentId                    = "aaaaa";
     operation.instrumentTicker                = "b";
     operation.instrumentName                  = "c";
@@ -482,39 +488,41 @@ TEST_F(Test_OperationsDatabase, Test_appendOperations)
     operation.fifoItems << item;
     operations << operation;
 
-    operation.timestamp = 5000;
+    operation.timestamp         = 5000;
+    operation.originalTimestamp = 5000;
     operations << operation;
 
-    operation.timestamp = 4000;
+    operation.timestamp         = 4000;
+    operation.originalTimestamp = 4000;
     operations << operation;
 
     const QString operation1Str =
         "{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{"
         "\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,\"units\":11},\"description\":\"d\",\"fifoItems\":[{\"cost\":{"
         "\"nano\":33,\"units\":32},\"quantity\":31}],\"inputMoney\":{\"nano\":18,\"units\":17},\"instrumentId\":\"aaaaa\","
-        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"payment\":7,"
-        "\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":25,\"units\":24},"
-        "\"remainedQuantity\":6,\"timestamp\":4000,\"totalMoney\":{\"nano\":27,\"units\":26},\"totalYieldWithCommission\":{"
-        "\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,\"yieldWithCommission\":15,"
-        "\"yieldWithCommissionPercent\":16}";
+        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"originalTimestamp\":"
+        "4000,\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":"
+        "25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":4000,\"totalMoney\":{\"nano\":27,\"units\":26},"
+        "\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,"
+        "\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16}";
     const QString operation2Str =
         "{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{"
         "\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,\"units\":11},\"description\":\"d\",\"fifoItems\":[{\"cost\":{"
         "\"nano\":33,\"units\":32},\"quantity\":31}],\"inputMoney\":{\"nano\":18,\"units\":17},\"instrumentId\":\"aaaaa\","
-        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"payment\":7,"
-        "\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":25,\"units\":24},"
-        "\"remainedQuantity\":6,\"timestamp\":5000,\"totalMoney\":{\"nano\":27,\"units\":26},\"totalYieldWithCommission\":{"
-        "\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,\"yieldWithCommission\":15,"
-        "\"yieldWithCommissionPercent\":16}";
+        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"originalTimestamp\":"
+        "5000,\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":"
+        "25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":5000,\"totalMoney\":{\"nano\":27,\"units\":26},"
+        "\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,"
+        "\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16}";
     const QString operation3Str =
         "{\"avgCostFifo\":8,\"avgPriceFifo\":3,\"avgPriceWavg\":4,\"commission\":13,\"commissionPrecision\":30,\"costFifo\":{"
         "\"nano\":10,\"units\":9},\"costWavg\":{\"nano\":12,\"units\":11},\"description\":\"d\",\"fifoItems\":[{\"cost\":{"
         "\"nano\":33,\"units\":32},\"quantity\":31}],\"inputMoney\":{\"nano\":18,\"units\":17},\"instrumentId\":\"aaaaa\","
-        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"payment\":7,"
-        "\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":25,\"units\":24},"
-        "\"remainedQuantity\":6,\"timestamp\":6000,\"totalMoney\":{\"nano\":27,\"units\":26},\"totalYieldWithCommission\":{"
-        "\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,\"yieldWithCommission\":15,"
-        "\"yieldWithCommissionPercent\":16}";
+        "\"instrumentName\":\"c\",\"instrumentTicker\":\"b\",\"maxInputMoney\":{\"nano\":20,\"units\":19},\"originalTimestamp\":"
+        "6000,\"payment\":7,\"paymentPrecision\":29,\"price\":2,\"pricePrecision\":28,\"quantity\":5,\"remainedMoney\":{\"nano\":"
+        "25,\"units\":24},\"remainedQuantity\":6,\"timestamp\":6000,\"totalMoney\":{\"nano\":27,\"units\":26},"
+        "\"totalYieldWithCommission\":{\"nano\":22,\"units\":21},\"totalYieldWithCommissionPercent\":23,\"yield\":14,"
+        "\"yieldWithCommission\":15,\"yieldWithCommissionPercent\":16}";
     const QByteArray operation1Bytes = operation1Str.toUtf8();
     const QByteArray operation2Bytes = operation2Str.toUtf8();
     const QByteArray operation3Bytes = operation3Str.toUtf8();

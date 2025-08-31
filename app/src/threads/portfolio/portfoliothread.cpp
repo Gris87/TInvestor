@@ -56,9 +56,9 @@ void PortfolioThread::run()
 
     blockSignals(false);
 
-    if (requestPortfolio())
+    if (createPortfolioStream())
     {
-        if (createPortfolioStream())
+        if (requestPortfolio())
         {
             while (true)
             {
@@ -80,12 +80,12 @@ void PortfolioThread::run()
                     requestPortfolio();
                 }
             }
-
-            const QWriteLocker lock(mRwMutex);
-
-            mGrpcClient->finishPortfolioStream(mPortfolioStream);
-            mPortfolioStream = nullptr;
         }
+
+        const QWriteLocker lock(mRwMutex);
+
+        mGrpcClient->finishPortfolioStream(mPortfolioStream);
+        mPortfolioStream = nullptr;
     }
 
     qDebug() << "Finish PortfolioThread";
@@ -145,7 +145,7 @@ bool PortfolioThread::requestPortfolio()
             }
             else
             {
-                qWarning() << "Invalid portfolio received. Try one more time"; // TODO: Use debug
+                qDebug() << "Invalid portfolio received. Try one more time";
 
                 if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
                 {

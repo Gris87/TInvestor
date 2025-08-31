@@ -33,6 +33,7 @@ createInitOperations(IInstrumentsStorage* instrumentsStorage, ILogosStorage* log
     Operation operation;
 
     operation.timestamp                       = timestamp;
+    operation.originalTimestamp               = timestamp;
     operation.instrumentId                    = RUBLE_UID;
     operation.instrumentLogo                  = logo;
     operation.instrumentTicker                = instrument.ticker;
@@ -159,6 +160,7 @@ static void simulateSellForOperations(
     Operation operation;
 
     operation.timestamp                       = timestamp;
+    operation.originalTimestamp               = timestamp;
     operation.instrumentId                    = instrumentId;
     operation.instrumentLogo                  = logo;
     operation.instrumentTicker                = instrument.ticker;
@@ -364,6 +366,7 @@ static void simulateBuyForOperations(
     Operation operation;
 
     operation.timestamp                       = timestamp;
+    operation.originalTimestamp               = timestamp;
     operation.instrumentId                    = instrumentId;
     operation.instrumentLogo                  = logo;
     operation.instrumentTicker                = instrument.ticker;

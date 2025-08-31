@@ -46,6 +46,7 @@ OperationsThread::OperationsThread(
     mLimitOperations(LIMIT_OPERATIONS),
     mOptimizeSize(OPTIMIZE_SIZE),
     mLastPositionUidForExtAccount(),
+    mOperationsLastDay(),
     mInstruments(),
     mInputMoney(),
     mMaxInputMoney(),
@@ -72,28 +73,29 @@ void OperationsThread::run()
 
     if (createPortfolioStream())
     {
-        requestOperations();
-
-        while (true)
+        if (requestOperations())
         {
-            optimize();
-
-            const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
-                mGrpcClient->readPortfolioStream(mPortfolioStream);
-
-            if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
+            while (true)
             {
-                break;
-            }
+                optimize();
 
-            if (portfolioStreamResponse->has_portfolio())
-            {
-                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
+                    mGrpcClient->readPortfolioStream(mPortfolioStream);
+
+                if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
                 {
                     break;
                 }
 
-                requestOperations();
+                if (portfolioStreamResponse->has_portfolio())
+                {
+                    if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                    {
+                        break;
+                    }
+
+                    requestOperations();
+                }
             }
         }
 
@@ -152,7 +154,8 @@ void OperationsThread::readOperations()
     {
         const Operation& lastOperation = operations.constFirst(); // Since it reversed
 
-        mLastRequestTimestamp     = lastOperation.timestamp + MS_IN_SECOND;
+        mLastRequestTimestamp     = lastOperation.timestamp;
+        mLastOperationTimestamp   = lastOperation.timestamp;
         mInputMoney               = lastOperation.inputMoney;
         mMaxInputMoney            = lastOperation.maxInputMoney;
         mTotalYieldWithCommission = lastOperation.totalYieldWithCommission;
@@ -162,6 +165,7 @@ void OperationsThread::readOperations()
     else
     {
         mLastRequestTimestamp     = 0;
+        mLastOperationTimestamp   = 0;
         mInputMoney               = Quotation();
         mMaxInputMoney            = Quotation();
         mTotalYieldWithCommission = Quotation();
@@ -169,15 +173,19 @@ void OperationsThread::readOperations()
         mTotalMoney               = Quotation();
     }
 
-    mLastOperationTimestamp              = 0;
     mAmountOfOperationsWithSameTimestamp = 0;
     mLastPositionUidForExtAccount        = "";
 
+    mOperationsLastDay.clear();
     mInstruments.clear();
 
     for (int i = operations.size() - 1; i >= 0; --i)
     {
         const Operation& operation = operations.at(i);
+
+        mOperationsLastDay.insert(
+            QString("%1_%2_%3").arg(QString::number(operation.originalTimestamp), operation.instrumentId, operation.description)
+        );
 
         if (operation.remainedQuantity > 0)
         {
@@ -198,22 +206,36 @@ void OperationsThread::readOperations()
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
-void OperationsThread::requestOperations()
+bool OperationsThread::requestOperations()
 {
-    const qint64 endTimestamp = QDateTime::currentMSecsSinceEpoch() + ONE_DAY;
+    const qint64 startTimestamp = qMax(mLastRequestTimestamp - ONE_DAY, 0);
+    const qint64 endTimestamp   = QDateTime::currentMSecsSinceEpoch() + ONE_DAY;
     QString      cursor;
 
+    QSet<QString>                                                  operationsLastDay;
     QList<std::shared_ptr<tinkoff::GetOperationsByCursorResponse>> allTinkoffOperations;
     int                                                            totalOperations = 0;
 
     while (true)
     {
         const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
-            mGrpcClient->getOperations(QThread::currentThread(), mAccountId, mLastRequestTimestamp, endTimestamp, cursor);
+            mGrpcClient->getOperations(QThread::currentThread(), mAccountId, startTimestamp, endTimestamp, cursor);
 
         if (QThread::currentThread()->isInterruptionRequested() || tinkoffOperations == nullptr)
         {
-            return;
+            return false;
+        }
+
+        if (!validateOperations(*tinkoffOperations))
+        {
+            qDebug() << "Invalid operations received. Try one more time";
+
+            if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+            {
+                return false;
+            }
+
+            continue;
         }
 
         if (tinkoffOperations->items_size() > 0)
@@ -226,7 +248,19 @@ void OperationsThread::requestOperations()
 
                 if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
                 {
-                    ++totalOperations;
+                    const QString operationIdStr = QString("%1_%2_%3")
+                                                       .arg(
+                                                           QString::number(timeToTimestamp(tinkoffOperation.date())),
+                                                           QString::fromStdString(tinkoffOperation.instrument_uid()),
+                                                           QString::fromStdString(tinkoffOperation.description())
+                                                       );
+
+                    if (!mOperationsLastDay.contains(operationIdStr))
+                    {
+                        ++totalOperations;
+                    }
+
+                    operationsLastDay.insert(operationIdStr);
                 }
             }
         }
@@ -238,8 +272,6 @@ void OperationsThread::requestOperations()
 
         cursor = QString::fromStdString(tinkoffOperations->next_cursor());
     }
-
-    qWarning() << "totalOperations" << totalOperations; // TODO: Delete it
 
     if (!QThread::currentThread()->isInterruptionRequested() && totalOperations > 0)
     {
@@ -258,8 +290,18 @@ void OperationsThread::requestOperations()
 
                 if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
                 {
-                    handleOperationItem(tinkoffOperation, &operations[curOperation]);
-                    --curOperation;
+                    const QString operationIdStr = QString("%1_%2_%3")
+                                                       .arg(
+                                                           QString::number(timeToTimestamp(tinkoffOperation.date())),
+                                                           QString::fromStdString(tinkoffOperation.instrument_uid()),
+                                                           QString::fromStdString(tinkoffOperation.description())
+                                                       );
+
+                    if (!mOperationsLastDay.contains(operationIdStr))
+                    {
+                        handleOperationItem(tinkoffOperation, &operations[curOperation]);
+                        --curOperation;
+                    }
                 }
             }
         }
@@ -277,21 +319,49 @@ void OperationsThread::requestOperations()
             mOperationsDatabase->appendOperations(operations);
         }
 
-        mLastRequestTimestamp = operations.constFirst().timestamp + MS_IN_SECOND; // Since it reversed
+        mLastRequestTimestamp = operations.constFirst().timestamp; // Since it reversed
+        mOperationsLastDay    = operationsLastDay;
 
         mAmountOfEntries += totalOperations;
     }
+
+    return true;
 }
 // NOLINTEND(readability-function-cognitive-complexity)
+
+bool OperationsThread::validateOperations(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations)
+{
+    bool res = true;
+
+    for (int i = 0; i < tinkoffOperations.items_size(); ++i)
+    {
+        const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations.items(i);
+        const tinkoff::OperationType  operationType    = tinkoffOperation.type();
+        const tinkoff::InstrumentType instrumentKind   = tinkoffOperation.instrument_kind();
+
+        if (instrumentKind == tinkoff::INSTRUMENT_TYPE_SHARE &&
+            (operationType == tinkoff::OPERATION_TYPE_BUY || operationType == tinkoff::OPERATION_TYPE_SELL))
+        {
+            if (tinkoffOperation.commission().units() == 0 && tinkoffOperation.commission().nano() == 0)
+            {
+                res = false;
+
+                break;
+            }
+        }
+    }
+
+    return res;
+}
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res)
 {
-    QString                      instrumentId  = QString::fromStdString(tinkoffOperation.instrument_uid());
-    const QString                positionUid   = QString::fromStdString(tinkoffOperation.position_uid());
-    const qint64                 timestamp     = timeToTimestamp(tinkoffOperation.date());
-    const tinkoff::OperationType operationType = tinkoffOperation.type();
-    const double                 payment       = quotationToDouble(tinkoffOperation.payment());
+    QString                      instrumentId      = QString::fromStdString(tinkoffOperation.instrument_uid());
+    const QString                positionUid       = QString::fromStdString(tinkoffOperation.position_uid());
+    const qint64                 originalTimestamp = timeToTimestamp(tinkoffOperation.date());
+    const tinkoff::OperationType operationType     = tinkoffOperation.type();
+    const double                 payment           = quotationToDouble(tinkoffOperation.payment());
 
     double    avgPriceFifo = 0.0;
     double    avgPriceWavg = 0.0;
@@ -301,13 +371,13 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
     float     yieldWithCommissionPercent      = 0.0f;
     float     totalYieldWithCommissionPercent = 0.0f;
 
-    if (timestamp == mLastOperationTimestamp)
+    if (originalTimestamp <= mLastOperationTimestamp)
     {
         ++mAmountOfOperationsWithSameTimestamp;
     }
     else
     {
-        mLastOperationTimestamp              = timestamp;
+        mLastOperationTimestamp              = originalTimestamp;
         mAmountOfOperationsWithSameTimestamp = 0;
     }
 
@@ -497,7 +567,8 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
     res->instrumentLogo = mLogosStorage->getLogo(instrumentId);
     mLogosStorage->readUnlock();
 
-    res->timestamp                       = timestamp + mAmountOfOperationsWithSameTimestamp;
+    res->timestamp                       = mLastOperationTimestamp + mAmountOfOperationsWithSameTimestamp;
+    res->originalTimestamp               = originalTimestamp;
     res->instrumentId                    = instrumentId;
     res->instrumentTicker                = instrument.ticker;
     res->instrumentName                  = instrument.name;

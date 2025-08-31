@@ -40,6 +40,7 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
         Operation& operation2 = operations[i + 1];
 
         operation1.timestamp                       = operations.size() - i;
+        operation1.originalTimestamp               = operations.size() - i;
         operation1.instrumentId                    = "aaaaa";
         operation1.instrumentTicker                = "aaaaa";
         operation1.instrumentName                  = "?????";
@@ -75,6 +76,7 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
         operation1.commissionPrecision             = 2;
 
         operation2.timestamp                       = operations.size() - i - 1;
+        operation2.originalTimestamp               = operations.size() - i - 1;
         operation2.instrumentId                    = "aaaaa";
         operation2.instrumentTicker                = "aaaaa";
         operation2.instrumentName                  = "?????";
@@ -116,6 +118,7 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
         Operation& operation2 = optimizedOperations[i + 1];
 
         operation1.timestamp                       = operations.size() - i;
+        operation1.originalTimestamp               = operations.size() - i;
         operation1.instrumentId                    = "aaaaa";
         operation1.instrumentTicker                = "aaaaa";
         operation1.instrumentName                  = "?????";
@@ -151,6 +154,7 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
         operation1.commissionPrecision             = 2;
 
         operation2.timestamp                       = operations.size() - i - 1;
+        operation2.originalTimestamp               = operations.size() - i - 1;
         operation2.instrumentId                    = "aaaaa";
         operation2.instrumentTicker                = "aaaaa";
         operation2.instrumentName                  = "?????";
@@ -190,6 +194,7 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
     Operation& lastOperation2 = operations[operations.size() - 2];
 
     lastOperation1.timestamp                       = 1;
+    lastOperation1.originalTimestamp               = 1;
     lastOperation1.instrumentId                    = "bbbbb";
     lastOperation1.instrumentTicker                = "bbbbb";
     lastOperation1.instrumentName                  = "?????";
@@ -225,6 +230,7 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
     lastOperation1.commissionPrecision             = 4;
 
     lastOperation2.timestamp                       = 2;
+    lastOperation2.originalTimestamp               = 2;
     lastOperation2.instrumentId                    = "ccccc";
     lastOperation2.instrumentTicker                = "ccccc";
     lastOperation2.instrumentName                  = "?????";

@@ -241,6 +241,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     Operation operation;
 
     operation.timestamp                       = 1704056400001;
+    operation.originalTimestamp               = 1704056400001;
     operation.instrumentId                    = RUBLE_UID;
     operation.instrumentLogo                  = &logo;
     operation.instrumentTicker                = "RUBLE";
@@ -320,6 +321,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     QList<Operation> bestOperations;
 
     operation.timestamp                       = 1704056400000;
+    operation.originalTimestamp               = 1704056400000;
     operation.instrumentId                    = RUBLE_UID;
     operation.instrumentLogo                  = &logo;
     operation.instrumentTicker                = "RUBLE";
@@ -410,6 +412,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     instrumentsForTrading1["aaaaa"] = tradingInfo;
 
     operation.timestamp                       = 1704056400001;
+    operation.originalTimestamp               = 1704056400001;
     operation.instrumentId                    = "aaaaa";
     operation.instrumentLogo                  = &logo;
     operation.instrumentTicker                = "ABBA";
@@ -568,6 +571,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     instrumentsForTrading2["bbbbb"] = tradingInfo;
 
     operation.timestamp                       = 1704056460001;
+    operation.originalTimestamp               = 1704056460001;
     operation.instrumentId                    = "bbbbb";
     operation.instrumentLogo                  = &logo;
     operation.instrumentTicker                = "BASE";
@@ -733,6 +737,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     instrumentsForTrading3["bbbbb"] = tradingInfo;
 
     operation.timestamp                       = 1704056520001;
+    operation.originalTimestamp               = 1704056520001;
     operation.instrumentId                    = "bbbbb";
     operation.instrumentLogo                  = &logo;
     operation.instrumentTicker                = "BASE";
@@ -884,6 +889,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     instrumentsForTrading4["aaaaa"] = tradingInfo;
 
     operation.timestamp                       = 1704056580001;
+    operation.originalTimestamp               = 1704056580001;
     operation.instrumentId                    = "aaaaa";
     operation.instrumentLogo                  = &logo;
     operation.instrumentTicker                = "ABBA";
@@ -1486,6 +1492,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
         Operation& operation2 = operations[i + 1];
 
         operation1.timestamp                       = operations.size() - i;
+        operation1.originalTimestamp               = operations.size() - i;
         operation1.instrumentId                    = "aaaaa";
         operation1.instrumentTicker                = "aaaaa";
         operation1.instrumentName                  = "?????";
@@ -1521,6 +1528,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
         operation1.commissionPrecision             = 2;
 
         operation2.timestamp                       = operations.size() - i - 1;
+        operation2.originalTimestamp               = operations.size() - i - 1;
         operation2.instrumentId                    = "aaaaa";
         operation2.instrumentTicker                = "aaaaa";
         operation2.instrumentName                  = "?????";
@@ -1562,6 +1570,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
         Operation& operation2 = optimizedOperations[i + 1];
 
         operation1.timestamp                       = operations.size() - i;
+        operation1.originalTimestamp               = operations.size() - i;
         operation1.instrumentId                    = "aaaaa";
         operation1.instrumentTicker                = "aaaaa";
         operation1.instrumentName                  = "?????";
@@ -1597,6 +1606,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
         operation1.commissionPrecision             = 2;
 
         operation2.timestamp                       = operations.size() - i - 1;
+        operation2.originalTimestamp               = operations.size() - i - 1;
         operation2.instrumentId                    = "aaaaa";
         operation2.instrumentTicker                = "aaaaa";
         operation2.instrumentName                  = "?????";

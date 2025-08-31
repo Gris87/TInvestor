@@ -94,6 +94,7 @@ TEST_F(Test_OperationsTableModel, Test_data)
     Operation operation3;
 
     operation1.timestamp                       = 1704056520000;
+    operation1.originalTimestamp               = 1704056520000;
     operation1.instrumentId                    = "aaaaa";
     operation1.instrumentLogo                  = nullptr;
     operation1.instrumentTicker                = "ABBA";
@@ -130,6 +131,7 @@ TEST_F(Test_OperationsTableModel, Test_data)
     operation1.commissionPrecision             = 4;
 
     operation2.timestamp                       = 1704056460000;
+    operation2.originalTimestamp               = 1704056460000;
     operation2.instrumentId                    = "bbbbb";
     operation2.instrumentLogo                  = nullptr;
     operation2.instrumentTicker                = "BASE";
@@ -166,6 +168,7 @@ TEST_F(Test_OperationsTableModel, Test_data)
     operation2.commissionPrecision             = 2;
 
     operation3.timestamp                       = 1704056400000;
+    operation3.originalTimestamp               = 1704056400000;
     operation3.instrumentId                    = "ccccc";
     operation3.instrumentLogo                  = &logo;
     operation3.instrumentTicker                = "CODE";
@@ -381,6 +384,7 @@ TEST_F(Test_OperationsTableModel, Test_sort)
     Operation operation3;
 
     operation1.timestamp                       = 1704056520000;
+    operation1.originalTimestamp               = 1704056520000;
     operation1.instrumentId                    = "aaaaa";
     operation1.instrumentLogo                  = nullptr;
     operation1.instrumentTicker                = "ABBA";
@@ -417,6 +421,7 @@ TEST_F(Test_OperationsTableModel, Test_sort)
     operation1.commissionPrecision             = 4;
 
     operation2.timestamp                       = 1704056460000;
+    operation2.originalTimestamp               = 1704056460000;
     operation2.instrumentId                    = "bbbbb";
     operation2.instrumentLogo                  = nullptr;
     operation2.instrumentTicker                = "BASE";
@@ -453,6 +458,7 @@ TEST_F(Test_OperationsTableModel, Test_sort)
     operation2.commissionPrecision             = 2;
 
     operation3.timestamp                       = 1704056400000;
+    operation3.originalTimestamp               = 1704056400000;
     operation3.instrumentId                    = "ccccc";
     operation3.instrumentLogo                  = &logo;
     operation3.instrumentTicker                = "CODE";
@@ -919,6 +925,7 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     Operation operation3;
 
     operation1.timestamp                       = 1704056520000;
+    operation1.originalTimestamp               = 1704056520000;
     operation1.instrumentId                    = "aaaaa";
     operation1.instrumentLogo                  = nullptr;
     operation1.instrumentTicker                = "ABBA";
@@ -955,6 +962,7 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     operation1.commissionPrecision             = 4;
 
     operation2.timestamp                       = 1704056460000;
+    operation2.originalTimestamp               = 1704056460000;
     operation2.instrumentId                    = "bbbbb";
     operation2.instrumentLogo                  = nullptr;
     operation2.instrumentTicker                = "BASE";
@@ -991,6 +999,7 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     operation2.commissionPrecision             = 2;
 
     operation3.timestamp                       = 1704056400000;
+    operation3.originalTimestamp               = 1704056400000;
     operation3.instrumentId                    = "ccccc";
     operation3.instrumentLogo                  = &logo;
     operation3.instrumentTicker                = "CODE";
@@ -1089,6 +1098,7 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     Operation        newOperation;
 
     newOperation.timestamp                       = 1704056580000;
+    newOperation.originalTimestamp               = 1704056580000;
     newOperation.instrumentId                    = "ddddd";
     newOperation.instrumentLogo                  = &logo;
     newOperation.instrumentTicker                = "DAGA";
@@ -1619,6 +1629,7 @@ TEST_F(Test_OperationsTableModel, Test_exportToExcel)
     Operation operation3;
 
     operation1.timestamp                       = 1704056520000;
+    operation1.originalTimestamp               = 1704056520000;
     operation1.instrumentId                    = "aaaaa";
     operation1.instrumentLogo                  = nullptr;
     operation1.instrumentTicker                = "ABBA";
@@ -1655,6 +1666,7 @@ TEST_F(Test_OperationsTableModel, Test_exportToExcel)
     operation1.commissionPrecision             = 4;
 
     operation2.timestamp                       = 1704056460000;
+    operation2.originalTimestamp               = 1704056460000;
     operation2.instrumentId                    = "bbbbb";
     operation2.instrumentLogo                  = nullptr;
     operation2.instrumentTicker                = "BASE";
@@ -1691,6 +1703,7 @@ TEST_F(Test_OperationsTableModel, Test_exportToExcel)
     operation2.commissionPrecision             = 2;
 
     operation3.timestamp                       = 1704056400000;
+    operation3.originalTimestamp               = 1704056400000;
     operation3.instrumentId                    = "ccccc";
     operation3.instrumentLogo                  = &logo;
     operation3.instrumentTicker                = "CODE";
