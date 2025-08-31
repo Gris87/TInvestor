@@ -656,51 +656,6 @@ void GrpcClient::finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfol
     }
 }
 
-std::shared_ptr<PositionsStream> GrpcClient::createPositionsStream(const QString& accountId)
-{
-    std::shared_ptr<PositionsStream> res = std::make_shared<PositionsStream>();
-
-    tinkoff::PositionsStreamRequest req;
-    req.add_accounts(accountId.toStdString());
-
-    res->context.set_credentials(mCreds);
-    res->stream = mRawGrpcClient->createPositionsStream(mOperationsStreamService, &res->context, req);
-
-    return res;
-}
-
-std::shared_ptr<tinkoff::PositionsStreamResponse>
-GrpcClient::readPositionsStream(std::shared_ptr<PositionsStream>& positionsStream)
-{
-    std::shared_ptr<tinkoff::PositionsStreamResponse> resp = std::make_shared<tinkoff::PositionsStreamResponse>();
-
-    if (!mRawGrpcClient->readPositionsStream(positionsStream, resp.get()))
-    {
-        // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readPositionsStream()"); // Not a problem
-
-        return nullptr;
-    }
-
-    return resp;
-}
-
-void GrpcClient::cancelPositionsStream(std::shared_ptr<PositionsStream>& positionsStream)
-{
-    positionsStream->context.TryCancel();
-}
-
-void GrpcClient::finishPositionsStream(std::shared_ptr<PositionsStream>& positionsStream)
-{
-    const grpc::Status     status    = mRawGrpcClient->finishPositionsStream(positionsStream);
-    const grpc::StatusCode errorCode = status.error_code();
-
-    if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
-        errorCode != grpc::StatusCode::CANCELLED)
-    {
-        emitAuthFailed(status);
-    }
-}
-
 void GrpcClient::emitAuthFailed(const grpc::Status& status)
 {
     emit authFailed(GRPC_STATUS_CODE_TO_STRING[status.error_code()]);

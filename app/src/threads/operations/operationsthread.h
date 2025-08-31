@@ -41,7 +41,7 @@ public:
     void setAccountId(const QString& account, const QString& accountId) override;
     void terminateThread() override;
 
-    bool createPositionsStream();
+    bool createPortfolioStream();
 
     void requestOperations();
     void handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
@@ -60,10 +60,8 @@ public:
 #endif
 
 private:
-    void      readOperations();
-    Quotation handlePositionsResponse(const tinkoff::PositionsResponse& tinkoffPositions);
-    Quotation handlePositionsResponse(const tinkoff::PositionData& tinkoffPositions);
-    void      optimize();
+    void readOperations();
+    void optimize();
 
     [[nodiscard]]
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;
@@ -76,7 +74,7 @@ private:
     IGrpcClient*                     mGrpcClient;
     IOptimizer*                      mOptimizer;
     QString                          mAccountId;
-    std::shared_ptr<PositionsStream> mPositionsStream;
+    std::shared_ptr<PortfolioStream> mPortfolioStream;
     qint64                           mLastRequestTimestamp;
     qint64                           mLastOperationTimestamp;
     qint8                            mAmountOfOperationsWithSameTimestamp;

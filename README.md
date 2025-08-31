@@ -284,13 +284,13 @@ git checkout v1.16.0 -b temp
 
 7. Setup environment variables
 
-- Add environment variables to your /etc/environment
+- Add environment variables to your ~/.bashrc
 
 ```
-ZLIB_PATH=SET_PATH_TO_ZLIB (for example: /home/user/Qt/zlib)
-QUAZIP_PATH=SET_PATH_TO_QUAZIP (for example: /home/user/Qt/quazip)
-VCPKG_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/vcpkg)
-GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: /home/user/Qt/googletest)
+export ZLIB_PATH=SET_PATH_TO_ZLIB (for example: /home/user/Qt/zlib)
+export QUAZIP_PATH=SET_PATH_TO_QUAZIP (for example: /home/user/Qt/quazip)
+export VCPKG_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/vcpkg)
+export GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: /home/user/Qt/googletest)
 ```
 
 8. Run QT Creator and compile project

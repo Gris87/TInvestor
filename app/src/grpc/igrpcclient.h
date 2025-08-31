@@ -70,12 +70,6 @@ public:
     virtual void cancelPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) = 0;
     virtual void finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) = 0;
 
-    virtual std::shared_ptr<PositionsStream> createPositionsStream(const QString& accountId) = 0;
-    virtual std::shared_ptr<tinkoff::PositionsStreamResponse>
-                 readPositionsStream(std::shared_ptr<PositionsStream>& positionsStream)   = 0;
-    virtual void cancelPositionsStream(std::shared_ptr<PositionsStream>& positionsStream) = 0;
-    virtual void finishPositionsStream(std::shared_ptr<PositionsStream>& positionsStream) = 0;
-
 signals:
     void authFailed(const QString& errorCodeString);
 };

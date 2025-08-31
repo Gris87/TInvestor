@@ -4,7 +4,7 @@
 
 
 
-constexpr int   MINUTES_TO_DOUBLE_CHECK = 3;
+constexpr int   MINUTES_TO_DOUBLE_CHECK = 5;
 constexpr float HUNDRED_PERCENT         = 100.0f;
 
 
@@ -20,6 +20,7 @@ SellDecision4::~SellDecision4()
     qDebug() << "Destroy SellDecision4";
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString SellDecision4::makeDecision(
     QThread*              parentThread,
     IDecisionMakerConfig* config,
@@ -131,3 +132,4 @@ QString SellDecision4::makeDecision(
 
     return "";
 }
+// NOLINTEND(readability-function-cognitive-complexity)

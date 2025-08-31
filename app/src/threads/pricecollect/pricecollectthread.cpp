@@ -778,7 +778,7 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, Stock** stocks, i
                                        stock->data.constLast().timestamp > stock->operational.detailedData.constLast().timestamp))
         {
             const StockData&     stockData = stock->data.constLast();
-            StockOperationalData stockOperationalData;
+            StockOperationalData stockOperationalData; // NOLINT(cppcoreguidelines-pro-type-member-init)
 
             stockOperationalData.timestamp = stockData.timestamp;
             stockOperationalData.price     = stockData.price;

@@ -503,8 +503,10 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
 
     ASSERT_EQ(
         cause,
-        QString("Decided to sell because the price reached 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD and lost "
-                "yield -33.33% from the price 120.00 \u20BD at %1 within last 10 minutes")
+        QString(
+            "Decided to sell because the price reached 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD and lost "
+            "yield -33.33% from the price 120.00 \u20BD at %1 within last 10 minutes"
+        )
             .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(10).timestamp).toString(DATETIME_FORMAT))
     );
 

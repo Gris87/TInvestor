@@ -1039,31 +1039,4 @@ TEST_F(Test_RawGrpcClient, Test_PortfolioStream)
 
     ASSERT_EQ(client->finishPortfolioStream(portfolioStream).error_code(), grpc::StatusCode::CANCELLED);
 }
-
-TEST_F(Test_RawGrpcClient, Test_PositionsStream)
-{
-    const InSequence seq;
-
-    tinkoff::PositionsStreamRequest req;
-    req.add_accounts("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
-
-    QString token = SANDBOX_TOKEN;
-    EXPECT_CALL(*userStorageMock, readLock());
-    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
-    EXPECT_CALL(*userStorageMock, readUnlock());
-
-    std::shared_ptr<PositionsStream> positionsStream(new PositionsStream());
-
-    positionsStream->context.set_credentials(creds);
-    positionsStream->stream = client->createPositionsStream(operationsStreamService, &positionsStream->context, req);
-
-    ASSERT_NE(positionsStream->stream, nullptr);
-
-    positionsStream->context.TryCancel();
-
-    tinkoff::PositionsStreamResponse resp;
-    ASSERT_EQ(client->readPositionsStream(positionsStream, &resp), false);
-
-    ASSERT_EQ(client->finishPositionsStream(positionsStream).error_code(), grpc::StatusCode::CANCELLED);
-}
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

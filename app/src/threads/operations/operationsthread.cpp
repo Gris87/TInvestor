@@ -38,7 +38,7 @@ OperationsThread::OperationsThread(
     mGrpcClient(grpcClient),
     mOptimizer(optimizer),
     mAccountId(),
-    mPositionsStream(),
+    mPortfolioStream(),
     mLastRequestTimestamp(),
     mLastOperationTimestamp(),
     mAmountOfOperationsWithSameTimestamp(),
@@ -70,62 +70,37 @@ void OperationsThread::run()
     blockSignals(false);
     readOperations();
 
-    const std::shared_ptr<tinkoff::PositionsResponse> tinkoffPositions =
-        mGrpcClient->getPositions(QThread::currentThread(), mAccountId);
-
-    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPositions != nullptr)
+    if (createPortfolioStream())
     {
-        Quotation money = handlePositionsResponse(*tinkoffPositions);
+        requestOperations();
 
-        if (createPositionsStream())
+        while (true)
         {
-            requestOperations();
+            optimize();
 
-            while (true)
+            const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
+                mGrpcClient->readPortfolioStream(mPortfolioStream);
+
+            if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
             {
-                optimize();
+                break;
+            }
 
-                const std::shared_ptr<tinkoff::PositionsStreamResponse> positionsStreamResponse =
-                    mGrpcClient->readPositionsStream(mPositionsStream);
-
-                if (QThread::currentThread()->isInterruptionRequested() || positionsStreamResponse == nullptr)
+            if (portfolioStreamResponse->has_portfolio())
+            {
+                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
                 {
                     break;
                 }
 
-                qWarning() << "Positions changed"; // TODO: Delete it
-
-                if (positionsStreamResponse->has_position())
-                {
-                    qWarning() << "YESSSS!!! Positions changed"; // TODO: Delete it
-
-                    const Quotation newMoney = handlePositionsResponse(positionsStreamResponse->position());
-
-                    qWarning() << "New money" << newMoney.units << newMoney.nano; // TODO: Delete it
-
-                    if (money != newMoney)
-                    {
-                        money = newMoney;
-
-                        qWarning() << "Sleep"; // TODO: Delete it
-
-                        if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
-                        {
-                            break;
-                        }
-
-                        qWarning() << "Ask for operations"; // TODO: Delete it
-
-                        requestOperations();
-                    }
-                }
+                requestOperations();
             }
-
-            const QWriteLocker lock(mRwMutex);
-
-            mGrpcClient->finishPositionsStream(mPositionsStream);
-            mPositionsStream = nullptr;
         }
+
+        const QWriteLocker lock(mRwMutex);
+
+        mGrpcClient->finishPortfolioStream(mPortfolioStream);
+        mPortfolioStream = nullptr;
     }
 
     qDebug() << "Finish OperationsThread";
@@ -144,15 +119,15 @@ void OperationsThread::terminateThread()
 
     const QReadLocker lock(mRwMutex);
 
-    if (mPositionsStream != nullptr)
+    if (mPortfolioStream != nullptr)
     {
-        mGrpcClient->cancelPositionsStream(mPositionsStream);
+        mGrpcClient->cancelPortfolioStream(mPortfolioStream);
     }
 
     requestInterruption();
 }
 
-bool OperationsThread::createPositionsStream()
+bool OperationsThread::createPortfolioStream()
 {
     bool res = false;
 
@@ -160,9 +135,9 @@ bool OperationsThread::createPositionsStream()
 
     if (!QThread::currentThread()->isInterruptionRequested())
     {
-        mPositionsStream = mGrpcClient->createPositionsStream(mAccountId);
+        mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId);
 
-        res = mPositionsStream != nullptr;
+        res = mPortfolioStream != nullptr;
     }
 
     return res;
@@ -220,44 +195,6 @@ void OperationsThread::readOperations()
     }
 
     emit operationsRead(operations);
-}
-
-Quotation OperationsThread::handlePositionsResponse(const tinkoff::PositionsResponse& tinkoffPositions)
-{
-    Quotation res;
-
-    for (int i = 0; i < tinkoffPositions.money_size(); ++i)
-    {
-        const tinkoff::MoneyValue& money = tinkoffPositions.money(i);
-
-        if (money.currency() == "rub")
-        {
-            res = quotationConvert(money);
-
-            break;
-        }
-    }
-
-    return res;
-}
-
-Quotation OperationsThread::handlePositionsResponse(const tinkoff::PositionData& tinkoffPositions)
-{
-    Quotation res;
-
-    for (int i = 0; i < tinkoffPositions.money_size(); ++i)
-    {
-        const tinkoff::MoneyValue& money = tinkoffPositions.money(i).available_value();
-
-        if (money.currency() == "rub")
-        {
-            res = quotationConvert(money);
-
-            break;
-        }
-    }
-
-    return res;
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)

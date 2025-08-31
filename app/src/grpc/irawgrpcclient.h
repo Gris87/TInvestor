@@ -59,14 +59,6 @@ struct PortfolioStream
     Stream              stream;
 };
 
-struct PositionsStream
-{
-    using Stream = std::unique_ptr<grpc::ClientReader<tinkoff::PositionsStreamResponse>>;
-
-    grpc::ClientContext context;
-    Stream              stream;
-};
-
 
 
 class IRawGrpcClient
@@ -191,13 +183,4 @@ public:
     virtual bool
     readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream, tinkoff::PortfolioStreamResponse* resp) = 0;
     virtual grpc::Status finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)                  = 0;
-
-    virtual PositionsStream::Stream createPositionsStream(
-        const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
-        grpc::ClientContext*                                           context,
-        const tinkoff::PositionsStreamRequest&                         req
-    ) = 0;
-    virtual bool
-    readPositionsStream(std::shared_ptr<PositionsStream>& positionsStream, tinkoff::PositionsStreamResponse* resp) = 0;
-    virtual grpc::Status finishPositionsStream(std::shared_ptr<PositionsStream>& positionsStream)                  = 0;
 };

@@ -121,14 +121,4 @@ public:
     );
     MOCK_METHOD(void, cancelPortfolioStream, (std::shared_ptr<PortfolioStream> & portfolioStream), (override));
     MOCK_METHOD(void, finishPortfolioStream, (std::shared_ptr<PortfolioStream> & portfolioStream), (override));
-
-    MOCK_METHOD(std::shared_ptr<PositionsStream>, createPositionsStream, (const QString& accountId), (override));
-    MOCK_METHOD(
-        std::shared_ptr<tinkoff::PositionsStreamResponse>,
-        readPositionsStream,
-        (std::shared_ptr<PositionsStream> & positionsStream),
-        (override)
-    );
-    MOCK_METHOD(void, cancelPositionsStream, (std::shared_ptr<PositionsStream> & positionsStream), (override));
-    MOCK_METHOD(void, finishPositionsStream, (std::shared_ptr<PositionsStream> & positionsStream), (override));
 };

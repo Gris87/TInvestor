@@ -1,4 +1,3 @@
-Portfolio stream for operations
 Collect operations by using historical daily data (last day) and append non processed operations
 Limit trading buy different percents in non-working hours
 Trade instruments with huge spread (detect periodically among all stocks). Buy few / sell few (average?)

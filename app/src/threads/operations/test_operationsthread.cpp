@@ -77,56 +77,29 @@ TEST_F(Test_OperationsThread, Test_run)
 
     QList<Operation> operations;
 
-    const std::shared_ptr<tinkoff::PositionsResponse> positionsResponse(new tinkoff::PositionsResponse());
+    std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
 
-    tinkoff::MoneyValue* money1 = positionsResponse->add_money(); // positionsResponse will take ownership
-    money1->set_currency("usd");
-    money1->set_units(0);
-    money1->set_nano(0);
+    const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse(new tinkoff::PortfolioStreamResponse());
 
-    tinkoff::MoneyValue* money2 = positionsResponse->add_money(); // positionsResponse will take ownership
-    money2->set_currency("rub");
-    money2->set_units(0);
-    money2->set_nano(0);
+    tinkoff::PortfolioResponse* portfolioResponse =
+        new tinkoff::PortfolioResponse(); // portfolioStreamResponse will take ownership
 
-    std::shared_ptr<PositionsStream> positionsStream(new PositionsStream());
-
-    const std::shared_ptr<tinkoff::PositionsStreamResponse> positionsStreamResponse(new tinkoff::PositionsStreamResponse());
-
-    tinkoff::PositionData* positionData = new tinkoff::PositionData(); // positionsStreamResponse will take ownership
-
-    tinkoff::PositionsMoney* positionsMoney1 = positionData->add_money(); // positionData will take ownership
-    tinkoff::MoneyValue*     money3          = new tinkoff::MoneyValue(); // positionsMoney1 will take ownership
-    money3->set_currency("usd");
-    money3->set_units(0);
-    money3->set_nano(0);
-    positionsMoney1->set_allocated_available_value(money3);
-
-    tinkoff::PositionsMoney* positionsMoney2 = positionData->add_money(); // positionData will take ownership
-    tinkoff::MoneyValue*     money4          = new tinkoff::MoneyValue(); // positionsMoney2 will take ownership
-    money4->set_currency("rub");
-    money4->set_units(15);
-    money4->set_nano(0);
-    positionsMoney2->set_allocated_available_value(money4);
-
-    positionsStreamResponse->set_allocated_position(positionData);
+    portfolioStreamResponse->set_allocated_portfolio(portfolioResponse);
 
     EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
-    EXPECT_CALL(*grpcClientMock, getPositions(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(positionsResponse));
-    EXPECT_CALL(*grpcClientMock, createPositionsStream(QString("account-id"))).WillOnce(Return(positionsStream));
+    EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
     EXPECT_CALL(
         *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(nullptr));
-    EXPECT_CALL(*grpcClientMock, readPositionsStream(positionsStream)).WillOnce(Return(positionsStreamResponse));
+    EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(portfolioStreamResponse));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(
         *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(nullptr));
-    EXPECT_CALL(*grpcClientMock, readPositionsStream(positionsStream)).WillOnce(Return(nullptr));
-    EXPECT_CALL(*grpcClientMock, finishPositionsStream(positionsStream));
+    EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream));
 
     thread->run();
 }
@@ -139,12 +112,12 @@ TEST_F(Test_OperationsThread, Test_terminateThread)
 
     thread->setAccountId("account-hash", "account-id");
 
-    std::shared_ptr<PositionsStream> positionsStream(new PositionsStream());
-    EXPECT_CALL(*grpcClientMock, createPositionsStream(QString("account-id"))).WillOnce(Return(positionsStream));
+    std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
+    EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
 
-    ASSERT_EQ(thread->createPositionsStream(), true);
+    ASSERT_EQ(thread->createPortfolioStream(), true);
 
-    EXPECT_CALL(*grpcClientMock, cancelPositionsStream(positionsStream));
+    EXPECT_CALL(*grpcClientMock, cancelPortfolioStream(portfolioStream));
 
     thread->terminateThread();
 }
@@ -1568,24 +1541,10 @@ TEST_F(Test_OperationsThread, Test_optimize)
     optimizedOperations[optimizedOperations.size() - 1] = lastOperation1;
     optimizedOperations[optimizedOperations.size() - 2] = lastOperation2;
 
-    const std::shared_ptr<tinkoff::PositionsResponse> positionsResponse(new tinkoff::PositionsResponse());
-
-    tinkoff::MoneyValue* money1 = positionsResponse->add_money(); // positionsResponse will take ownership
-    money1->set_currency("usd");
-    money1->set_units(0);
-    money1->set_nano(0);
-
-    tinkoff::MoneyValue* money2 = positionsResponse->add_money(); // positionsResponse will take ownership
-    money2->set_currency("rub");
-    money2->set_units(0);
-    money2->set_nano(0);
-
-    std::shared_ptr<PositionsStream> positionsStream(new PositionsStream());
+    std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
 
     EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
-    EXPECT_CALL(*grpcClientMock, getPositions(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(positionsResponse));
-    EXPECT_CALL(*grpcClientMock, createPositionsStream(QString("account-id"))).WillOnce(Return(positionsStream));
+    EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
     EXPECT_CALL(
         *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1011, Ge(1704056400000), QString(""))
     )
@@ -1594,8 +1553,8 @@ TEST_F(Test_OperationsThread, Test_optimize)
     EXPECT_CALL(*optimizerMock, optimizeOperations(operations, 3, QStringList() << "bbbbb" << "ccccc"))
         .WillOnce(Return(optimizedOperations));
     EXPECT_CALL(*operationsDatabaseMock, writeOperations(optimizedOperations, -1));
-    EXPECT_CALL(*grpcClientMock, readPositionsStream(positionsStream)).WillOnce(Return(nullptr));
-    EXPECT_CALL(*grpcClientMock, finishPositionsStream(positionsStream));
+    EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream));
 
     thread->run();
 }
