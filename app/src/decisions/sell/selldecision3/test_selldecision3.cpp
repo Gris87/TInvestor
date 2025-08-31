@@ -141,7 +141,6 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
 
     ASSERT_EQ(cause, "");
 
-
     // ====================================================================
     // TEST CASE: Unexpected maximum
     // ====================================================================
@@ -367,7 +366,6 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
     cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, 100.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
-
 
     // ====================================================================
     // TEST CASE: Unexpected maximum
