@@ -27,20 +27,19 @@ def _validate_file(args, file_path, lines):
     res = True
 
     for i, line in enumerate(lines):
-        if line.strip().startswith("EXPECT_CALL("):
+        if "EXPECT_CALL(" in line:
             index = i - 1
             found = False
 
             while (index >= 0):
-                prev_line2 = lines[index - 1].strip() if index >= 1 else ""
-                prev_line = lines[index].strip()
+                prev_line = lines[index].rstrip()
 
                 if "InSequence seq;" in prev_line:
                     found = True
 
                     break
 
-                if prev_line == "{" and not prev_line2.startswith("if (") and not prev_line2.startswith("for (") and not prev_line2.startswith("while (") and not prev_line2.startswith("else"):
+                if prev_line == "{":
                     break
 
                 index = index - 1
@@ -56,14 +55,14 @@ def _validate_file(args, file_path, lines):
             found = False
 
             while (index < len(lines)):
-                next_line = lines[index].strip()
+                next_line = lines[index].rstrip()
 
-                if next_line.startswith("EXPECT_CALL("):
+                if "EXPECT_CALL(" in next_line:
                     found = True
 
                     break
 
-                if "InSequence seq;" in next_line:
+                if next_line == "}" or "InSequence seq;" in next_line:
                     break
 
                 index = index + 1
