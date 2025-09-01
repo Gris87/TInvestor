@@ -376,7 +376,7 @@ static int runApplication(QApplication* app)
     LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
 
     TimeUtils         timeUtils;
-    TradeUtils        tradeUtils;
+    TradeUtils        tradeUtils(&timeUtils);
     FileDialogFactory fileDialogFactory;
     MessageBoxUtils   messageBoxUtils;
     HttpClient        httpClient;

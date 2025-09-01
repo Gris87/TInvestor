@@ -410,6 +410,7 @@ void DecisionMaker::makeDecisions(
 
             qint64 amountOfLots = mTradeUtils->calculateAmountOfLotsToBuy(
                 config,
+                timestamp,
                 money,
                 totalCost,
                 tradingInfo.expectedCost, // tradingInfo.expectedCost == stock.meta.turnover

@@ -8,8 +8,9 @@ constexpr float HUNDRED_PERCENT = 100.0f;
 
 
 
-TradeUtils::TradeUtils() :
-    ITradeUtils()
+TradeUtils::TradeUtils(ITimeUtils* timeUtils) :
+    ITradeUtils(),
+    mTimeUtils(timeUtils)
 {
     qDebug() << "Create TradeUtils";
 }
@@ -20,27 +21,78 @@ TradeUtils::~TradeUtils()
 }
 
 qint64 TradeUtils::calculateAmountOfLotsToBuy(
-    IConfig* config, double money, double totalCost, double turnover, double lotPrice, double lotPriceWithCommission
+    IConfig* config,
+    qint64   timestamp,
+    double   money,
+    double   totalCost,
+    double   turnover,
+    double   lotPrice,
+    double   lotPriceWithCommission
 ) const
 {
-    qint64 res;
+    bool   limitStockPurchase     = false;
+    double limitStockPurchasePart = 0.0;
+    bool   limitByTurnover        = false;
+    double limitByTurnoverPercent = 0.0;
 
-    if (config->isLimitStockPurchase())
+    if (config->isLimitStockPurchaseNonWorkingHours() && !mTimeUtils->isWorkingHours(timestamp))
     {
-        double cost = 0.0;
+        limitStockPurchase     = true;
+        limitStockPurchasePart = config->getLimitStockPurchasePartNonWorkingHours();
 
-        if (config->isLimitByTurnover())
+        if (config->isLimitByTurnoverNonWorkingHours())
         {
-            const double limitStockPurchasePart = config->getLimitStockPurchasePart() / HUNDRED_PERCENT;
-            const double limitByTurnoverPercent = config->getLimitByTurnoverPercent() / HUNDRED_PERCENT;
-
-            cost = qMin(totalCost * limitStockPurchasePart, turnover * limitByTurnoverPercent);
+            limitByTurnover        = true;
+            limitByTurnoverPercent = config->getLimitByTurnoverPercentNonWorkingHours();
         }
         else
         {
-            const double limitStockPurchasePart = config->getLimitStockPurchasePart() / HUNDRED_PERCENT;
+            limitByTurnover        = config->isLimitByTurnover();
+            limitByTurnoverPercent = config->getLimitByTurnoverPercent();
+        }
+    }
+    else
+    {
+        limitStockPurchase     = config->isLimitStockPurchase();
+        limitStockPurchasePart = config->getLimitStockPurchasePart();
+        limitByTurnover        = config->isLimitByTurnover();
+        limitByTurnoverPercent = config->getLimitByTurnoverPercent();
+    }
 
-            cost = totalCost * limitStockPurchasePart;
+    return calculateAmountOfLotsToBuyInternal(
+        limitStockPurchase,
+        limitStockPurchasePart,
+        limitByTurnover,
+        limitByTurnoverPercent,
+        money,
+        totalCost,
+        turnover,
+        lotPrice,
+        lotPriceWithCommission
+    );
+}
+
+qint64 TradeUtils::calculateAmountOfLotsToBuyInternal(
+    bool   limitStockPurchase,
+    double limitStockPurchasePart,
+    bool   limitByTurnover,
+    double limitByTurnoverPercent,
+    double money,
+    double totalCost,
+    double turnover,
+    double lotPrice,
+    double lotPriceWithCommission
+) const
+{
+    qint64 res = 0;
+
+    if (limitStockPurchase)
+    {
+        double cost = totalCost * limitStockPurchasePart / HUNDRED_PERCENT;
+
+        if (limitByTurnover)
+        {
+            cost = qMin(cost, turnover * limitByTurnoverPercent / HUNDRED_PERCENT);
         }
 
         cost = qMax(cost, lotPrice);

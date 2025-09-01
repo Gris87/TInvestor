@@ -17,6 +17,12 @@ public:
 
     [[nodiscard]]
     virtual qint64 calculateAmountOfLotsToBuy(
-        IConfig* config, double money, double totalCost, double turnover, double lotPrice, double lotPriceWithCommission
+        IConfig* config,
+        qint64   timestamp,
+        double   money,
+        double   totalCost,
+        double   turnover,
+        double   lotPrice,
+        double   lotPriceWithCommission
     ) const = 0;
 };

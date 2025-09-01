@@ -301,6 +301,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         *tradeUtilsMock,
         calculateAmountOfLotsToBuy(
             configMock,
+            1704110400000,
             DoubleEq(100000.0),
             DoubleEq(1000000.0),
             DoubleEq(9000000000.0),
@@ -379,6 +380,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         *tradeUtilsMock,
         calculateAmountOfLotsToBuy(
             configMock,
+            1704110400000,
             DoubleEq(100000.0),
             DoubleEq(1000000.0),
             DoubleEq(9000000000.0),
@@ -448,6 +450,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         *tradeUtilsMock,
         calculateAmountOfLotsToBuy(
             configMock,
+            1704110400000,
             DoubleEq(100000.0),
             DoubleEq(1000000.0),
             DoubleEq(9000000000.0),
@@ -557,6 +560,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         *tradeUtilsMock,
         calculateAmountOfLotsToBuy(
             configMock,
+            1704110400000,
             DoubleEq(100000.0),
             DoubleEq(1000000.0),
             DoubleEq(9000000000.0),

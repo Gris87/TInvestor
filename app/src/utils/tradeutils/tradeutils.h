@@ -4,12 +4,14 @@
 
 #include "src/utils/tradeutils/itradeutils.h"
 
+#include "src/utils/timeutils/itimeutils.h"
+
 
 
 class TradeUtils : public ITradeUtils
 {
 public:
-    TradeUtils();
+    TradeUtils(ITimeUtils* timeUtils);
     ~TradeUtils() override;
 
     TradeUtils(const TradeUtils& another)            = delete;
@@ -17,6 +19,28 @@ public:
 
     [[nodiscard]]
     qint64 calculateAmountOfLotsToBuy(
-        IConfig* config, double money, double totalCost, double turnover, double lotPrice, double lotPriceWithCommission
+        IConfig* config,
+        qint64   timestamp,
+        double   money,
+        double   totalCost,
+        double   turnover,
+        double   lotPrice,
+        double   lotPriceWithCommission
     ) const override;
+
+private:
+    [[nodiscard]]
+    qint64 calculateAmountOfLotsToBuyInternal(
+        bool   limitStockPurchase,
+        double limitStockPurchasePart,
+        bool   limitByTurnover,
+        double limitByTurnoverPercent,
+        double money,
+        double totalCost,
+        double turnover,
+        double lotPrice,
+        double lotPriceWithCommission
+    ) const;
+
+    ITimeUtils* mTimeUtils;
 };
