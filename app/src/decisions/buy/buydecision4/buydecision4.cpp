@@ -212,3 +212,8 @@ QString BuyDecision4::makeDecision(
     return "";
 }
 // NOLINTEND(readability-function-cognitive-complexity)
+
+bool BuyDecision4::isAsap() const
+{
+    return false;
+}

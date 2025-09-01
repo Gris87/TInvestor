@@ -63,3 +63,8 @@ QString SellDecision1::makeDecision(
 
     return "";
 }
+
+bool SellDecision1::isAsap() const
+{
+    return true;
+}

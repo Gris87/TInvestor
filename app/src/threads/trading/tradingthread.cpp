@@ -242,13 +242,15 @@ bool TradingThread::sell(double expected, double delta)
 
         const qint64 coef = static_cast<qint64>(std::ceil(price / quotationToDouble(mMinPriceIncrement)));
 
-        return sellWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef));
+        float marketPrice = tinkoffOrderBook->bids_size() > 0 ? quotationToDouble(tinkoffOrderBook->bids(0).price()) : 0;
+
+        return sellWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef), marketPrice);
     }
 
     return false;
 }
 
-bool TradingThread::sellWithPrice(double expected, double delta, const Quotation& price)
+bool TradingThread::sellWithPrice(double expected, double delta, const Quotation& price, float marketPrice)
 {
     if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
@@ -262,7 +264,7 @@ bool TradingThread::sellWithPrice(double expected, double delta, const Quotation
             }
         }
 
-        return sellWithPriceOptimalAmount(expected, delta, price);
+        return sellWithPriceOptimalAmount(expected, delta, price, marketPrice);
     }
 
     const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
@@ -292,7 +294,7 @@ bool TradingThread::sellWithPrice(double expected, double delta, const Quotation
     return false;
 }
 
-bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price)
+bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice)
 {
     while (true)
     {
@@ -346,10 +348,14 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
                     LOG_LEVEL_VERBOSE,
                     mInstrumentId,
                     tr("Order to sell %1 created with a price %2")
-                        .arg(
-                            QString::number(amountToSell * mInstrumentLot),
-                            QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
-                        )
+                            .arg(
+                                QString::number(amountToSell * mInstrumentLot),
+                                QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
+                            ) +
+                        (marketPrice > 0
+                             ? " " +
+                                   tr("while market price %1").arg(QString::number(marketPrice, 'f', mPricePrecision) + " \u20BD")
+                             : "")
                 );
 
                 mOrderId          = QString::fromStdString(tinkoffOrder->order_id());
@@ -422,13 +428,15 @@ bool TradingThread::buy(double expected, double delta)
 
         const qint64 coef = static_cast<qint64>(std::floor(price / quotationToDouble(mMinPriceIncrement)));
 
-        return buyWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef));
+        float marketPrice = tinkoffOrderBook->asks_size() > 0 ? quotationToDouble(tinkoffOrderBook->asks(0).price()) : 0;
+
+        return buyWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef), marketPrice);
     }
 
     return false;
 }
 
-bool TradingThread::buyWithPrice(double expected, double delta, const Quotation& price)
+bool TradingThread::buyWithPrice(double expected, double delta, const Quotation& price, float marketPrice)
 {
     if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
@@ -442,7 +450,7 @@ bool TradingThread::buyWithPrice(double expected, double delta, const Quotation&
             }
         }
 
-        return buyWithPriceOptimalAmount(expected, delta, price);
+        return buyWithPriceOptimalAmount(expected, delta, price, marketPrice);
     }
 
     const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
@@ -472,7 +480,7 @@ bool TradingThread::buyWithPrice(double expected, double delta, const Quotation&
     return false;
 }
 
-bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price)
+bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice)
 {
     while (true)
     {
@@ -521,10 +529,14 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
                     LOG_LEVEL_VERBOSE,
                     mInstrumentId,
                     tr("Order to buy %1 created with a price %2")
-                        .arg(
-                            QString::number(amountToBuy * mInstrumentLot),
-                            QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
-                        )
+                            .arg(
+                                QString::number(amountToBuy * mInstrumentLot),
+                                QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
+                            ) +
+                        (marketPrice > 0
+                             ? " " +
+                                   tr("while market price %1").arg(QString::number(marketPrice, 'f', mPricePrecision) + " \u20BD")
+                             : "")
                 );
 
                 mOrderId          = QString::fromStdString(tinkoffOrder->order_id());

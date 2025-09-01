@@ -27,6 +27,9 @@ public:
         float                 commission
     ) override;
 
+    [[nodiscard]]
+    bool isAsap() const override;
+
 #ifdef TESTING_MODE
     void testSetStep(int step)
     {

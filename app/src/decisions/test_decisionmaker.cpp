@@ -277,6 +277,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to sell"));
+    EXPECT_CALL(*sellDecisionMock, isAsap()).WillOnce(Return(false));
     EXPECT_CALL(
         *buyDecisionMock,
         makeDecision(
@@ -284,6 +285,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to buy"));
+    EXPECT_CALL(*buyDecisionMock, isAsap()).WillOnce(Return(false));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
@@ -356,6 +358,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to sell"));
+    EXPECT_CALL(*sellDecisionMock, isAsap()).WillOnce(Return(false));
     EXPECT_CALL(
         *buyDecisionMock,
         makeDecision(
@@ -363,6 +366,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to buy"));
+    EXPECT_CALL(*buyDecisionMock, isAsap()).WillOnce(Return(false));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
@@ -414,6 +418,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to sell"));
+    EXPECT_CALL(*sellDecisionMock, isAsap()).WillOnce(Return(false));
     EXPECT_CALL(
         *buyDecisionMock,
         makeDecision(
@@ -421,6 +426,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to buy"));
+    EXPECT_CALL(*buyDecisionMock, isAsap()).WillOnce(Return(false));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
@@ -470,6 +476,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to sell"));
+    EXPECT_CALL(*sellDecisionMock, isAsap()).WillOnce(Return(false));
 
     result = decisionMaker->makeDecision(
         QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, true, 200000, false, true
@@ -509,6 +516,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to sell"));
+    EXPECT_CALL(*sellDecisionMock, isAsap()).WillOnce(Return(false));
     EXPECT_CALL(
         *buyDecisionMock,
         makeDecision(
@@ -516,6 +524,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to buy"));
+    EXPECT_CALL(*buyDecisionMock, isAsap()).WillOnce(Return(false));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());

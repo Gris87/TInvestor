@@ -351,3 +351,8 @@ QString BuyDecision2::makeDecision(
     return "";
 }
 // NOLINTEND(readability-function-cognitive-complexity)
+
+bool BuyDecision2::isAsap() const
+{
+    return false;
+}

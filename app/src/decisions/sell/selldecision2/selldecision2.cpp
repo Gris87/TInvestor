@@ -164,3 +164,8 @@ QString SellDecision2::makeDecision(
     return "";
 }
 // NOLINTEND(readability-function-cognitive-complexity)
+
+bool SellDecision2::isAsap() const
+{
+    return true;
+}

@@ -290,3 +290,8 @@ QString BuyDecision1::makeDecision(
     return "";
 }
 // NOLINTEND(readability-function-cognitive-complexity)
+
+bool BuyDecision1::isAsap() const
+{
+    return false;
+}

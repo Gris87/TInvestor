@@ -8,8 +8,7 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr float HUNDRED_PERCENT          = 100.0f;
-constexpr int   ASAP_SELL_DECISION_INDEX = 2;
+constexpr float HUNDRED_PERCENT = 100.0f;
 
 
 
@@ -302,11 +301,14 @@ static void makeDecisionsForParallel(
             {
                 if (money >= price)
                 {
-                    const qint64 limitTimestamp = instrumentSells->value(stock->meta.instrumentId, 0);
+                    const qint64     limitTimestamp = instrumentSells->value(stock->meta.instrumentId, 0);
+                    IActionDecision* buyDecision    = nullptr;
 
                     for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
                     {
-                        cause = buyDecisionsArray[j]->makeDecision(
+                        buyDecision = buyDecisionsArray[j];
+
+                        cause = buyDecision->makeDecision(
                             parentThread, decisionConfig, limitTimestamp, stock, dateRange, dataIndex, price, avgPrice, commission
                         );
                     }
@@ -314,17 +316,19 @@ static void makeDecisionsForParallel(
                     if (cause != "")
                     {
                         buyResultsArray[threadId][stock->meta.instrumentId] =
-                            TradingInfo(false, avgPrice, price, stock->meta.turnover, cause);
+                            TradingInfo(buyDecision->isAsap(), avgPrice, price, stock->meta.turnover, cause);
                     }
                 }
             }
             else
             {
-                int j;
+                IActionDecision* sellDecision = nullptr;
 
-                for (j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
+                for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
                 {
-                    cause = sellDecisionsArray[j]->makeDecision(
+                    sellDecision = sellDecisionsArray[j];
+
+                    cause = sellDecision->makeDecision(
                         parentThread, decisionConfig, 0, stock, dateRange, dataIndex, price, avgPrice, commission
                     );
                 }
@@ -332,7 +336,7 @@ static void makeDecisionsForParallel(
                 if (cause != "")
                 {
                     sellResultsArray[threadId][stock->meta.instrumentId] =
-                        TradingInfo(j >= ASAP_SELL_DECISION_INDEX, avgPrice, price, 0.0, cause);
+                        TradingInfo(sellDecision->isAsap(), avgPrice, price, 0.0, cause);
                 }
             }
         }

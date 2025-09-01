@@ -72,16 +72,16 @@ private:
     double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
 
     [[nodiscard]]
-    bool sellWithPrice(double expected, double delta, const Quotation& price);
+    bool sellWithPrice(double expected, double delta, const Quotation& price, float marketPrice);
 
     [[nodiscard]]
-    bool sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price);
+    bool sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
 
     [[nodiscard]]
-    bool buyWithPrice(double expected, double delta, const Quotation& price);
+    bool buyWithPrice(double expected, double delta, const Quotation& price, float marketPrice);
 
     [[nodiscard]]
-    bool buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price);
+    bool buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
 
     void cancelOrder();
     void informAboutOrderState(const tinkoff::OrderState& tinkoffOrder);

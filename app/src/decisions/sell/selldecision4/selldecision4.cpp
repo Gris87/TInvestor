@@ -133,3 +133,8 @@ QString SellDecision4::makeDecision(
     return "";
 }
 // NOLINTEND(readability-function-cognitive-complexity)
+
+bool SellDecision4::isAsap() const
+{
+    return false;
+}

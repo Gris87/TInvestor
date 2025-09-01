@@ -29,4 +29,7 @@ public:
         float                 avgPrice,
         float                 commission
     ) = 0;
+
+    [[nodiscard]]
+    virtual bool isAsap() const = 0;
 };

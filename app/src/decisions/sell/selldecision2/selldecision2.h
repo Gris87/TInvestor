@@ -26,4 +26,7 @@ public:
         float                 avgPrice,
         float                 commission
     ) override;
+
+    [[nodiscard]]
+    bool isAsap() const override;
 };
