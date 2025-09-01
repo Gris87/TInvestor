@@ -216,7 +216,7 @@ TEST_F(Test_Config, Test_assign)
     config->assign(&config2);
 
     // clang-format off
-    ASSERT_EQ(config->isAutorun(),                                 true);
+    ASSERT_EQ(config->isAutorun(),                                  true);
     ASSERT_EQ(config->getCpuUsage(),                                "OPTIMAL");
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     30);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);

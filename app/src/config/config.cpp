@@ -6,20 +6,20 @@
 
 const char* const CPU_USAGE_DEFAULT = "MAXIMUM";
 
-constexpr bool  AUTORUN_DEFAULT                    = true;
-constexpr int   MAKE_DECISION_TIMEOUT_DEFAULT      = 1;
-constexpr bool  TRADE_IN_NON_WORKING_HOURS_DEFAULT = true;
-constexpr bool  LIMIT_STOCK_PURCHASE_DEFAULT       = true;
-constexpr float LIMIT_STOCK_PURCHASE_PART_DEFAULT  = 10.0f;
-constexpr bool  LIMIT_BY_TURNOVER_DEFAULT          = true;
-constexpr float LIMIT_BY_TURNOVER_PERCENT_DEFAULT  = 5.0f;
+constexpr bool  AUTORUN_DEFAULT                                     = true;
+constexpr int   MAKE_DECISION_TIMEOUT_DEFAULT                       = 1;
+constexpr bool  TRADE_IN_NON_WORKING_HOURS_DEFAULT                  = true;
+constexpr bool  LIMIT_STOCK_PURCHASE_DEFAULT                        = true;
+constexpr float LIMIT_STOCK_PURCHASE_PART_DEFAULT                   = 10.0f;
+constexpr bool  LIMIT_BY_TURNOVER_DEFAULT                           = true;
+constexpr float LIMIT_BY_TURNOVER_PERCENT_DEFAULT                   = 5.0f;
 constexpr bool  LIMIT_STOCK_PURCHASE_NON_WORKING_HOURS_DEFAULT      = true;
 constexpr float LIMIT_STOCK_PURCHASE_PART_NON_WORKING_HOURS_DEFAULT = 1.0f;
 constexpr bool  LIMIT_BY_TURNOVER_NON_WORKING_HOURS_DEFAULT         = true;
 constexpr float LIMIT_BY_TURNOVER_PERCENT_NON_WORKING_HOURS_DEFAULT = 1.0f;
 constexpr int   STORAGE_MONTH_LIMIT_DEFAULT                         = 12;
-constexpr bool  SIMULATOR_CONFIG_COMMON_DEFAULT    = true;
-constexpr bool  AUTOPILOT_CONFIG_COMMON_DEFAULT    = false;
+constexpr bool  SIMULATOR_CONFIG_COMMON_DEFAULT                     = true;
+constexpr bool  AUTOPILOT_CONFIG_COMMON_DEFAULT                     = false;
 
 
 
@@ -85,21 +85,21 @@ void Config::assign(IConfig* another)
     mSimulatorConfig->assign(config.mSimulatorConfig);
     mAutoPilotConfig->assign(config.mAutoPilotConfig);
 
-    mAutorun                = config.mAutorun;
-    mCpuUsage               = config.mCpuUsage;
-    mMakeDecisionTimeout    = config.mMakeDecisionTimeout;
-    mTradeInNonWorkingHours = config.mTradeInNonWorkingHours;
-    mLimitStockPurchase     = config.mLimitStockPurchase;
-    mLimitStockPurchasePart = config.mLimitStockPurchasePart;
+    mAutorun                               = config.mAutorun;
+    mCpuUsage                              = config.mCpuUsage;
+    mMakeDecisionTimeout                   = config.mMakeDecisionTimeout;
+    mTradeInNonWorkingHours                = config.mTradeInNonWorkingHours;
+    mLimitStockPurchase                    = config.mLimitStockPurchase;
+    mLimitStockPurchasePart                = config.mLimitStockPurchasePart;
     mLimitByTurnover                       = config.mLimitByTurnover;
     mLimitByTurnoverPercent                = config.mLimitByTurnoverPercent;
     mLimitStockPurchaseNonWorkingHours     = config.mLimitStockPurchaseNonWorkingHours;
     mLimitStockPurchasePartNonWorkingHours = config.mLimitStockPurchasePartNonWorkingHours;
     mLimitByTurnoverNonWorkingHours        = config.mLimitByTurnoverNonWorkingHours;
     mLimitByTurnoverPercentNonWorkingHours = config.mLimitByTurnoverPercentNonWorkingHours;
-    mStorageMonthLimit      = config.mStorageMonthLimit;
-    mSimulatorConfigCommon  = config.mSimulatorConfigCommon;
-    mAutoPilotConfigCommon  = config.mAutoPilotConfigCommon;
+    mStorageMonthLimit                     = config.mStorageMonthLimit;
+    mSimulatorConfigCommon                 = config.mSimulatorConfigCommon;
+    mAutoPilotConfigCommon                 = config.mAutoPilotConfigCommon;
 }
 
 void Config::makeDefault()
@@ -111,21 +111,21 @@ void Config::makeDefault()
     mSimulatorConfig->makeDefault();
     mAutoPilotConfig->makeDefault();
 
-    mAutorun                = AUTORUN_DEFAULT;
-    mCpuUsage               = CPU_USAGE_DEFAULT;
-    mMakeDecisionTimeout    = MAKE_DECISION_TIMEOUT_DEFAULT;
-    mTradeInNonWorkingHours = TRADE_IN_NON_WORKING_HOURS_DEFAULT;
-    mLimitStockPurchase     = LIMIT_STOCK_PURCHASE_DEFAULT;
-    mLimitStockPurchasePart = LIMIT_STOCK_PURCHASE_PART_DEFAULT;
-    mLimitByTurnover        = LIMIT_BY_TURNOVER_DEFAULT;
-    mLimitByTurnoverPercent = LIMIT_BY_TURNOVER_PERCENT_DEFAULT;
+    mAutorun                               = AUTORUN_DEFAULT;
+    mCpuUsage                              = CPU_USAGE_DEFAULT;
+    mMakeDecisionTimeout                   = MAKE_DECISION_TIMEOUT_DEFAULT;
+    mTradeInNonWorkingHours                = TRADE_IN_NON_WORKING_HOURS_DEFAULT;
+    mLimitStockPurchase                    = LIMIT_STOCK_PURCHASE_DEFAULT;
+    mLimitStockPurchasePart                = LIMIT_STOCK_PURCHASE_PART_DEFAULT;
+    mLimitByTurnover                       = LIMIT_BY_TURNOVER_DEFAULT;
+    mLimitByTurnoverPercent                = LIMIT_BY_TURNOVER_PERCENT_DEFAULT;
     mLimitStockPurchaseNonWorkingHours     = LIMIT_STOCK_PURCHASE_NON_WORKING_HOURS_DEFAULT;
     mLimitStockPurchasePartNonWorkingHours = LIMIT_STOCK_PURCHASE_PART_NON_WORKING_HOURS_DEFAULT;
     mLimitByTurnoverNonWorkingHours        = LIMIT_BY_TURNOVER_NON_WORKING_HOURS_DEFAULT;
     mLimitByTurnoverPercentNonWorkingHours = LIMIT_BY_TURNOVER_PERCENT_NON_WORKING_HOURS_DEFAULT;
-    mStorageMonthLimit      = STORAGE_MONTH_LIMIT_DEFAULT;
-    mSimulatorConfigCommon  = SIMULATOR_CONFIG_COMMON_DEFAULT;
-    mAutoPilotConfigCommon  = AUTOPILOT_CONFIG_COMMON_DEFAULT;
+    mStorageMonthLimit                     = STORAGE_MONTH_LIMIT_DEFAULT;
+    mSimulatorConfigCommon                 = SIMULATOR_CONFIG_COMMON_DEFAULT;
+    mAutoPilotConfigCommon                 = AUTOPILOT_CONFIG_COMMON_DEFAULT;
 }
 
 void Config::save(ISettingsEditor* settingsEditor)
