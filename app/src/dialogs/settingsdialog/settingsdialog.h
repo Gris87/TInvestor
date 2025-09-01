@@ -54,9 +54,7 @@ private slots:
     void on_autorunCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_cpuUsageComboBox_currentIndexChanged(int index);
     void on_makeDecisionTimeoutSpinBox_valueChanged(int value);
-    void on_useScheduleCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_scheduleStartTimeEdit_timeChanged(const QTime& time);
-    void on_scheduleEndTimeEdit_timeChanged(const QTime& time);
+    void on_tradeInNonWorkingHoursCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value);

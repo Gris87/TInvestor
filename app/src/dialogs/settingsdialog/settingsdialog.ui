@@ -164,54 +164,12 @@
           <number>4</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="useScheduleCheckBox">
+          <widget class="QCheckBox" name="tradeInNonWorkingHoursCheckBox">
            <property name="text">
-            <string>Trade stocks on weekdays in the interval</string>
+            <string>Trade stocks in non-wokring hours</string>
            </property>
            <property name="checked">
             <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTimeEdit" name="scheduleStartTimeEdit">
-           <property name="displayFormat">
-            <string notr="true">H:mm</string>
-           </property>
-           <property name="time">
-            <time>
-             <hour>10</hour>
-             <minute>0</minute>
-             <second>0</second>
-            </time>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string notr="true">-</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTimeEdit" name="scheduleEndTimeEdit">
-           <property name="displayFormat">
-            <string notr="true">H:mm</string>
-           </property>
-           <property name="time">
-            <time>
-             <hour>18</hour>
-             <minute>40</minute>
-             <second>0</second>
-            </time>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>in Moscow time</string>
            </property>
           </widget>
          </item>

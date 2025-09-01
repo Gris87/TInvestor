@@ -4,6 +4,8 @@
 
 #include "src/utils/timeutils/itimeutils.h"
 
+#include <QTimeZone>
+
 
 
 class TimeUtils : public ITimeUtils
@@ -16,4 +18,8 @@ public:
     TimeUtils& operator=(const TimeUtils& another) = delete;
 
     bool interruptibleSleep(int ms, QThread* parentThread) override;
+    bool isWorkingHours(qint64 timestamp) override;
+
+private:
+    QTimeZone mMoscowTimezone;
 };

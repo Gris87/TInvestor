@@ -7,6 +7,7 @@
 #include "src/decisions/iactiondecision_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
 
 
 
@@ -31,6 +32,7 @@ protected:
         configMock             = new StrictMock<ConfigMock>();
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         userStorageMock        = new StrictMock<UserStorageMock>();
+        timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         buyDecisionMock        = new StrictMock<ActionDecisionMock>();
         sellDecisionMock       = new StrictMock<ActionDecisionMock>();
         simulatorConfigMock    = new StrictMock<DecisionMakerConfigMock>();
@@ -39,6 +41,7 @@ protected:
         decisionMaker = new DecisionMaker(
             instrumentsStorageMock,
             userStorageMock,
+            timeUtilsMock,
             QList<IActionDecision*>() << buyDecisionMock,
             QList<IActionDecision*>() << sellDecisionMock
         );
@@ -50,6 +53,7 @@ protected:
         delete configMock;
         delete instrumentsStorageMock;
         delete userStorageMock;
+        delete timeUtilsMock;
         delete buyDecisionMock;
         delete sellDecisionMock;
         delete simulatorConfigMock;
@@ -60,6 +64,7 @@ protected:
     StrictMock<ConfigMock>*              configMock;
     StrictMock<InstrumentsStorageMock>*  instrumentsStorageMock;
     StrictMock<UserStorageMock>*         userStorageMock;
+    StrictMock<TimeUtilsMock>*           timeUtilsMock;
     StrictMock<ActionDecisionMock>*      buyDecisionMock;
     StrictMock<ActionDecisionMock>*      sellDecisionMock;
     StrictMock<DecisionMakerConfigMock>* simulatorConfigMock;
@@ -250,11 +255,8 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     instruments["bbbbb"] = instrument2;
     instruments["ccccc"] = instrument3;
 
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
-    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(0));
-    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(18));
-    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(40));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704110400000)).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
     EXPECT_CALL(*userStorageMock, readLock());
@@ -314,7 +316,8 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");
     // clang-format on
 
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704542400000)).WillOnce(Return(false));
 
     result = decisionMaker->makeDecision(
         QThread::currentThread(), 1704542400000, configMock, instrumentSells, portfolio, stocks, false, 0, false, true
@@ -322,19 +325,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
 
     ASSERT_EQ(result.size(), 0);
 
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
-    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(0));
-    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(18));
-    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(40));
-
-    result = decisionMaker->makeDecision(
-        QThread::currentThread(), 1704056400000, configMock, instrumentSells, portfolio, stocks, false, 0, false, true
-    );
-
-    ASSERT_EQ(result.size(), 0);
-
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
@@ -394,7 +385,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");
     // clang-format on
 
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
@@ -452,7 +443,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");
     // clang-format on
 
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
@@ -492,7 +483,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");
     // clang-format on
 
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
@@ -550,7 +541,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");
     // clang-format on
 
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));

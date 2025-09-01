@@ -1,9 +1,10 @@
 Limit trading buy different percents in non-working hours
 Trade instruments with huge spread (detect periodically among all stocks). Buy few / sell few (average?)
-Super ASAP buying for BuyDecision1 with trading based on asks with price raise < 0.50%
-Super ASAP selling for SellDecision1 with trading based on bids with yield > 0.38%
 Improve coverage
 Create release
+
+Super ASAP buying for BuyDecision1 with trading based on asks with price raise < 0.50%
+Super ASAP selling for SellDecision1 with trading based on bids with yield > 0.38%
 
 Change best config search algorithm
 Find best configs

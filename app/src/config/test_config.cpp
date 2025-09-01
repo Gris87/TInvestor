@@ -53,11 +53,7 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
     config->setMakeDecisionTimeout(5);
-    config->setUseSchedule(false);
-    config->setScheduleStartHour(8);
-    config->setScheduleStartMinute(15);
-    config->setScheduleEndHour(20);
-    config->setScheduleEndMinute(50);
+    config->setTradeInNonWorkingHours(false);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
@@ -70,11 +66,7 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config->isAutorun(),                   false);
     ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isUseSchedule(),               false);
-    ASSERT_EQ(config->getScheduleStartHour(),        8);
-    ASSERT_EQ(config->getScheduleStartMinute(),      15);
-    ASSERT_EQ(config->getScheduleEndHour(),          20);
-    ASSERT_EQ(config->getScheduleEndMinute(),        50);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
     ASSERT_EQ(config->isLimitStockPurchase(),        false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(), 25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),           false);
@@ -95,11 +87,7 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config->isAutorun(),                   false);
     ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isUseSchedule(),               false);
-    ASSERT_EQ(config->getScheduleStartHour(),        8);
-    ASSERT_EQ(config->getScheduleStartMinute(),      15);
-    ASSERT_EQ(config->getScheduleEndHour(),          20);
-    ASSERT_EQ(config->getScheduleEndMinute(),        50);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
     ASSERT_EQ(config->isLimitStockPurchase(),        false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(), 25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),           false);
@@ -113,11 +101,7 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config2->isAutorun(),                   false);
     ASSERT_EQ(config2->getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config2->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config2->isUseSchedule(),               false);
-    ASSERT_EQ(config2->getScheduleStartHour(),        8);
-    ASSERT_EQ(config2->getScheduleStartMinute(),      15);
-    ASSERT_EQ(config2->getScheduleEndHour(),          20);
-    ASSERT_EQ(config2->getScheduleEndMinute(),        50);
+    ASSERT_EQ(config2->isTradeInNonWorkingHours(),    false);
     ASSERT_EQ(config2->isLimitStockPurchase(),        false);
     ASSERT_NEAR(config2->getLimitStockPurchasePart(), 25.0f, 0.0001f);
     ASSERT_EQ(config2->isLimitByTurnover(),           false);
@@ -145,11 +129,7 @@ TEST_F(Test_Config, Test_assign)
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
     config->setMakeDecisionTimeout(5);
-    config->setUseSchedule(false);
-    config->setScheduleStartHour(8);
-    config->setScheduleStartMinute(15);
-    config->setScheduleEndHour(20);
-    config->setScheduleEndMinute(50);
+    config->setTradeInNonWorkingHours(false);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
@@ -162,11 +142,7 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->isAutorun(),                   false);
     ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isUseSchedule(),               false);
-    ASSERT_EQ(config->getScheduleStartHour(),        8);
-    ASSERT_EQ(config->getScheduleStartMinute(),      15);
-    ASSERT_EQ(config->getScheduleEndHour(),          20);
-    ASSERT_EQ(config->getScheduleEndMinute(),        50);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
     ASSERT_EQ(config->isLimitStockPurchase(),        false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(), 25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),           false);
@@ -179,11 +155,7 @@ TEST_F(Test_Config, Test_assign)
     config2.setAutorun(true);
     config2.setCpuUsage("OPTIMAL");
     config2.setMakeDecisionTimeout(30);
-    config2.setUseSchedule(true);
-    config2.setScheduleStartHour(7);
-    config2.setScheduleStartMinute(5);
-    config2.setScheduleEndHour(21);
-    config2.setScheduleEndMinute(37);
+    config2.setTradeInNonWorkingHours(true);
     config2.setLimitStockPurchase(true);
     config2.setLimitStockPurchasePart(5.0f);
     config2.setLimitByTurnover(true);
@@ -196,11 +168,7 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.isAutorun(),                   true);
     ASSERT_EQ(config2.getCpuUsage(),                 "OPTIMAL");
     ASSERT_EQ(config2.getMakeDecisionTimeout(),      30);
-    ASSERT_EQ(config2.isUseSchedule(),               true);
-    ASSERT_EQ(config2.getScheduleStartHour(),        7);
-    ASSERT_EQ(config2.getScheduleStartMinute(),      5);
-    ASSERT_EQ(config2.getScheduleEndHour(),          21);
-    ASSERT_EQ(config2.getScheduleEndMinute(),        37);
+    ASSERT_EQ(config2.isTradeInNonWorkingHours(),    true);
     ASSERT_EQ(config2.isLimitStockPurchase(),        true);
     ASSERT_NEAR(config2.getLimitStockPurchasePart(), 5.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitByTurnover(),           true);
@@ -219,11 +187,7 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->isAutorun(),                   true);
     ASSERT_EQ(config->getCpuUsage(),                 "OPTIMAL");
     ASSERT_EQ(config->getMakeDecisionTimeout(),      30);
-    ASSERT_EQ(config->isUseSchedule(),               true);
-    ASSERT_EQ(config->getScheduleStartHour(),        7);
-    ASSERT_EQ(config->getScheduleStartMinute(),      5);
-    ASSERT_EQ(config->getScheduleEndHour(),          21);
-    ASSERT_EQ(config->getScheduleEndMinute(),        37);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),    true);
     ASSERT_EQ(config->isLimitStockPurchase(),        true);
     ASSERT_NEAR(config->getLimitStockPurchasePart(), 5.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),           true);
@@ -237,11 +201,7 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.isAutorun(),                   true);
     ASSERT_EQ(config2.getCpuUsage(),                 "OPTIMAL");
     ASSERT_EQ(config2.getMakeDecisionTimeout(),      30);
-    ASSERT_EQ(config2.isUseSchedule(),               true);
-    ASSERT_EQ(config2.getScheduleStartHour(),        7);
-    ASSERT_EQ(config2.getScheduleStartMinute(),      5);
-    ASSERT_EQ(config2.getScheduleEndHour(),          21);
-    ASSERT_EQ(config2.getScheduleEndMinute(),        37);
+    ASSERT_EQ(config2.isTradeInNonWorkingHours(),    true);
     ASSERT_EQ(config2.isLimitStockPurchase(),        true);
     ASSERT_NEAR(config2.getLimitStockPurchasePart(), 5.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitByTurnover(),           true);
@@ -259,11 +219,7 @@ TEST_F(Test_Config, Test_makeDefault)
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
     config->setMakeDecisionTimeout(5);
-    config->setUseSchedule(false);
-    config->setScheduleStartHour(8);
-    config->setScheduleStartMinute(15);
-    config->setScheduleEndHour(20);
-    config->setScheduleEndMinute(50);
+    config->setTradeInNonWorkingHours(false);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(50.0f);
     config->setLimitByTurnover(false);
@@ -276,11 +232,7 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isAutorun(),                   false);
     ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isUseSchedule(),               false);
-    ASSERT_EQ(config->getScheduleStartHour(),        8);
-    ASSERT_EQ(config->getScheduleStartMinute(),      15);
-    ASSERT_EQ(config->getScheduleEndHour(),          20);
-    ASSERT_EQ(config->getScheduleEndMinute(),        50);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
     ASSERT_EQ(config->isLimitStockPurchase(),        false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(), 50.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),           false);
@@ -299,11 +251,7 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isAutorun(),                   true);
     ASSERT_EQ(config->getCpuUsage(),                 "MAXIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),      1);
-    ASSERT_EQ(config->isUseSchedule(),               true);
-    ASSERT_EQ(config->getScheduleStartHour(),        10);
-    ASSERT_EQ(config->getScheduleStartMinute(),      0);
-    ASSERT_EQ(config->getScheduleEndHour(),          18);
-    ASSERT_EQ(config->getScheduleEndMinute(),        40);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),    true);
     ASSERT_EQ(config->isLimitStockPurchase(),        true);
     ASSERT_NEAR(config->getLimitStockPurchasePart(), 10.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),           true);
@@ -321,11 +269,7 @@ TEST_F(Test_Config, Test_save)
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
     config->setMakeDecisionTimeout(5);
-    config->setUseSchedule(false);
-    config->setScheduleStartHour(8);
-    config->setScheduleStartMinute(15);
-    config->setScheduleEndHour(20);
-    config->setScheduleEndMinute(50);
+    config->setTradeInNonWorkingHours(false);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(50.0f);
     config->setLimitByTurnover(false);
@@ -338,11 +282,7 @@ TEST_F(Test_Config, Test_save)
     ASSERT_EQ(config->isAutorun(),                   false);
     ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isUseSchedule(),               false);
-    ASSERT_EQ(config->getScheduleStartHour(),        8);
-    ASSERT_EQ(config->getScheduleStartMinute(),      15);
-    ASSERT_EQ(config->getScheduleEndHour(),          20);
-    ASSERT_EQ(config->getScheduleEndMinute(),        50);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
     ASSERT_EQ(config->isLimitStockPurchase(),        false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(), 50.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),           false);
@@ -361,11 +301,7 @@ TEST_F(Test_Config, Test_save)
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),                QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/CpuUsage"),               QVariant("MINIMUM")));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/MakeDecisionTimeout"),    QVariant(5)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/UseSchedule"),            QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleStartHour"),      QVariant(8)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleStartMinute"),    QVariant(15)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleEndHour"),        QVariant(20)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleEndMinute"),      QVariant(50)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeInNonWorkingHours"), QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchase"),     QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePart"), QVariant(50.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnover"),        QVariant(false)));
@@ -385,11 +321,7 @@ TEST_F(Test_Config, Test_load)
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
     config->setMakeDecisionTimeout(5);
-    config->setUseSchedule(false);
-    config->setScheduleStartHour(8);
-    config->setScheduleStartMinute(15);
-    config->setScheduleEndHour(20);
-    config->setScheduleEndMinute(50);
+    config->setTradeInNonWorkingHours(false);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(50.0f);
     config->setLimitByTurnover(false);
@@ -402,11 +334,7 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->isAutorun(),                   false);
     ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isUseSchedule(),               false);
-    ASSERT_EQ(config->getScheduleStartHour(),        8);
-    ASSERT_EQ(config->getScheduleStartMinute(),      15);
-    ASSERT_EQ(config->getScheduleEndHour(),          20);
-    ASSERT_EQ(config->getScheduleEndMinute(),        50);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
     ASSERT_EQ(config->isLimitStockPurchase(),        false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(), 50.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),           false);
@@ -425,11 +353,7 @@ TEST_F(Test_Config, Test_load)
     EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),                QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/CpuUsage"),               QVariant("MINIMUM"))).WillOnce(Return(QVariant("OPTIMAL")));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/MakeDecisionTimeout"),    QVariant(5))).WillOnce(Return(QVariant(30)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/UseSchedule"),            QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleStartHour"),      QVariant(8))).WillOnce(Return(QVariant(7)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleStartMinute"),    QVariant(15))).WillOnce(Return(QVariant(5)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleEndHour"),        QVariant(20))).WillOnce(Return(QVariant(21)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleEndMinute"),      QVariant(50))).WillOnce(Return(QVariant(37)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeInNonWorkingHours"), QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchase"),     QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePart"), QVariant(50.0f))).WillOnce(Return(QVariant(5.0f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnover"),        QVariant(false))).WillOnce(Return(QVariant(true)));
@@ -445,11 +369,7 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->isAutorun(),                   true);
     ASSERT_EQ(config->getCpuUsage(),                 "OPTIMAL");
     ASSERT_EQ(config->getMakeDecisionTimeout(),      30);
-    ASSERT_EQ(config->isUseSchedule(),               true);
-    ASSERT_EQ(config->getScheduleStartHour(),        7);
-    ASSERT_EQ(config->getScheduleStartMinute(),      5);
-    ASSERT_EQ(config->getScheduleEndHour(),          21);
-    ASSERT_EQ(config->getScheduleEndMinute(),        37);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),    true);
     ASSERT_EQ(config->isLimitStockPurchase(),        true);
     ASSERT_NEAR(config->getLimitStockPurchasePart(), 5.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),           true);
@@ -497,49 +417,13 @@ TEST_F(Test_Config, Test_setMakeDecisionTimeout_and_getMakeDecisionTimeout)
     ASSERT_EQ(config->getMakeDecisionTimeout(), 2);
 }
 
-TEST_F(Test_Config, Test_setUseSchedule_and_isUseSchedule)
+TEST_F(Test_Config, Test_setTradeInNonWorkingHours_and_isTradeInNonWorkingHours)
 {
-    config->setUseSchedule(false);
-    ASSERT_EQ(config->isUseSchedule(), false);
+    config->setTradeInNonWorkingHours(false);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(), false);
 
-    config->setUseSchedule(true);
-    ASSERT_EQ(config->isUseSchedule(), true);
-}
-
-TEST_F(Test_Config, Test_setScheduleStartHour_and_getScheduleStartHour)
-{
-    config->setScheduleStartHour(1);
-    ASSERT_EQ(config->getScheduleStartHour(), 1);
-
-    config->setScheduleStartHour(2);
-    ASSERT_EQ(config->getScheduleStartHour(), 2);
-}
-
-TEST_F(Test_Config, Test_setScheduleStartMinute_and_getScheduleStartMinute)
-{
-    config->setScheduleStartMinute(1);
-    ASSERT_EQ(config->getScheduleStartMinute(), 1);
-
-    config->setScheduleStartMinute(2);
-    ASSERT_EQ(config->getScheduleStartMinute(), 2);
-}
-
-TEST_F(Test_Config, Test_setScheduleEndHour_and_getScheduleEndHour)
-{
-    config->setScheduleEndHour(1);
-    ASSERT_EQ(config->getScheduleEndHour(), 1);
-
-    config->setScheduleEndHour(2);
-    ASSERT_EQ(config->getScheduleEndHour(), 2);
-}
-
-TEST_F(Test_Config, Test_setScheduleEndMinute_and_getScheduleEndMinute)
-{
-    config->setScheduleEndMinute(1);
-    ASSERT_EQ(config->getScheduleEndMinute(), 1);
-
-    config->setScheduleEndMinute(2);
-    ASSERT_EQ(config->getScheduleEndMinute(), 2);
+    config->setTradeInNonWorkingHours(true);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(), true);
 }
 
 TEST_F(Test_Config, Test_setLimitStockPurchase_and_isLimitStockPurchase)

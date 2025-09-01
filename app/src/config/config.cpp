@@ -6,20 +6,16 @@
 
 const char* const CPU_USAGE_DEFAULT = "MAXIMUM";
 
-constexpr bool  AUTORUN_DEFAULT                   = true;
-constexpr int   MAKE_DECISION_TIMEOUT_DEFAULT     = 1;
-constexpr bool  USE_SCHEDULE_DEFAULT              = true;
-constexpr int   SCHEDULE_START_HOUR_DEFAULT       = 10;
-constexpr int   SCHEDULE_START_MINUTE_DEFAULT     = 0;
-constexpr int   SCHEDULE_END_HOUR_DEFAULT         = 18;
-constexpr int   SCHEDULE_END_MINUTE_DEFAULT       = 40;
-constexpr bool  LIMIT_STOCK_PURCHASE_DEFAULT      = true;
-constexpr float LIMIT_STOCK_PURCHASE_PART_DEFAULT = 10.0f;
-constexpr bool  LIMIT_BY_TURNOVER_DEFAULT         = true;
-constexpr float LIMIT_BY_TURNOVER_PERCENT_DEFAULT = 5.0f;
-constexpr int   STORAGE_MONTH_LIMIT_DEFAULT       = 12;
-constexpr bool  SIMULATOR_CONFIG_COMMON_DEFAULT   = true;
-constexpr bool  AUTOPILOT_CONFIG_COMMON_DEFAULT   = false;
+constexpr bool  AUTORUN_DEFAULT                    = true;
+constexpr int   MAKE_DECISION_TIMEOUT_DEFAULT      = 1;
+constexpr bool  TRADE_IN_NON_WORKING_HOURS_DEFAULT = true;
+constexpr bool  LIMIT_STOCK_PURCHASE_DEFAULT       = true;
+constexpr float LIMIT_STOCK_PURCHASE_PART_DEFAULT  = 10.0f;
+constexpr bool  LIMIT_BY_TURNOVER_DEFAULT          = true;
+constexpr float LIMIT_BY_TURNOVER_PERCENT_DEFAULT  = 5.0f;
+constexpr int   STORAGE_MONTH_LIMIT_DEFAULT        = 12;
+constexpr bool  SIMULATOR_CONFIG_COMMON_DEFAULT    = true;
+constexpr bool  AUTOPILOT_CONFIG_COMMON_DEFAULT    = false;
 
 
 
@@ -31,11 +27,7 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mAutorun(),
     mCpuUsage(),
     mMakeDecisionTimeout(),
-    mUseSchedule(),
-    mScheduleStartHour(),
-    mScheduleStartMinute(),
-    mScheduleEndHour(),
-    mScheduleEndMinute(),
+    mTradeInNonWorkingHours(),
     mLimitStockPurchase(),
     mLimitStockPurchasePart(),
     mLimitByTurnover(),
@@ -88,11 +80,7 @@ void Config::assign(IConfig* another)
     mAutorun                = config.mAutorun;
     mCpuUsage               = config.mCpuUsage;
     mMakeDecisionTimeout    = config.mMakeDecisionTimeout;
-    mUseSchedule            = config.mUseSchedule;
-    mScheduleStartHour      = config.mScheduleStartHour;
-    mScheduleStartMinute    = config.mScheduleStartMinute;
-    mScheduleEndHour        = config.mScheduleEndHour;
-    mScheduleEndMinute      = config.mScheduleEndMinute;
+    mTradeInNonWorkingHours = config.mTradeInNonWorkingHours;
     mLimitStockPurchase     = config.mLimitStockPurchase;
     mLimitStockPurchasePart = config.mLimitStockPurchasePart;
     mLimitByTurnover        = config.mLimitByTurnover;
@@ -114,11 +102,7 @@ void Config::makeDefault()
     mAutorun                = AUTORUN_DEFAULT;
     mCpuUsage               = CPU_USAGE_DEFAULT;
     mMakeDecisionTimeout    = MAKE_DECISION_TIMEOUT_DEFAULT;
-    mUseSchedule            = USE_SCHEDULE_DEFAULT;
-    mScheduleStartHour      = SCHEDULE_START_HOUR_DEFAULT;
-    mScheduleStartMinute    = SCHEDULE_START_MINUTE_DEFAULT;
-    mScheduleEndHour        = SCHEDULE_END_HOUR_DEFAULT;
-    mScheduleEndMinute      = SCHEDULE_END_MINUTE_DEFAULT;
+    mTradeInNonWorkingHours = TRADE_IN_NON_WORKING_HOURS_DEFAULT;
     mLimitStockPurchase     = LIMIT_STOCK_PURCHASE_DEFAULT;
     mLimitStockPurchasePart = LIMIT_STOCK_PURCHASE_PART_DEFAULT;
     mLimitByTurnover        = LIMIT_BY_TURNOVER_DEFAULT;
@@ -141,11 +125,7 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/Autorun",                mAutorun);
     settingsEditor->setValue("Config/CpuUsage",               mCpuUsage);
     settingsEditor->setValue("Config/MakeDecisionTimeout",    mMakeDecisionTimeout);
-    settingsEditor->setValue("Config/UseSchedule",            mUseSchedule);
-    settingsEditor->setValue("Config/ScheduleStartHour",      mScheduleStartHour);
-    settingsEditor->setValue("Config/ScheduleStartMinute",    mScheduleStartMinute);
-    settingsEditor->setValue("Config/ScheduleEndHour",        mScheduleEndHour);
-    settingsEditor->setValue("Config/ScheduleEndMinute",      mScheduleEndMinute);
+    settingsEditor->setValue("Config/TradeInNonWorkingHours", mTradeInNonWorkingHours);
     settingsEditor->setValue("Config/LimitStockPurchase",     mLimitStockPurchase);
     settingsEditor->setValue("Config/LimitStockPurchasePart", mLimitStockPurchasePart);
     settingsEditor->setValue("Config/LimitByTurnover",        mLimitByTurnover);
@@ -169,11 +149,7 @@ void Config::load(ISettingsEditor* settingsEditor)
     mAutorun                   = settingsEditor->value("Config/Autorun",                mAutorun).toBool();
     mCpuUsage                  = settingsEditor->value("Config/CpuUsage",               mCpuUsage).toString();
     mMakeDecisionTimeout       = settingsEditor->value("Config/MakeDecisionTimeout",    mMakeDecisionTimeout).toInt();
-    mUseSchedule               = settingsEditor->value("Config/UseSchedule",            mUseSchedule).toBool();
-    mScheduleStartHour         = settingsEditor->value("Config/ScheduleStartHour",      mScheduleStartHour).toInt();
-    mScheduleStartMinute       = settingsEditor->value("Config/ScheduleStartMinute",    mScheduleStartMinute).toInt();
-    mScheduleEndHour           = settingsEditor->value("Config/ScheduleEndHour",        mScheduleEndHour).toInt();
-    mScheduleEndMinute         = settingsEditor->value("Config/ScheduleEndMinute",      mScheduleEndMinute).toInt();
+    mTradeInNonWorkingHours    = settingsEditor->value("Config/TradeInNonWorkingHours", mTradeInNonWorkingHours).toBool();
     mLimitStockPurchase        = settingsEditor->value("Config/LimitStockPurchase",     mLimitStockPurchase).toBool();
     mLimitStockPurchasePart    = settingsEditor->value("Config/LimitStockPurchasePart", mLimitStockPurchasePart).toFloat();
     mLimitByTurnover           = settingsEditor->value("Config/LimitByTurnover",        mLimitByTurnover).toBool();
@@ -236,74 +212,18 @@ int Config::getMakeDecisionTimeout()
     return mMakeDecisionTimeout;
 }
 
-void Config::setUseSchedule(bool value)
+void Config::setTradeInNonWorkingHours(bool value)
 {
     const QWriteLocker lock(mRwMutex);
 
-    mUseSchedule = value;
+    mTradeInNonWorkingHours = value;
 }
 
-bool Config::isUseSchedule()
+bool Config::isTradeInNonWorkingHours()
 {
     const QReadLocker lock(mRwMutex);
 
-    return mUseSchedule;
-}
-
-void Config::setScheduleStartHour(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mScheduleStartHour = value;
-}
-
-int Config::getScheduleStartHour()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mScheduleStartHour;
-}
-
-void Config::setScheduleStartMinute(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mScheduleStartMinute = value;
-}
-
-int Config::getScheduleStartMinute()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mScheduleStartMinute;
-}
-
-void Config::setScheduleEndHour(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mScheduleEndHour = value;
-}
-
-int Config::getScheduleEndHour()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mScheduleEndHour;
-}
-
-void Config::setScheduleEndMinute(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mScheduleEndMinute = value;
-}
-
-int Config::getScheduleEndMinute()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mScheduleEndMinute;
+    return mTradeInNonWorkingHours;
 }
 
 void Config::setLimitStockPurchase(bool value)

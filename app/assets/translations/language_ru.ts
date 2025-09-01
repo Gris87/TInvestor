@@ -1075,45 +1075,35 @@
         <translation>Максимально</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="169"/>
-        <source>Trade stocks on weekdays in the interval</source>
-        <translation>Торговать акциями в будни в интервале</translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="214"/>
-        <source>in Moscow time</source>
-        <translation>по московскому времени</translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="308"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="266"/>
         <source>of average daily turnover</source>
         <translation>от среднего дневного оборота</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="338"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="296"/>
         <source>Store stocks data for</source>
         <translation>Хранить данные об акциях</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="345"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="303"/>
         <source> months</source>
         <translation> месяцев</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="426"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="213"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="237"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="384"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="181"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="205"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="526"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="484"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="411"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="447"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="369"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="405"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
     </message>
@@ -1128,29 +1118,34 @@
         <translation> минут</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="241"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="169"/>
+        <source>Trade stocks in non-wokring hours</source>
+        <translation>Торговать акциями в нерабочее время</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="199"/>
         <source>Limit stock purchase part less than</source>
         <translation>Не покупать акции с долей больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="285"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="243"/>
         <source>and less than</source>
         <translation>и больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="390"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="214"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="236"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="348"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="182"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="204"/>
         <source>Simulation</source>
         <translation>Симуляция</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="483"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="441"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="506"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="464"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -1160,8 +1155,8 @@
         <translation>Автозапускать при запуске %1</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="208"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="231"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="176"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="199"/>
         <source>Decision maker</source>
         <translation>Принятие решений</translation>
     </message>

@@ -92,20 +92,13 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::updateUiFromConfig()
 {
-    const int scheduleStartHour   = mConfig->getScheduleStartHour();
-    const int scheduleStartMinute = mConfig->getScheduleStartMinute();
-    const int scheduleEndHour     = mConfig->getScheduleEndHour();
-    const int scheduleEndMinute   = mConfig->getScheduleEndMinute();
-
     mSimulatorConfigWidget->updateUiFromConfig();
     mAutoPilotConfigWidget->updateUiFromConfig();
 
     ui->autorunCheckBox->setChecked(mConfig->isAutorun());
     ui->cpuUsageComboBox->setCurrentIndex(CPU_USAGE_INDEX.value(mConfig->getCpuUsage(), CPU_USAGE_INDEX.value("MAXIMUM")));
     ui->makeDecisionTimeoutSpinBox->setValue(mConfig->getMakeDecisionTimeout());
-    ui->useScheduleCheckBox->setChecked(mConfig->isUseSchedule());
-    ui->scheduleStartTimeEdit->setTime(QTime(scheduleStartHour, scheduleStartMinute));
-    ui->scheduleEndTimeEdit->setTime(QTime(scheduleEndHour, scheduleEndMinute));
+    ui->tradeInNonWorkingHoursCheckBox->setChecked(mConfig->isTradeInNonWorkingHours());
     ui->limitStockPurchaseCheckBox->setChecked(mConfig->isLimitStockPurchase());
     ui->limitStockPurchasePartDoubleSpinBox->setValue(mConfig->getLimitStockPurchasePart());
     ui->limitByTurnoverCheckBox->setChecked(mConfig->isLimitByTurnover());
@@ -132,36 +125,11 @@ void SettingsDialog::on_makeDecisionTimeoutSpinBox_valueChanged(int value)
     mConfig->setMakeDecisionTimeout(value);
 }
 
-void SettingsDialog::on_useScheduleCheckBox_checkStateChanged(const Qt::CheckState& value)
+void SettingsDialog::on_tradeInNonWorkingHoursCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     const bool checked = value == Qt::Checked;
 
-    mConfig->setUseSchedule(checked);
-
-    ui->scheduleStartTimeEdit->setEnabled(checked);
-    ui->scheduleEndTimeEdit->setEnabled(checked);
-}
-
-void SettingsDialog::on_scheduleStartTimeEdit_timeChanged(const QTime& time)
-{
-    if (time > ui->scheduleEndTimeEdit->time())
-    {
-        ui->scheduleEndTimeEdit->setTime(time);
-    }
-
-    mConfig->setScheduleStartHour(time.hour());
-    mConfig->setScheduleStartMinute(time.minute());
-}
-
-void SettingsDialog::on_scheduleEndTimeEdit_timeChanged(const QTime& time)
-{
-    if (time < ui->scheduleStartTimeEdit->time())
-    {
-        ui->scheduleStartTimeEdit->setTime(time);
-    }
-
-    mConfig->setScheduleEndHour(time.hour());
-    mConfig->setScheduleEndMinute(time.minute());
+    mConfig->setTradeInNonWorkingHours(checked);
 }
 
 void SettingsDialog::on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value)

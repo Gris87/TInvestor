@@ -5,12 +5,12 @@
 #include "src/decisions/idecisionmaker.h"
 
 #include <QReadWriteLock>
-#include <QTimeZone>
 
 #include "src/config/iconfig.h"
 #include "src/decisions/iactiondecision.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/user/iuserstorage.h"
+#include "src/utils/timeutils/itimeutils.h"
 
 
 
@@ -34,6 +34,7 @@ public:
     DecisionMaker(
         IInstrumentsStorage*           instrumentsStorage,
         IUserStorage*                  userStorage,
+        ITimeUtils*                    timeUtils,
         const QList<IActionDecision*>& buyDecisions,
         const QList<IActionDecision*>& sellDecisions
     );
@@ -78,8 +79,8 @@ private:
     QReadWriteLock*         mRwMutex;
     IInstrumentsStorage*    mInstrumentsStorage;
     IUserStorage*           mUserStorage;
+    ITimeUtils*             mTimeUtils;
     QList<IActionDecision*> mBuyDecisions;
     QList<IActionDecision*> mSellDecisions;
-    QTimeZone               mMoscowTimezone;
     QMap<QString, Stock*>   mStocksMap;
 };

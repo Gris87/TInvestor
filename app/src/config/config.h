@@ -37,20 +37,8 @@ public:
     void setMakeDecisionTimeout(int value) override;
     int  getMakeDecisionTimeout() override;
 
-    void setUseSchedule(bool value) override;
-    bool isUseSchedule() override;
-
-    void setScheduleStartHour(int value) override;
-    int  getScheduleStartHour() override;
-
-    void setScheduleStartMinute(int value) override;
-    int  getScheduleStartMinute() override;
-
-    void setScheduleEndHour(int value) override;
-    int  getScheduleEndHour() override;
-
-    void setScheduleEndMinute(int value) override;
-    int  getScheduleEndMinute() override;
+    void setTradeInNonWorkingHours(bool value) override;
+    bool isTradeInNonWorkingHours() override;
 
     void setLimitStockPurchase(bool value) override;
     bool isLimitStockPurchase() override;
@@ -82,11 +70,7 @@ private:
     bool    mAutorun;
     QString mCpuUsage;
     int     mMakeDecisionTimeout;
-    bool    mUseSchedule;
-    int     mScheduleStartHour;
-    int     mScheduleStartMinute;
-    int     mScheduleEndHour;
-    int     mScheduleEndMinute;
+    bool    mTradeInNonWorkingHours;
     bool    mLimitStockPurchase;
     float   mLimitStockPurchasePart;
     bool    mLimitByTurnover;

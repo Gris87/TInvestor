@@ -150,9 +150,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->autorunCheckBox->blockSignals(true);
     dialog->ui->cpuUsageComboBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
-    dialog->ui->useScheduleCheckBox->blockSignals(true);
-    dialog->ui->scheduleStartTimeEdit->blockSignals(true);
-    dialog->ui->scheduleEndTimeEdit->blockSignals(true);
+    dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
     dialog->ui->limitStockPurchasePartDoubleSpinBox->blockSignals(true);
     dialog->ui->limitByTurnoverCheckBox->blockSignals(true);
@@ -161,18 +159,13 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
 
-    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
-    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
-    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(19));
-    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(15));
-
     EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLimitStockPurchasePart()).WillOnce(Return(20.0f));
     EXPECT_CALL(*configMock, isLimitByTurnover()).WillOnce(Return(true));
@@ -187,9 +180,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                   true);
     ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),               2);
     ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),            2);
-    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),               true);
-    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),                  QTime(10, 30));
-    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                    QTime(19, 15));
+    ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),    true);
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),        true);
     ASSERT_NEAR(dialog->ui->limitStockPurchasePartDoubleSpinBox->value(), 20.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitByTurnoverCheckBox->isChecked(),           true);
@@ -199,18 +190,13 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(),     false);
     // clang-format on
 
-    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(11));
-    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(15));
-    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(20));
-    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(40));
-
     EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("MINIMUM"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(5));
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getLimitStockPurchasePart()).WillOnce(Return(50.0f));
     EXPECT_CALL(*configMock, isLimitByTurnover()).WillOnce(Return(false));
@@ -225,9 +211,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                   false);
     ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),               0);
     ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),            5);
-    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),               false);
-    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),                  QTime(11, 15));
-    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                    QTime(20, 40));
+    ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),    false);
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),        false);
     ASSERT_NEAR(dialog->ui->limitStockPurchasePartDoubleSpinBox->value(), 50.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitByTurnoverCheckBox->isChecked(),           false);
@@ -283,85 +267,19 @@ TEST_F(Test_SettingsDialog, Test_on_makeDecisionTimeoutSpinBox_valueChanged)
     dialog->ui->makeDecisionTimeoutSpinBox->setValue(3);
 }
 
-TEST_F(Test_SettingsDialog, Test_on_useScheduleCheckBox_checkStateChanged)
+TEST_F(Test_SettingsDialog, Test_on_tradeInNonWorkingHoursCheckBox_checkStateChanged)
 {
     const InSequence seq;
 
-    dialog->ui->useScheduleCheckBox->blockSignals(true);
-    dialog->ui->useScheduleCheckBox->setChecked(false);
-    dialog->ui->useScheduleCheckBox->blockSignals(false);
+    dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
+    dialog->ui->tradeInNonWorkingHoursCheckBox->setChecked(false);
+    dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(false);
 
-    EXPECT_CALL(*configMock, setUseSchedule(true));
-    dialog->ui->useScheduleCheckBox->setChecked(true);
+    EXPECT_CALL(*configMock, setTradeInNonWorkingHours(true));
+    dialog->ui->tradeInNonWorkingHoursCheckBox->setChecked(true);
 
-    // clang-format off
-    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->isEnabled(), true);
-    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->isEnabled(),   true);
-    // clang-format on
-
-    EXPECT_CALL(*configMock, setUseSchedule(false));
-    dialog->ui->useScheduleCheckBox->setChecked(false);
-
-    // clang-format off
-    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->isEnabled(), false);
-    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->isEnabled(),   false);
-    // clang-format on
-}
-
-TEST_F(Test_SettingsDialog, Test_on_scheduleStartTimeEdit_timeChanged)
-{
-    const InSequence seq;
-
-    dialog->ui->scheduleStartTimeEdit->blockSignals(true);
-    dialog->ui->scheduleEndTimeEdit->blockSignals(true);
-    dialog->ui->scheduleStartTimeEdit->setTime(QTime(10, 15));
-    dialog->ui->scheduleEndTimeEdit->setTime(QTime(12, 10));
-    dialog->ui->scheduleStartTimeEdit->blockSignals(false);
-    dialog->ui->scheduleEndTimeEdit->blockSignals(false);
-
-    EXPECT_CALL(*configMock, setScheduleStartHour(11));
-    EXPECT_CALL(*configMock, setScheduleStartMinute(15));
-    dialog->ui->scheduleStartTimeEdit->setTime(QTime(11, 15));
-
-    EXPECT_CALL(*configMock, setScheduleStartHour(10));
-    EXPECT_CALL(*configMock, setScheduleStartMinute(20));
-    dialog->ui->scheduleStartTimeEdit->setTime(QTime(10, 20));
-
-    EXPECT_CALL(*configMock, setScheduleEndHour(12));
-    EXPECT_CALL(*configMock, setScheduleEndMinute(30));
-    EXPECT_CALL(*configMock, setScheduleStartHour(12));
-    EXPECT_CALL(*configMock, setScheduleStartMinute(30));
-    dialog->ui->scheduleStartTimeEdit->setTime(QTime(12, 30));
-
-    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(), QTime(12, 30));
-}
-
-TEST_F(Test_SettingsDialog, Test_on_scheduleEndTimeEdit_timeChanged)
-{
-    const InSequence seq;
-
-    dialog->ui->scheduleStartTimeEdit->blockSignals(true);
-    dialog->ui->scheduleEndTimeEdit->blockSignals(true);
-    dialog->ui->scheduleStartTimeEdit->setTime(QTime(10, 15));
-    dialog->ui->scheduleEndTimeEdit->setTime(QTime(12, 10));
-    dialog->ui->scheduleStartTimeEdit->blockSignals(false);
-    dialog->ui->scheduleEndTimeEdit->blockSignals(false);
-
-    EXPECT_CALL(*configMock, setScheduleEndHour(11));
-    EXPECT_CALL(*configMock, setScheduleEndMinute(15));
-    dialog->ui->scheduleEndTimeEdit->setTime(QTime(11, 15));
-
-    EXPECT_CALL(*configMock, setScheduleEndHour(12));
-    EXPECT_CALL(*configMock, setScheduleEndMinute(20));
-    dialog->ui->scheduleEndTimeEdit->setTime(QTime(12, 20));
-
-    EXPECT_CALL(*configMock, setScheduleStartHour(10));
-    EXPECT_CALL(*configMock, setScheduleStartMinute(0));
-    EXPECT_CALL(*configMock, setScheduleEndHour(10));
-    EXPECT_CALL(*configMock, setScheduleEndMinute(0));
-    dialog->ui->scheduleEndTimeEdit->setTime(QTime(10, 0));
-
-    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(), QTime(10, 0));
+    EXPECT_CALL(*configMock, setTradeInNonWorkingHours(false));
+    dialog->ui->tradeInNonWorkingHoursCheckBox->setChecked(false);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_limitStockPurchaseCheckBox_checkStateChanged)
@@ -578,9 +496,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->autorunCheckBox->blockSignals(true);
     dialog->ui->cpuUsageComboBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
-    dialog->ui->useScheduleCheckBox->blockSignals(true);
-    dialog->ui->scheduleStartTimeEdit->blockSignals(true);
-    dialog->ui->scheduleEndTimeEdit->blockSignals(true);
+    dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
     dialog->ui->limitStockPurchasePartDoubleSpinBox->blockSignals(true);
     dialog->ui->limitByTurnoverCheckBox->blockSignals(true);
@@ -591,18 +507,13 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
 
     EXPECT_CALL(*configMock, makeDefault());
 
-    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
-    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
-    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(19));
-    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(15));
-
     EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
-    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLimitStockPurchasePart()).WillOnce(Return(20.0f));
     EXPECT_CALL(*configMock, isLimitByTurnover()).WillOnce(Return(true));
@@ -617,9 +528,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                   true);
     ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),               2);
     ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),            2);
-    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),               true);
-    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),                  QTime(10, 30));
-    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                    QTime(19, 15));
+    ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),    true);
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),        true);
     ASSERT_NEAR(dialog->ui->limitStockPurchasePartDoubleSpinBox->value(), 20.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitByTurnoverCheckBox->isChecked(),           true);

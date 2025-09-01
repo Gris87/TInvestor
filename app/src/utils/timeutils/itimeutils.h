@@ -16,4 +16,5 @@ public:
     ITimeUtils& operator=(const ITimeUtils& another) = delete;
 
     virtual bool interruptibleSleep(int ms, QThread* parentThread) = 0;
+    virtual bool isWorkingHours(qint64 timestamp)                  = 0;
 };

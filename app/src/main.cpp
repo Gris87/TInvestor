@@ -394,9 +394,9 @@ static int runApplication(QApplication* app)
     const QList<IActionDecision*> buyDecisions  = {&buyDecision1, &buyDecision2, &buyDecision3, &buyDecision4};
     const QList<IActionDecision*> sellDecisions = {&sellDecision1, &sellDecision2, &sellDecision3, &sellDecision4};
 
-    DecisionMaker simulatorRealtimeDecisionMaker(&instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
-    DecisionMaker simulatorDateRangeDecisionMaker(&instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
-    DecisionMaker autoPilotRealtimeDecisionMaker(&instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
+    DecisionMaker simulatorRealtimeDecisionMaker(&instrumentsStorage, &userStorage, &timeUtils, buyDecisions, sellDecisions);
+    DecisionMaker simulatorDateRangeDecisionMaker(&instrumentsStorage, &userStorage, &timeUtils, buyDecisions, sellDecisions);
+    DecisionMaker autoPilotRealtimeDecisionMaker(&instrumentsStorage, &userStorage, &timeUtils, buyDecisions, sellDecisions);
 
     CleanupThread      cleanupThread(&config, &stocksStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);

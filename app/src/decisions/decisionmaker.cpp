@@ -15,6 +15,7 @@ constexpr float HUNDRED_PERCENT = 100.0f;
 DecisionMaker::DecisionMaker(
     IInstrumentsStorage*           instrumentsStorage,
     IUserStorage*                  userStorage,
+    ITimeUtils*                    timeUtils,
     const QList<IActionDecision*>& buyDecisions,
     const QList<IActionDecision*>& sellDecisions
 ) :
@@ -22,9 +23,9 @@ DecisionMaker::DecisionMaker(
     mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
     mUserStorage(userStorage),
+    mTimeUtils(timeUtils),
     mBuyDecisions(buyDecisions),
     mSellDecisions(sellDecisions),
-    mMoscowTimezone("Europe/Moscow"),
     mStocksMap()
 {
     qDebug() << "Create DecisionMaker";
@@ -52,28 +53,9 @@ InstrumentsForTrading DecisionMaker::makeDecision(
 {
     InstrumentsForTrading res;
 
-    if (config->isUseSchedule())
+    if (!config->isTradeInNonWorkingHours() && !mTimeUtils->isWorkingHours(timestamp))
     {
-        const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
-        const int       dayOfWeek = dateTime.date().dayOfWeek();
-
-        if (dayOfWeek == Qt::Saturday || dayOfWeek == Qt::Sunday)
-        {
-            return res;
-        }
-
-        const QTime time        = dateTime.time();
-        const int   startHour   = config->getScheduleStartHour();
-        const int   startMinute = config->getScheduleStartMinute();
-        const int   endHour     = config->getScheduleEndHour();
-        const int   endMinute   = config->getScheduleEndMinute();
-        const QTime startTime   = QTime(startHour, startMinute);
-        const QTime endTime     = QTime(endHour, endMinute);
-
-        if (time < startTime || time > endTime)
-        {
-            return res;
-        }
+        return res;
     }
 
     IDecisionMakerConfig* decisionConfig = chooseDecisionConfig(config, autoPilot);

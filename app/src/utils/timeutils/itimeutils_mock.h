@@ -21,4 +21,5 @@ public:
     TimeUtilsMock& operator=(const TimeUtilsMock& another) = delete;
 
     MOCK_METHOD(bool, interruptibleSleep, (int ms, QThread* parentThread), (override));
+    MOCK_METHOD(bool, isWorkingHours, (qint64 timestamp), (override));
 };

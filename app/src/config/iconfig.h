@@ -36,20 +36,8 @@ public:
     virtual void setMakeDecisionTimeout(int value) = 0;
     virtual int  getMakeDecisionTimeout()          = 0;
 
-    virtual void setUseSchedule(bool value) = 0;
-    virtual bool isUseSchedule()            = 0;
-
-    virtual void setScheduleStartHour(int value) = 0;
-    virtual int  getScheduleStartHour()          = 0;
-
-    virtual void setScheduleStartMinute(int value) = 0;
-    virtual int  getScheduleStartMinute()          = 0;
-
-    virtual void setScheduleEndHour(int value) = 0;
-    virtual int  getScheduleEndHour()          = 0;
-
-    virtual void setScheduleEndMinute(int value) = 0;
-    virtual int  getScheduleEndMinute()          = 0;
+    virtual void setTradeInNonWorkingHours(bool value) = 0;
+    virtual bool isTradeInNonWorkingHours()            = 0;
 
     virtual void setLimitStockPurchase(bool value) = 0;
     virtual bool isLimitStockPurchase()            = 0;

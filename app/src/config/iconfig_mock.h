@@ -40,20 +40,8 @@ public:
     MOCK_METHOD(void, setMakeDecisionTimeout, (int value), (override));
     MOCK_METHOD(int, getMakeDecisionTimeout, (), (override));
 
-    MOCK_METHOD(void, setUseSchedule, (bool value), (override));
-    MOCK_METHOD(bool, isUseSchedule, (), (override));
-
-    MOCK_METHOD(void, setScheduleStartHour, (int value), (override));
-    MOCK_METHOD(int, getScheduleStartHour, (), (override));
-
-    MOCK_METHOD(void, setScheduleStartMinute, (int value), (override));
-    MOCK_METHOD(int, getScheduleStartMinute, (), (override));
-
-    MOCK_METHOD(void, setScheduleEndHour, (int value), (override));
-    MOCK_METHOD(int, getScheduleEndHour, (), (override));
-
-    MOCK_METHOD(void, setScheduleEndMinute, (int value), (override));
-    MOCK_METHOD(int, getScheduleEndMinute, (), (override));
+    MOCK_METHOD(void, setTradeInNonWorkingHours, (bool value), (override));
+    MOCK_METHOD(bool, isTradeInNonWorkingHours, (), (override));
 
     MOCK_METHOD(void, setLimitStockPurchase, (bool value), (override));
     MOCK_METHOD(bool, isLimitStockPurchase, (), (override));
