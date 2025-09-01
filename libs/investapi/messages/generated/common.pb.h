@@ -298,6 +298,42 @@ inline bool ResultSubscriptionStatus_Parse(absl::string_view name, ResultSubscri
   return ::google::protobuf::internal::ParseNamedEnum<ResultSubscriptionStatus>(
       ResultSubscriptionStatus_descriptor(), name, value);
 }
+enum RealExchange : int {
+  REAL_EXCHANGE_UNSPECIFIED = 0,
+  REAL_EXCHANGE_MOEX = 1,
+  REAL_EXCHANGE_RTS = 2,
+  REAL_EXCHANGE_OTC = 3,
+  REAL_EXCHANGE_DEALER = 4,
+  RealExchange_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      std::numeric_limits<::int32_t>::min(),
+  RealExchange_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      std::numeric_limits<::int32_t>::max(),
+};
+
+bool RealExchange_IsValid(int value);
+extern const uint32_t RealExchange_internal_data_[];
+constexpr RealExchange RealExchange_MIN = static_cast<RealExchange>(0);
+constexpr RealExchange RealExchange_MAX = static_cast<RealExchange>(4);
+constexpr int RealExchange_ARRAYSIZE = 4 + 1;
+const ::google::protobuf::EnumDescriptor*
+RealExchange_descriptor();
+template <typename T>
+const std::string& RealExchange_Name(T value) {
+  static_assert(std::is_same<T, RealExchange>::value ||
+                    std::is_integral<T>::value,
+                "Incorrect type passed to RealExchange_Name().");
+  return RealExchange_Name(static_cast<RealExchange>(value));
+}
+template <>
+inline const std::string& RealExchange_Name(RealExchange value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RealExchange_descriptor,
+                                                 0, 4>(
+      static_cast<int>(value));
+}
+inline bool RealExchange_Parse(absl::string_view name, RealExchange* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RealExchange>(
+      RealExchange_descriptor(), name, value);
+}
 
 // ===================================================================
 
@@ -3491,6 +3527,12 @@ struct is_proto_enum<::tinkoff::public_::invest::api::contract::v1::ResultSubscr
 template <>
 inline const EnumDescriptor* GetEnumDescriptor<::tinkoff::public_::invest::api::contract::v1::ResultSubscriptionStatus>() {
   return ::tinkoff::public_::invest::api::contract::v1::ResultSubscriptionStatus_descriptor();
+}
+template <>
+struct is_proto_enum<::tinkoff::public_::invest::api::contract::v1::RealExchange> : std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor<::tinkoff::public_::invest::api::contract::v1::RealExchange>() {
+  return ::tinkoff::public_::invest::api::contract::v1::RealExchange_descriptor();
 }
 
 }  // namespace protobuf

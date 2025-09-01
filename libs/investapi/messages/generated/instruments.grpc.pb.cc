@@ -64,6 +64,7 @@ static const char* InstrumentsService_method_names[] = {
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetConsensusForecasts",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetForecastBy",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetRiskRates",
+  "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetInsiderDeals",
 };
 
 std::unique_ptr< InstrumentsService::Stub> InstrumentsService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -110,6 +111,7 @@ InstrumentsService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>&
   , rpcmethod_GetConsensusForecasts_(InstrumentsService_method_names[34], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetForecastBy_(InstrumentsService_method_names[35], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetRiskRates_(InstrumentsService_method_names[36], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetInsiderDeals_(InstrumentsService_method_names[37], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status InstrumentsService::Stub::TradingSchedules(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesRequest& request, ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse* response) {
@@ -963,6 +965,29 @@ void InstrumentsService::Stub::async::GetRiskRates(::grpc::ClientContext* contex
   return result;
 }
 
+::grpc::Status InstrumentsService::Stub::GetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetInsiderDeals_, context, request, response);
+}
+
+void InstrumentsService::Stub::async::GetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetInsiderDeals_, context, request, response, std::move(f));
+}
+
+void InstrumentsService::Stub::async::GetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetInsiderDeals_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>* InstrumentsService::Stub::PrepareAsyncGetInsiderDealsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetInsiderDeals_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>* InstrumentsService::Stub::AsyncGetInsiderDealsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetInsiderDealsRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 InstrumentsService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InstrumentsService_method_names[0],
@@ -1334,6 +1359,16 @@ InstrumentsService::Service::Service() {
              ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* resp) {
                return service->GetRiskRates(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InstrumentsService_method_names[37],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InstrumentsService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* resp) {
+               return service->GetInsiderDeals(ctx, req, resp);
+             }, this)));
 }
 
 InstrumentsService::Service::~Service() {
@@ -1592,6 +1627,13 @@ InstrumentsService::Service::~Service() {
 }
 
 ::grpc::Status InstrumentsService::Service::GetRiskRates(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InstrumentsService::Service::GetInsiderDeals(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response) {
   (void) context;
   (void) request;
   (void) response;

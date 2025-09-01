@@ -120,6 +120,7 @@ SOURCES += \
     src/utils/style/test_darkpalette.cpp \
     src/utils/timeutils/test_timeutils.cpp \
     src/utils/tradesimulation/test_tradesimulation.cpp \
+    src/utils/tradeutils/test_tradeutils.cpp \
     src/widgets/accountchartwidget/test_accountchartwidget.cpp \
     src/widgets/accountchartwidget/test_accountchartwidgetfactory.cpp \
     src/widgets/accountchartwidget/test_charttooltip.cpp \
@@ -241,6 +242,7 @@ HEADERS += \
     src/utils/optimizer/ioptimizer_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
     src/utils/timeutils/itimeutils_mock.h \
+    src/utils/tradeutils/itradeutils_mock.h \
     src/widgets/accountchartwidget/iaccountchartwidget_mock.h \
     src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h \
     src/widgets/actionstableitemwidget/iactionstableitemwidget_mock.h \

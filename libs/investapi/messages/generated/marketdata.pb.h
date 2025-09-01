@@ -682,6 +682,7 @@ enum MarketValueType : int {
   INSTRUMENT_VALUE_CLOSE_PRICE = 3,
   INSTRUMENT_VALUE_EVENING_SESSION_PRICE = 4,
   INSTRUMENT_VALUE_OPEN_INTEREST = 5,
+  INSTRUMENT_VALUE_THEOR_PRICE = 6,
   MarketValueType_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
   MarketValueType_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -691,8 +692,8 @@ enum MarketValueType : int {
 bool MarketValueType_IsValid(int value);
 extern const uint32_t MarketValueType_internal_data_[];
 constexpr MarketValueType MarketValueType_MIN = static_cast<MarketValueType>(0);
-constexpr MarketValueType MarketValueType_MAX = static_cast<MarketValueType>(5);
-constexpr int MarketValueType_ARRAYSIZE = 5 + 1;
+constexpr MarketValueType MarketValueType_MAX = static_cast<MarketValueType>(6);
+constexpr int MarketValueType_ARRAYSIZE = 6 + 1;
 const ::google::protobuf::EnumDescriptor*
 MarketValueType_descriptor();
 template <typename T>
@@ -705,7 +706,7 @@ const std::string& MarketValueType_Name(T value) {
 template <>
 inline const std::string& MarketValueType_Name(MarketValueType value) {
   return ::google::protobuf::internal::NameOfDenseEnum<MarketValueType_descriptor,
-                                                 0, 5>(
+                                                 0, 6>(
       static_cast<int>(value));
 }
 inline bool MarketValueType_Parse(absl::string_view name, MarketValueType* value) {

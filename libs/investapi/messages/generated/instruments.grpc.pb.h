@@ -338,6 +338,14 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>> PrepareAsyncGetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>>(PrepareAsyncGetRiskRatesRaw(context, request, cq));
     }
+    // GetInsiderDeals —  сделки инсайдеров по инструментам
+    virtual ::grpc::Status GetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>> AsyncGetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>>(AsyncGetInsiderDealsRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>> PrepareAsyncGetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>>(PrepareAsyncGetInsiderDealsRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -453,6 +461,9 @@ class InstrumentsService final {
       // GetRiskRates — ставки риска по инструменту
       virtual void GetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // GetInsiderDeals —  сделки инсайдеров по инструментам
+      virtual void GetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -532,6 +543,8 @@ class InstrumentsService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse>* PrepareAsyncGetForecastByRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>* AsyncGetRiskRatesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>* PrepareAsyncGetRiskRatesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>* AsyncGetInsiderDealsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>* PrepareAsyncGetInsiderDealsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -795,6 +808,13 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>> PrepareAsyncGetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>>(PrepareAsyncGetRiskRatesRaw(context, request, cq));
     }
+    ::grpc::Status GetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>> AsyncGetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>>(AsyncGetInsiderDealsRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>> PrepareAsyncGetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>>(PrepareAsyncGetInsiderDealsRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -872,6 +892,8 @@ class InstrumentsService final {
       void GetForecastBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response, std::function<void(::grpc::Status)>) override;
       void GetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetInsiderDeals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -957,6 +979,8 @@ class InstrumentsService final {
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse>* PrepareAsyncGetForecastByRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>* AsyncGetRiskRatesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>* PrepareAsyncGetRiskRatesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>* AsyncGetInsiderDealsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>* PrepareAsyncGetInsiderDealsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_TradingSchedules_;
     const ::grpc::internal::RpcMethod rpcmethod_BondBy_;
     const ::grpc::internal::RpcMethod rpcmethod_Bonds_;
@@ -994,6 +1018,7 @@ class InstrumentsService final {
     const ::grpc::internal::RpcMethod rpcmethod_GetConsensusForecasts_;
     const ::grpc::internal::RpcMethod rpcmethod_GetForecastBy_;
     const ::grpc::internal::RpcMethod rpcmethod_GetRiskRates_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetInsiderDeals_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -1076,6 +1101,8 @@ class InstrumentsService final {
     virtual ::grpc::Status GetForecastBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse* response);
     // GetRiskRates — ставки риска по инструменту
     virtual ::grpc::Status GetRiskRates(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response);
+    // GetInsiderDeals —  сделки инсайдеров по инструментам
+    virtual ::grpc::Status GetInsiderDeals(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_TradingSchedules : public BaseClass {
@@ -1817,7 +1844,27 @@ class InstrumentsService final {
       ::grpc::Service::RequestAsyncUnary(36, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_TradingSchedules<WithAsyncMethod_BondBy<WithAsyncMethod_Bonds<WithAsyncMethod_GetBondCoupons<WithAsyncMethod_GetBondEvents<WithAsyncMethod_CurrencyBy<WithAsyncMethod_Currencies<WithAsyncMethod_EtfBy<WithAsyncMethod_Etfs<WithAsyncMethod_FutureBy<WithAsyncMethod_Futures<WithAsyncMethod_OptionBy<WithAsyncMethod_Options<WithAsyncMethod_OptionsBy<WithAsyncMethod_ShareBy<WithAsyncMethod_Shares<WithAsyncMethod_Indicatives<WithAsyncMethod_GetAccruedInterests<WithAsyncMethod_GetFuturesMargin<WithAsyncMethod_GetInstrumentBy<WithAsyncMethod_GetDividends<WithAsyncMethod_GetAssetBy<WithAsyncMethod_GetAssets<WithAsyncMethod_GetFavorites<WithAsyncMethod_EditFavorites<WithAsyncMethod_CreateFavoriteGroup<WithAsyncMethod_DeleteFavoriteGroup<WithAsyncMethod_GetFavoriteGroups<WithAsyncMethod_GetCountries<WithAsyncMethod_FindInstrument<WithAsyncMethod_GetBrands<WithAsyncMethod_GetBrandBy<WithAsyncMethod_GetAssetFundamentals<WithAsyncMethod_GetAssetReports<WithAsyncMethod_GetConsensusForecasts<WithAsyncMethod_GetForecastBy<WithAsyncMethod_GetRiskRates<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_GetInsiderDeals : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetInsiderDeals() {
+      ::grpc::Service::MarkMethodAsync(37);
+    }
+    ~WithAsyncMethod_GetInsiderDeals() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetInsiderDeals(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetInsiderDeals(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(37, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_TradingSchedules<WithAsyncMethod_BondBy<WithAsyncMethod_Bonds<WithAsyncMethod_GetBondCoupons<WithAsyncMethod_GetBondEvents<WithAsyncMethod_CurrencyBy<WithAsyncMethod_Currencies<WithAsyncMethod_EtfBy<WithAsyncMethod_Etfs<WithAsyncMethod_FutureBy<WithAsyncMethod_Futures<WithAsyncMethod_OptionBy<WithAsyncMethod_Options<WithAsyncMethod_OptionsBy<WithAsyncMethod_ShareBy<WithAsyncMethod_Shares<WithAsyncMethod_Indicatives<WithAsyncMethod_GetAccruedInterests<WithAsyncMethod_GetFuturesMargin<WithAsyncMethod_GetInstrumentBy<WithAsyncMethod_GetDividends<WithAsyncMethod_GetAssetBy<WithAsyncMethod_GetAssets<WithAsyncMethod_GetFavorites<WithAsyncMethod_EditFavorites<WithAsyncMethod_CreateFavoriteGroup<WithAsyncMethod_DeleteFavoriteGroup<WithAsyncMethod_GetFavoriteGroups<WithAsyncMethod_GetCountries<WithAsyncMethod_FindInstrument<WithAsyncMethod_GetBrands<WithAsyncMethod_GetBrandBy<WithAsyncMethod_GetAssetFundamentals<WithAsyncMethod_GetAssetReports<WithAsyncMethod_GetConsensusForecasts<WithAsyncMethod_GetForecastBy<WithAsyncMethod_GetRiskRates<WithAsyncMethod_GetInsiderDeals<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_TradingSchedules : public BaseClass {
    private:
@@ -2817,7 +2864,34 @@ class InstrumentsService final {
     virtual ::grpc::ServerUnaryReactor* GetRiskRates(
       ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_TradingSchedules<WithCallbackMethod_BondBy<WithCallbackMethod_Bonds<WithCallbackMethod_GetBondCoupons<WithCallbackMethod_GetBondEvents<WithCallbackMethod_CurrencyBy<WithCallbackMethod_Currencies<WithCallbackMethod_EtfBy<WithCallbackMethod_Etfs<WithCallbackMethod_FutureBy<WithCallbackMethod_Futures<WithCallbackMethod_OptionBy<WithCallbackMethod_Options<WithCallbackMethod_OptionsBy<WithCallbackMethod_ShareBy<WithCallbackMethod_Shares<WithCallbackMethod_Indicatives<WithCallbackMethod_GetAccruedInterests<WithCallbackMethod_GetFuturesMargin<WithCallbackMethod_GetInstrumentBy<WithCallbackMethod_GetDividends<WithCallbackMethod_GetAssetBy<WithCallbackMethod_GetAssets<WithCallbackMethod_GetFavorites<WithCallbackMethod_EditFavorites<WithCallbackMethod_CreateFavoriteGroup<WithCallbackMethod_DeleteFavoriteGroup<WithCallbackMethod_GetFavoriteGroups<WithCallbackMethod_GetCountries<WithCallbackMethod_FindInstrument<WithCallbackMethod_GetBrands<WithCallbackMethod_GetBrandBy<WithCallbackMethod_GetAssetFundamentals<WithCallbackMethod_GetAssetReports<WithCallbackMethod_GetConsensusForecasts<WithCallbackMethod_GetForecastBy<WithCallbackMethod_GetRiskRates<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_GetInsiderDeals : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetInsiderDeals() {
+      ::grpc::Service::MarkMethodCallback(37,
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response) { return this->GetInsiderDeals(context, request, response); }));}
+    void SetMessageAllocatorFor_GetInsiderDeals(
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(37);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetInsiderDeals() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetInsiderDeals(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetInsiderDeals(
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_TradingSchedules<WithCallbackMethod_BondBy<WithCallbackMethod_Bonds<WithCallbackMethod_GetBondCoupons<WithCallbackMethod_GetBondEvents<WithCallbackMethod_CurrencyBy<WithCallbackMethod_Currencies<WithCallbackMethod_EtfBy<WithCallbackMethod_Etfs<WithCallbackMethod_FutureBy<WithCallbackMethod_Futures<WithCallbackMethod_OptionBy<WithCallbackMethod_Options<WithCallbackMethod_OptionsBy<WithCallbackMethod_ShareBy<WithCallbackMethod_Shares<WithCallbackMethod_Indicatives<WithCallbackMethod_GetAccruedInterests<WithCallbackMethod_GetFuturesMargin<WithCallbackMethod_GetInstrumentBy<WithCallbackMethod_GetDividends<WithCallbackMethod_GetAssetBy<WithCallbackMethod_GetAssets<WithCallbackMethod_GetFavorites<WithCallbackMethod_EditFavorites<WithCallbackMethod_CreateFavoriteGroup<WithCallbackMethod_DeleteFavoriteGroup<WithCallbackMethod_GetFavoriteGroups<WithCallbackMethod_GetCountries<WithCallbackMethod_FindInstrument<WithCallbackMethod_GetBrands<WithCallbackMethod_GetBrandBy<WithCallbackMethod_GetAssetFundamentals<WithCallbackMethod_GetAssetReports<WithCallbackMethod_GetConsensusForecasts<WithCallbackMethod_GetForecastBy<WithCallbackMethod_GetRiskRates<WithCallbackMethod_GetInsiderDeals<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_TradingSchedules : public BaseClass {
@@ -3444,6 +3518,23 @@ class InstrumentsService final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetRiskRates(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetInsiderDeals : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetInsiderDeals() {
+      ::grpc::Service::MarkMethodGeneric(37);
+    }
+    ~WithGenericMethod_GetInsiderDeals() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetInsiderDeals(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -4186,6 +4277,26 @@ class InstrumentsService final {
     }
     void RequestGetRiskRates(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(36, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetInsiderDeals : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetInsiderDeals() {
+      ::grpc::Service::MarkMethodRaw(37);
+    }
+    ~WithRawMethod_GetInsiderDeals() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetInsiderDeals(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetInsiderDeals(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(37, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -5000,6 +5111,28 @@ class InstrumentsService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetRiskRates(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetInsiderDeals : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetInsiderDeals() {
+      ::grpc::Service::MarkMethodRawCallback(37,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetInsiderDeals(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetInsiderDeals() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetInsiderDeals(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetInsiderDeals(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -6001,9 +6134,36 @@ class InstrumentsService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetRiskRates(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest,::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_TradingSchedules<WithStreamedUnaryMethod_BondBy<WithStreamedUnaryMethod_Bonds<WithStreamedUnaryMethod_GetBondCoupons<WithStreamedUnaryMethod_GetBondEvents<WithStreamedUnaryMethod_CurrencyBy<WithStreamedUnaryMethod_Currencies<WithStreamedUnaryMethod_EtfBy<WithStreamedUnaryMethod_Etfs<WithStreamedUnaryMethod_FutureBy<WithStreamedUnaryMethod_Futures<WithStreamedUnaryMethod_OptionBy<WithStreamedUnaryMethod_Options<WithStreamedUnaryMethod_OptionsBy<WithStreamedUnaryMethod_ShareBy<WithStreamedUnaryMethod_Shares<WithStreamedUnaryMethod_Indicatives<WithStreamedUnaryMethod_GetAccruedInterests<WithStreamedUnaryMethod_GetFuturesMargin<WithStreamedUnaryMethod_GetInstrumentBy<WithStreamedUnaryMethod_GetDividends<WithStreamedUnaryMethod_GetAssetBy<WithStreamedUnaryMethod_GetAssets<WithStreamedUnaryMethod_GetFavorites<WithStreamedUnaryMethod_EditFavorites<WithStreamedUnaryMethod_CreateFavoriteGroup<WithStreamedUnaryMethod_DeleteFavoriteGroup<WithStreamedUnaryMethod_GetFavoriteGroups<WithStreamedUnaryMethod_GetCountries<WithStreamedUnaryMethod_FindInstrument<WithStreamedUnaryMethod_GetBrands<WithStreamedUnaryMethod_GetBrandBy<WithStreamedUnaryMethod_GetAssetFundamentals<WithStreamedUnaryMethod_GetAssetReports<WithStreamedUnaryMethod_GetConsensusForecasts<WithStreamedUnaryMethod_GetForecastBy<WithStreamedUnaryMethod_GetRiskRates<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetInsiderDeals : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetInsiderDeals() {
+      ::grpc::Service::MarkMethodStreamed(37,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>* streamer) {
+                       return this->StreamedGetInsiderDeals(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetInsiderDeals() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetInsiderDeals(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetInsiderDeals(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest,::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_TradingSchedules<WithStreamedUnaryMethod_BondBy<WithStreamedUnaryMethod_Bonds<WithStreamedUnaryMethod_GetBondCoupons<WithStreamedUnaryMethod_GetBondEvents<WithStreamedUnaryMethod_CurrencyBy<WithStreamedUnaryMethod_Currencies<WithStreamedUnaryMethod_EtfBy<WithStreamedUnaryMethod_Etfs<WithStreamedUnaryMethod_FutureBy<WithStreamedUnaryMethod_Futures<WithStreamedUnaryMethod_OptionBy<WithStreamedUnaryMethod_Options<WithStreamedUnaryMethod_OptionsBy<WithStreamedUnaryMethod_ShareBy<WithStreamedUnaryMethod_Shares<WithStreamedUnaryMethod_Indicatives<WithStreamedUnaryMethod_GetAccruedInterests<WithStreamedUnaryMethod_GetFuturesMargin<WithStreamedUnaryMethod_GetInstrumentBy<WithStreamedUnaryMethod_GetDividends<WithStreamedUnaryMethod_GetAssetBy<WithStreamedUnaryMethod_GetAssets<WithStreamedUnaryMethod_GetFavorites<WithStreamedUnaryMethod_EditFavorites<WithStreamedUnaryMethod_CreateFavoriteGroup<WithStreamedUnaryMethod_DeleteFavoriteGroup<WithStreamedUnaryMethod_GetFavoriteGroups<WithStreamedUnaryMethod_GetCountries<WithStreamedUnaryMethod_FindInstrument<WithStreamedUnaryMethod_GetBrands<WithStreamedUnaryMethod_GetBrandBy<WithStreamedUnaryMethod_GetAssetFundamentals<WithStreamedUnaryMethod_GetAssetReports<WithStreamedUnaryMethod_GetConsensusForecasts<WithStreamedUnaryMethod_GetForecastBy<WithStreamedUnaryMethod_GetRiskRates<WithStreamedUnaryMethod_GetInsiderDeals<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_TradingSchedules<WithStreamedUnaryMethod_BondBy<WithStreamedUnaryMethod_Bonds<WithStreamedUnaryMethod_GetBondCoupons<WithStreamedUnaryMethod_GetBondEvents<WithStreamedUnaryMethod_CurrencyBy<WithStreamedUnaryMethod_Currencies<WithStreamedUnaryMethod_EtfBy<WithStreamedUnaryMethod_Etfs<WithStreamedUnaryMethod_FutureBy<WithStreamedUnaryMethod_Futures<WithStreamedUnaryMethod_OptionBy<WithStreamedUnaryMethod_Options<WithStreamedUnaryMethod_OptionsBy<WithStreamedUnaryMethod_ShareBy<WithStreamedUnaryMethod_Shares<WithStreamedUnaryMethod_Indicatives<WithStreamedUnaryMethod_GetAccruedInterests<WithStreamedUnaryMethod_GetFuturesMargin<WithStreamedUnaryMethod_GetInstrumentBy<WithStreamedUnaryMethod_GetDividends<WithStreamedUnaryMethod_GetAssetBy<WithStreamedUnaryMethod_GetAssets<WithStreamedUnaryMethod_GetFavorites<WithStreamedUnaryMethod_EditFavorites<WithStreamedUnaryMethod_CreateFavoriteGroup<WithStreamedUnaryMethod_DeleteFavoriteGroup<WithStreamedUnaryMethod_GetFavoriteGroups<WithStreamedUnaryMethod_GetCountries<WithStreamedUnaryMethod_FindInstrument<WithStreamedUnaryMethod_GetBrands<WithStreamedUnaryMethod_GetBrandBy<WithStreamedUnaryMethod_GetAssetFundamentals<WithStreamedUnaryMethod_GetAssetReports<WithStreamedUnaryMethod_GetConsensusForecasts<WithStreamedUnaryMethod_GetForecastBy<WithStreamedUnaryMethod_GetRiskRates<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_TradingSchedules<WithStreamedUnaryMethod_BondBy<WithStreamedUnaryMethod_Bonds<WithStreamedUnaryMethod_GetBondCoupons<WithStreamedUnaryMethod_GetBondEvents<WithStreamedUnaryMethod_CurrencyBy<WithStreamedUnaryMethod_Currencies<WithStreamedUnaryMethod_EtfBy<WithStreamedUnaryMethod_Etfs<WithStreamedUnaryMethod_FutureBy<WithStreamedUnaryMethod_Futures<WithStreamedUnaryMethod_OptionBy<WithStreamedUnaryMethod_Options<WithStreamedUnaryMethod_OptionsBy<WithStreamedUnaryMethod_ShareBy<WithStreamedUnaryMethod_Shares<WithStreamedUnaryMethod_Indicatives<WithStreamedUnaryMethod_GetAccruedInterests<WithStreamedUnaryMethod_GetFuturesMargin<WithStreamedUnaryMethod_GetInstrumentBy<WithStreamedUnaryMethod_GetDividends<WithStreamedUnaryMethod_GetAssetBy<WithStreamedUnaryMethod_GetAssets<WithStreamedUnaryMethod_GetFavorites<WithStreamedUnaryMethod_EditFavorites<WithStreamedUnaryMethod_CreateFavoriteGroup<WithStreamedUnaryMethod_DeleteFavoriteGroup<WithStreamedUnaryMethod_GetFavoriteGroups<WithStreamedUnaryMethod_GetCountries<WithStreamedUnaryMethod_FindInstrument<WithStreamedUnaryMethod_GetBrands<WithStreamedUnaryMethod_GetBrandBy<WithStreamedUnaryMethod_GetAssetFundamentals<WithStreamedUnaryMethod_GetAssetReports<WithStreamedUnaryMethod_GetConsensusForecasts<WithStreamedUnaryMethod_GetForecastBy<WithStreamedUnaryMethod_GetRiskRates<WithStreamedUnaryMethod_GetInsiderDeals<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
 };
 // Методы сервиса предназначены для получения:<br/>1. Информации об инструментах.<br/>2.
 // Расписания торговых сессий.<br/>3. Календаря выплат купонов по облигациям.<br/>4.

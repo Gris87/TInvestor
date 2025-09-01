@@ -314,7 +314,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 }  // namespace invest
 }  // namespace public_
 }  // namespace tinkoff
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_common_2eproto[5];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_common_2eproto[6];
 static constexpr const ::_pb::ServiceDescriptor**
     file_level_service_descriptors_common_2eproto = nullptr;
 const ::uint32_t
@@ -516,10 +516,13 @@ const char descriptor_table_protodef_common_2eproto[] ABSL_ATTRIBUTE_SECTION_VAR
     "\n\030ResultSubscriptionStatus\022*\n&RESULT_SUB"
     "SCRIPTION_STATUS_UNSPECIFIED\020\000\022!\n\035RESULT"
     "_SUBSCRIPTION_STATUS_OK\020\001\022$\n RESULT_SUBS"
-    "CRIPTION_STATUS_ERROR\020\rBa\n\034ru.tinkoff.pi"
-    "api.contract.v1P\001Z\014./;investapi\242\002\005TIAPI\252"
-    "\002\024Tinkoff.InvestApi.V1\312\002\021Tinkoff\\Invest\\"
-    "V1b\006proto3"
+    "CRIPTION_STATUS_ERROR\020\r*\215\001\n\014RealExchange"
+    "\022\035\n\031REAL_EXCHANGE_UNSPECIFIED\020\000\022\026\n\022REAL_"
+    "EXCHANGE_MOEX\020\001\022\025\n\021REAL_EXCHANGE_RTS\020\002\022\025"
+    "\n\021REAL_EXCHANGE_OTC\020\003\022\030\n\024REAL_EXCHANGE_D"
+    "EALER\020\004Ba\n\034ru.tinkoff.piapi.contract.v1P"
+    "\001Z\014./;investapi\242\002\005TIAPI\252\002\024Tinkoff.Invest"
+    "Api.V1\312\002\021Tinkoff\\Invest\\V1b\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_common_2eproto_deps[1] =
     {
@@ -529,7 +532,7 @@ static ::absl::once_flag descriptor_table_common_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_common_2eproto = {
     false,
     false,
-    2450,
+    2594,
     descriptor_table_protodef_common_2eproto,
     "common.proto",
     &descriptor_table_common_2eproto_once,
@@ -592,6 +595,15 @@ PROTOBUF_CONSTINIT const uint32_t ResultSubscriptionStatus_internal_data_[] = {
     131072u, 32u, 2048u, };
 bool ResultSubscriptionStatus_IsValid(int value) {
   return 0 <= value && value <= 13 && ((8195u >> value) & 1) != 0;
+}
+const ::google::protobuf::EnumDescriptor* RealExchange_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_common_2eproto);
+  return file_level_enum_descriptors_common_2eproto[5];
+}
+PROTOBUF_CONSTINIT const uint32_t RealExchange_internal_data_[] = {
+    327680u, 0u, };
+bool RealExchange_IsValid(int value) {
+  return 0 <= value && value <= 4;
 }
 // ===================================================================
 
