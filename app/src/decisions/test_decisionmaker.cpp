@@ -8,6 +8,7 @@
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
+#include "src/utils/tradeutils/itradeutils_mock.h"
 
 
 
@@ -15,6 +16,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 
+using ::testing::DoubleEq;
 using ::testing::FloatEq;
 using ::testing::InSequence;
 using ::testing::Return;
@@ -33,6 +35,7 @@ protected:
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         userStorageMock        = new StrictMock<UserStorageMock>();
         timeUtilsMock          = new StrictMock<TimeUtilsMock>();
+        tradeUtilsMock         = new StrictMock<TradeUtilsMock>();
         buyDecisionMock        = new StrictMock<ActionDecisionMock>();
         sellDecisionMock       = new StrictMock<ActionDecisionMock>();
         simulatorConfigMock    = new StrictMock<DecisionMakerConfigMock>();
@@ -42,6 +45,7 @@ protected:
             instrumentsStorageMock,
             userStorageMock,
             timeUtilsMock,
+            tradeUtilsMock,
             QList<IActionDecision*>() << buyDecisionMock,
             QList<IActionDecision*>() << sellDecisionMock
         );
@@ -54,6 +58,7 @@ protected:
         delete instrumentsStorageMock;
         delete userStorageMock;
         delete timeUtilsMock;
+        delete tradeUtilsMock;
         delete buyDecisionMock;
         delete sellDecisionMock;
         delete simulatorConfigMock;
@@ -65,6 +70,7 @@ protected:
     StrictMock<InstrumentsStorageMock>*  instrumentsStorageMock;
     StrictMock<UserStorageMock>*         userStorageMock;
     StrictMock<TimeUtilsMock>*           timeUtilsMock;
+    StrictMock<TradeUtilsMock>*          tradeUtilsMock;
     StrictMock<ActionDecisionMock>*      buyDecisionMock;
     StrictMock<ActionDecisionMock>*      sellDecisionMock;
     StrictMock<DecisionMakerConfigMock>* simulatorConfigMock;
@@ -291,10 +297,18 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
-    EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, isLimitByTurnover()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getLimitStockPurchasePart()).WillOnce(Return(7.0f));
-    EXPECT_CALL(*configMock, getLimitByTurnoverPercent()).WillOnce(Return(0.0005f));
+    EXPECT_CALL(
+        *tradeUtilsMock,
+        calculateAmountOfLotsToBuy(
+            configMock,
+            DoubleEq(100000.0),
+            DoubleEq(1000000.0),
+            DoubleEq(9000000000.0),
+            DoubleEq(30.000001907348633),
+            DoubleEq(30.012000323104758)
+        )
+    )
+        .WillOnce(Return(1500));
 
     InstrumentsForTrading result = decisionMaker->makeDecision(
         QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, false, 0, false, false
@@ -361,9 +375,18 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
-    EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, isLimitByTurnover()).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, getLimitStockPurchasePart()).WillOnce(Return(7.0f));
+    EXPECT_CALL(
+        *tradeUtilsMock,
+        calculateAmountOfLotsToBuy(
+            configMock,
+            DoubleEq(100000.0),
+            DoubleEq(1000000.0),
+            DoubleEq(9000000000.0),
+            DoubleEq(30.000001907348633),
+            DoubleEq(30.012000323104758)
+        )
+    )
+        .WillOnce(Return(2333));
 
     result = decisionMaker->makeDecision(
         QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, false, 0, false, true
@@ -421,7 +444,18 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
-    EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
+    EXPECT_CALL(
+        *tradeUtilsMock,
+        calculateAmountOfLotsToBuy(
+            configMock,
+            DoubleEq(100000.0),
+            DoubleEq(1000000.0),
+            DoubleEq(9000000000.0),
+            DoubleEq(30.000001907348633),
+            DoubleEq(30.012000323104758)
+        )
+    )
+        .WillOnce(Return(3332));
 
     result = decisionMaker->makeDecision(
         QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, false, 0, false, true
@@ -519,7 +553,18 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
-    EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
+    EXPECT_CALL(
+        *tradeUtilsMock,
+        calculateAmountOfLotsToBuy(
+            configMock,
+            DoubleEq(100000.0),
+            DoubleEq(1000000.0),
+            DoubleEq(9000000000.0),
+            DoubleEq(30.000001907348633),
+            DoubleEq(30.012000323104758)
+        )
+    )
+        .WillOnce(Return(3332));
 
     result = decisionMaker->makeDecision(
         QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, true, 0, true, true

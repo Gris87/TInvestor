@@ -16,6 +16,7 @@ DecisionMaker::DecisionMaker(
     IInstrumentsStorage*           instrumentsStorage,
     IUserStorage*                  userStorage,
     ITimeUtils*                    timeUtils,
+    ITradeUtils*                   tradeUtils,
     const QList<IActionDecision*>& buyDecisions,
     const QList<IActionDecision*>& sellDecisions
 ) :
@@ -24,6 +25,7 @@ DecisionMaker::DecisionMaker(
     mInstrumentsStorage(instrumentsStorage),
     mUserStorage(userStorage),
     mTimeUtils(timeUtils),
+    mTradeUtils(tradeUtils),
     mBuyDecisions(buyDecisions),
     mSellDecisions(sellDecisions),
     mStocksMap()
@@ -342,10 +344,10 @@ void DecisionMaker::makeDecisions(
     InstrumentsForTrading&    res
 )
 {
-    double totalCost = 0.0;
     double money     = 0.0;
+    double totalCost = 0.0;
 
-    calculateTotalCostAndMoney(parentThread, portfolio, totalCost, money);
+    calculateMoneyAndTotalCost(parentThread, portfolio, money, totalCost);
     money -= keepMoney;
 
     mUserStorage->readLock();
@@ -406,36 +408,14 @@ void DecisionMaker::makeDecisions(
             const double lotPrice               = instrument.lot * tradingInfo.price;
             const double lotPriceWithCommission = lotPrice * (1 + commission);
 
-            qint64 amountOfLots = 0;
-
-            if (config->isLimitStockPurchase())
-            {
-                double cost = 0.0;
-
-                if (config->isLimitByTurnover())
-                {
-                    const double limitStockPurchasePart = config->getLimitStockPurchasePart() / HUNDRED_PERCENT;
-                    const double limitByTurnoverPercent = config->getLimitByTurnoverPercent() / HUNDRED_PERCENT;
-
-                    cost = qMin(
-                        totalCost * limitStockPurchasePart,
-                        tradingInfo.expectedCost * limitByTurnoverPercent // tradingInfo.expectedCost == stock.meta.turnover
-                    );
-                }
-                else
-                {
-                    const double limitStockPurchasePart = config->getLimitStockPurchasePart() / HUNDRED_PERCENT;
-
-                    cost = totalCost * limitStockPurchasePart;
-                }
-
-                cost         = qMax(cost, lotPrice);
-                amountOfLots = qMin(qRound64(cost / lotPrice), static_cast<qint64>(money / lotPriceWithCommission));
-            }
-            else
-            {
-                amountOfLots = money / lotPriceWithCommission;
-            }
+            qint64 amountOfLots = mTradeUtils->calculateAmountOfLotsToBuy(
+                config,
+                money,
+                totalCost,
+                tradingInfo.expectedCost, // tradingInfo.expectedCost == stock.meta.turnover
+                lotPrice,
+                lotPriceWithCommission
+            );
 
             if (amountOfLots > 0)
             {
@@ -449,10 +429,10 @@ void DecisionMaker::makeDecisions(
 }
 
 void
-DecisionMaker::calculateTotalCostAndMoney(QThread* parentThread, const Portfolio& portfolio, double& totalCost, double& money)
+DecisionMaker::calculateMoneyAndTotalCost(QThread* parentThread, const Portfolio& portfolio, double& money, double& totalCost)
 {
-    totalCost = 0.0;
     money     = 0.0;
+    totalCost = 0.0;
 
     for (int i = 0; i < portfolio.positions.size() && !parentThread->isInterruptionRequested(); ++i)
     {

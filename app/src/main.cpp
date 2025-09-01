@@ -81,6 +81,7 @@
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
 #include "src/utils/timeutils/timeutils.h"
+#include "src/utils/tradeutils/tradeutils.h"
 #include "src/widgets/accountchartwidget/accountchartwidgetfactory.h"
 #include "src/widgets/actionstableitemwidget/actionstableitemwidgetfactory.h"
 #include "src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h"
@@ -375,6 +376,7 @@ static int runApplication(QApplication* app)
     LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
 
     TimeUtils         timeUtils;
+    TradeUtils        tradeUtils;
     FileDialogFactory fileDialogFactory;
     MessageBoxUtils   messageBoxUtils;
     HttpClient        httpClient;
@@ -394,9 +396,15 @@ static int runApplication(QApplication* app)
     const QList<IActionDecision*> buyDecisions  = {&buyDecision1, &buyDecision2, &buyDecision3, &buyDecision4};
     const QList<IActionDecision*> sellDecisions = {&sellDecision1, &sellDecision2, &sellDecision3, &sellDecision4};
 
-    DecisionMaker simulatorRealtimeDecisionMaker(&instrumentsStorage, &userStorage, &timeUtils, buyDecisions, sellDecisions);
-    DecisionMaker simulatorDateRangeDecisionMaker(&instrumentsStorage, &userStorage, &timeUtils, buyDecisions, sellDecisions);
-    DecisionMaker autoPilotRealtimeDecisionMaker(&instrumentsStorage, &userStorage, &timeUtils, buyDecisions, sellDecisions);
+    DecisionMaker simulatorRealtimeDecisionMaker(
+        &instrumentsStorage, &userStorage, &timeUtils, &tradeUtils, buyDecisions, sellDecisions
+    );
+    DecisionMaker simulatorDateRangeDecisionMaker(
+        &instrumentsStorage, &userStorage, &timeUtils, &tradeUtils, buyDecisions, sellDecisions
+    );
+    DecisionMaker autoPilotRealtimeDecisionMaker(
+        &instrumentsStorage, &userStorage, &timeUtils, &tradeUtils, buyDecisions, sellDecisions
+    );
 
     CleanupThread      cleanupThread(&config, &stocksStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);

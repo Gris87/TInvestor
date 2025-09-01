@@ -11,6 +11,7 @@
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/utils/timeutils/itimeutils.h"
+#include "src/utils/tradeutils/itradeutils.h"
 
 
 
@@ -35,6 +36,7 @@ public:
         IInstrumentsStorage*           instrumentsStorage,
         IUserStorage*                  userStorage,
         ITimeUtils*                    timeUtils,
+        ITradeUtils*                   tradeUtils,
         const QList<IActionDecision*>& buyDecisions,
         const QList<IActionDecision*>& sellDecisions
     );
@@ -74,12 +76,13 @@ private:
         bool                      useParallel,
         InstrumentsForTrading&    res
     );
-    void calculateTotalCostAndMoney(QThread* parentThread, const Portfolio& portfolio, double& totalCost, double& money);
+    void calculateMoneyAndTotalCost(QThread* parentThread, const Portfolio& portfolio, double& money, double& totalCost);
 
     QReadWriteLock*         mRwMutex;
     IInstrumentsStorage*    mInstrumentsStorage;
     IUserStorage*           mUserStorage;
     ITimeUtils*             mTimeUtils;
+    ITradeUtils*            mTradeUtils;
     QList<IActionDecision*> mBuyDecisions;
     QList<IActionDecision*> mSellDecisions;
     QMap<QString, Stock*>   mStocksMap;
