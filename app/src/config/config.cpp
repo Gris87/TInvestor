@@ -13,7 +13,11 @@ constexpr bool  LIMIT_STOCK_PURCHASE_DEFAULT       = true;
 constexpr float LIMIT_STOCK_PURCHASE_PART_DEFAULT  = 10.0f;
 constexpr bool  LIMIT_BY_TURNOVER_DEFAULT          = true;
 constexpr float LIMIT_BY_TURNOVER_PERCENT_DEFAULT  = 5.0f;
-constexpr int   STORAGE_MONTH_LIMIT_DEFAULT        = 12;
+constexpr bool  LIMIT_STOCK_PURCHASE_NON_WORKING_HOURS_DEFAULT      = true;
+constexpr float LIMIT_STOCK_PURCHASE_PART_NON_WORKING_HOURS_DEFAULT = 1.0f;
+constexpr bool  LIMIT_BY_TURNOVER_NON_WORKING_HOURS_DEFAULT         = true;
+constexpr float LIMIT_BY_TURNOVER_PERCENT_NON_WORKING_HOURS_DEFAULT = 1.0f;
+constexpr int   STORAGE_MONTH_LIMIT_DEFAULT                         = 12;
 constexpr bool  SIMULATOR_CONFIG_COMMON_DEFAULT    = true;
 constexpr bool  AUTOPILOT_CONFIG_COMMON_DEFAULT    = false;
 
@@ -32,6 +36,10 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mLimitStockPurchasePart(),
     mLimitByTurnover(),
     mLimitByTurnoverPercent(),
+    mLimitStockPurchaseNonWorkingHours(),
+    mLimitStockPurchasePartNonWorkingHours(),
+    mLimitByTurnoverNonWorkingHours(),
+    mLimitByTurnoverPercentNonWorkingHours(),
     mStorageMonthLimit(),
     mSimulatorConfigCommon(),
     mAutoPilotConfigCommon()
@@ -83,8 +91,12 @@ void Config::assign(IConfig* another)
     mTradeInNonWorkingHours = config.mTradeInNonWorkingHours;
     mLimitStockPurchase     = config.mLimitStockPurchase;
     mLimitStockPurchasePart = config.mLimitStockPurchasePart;
-    mLimitByTurnover        = config.mLimitByTurnover;
-    mLimitByTurnoverPercent = config.mLimitByTurnoverPercent;
+    mLimitByTurnover                       = config.mLimitByTurnover;
+    mLimitByTurnoverPercent                = config.mLimitByTurnoverPercent;
+    mLimitStockPurchaseNonWorkingHours     = config.mLimitStockPurchaseNonWorkingHours;
+    mLimitStockPurchasePartNonWorkingHours = config.mLimitStockPurchasePartNonWorkingHours;
+    mLimitByTurnoverNonWorkingHours        = config.mLimitByTurnoverNonWorkingHours;
+    mLimitByTurnoverPercentNonWorkingHours = config.mLimitByTurnoverPercentNonWorkingHours;
     mStorageMonthLimit      = config.mStorageMonthLimit;
     mSimulatorConfigCommon  = config.mSimulatorConfigCommon;
     mAutoPilotConfigCommon  = config.mAutoPilotConfigCommon;
@@ -107,6 +119,10 @@ void Config::makeDefault()
     mLimitStockPurchasePart = LIMIT_STOCK_PURCHASE_PART_DEFAULT;
     mLimitByTurnover        = LIMIT_BY_TURNOVER_DEFAULT;
     mLimitByTurnoverPercent = LIMIT_BY_TURNOVER_PERCENT_DEFAULT;
+    mLimitStockPurchaseNonWorkingHours     = LIMIT_STOCK_PURCHASE_NON_WORKING_HOURS_DEFAULT;
+    mLimitStockPurchasePartNonWorkingHours = LIMIT_STOCK_PURCHASE_PART_NON_WORKING_HOURS_DEFAULT;
+    mLimitByTurnoverNonWorkingHours        = LIMIT_BY_TURNOVER_NON_WORKING_HOURS_DEFAULT;
+    mLimitByTurnoverPercentNonWorkingHours = LIMIT_BY_TURNOVER_PERCENT_NON_WORKING_HOURS_DEFAULT;
     mStorageMonthLimit      = STORAGE_MONTH_LIMIT_DEFAULT;
     mSimulatorConfigCommon  = SIMULATOR_CONFIG_COMMON_DEFAULT;
     mAutoPilotConfigCommon  = AUTOPILOT_CONFIG_COMMON_DEFAULT;
@@ -122,17 +138,21 @@ void Config::save(ISettingsEditor* settingsEditor)
     mAutoPilotConfig->save(settingsEditor, "Config/AutoPilot");
 
     // clang-format off
-    settingsEditor->setValue("Config/Autorun",                mAutorun);
-    settingsEditor->setValue("Config/CpuUsage",               mCpuUsage);
-    settingsEditor->setValue("Config/MakeDecisionTimeout",    mMakeDecisionTimeout);
-    settingsEditor->setValue("Config/TradeInNonWorkingHours", mTradeInNonWorkingHours);
-    settingsEditor->setValue("Config/LimitStockPurchase",     mLimitStockPurchase);
-    settingsEditor->setValue("Config/LimitStockPurchasePart", mLimitStockPurchasePart);
-    settingsEditor->setValue("Config/LimitByTurnover",        mLimitByTurnover);
-    settingsEditor->setValue("Config/LimitByTurnoverPercent", mLimitByTurnoverPercent);
-    settingsEditor->setValue("Config/StorageMonthLimit",      mStorageMonthLimit);
-    settingsEditor->setValue("Config/SimulatorConfigCommon",  mSimulatorConfigCommon);
-    settingsEditor->setValue("Config/AutoPilotConfigCommon",  mAutoPilotConfigCommon);
+    settingsEditor->setValue("Config/Autorun",                               mAutorun);
+    settingsEditor->setValue("Config/CpuUsage",                              mCpuUsage);
+    settingsEditor->setValue("Config/MakeDecisionTimeout",                   mMakeDecisionTimeout);
+    settingsEditor->setValue("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours);
+    settingsEditor->setValue("Config/LimitStockPurchase",                    mLimitStockPurchase);
+    settingsEditor->setValue("Config/LimitStockPurchasePart",                mLimitStockPurchasePart);
+    settingsEditor->setValue("Config/LimitByTurnover",                       mLimitByTurnover);
+    settingsEditor->setValue("Config/LimitByTurnoverPercent",                mLimitByTurnoverPercent);
+    settingsEditor->setValue("Config/LimitStockPurchaseNonWorkingHours",     mLimitStockPurchaseNonWorkingHours);
+    settingsEditor->setValue("Config/LimitStockPurchasePartNonWorkingHours", mLimitStockPurchasePartNonWorkingHours);
+    settingsEditor->setValue("Config/LimitByTurnoverNonWorkingHours",        mLimitByTurnoverNonWorkingHours);
+    settingsEditor->setValue("Config/LimitByTurnoverPercentNonWorkingHours", mLimitByTurnoverPercentNonWorkingHours);
+    settingsEditor->setValue("Config/StorageMonthLimit",                     mStorageMonthLimit);
+    settingsEditor->setValue("Config/SimulatorConfigCommon",                 mSimulatorConfigCommon);
+    settingsEditor->setValue("Config/AutoPilotConfigCommon",                 mAutoPilotConfigCommon);
     // clang-format on
 }
 
@@ -146,17 +166,21 @@ void Config::load(ISettingsEditor* settingsEditor)
     mAutoPilotConfig->load(settingsEditor, "Config/AutoPilot");
 
     // clang-format off
-    mAutorun                   = settingsEditor->value("Config/Autorun",                mAutorun).toBool();
-    mCpuUsage                  = settingsEditor->value("Config/CpuUsage",               mCpuUsage).toString();
-    mMakeDecisionTimeout       = settingsEditor->value("Config/MakeDecisionTimeout",    mMakeDecisionTimeout).toInt();
-    mTradeInNonWorkingHours    = settingsEditor->value("Config/TradeInNonWorkingHours", mTradeInNonWorkingHours).toBool();
-    mLimitStockPurchase        = settingsEditor->value("Config/LimitStockPurchase",     mLimitStockPurchase).toBool();
-    mLimitStockPurchasePart    = settingsEditor->value("Config/LimitStockPurchasePart", mLimitStockPurchasePart).toFloat();
-    mLimitByTurnover           = settingsEditor->value("Config/LimitByTurnover",        mLimitByTurnover).toBool();
-    mLimitByTurnoverPercent    = settingsEditor->value("Config/LimitByTurnoverPercent", mLimitByTurnoverPercent).toFloat();
-    mStorageMonthLimit         = settingsEditor->value("Config/StorageMonthLimit",      mStorageMonthLimit).toInt();
-    mSimulatorConfigCommon     = settingsEditor->value("Config/SimulatorConfigCommon",  mSimulatorConfigCommon).toBool();
-    mAutoPilotConfigCommon     = settingsEditor->value("Config/AutoPilotConfigCommon",  mAutoPilotConfigCommon).toBool();
+    mAutorun                               = settingsEditor->value("Config/Autorun",                               mAutorun).toBool();
+    mCpuUsage                              = settingsEditor->value("Config/CpuUsage",                              mCpuUsage).toString();
+    mMakeDecisionTimeout                   = settingsEditor->value("Config/MakeDecisionTimeout",                   mMakeDecisionTimeout).toInt();
+    mTradeInNonWorkingHours                = settingsEditor->value("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours).toBool();
+    mLimitStockPurchase                    = settingsEditor->value("Config/LimitStockPurchase",                    mLimitStockPurchase).toBool();
+    mLimitStockPurchasePart                = settingsEditor->value("Config/LimitStockPurchasePart",                mLimitStockPurchasePart).toFloat();
+    mLimitByTurnover                       = settingsEditor->value("Config/LimitByTurnover",                       mLimitByTurnover).toBool();
+    mLimitByTurnoverPercent                = settingsEditor->value("Config/LimitByTurnoverPercent",                mLimitByTurnoverPercent).toFloat();
+    mLimitStockPurchaseNonWorkingHours     = settingsEditor->value("Config/LimitStockPurchaseNonWorkingHours",     mLimitStockPurchaseNonWorkingHours).toBool();
+    mLimitStockPurchasePartNonWorkingHours = settingsEditor->value("Config/LimitStockPurchasePartNonWorkingHours", mLimitStockPurchasePartNonWorkingHours).toFloat();
+    mLimitByTurnoverNonWorkingHours        = settingsEditor->value("Config/LimitByTurnoverNonWorkingHours",        mLimitByTurnoverNonWorkingHours).toBool();
+    mLimitByTurnoverPercentNonWorkingHours = settingsEditor->value("Config/LimitByTurnoverPercentNonWorkingHours", mLimitByTurnoverPercentNonWorkingHours).toFloat();
+    mStorageMonthLimit                     = settingsEditor->value("Config/StorageMonthLimit",                     mStorageMonthLimit).toInt();
+    mSimulatorConfigCommon                 = settingsEditor->value("Config/SimulatorConfigCommon",                 mSimulatorConfigCommon).toBool();
+    mAutoPilotConfigCommon                 = settingsEditor->value("Config/AutoPilotConfigCommon",                 mAutoPilotConfigCommon).toBool();
     // clang-format on
 }
 
@@ -280,6 +304,62 @@ float Config::getLimitByTurnoverPercent()
     const QReadLocker lock(mRwMutex);
 
     return mLimitByTurnoverPercent;
+}
+
+void Config::setLimitStockPurchaseNonWorkingHours(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mLimitStockPurchaseNonWorkingHours = value;
+}
+
+bool Config::isLimitStockPurchaseNonWorkingHours()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mLimitStockPurchaseNonWorkingHours;
+}
+
+void Config::setLimitStockPurchasePartNonWorkingHours(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mLimitStockPurchasePartNonWorkingHours = value;
+}
+
+float Config::getLimitStockPurchasePartNonWorkingHours()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mLimitStockPurchasePartNonWorkingHours;
+}
+
+void Config::setLimitByTurnoverNonWorkingHours(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mLimitByTurnoverNonWorkingHours = value;
+}
+
+bool Config::isLimitByTurnoverNonWorkingHours()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mLimitByTurnoverNonWorkingHours;
+}
+
+void Config::setLimitByTurnoverPercentNonWorkingHours(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mLimitByTurnoverPercentNonWorkingHours = value;
+}
+
+float Config::getLimitByTurnoverPercentNonWorkingHours()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mLimitByTurnoverPercentNonWorkingHours;
 }
 
 void Config::setStorageMonthLimit(int value)

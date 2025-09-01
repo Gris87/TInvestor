@@ -58,22 +58,30 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
     config->setLimitByTurnoverPercent(5.0f);
+    config->setLimitStockPurchaseNonWorkingHours(false);
+    config->setLimitStockPurchasePartNonWorkingHours(15.0f);
+    config->setLimitByTurnoverNonWorkingHours(false);
+    config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
 
     // clang-format off
-    ASSERT_EQ(config->isAutorun(),                   false);
-    ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
-    ASSERT_EQ(config->isLimitStockPurchase(),        false);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(), 25.0f, 0.0001f);
-    ASSERT_EQ(config->isLimitByTurnover(),           false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(), 5.0f, 0.0001f);
-    ASSERT_EQ(config->getStorageMonthLimit(),        36);
-    ASSERT_EQ(config->isSimulatorConfigCommon(),     false);
-    ASSERT_EQ(config->isAutoPilotConfigCommon(),     true);
+    ASSERT_EQ(config->isAutorun(),                                  false);
+    ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
+    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isLimitStockPurchase(),                       false);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnover(),                          false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
+    ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
 
     EXPECT_CALL(*simulatorConfigMock, clone()).WillOnce(Return(&simulatorConfigMock2));
@@ -84,31 +92,39 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     IConfig* config2 = config->clone();
 
     // clang-format off
-    ASSERT_EQ(config->isAutorun(),                   false);
-    ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
-    ASSERT_EQ(config->isLimitStockPurchase(),        false);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(), 25.0f, 0.0001f);
-    ASSERT_EQ(config->isLimitByTurnover(),           false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(), 5.0f, 0.0001f);
-    ASSERT_EQ(config->getStorageMonthLimit(),        36);
-    ASSERT_EQ(config->isSimulatorConfigCommon(),     false);
-    ASSERT_EQ(config->isAutoPilotConfigCommon(),     true);
+    ASSERT_EQ(config->isAutorun(),                                  false);
+    ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
+    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isLimitStockPurchase(),                       false);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnover(),                          false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
+    ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(config2->isAutorun(),                   false);
-    ASSERT_EQ(config2->getCpuUsage(),                 "MINIMUM");
-    ASSERT_EQ(config2->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config2->isTradeInNonWorkingHours(),    false);
-    ASSERT_EQ(config2->isLimitStockPurchase(),        false);
-    ASSERT_NEAR(config2->getLimitStockPurchasePart(), 25.0f, 0.0001f);
-    ASSERT_EQ(config2->isLimitByTurnover(),           false);
-    ASSERT_NEAR(config2->getLimitByTurnoverPercent(), 5.0f, 0.0001f);
-    ASSERT_EQ(config2->getStorageMonthLimit(),        36);
-    ASSERT_EQ(config2->isSimulatorConfigCommon(),     false);
-    ASSERT_EQ(config2->isAutoPilotConfigCommon(),     true);
+    ASSERT_EQ(config2->isAutorun(),                                  false);
+    ASSERT_EQ(config2->getCpuUsage(),                                "MINIMUM");
+    ASSERT_EQ(config2->getMakeDecisionTimeout(),                     5);
+    ASSERT_EQ(config2->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config2->isLimitStockPurchase(),                       false);
+    ASSERT_NEAR(config2->getLimitStockPurchasePart(),                25.0f, 0.0001f);
+    ASSERT_EQ(config2->isLimitByTurnover(),                          false);
+    ASSERT_NEAR(config2->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_EQ(config2->isLimitStockPurchaseNonWorkingHours(),        false);
+    ASSERT_NEAR(config2->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
+    ASSERT_EQ(config2->isLimitByTurnoverNonWorkingHours(),           false);
+    ASSERT_NEAR(config2->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config2->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config2->isSimulatorConfigCommon(),                    false);
+    ASSERT_EQ(config2->isAutoPilotConfigCommon(),                    true);
     // clang-format on
 
     EXPECT_CALL(simulatorConfigMock2, deleteRecursively());
@@ -134,22 +150,30 @@ TEST_F(Test_Config, Test_assign)
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
     config->setLimitByTurnoverPercent(5.0f);
+    config->setLimitStockPurchaseNonWorkingHours(false);
+    config->setLimitStockPurchasePartNonWorkingHours(15.0f);
+    config->setLimitByTurnoverNonWorkingHours(false);
+    config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
 
     // clang-format off
-    ASSERT_EQ(config->isAutorun(),                   false);
-    ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
-    ASSERT_EQ(config->isLimitStockPurchase(),        false);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(), 25.0f, 0.0001f);
-    ASSERT_EQ(config->isLimitByTurnover(),           false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(), 5.0f, 0.0001f);
-    ASSERT_EQ(config->getStorageMonthLimit(),        36);
-    ASSERT_EQ(config->isSimulatorConfigCommon(),     false);
-    ASSERT_EQ(config->isAutoPilotConfigCommon(),     true);
+    ASSERT_EQ(config->isAutorun(),                                  false);
+    ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
+    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isLimitStockPurchase(),                       false);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnover(),                          false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
+    ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
 
     config2.setAutorun(true);
@@ -160,22 +184,30 @@ TEST_F(Test_Config, Test_assign)
     config2.setLimitStockPurchasePart(5.0f);
     config2.setLimitByTurnover(true);
     config2.setLimitByTurnoverPercent(7.5f);
+    config2.setLimitStockPurchaseNonWorkingHours(true);
+    config2.setLimitStockPurchasePartNonWorkingHours(35.0f);
+    config2.setLimitByTurnoverNonWorkingHours(true);
+    config2.setLimitByTurnoverPercentNonWorkingHours(37.5f);
     config2.setStorageMonthLimit(12);
     config2.setSimulatorConfigCommon(true);
     config2.setAutoPilotConfigCommon(false);
 
     // clang-format off
-    ASSERT_EQ(config2.isAutorun(),                   true);
-    ASSERT_EQ(config2.getCpuUsage(),                 "OPTIMAL");
-    ASSERT_EQ(config2.getMakeDecisionTimeout(),      30);
-    ASSERT_EQ(config2.isTradeInNonWorkingHours(),    true);
-    ASSERT_EQ(config2.isLimitStockPurchase(),        true);
-    ASSERT_NEAR(config2.getLimitStockPurchasePart(), 5.0f, 0.0001f);
-    ASSERT_EQ(config2.isLimitByTurnover(),           true);
-    ASSERT_NEAR(config2.getLimitByTurnoverPercent(), 7.5f, 0.0001f);
-    ASSERT_EQ(config2.getStorageMonthLimit(),        12);
-    ASSERT_EQ(config2.isSimulatorConfigCommon(),     true);
-    ASSERT_EQ(config2.isAutoPilotConfigCommon(),     false);
+    ASSERT_EQ(config2.isAutorun(),                                  true);
+    ASSERT_EQ(config2.getCpuUsage(),                                "OPTIMAL");
+    ASSERT_EQ(config2.getMakeDecisionTimeout(),                     30);
+    ASSERT_EQ(config2.isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config2.isLimitStockPurchase(),                       true);
+    ASSERT_NEAR(config2.getLimitStockPurchasePart(),                5.0f, 0.0001f);
+    ASSERT_EQ(config2.isLimitByTurnover(),                          true);
+    ASSERT_NEAR(config2.getLimitByTurnoverPercent(),                7.5f, 0.0001f);
+    ASSERT_EQ(config2.isLimitStockPurchaseNonWorkingHours(),        true);
+    ASSERT_NEAR(config2.getLimitStockPurchasePartNonWorkingHours(), 35.0f, 0.0001f);
+    ASSERT_EQ(config2.isLimitByTurnoverNonWorkingHours(),           true);
+    ASSERT_NEAR(config2.getLimitByTurnoverPercentNonWorkingHours(), 37.5f, 0.0001f);
+    ASSERT_EQ(config2.getStorageMonthLimit(),                       12);
+    ASSERT_EQ(config2.isSimulatorConfigCommon(),                    true);
+    ASSERT_EQ(config2.isAutoPilotConfigCommon(),                    false);
     // clang-format on
 
     EXPECT_CALL(*simulatorConfigMock, assign(&simulatorConfigMock2));
@@ -184,31 +216,39 @@ TEST_F(Test_Config, Test_assign)
     config->assign(&config2);
 
     // clang-format off
-    ASSERT_EQ(config->isAutorun(),                   true);
-    ASSERT_EQ(config->getCpuUsage(),                 "OPTIMAL");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),      30);
-    ASSERT_EQ(config->isTradeInNonWorkingHours(),    true);
-    ASSERT_EQ(config->isLimitStockPurchase(),        true);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(), 5.0f, 0.0001f);
-    ASSERT_EQ(config->isLimitByTurnover(),           true);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(), 7.5f, 0.0001f);
-    ASSERT_EQ(config->getStorageMonthLimit(),        12);
-    ASSERT_EQ(config->isSimulatorConfigCommon(),     true);
-    ASSERT_EQ(config->isAutoPilotConfigCommon(),     false);
+    ASSERT_EQ(config->isAutorun(),                                 true);
+    ASSERT_EQ(config->getCpuUsage(),                                "OPTIMAL");
+    ASSERT_EQ(config->getMakeDecisionTimeout(),                     30);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config->isLimitStockPurchase(),                       true);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                5.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnover(),                          true);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                7.5f, 0.0001f);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        true);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 35.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           true);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 37.5f, 0.0001f);
+    ASSERT_EQ(config->getStorageMonthLimit(),                       12);
+    ASSERT_EQ(config->isSimulatorConfigCommon(),                    true);
+    ASSERT_EQ(config->isAutoPilotConfigCommon(),                    false);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(config2.isAutorun(),                   true);
-    ASSERT_EQ(config2.getCpuUsage(),                 "OPTIMAL");
-    ASSERT_EQ(config2.getMakeDecisionTimeout(),      30);
-    ASSERT_EQ(config2.isTradeInNonWorkingHours(),    true);
-    ASSERT_EQ(config2.isLimitStockPurchase(),        true);
-    ASSERT_NEAR(config2.getLimitStockPurchasePart(), 5.0f, 0.0001f);
-    ASSERT_EQ(config2.isLimitByTurnover(),           true);
-    ASSERT_NEAR(config2.getLimitByTurnoverPercent(), 7.5f, 0.0001f);
-    ASSERT_EQ(config2.getStorageMonthLimit(),        12);
-    ASSERT_EQ(config2.isSimulatorConfigCommon(),     true);
-    ASSERT_EQ(config2.isAutoPilotConfigCommon(),     false);
+    ASSERT_EQ(config2.isAutorun(),                                  true);
+    ASSERT_EQ(config2.getCpuUsage(),                                "OPTIMAL");
+    ASSERT_EQ(config2.getMakeDecisionTimeout(),                     30);
+    ASSERT_EQ(config2.isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config2.isLimitStockPurchase(),                       true);
+    ASSERT_NEAR(config2.getLimitStockPurchasePart(),                5.0f, 0.0001f);
+    ASSERT_EQ(config2.isLimitByTurnover(),                          true);
+    ASSERT_NEAR(config2.getLimitByTurnoverPercent(),                7.5f, 0.0001f);
+    ASSERT_EQ(config2.isLimitStockPurchaseNonWorkingHours(),        true);
+    ASSERT_NEAR(config2.getLimitStockPurchasePartNonWorkingHours(), 35.0f, 0.0001f);
+    ASSERT_EQ(config2.isLimitByTurnoverNonWorkingHours(),           true);
+    ASSERT_NEAR(config2.getLimitByTurnoverPercentNonWorkingHours(), 37.5f, 0.0001f);
+    ASSERT_EQ(config2.getStorageMonthLimit(),                       12);
+    ASSERT_EQ(config2.isSimulatorConfigCommon(),                    true);
+    ASSERT_EQ(config2.isAutoPilotConfigCommon(),                    false);
     // clang-format on
 }
 
@@ -224,22 +264,30 @@ TEST_F(Test_Config, Test_makeDefault)
     config->setLimitStockPurchasePart(50.0f);
     config->setLimitByTurnover(false);
     config->setLimitByTurnoverPercent(15.0f);
+    config->setLimitStockPurchaseNonWorkingHours(false);
+    config->setLimitStockPurchasePartNonWorkingHours(80.0f);
+    config->setLimitByTurnoverNonWorkingHours(false);
+    config->setLimitByTurnoverPercentNonWorkingHours(65.0f);
     config->setStorageMonthLimit(36);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
 
     // clang-format off
-    ASSERT_EQ(config->isAutorun(),                   false);
-    ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
-    ASSERT_EQ(config->isLimitStockPurchase(),        false);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(), 50.0f, 0.0001f);
-    ASSERT_EQ(config->isLimitByTurnover(),           false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(), 15.0f, 0.0001f);
-    ASSERT_EQ(config->getStorageMonthLimit(),        36);
-    ASSERT_EQ(config->isSimulatorConfigCommon(),     false);
-    ASSERT_EQ(config->isAutoPilotConfigCommon(),     true);
+    ASSERT_EQ(config->isAutorun(),                                  false);
+    ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
+    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isLimitStockPurchase(),                       false);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                50.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnover(),                          false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                15.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 80.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 65.0f, 0.0001f);
+    ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
+    ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
 
     EXPECT_CALL(*simulatorConfigMock, makeDefault());
@@ -248,17 +296,21 @@ TEST_F(Test_Config, Test_makeDefault)
     config->makeDefault();
 
     // clang-format off
-    ASSERT_EQ(config->isAutorun(),                   true);
-    ASSERT_EQ(config->getCpuUsage(),                 "MAXIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),      1);
-    ASSERT_EQ(config->isTradeInNonWorkingHours(),    true);
-    ASSERT_EQ(config->isLimitStockPurchase(),        true);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(), 10.0f, 0.0001f);
-    ASSERT_EQ(config->isLimitByTurnover(),           true);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(), 5.0f, 0.0001f);
-    ASSERT_EQ(config->getStorageMonthLimit(),        12);
-    ASSERT_EQ(config->isSimulatorConfigCommon(),     true);
-    ASSERT_EQ(config->isAutoPilotConfigCommon(),     false);
+    ASSERT_EQ(config->isAutorun(),                                  true);
+    ASSERT_EQ(config->getCpuUsage(),                                "MAXIMUM");
+    ASSERT_EQ(config->getMakeDecisionTimeout(),                     1);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config->isLimitStockPurchase(),                       true);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                10.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnover(),                          true);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        true);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 1.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           true);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 1.0f, 0.0001f);
+    ASSERT_EQ(config->getStorageMonthLimit(),                       12);
+    ASSERT_EQ(config->isSimulatorConfigCommon(),                    true);
+    ASSERT_EQ(config->isAutoPilotConfigCommon(),                    false);
     // clang-format on
 }
 
@@ -274,22 +326,30 @@ TEST_F(Test_Config, Test_save)
     config->setLimitStockPurchasePart(50.0f);
     config->setLimitByTurnover(false);
     config->setLimitByTurnoverPercent(5.0f);
+    config->setLimitStockPurchaseNonWorkingHours(false);
+    config->setLimitStockPurchasePartNonWorkingHours(25.0f);
+    config->setLimitByTurnoverNonWorkingHours(false);
+    config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
 
     // clang-format off
-    ASSERT_EQ(config->isAutorun(),                   false);
-    ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
-    ASSERT_EQ(config->isLimitStockPurchase(),        false);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(), 50.0f, 0.0001f);
-    ASSERT_EQ(config->isLimitByTurnover(),           false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(), 5.0f, 0.0001f);
-    ASSERT_EQ(config->getStorageMonthLimit(),        36);
-    ASSERT_EQ(config->isSimulatorConfigCommon(),     false);
-    ASSERT_EQ(config->isAutoPilotConfigCommon(),     true);
+    ASSERT_EQ(config->isAutorun(),                                  false);
+    ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
+    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isLimitStockPurchase(),                       false);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                50.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnover(),                          false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 25.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
+    ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
@@ -298,17 +358,21 @@ TEST_F(Test_Config, Test_save)
     EXPECT_CALL(*autoPilotConfigMock, save(&settingsEditorMock, QString("Config/AutoPilot")));
 
     // clang-format off
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),                QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/CpuUsage"),               QVariant("MINIMUM")));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/MakeDecisionTimeout"),    QVariant(5)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeInNonWorkingHours"), QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchase"),     QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePart"), QVariant(50.0f)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnover"),        QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverPercent"), QVariant(5.0f)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/StorageMonthLimit"),      QVariant(36)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/SimulatorConfigCommon"),  QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AutoPilotConfigCommon"),  QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),                               QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/CpuUsage"),                              QVariant("MINIMUM")));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/MakeDecisionTimeout"),                   QVariant(5)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeInNonWorkingHours"),                QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchase"),                    QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePart"),                QVariant(50.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnover"),                       QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverPercent"),                QVariant(5.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchaseNonWorkingHours"),     QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePartNonWorkingHours"), QVariant(25.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverNonWorkingHours"),        QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverPercentNonWorkingHours"), QVariant(2.5f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/StorageMonthLimit"),                     QVariant(36)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/SimulatorConfigCommon"),                 QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AutoPilotConfigCommon"),                 QVariant(true)));
     // clang-format on
 
     config->save(&settingsEditorMock);
@@ -326,22 +390,30 @@ TEST_F(Test_Config, Test_load)
     config->setLimitStockPurchasePart(50.0f);
     config->setLimitByTurnover(false);
     config->setLimitByTurnoverPercent(5.0f);
+    config->setLimitStockPurchaseNonWorkingHours(false);
+    config->setLimitStockPurchasePartNonWorkingHours(25.0f);
+    config->setLimitByTurnoverNonWorkingHours(false);
+    config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
 
     // clang-format off
-    ASSERT_EQ(config->isAutorun(),                   false);
-    ASSERT_EQ(config->getCpuUsage(),                 "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),      5);
-    ASSERT_EQ(config->isTradeInNonWorkingHours(),    false);
-    ASSERT_EQ(config->isLimitStockPurchase(),        false);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(), 50.0f, 0.0001f);
-    ASSERT_EQ(config->isLimitByTurnover(),           false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(), 5.0f, 0.0001f);
-    ASSERT_EQ(config->getStorageMonthLimit(),        36);
-    ASSERT_EQ(config->isSimulatorConfigCommon(),     false);
-    ASSERT_EQ(config->isAutoPilotConfigCommon(),     true);
+    ASSERT_EQ(config->isAutorun(),                                  false);
+    ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
+    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isLimitStockPurchase(),                       false);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                50.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnover(),                          false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 25.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
+    ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
@@ -350,33 +422,41 @@ TEST_F(Test_Config, Test_load)
     EXPECT_CALL(*autoPilotConfigMock, load(&settingsEditorMock, QString("Config/AutoPilot")));
 
     // clang-format off
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),                QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/CpuUsage"),               QVariant("MINIMUM"))).WillOnce(Return(QVariant("OPTIMAL")));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/MakeDecisionTimeout"),    QVariant(5))).WillOnce(Return(QVariant(30)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeInNonWorkingHours"), QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchase"),     QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePart"), QVariant(50.0f))).WillOnce(Return(QVariant(5.0f)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnover"),        QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverPercent"), QVariant(5.0f))).WillOnce(Return(QVariant(7.5f)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/StorageMonthLimit"),      QVariant(36))).WillOnce(Return(QVariant(12)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/SimulatorConfigCommon"),  QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/AutoPilotConfigCommon"),  QVariant(true))).WillOnce(Return(QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),                               QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/CpuUsage"),                              QVariant("MINIMUM"))).WillOnce(Return(QVariant("OPTIMAL")));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/MakeDecisionTimeout"),                   QVariant(5))).WillOnce(Return(QVariant(30)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeInNonWorkingHours"),                QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchase"),                    QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePart"),                QVariant(50.0f))).WillOnce(Return(QVariant(5.0f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnover"),                       QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverPercent"),                QVariant(5.0f))).WillOnce(Return(QVariant(7.5f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchaseNonWorkingHours"),     QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePartNonWorkingHours"), QVariant(25.0f))).WillOnce(Return(QVariant(15.0f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverNonWorkingHours"),        QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverPercentNonWorkingHours"), QVariant(2.5f))).WillOnce(Return(QVariant(17.5f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/StorageMonthLimit"),                     QVariant(36))).WillOnce(Return(QVariant(12)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/SimulatorConfigCommon"),                 QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/AutoPilotConfigCommon"),                 QVariant(true))).WillOnce(Return(QVariant(false)));
     // clang-format on
 
     config->load(&settingsEditorMock);
 
     // clang-format off
-    ASSERT_EQ(config->isAutorun(),                   true);
-    ASSERT_EQ(config->getCpuUsage(),                 "OPTIMAL");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),      30);
-    ASSERT_EQ(config->isTradeInNonWorkingHours(),    true);
-    ASSERT_EQ(config->isLimitStockPurchase(),        true);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(), 5.0f, 0.0001f);
-    ASSERT_EQ(config->isLimitByTurnover(),           true);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(), 7.5f, 0.0001f);
-    ASSERT_EQ(config->getStorageMonthLimit(),        12);
-    ASSERT_EQ(config->isSimulatorConfigCommon(),     true);
-    ASSERT_EQ(config->isAutoPilotConfigCommon(),     false);
+    ASSERT_EQ(config->isAutorun(),                                  true);
+    ASSERT_EQ(config->getCpuUsage(),                                "OPTIMAL");
+    ASSERT_EQ(config->getMakeDecisionTimeout(),                     30);
+    ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config->isLimitStockPurchase(),                       true);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                5.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnover(),                          true);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                7.5f, 0.0001f);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        true);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           true);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 17.5f, 0.0001f);
+    ASSERT_EQ(config->getStorageMonthLimit(),                       12);
+    ASSERT_EQ(config->isSimulatorConfigCommon(),                    true);
+    ASSERT_EQ(config->isAutoPilotConfigCommon(),                    false);
     // clang-format on
 }
 
@@ -460,6 +540,42 @@ TEST_F(Test_Config, Test_setLimitByTurnoverPercent_and_getLimitByTurnoverPercent
 
     config->setLimitByTurnoverPercent(50.0f);
     ASSERT_NEAR(config->getLimitByTurnoverPercent(), 50.0f, 0.0001f);
+}
+
+TEST_F(Test_Config, Test_setLimitStockPurchaseNonWorkingHours_and_isLimitStockPurchaseNonWorkingHours)
+{
+    config->setLimitStockPurchaseNonWorkingHours(false);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(), false);
+
+    config->setLimitStockPurchaseNonWorkingHours(true);
+    ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(), true);
+}
+
+TEST_F(Test_Config, Test_setLimitStockPurchasePartNonWorkingHours_and_getLimitStockPurchasePartNonWorkingHours)
+{
+    config->setLimitStockPurchasePartNonWorkingHours(1.0f);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 1.0f, 0.0001f);
+
+    config->setLimitStockPurchasePartNonWorkingHours(5.0f);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 5.0f, 0.0001f);
+}
+
+TEST_F(Test_Config, Test_setLimitByTurnoverNonWorkingHours_and_isLimitByTurnoverNonWorkingHours)
+{
+    config->setLimitByTurnoverNonWorkingHours(false);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(), false);
+
+    config->setLimitByTurnoverNonWorkingHours(true);
+    ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(), true);
+}
+
+TEST_F(Test_Config, Test_setLimitByTurnoverPercentNonWorkingHours_and_getLimitByTurnoverPercentNonWorkingHours)
+{
+    config->setLimitByTurnoverPercentNonWorkingHours(10.0f);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 10.0f, 0.0001f);
+
+    config->setLimitByTurnoverPercentNonWorkingHours(50.0f);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 50.0f, 0.0001f);
 }
 
 TEST_F(Test_Config, Test_setStorageMonthLimit_and_getStorageMonthLimit)

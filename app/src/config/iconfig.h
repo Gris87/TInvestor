@@ -51,6 +51,18 @@ public:
     virtual void  setLimitByTurnoverPercent(float value) = 0;
     virtual float getLimitByTurnoverPercent()            = 0;
 
+    virtual void setLimitStockPurchaseNonWorkingHours(bool value) = 0;
+    virtual bool isLimitStockPurchaseNonWorkingHours()            = 0;
+
+    virtual void  setLimitStockPurchasePartNonWorkingHours(float value) = 0;
+    virtual float getLimitStockPurchasePartNonWorkingHours()            = 0;
+
+    virtual void setLimitByTurnoverNonWorkingHours(bool value) = 0;
+    virtual bool isLimitByTurnoverNonWorkingHours()            = 0;
+
+    virtual void  setLimitByTurnoverPercentNonWorkingHours(float value) = 0;
+    virtual float getLimitByTurnoverPercentNonWorkingHours()            = 0;
+
     virtual void setStorageMonthLimit(int value) = 0;
     virtual int  getStorageMonthLimit()          = 0;
 

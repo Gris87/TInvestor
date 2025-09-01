@@ -103,6 +103,10 @@ void SettingsDialog::updateUiFromConfig()
     ui->limitStockPurchasePartDoubleSpinBox->setValue(mConfig->getLimitStockPurchasePart());
     ui->limitByTurnoverCheckBox->setChecked(mConfig->isLimitByTurnover());
     ui->limitByTurnoverPercentDoubleSpinBox->setValue(mConfig->getLimitByTurnoverPercent());
+    ui->limitStockPurchaseNonWorkingHoursCheckBox->setChecked(mConfig->isLimitStockPurchaseNonWorkingHours());
+    ui->limitStockPurchasePartNonWorkingHoursDoubleSpinBox->setValue(mConfig->getLimitStockPurchasePartNonWorkingHours());
+    ui->limitByTurnoverNonWorkingHoursCheckBox->setChecked(mConfig->isLimitByTurnoverNonWorkingHours());
+    ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->setValue(mConfig->getLimitByTurnoverPercentNonWorkingHours());
     ui->storageMonthLimitSpinBox->setValue(mConfig->getStorageMonthLimit());
     ui->simulatorConfigCommonCheckBox->setChecked(mConfig->isSimulatorConfigCommon());
     ui->autoPilotConfigCommonCheckBox->setChecked(mConfig->isAutoPilotConfigCommon());
@@ -160,6 +164,39 @@ void SettingsDialog::on_limitByTurnoverPercentDoubleSpinBox_valueChanged(double 
     mConfig->setLimitByTurnoverPercent(value);
 }
 
+void SettingsDialog::on_limitStockPurchaseNonWorkingHoursCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setLimitStockPurchaseNonWorkingHours(checked);
+
+    ui->limitStockPurchaseNonWorkingHoursWidget->setEnabled(checked);
+}
+
+void SettingsDialog::on_limitStockPurchasePartNonWorkingHoursDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setLimitStockPurchasePartNonWorkingHours(value);
+}
+
+void SettingsDialog::on_limitByTurnoverNonWorkingHoursCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setLimitByTurnoverNonWorkingHours(checked);
+
+    ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_limitByTurnoverPercentNonWorkingHoursDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setLimitByTurnoverPercentNonWorkingHours(value);
+}
+
+void SettingsDialog::on_storageMonthLimitSpinBox_valueChanged(int value)
+{
+    mConfig->setStorageMonthLimit(value);
+}
+
 void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     if (ui->autoPilotConfigCommonCheckBox->isChecked())
@@ -204,11 +241,6 @@ void SettingsDialog::on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt
         ui->tabWidget->insertTab(SIMULATION_TAB_ID, ui->simulationTab, tr("Simulation"));
         ui->tabWidget->setTabText(AUTO_PILOT_TAB_ID, tr("Auto-pilot"));
     }
-}
-
-void SettingsDialog::on_storageMonthLimitSpinBox_valueChanged(int value)
-{
-    mConfig->setStorageMonthLimit(value);
 }
 
 void SettingsDialog::on_okButton_clicked()

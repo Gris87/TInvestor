@@ -52,6 +52,18 @@ public:
     void  setLimitByTurnoverPercent(float value) override;
     float getLimitByTurnoverPercent() override;
 
+    void setLimitStockPurchaseNonWorkingHours(bool value) override;
+    bool isLimitStockPurchaseNonWorkingHours() override;
+
+    void  setLimitStockPurchasePartNonWorkingHours(float value) override;
+    float getLimitStockPurchasePartNonWorkingHours() override;
+
+    void setLimitByTurnoverNonWorkingHours(bool value) override;
+    bool isLimitByTurnoverNonWorkingHours() override;
+
+    void  setLimitByTurnoverPercentNonWorkingHours(float value) override;
+    float getLimitByTurnoverPercentNonWorkingHours() override;
+
     void setStorageMonthLimit(int value) override;
     int  getStorageMonthLimit() override;
 
@@ -75,6 +87,10 @@ private:
     float   mLimitStockPurchasePart;
     bool    mLimitByTurnover;
     float   mLimitByTurnoverPercent;
+    bool    mLimitStockPurchaseNonWorkingHours;
+    float   mLimitStockPurchasePartNonWorkingHours;
+    bool    mLimitByTurnoverNonWorkingHours;
+    float   mLimitByTurnoverPercentNonWorkingHours;
     int     mStorageMonthLimit;
     bool    mSimulatorConfigCommon;
     bool    mAutoPilotConfigCommon;
