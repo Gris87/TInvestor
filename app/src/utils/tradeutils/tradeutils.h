@@ -11,7 +11,7 @@
 class TradeUtils : public ITradeUtils
 {
 public:
-    TradeUtils(ITimeUtils* timeUtils);
+    explicit TradeUtils(ITimeUtils* timeUtils);
     ~TradeUtils() override;
 
     TradeUtils(const TradeUtils& another)            = delete;

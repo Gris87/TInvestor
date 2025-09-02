@@ -297,7 +297,7 @@ static void makeDecisionsForParallel(
                         );
                     }
 
-                    if (cause != "")
+                    if (cause != "" && buyDecision != nullptr)
                     {
                         buyResultsArray[threadId][stock->meta.instrumentId] =
                             TradingInfo(buyDecision->isAsap(), avgPrice, price, stock->meta.turnover, cause);
@@ -317,7 +317,7 @@ static void makeDecisionsForParallel(
                     );
                 }
 
-                if (cause != "")
+                if (cause != "" && sellDecision != nullptr)
                 {
                     sellResultsArray[threadId][stock->meta.instrumentId] =
                         TradingInfo(sellDecision->isAsap(), avgPrice, price, 0.0, cause);
@@ -408,7 +408,7 @@ void DecisionMaker::makeDecisions(
             const double lotPrice               = instrument.lot * tradingInfo.price;
             const double lotPriceWithCommission = lotPrice * (1 + commission);
 
-            qint64 amountOfLots = mTradeUtils->calculateAmountOfLotsToBuy(
+            const qint64 amountOfLots = mTradeUtils->calculateAmountOfLotsToBuy(
                 config,
                 timestamp,
                 money,

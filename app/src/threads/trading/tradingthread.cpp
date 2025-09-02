@@ -242,7 +242,7 @@ bool TradingThread::sell(double expected, double delta)
 
         const qint64 coef = static_cast<qint64>(std::ceil(price / quotationToDouble(mMinPriceIncrement)));
 
-        float marketPrice = tinkoffOrderBook->bids_size() > 0 ? quotationToDouble(tinkoffOrderBook->bids(0).price()) : 0;
+        const float marketPrice = tinkoffOrderBook->bids_size() > 0 ? quotationToDouble(tinkoffOrderBook->bids(0).price()) : 0;
 
         return sellWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef), marketPrice);
     }
@@ -294,6 +294,7 @@ bool TradingThread::sellWithPrice(double expected, double delta, const Quotation
     return false;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice)
 {
     while (true)
@@ -388,6 +389,7 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
 
     return false;
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 bool TradingThread::buy(double expected, double delta)
 {
@@ -428,7 +430,7 @@ bool TradingThread::buy(double expected, double delta)
 
         const qint64 coef = static_cast<qint64>(std::floor(price / quotationToDouble(mMinPriceIncrement)));
 
-        float marketPrice = tinkoffOrderBook->asks_size() > 0 ? quotationToDouble(tinkoffOrderBook->asks(0).price()) : 0;
+        const float marketPrice = tinkoffOrderBook->asks_size() > 0 ? quotationToDouble(tinkoffOrderBook->asks(0).price()) : 0;
 
         return buyWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef), marketPrice);
     }

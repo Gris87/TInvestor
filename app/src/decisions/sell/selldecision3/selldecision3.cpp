@@ -227,5 +227,5 @@ QString SellDecision3::makeDecision(
 
 bool SellDecision3::isAsap() const
 {
-    return false;
+    return true;
 }

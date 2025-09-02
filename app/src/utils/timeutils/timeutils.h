@@ -11,7 +11,7 @@
 class TimeUtils : public ITimeUtils
 {
 public:
-    TimeUtils();
+    explicit TimeUtils();
     ~TimeUtils() override;
 
     TimeUtils(const TimeUtils& another)            = delete;
