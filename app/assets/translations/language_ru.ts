@@ -829,22 +829,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="167"/>
+        <location filename="../../src/main.cpp" line="168"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="167"/>
+        <location filename="../../src/main.cpp" line="168"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="193"/>
+        <location filename="../../src/main.cpp" line="194"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="193"/>
+        <location filename="../../src/main.cpp" line="194"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -1412,79 +1412,79 @@
         <translation>Торговля успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="586"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="635"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="588"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="639"/>
         <source>Order cancelled</source>
         <translation>Заявка отменена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="350"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="351"/>
         <source>Order to sell %1 created with a price %2</source>
         <translation>Заявка создана на продажу %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="330"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="331"/>
         <source>Failed to create order to sell %1 with a price %2</source>
         <translation>Не удалось создать заявку на продажу %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="357"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="538"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="358"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="540"/>
         <source>while market price %1</source>
         <translation>пока рыночная цена %1</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="371"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="372"/>
         <source>Order to sell %1 rejected with a price %2. Let&apos;s try again</source>
         <translation>Заявка отклонена на продажу %1 по цене %2. Попробуем ещё раз</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="415"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="417"/>
         <source>Trade interrupted because the price reached %1 with raise %2 from the price %3</source>
         <translation>Торговля прервана, потому что цена достигла %1 с ростом %2 от цены %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="511"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="513"/>
         <source>Failed to create order to buy %1 with a price %2</source>
         <translation>Не удалось создать заявку на покупку %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="531"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="533"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation>Заявка создана на покупку %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="552"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="554"/>
         <source>Order to buy %1 rejected with a price %2. Let&apos;s try again</source>
         <translation>Заявка отклонена на покупку %1 по цене %2. Попробуем ещё раз</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="603"/>
-        <source>%1 bought with a price %2</source>
-        <translation>%1 куплено по цене %2</translation>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="605"/>
+        <source>%1/%2 bought with a price %3</source>
+        <translation>%1/%2 куплено по цене %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="612"/>
-        <source>%1 sold with a price %2</source>
-        <translation>%1 продано по цене %2</translation>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="615"/>
+        <source>%1/%2 sold with a price %3</source>
+        <translation>%1/%2 продано по цене %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="623"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="627"/>
         <source>Order completed</source>
         <translation>Заявка выполнена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="627"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="631"/>
         <source>Order partially completed</source>
         <translation>Заявка частично выполнена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="631"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="635"/>
         <source>Order rejected</source>
         <translation>Заявка отклонена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="639"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="643"/>
         <source>Order is still waiting</source>
         <translation>Заявка ещё ожидает</translation>
     </message>

@@ -344,6 +344,7 @@ TEST_F(Test_TradingThread, Test_sell)
 
     orderState->set_direction(tinkoff::ORDER_DIRECTION_SELL);
     orderState->set_lots_executed(5);
+    orderState->set_lots_requested(5);
     orderState->set_allocated_initial_security_price(orderPrice);
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_FILL);
 
@@ -353,7 +354,7 @@ TEST_F(Test_TradingThread, Test_sell)
         .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50 sold with a price 10.500 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 sold with a price 10.500 \u20BD"))
     );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(3000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), price))
@@ -380,7 +381,7 @@ TEST_F(Test_TradingThread, Test_sell)
         .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order partially completed. 50 sold with a price 10.500 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order partially completed. 50/50 sold with a price 10.500 \u20BD"))
     );
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order cancelled")));
     EXPECT_CALL(*grpcClientMock, cancelOrder(QThread::currentThread(), QString("account-id"), QString("order-id")))
@@ -408,7 +409,7 @@ TEST_F(Test_TradingThread, Test_sell)
         .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50 sold with a price 10.500 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 sold with a price 10.500 \u20BD"))
     );
 
     ASSERT_EQ(thread->sell(10000, 40000), true);
@@ -421,7 +422,7 @@ TEST_F(Test_TradingThread, Test_sell)
         .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order rejected. 50 sold with a price 10.500 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order rejected. 50/50 sold with a price 10.500 \u20BD"))
     );
 
     ASSERT_EQ(thread->sell(10000, 40000), false);
@@ -605,6 +606,7 @@ TEST_F(Test_TradingThread, Test_buy)
 
     orderState->set_direction(tinkoff::ORDER_DIRECTION_BUY);
     orderState->set_lots_executed(5);
+    orderState->set_lots_requested(5);
     orderState->set_allocated_initial_security_price(orderPrice);
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_FILL);
 
@@ -614,7 +616,7 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50 bought with a price 10.500 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 bought with a price 10.500 \u20BD"))
     );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(3000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), price))
@@ -641,7 +643,7 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order is still waiting. 50 bought with a price 10.500 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order is still waiting. 50/50 bought with a price 10.500 \u20BD"))
     );
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order cancelled")));
     EXPECT_CALL(*grpcClientMock, cancelOrder(QThread::currentThread(), QString("account-id"), QString("order-id")))
@@ -669,7 +671,7 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50 bought with a price 10.500 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 bought with a price 10.500 \u20BD"))
     );
 
     ASSERT_EQ(thread->buy(10000, 40000), true);
@@ -682,7 +684,7 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order cancelled. 50 bought with a price 10.500 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order cancelled. 50/50 bought with a price 10.500 \u20BD"))
     );
 
     ASSERT_EQ(thread->buy(10000, 40000), false);

@@ -9,6 +9,7 @@
 #include "src/decisions/idecisionmaker.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
+#include "src/utils/timeutils/itimeutils.h"
 
 
 
@@ -21,6 +22,7 @@ public:
         IStocksStorage* stocksStorage,
         IConfig*        config,
         IDecisionMaker* decisionMaker,
+        ITimeUtils*     timeUtils,
         IGrpcClient*    grpcClient,
         QObject*        parent = nullptr
     );
@@ -41,6 +43,7 @@ public:
     void terminateThread() override;
 
 private:
+    bool            validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     Portfolio       handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     InstrumentSells handleGetOperationsByCursorResponse(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations);
     InstrumentSells mergeInstrumentSells(InstrumentSells instrumentsFromOperations);
@@ -49,6 +52,7 @@ private:
     IStocksStorage* mStocksStorage;
     IConfig*        mConfig;
     IDecisionMaker* mDecisionMaker;
+    ITimeUtils*     mTimeUtils;
     IGrpcClient*    mGrpcClient;
     QString         mAccountId;
     int             mKeepMoney;

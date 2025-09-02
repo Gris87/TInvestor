@@ -459,7 +459,7 @@ static int runApplication(QApplication* app)
         &optimizer
     );
     AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(
-        &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &grpcClient
+        &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &timeUtils, &grpcClient
     );
     FollowThread         followThread(&instrumentsStorage, &grpcClient);
     OrderBookThread      orderBookThread(&grpcClient);

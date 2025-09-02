@@ -8,22 +8,29 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr qint64 MS_IN_SECOND = 1000LL;
-constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR     = 60LL * ONE_MINUTE;
-constexpr qint64 ONE_DAY      = 24LL * ONE_HOUR;
-constexpr qint64 DATE_RANGE   = 90LL * ONE_DAY;
+constexpr qint64 MS_IN_SECOND         = 1000LL;
+constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY              = 24LL * ONE_HOUR;
+constexpr qint64 DATE_RANGE           = 90LL * ONE_DAY;
+constexpr qint64 SLEEP_BEFORE_REQUEST = 5LL * MS_IN_SECOND; // 5 seconds
 
 
 
 AutoPilotDecisionMakerThread::AutoPilotDecisionMakerThread(
-    IStocksStorage* stocksStorage, IConfig* config, IDecisionMaker* decisionMaker, IGrpcClient* grpcClient, QObject* parent
+    IStocksStorage* stocksStorage,
+    IConfig*        config,
+    IDecisionMaker* decisionMaker,
+    ITimeUtils*     timeUtils,
+    IGrpcClient*    grpcClient,
+    QObject*        parent
 ) :
     IAutoPilotDecisionMakerThread(parent),
     mRwMutex(new QReadWriteLock()),
     mStocksStorage(stocksStorage),
     mConfig(config),
     mDecisionMaker(decisionMaker),
+    mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mAccountId(),
     mKeepMoney(),
@@ -45,41 +52,63 @@ void AutoPilotDecisionMakerThread::run()
 
     blockSignals(false);
 
-    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-        mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
-
-    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+    while (!QThread::currentThread()->isInterruptionRequested())
     {
-        const Portfolio portfolio = handlePortfolioResponse(*tinkoffPortfolio);
+        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
 
-        const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
-
-        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
-            mGrpcClient->getOperations(QThread::currentThread(), mAccountId, timestamp - DATE_RANGE, timestamp + ONE_DAY, "");
-
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOperations != nullptr)
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
         {
-            const InstrumentSells instrumentSells = handleGetOperationsByCursorResponse(*tinkoffOperations);
-
-            mStocksStorage->readLock();
-            const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
-                QThread::currentThread(),
-                QDateTime::currentMSecsSinceEpoch(),
-                mConfig,
-                instrumentSells,
-                portfolio,
-                mStocksStorage->getStocks(),
-                true,
-                keepMoney(),
-                false,
-                true
-            );
-            mStocksStorage->readUnlock();
-
-            if (!instrumentsForTrading.isEmpty())
+            if (validatePortfolioResponse(*tinkoffPortfolio))
             {
-                emit tradeInstruments(instrumentsForTrading);
+                const Portfolio portfolio = handlePortfolioResponse(*tinkoffPortfolio);
+
+                const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+
+                const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations = mGrpcClient->getOperations(
+                    QThread::currentThread(), mAccountId, timestamp - DATE_RANGE, timestamp + ONE_DAY, ""
+                );
+
+                if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOperations != nullptr)
+                {
+                    const InstrumentSells instrumentSells = handleGetOperationsByCursorResponse(*tinkoffOperations);
+
+                    mStocksStorage->readLock();
+                    const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
+                        QThread::currentThread(),
+                        QDateTime::currentMSecsSinceEpoch(),
+                        mConfig,
+                        instrumentSells,
+                        portfolio,
+                        mStocksStorage->getStocks(),
+                        true,
+                        keepMoney(),
+                        false,
+                        true
+                    );
+                    mStocksStorage->readUnlock();
+
+                    if (!instrumentsForTrading.isEmpty())
+                    {
+                        emit tradeInstruments(instrumentsForTrading);
+                    }
+                }
+
+                break;
             }
+            else
+            {
+                qDebug() << "Invalid portfolio received. Try one more time";
+
+                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            break;
         }
     }
 
@@ -117,6 +146,30 @@ void AutoPilotDecisionMakerThread::terminateThread()
     blockSignals(true);
 
     requestInterruption();
+}
+
+bool AutoPilotDecisionMakerThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
+{
+    bool res = true;
+
+    for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
+    {
+        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
+
+        const QString instrumentId = QString::fromStdString(position.instrument_uid());
+
+        if (instrumentId != RUBLE_UID)
+        {
+            if (position.average_position_price().units() <= 0 && position.average_position_price().nano() <= 0)
+            {
+                res = false;
+
+                break;
+            }
+        }
+    }
+
+    return res;
 }
 
 Portfolio AutoPilotDecisionMakerThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)

@@ -602,18 +602,20 @@ void TradingThread::informAboutOrderState(const tinkoff::OrderState& tinkoffOrde
     if (tinkoffOrder.direction() == tinkoff::ORDER_DIRECTION_BUY)
     {
         details =
-            tr("%1 bought with a price %2")
+            tr("%1/%2 bought with a price %3")
                 .arg(
                     QString::number(tinkoffOrder.lots_executed() * mInstrumentLot),
+                    QString::number(tinkoffOrder.lots_requested() * mInstrumentLot),
                     QString::number(quotationToFloat(tinkoffOrder.initial_security_price()), 'f', mPricePrecision) + " \u20BD"
                 );
     }
     else
     {
         details =
-            tr("%1 sold with a price %2")
+            tr("%1/%2 sold with a price %3")
                 .arg(
                     QString::number(tinkoffOrder.lots_executed() * mInstrumentLot),
+                    QString::number(tinkoffOrder.lots_requested() * mInstrumentLot),
                     QString::number(quotationToFloat(tinkoffOrder.initial_security_price()), 'f', mPricePrecision) + " \u20BD"
                 );
     }
