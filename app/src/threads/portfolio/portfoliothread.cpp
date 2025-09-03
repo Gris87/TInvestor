@@ -9,7 +9,7 @@
 const char* const RUBLE_UID            = "a92e2e25-a698-45cc-a781-167cf465257c";
 constexpr float   HUNDRED_PERCENT      = 100.0f;
 constexpr qint64  MS_IN_SECOND         = 1000LL;
-constexpr qint64  SLEEP_BEFORE_REQUEST = 5LL * MS_IN_SECOND; // 5 seconds
+constexpr qint64  SLEEP_BEFORE_REQUEST = 10LL * MS_IN_SECOND; // 10 seconds
 
 
 

@@ -488,7 +488,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     buyEntry3.instrumentLogo   = &logo;
     buyEntry3.instrumentTicker = "ABBA";
     buyEntry3.instrumentName   = "Abstract Basics";
-    buyEntry3.message          = "Order completed. 500 bought with a price 200.0 \u20BD";
+    buyEntry3.message          = "Order completed. 500/500 bought with a price 200.0 \u20BD";
 
     buyEntry4.timestamp        = 1004;
     buyEntry4.level            = LOG_LEVEL_VERBOSE;
@@ -677,7 +677,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     buyEntry3.instrumentLogo   = &logo;
     buyEntry3.instrumentTicker = "BASE";
     buyEntry3.instrumentName   = "Basketball enhancement";
-    buyEntry3.message          = "Order completed. 750 bought with a price 200.00 \u20BD";
+    buyEntry3.message          = "Order completed. 750/750 bought with a price 200.00 \u20BD";
 
     buyEntry4.timestamp        = 2004;
     buyEntry4.level            = LOG_LEVEL_VERBOSE;
@@ -885,7 +885,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     sellEntry3.instrumentLogo   = &logo;
     sellEntry3.instrumentTicker = "BASE";
     sellEntry3.instrumentName   = "Basketball enhancement";
-    sellEntry3.message          = "Order completed. 750 sold with a price 300.00 \u20BD";
+    sellEntry3.message          = "Order completed. 750/750 sold with a price 300.00 \u20BD";
 
     sellEntry4.timestamp        = 3004;
     sellEntry4.level            = LOG_LEVEL_VERBOSE;
@@ -1067,7 +1067,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     sellEntry3.instrumentLogo   = &logo;
     sellEntry3.instrumentTicker = "ABBA";
     sellEntry3.instrumentName   = "Abstract Basics";
-    sellEntry3.message          = "Order completed. 500 sold with a price 2000.0 \u20BD";
+    sellEntry3.message          = "Order completed. 500/500 sold with a price 2000.0 \u20BD";
 
     sellEntry4.timestamp        = 4004;
     sellEntry4.level            = LOG_LEVEL_VERBOSE;

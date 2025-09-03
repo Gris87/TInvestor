@@ -1,4 +1,5 @@
 Trade instruments with huge spread (detect periodically among all stocks). Buy few / sell few (average?)
+Buy TMON@ at the evening and sell at the morning
 Improve coverage
 Create release
 

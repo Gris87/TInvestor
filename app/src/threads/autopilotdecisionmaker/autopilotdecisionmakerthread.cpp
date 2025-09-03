@@ -13,7 +13,7 @@ constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
 constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
 constexpr qint64 ONE_DAY              = 24LL * ONE_HOUR;
 constexpr qint64 DATE_RANGE           = 90LL * ONE_DAY;
-constexpr qint64 SLEEP_BEFORE_REQUEST = 5LL * MS_IN_SECOND; // 5 seconds
+constexpr qint64 SLEEP_BEFORE_REQUEST = 1LL * MS_IN_SECOND; // 1 second
 
 
 
@@ -52,7 +52,9 @@ void AutoPilotDecisionMakerThread::run()
 
     blockSignals(false);
 
-    while (!QThread::currentThread()->isInterruptionRequested())
+    bool success = false;
+
+    while (!QThread::currentThread()->isInterruptionRequested() && !success)
     {
         const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
             mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
@@ -94,7 +96,7 @@ void AutoPilotDecisionMakerThread::run()
                     }
                 }
 
-                break;
+                success = true;
             }
             else
             {

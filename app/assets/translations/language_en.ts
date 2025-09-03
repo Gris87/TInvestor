@@ -940,7 +940,7 @@
     </message>
     <message>
         <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="234"/>
-        <source>Order completed. %1 sold with a price %2</source>
+        <source>Order completed. %1/%1 sold with a price %2</source>
         <translation></translation>
     </message>
     <message>
@@ -961,7 +961,7 @@
     </message>
     <message>
         <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="438"/>
-        <source>Order completed. %1 bought with a price %2</source>
+        <source>Order completed. %1/%1 bought with a price %2</source>
         <translation></translation>
     </message>
 </context>

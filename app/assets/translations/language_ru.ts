@@ -940,8 +940,8 @@
     </message>
     <message>
         <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="234"/>
-        <source>Order completed. %1 sold with a price %2</source>
-        <translation>Заявка выполнена. %1 продано по цене %2</translation>
+        <source>Order completed. %1/%1 sold with a price %2</source>
+        <translation>Заявка выполнена. %1/%1 продано по цене %2</translation>
     </message>
     <message>
         <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="242"/>
@@ -961,8 +961,8 @@
     </message>
     <message>
         <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="438"/>
-        <source>Order completed. %1 bought with a price %2</source>
-        <translation>Заявка выполнена. %1 куплено по цене %2</translation>
+        <source>Order completed. %1/%1 bought with a price %2</source>
+        <translation>Заявка выполнена. %1/%1 куплено по цене %2</translation>
     </message>
 </context>
 <context>
