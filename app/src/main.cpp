@@ -464,7 +464,7 @@ static int runApplication(QApplication* app)
         &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &timeUtils, &grpcClient
     );
     HugeSpreadThread     hugeSpreadThread;
-    HighLiquidityThread  highLiquidityThread;
+    HighLiquidityThread  highLiquidityThread(&config, &timeUtils, &grpcClient);
     FollowThread         followThread(&instrumentsStorage, &grpcClient);
     OrderBookThread      orderBookThread(&grpcClient);
     TradingThreadFactory tradingThreadFactory;

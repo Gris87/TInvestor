@@ -2,6 +2,16 @@
 
 #include <gtest/gtest.h>
 
+#include "src/config/iconfig_mock.h"
+#include "src/grpc/igrpcclient_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
+
+
+
+using ::testing::InSequence;
+using ::testing::Return;
+using ::testing::StrictMock;
+
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
@@ -10,15 +20,25 @@ class Test_HighLiquidityThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        thread = new HighLiquidityThread();
+        configMock     = new StrictMock<ConfigMock>();
+        timeUtilsMock  = new StrictMock<TimeUtilsMock>();
+        grpcClientMock = new StrictMock<GrpcClientMock>();
+
+        thread = new HighLiquidityThread(configMock, timeUtilsMock, grpcClientMock);
     }
 
     void TearDown() override
     {
         delete thread;
+        delete configMock;
+        delete timeUtilsMock;
+        delete grpcClientMock;
     }
 
-    HighLiquidityThread* thread;
+    HighLiquidityThread*        thread;
+    StrictMock<ConfigMock>*     configMock;
+    StrictMock<TimeUtilsMock>*  timeUtilsMock;
+    StrictMock<GrpcClientMock>* grpcClientMock;
 };
 
 
