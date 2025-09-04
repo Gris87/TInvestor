@@ -4,6 +4,8 @@
 
 #include <QThread>
 
+#include "src/domain/trading/tradinginfo.h"
+
 
 
 class IHighLiquidityThread : public QThread
@@ -20,5 +22,10 @@ public:
     IHighLiquidityThread(const IHighLiquidityThread& another)            = delete;
     IHighLiquidityThread& operator=(const IHighLiquidityThread& another) = delete;
 
-    virtual void terminateThread() = 0;
+    virtual void setAccountId(const QString& accountId) = 0;
+    virtual void setKeepMoney(int value)                = 0;
+    virtual void terminateThread()                      = 0;
+
+signals:
+    void tradeInstruments(const InstrumentsForTrading& instruments); // Instrument UID => TradingInfo
 };

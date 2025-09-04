@@ -20,6 +20,8 @@
 #include "src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread.h"
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/follow/ifollowthread.h"
+#include "src/threads/highliquidity/ihighliquiditythread.h"
+#include "src/threads/hugespread/ihugespreadthread.h"
 #include "src/threads/lastprice/ilastpricethread.h"
 #include "src/threads/logs/ilogsthread.h"
 #include "src/threads/operations/ioperationsthread.h"
@@ -107,6 +109,8 @@ public:
         ISimulatorDecisionMakerThread*          simulatorDecisionMakerThread,
         ISimulatorDateRangeDecisionMakerThread* simulatorDateRangeDecisionMakerThread,
         IAutoPilotDecisionMakerThread*          autoPilotDecisionMakerThread,
+        IHugeSpreadThread*                      hugeSpreadThread,
+        IHighLiquidityThread*                   highLiquidityThread,
         IFollowThread*                          followThread,
         IOrderBookThread*                       orderBookThread,
         ITradingThreadFactory*                  tradingThreadFactory,
@@ -188,6 +192,8 @@ private:
     ISimulatorDecisionMakerThread*          mSimulatorDecisionMakerThread;
     ISimulatorDateRangeDecisionMakerThread* mSimulatorDateRangeDecisionMakerThread;
     IAutoPilotDecisionMakerThread*          mAutoPilotDecisionMakerThread;
+    IHugeSpreadThread*                      mHugeSpreadThread;
+    IHighLiquidityThread*                   mHighLiquidityThread;
     IFollowThread*                          mFollowThread;
     IOrderBookThread*                       mOrderBookThread;
     ITradingThreadFactory*                  mTradingThreadFactory;

@@ -57,6 +57,8 @@
 #include "src/threads/autopilotdecisionmaker/autopilotdecisionmakerthread.h"
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/follow/followthread.h"
+#include "src/threads/highliquidity/highliquiditythread.h"
+#include "src/threads/hugespread/hugespreadthread.h"
 #include "src/threads/lastprice//lastpricethread.h"
 #include "src/threads/logs/logsthread.h"
 #include "src/threads/operations/operationsthread.h"
@@ -461,6 +463,8 @@ static int runApplication(QApplication* app)
     AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(
         &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &timeUtils, &grpcClient
     );
+    HugeSpreadThread     hugeSpreadThread;
+    HighLiquidityThread  highLiquidityThread;
     FollowThread         followThread(&instrumentsStorage, &grpcClient);
     OrderBookThread      orderBookThread(&grpcClient);
     TradingThreadFactory tradingThreadFactory;
@@ -516,6 +520,8 @@ static int runApplication(QApplication* app)
         &simulatorDecisionMakerThread,
         &simulatorDateRangeDecisionMakerThread,
         &autoPilotDecisionMakerThread,
+        &hugeSpreadThread,
+        &highLiquidityThread,
         &followThread,
         &orderBookThread,
         &tradingThreadFactory,

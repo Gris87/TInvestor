@@ -24,6 +24,25 @@ void HugeSpreadThread::run()
     qDebug() << "Finish HugeSpreadThread";
 }
 
+void HugeSpreadThread::setAccountId(const QString& accountId)
+{
+    mAccountId = accountId;
+}
+
+void HugeSpreadThread::setKeepMoney(int value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mKeepMoney = value;
+}
+
+int HugeSpreadThread::keepMoney() const
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mKeepMoney;
+}
+
 void HugeSpreadThread::terminateThread()
 {
     blockSignals(true);
