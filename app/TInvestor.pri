@@ -91,6 +91,8 @@ SOURCES += \
     src/threads/autopilotdecisionmaker/autopilotdecisionmakerthread.cpp \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/follow/followthread.cpp \
+    src/threads/highliquidity/highliquiditythread.cpp \
+    src/threads/hugespread/hugespreadthread.cpp \
     src/threads/lastprice/lastpricethread.cpp \
     src/threads/logs/logsthread.cpp \
     src/threads/operations/operationsthread.cpp \
@@ -307,6 +309,10 @@ HEADERS += \
     src/threads/cleanup/icleanupthread.h \
     src/threads/follow/followthread.h \
     src/threads/follow/ifollowthread.h \
+    src/threads/highliquidity/highliquiditythread.h \
+    src/threads/highliquidity/ihighliquiditythread.h \
+    src/threads/hugespread/hugespreadthread.h \
+    src/threads/hugespread/ihugespreadthread.h \
     src/threads/lastprice/ilastpricethread.h \
     src/threads/lastprice/lastpricethread.h \
     src/threads/logs/ilogsthread.h \

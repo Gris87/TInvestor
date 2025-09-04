@@ -87,6 +87,8 @@ SOURCES += \
     src/threads/autopilotdecisionmaker/test_autopilotdecisionmakerthread.cpp \
     src/threads/cleanup/test_cleanupthread.cpp \
     src/threads/follow/test_followthread.cpp \
+    src/threads/highliquidity/test_highliquiditythread.cpp \
+    src/threads/hugespread/test_hugespreadthread.cpp \
     src/threads/lastprice/test_lastpricethread.cpp \
     src/threads/logs/test_logsthread.cpp \
     src/threads/operations/test_operationsthread.cpp \
@@ -214,6 +216,8 @@ HEADERS += \
     src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
     src/threads/follow/ifollowthread_mock.h \
+    src/threads/highliquidity/ihighliquiditythread_mock.h \
+    src/threads/hugespread/ihugespreadthread_mock.h \
     src/threads/lastprice/ilastpricethread_mock.h \
     src/threads/logs/ilogsthread_mock.h \
     src/threads/operations/ioperationsthread_mock.h \
