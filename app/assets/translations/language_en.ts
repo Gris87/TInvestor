@@ -1091,68 +1091,83 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="199"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="296"/>
+        <source>Trade stocks with spread more than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="248"/>
+        <source>Trade high liquidity ETF (e.g. TMON@) with part less than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="274"/>
+        <source>at night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="301"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="411"/>
         <source>Limit stock purchase part less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="243"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="340"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="345"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="455"/>
         <source>and less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="266"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="368"/>
         <source>of average daily turnover</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="363"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="478"/>
         <source>of average daily turnover in non-wokring hours</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="393"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="509"/>
         <source>Store stocks data for</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="400"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="516"/>
         <source> months</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="445"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="219"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="241"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="561"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="253"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="275"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="466"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="502"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="582"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="618"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="481"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="218"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="242"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="597"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="252"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="276"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="538"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="654"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="561"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="677"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="581"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="697"/>
         <source>Default</source>
         <translation></translation>
     </message>
@@ -1162,8 +1177,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="213"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="236"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="247"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="270"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>

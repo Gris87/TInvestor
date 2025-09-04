@@ -43,6 +43,18 @@ public:
     MOCK_METHOD(void, setTradeInNonWorkingHours, (bool value), (override));
     MOCK_METHOD(bool, isTradeInNonWorkingHours, (), (override));
 
+    MOCK_METHOD(void, setTradeHugeSpread, (bool value), (override));
+    MOCK_METHOD(bool, isTradeHugeSpread, (), (override));
+
+    MOCK_METHOD(void, setHugeSpread, (float value), (override));
+    MOCK_METHOD(float, getHugeSpread, (), (override));
+
+    MOCK_METHOD(void, setTradeLiquidityEtf, (bool value), (override));
+    MOCK_METHOD(bool, isTradeLiquidityEtf, (), (override));
+
+    MOCK_METHOD(void, setLiquidityPart, (float value), (override));
+    MOCK_METHOD(float, getLiquidityPart, (), (override));
+
     MOCK_METHOD(void, setLimitStockPurchase, (bool value), (override));
     MOCK_METHOD(bool, isLimitStockPurchase, (), (override));
 

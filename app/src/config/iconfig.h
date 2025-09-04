@@ -39,6 +39,18 @@ public:
     virtual void setTradeInNonWorkingHours(bool value) = 0;
     virtual bool isTradeInNonWorkingHours()            = 0;
 
+    virtual void setTradeHugeSpread(bool value) = 0;
+    virtual bool isTradeHugeSpread()            = 0;
+
+    virtual void  setHugeSpread(float value) = 0;
+    virtual float getHugeSpread()            = 0;
+
+    virtual void setTradeLiquidityEtf(bool value) = 0;
+    virtual bool isTradeLiquidityEtf()            = 0;
+
+    virtual void  setLiquidityPart(float value) = 0;
+    virtual float getLiquidityPart()            = 0;
+
     virtual void setLimitStockPurchase(bool value) = 0;
     virtual bool isLimitStockPurchase()            = 0;
 

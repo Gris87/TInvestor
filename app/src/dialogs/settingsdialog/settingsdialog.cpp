@@ -99,6 +99,10 @@ void SettingsDialog::updateUiFromConfig()
     ui->cpuUsageComboBox->setCurrentIndex(CPU_USAGE_INDEX.value(mConfig->getCpuUsage(), CPU_USAGE_INDEX.value("MAXIMUM")));
     ui->makeDecisionTimeoutSpinBox->setValue(mConfig->getMakeDecisionTimeout());
     ui->tradeInNonWorkingHoursCheckBox->setChecked(mConfig->isTradeInNonWorkingHours());
+    ui->tradeHugeSpreadCheckBox->setChecked(mConfig->isTradeHugeSpread());
+    ui->hugeSpreadDoubleSpinBox->setValue(mConfig->getHugeSpread());
+    ui->tradeLiquidityEtfCheckBox->setChecked(mConfig->isTradeLiquidityEtf());
+    ui->liquidityPartDoubleSpinBox->setValue(mConfig->getLiquidityPart());
     ui->limitStockPurchaseCheckBox->setChecked(mConfig->isLimitStockPurchase());
     ui->limitStockPurchasePartDoubleSpinBox->setValue(mConfig->getLimitStockPurchasePart());
     ui->limitByTurnoverCheckBox->setChecked(mConfig->isLimitByTurnover());
@@ -134,6 +138,36 @@ void SettingsDialog::on_tradeInNonWorkingHoursCheckBox_checkStateChanged(const Q
     const bool checked = value == Qt::Checked;
 
     mConfig->setTradeInNonWorkingHours(checked);
+
+    ui->limitStockPurchaseNonWorkingHoursWidget->setEnabled(checked);
+}
+
+void SettingsDialog::on_tradeHugeSpreadCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setTradeHugeSpread(checked);
+
+    ui->hugeSpreadDoubleSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_hugeSpreadDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setHugeSpread(value);
+}
+
+void SettingsDialog::on_tradeLiquidityEtfCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setTradeLiquidityEtf(checked);
+
+    ui->liquidityPartDoubleSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_liquidityPartDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setLiquidityPart(value);
 }
 
 void SettingsDialog::on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -142,7 +176,7 @@ void SettingsDialog::on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::C
 
     mConfig->setLimitStockPurchase(checked);
 
-    ui->limitStockPurchaseWidget->setEnabled(checked);
+    ui->limitByTurnoverWidget->setEnabled(checked);
 }
 
 void SettingsDialog::on_limitStockPurchasePartDoubleSpinBox_valueChanged(double value)
@@ -170,7 +204,7 @@ void SettingsDialog::on_limitStockPurchaseNonWorkingHoursCheckBox_checkStateChan
 
     mConfig->setLimitStockPurchaseNonWorkingHours(checked);
 
-    ui->limitStockPurchaseNonWorkingHoursWidget->setEnabled(checked);
+    ui->limitByTurnoverNonWorkingHoursWidget->setEnabled(checked);
 }
 
 void SettingsDialog::on_limitStockPurchasePartNonWorkingHoursDoubleSpinBox_valueChanged(double value)

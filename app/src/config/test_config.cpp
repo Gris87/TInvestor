@@ -54,10 +54,14 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     config->setCpuUsage("MINIMUM");
     config->setMakeDecisionTimeout(5);
     config->setTradeInNonWorkingHours(false);
+    config->setTradeHugeSpread(false);
+    config->setHugeSpread(3.0f);
+    config->setTradeLiquidityEtf(false);
+    config->setLiquidityPart(87.0f);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
-    config->setLimitByTurnoverPercent(5.0f);
+    config->setLimitByTurnoverPercent(3.7f);
     config->setLimitStockPurchaseNonWorkingHours(false);
     config->setLimitStockPurchasePartNonWorkingHours(15.0f);
     config->setLimitByTurnoverNonWorkingHours(false);
@@ -71,10 +75,14 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeHugeSpread(),                          false);
+    ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
+    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                3.7f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
@@ -96,10 +104,14 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeHugeSpread(),                          false);
+    ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
+    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                3.7f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
@@ -114,10 +126,14 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config2->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config2->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config2->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config2->isTradeHugeSpread(),                          false);
+    ASSERT_NEAR(config2->getHugeSpread(),                            3.0f, 0.0001f);
+    ASSERT_EQ(config2->isTradeLiquidityEtf(),                        false);
+    ASSERT_NEAR(config2->getLiquidityPart(),                         87.0f, 0.0001f);
     ASSERT_EQ(config2->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config2->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config2->isLimitByTurnover(),                          false);
-    ASSERT_NEAR(config2->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_NEAR(config2->getLimitByTurnoverPercent(),                3.7f, 0.0001f);
     ASSERT_EQ(config2->isLimitStockPurchaseNonWorkingHours(),        false);
     ASSERT_NEAR(config2->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config2->isLimitByTurnoverNonWorkingHours(),           false);
@@ -146,10 +162,14 @@ TEST_F(Test_Config, Test_assign)
     config->setCpuUsage("MINIMUM");
     config->setMakeDecisionTimeout(5);
     config->setTradeInNonWorkingHours(false);
+    config->setTradeHugeSpread(false);
+    config->setHugeSpread(3.0f);
+    config->setTradeLiquidityEtf(false);
+    config->setLiquidityPart(87.0f);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
-    config->setLimitByTurnoverPercent(5.0f);
+    config->setLimitByTurnoverPercent(3.7f);
     config->setLimitStockPurchaseNonWorkingHours(false);
     config->setLimitStockPurchasePartNonWorkingHours(15.0f);
     config->setLimitByTurnoverNonWorkingHours(false);
@@ -163,10 +183,14 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeHugeSpread(),                          false);
+    ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
+    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                3.7f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
@@ -180,6 +204,10 @@ TEST_F(Test_Config, Test_assign)
     config2.setCpuUsage("OPTIMAL");
     config2.setMakeDecisionTimeout(30);
     config2.setTradeInNonWorkingHours(true);
+    config2.setTradeHugeSpread(true);
+    config2.setHugeSpread(4.5f);
+    config2.setTradeLiquidityEtf(true);
+    config2.setLiquidityPart(77.0f);
     config2.setLimitStockPurchase(true);
     config2.setLimitStockPurchasePart(5.0f);
     config2.setLimitByTurnover(true);
@@ -197,6 +225,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.getCpuUsage(),                                "OPTIMAL");
     ASSERT_EQ(config2.getMakeDecisionTimeout(),                     30);
     ASSERT_EQ(config2.isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config2.isTradeHugeSpread(),                          true);
+    ASSERT_NEAR(config2.getHugeSpread(),                            4.5f, 0.0001f);
+    ASSERT_EQ(config2.isTradeLiquidityEtf(),                        true);
+    ASSERT_NEAR(config2.getLiquidityPart(),                         77.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitStockPurchase(),                       true);
     ASSERT_NEAR(config2.getLimitStockPurchasePart(),                5.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitByTurnover(),                          true);
@@ -220,6 +252,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->getCpuUsage(),                                "OPTIMAL");
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     30);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config->isTradeHugeSpread(),                          true);
+    ASSERT_NEAR(config->getHugeSpread(),                            4.5f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtf(),                        true);
+    ASSERT_NEAR(config->getLiquidityPart(),                         77.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       true);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                5.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          true);
@@ -238,6 +274,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.getCpuUsage(),                                "OPTIMAL");
     ASSERT_EQ(config2.getMakeDecisionTimeout(),                     30);
     ASSERT_EQ(config2.isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config2.isTradeHugeSpread(),                          true);
+    ASSERT_NEAR(config2.getHugeSpread(),                            4.5f, 0.0001f);
+    ASSERT_EQ(config2.isTradeLiquidityEtf(),                        true);
+    ASSERT_NEAR(config2.getLiquidityPart(),                         77.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitStockPurchase(),                       true);
     ASSERT_NEAR(config2.getLimitStockPurchasePart(),                5.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitByTurnover(),                          true);
@@ -260,14 +300,18 @@ TEST_F(Test_Config, Test_makeDefault)
     config->setCpuUsage("MINIMUM");
     config->setMakeDecisionTimeout(5);
     config->setTradeInNonWorkingHours(false);
+    config->setTradeHugeSpread(false);
+    config->setHugeSpread(3.0f);
+    config->setTradeLiquidityEtf(false);
+    config->setLiquidityPart(87.0f);
     config->setLimitStockPurchase(false);
-    config->setLimitStockPurchasePart(50.0f);
+    config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
-    config->setLimitByTurnoverPercent(15.0f);
+    config->setLimitByTurnoverPercent(3.7f);
     config->setLimitStockPurchaseNonWorkingHours(false);
-    config->setLimitStockPurchasePartNonWorkingHours(80.0f);
+    config->setLimitStockPurchasePartNonWorkingHours(15.0f);
     config->setLimitByTurnoverNonWorkingHours(false);
-    config->setLimitByTurnoverPercentNonWorkingHours(65.0f);
+    config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
@@ -277,14 +321,18 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeHugeSpread(),                          false);
+    ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
+    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(),                50.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                15.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                3.7f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
-    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 80.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 65.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
     ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
@@ -300,6 +348,10 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->getCpuUsage(),                                "MAXIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     1);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config->isTradeHugeSpread(),                          true);
+    ASSERT_NEAR(config->getHugeSpread(),                            1.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtf(),                        true);
+    ASSERT_NEAR(config->getLiquidityPart(),                         90.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       true);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                10.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          true);
@@ -322,12 +374,16 @@ TEST_F(Test_Config, Test_save)
     config->setCpuUsage("MINIMUM");
     config->setMakeDecisionTimeout(5);
     config->setTradeInNonWorkingHours(false);
+    config->setTradeHugeSpread(false);
+    config->setHugeSpread(3.0f);
+    config->setTradeLiquidityEtf(false);
+    config->setLiquidityPart(87.0f);
     config->setLimitStockPurchase(false);
-    config->setLimitStockPurchasePart(50.0f);
+    config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
-    config->setLimitByTurnoverPercent(5.0f);
+    config->setLimitByTurnoverPercent(3.7f);
     config->setLimitStockPurchaseNonWorkingHours(false);
-    config->setLimitStockPurchasePartNonWorkingHours(25.0f);
+    config->setLimitStockPurchasePartNonWorkingHours(15.0f);
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
@@ -339,12 +395,16 @@ TEST_F(Test_Config, Test_save)
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeHugeSpread(),                          false);
+    ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
+    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(),                50.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                3.7f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
-    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 25.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
@@ -362,12 +422,16 @@ TEST_F(Test_Config, Test_save)
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/CpuUsage"),                              QVariant("MINIMUM")));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/MakeDecisionTimeout"),                   QVariant(5)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeInNonWorkingHours"),                QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeHugeSpread"),                       QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HugeSpread"),                            QVariant(3.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeLiquidityEtf"),                     QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LiquidityPart"),                         QVariant(87.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchase"),                    QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePart"),                QVariant(50.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePart"),                QVariant(25.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnover"),                       QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverPercent"),                QVariant(5.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverPercent"),                QVariant(3.7f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchaseNonWorkingHours"),     QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePartNonWorkingHours"), QVariant(25.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePartNonWorkingHours"), QVariant(15.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverNonWorkingHours"),        QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverPercentNonWorkingHours"), QVariant(2.5f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/StorageMonthLimit"),                     QVariant(36)));
@@ -386,12 +450,16 @@ TEST_F(Test_Config, Test_load)
     config->setCpuUsage("MINIMUM");
     config->setMakeDecisionTimeout(5);
     config->setTradeInNonWorkingHours(false);
+    config->setTradeHugeSpread(false);
+    config->setHugeSpread(3.0f);
+    config->setTradeLiquidityEtf(false);
+    config->setLiquidityPart(87.0f);
     config->setLimitStockPurchase(false);
-    config->setLimitStockPurchasePart(50.0f);
+    config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
-    config->setLimitByTurnoverPercent(5.0f);
+    config->setLimitByTurnoverPercent(3.7f);
     config->setLimitStockPurchaseNonWorkingHours(false);
-    config->setLimitStockPurchasePartNonWorkingHours(25.0f);
+    config->setLimitStockPurchasePartNonWorkingHours(15.0f);
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
@@ -403,12 +471,16 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeHugeSpread(),                          false);
+    ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
+    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
-    ASSERT_NEAR(config->getLimitStockPurchasePart(),                50.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
-    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                5.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitByTurnoverPercent(),                3.7f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        false);
-    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 25.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
@@ -426,12 +498,16 @@ TEST_F(Test_Config, Test_load)
     EXPECT_CALL(settingsEditorMock, value(QString("Config/CpuUsage"),                              QVariant("MINIMUM"))).WillOnce(Return(QVariant("OPTIMAL")));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/MakeDecisionTimeout"),                   QVariant(5))).WillOnce(Return(QVariant(30)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeInNonWorkingHours"),                QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeHugeSpread"),                       QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/HugeSpread"),                            QVariant(3.0f))).WillOnce(Return(QVariant(9.0f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeLiquidityEtf"),                     QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LiquidityPart"),                         QVariant(87.0f))).WillOnce(Return(QVariant(97.5f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchase"),                    QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePart"),                QVariant(50.0f))).WillOnce(Return(QVariant(5.0f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePart"),                QVariant(25.0f))).WillOnce(Return(QVariant(5.0f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnover"),                       QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverPercent"),                QVariant(5.0f))).WillOnce(Return(QVariant(7.5f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverPercent"),                QVariant(3.7f))).WillOnce(Return(QVariant(7.5f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchaseNonWorkingHours"),     QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePartNonWorkingHours"), QVariant(25.0f))).WillOnce(Return(QVariant(15.0f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePartNonWorkingHours"), QVariant(15.0f))).WillOnce(Return(QVariant(35.0f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverNonWorkingHours"),        QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverPercentNonWorkingHours"), QVariant(2.5f))).WillOnce(Return(QVariant(17.5f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/StorageMonthLimit"),                     QVariant(36))).WillOnce(Return(QVariant(12)));
@@ -446,12 +522,16 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->getCpuUsage(),                                "OPTIMAL");
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     30);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config->isTradeHugeSpread(),                          true);
+    ASSERT_NEAR(config->getHugeSpread(),                            9.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtf(),                        true);
+    ASSERT_NEAR(config->getLiquidityPart(),                         97.5f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       true);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                5.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          true);
     ASSERT_NEAR(config->getLimitByTurnoverPercent(),                7.5f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchaseNonWorkingHours(),        true);
-    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
+    ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 35.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 17.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       12);
@@ -504,6 +584,42 @@ TEST_F(Test_Config, Test_setTradeInNonWorkingHours_and_isTradeInNonWorkingHours)
 
     config->setTradeInNonWorkingHours(true);
     ASSERT_EQ(config->isTradeInNonWorkingHours(), true);
+}
+
+TEST_F(Test_Config, Test_setTradeHugeSpread_and_isTradeHugeSpread)
+{
+    config->setTradeHugeSpread(false);
+    ASSERT_EQ(config->isTradeHugeSpread(), false);
+
+    config->setTradeHugeSpread(true);
+    ASSERT_EQ(config->isTradeHugeSpread(), true);
+}
+
+TEST_F(Test_Config, Test_setHugeSpread_and_getHugeSpread)
+{
+    config->setHugeSpread(1.0f);
+    ASSERT_NEAR(config->getHugeSpread(), 1.0f, 0.0001f);
+
+    config->setHugeSpread(5.0f);
+    ASSERT_NEAR(config->getHugeSpread(), 5.0f, 0.0001f);
+}
+
+TEST_F(Test_Config, Test_setTradeLiquidityEtf_and_isTradeLiquidityEtf)
+{
+    config->setTradeLiquidityEtf(false);
+    ASSERT_EQ(config->isTradeLiquidityEtf(), false);
+
+    config->setTradeLiquidityEtf(true);
+    ASSERT_EQ(config->isTradeLiquidityEtf(), true);
+}
+
+TEST_F(Test_Config, Test_setLiquidityPart_and_getLiquidityPart)
+{
+    config->setLiquidityPart(10.0f);
+    ASSERT_NEAR(config->getLiquidityPart(), 10.0f, 0.0001f);
+
+    config->setLiquidityPart(50.0f);
+    ASSERT_NEAR(config->getLiquidityPart(), 50.0f, 0.0001f);
 }
 
 TEST_F(Test_Config, Test_setLimitStockPurchase_and_isLimitStockPurchase)
