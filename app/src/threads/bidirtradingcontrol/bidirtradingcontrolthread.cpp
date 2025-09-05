@@ -19,7 +19,9 @@ BiDirTradingControlThread::BiDirTradingControlThread(
     mConfig(config),
     mGrpcClient(grpcClient),
     mAccountId(),
-    mLastDetectionTimestamp()
+    mLastDetectionTimestamp(),
+    mLastTradeHugeSpread(),
+    mLastTradeLiquidityEtfDaily()
 {
     qDebug() << "Create BiDirTradingControlThread";
 }
@@ -35,12 +37,17 @@ void BiDirTradingControlThread::run()
 
     blockSignals(false);
 
-    const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+    const qint64 timestamp              = QDateTime::currentMSecsSinceEpoch();
+    const bool   tradeHugeSpread        = mConfig->isTradeHugeSpread();
+    const bool   tradeLiquidityEtfDaily = mConfig->isTradeLiquidityEtfDaily();
 
-    if (timestamp - mLastDetectionTimestamp > DETECTION_INTERVAL)
+    if (timestamp - mLastDetectionTimestamp > DETECTION_INTERVAL || mLastTradeHugeSpread != tradeHugeSpread ||
+        mLastTradeLiquidityEtfDaily != tradeLiquidityEtfDaily)
     {
-        detectHugeSpreadStocks();
-        mLastDetectionTimestamp = timestamp;
+        detectHugeSpreadStocks(tradeHugeSpread, tradeLiquidityEtfDaily);
+        mLastDetectionTimestamp     = timestamp;
+        mLastTradeHugeSpread        = tradeHugeSpread;
+        mLastTradeLiquidityEtfDaily = tradeLiquidityEtfDaily;
     }
 
     qDebug() << "Finish BiDirTradingControlThread";
@@ -58,9 +65,9 @@ void BiDirTradingControlThread::terminateThread()
     requestInterruption();
 }
 
-void BiDirTradingControlThread::detectHugeSpreadStocks()
+void BiDirTradingControlThread::detectHugeSpreadStocks(bool tradeHugeSpread, bool tradeLiquidityEtfDaily)
 {
-    if (mConfig->isTradeHugeSpread())
+    if (tradeHugeSpread)
     {
         /*
         mStocksStorage->readLock();
@@ -69,9 +76,11 @@ void BiDirTradingControlThread::detectHugeSpreadStocks()
         */
 
         // TODO: Implement
+
+        // TODO: Filter for non qualified stocks only
     }
 
-    if (mConfig->isTradeLiquidityEtfDaily())
+    if (tradeLiquidityEtfDaily)
     {
         // TODO: Implement
     }

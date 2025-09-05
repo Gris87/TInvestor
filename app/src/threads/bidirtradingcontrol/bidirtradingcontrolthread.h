@@ -30,11 +30,13 @@ public:
     void terminateThread() override;
 
 private:
-    void detectHugeSpreadStocks();
+    void detectHugeSpreadStocks(bool tradeHugeSpread, bool tradeLiquidityEtfDaily);
 
     IStocksStorage* mStocksStorage;
     IConfig*        mConfig;
     IGrpcClient*    mGrpcClient;
     QString         mAccountId;
     qint64          mLastDetectionTimestamp;
+    bool            mLastTradeHugeSpread;
+    bool            mLastTradeLiquidityEtfDaily;
 };

@@ -77,6 +77,7 @@ SOURCES += \
     src/domain/stock/stockmeta.cpp \
     src/domain/stock/stockoperational.cpp \
     src/domain/stock/stocktableentry.cpp \
+    src/domain/trading/bidirtradinginfo.cpp \
     src/domain/trading/tradinginfo.cpp \
     src/domain/user/account.cpp \
     src/domain/user/user.cpp \
@@ -287,6 +288,7 @@ HEADERS += \
     src/domain/stock/stockmeta.h \
     src/domain/stock/stockoperational.h \
     src/domain/stock/stocktableentry.h \
+    src/domain/trading/bidirtradinginfo.h \
     src/domain/trading/tradinginfo.h \
     src/domain/user/account.h \
     src/domain/user/user.h \
