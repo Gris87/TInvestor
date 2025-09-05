@@ -1,10 +1,10 @@
+Bug with double input in operations
 Trade instruments with huge spread (detect periodically among all stocks). Buy few / sell few (average?)
 Buy TMON@ at the evening and sell at the morning
 Trade TMON@ bid <=> ask
 Improve coverage
 Create release
 
-Remove keep money
 Create script for providing details about selling from operations.json
 Super ASAP buying for BuyDecision1 with trading based on asks with price raise < 0.50%
 Super ASAP selling for SellDecision1 with trading based on bids with yield > 0.38%
@@ -16,6 +16,7 @@ Different defaults based on commission
 Participate in auction
 Split order into chunks
 Trade with USD/EUR
+Make following based on orders stream
 
 =======================================
 For the best times

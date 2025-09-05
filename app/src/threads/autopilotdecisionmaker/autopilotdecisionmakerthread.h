@@ -34,11 +34,7 @@ public:
     void run() override;
 
     void setAccountId(const QString& accountId) override;
-    void setKeepMoney(int value) override;
     void notifyAboutSell(const QString& instrumentId) override;
-
-    [[nodiscard]]
-    int keepMoney() const;
 
     void terminateThread() override;
 
@@ -55,6 +51,5 @@ private:
     ITimeUtils*     mTimeUtils;
     IGrpcClient*    mGrpcClient;
     QString         mAccountId;
-    int             mKeepMoney;
     InstrumentSells mSellNotifications;
 };

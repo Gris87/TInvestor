@@ -17,7 +17,6 @@ FollowThread::FollowThread(IInstrumentsStorage* instrumentsStorage, IGrpcClient*
     mGrpcClient(grpcClient),
     mAccountId(),
     mAnotherAccountId(),
-    mKeepMoney(),
     mPortfolioStream()
 {
     qDebug() << "Create FollowThread";
@@ -95,20 +94,6 @@ void FollowThread::setAccounts(const QString& accountId, const QString& anotherA
     mAnotherAccountName = anotherAccountName;
 }
 
-void FollowThread::setKeepMoney(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mKeepMoney = value;
-}
-
-int FollowThread::keepMoney() const
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mKeepMoney;
-}
-
 void FollowThread::terminateThread()
 {
     blockSignals(true);
@@ -147,7 +132,7 @@ void FollowThread::handlePortfolios(
     PortfolioMinItems instruments        = buildInstrumentToCostMap(portfolio);
     PortfolioMinItems anotherInstruments = buildInstrumentToCostMap(anotherPortfolio);
 
-    const double totalCost        = qMax(calculateTotalCost(instruments) - keepMoney(), 0.0);
+    const double totalCost        = calculateTotalCost(instruments);
     const double anotherTotalCost = calculateTotalCost(anotherInstruments);
 
     instruments.remove(RUBLE_UID);

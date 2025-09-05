@@ -465,7 +465,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(), Ge(1704056400000), configMock, instrumentSells, portfolio, stocks, false, 0, false, true
+            QThread::currentThread(), Ge(1704056400000), configMock, instrumentSells, portfolio, stocks, false, false, true
         )
     )
         .WillOnce(Return(instrumentsForTrading));
@@ -667,16 +667,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(),
-            Ge(1704056400000),
-            configMock,
-            buyInstrumentSells,
-            buyPortfolio,
-            stocks,
-            false,
-            0,
-            false,
-            true
+            QThread::currentThread(), Ge(1704056400000), configMock, buyInstrumentSells, buyPortfolio, stocks, false, false, true
         )
     )
         .WillOnce(Return(instrumentsForTrading));
@@ -860,7 +851,6 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
             buyPortfolio2,
             stocks,
             false,
-            0,
             false,
             true
         )
@@ -1017,7 +1007,6 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
             sellPortfolio,
             stocks,
             false,
-            0,
             false,
             true
         )
@@ -1328,16 +1317,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(),
-            Ge(1704056400000),
-            configMock,
-            Ne(InstrumentSells()),
-            portfolio,
-            stocks,
-            false,
-            0,
-            false,
-            true
+            QThread::currentThread(), Ge(1704056400000), configMock, Ne(InstrumentSells()), portfolio, stocks, false, false, true
         )
     )
         .WillOnce(Return(instrumentsForTrading));

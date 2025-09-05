@@ -48,7 +48,6 @@ InstrumentsForTrading DecisionMaker::makeDecision(
     const Portfolio&       portfolio,
     const QList<Stock*>&   stocks,
     bool                   autoPilot,
-    int                    keepMoney,
     bool                   dateRange,
     bool                   useParallel
 )
@@ -73,7 +72,6 @@ InstrumentsForTrading DecisionMaker::makeDecision(
         instrumentSells,
         portfolio,
         stocksWithAvgPrice,
-        keepMoney,
         dateRange,
         useParallel,
         res
@@ -338,7 +336,6 @@ void DecisionMaker::makeDecisions(
     const InstrumentSells&    instrumentSells,
     const Portfolio&          portfolio,
     QList<StockWithAvgPrice>& stocksWithAvgPrice,
-    int                       keepMoney,
     bool                      dateRange,
     bool                      useParallel,
     InstrumentsForTrading&    res
@@ -348,7 +345,6 @@ void DecisionMaker::makeDecisions(
     double totalCost = 0.0;
 
     calculateMoneyAndTotalCost(parentThread, portfolio, money, totalCost);
-    money -= keepMoney;
 
     mUserStorage->readLock();
     float commission = mUserStorage->getCommission();

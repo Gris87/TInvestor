@@ -94,7 +94,6 @@ void SimulatorDecisionMakerThread::run()
         mPortfolio,
         mStocksStorage->getStocks(),
         false,
-        0,
         false,
         true
     );

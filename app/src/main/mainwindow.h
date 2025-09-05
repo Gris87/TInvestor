@@ -141,7 +141,6 @@ public:
     QTimer                         makeDecisionTimer;
     QTimer                         stocksTableUpdateAllTimer;
     QTimer                         stocksTableUpdateLastPricesTimer;
-    QTimer                         keepMoneyChangeDelayTimer;
     QTimer                         simulatorPortfolioUpdateLastPricesTimer;
     QTimer                         autoPilotPortfolioUpdateLastPricesTimer;
     bool                           authFailedDialogShown;
@@ -218,7 +217,6 @@ public slots:
     void makeDecisionTimerTicked();
     void stocksTableUpdateAllTimerTicked();
     void stocksTableUpdateLastPricesTimerTicked();
-    void keepMoneyChangeDelayTimerTicked();
     void simulatorPortfolioUpdateLastPricesTimerTicked();
     void autoPilotPortfolioUpdateLastPricesTimerTicked();
     void notifyInstrumentsProgress(const QString& message) const;
@@ -261,5 +259,4 @@ private slots:
     void on_actionSettings_triggered();
     void on_startSimulationButton_clicked();
     void on_startAutoPilotButton_clicked();
-    void on_keepMoneySpinBox_valueChanged(int value);
 };

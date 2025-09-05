@@ -274,12 +274,6 @@ protected:
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, loadWindowState(QString("MainWindow/Simulator")));
         EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, loadWindowState(QString("MainWindow/AutoPilot")));
 
-        EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/KeepMoney"), QVariant(0))).WillOnce(Return(QVariant(0)));
-        EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
-        EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setKeepMoney(0));
-        EXPECT_CALL(*highLiquidityThreadMock, setKeepMoney(0));
-        EXPECT_CALL(*followThreadMock, setKeepMoney(0));
-
         mainWindow = new MainWindow(
             configMock,
             configForSettingsDialogMock,
@@ -727,23 +721,6 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateLastPricesTimerTicked)
     mainWindow->stocksTableUpdateLastPricesTimerTicked();
 
     ASSERT_EQ(mainWindow->stocksTableUpdateLastPricesTimer.isActive(), true);
-}
-
-TEST_F(Test_MainWindow, Test_keepMoneyChangeDelayTimerTicked)
-{
-    const InSequence seq;
-
-    mainWindow->keepMoneyChangeDelayTimer.start(100000);
-    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.isActive(), true);
-
-    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
-    EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setKeepMoney(0));
-    EXPECT_CALL(*highLiquidityThreadMock, setKeepMoney(0));
-    EXPECT_CALL(*followThreadMock, setKeepMoney(0));
-
-    mainWindow->keepMoneyChangeDelayTimerTicked();
-
-    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.isActive(), false);
 }
 
 TEST_F(Test_MainWindow, Test_simulatorPortfolioUpdateLastPricesTimerTicked)
@@ -1782,21 +1759,6 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     ASSERT_EQ(mainWindow->ui->autoPilotActiveWidget->isVisible(),         false);
     ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), false);
     ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
-    // clang-format on
-}
-
-TEST_F(Test_MainWindow, Test_on_keepMoneySpinBox_valueChanged)
-{
-    // clang-format off
-    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.interval(), 0);
-    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.isActive(), false);
-    // clang-format on
-
-    mainWindow->ui->keepMoneySpinBox->setValue(5000);
-
-    // clang-format off
-    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.interval(), 1000);
-    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.isActive(), true);
     // clang-format on
 }
 

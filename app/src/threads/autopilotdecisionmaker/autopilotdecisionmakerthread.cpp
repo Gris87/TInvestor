@@ -33,7 +33,6 @@ AutoPilotDecisionMakerThread::AutoPilotDecisionMakerThread(
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mAccountId(),
-    mKeepMoney(),
     mSellNotifications()
 {
     qDebug() << "Create AutoPilotDecisionMakerThread";
@@ -84,7 +83,6 @@ void AutoPilotDecisionMakerThread::run()
                         portfolio,
                         mStocksStorage->getStocks(),
                         true,
-                        keepMoney(),
                         false,
                         true
                     );
@@ -122,25 +120,11 @@ void AutoPilotDecisionMakerThread::setAccountId(const QString& accountId)
     mAccountId = accountId;
 }
 
-void AutoPilotDecisionMakerThread::setKeepMoney(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mKeepMoney = value;
-}
-
 void AutoPilotDecisionMakerThread::notifyAboutSell(const QString& instrumentId)
 {
     const QWriteLocker lock(mRwMutex);
 
     mSellNotifications[instrumentId] = QDateTime::currentMSecsSinceEpoch();
-}
-
-int AutoPilotDecisionMakerThread::keepMoney() const
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mKeepMoney;
 }
 
 void AutoPilotDecisionMakerThread::terminateThread()

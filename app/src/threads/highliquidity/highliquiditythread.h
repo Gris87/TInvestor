@@ -4,7 +4,6 @@
 
 #include "src/threads/highliquidity/ihighliquiditythread.h"
 
-#include <QReadWriteLock>
 #include <QTimeZone>
 
 #include "src/config/iconfig.h"
@@ -31,10 +30,6 @@ public:
     void sellEtf();
 
     void setAccountId(const QString& accountId) override;
-    void setKeepMoney(int value) override;
-
-    [[nodiscard]]
-    int keepMoney() const;
 
     void terminateThread() override;
 
@@ -44,11 +39,9 @@ private:
         const tinkoff::PortfolioResponse& tinkoffPortfolio, double& money, double& totalCost, bool& etfFound
     );
 
-    QReadWriteLock* mRwMutex;
-    IConfig*        mConfig;
-    ITimeUtils*     mTimeUtils;
-    IGrpcClient*    mGrpcClient;
-    QTimeZone       mMoscowTimezone;
-    QString         mAccountId;
-    int             mKeepMoney;
+    IConfig*     mConfig;
+    ITimeUtils*  mTimeUtils;
+    IGrpcClient* mGrpcClient;
+    QTimeZone    mMoscowTimezone;
+    QString      mAccountId;
 };

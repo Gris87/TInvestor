@@ -30,7 +30,6 @@ public:
          const Portfolio&       portfolio,
          const QList<Stock*>&   stocks,
          bool                   autoPilot,
-         int                    keepMoney,
          bool                   dateRange,
          bool                   useParallel),
         (override)

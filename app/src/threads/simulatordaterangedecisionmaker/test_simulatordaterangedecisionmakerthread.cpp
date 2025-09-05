@@ -1080,7 +1080,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(), 1704056400000, &clonedConfigMock, instrumentSells, portfolio, stocks, false, 0, true, false
+            QThread::currentThread(), 1704056400000, &clonedConfigMock, instrumentSells, portfolio, stocks, false, true, false
         )
     )
         .WillOnce(Return(instrumentsForTrading1));
@@ -1104,7 +1104,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
             buyPortfolio,
             stocks,
             false,
-            0,
             true,
             false
         )
@@ -1130,7 +1129,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
             buyPortfolio2,
             stocks,
             false,
-            0,
             true,
             false
         )
@@ -1156,7 +1154,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
             sellPortfolio,
             stocks,
             false,
-            0,
             true,
             false
         )
@@ -1182,7 +1179,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
             sellPortfolio2,
             stocks,
             false,
-            0,
             true,
             false
         )
@@ -1340,9 +1336,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(
-            QThread::currentThread(), 1704056400000, configMock, instrumentSells, portfolio, stocks, false, 0, true, true
-        )
+        makeDecision(QThread::currentThread(), 1704056400000, configMock, instrumentSells, portfolio, stocks, false, true, true)
     )
         .WillOnce(Return(instrumentsForTrading1));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1358,7 +1352,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(), 1704056460000, configMock, buyInstrumentSells, buyPortfolio, stocks, false, 0, true, true
+            QThread::currentThread(), 1704056460000, configMock, buyInstrumentSells, buyPortfolio, stocks, false, true, true
         )
     )
         .WillOnce(Return(instrumentsForTrading2));
@@ -1375,7 +1369,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(), 1704056520000, configMock, buyInstrumentSells2, buyPortfolio2, stocks, false, 0, true, true
+            QThread::currentThread(), 1704056520000, configMock, buyInstrumentSells2, buyPortfolio2, stocks, false, true, true
         )
     )
         .WillOnce(Return(instrumentsForTrading3));
@@ -1392,7 +1386,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(), 1704056580000, configMock, sellInstrumentSells, sellPortfolio, stocks, false, 0, true, true
+            QThread::currentThread(), 1704056580000, configMock, sellInstrumentSells, sellPortfolio, stocks, false, true, true
         )
     )
         .WillOnce(Return(instrumentsForTrading4));
@@ -1416,7 +1410,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
             sellPortfolio2,
             stocks,
             false,
-            0,
             true,
             true
         )

@@ -25,7 +25,6 @@ constexpr qint64  PRICE_COLLECT_INTERVAL                   = ONE_HOUR;          
 constexpr qint64  CLEANUP_INTERVAL                         = ONE_DAY;           // 1 day
 constexpr qint64  STOCKS_TABLE_UPDATE_ALL_INTERVAL         = ONE_DAY;           // 1 day
 constexpr qint64  STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL = 3 * MS_IN_SECOND;  // 3 seconds
-constexpr qint64  KEEP_MONEY_CHANGE_DELAY                  = MS_IN_SECOND;      // 1 second
 constexpr qint64  PORTFOLIO_UPDATE_LAST_PRICES_INTERVAL    = 3 * MS_IN_SECOND;  // 3 seconds
 
 #ifdef Q_OS_WINDOWS
@@ -264,7 +263,6 @@ MainWindow::MainWindow(
     connect(&makeDecisionTimer,                       SIGNAL(timeout()),                                        this, SLOT(makeDecisionTimerTicked()));
     connect(&stocksTableUpdateAllTimer,               SIGNAL(timeout()),                                        this, SLOT(stocksTableUpdateAllTimerTicked()));
     connect(&stocksTableUpdateLastPricesTimer,        SIGNAL(timeout()),                                        this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
-    connect(&keepMoneyChangeDelayTimer,               SIGNAL(timeout()),                                        this, SLOT(keepMoneyChangeDelayTimerTicked()));
     connect(&simulatorPortfolioUpdateLastPricesTimer, SIGNAL(timeout()),                                        this, SLOT(simulatorPortfolioUpdateLastPricesTimerTicked()));
     connect(&autoPilotPortfolioUpdateLastPricesTimer, SIGNAL(timeout()),                                        this, SLOT(autoPilotPortfolioUpdateLastPricesTimerTicked()));
     connect(mPriceCollectThread,                      SIGNAL(notifyInstrumentsProgress(const QString&)),        this, SLOT(notifyInstrumentsProgress(const QString&)));
@@ -525,19 +523,6 @@ void MainWindow::stocksTableUpdateLastPricesTimerTicked()
     qDebug() << "Stocks table update timer ticked";
 
     mStocksTableWidget->updateLastPrices();
-}
-
-void MainWindow::keepMoneyChangeDelayTimerTicked()
-{
-    keepMoneyChangeDelayTimer.stop();
-
-    const int keepMoney = ui->keepMoneySpinBox->value();
-
-    mAutoPilotSettingsEditor->setValue("Options/KeepMoney", keepMoney);
-
-    mAutoPilotDecisionMakerThread->setKeepMoney(keepMoney);
-    mHighLiquidityThread->setKeepMoney(keepMoney);
-    mFollowThread->setKeepMoney(keepMoney);
 }
 
 void MainWindow::simulatorPortfolioUpdateLastPricesTimerTicked()
@@ -1118,11 +1103,6 @@ void MainWindow::on_startAutoPilotButton_clicked()
     }
 }
 
-void MainWindow::on_keepMoneySpinBox_valueChanged(int /*value*/)
-{
-    keepMoneyChangeDelayTimer.start(KEEP_MONEY_CHANGE_DELAY);
-}
-
 enum DatabaseType : qint8
 {
     DATABASE_TYPE_USER,
@@ -1306,9 +1286,6 @@ void MainWindow::loadWindowState()
     mStocksTableWidget->loadWindowState("MainWindow/StocksTableWidget");
     mSimulatorDecisionMakerWidget->loadWindowState("MainWindow/Simulator");
     mAutoPilotDecisionMakerWidget->loadWindowState("MainWindow/AutoPilot");
-
-    ui->keepMoneySpinBox->setValue(mAutoPilotSettingsEditor->value("Options/KeepMoney", 0).toInt());
-    keepMoneyChangeDelayTimerTicked();
 
     updateStackWidgetToolbar();
 }

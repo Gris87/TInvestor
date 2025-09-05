@@ -602,23 +602,6 @@
                 </property>
                </spacer>
               </item>
-              <item>
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Keep money on account:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="keepMoneySpinBox">
-                <property name="suffix">
-                 <string notr="true"> p</string>
-                </property>
-                <property name="maximum">
-                 <number>1000000000</number>
-                </property>
-               </widget>
-              </item>
              </layout>
             </item>
             <item>

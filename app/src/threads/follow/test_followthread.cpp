@@ -283,17 +283,6 @@ TEST_F(Test_FollowThread, Test_run)
     thread->run();
 }
 
-TEST_F(Test_FollowThread, Test_setKeepMoney_and_keepMoney)
-{
-    ASSERT_EQ(thread->keepMoney(), 0);
-
-    thread->setKeepMoney(1000);
-    ASSERT_EQ(thread->keepMoney(), 1000);
-
-    thread->setKeepMoney(50000);
-    ASSERT_EQ(thread->keepMoney(), 50000);
-}
-
 TEST_F(Test_FollowThread, Test_terminateThread)
 {
     const InSequence seq;

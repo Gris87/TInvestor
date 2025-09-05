@@ -67,7 +67,6 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     const InSequence seq;
 
     thread->setAccountId("aaaaa");
-    thread->setKeepMoney(10000);
 
     const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
 
@@ -265,7 +264,7 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(), Ge(1704056400000), configMock, instrumentSells, portfolio, stocks, true, 10000, false, true
+            QThread::currentThread(), Ge(1704056400000), configMock, instrumentSells, portfolio, stocks, true, false, true
         )
     )
         .WillOnce(Return(instrumentsForTrading));

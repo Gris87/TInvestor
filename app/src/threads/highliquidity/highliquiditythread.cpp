@@ -24,13 +24,11 @@ constexpr qint64 SLEEP_BEFORE_REQUEST        = 1LL * MS_IN_SECOND; // 1 second
 
 HighLiquidityThread::HighLiquidityThread(IConfig* config, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent) :
     IHighLiquidityThread(parent),
-    mRwMutex(new QReadWriteLock()),
     mConfig(config),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mMoscowTimezone("Europe/Moscow"),
-    mAccountId(),
-    mKeepMoney()
+    mAccountId()
 {
     qDebug() << "Create HighLiquidityThread";
 }
@@ -38,8 +36,6 @@ HighLiquidityThread::HighLiquidityThread(IConfig* config, ITimeUtils* timeUtils,
 HighLiquidityThread::~HighLiquidityThread()
 {
     qDebug() << "Destroy HighLiquidityThread";
-
-    delete mRwMutex;
 }
 
 void HighLiquidityThread::run()
@@ -102,7 +98,6 @@ void HighLiquidityThread::buyEtf()
 
                 calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfFound);
                 money -= totalCost * mConfig->getLiquidityEtfRemainedPartNightly() / HUNDRED_PERCENT;
-                money -= keepMoney();
 
                 if (!QThread::currentThread()->isInterruptionRequested() && !etfFound && money > 0)
                 {
@@ -164,20 +159,6 @@ void HighLiquidityThread::sellEtf()
 void HighLiquidityThread::setAccountId(const QString& accountId)
 {
     mAccountId = accountId;
-}
-
-void HighLiquidityThread::setKeepMoney(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mKeepMoney = value;
-}
-
-int HighLiquidityThread::keepMoney() const
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mKeepMoney;
 }
 
 void HighLiquidityThread::terminateThread()

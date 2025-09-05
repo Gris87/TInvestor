@@ -53,7 +53,6 @@ public:
         const Portfolio&       portfolio,
         const QList<Stock*>&   stocks,
         bool                   autoPilot,
-        int                    keepMoney,
         bool                   dateRange,
         bool                   useParallel
     ) override;
@@ -71,7 +70,6 @@ private:
         const InstrumentSells&    instrumentSells,
         const Portfolio&          portfolio,
         QList<StockWithAvgPrice>& stocksWithAvgPrice,
-        int                       keepMoney,
         bool                      dateRange,
         bool                      useParallel,
         InstrumentsForTrading&    res

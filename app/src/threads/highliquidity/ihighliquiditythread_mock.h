@@ -24,6 +24,5 @@ public:
 
     MOCK_METHOD(void, run, (), (override));
     MOCK_METHOD(void, setAccountId, (const QString& accountId), (override));
-    MOCK_METHOD(void, setKeepMoney, (int value), (override));
     MOCK_METHOD(void, terminateThread, (), (override));
 };

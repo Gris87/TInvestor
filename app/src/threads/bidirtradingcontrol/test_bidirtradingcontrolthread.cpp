@@ -2,6 +2,16 @@
 
 #include <gtest/gtest.h>
 
+#include "src/config/iconfig_mock.h"
+#include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/stocks/istocksstorage_mock.h"
+
+
+
+using ::testing::InSequence;
+using ::testing::Return;
+using ::testing::StrictMock;
+
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
@@ -10,15 +20,25 @@ class Test_BiDirTradingControlThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        thread = new BiDirTradingControlThread();
+        stocksStorageMock = new StrictMock<StocksStorageMock>();
+        configMock        = new StrictMock<ConfigMock>();
+        grpcClientMock    = new StrictMock<GrpcClientMock>();
+
+        thread = new BiDirTradingControlThread(stocksStorageMock, configMock, grpcClientMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete thread;
+        delete stocksStorageMock;
+        delete configMock;
+        delete grpcClientMock;
     }
 
-    BiDirTradingControlThread* thread;
+    BiDirTradingControlThread*     thread;
+    StrictMock<StocksStorageMock>* stocksStorageMock;
+    StrictMock<ConfigMock>*        configMock;
+    StrictMock<GrpcClientMock>*    grpcClientMock;
 };
 
 

@@ -312,7 +312,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         .WillOnce(Return(1500));
 
     InstrumentsForTrading result = decisionMaker->makeDecision(
-        QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, false, 0, false, false
+        QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, false, false, false
     );
 
     // clang-format off
@@ -335,7 +335,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704542400000)).WillOnce(Return(false));
 
     result = decisionMaker->makeDecision(
-        QThread::currentThread(), 1704542400000, configMock, instrumentSells, portfolio, stocks, false, 0, false, true
+        QThread::currentThread(), 1704542400000, configMock, instrumentSells, portfolio, stocks, false, false, true
     );
 
     ASSERT_EQ(result.size(), 0);
@@ -391,7 +391,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         .WillOnce(Return(2333));
 
     result = decisionMaker->makeDecision(
-        QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, false, 0, false, true
+        QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, false, false, true
     );
 
     // clang-format off
@@ -461,7 +461,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         .WillOnce(Return(3332));
 
     result = decisionMaker->makeDecision(
-        QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, false, 0, false, true
+        QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, false, false, true
     );
 
     // clang-format off
@@ -505,9 +505,16 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     )
         .WillOnce(Return("I want to sell"));
     EXPECT_CALL(*sellDecisionMock, asapMode()).WillOnce(Return(ASAP_MODE_NONE));
+    EXPECT_CALL(
+        *buyDecisionMock,
+        makeDecision(
+            QThread::currentThread(), autoPilotConfigMock, 0, &stock3, false, -1, FloatEq(0.3f), FloatEq(-1.0f), FloatEq(0.04f)
+        )
+    )
+        .WillOnce(Return(""));
 
     result = decisionMaker->makeDecision(
-        QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, true, 200000, false, true
+        QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, true, false, true
     );
 
     // clang-format off
@@ -571,7 +578,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         .WillOnce(Return(3332));
 
     result = decisionMaker->makeDecision(
-        QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, true, 0, true, true
+        QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, true, true, true
     );
 
     // clang-format off
@@ -602,7 +609,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, readUnlock());
 
     result = decisionMaker->makeDecision(
-        QThread::currentThread(), 1704110460000, configMock, instrumentSells, portfolio, stocks, true, 0, true, true
+        QThread::currentThread(), 1704110460000, configMock, instrumentSells, portfolio, stocks, true, true, true
     );
 
     ASSERT_EQ(result.size(), 0);
