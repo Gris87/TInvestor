@@ -1,6 +1,4 @@
-Bug with double input in operations
 Trade instruments with huge spread (detect periodically among all stocks). Buy few / sell few (average?)
-Buy TMON@ at the evening and sell at the morning
 Trade TMON@ bid <=> ask
 Improve coverage
 Create release

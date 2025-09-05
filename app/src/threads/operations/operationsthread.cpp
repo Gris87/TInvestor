@@ -248,10 +248,17 @@ bool OperationsThread::requestOperations()
 
                 if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
                 {
+                    QString instrumentId = QString::fromStdString(tinkoffOperation.instrument_uid());
+
+                    if (instrumentId == "")
+                    {
+                        instrumentId = RUBLE_UID;
+                    }
+
                     const QString operationIdStr = QString("%1_%2_%3")
                                                        .arg(
                                                            QString::number(timeToTimestamp(tinkoffOperation.date())),
-                                                           QString::fromStdString(tinkoffOperation.instrument_uid()),
+                                                           instrumentId,
                                                            QString::fromStdString(tinkoffOperation.description())
                                                        );
 
@@ -290,10 +297,17 @@ bool OperationsThread::requestOperations()
 
                 if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
                 {
+                    QString instrumentId = QString::fromStdString(tinkoffOperation.instrument_uid());
+
+                    if (instrumentId == "")
+                    {
+                        instrumentId = RUBLE_UID;
+                    }
+
                     const QString operationIdStr = QString("%1_%2_%3")
                                                        .arg(
                                                            QString::number(timeToTimestamp(tinkoffOperation.date())),
-                                                           QString::fromStdString(tinkoffOperation.instrument_uid()),
+                                                           instrumentId,
                                                            QString::fromStdString(tinkoffOperation.description())
                                                        );
 
