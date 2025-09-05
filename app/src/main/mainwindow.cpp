@@ -87,7 +87,7 @@ MainWindow::MainWindow(
     ISimulatorDecisionMakerThread*          simulatorDecisionMakerThread,
     ISimulatorDateRangeDecisionMakerThread* simulatorDateRangeDecisionMakerThread,
     IAutoPilotDecisionMakerThread*          autoPilotDecisionMakerThread,
-    IHugeSpreadThread*                      hugeSpreadThread,
+    IBiDirTradingControlThread*             biDirTradingControlThread,
     IHighLiquidityThread*                   highLiquidityThread,
     IFollowThread*                          followThread,
     IOrderBookThread*                       orderBookThread,
@@ -139,7 +139,7 @@ MainWindow::MainWindow(
     mSimulatorDecisionMakerThread(simulatorDecisionMakerThread),
     mSimulatorDateRangeDecisionMakerThread(simulatorDateRangeDecisionMakerThread),
     mAutoPilotDecisionMakerThread(autoPilotDecisionMakerThread),
-    mHugeSpreadThread(hugeSpreadThread),
+    mBiDirTradingControlThread(biDirTradingControlThread),
     mHighLiquidityThread(highLiquidityThread),
     mFollowThread(followThread),
     mOrderBookThread(orderBookThread),
@@ -294,7 +294,7 @@ MainWindow::MainWindow(
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(logsRead(const QList<LogEntry>&)),                 this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(portfolioChanged(const Portfolio&)),               this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
     connect(mAutoPilotDecisionMakerThread,            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),   this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
-    connect(mHugeSpreadThread,                        SIGNAL(tradeInstruments(const InstrumentsForTrading&)),   this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
+    connect(mBiDirTradingControlThread,               SIGNAL(tradeInstruments(const InstrumentsForTrading&)),   this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mHighLiquidityThread,                     SIGNAL(tradeInstruments(const InstrumentsForTrading&)),   this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mFollowThread,                            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),   this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),      this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
@@ -326,7 +326,7 @@ MainWindow::~MainWindow()
     mSimulatorDecisionMakerThread->terminateThread();
     mSimulatorDateRangeDecisionMakerThread->terminateThread();
     mAutoPilotDecisionMakerThread->terminateThread();
-    mHugeSpreadThread->terminateThread();
+    mBiDirTradingControlThread->terminateThread();
     mHighLiquidityThread->terminateThread();
     mFollowThread->terminateThread();
 
@@ -347,7 +347,7 @@ MainWindow::~MainWindow()
     mSimulatorDecisionMakerThread->wait();
     mSimulatorDateRangeDecisionMakerThread->wait();
     mAutoPilotDecisionMakerThread->wait();
-    mHugeSpreadThread->wait();
+    mBiDirTradingControlThread->wait();
     mHighLiquidityThread->wait();
     mFollowThread->wait();
 
@@ -500,9 +500,9 @@ void MainWindow::makeDecisionTimerTicked()
         {
             mAutoPilotDecisionMakerThread->start();
 
-            if (mConfig->isTradeHugeSpread())
+            if (mConfig->isTradeHugeSpread() || mConfig->isTradeLiquidityEtfDaily())
             {
-                mHugeSpreadThread->start();
+                mBiDirTradingControlThread->start();
             }
 
             if (mConfig->isTradeLiquidityEtfNightly())
@@ -536,7 +536,7 @@ void MainWindow::keepMoneyChangeDelayTimerTicked()
     mAutoPilotSettingsEditor->setValue("Options/KeepMoney", keepMoney);
 
     mAutoPilotDecisionMakerThread->setKeepMoney(keepMoney);
-    mHugeSpreadThread->setKeepMoney(keepMoney);
+    mBiDirTradingControlThread->setKeepMoney(keepMoney);
     mHighLiquidityThread->setKeepMoney(keepMoney);
     mFollowThread->setKeepMoney(keepMoney);
 }
@@ -704,7 +704,7 @@ void MainWindow::startAutoPilot()
         if (mode == AUTO_PILOT_MODE_INTERNAL)
         {
             mAutoPilotDecisionMakerThread->setAccountId(mAutoPilotAccountId);
-            mHugeSpreadThread->setAccountId(mAutoPilotAccountId);
+            mBiDirTradingControlThread->setAccountId(mAutoPilotAccountId);
             mHighLiquidityThread->setAccountId(mAutoPilotAccountId);
         }
         else if (mode == AUTO_PILOT_MODE_FOLLOW)
@@ -724,9 +724,9 @@ void MainWindow::startAutoPilot()
         {
             mAutoPilotDecisionMakerThread->start();
 
-            if (mConfig->isTradeHugeSpread())
+            if (mConfig->isTradeHugeSpread() || mConfig->isTradeLiquidityEtfDaily())
             {
-                mHugeSpreadThread->start();
+                mBiDirTradingControlThread->start();
             }
 
             if (mConfig->isTradeLiquidityEtfNightly())
@@ -760,7 +760,7 @@ void MainWindow::stopAutoPilot()
     mPortfolioThread->terminateThread();
     mAutoPilotPortfolioLastPriceThread->terminateThread();
     mAutoPilotDecisionMakerThread->terminateThread();
-    mHugeSpreadThread->terminateThread();
+    mBiDirTradingControlThread->terminateThread();
     mHighLiquidityThread->terminateThread();
     mFollowThread->terminateThread();
 
@@ -776,7 +776,7 @@ void MainWindow::stopAutoPilot()
     mPortfolioThread->wait();
     mAutoPilotPortfolioLastPriceThread->wait();
     mAutoPilotDecisionMakerThread->wait();
-    mHugeSpreadThread->wait();
+    mBiDirTradingControlThread->wait();
     mHighLiquidityThread->wait();
     mFollowThread->wait();
 

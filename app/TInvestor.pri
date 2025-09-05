@@ -89,10 +89,12 @@ SOURCES += \
     src/storage/stocks/stocksstorage.cpp \
     src/storage/user/userstorage.cpp \
     src/threads/autopilotdecisionmaker/autopilotdecisionmakerthread.cpp \
+    src/threads/bidirtrading/bidirtradingthread.cpp \
+    src/threads/bidirtrading/bidirtradingthreadfactory.cpp \
+    src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/follow/followthread.cpp \
     src/threads/highliquidity/highliquiditythread.cpp \
-    src/threads/hugespread/hugespreadthread.cpp \
     src/threads/lastprice/lastpricethread.cpp \
     src/threads/logs/logsthread.cpp \
     src/threads/operations/operationsthread.cpp \
@@ -305,14 +307,18 @@ HEADERS += \
     src/storage/user/userstorage.h \
     src/threads/autopilotdecisionmaker/autopilotdecisionmakerthread.h \
     src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread.h \
+    src/threads/bidirtrading/bidirtradingthread.h \
+    src/threads/bidirtrading/bidirtradingthreadfactory.h \
+    src/threads/bidirtrading/ibidirtradingthread.h \
+    src/threads/bidirtrading/ibidirtradingthreadfactory.h \
+    src/threads/bidirtradingcontrol/bidirtradingcontrolthread.h \
+    src/threads/bidirtradingcontrol/ibidirtradingcontrolthread.h \
     src/threads/cleanup/cleanupthread.h \
     src/threads/cleanup/icleanupthread.h \
     src/threads/follow/followthread.h \
     src/threads/follow/ifollowthread.h \
     src/threads/highliquidity/highliquiditythread.h \
     src/threads/highliquidity/ihighliquiditythread.h \
-    src/threads/hugespread/hugespreadthread.h \
-    src/threads/hugespread/ihugespreadthread.h \
     src/threads/lastprice/ilastpricethread.h \
     src/threads/lastprice/lastpricethread.h \
     src/threads/logs/ilogsthread.h \

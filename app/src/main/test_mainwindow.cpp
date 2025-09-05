@@ -29,10 +29,10 @@
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread_mock.h"
+#include "src/threads/bidirtradingcontrol/ibidirtradingcontrolthread_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/follow/ifollowthread_mock.h"
 #include "src/threads/highliquidity/ihighliquiditythread_mock.h"
-#include "src/threads/hugespread/ihugespreadthread_mock.h"
 #include "src/threads/lastprice/ilastpricethread_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
 #include "src/threads/operations/ioperationsthread_mock.h"
@@ -150,7 +150,7 @@ protected:
         simulatorDecisionMakerThreadMock          = new StrictMock<SimulatorDecisionMakerThreadMock>();
         simulatorDateRangeDecisionMakerThreadMock = new StrictMock<SimulatorDateRangeDecisionMakerThreadMock>();
         autoPilotDecisionMakerThreadMock          = new StrictMock<AutoPilotDecisionMakerThreadMock>();
-        hugeSpreadThreadMock                      = new StrictMock<HugeSpreadThreadMock>();
+        biDirTradingControlThreadMock             = new StrictMock<BiDirTradingControlThreadMock>();
         highLiquidityThreadMock                   = new StrictMock<HighLiquidityThreadMock>();
         followThreadMock                          = new StrictMock<FollowThreadMock>();
         orderBookThreadMock                       = new StrictMock<OrderBookThreadMock>();
@@ -277,7 +277,7 @@ protected:
         EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/KeepMoney"), QVariant(0))).WillOnce(Return(QVariant(0)));
         EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
         EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setKeepMoney(0));
-        EXPECT_CALL(*hugeSpreadThreadMock, setKeepMoney(0));
+        EXPECT_CALL(*biDirTradingControlThreadMock, setKeepMoney(0));
         EXPECT_CALL(*highLiquidityThreadMock, setKeepMoney(0));
         EXPECT_CALL(*followThreadMock, setKeepMoney(0));
 
@@ -332,7 +332,7 @@ protected:
             simulatorDecisionMakerThreadMock,
             simulatorDateRangeDecisionMakerThreadMock,
             autoPilotDecisionMakerThreadMock,
-            hugeSpreadThreadMock,
+            biDirTradingControlThreadMock,
             highLiquidityThreadMock,
             followThreadMock,
             orderBookThreadMock,
@@ -363,7 +363,7 @@ protected:
         EXPECT_CALL(*simulatorDecisionMakerThreadMock, terminateThread());
         EXPECT_CALL(*simulatorDateRangeDecisionMakerThreadMock, terminateThread());
         EXPECT_CALL(*autoPilotDecisionMakerThreadMock, terminateThread());
-        EXPECT_CALL(*hugeSpreadThreadMock, terminateThread());
+        EXPECT_CALL(*biDirTradingControlThreadMock, terminateThread());
         EXPECT_CALL(*highLiquidityThreadMock, terminateThread());
         EXPECT_CALL(*followThreadMock, terminateThread());
 
@@ -429,7 +429,7 @@ protected:
         delete simulatorDecisionMakerThreadMock;
         delete simulatorDateRangeDecisionMakerThreadMock;
         delete autoPilotDecisionMakerThreadMock;
-        delete hugeSpreadThreadMock;
+        delete biDirTradingControlThreadMock;
         delete highLiquidityThreadMock;
         delete followThreadMock;
         delete orderBookThreadMock;
@@ -502,7 +502,7 @@ protected:
     StrictMock<SimulatorDecisionMakerThreadMock>*          simulatorDecisionMakerThreadMock;
     StrictMock<SimulatorDateRangeDecisionMakerThreadMock>* simulatorDateRangeDecisionMakerThreadMock;
     StrictMock<AutoPilotDecisionMakerThreadMock>*          autoPilotDecisionMakerThreadMock;
-    StrictMock<HugeSpreadThreadMock>*                      hugeSpreadThreadMock;
+    StrictMock<BiDirTradingControlThreadMock>*             biDirTradingControlThreadMock;
     StrictMock<HighLiquidityThreadMock>*                   highLiquidityThreadMock;
     StrictMock<FollowThreadMock>*                          followThreadMock;
     StrictMock<OrderBookThreadMock>*                       orderBookThreadMock;
@@ -595,7 +595,7 @@ TEST_F(Test_MainWindow, Test_authFailed)
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
     EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, terminateThread());
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, terminateThread());
-    EXPECT_CALL(*hugeSpreadThreadMock, terminateThread());
+    EXPECT_CALL(*biDirTradingControlThreadMock, terminateThread());
     EXPECT_CALL(*highLiquidityThreadMock, terminateThread());
     EXPECT_CALL(*followThreadMock, terminateThread());
     EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, mainWindow))
@@ -686,7 +686,7 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
     EXPECT_CALL(*simulatorDecisionMakerThreadMock, run());
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, run());
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
-    EXPECT_CALL(*hugeSpreadThreadMock, run());
+    EXPECT_CALL(*biDirTradingControlThreadMock, run());
     EXPECT_CALL(*configMock, isTradeLiquidityEtfNightly()).WillOnce(Return(true));
     EXPECT_CALL(*highLiquidityThreadMock, run());
 
@@ -698,7 +698,7 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 
     simulatorDecisionMakerThreadMock->wait();
     autoPilotDecisionMakerThreadMock->wait();
-    hugeSpreadThreadMock->wait();
+    biDirTradingControlThreadMock->wait();
     highLiquidityThreadMock->wait();
 }
 
@@ -739,7 +739,7 @@ TEST_F(Test_MainWindow, Test_keepMoneyChangeDelayTimerTicked)
 
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setKeepMoney(0));
-    EXPECT_CALL(*hugeSpreadThreadMock, setKeepMoney(0));
+    EXPECT_CALL(*biDirTradingControlThreadMock, setKeepMoney(0));
     EXPECT_CALL(*highLiquidityThreadMock, setKeepMoney(0));
     EXPECT_CALL(*followThreadMock, setKeepMoney(0));
 
@@ -1554,7 +1554,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*logsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
     EXPECT_CALL(*portfolioThreadMock, setAccountId(QString("aaaaaa")));
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setAccountId(QString("aaaaaa")));
-    EXPECT_CALL(*hugeSpreadThreadMock, setAccountId(QString("aaaaaa")));
+    EXPECT_CALL(*biDirTradingControlThreadMock, setAccountId(QString("aaaaaa")));
     EXPECT_CALL(*highLiquidityThreadMock, setAccountId(QString("aaaaaa")));
 
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
@@ -1566,7 +1566,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, run());
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, run());
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
-    EXPECT_CALL(*hugeSpreadThreadMock, run());
+    EXPECT_CALL(*biDirTradingControlThreadMock, run());
     EXPECT_CALL(*configMock, isTradeLiquidityEtfNightly()).WillOnce(Return(true));
     EXPECT_CALL(*highLiquidityThreadMock, run());
 
@@ -1586,7 +1586,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     portfolioThreadMock->wait();
     autoPilotPortfolioLastPriceThreadMock->wait();
     autoPilotDecisionMakerThreadMock->wait();
-    hugeSpreadThreadMock->wait();
+    biDirTradingControlThreadMock->wait();
     highLiquidityThreadMock->wait();
 
     InstrumentsForTrading instruments;
@@ -1650,7 +1650,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
     EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, terminateThread());
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, terminateThread());
-    EXPECT_CALL(*hugeSpreadThreadMock, terminateThread());
+    EXPECT_CALL(*biDirTradingControlThreadMock, terminateThread());
     EXPECT_CALL(*highLiquidityThreadMock, terminateThread());
     EXPECT_CALL(*followThreadMock, terminateThread());
     EXPECT_CALL(*tradingThreadMock, terminateThread());
@@ -1772,7 +1772,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
     EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, terminateThread());
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, terminateThread());
-    EXPECT_CALL(*hugeSpreadThreadMock, terminateThread());
+    EXPECT_CALL(*biDirTradingControlThreadMock, terminateThread());
     EXPECT_CALL(*highLiquidityThreadMock, terminateThread());
     EXPECT_CALL(*followThreadMock, terminateThread());
     EXPECT_CALL(*tradingThreadMock, terminateThread());

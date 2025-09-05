@@ -85,10 +85,12 @@ SOURCES += \
     src/storage/stocks/test_stocksstorage.cpp \
     src/storage/user/test_userstorage.cpp \
     src/threads/autopilotdecisionmaker/test_autopilotdecisionmakerthread.cpp \
+    src/threads/bidirtrading/test_bidirtradingthread.cpp \
+    src/threads/bidirtrading/test_bidirtradingthreadfactory.cpp \
+    src/threads/bidirtradingcontrol/test_bidirtradingcontrolthread.cpp \
     src/threads/cleanup/test_cleanupthread.cpp \
     src/threads/follow/test_followthread.cpp \
     src/threads/highliquidity/test_highliquiditythread.cpp \
-    src/threads/hugespread/test_hugespreadthread.cpp \
     src/threads/lastprice/test_lastpricethread.cpp \
     src/threads/logs/test_logsthread.cpp \
     src/threads/operations/test_operationsthread.cpp \
@@ -214,10 +216,12 @@ HEADERS += \
     src/storage/stocks/istocksstorage_mock.h \
     src/storage/user/iuserstorage_mock.h \
     src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread_mock.h \
+    src/threads/bidirtrading/ibidirtradingthread_mock.h \
+    src/threads/bidirtrading/ibidirtradingthreadfactory_mock.h \
+    src/threads/bidirtradingcontrol/ibidirtradingcontrolthread_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
     src/threads/follow/ifollowthread_mock.h \
     src/threads/highliquidity/ihighliquiditythread_mock.h \
-    src/threads/hugespread/ihugespreadthread_mock.h \
     src/threads/lastprice/ilastpricethread_mock.h \
     src/threads/logs/ilogsthread_mock.h \
     src/threads/operations/ioperationsthread_mock.h \

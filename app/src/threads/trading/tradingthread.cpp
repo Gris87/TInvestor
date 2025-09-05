@@ -154,6 +154,8 @@ bool TradingThread::trade()
             return false;
         }
 
+        // TODO: Validate portfolio
+
         const double cost     = handlePortfolioResponse(*tinkoffPortfolio);
         const double expected = expectedCost();
 

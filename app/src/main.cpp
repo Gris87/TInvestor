@@ -55,10 +55,10 @@
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
 #include "src/threads/autopilotdecisionmaker/autopilotdecisionmakerthread.h"
+#include "src/threads/bidirtradingcontrol/bidirtradingcontrolthread.h"
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/follow/followthread.h"
 #include "src/threads/highliquidity/highliquiditythread.h"
-#include "src/threads/hugespread/hugespreadthread.h"
 #include "src/threads/lastprice//lastpricethread.h"
 #include "src/threads/logs/logsthread.h"
 #include "src/threads/operations/operationsthread.h"
@@ -463,11 +463,11 @@ static int runApplication(QApplication* app)
     AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(
         &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &timeUtils, &grpcClient
     );
-    HugeSpreadThread     hugeSpreadThread;
-    HighLiquidityThread  highLiquidityThread(&config, &timeUtils, &grpcClient);
-    FollowThread         followThread(&instrumentsStorage, &grpcClient);
-    OrderBookThread      orderBookThread(&grpcClient);
-    TradingThreadFactory tradingThreadFactory;
+    BiDirTradingControlThread biDirTradingControlThread;
+    HighLiquidityThread       highLiquidityThread(&config, &timeUtils, &grpcClient);
+    FollowThread              followThread(&instrumentsStorage, &grpcClient);
+    OrderBookThread           orderBookThread(&grpcClient);
+    TradingThreadFactory      tradingThreadFactory;
 
     MainWindow mainWindow(
         &config,
@@ -520,7 +520,7 @@ static int runApplication(QApplication* app)
         &simulatorDecisionMakerThread,
         &simulatorDateRangeDecisionMakerThread,
         &autoPilotDecisionMakerThread,
-        &hugeSpreadThread,
+        &biDirTradingControlThread,
         &highLiquidityThread,
         &followThread,
         &orderBookThread,

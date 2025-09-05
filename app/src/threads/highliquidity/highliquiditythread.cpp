@@ -24,10 +24,13 @@ constexpr qint64 SLEEP_BEFORE_REQUEST        = 1LL * MS_IN_SECOND; // 1 second
 
 HighLiquidityThread::HighLiquidityThread(IConfig* config, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent) :
     IHighLiquidityThread(parent),
+    mRwMutex(new QReadWriteLock()),
     mConfig(config),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
-    mMoscowTimezone("Europe/Moscow")
+    mMoscowTimezone("Europe/Moscow"),
+    mAccountId(),
+    mKeepMoney()
 {
     qDebug() << "Create HighLiquidityThread";
 }
@@ -35,6 +38,8 @@ HighLiquidityThread::HighLiquidityThread(IConfig* config, ITimeUtils* timeUtils,
 HighLiquidityThread::~HighLiquidityThread()
 {
     qDebug() << "Destroy HighLiquidityThread";
+
+    delete mRwMutex;
 }
 
 void HighLiquidityThread::run()

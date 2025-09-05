@@ -18,10 +18,10 @@
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread.h"
+#include "src/threads/bidirtradingcontrol/ibidirtradingcontrolthread.h"
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/follow/ifollowthread.h"
 #include "src/threads/highliquidity/ihighliquiditythread.h"
-#include "src/threads/hugespread/ihugespreadthread.h"
 #include "src/threads/lastprice/ilastpricethread.h"
 #include "src/threads/logs/ilogsthread.h"
 #include "src/threads/operations/ioperationsthread.h"
@@ -109,7 +109,7 @@ public:
         ISimulatorDecisionMakerThread*          simulatorDecisionMakerThread,
         ISimulatorDateRangeDecisionMakerThread* simulatorDateRangeDecisionMakerThread,
         IAutoPilotDecisionMakerThread*          autoPilotDecisionMakerThread,
-        IHugeSpreadThread*                      hugeSpreadThread,
+        IBiDirTradingControlThread*             biDirTradingControlThread,
         IHighLiquidityThread*                   highLiquidityThread,
         IFollowThread*                          followThread,
         IOrderBookThread*                       orderBookThread,
@@ -192,7 +192,7 @@ private:
     ISimulatorDecisionMakerThread*          mSimulatorDecisionMakerThread;
     ISimulatorDateRangeDecisionMakerThread* mSimulatorDateRangeDecisionMakerThread;
     IAutoPilotDecisionMakerThread*          mAutoPilotDecisionMakerThread;
-    IHugeSpreadThread*                      mHugeSpreadThread;
+    IBiDirTradingControlThread*             mBiDirTradingControlThread;
     IHighLiquidityThread*                   mHighLiquidityThread;
     IFollowThread*                          mFollowThread;
     IOrderBookThread*                       mOrderBookThread;
