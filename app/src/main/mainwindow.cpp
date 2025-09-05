@@ -536,7 +536,6 @@ void MainWindow::keepMoneyChangeDelayTimerTicked()
     mAutoPilotSettingsEditor->setValue("Options/KeepMoney", keepMoney);
 
     mAutoPilotDecisionMakerThread->setKeepMoney(keepMoney);
-    mBiDirTradingControlThread->setKeepMoney(keepMoney);
     mHighLiquidityThread->setKeepMoney(keepMoney);
     mFollowThread->setKeepMoney(keepMoney);
 }

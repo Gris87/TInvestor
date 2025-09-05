@@ -4,7 +4,9 @@
 
 #include "src/threads/bidirtradingcontrol/ibidirtradingcontrolthread.h"
 
-#include <QReadWriteLock>
+#include "src/config/iconfig.h"
+#include "src/grpc/igrpcclient.h"
+#include "src/storage/stocks/istocksstorage.h"
 
 
 
@@ -13,7 +15,9 @@ class BiDirTradingControlThread : public IBiDirTradingControlThread
     Q_OBJECT
 
 public:
-    explicit BiDirTradingControlThread(QObject* parent = nullptr);
+    explicit BiDirTradingControlThread(
+        IStocksStorage* stocksStorage, IConfig* config, IGrpcClient* grpcClient, QObject* parent = nullptr
+    );
     ~BiDirTradingControlThread() override;
 
     BiDirTradingControlThread(const BiDirTradingControlThread& another)            = delete;
@@ -22,15 +26,15 @@ public:
     void run() override;
 
     void setAccountId(const QString& accountId) override;
-    void setKeepMoney(int value) override;
-
-    [[nodiscard]]
-    int keepMoney() const;
 
     void terminateThread() override;
 
 private:
-    QReadWriteLock* mRwMutex;
+    void detectHugeSpreadStocks();
+
+    IStocksStorage* mStocksStorage;
+    IConfig*        mConfig;
+    IGrpcClient*    mGrpcClient;
     QString         mAccountId;
-    int             mKeepMoney;
+    qint64          mLastDetectionTimestamp;
 };

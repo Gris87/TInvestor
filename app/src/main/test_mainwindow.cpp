@@ -277,7 +277,6 @@ protected:
         EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/KeepMoney"), QVariant(0))).WillOnce(Return(QVariant(0)));
         EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
         EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setKeepMoney(0));
-        EXPECT_CALL(*biDirTradingControlThreadMock, setKeepMoney(0));
         EXPECT_CALL(*highLiquidityThreadMock, setKeepMoney(0));
         EXPECT_CALL(*followThreadMock, setKeepMoney(0));
 
@@ -739,7 +738,6 @@ TEST_F(Test_MainWindow, Test_keepMoneyChangeDelayTimerTicked)
 
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setKeepMoney(0));
-    EXPECT_CALL(*biDirTradingControlThreadMock, setKeepMoney(0));
     EXPECT_CALL(*highLiquidityThreadMock, setKeepMoney(0));
     EXPECT_CALL(*followThreadMock, setKeepMoney(0));
 

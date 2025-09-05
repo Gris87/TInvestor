@@ -23,7 +23,6 @@ public:
     IBiDirTradingControlThread& operator=(const IBiDirTradingControlThread& another) = delete;
 
     virtual void setAccountId(const QString& accountId) = 0;
-    virtual void setKeepMoney(int value)                = 0;
     virtual void terminateThread()                      = 0;
 
 signals:
