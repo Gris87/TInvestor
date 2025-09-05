@@ -246,7 +246,7 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     InstrumentsForTrading instrumentsForTrading;
     TradingInfo           tradingInfo;
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = 1990.0f;
     tradingInfo.price        = 2000.0f;
     tradingInfo.expectedCost = 0.0;

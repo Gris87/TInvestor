@@ -28,7 +28,7 @@ public:
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,
-        bool                 asap,
+        AsapMode             asapMode,
         float                avgPrice,
         float                price,
         double               expectedCost,

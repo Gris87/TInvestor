@@ -213,7 +213,7 @@ QString BuyDecision4::makeDecision(
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
-bool BuyDecision4::isAsap() const
+AsapMode BuyDecision4::asapMode() const
 {
-    return false;
+    return ASAP_MODE_NONE;
 }

@@ -40,7 +40,7 @@ protected:
             logsThreadMock,
             "account-id",
             "aaaaa",
-            true,
+            ASAP_MODE_FOLLOW_PRICE,
             10.0f,
             100.0f,
             10000.0,

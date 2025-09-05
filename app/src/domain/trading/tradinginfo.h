@@ -6,20 +6,29 @@
 
 
 
+enum AsapMode : quint8
+{
+    ASAP_MODE_NONE,
+    ASAP_MODE_FOLLOW_PRICE,
+    ASAP_MODE_IMMEDIATELY_TRADE
+};
+
+
+
 struct TradingInfo
 {
     TradingInfo();
-    TradingInfo(bool _asap, float _avgPrice, float _price, double _expectedCost, const QString& _cause);
+    TradingInfo(AsapMode _asapMode, float _avgPrice, float _price, double _expectedCost, const QString& _cause);
     TradingInfo(const TradingInfo& another) = default;
     ~TradingInfo()                          = default;
 
     TradingInfo& operator=(const TradingInfo& another) = default;
 
-    bool    asap;
-    float   avgPrice;
-    float   price;
-    double  expectedCost;
-    QString cause;
+    AsapMode asapMode;
+    float    avgPrice;
+    float    price;
+    double   expectedCost;
+    QString  cause;
 };
 
 using InstrumentsForTrading = QMap<QString, TradingInfo>; // Instrument UID => TradingInfo

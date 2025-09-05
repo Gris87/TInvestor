@@ -24,17 +24,17 @@ TEST_F(Test_TradingInfo, Test_constructor_and_destructor)
     const TradingInfo info;
 
     // clang-format off
-    ASSERT_EQ(info.asap,           false);
+    ASSERT_EQ(info.asapMode,       ASAP_MODE_NONE);
     ASSERT_NEAR(info.avgPrice,     0, 0.0001f);
     ASSERT_NEAR(info.price,        0, 0.0001f);
     ASSERT_NEAR(info.expectedCost, 0, 0.0001);
     ASSERT_EQ(info.cause,          "");
     // clang-format on
 
-    const TradingInfo info2(true, 1.0f, 2.0f, 3.0, "a");
+    const TradingInfo info2(ASAP_MODE_IMMEDIATELY_TRADE, 1.0f, 2.0f, 3.0, "a");
 
     // clang-format off
-    ASSERT_EQ(info2.asap,           true);
+    ASSERT_EQ(info2.asapMode,       ASAP_MODE_IMMEDIATELY_TRADE);
     ASSERT_NEAR(info2.avgPrice,     1.0f, 0.0001f);
     ASSERT_NEAR(info2.price,        2.0f, 0.0001f);
     ASSERT_NEAR(info2.expectedCost, 3.0,  0.0001);
@@ -46,7 +46,7 @@ TEST_F(Test_TradingInfo, Test_copy_constructor)
 {
     TradingInfo info;
 
-    info.asap         = true;
+    info.asapMode     = ASAP_MODE_IMMEDIATELY_TRADE;
     info.avgPrice     = 1.0f;
     info.price        = 2.0f;
     info.expectedCost = 3.0;
@@ -55,7 +55,7 @@ TEST_F(Test_TradingInfo, Test_copy_constructor)
     const TradingInfo info2(info);
 
     // clang-format off
-    ASSERT_EQ(info2.asap,           true);
+    ASSERT_EQ(info2.asapMode,       ASAP_MODE_IMMEDIATELY_TRADE);
     ASSERT_NEAR(info2.avgPrice,     1.0f, 0.0001f);
     ASSERT_NEAR(info2.price,        2.0f, 0.0001f);
     ASSERT_NEAR(info2.expectedCost, 3.0,  0.0001);
@@ -68,7 +68,7 @@ TEST_F(Test_TradingInfo, Test_assign)
     TradingInfo info;
     TradingInfo info2;
 
-    info.asap         = true;
+    info.asapMode     = ASAP_MODE_IMMEDIATELY_TRADE;
     info.avgPrice     = 1.0f;
     info.price        = 2.0f;
     info.expectedCost = 3.0;
@@ -77,7 +77,7 @@ TEST_F(Test_TradingInfo, Test_assign)
     info2 = info;
 
     // clang-format off
-    ASSERT_EQ(info2.asap,           true);
+    ASSERT_EQ(info2.asapMode,       ASAP_MODE_IMMEDIATELY_TRADE);
     ASSERT_NEAR(info2.avgPrice,     1.0f, 0.0001f);
     ASSERT_NEAR(info2.price,        2.0f, 0.0001f);
     ASSERT_NEAR(info2.expectedCost, 3.0,  0.0001);

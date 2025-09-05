@@ -28,7 +28,7 @@ public:
     ) override;
 
     [[nodiscard]]
-    bool isAsap() const override;
+    AsapMode asapMode() const override;
 
 #ifdef TESTING_MODE
     void testSetStep(int step)

@@ -378,14 +378,14 @@ TEST_F(Test_SettingsDialog, Test_on_liquidityPartDoubleSpinBox_valueChanged)
     const InSequence seq;
 
     dialog->ui->liquidityPartDoubleSpinBox->blockSignals(true);
-    dialog->ui->liquidityPartDoubleSpinBox->setValue(1);
+    dialog->ui->liquidityPartDoubleSpinBox->setValue(51);
     dialog->ui->liquidityPartDoubleSpinBox->blockSignals(false);
 
-    EXPECT_CALL(*configMock, setLiquidityPart(2.0f));
-    dialog->ui->liquidityPartDoubleSpinBox->setValue(2.0f);
+    EXPECT_CALL(*configMock, setLiquidityPart(12.0f));
+    dialog->ui->liquidityPartDoubleSpinBox->setValue(12.0f);
 
-    EXPECT_CALL(*configMock, setLiquidityPart(3.0f));
-    dialog->ui->liquidityPartDoubleSpinBox->setValue(3.0f);
+    EXPECT_CALL(*configMock, setLiquidityPart(13.0f));
+    dialog->ui->liquidityPartDoubleSpinBox->setValue(13.0f);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_limitStockPurchaseCheckBox_checkStateChanged)

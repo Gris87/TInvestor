@@ -10,6 +10,7 @@
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 const char* const TMON_UID  = "498ec3ff-ef27-4729-9703-a5aac48d5789";
 
+constexpr float  HUNDRED_PERCENT             = 100.0f;
 constexpr int    NORMAL_SESSION_START_HOUR   = 10;
 constexpr int    NORMAL_SESSION_START_MINUTE = 0;
 constexpr int    NORMAL_SESSION_END_HOUR     = 18;
@@ -99,7 +100,16 @@ void HighLiquidityThread::buyEtf()
 
                 if (!QThread::currentThread()->isInterruptionRequested() && !etfFound && money > 0)
                 {
-                    // TODO: Buy
+                    InstrumentsForTrading instrumentsForTrading;
+
+                    instrumentsForTrading[TMON_UID] = TradingInfo(
+                        ASAP_MODE_IMMEDIATELY_TRADE,
+                        -1.0f,
+                        -1.0f,
+                        qMin(totalCost * mConfig->getLiquidityPart() / HUNDRED_PERCENT, money),
+                        tr("Decided to buy because trading day is over")
+                    );
+                    emit tradeInstruments(instrumentsForTrading);
                 }
 
                 success = true;
@@ -136,7 +146,14 @@ void HighLiquidityThread::sellEtf()
 
             if (instrumentId == TMON_UID)
             {
-                // TODO: Sell
+                InstrumentsForTrading instrumentsForTrading;
+
+                instrumentsForTrading[instrumentId] = TradingInfo(
+                    ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, 0.0, tr("Decided to sell because it had been a night since buying")
+                );
+                emit tradeInstruments(instrumentsForTrading);
+
+                break;
             }
         }
     }
@@ -200,7 +217,7 @@ void HighLiquidityThread::calculateMoneyAndTotalCost(
     totalCost = 0.0;
     etfFound  = false;
 
-    for (int i = 0; i < tinkoffPortfolio.positions_size() && !QThread::currentThread()-->isInterruptionRequested(); ++i)
+    for (int i = 0; i < tinkoffPortfolio.positions_size() && !QThread::currentThread()->isInterruptionRequested(); ++i)
     {
         const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
 

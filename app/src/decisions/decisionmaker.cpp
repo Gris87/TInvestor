@@ -300,7 +300,7 @@ static void makeDecisionsForParallel(
                     if (cause != "" && buyDecision != nullptr)
                     {
                         buyResultsArray[threadId][stock->meta.instrumentId] =
-                            TradingInfo(buyDecision->isAsap(), avgPrice, price, stock->meta.turnover, cause);
+                            TradingInfo(buyDecision->asapMode(), avgPrice, price, stock->meta.turnover, cause);
                     }
                 }
             }
@@ -320,7 +320,7 @@ static void makeDecisionsForParallel(
                 if (cause != "" && sellDecision != nullptr)
                 {
                     sellResultsArray[threadId][stock->meta.instrumentId] =
-                        TradingInfo(sellDecision->isAsap(), avgPrice, price, 0.0, cause);
+                        TradingInfo(sellDecision->asapMode(), avgPrice, price, 0.0, cause);
                 }
             }
         }

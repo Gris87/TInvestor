@@ -933,7 +933,7 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
                 mLogsThread,
                 mAutoPilotAccountId,
                 instrumentId,
-                tradingInfo.asap,
+                tradingInfo.asapMode,
                 tradingInfo.avgPrice,
                 tradingInfo.price,
                 tradingInfo.expectedCost,
@@ -950,7 +950,7 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
         }
         else
         {
-            tradingThread->setAsap(tradingInfo.asap);
+            tradingThread->setAsapMode(tradingInfo.asapMode);
             tradingThread->setAvgPrice(tradingInfo.avgPrice);
             tradingThread->setExpectedCost(tradingInfo.expectedCost, tradingInfo.cause);
         }

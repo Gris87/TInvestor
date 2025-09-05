@@ -34,5 +34,5 @@ public:
          float                 commission),
         (override)
     );
-    MOCK_METHOD(bool, isAsap, (), (const, override));
+    MOCK_METHOD(AsapMode, asapMode, (), (const, override));
 };

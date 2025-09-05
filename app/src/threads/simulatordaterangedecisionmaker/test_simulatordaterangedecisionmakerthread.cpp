@@ -403,7 +403,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     InstrumentsForTrading instrumentsForTrading1;
     TradingInfo           tradingInfo;
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 200.0f;
     tradingInfo.expectedCost = 100000.0;
@@ -554,7 +554,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     InstrumentsForTrading instrumentsForTrading2 = instrumentsForTrading1;
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 200.0f;
     tradingInfo.expectedCost = 100000.0;
@@ -562,7 +562,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     instrumentsForTrading2["aaaaa"] = tradingInfo;
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 200.0f;
     tradingInfo.expectedCost = 150000.0;
@@ -728,7 +728,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     InstrumentsForTrading instrumentsForTrading3 = instrumentsForTrading2;
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = 250.0f;
     tradingInfo.price        = 300.0f;
     tradingInfo.expectedCost = 0.0;
@@ -880,7 +880,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
 
     InstrumentsForTrading instrumentsForTrading4 = instrumentsForTrading3;
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = 1990.0f;
     tradingInfo.price        = 2000.0f;
     tradingInfo.expectedCost = 0.0;

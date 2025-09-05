@@ -57,7 +57,7 @@ TEST_F(Test_TradingThreadFactory, Test_newInstance)
         &logsThreadMock,
         "aaaaa",
         "bbbbb",
-        true,
+        ASAP_MODE_NONE,
         10.0f,
         100.0f,
         1000.0,

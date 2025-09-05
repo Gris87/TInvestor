@@ -28,5 +28,5 @@ public:
     ) override;
 
     [[nodiscard]]
-    bool isAsap() const override;
+    AsapMode asapMode() const override;
 };

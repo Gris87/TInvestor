@@ -3,7 +3,7 @@
 
 
 TradingInfo::TradingInfo() :
-    asap(),
+    asapMode(),
     avgPrice(),
     price(),
     expectedCost(),
@@ -11,8 +11,8 @@ TradingInfo::TradingInfo() :
 {
 }
 
-TradingInfo::TradingInfo(bool _asap, float _avgPrice, float _price, double _expectedCost, const QString& _cause) :
-    asap(_asap),
+TradingInfo::TradingInfo(AsapMode _asapMode, float _avgPrice, float _price, double _expectedCost, const QString& _cause) :
+    asapMode(_asapMode),
     avgPrice(_avgPrice),
     price(_price),
     expectedCost(_expectedCost),

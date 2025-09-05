@@ -64,7 +64,7 @@ QString SellDecision1::makeDecision(
     return "";
 }
 
-bool SellDecision1::isAsap() const
+AsapMode SellDecision1::asapMode() const
 {
-    return false;
+    return ASAP_MODE_NONE;
 }

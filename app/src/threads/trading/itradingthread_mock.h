@@ -23,7 +23,7 @@ public:
     TradingThreadMock& operator=(const TradingThreadMock& another) = delete;
 
     MOCK_METHOD(void, run, (), (override));
-    MOCK_METHOD(void, setAsap, (bool asap), (override));
+    MOCK_METHOD(void, setAsapMode, (AsapMode asapMode), (override));
     MOCK_METHOD(void, setAvgPrice, (float avgPrice), (override));
     MOCK_METHOD(void, setExpectedCost, (double expectedCost, const QString& cause), (override));
     MOCK_METHOD(void, terminateThread, (), (override));

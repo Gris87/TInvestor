@@ -232,8 +232,8 @@ void FollowThread::buildInstrumentsForTrading(
         if (!instruments.contains(instrumentId))
         {
             instrumentsForBuy[instrumentId] = TradingInfo(
-                true,
-                -1,
+                ASAP_MODE_FOLLOW_PRICE,
+                -1.0f,
                 it.value().price,
                 expectedCost,
                 tr("Decided to buy up to cost %1 due to following account \"%2\"")
@@ -252,8 +252,8 @@ void FollowThread::buildInstrumentsForTrading(
         if (delta < -lotPrice)
         {
             instrumentsForSale[instrumentId] = TradingInfo(
-                true,
-                -1,
+                ASAP_MODE_FOLLOW_PRICE,
+                -1.0f,
                 item.price,
                 expectedCost,
                 tr("Decided to sell up to cost %1 due to following account \"%2\"")
@@ -263,8 +263,8 @@ void FollowThread::buildInstrumentsForTrading(
         else if (delta > lotPrice)
         {
             instrumentsForBuy[instrumentId] = TradingInfo(
-                true,
-                -1,
+                ASAP_MODE_FOLLOW_PRICE,
+                -1.0f,
                 item.price,
                 expectedCost,
                 tr("Decided to buy up to cost %1 due to following account \"%2\"")
@@ -280,8 +280,8 @@ void FollowThread::buildInstrumentsForTrading(
         if (!anotherInstruments.contains(instrumentId))
         {
             instrumentsForSale[instrumentId] = TradingInfo(
-                true,
-                -1,
+                ASAP_MODE_FOLLOW_PRICE,
+                -1.0f,
                 it.value().price,
                 0, // Need to sell all
                 tr("Decided to sell up to cost %1 due to following account \"%2\"").arg("0.00 \u20BD", mAnotherAccountName)

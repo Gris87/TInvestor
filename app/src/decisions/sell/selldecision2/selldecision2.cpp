@@ -165,7 +165,7 @@ QString SellDecision2::makeDecision(
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
-bool SellDecision2::isAsap() const
+AsapMode SellDecision2::asapMode() const
 {
-    return false;
+    return ASAP_MODE_NONE;
 }

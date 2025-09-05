@@ -27,7 +27,7 @@ public:
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,
-        bool                 asap,
+        AsapMode             asapMode,
         float                avgPrice,
         float                price,
         double               expectedCost,
@@ -41,12 +41,12 @@ public:
 
     void run() override;
 
-    void setAsap(bool asap) override;
+    void setAsapMode(AsapMode asapMode) override;
     void setAvgPrice(float avgPrice) override;
     void setExpectedCost(double expectedCost, const QString& cause) override;
 
     [[nodiscard]]
-    bool asap() const;
+    AsapMode asapMode() const;
 
     [[nodiscard]]
     float avgPrice() const;
@@ -94,7 +94,7 @@ private:
     ILogsThread*         mLogsThread;
     QString              mAccountId;
     QString              mInstrumentId;
-    bool                 mAsap;
+    AsapMode             mAsapMode;
     float                mAvgPrice;
     float                mPrice;
     double               mExpectedCost;

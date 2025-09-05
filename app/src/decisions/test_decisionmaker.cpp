@@ -285,7 +285,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to sell"));
-    EXPECT_CALL(*sellDecisionMock, isAsap()).WillOnce(Return(false));
+    EXPECT_CALL(*sellDecisionMock, asapMode()).WillOnce(Return(ASAP_MODE_NONE));
     EXPECT_CALL(
         *buyDecisionMock,
         makeDecision(
@@ -293,7 +293,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to buy"));
-    EXPECT_CALL(*buyDecisionMock, isAsap()).WillOnce(Return(false));
+    EXPECT_CALL(*buyDecisionMock, asapMode()).WillOnce(Return(ASAP_MODE_NONE));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
@@ -318,13 +318,13 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
-    ASSERT_EQ(result["ccccc"].asap,           false);
+    ASSERT_EQ(result["ccccc"].asapMode,       ASAP_MODE_NONE);
     ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 45000.00286, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
     ASSERT_EQ(result.contains("bbbbb"),       true);
-    ASSERT_EQ(result["bbbbb"].asap,           false);
+    ASSERT_EQ(result["bbbbb"].asapMode,       ASAP_MODE_NONE);
     ASSERT_NEAR(result["bbbbb"].avgPrice,     203.0f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].price,        0.2f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);
@@ -364,7 +364,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to sell"));
-    EXPECT_CALL(*sellDecisionMock, isAsap()).WillOnce(Return(false));
+    EXPECT_CALL(*sellDecisionMock, asapMode()).WillOnce(Return(ASAP_MODE_NONE));
     EXPECT_CALL(
         *buyDecisionMock,
         makeDecision(
@@ -372,7 +372,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to buy"));
-    EXPECT_CALL(*buyDecisionMock, isAsap()).WillOnce(Return(false));
+    EXPECT_CALL(*buyDecisionMock, asapMode()).WillOnce(Return(ASAP_MODE_NONE));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
@@ -397,13 +397,13 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
-    ASSERT_EQ(result["ccccc"].asap,           false);
+    ASSERT_EQ(result["ccccc"].asapMode,       ASAP_MODE_NONE);
     ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 69990.00445, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
     ASSERT_EQ(result.contains("bbbbb"),       true);
-    ASSERT_EQ(result["bbbbb"].asap,           false);
+    ASSERT_EQ(result["bbbbb"].asapMode,       ASAP_MODE_NONE);
     ASSERT_NEAR(result["bbbbb"].avgPrice,     203.0f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].price,        0.2f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);
@@ -434,7 +434,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to sell"));
-    EXPECT_CALL(*sellDecisionMock, isAsap()).WillOnce(Return(false));
+    EXPECT_CALL(*sellDecisionMock, asapMode()).WillOnce(Return(ASAP_MODE_NONE));
     EXPECT_CALL(
         *buyDecisionMock,
         makeDecision(
@@ -442,7 +442,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to buy"));
-    EXPECT_CALL(*buyDecisionMock, isAsap()).WillOnce(Return(false));
+    EXPECT_CALL(*buyDecisionMock, asapMode()).WillOnce(Return(ASAP_MODE_NONE));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
@@ -467,13 +467,13 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
-    ASSERT_EQ(result["ccccc"].asap,           false);
+    ASSERT_EQ(result["ccccc"].asapMode,       ASAP_MODE_NONE);
     ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 99960.00635, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
     ASSERT_EQ(result.contains("bbbbb"),       true);
-    ASSERT_EQ(result["bbbbb"].asap,           false);
+    ASSERT_EQ(result["bbbbb"].asapMode,       ASAP_MODE_NONE);
     ASSERT_NEAR(result["bbbbb"].avgPrice,     203.0f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].price,        0.2f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);
@@ -504,7 +504,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to sell"));
-    EXPECT_CALL(*sellDecisionMock, isAsap()).WillOnce(Return(false));
+    EXPECT_CALL(*sellDecisionMock, asapMode()).WillOnce(Return(ASAP_MODE_NONE));
 
     result = decisionMaker->makeDecision(
         QThread::currentThread(), 1704110400000, configMock, instrumentSells, portfolio, stocks, true, 200000, false, true
@@ -513,7 +513,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     // clang-format off
     ASSERT_EQ(result.size(),                  1);
     ASSERT_EQ(result.contains("bbbbb"),       true);
-    ASSERT_EQ(result["bbbbb"].asap,           false);
+    ASSERT_EQ(result["bbbbb"].asapMode,       ASAP_MODE_NONE);
     ASSERT_NEAR(result["bbbbb"].avgPrice,     203.0f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].price,        0.2f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);
@@ -544,7 +544,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to sell"));
-    EXPECT_CALL(*sellDecisionMock, isAsap()).WillOnce(Return(false));
+    EXPECT_CALL(*sellDecisionMock, asapMode()).WillOnce(Return(ASAP_MODE_NONE));
     EXPECT_CALL(
         *buyDecisionMock,
         makeDecision(
@@ -552,7 +552,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
         )
     )
         .WillOnce(Return("I want to buy"));
-    EXPECT_CALL(*buyDecisionMock, isAsap()).WillOnce(Return(false));
+    EXPECT_CALL(*buyDecisionMock, asapMode()).WillOnce(Return(ASAP_MODE_NONE));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
@@ -577,13 +577,13 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
-    ASSERT_EQ(result["ccccc"].asap,           false);
+    ASSERT_EQ(result["ccccc"].asapMode,       ASAP_MODE_NONE);
     ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 99960.00635, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
     ASSERT_EQ(result.contains("bbbbb"),       true);
-    ASSERT_EQ(result["bbbbb"].asap,           false);
+    ASSERT_EQ(result["bbbbb"].asapMode,       ASAP_MODE_NONE);
     ASSERT_NEAR(result["bbbbb"].avgPrice,     203.0f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].price,        0.2f, 0.0001f);
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);

@@ -408,7 +408,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     InstrumentsForTrading instrumentsForTrading;
     TradingInfo           tradingInfo;
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 200.0f;
     tradingInfo.expectedCost = 100000.0;
@@ -594,7 +594,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     ASSERT_EQ(instrumentSells.size(),        0);
     // clang-format on
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 200.0f;
     tradingInfo.expectedCost = 100000.0;
@@ -602,7 +602,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
 
     instrumentsForTrading["aaaaa"] = tradingInfo;
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 200.0f;
     tradingInfo.expectedCost = 150000.0;
@@ -805,7 +805,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     ASSERT_EQ(instrumentSells.size(),        0);
     // clang-format on
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = 250.0f;
     tradingInfo.price        = 300.0f;
     tradingInfo.expectedCost = 0.0;
@@ -992,7 +992,7 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     ASSERT_EQ(instrumentSells["bbbbb"],      3005);
     // clang-format on
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = 1990.0f;
     tradingInfo.price        = 2000.0f;
     tradingInfo.expectedCost = 0.0;

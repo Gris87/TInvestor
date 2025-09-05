@@ -25,7 +25,7 @@ TradingThread::TradingThread(
     ILogsThread*         logsThread,
     const QString&       accountId,
     const QString&       instrumentId,
-    bool                 asap,
+    AsapMode             asapMode,
     float                avgPrice,
     float                price,
     double               expectedCost,
@@ -41,7 +41,7 @@ TradingThread::TradingThread(
     mLogsThread(logsThread),
     mAccountId(accountId),
     mInstrumentId(instrumentId),
-    mAsap(asap),
+    mAsapMode(asapMode),
     mAvgPrice(avgPrice),
     mPrice(price),
     mExpectedCost(expectedCost),
@@ -80,13 +80,13 @@ void TradingThread::run()
     qDebug() << "Finish TradingThread";
 }
 
-void TradingThread::setAsap(bool asap)
+void TradingThread::setAsapMode(AsapMode asapMode)
 {
     const QWriteLocker lock(mRwMutex);
 
-    if (!mAsap && asap)
+    if (asapMode > mAsapMode)
     {
-        mAsap = asap;
+        mAsapMode = asapMode;
     }
 }
 
@@ -112,11 +112,11 @@ void TradingThread::setExpectedCost(double expectedCost, const QString& cause)
     }
 }
 
-bool TradingThread::asap() const
+AsapMode TradingThread::asapMode() const
 {
     const QReadLocker lock(mRwMutex);
 
-    return mAsap;
+    return mAsapMode;
 }
 
 float TradingThread::avgPrice() const
@@ -227,11 +227,19 @@ bool TradingThread::sell(double expected, double delta)
         return false;
     }
 
-    if (tinkoffOrderBook->asks_size() > 0)
-    {
-        double price = quotationToDouble(tinkoffOrderBook->asks(0).price());
+    const AsapMode mode  = asapMode();
+    double         price = -1;
 
-        if (!asap())
+    if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->bids_size() > 0)
+    {
+        price = quotationToDouble(tinkoffOrderBook->bids(0).price());
+    }
+
+    if (tinkoffOrderBook->asks_size() > 0 && price < 0)
+    {
+        price = quotationToDouble(tinkoffOrderBook->asks(0).price());
+
+        if (mode == ASAP_MODE_NONE)
         {
             mUserStorage->readLock();
             const float commission = mUserStorage->getCommission();
@@ -239,7 +247,10 @@ bool TradingThread::sell(double expected, double delta)
 
             price = qMax(price, avgPrice() * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
         }
+    }
 
+    if (price > 0)
+    {
         const qint64 coef = static_cast<qint64>(std::ceil(price / quotationToDouble(mMinPriceIncrement)));
 
         const float marketPrice = tinkoffOrderBook->bids_size() > 0 ? quotationToDouble(tinkoffOrderBook->bids(0).price()) : 0;
@@ -401,11 +412,19 @@ bool TradingThread::buy(double expected, double delta)
         return false;
     }
 
-    if (tinkoffOrderBook->bids_size() > 0)
-    {
-        const double price = quotationToDouble(tinkoffOrderBook->bids(0).price());
+    const AsapMode mode  = asapMode();
+    double         price = -1;
 
-        if (!asap())
+    if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->asks_size() > 0)
+    {
+        price = quotationToDouble(tinkoffOrderBook->asks(0).price());
+    }
+
+    if (tinkoffOrderBook->bids_size() > 0 && price < 0)
+    {
+        price = quotationToDouble(tinkoffOrderBook->bids(0).price());
+
+        if (mode == ASAP_MODE_NONE)
         {
             const double priceRaise = ((price / mPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
@@ -427,7 +446,10 @@ bool TradingThread::buy(double expected, double delta)
                 return true;
             }
         }
+    }
 
+    if (price > 0)
+    {
         const qint64 coef = static_cast<qint64>(std::floor(price / quotationToDouble(mMinPriceIncrement)));
 
         const float marketPrice = tinkoffOrderBook->asks_size() > 0 ? quotationToDouble(tinkoffOrderBook->asks(0).price()) : 0;

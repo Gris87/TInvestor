@@ -1080,19 +1080,19 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
     TradingInfo tradingInfo2;
     TradingInfo tradingInfo3;
 
-    tradingInfo1.asap         = false;
+    tradingInfo1.asapMode     = ASAP_MODE_NONE;
     tradingInfo1.avgPrice     = -1.0f;
     tradingInfo1.price        = 10.0f;
     tradingInfo1.expectedCost = 10000.0;
     tradingInfo1.cause        = "Need to buy";
 
-    tradingInfo2.asap         = false;
+    tradingInfo2.asapMode     = ASAP_MODE_NONE;
     tradingInfo2.avgPrice     = -1.0f;
     tradingInfo2.price        = 100.0f;
     tradingInfo2.expectedCost = 15000.0;
     tradingInfo2.cause        = "Need to buy more";
 
-    tradingInfo3.asap         = true;
+    tradingInfo3.asapMode     = ASAP_MODE_FOLLOW_PRICE;
     tradingInfo3.avgPrice     = 1000000.0f;
     tradingInfo3.price        = 1000.0f;
     tradingInfo3.expectedCost = 0.0;
@@ -1116,7 +1116,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
             logsThreadMock,
             QString(""),
             QString("aaaaa"),
-            false,
+            ASAP_MODE_NONE,
             FloatEq(-1.0f),
             FloatEq(10.0f),
             DoubleEq(10000.0),
@@ -1136,7 +1136,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
             logsThreadMock,
             QString(""),
             QString("bbbbb"),
-            false,
+            ASAP_MODE_NONE,
             FloatEq(-1.0f),
             FloatEq(100.0f),
             DoubleEq(15000.0),
@@ -1159,7 +1159,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
     // clang-format on
 
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, notifyAboutSell(QString("aaaaa")));
-    EXPECT_CALL(*tradingThreadMock1, setAsap(true));
+    EXPECT_CALL(*tradingThreadMock1, setAsapMode(ASAP_MODE_FOLLOW_PRICE));
     EXPECT_CALL(*tradingThreadMock1, setAvgPrice(FloatEq(1000000.0f)));
     EXPECT_CALL(*tradingThreadMock1, setExpectedCost(DoubleEq(0.0), QString("Sell ASAP")));
 
@@ -1592,7 +1592,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     InstrumentsForTrading instruments;
     TradingInfo           tradingInfo;
 
-    tradingInfo.asap         = false;
+    tradingInfo.asapMode     = ASAP_MODE_NONE;
     tradingInfo.avgPrice     = -1.0f;
     tradingInfo.price        = 100.0f;
     tradingInfo.expectedCost = 10000.0;
@@ -1610,7 +1610,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             logsThreadMock,
             QString("aaaaaa"),
             QString("aaa-aaa"),
-            false,
+            ASAP_MODE_NONE,
             FloatEq(-1.0f),
             FloatEq(100.0f),
             DoubleEq(10000.0),
@@ -1732,7 +1732,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             logsThreadMock,
             QString("aaaaaa"),
             QString("aaa-aaa"),
-            false,
+            ASAP_MODE_NONE,
             FloatEq(-1.0f),
             FloatEq(100.0f),
             DoubleEq(10000.0),

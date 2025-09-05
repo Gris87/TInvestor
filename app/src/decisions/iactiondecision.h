@@ -6,6 +6,7 @@
 
 #include "src/config/decisions/idecisionmakerconfig.h"
 #include "src/domain/stock/stock.h"
+#include "src/domain/trading/tradinginfo.h"
 
 
 
@@ -31,5 +32,5 @@ public:
     ) = 0;
 
     [[nodiscard]]
-    virtual bool isAsap() const = 0;
+    virtual AsapMode asapMode() const = 0;
 };

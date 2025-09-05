@@ -134,7 +134,7 @@ QString SellDecision4::makeDecision(
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
-bool SellDecision4::isAsap() const
+AsapMode SellDecision4::asapMode() const
 {
-    return true;
+    return ASAP_MODE_FOLLOW_PRICE;
 }
