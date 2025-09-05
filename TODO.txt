@@ -4,6 +4,7 @@ Trade TMON@ bid <=> ask
 Improve coverage
 Create release
 
+Create script for providing details about selling from operations.json
 Super ASAP buying for BuyDecision1 with trading based on asks with price raise < 0.50%
 Super ASAP selling for SellDecision1 with trading based on bids with yield > 0.38%
 Buy decision 5: Buy if price is lower than price of last buy during 30 minutes from last sell

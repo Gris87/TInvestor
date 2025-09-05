@@ -687,7 +687,7 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, run());
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
     EXPECT_CALL(*hugeSpreadThreadMock, run());
-    EXPECT_CALL(*configMock, isTradeLiquidityEtf()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeLiquidityEtfNightly()).WillOnce(Return(true));
     EXPECT_CALL(*highLiquidityThreadMock, run());
 
     mainWindow->ui->simulationActiveSpinnerWidget->start();
@@ -1567,7 +1567,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, run());
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
     EXPECT_CALL(*hugeSpreadThreadMock, run());
-    EXPECT_CALL(*configMock, isTradeLiquidityEtf()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeLiquidityEtfNightly()).WillOnce(Return(true));
     EXPECT_CALL(*highLiquidityThreadMock, run());
 
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot started")));

@@ -56,8 +56,10 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     config->setTradeInNonWorkingHours(false);
     config->setTradeHugeSpread(false);
     config->setHugeSpread(3.0f);
-    config->setTradeLiquidityEtf(false);
-    config->setLiquidityPart(87.0f);
+    config->setTradeLiquidityEtfDaily(false);
+    config->setLiquidityEtfPartDaily(2.0f);
+    config->setTradeLiquidityEtfNightly(false);
+    config->setLiquidityEtfRemainedPartNightly(7.0f);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
@@ -77,8 +79,10 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeSpread(),                          false);
     ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
-    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
-    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(),                   false);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(),                 2.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(),                 false);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(),       7.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
@@ -106,8 +110,10 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeSpread(),                          false);
     ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
-    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
-    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(),                   false);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(),                 2.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(),                 false);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(),       7.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
@@ -128,8 +134,10 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config2->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config2->isTradeHugeSpread(),                          false);
     ASSERT_NEAR(config2->getHugeSpread(),                            3.0f, 0.0001f);
-    ASSERT_EQ(config2->isTradeLiquidityEtf(),                        false);
-    ASSERT_NEAR(config2->getLiquidityPart(),                         87.0f, 0.0001f);
+    ASSERT_EQ(config2->isTradeLiquidityEtfDaily(),                   false);
+    ASSERT_NEAR(config2->getLiquidityEtfPartDaily(),                 2.0f, 0.0001f);
+    ASSERT_EQ(config2->isTradeLiquidityEtfNightly(),                 false);
+    ASSERT_NEAR(config2->getLiquidityEtfRemainedPartNightly(),       7.0f, 0.0001f);
     ASSERT_EQ(config2->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config2->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config2->isLimitByTurnover(),                          false);
@@ -164,8 +172,10 @@ TEST_F(Test_Config, Test_assign)
     config->setTradeInNonWorkingHours(false);
     config->setTradeHugeSpread(false);
     config->setHugeSpread(3.0f);
-    config->setTradeLiquidityEtf(false);
-    config->setLiquidityPart(87.0f);
+    config->setTradeLiquidityEtfDaily(false);
+    config->setLiquidityEtfPartDaily(2.0f);
+    config->setTradeLiquidityEtfNightly(false);
+    config->setLiquidityEtfRemainedPartNightly(7.0f);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
@@ -185,8 +195,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeSpread(),                          false);
     ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
-    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
-    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(),                   false);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(),                 2.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(),                 false);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(),       7.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
@@ -206,8 +218,10 @@ TEST_F(Test_Config, Test_assign)
     config2.setTradeInNonWorkingHours(true);
     config2.setTradeHugeSpread(true);
     config2.setHugeSpread(4.5f);
-    config2.setTradeLiquidityEtf(true);
-    config2.setLiquidityPart(77.0f);
+    config2.setTradeLiquidityEtfDaily(true);
+    config2.setLiquidityEtfPartDaily(5.0f);
+    config2.setTradeLiquidityEtfNightly(true);
+    config2.setLiquidityEtfRemainedPartNightly(17.0f);
     config2.setLimitStockPurchase(true);
     config2.setLimitStockPurchasePart(5.0f);
     config2.setLimitByTurnover(true);
@@ -227,8 +241,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config2.isTradeHugeSpread(),                          true);
     ASSERT_NEAR(config2.getHugeSpread(),                            4.5f, 0.0001f);
-    ASSERT_EQ(config2.isTradeLiquidityEtf(),                        true);
-    ASSERT_NEAR(config2.getLiquidityPart(),                         77.0f, 0.0001f);
+    ASSERT_EQ(config2.isTradeLiquidityEtfDaily(),                   true);
+    ASSERT_NEAR(config2.getLiquidityEtfPartDaily(),                 5.0f, 0.0001f);
+    ASSERT_EQ(config2.isTradeLiquidityEtfNightly(),                 true);
+    ASSERT_NEAR(config2.getLiquidityEtfRemainedPartNightly(),       17.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitStockPurchase(),                       true);
     ASSERT_NEAR(config2.getLimitStockPurchasePart(),                5.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitByTurnover(),                          true);
@@ -254,8 +270,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config->isTradeHugeSpread(),                          true);
     ASSERT_NEAR(config->getHugeSpread(),                            4.5f, 0.0001f);
-    ASSERT_EQ(config->isTradeLiquidityEtf(),                        true);
-    ASSERT_NEAR(config->getLiquidityPart(),                         77.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(),                   true);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(),                 5.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(),                 true);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(),       17.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       true);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                5.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          true);
@@ -276,8 +294,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config2.isTradeHugeSpread(),                          true);
     ASSERT_NEAR(config2.getHugeSpread(),                            4.5f, 0.0001f);
-    ASSERT_EQ(config2.isTradeLiquidityEtf(),                        true);
-    ASSERT_NEAR(config2.getLiquidityPart(),                         77.0f, 0.0001f);
+    ASSERT_EQ(config2.isTradeLiquidityEtfDaily(),                   true);
+    ASSERT_NEAR(config2.getLiquidityEtfPartDaily(),                 5.0f, 0.0001f);
+    ASSERT_EQ(config2.isTradeLiquidityEtfNightly(),                 true);
+    ASSERT_NEAR(config2.getLiquidityEtfRemainedPartNightly(),       17.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitStockPurchase(),                       true);
     ASSERT_NEAR(config2.getLimitStockPurchasePart(),                5.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitByTurnover(),                          true);
@@ -302,8 +322,10 @@ TEST_F(Test_Config, Test_makeDefault)
     config->setTradeInNonWorkingHours(false);
     config->setTradeHugeSpread(false);
     config->setHugeSpread(3.0f);
-    config->setTradeLiquidityEtf(false);
-    config->setLiquidityPart(87.0f);
+    config->setTradeLiquidityEtfDaily(false);
+    config->setLiquidityEtfPartDaily(2.0f);
+    config->setTradeLiquidityEtfNightly(false);
+    config->setLiquidityEtfRemainedPartNightly(7.0f);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
@@ -323,8 +345,10 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeSpread(),                          false);
     ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
-    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
-    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(),                   false);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(),                 2.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(),                 false);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(),       7.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
@@ -350,8 +374,10 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config->isTradeHugeSpread(),                          true);
     ASSERT_NEAR(config->getHugeSpread(),                            1.0f, 0.0001f);
-    ASSERT_EQ(config->isTradeLiquidityEtf(),                        true);
-    ASSERT_NEAR(config->getLiquidityPart(),                         90.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(),                   true);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(),                 1.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(),                 true);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(),       5.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       true);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                10.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          true);
@@ -376,8 +402,10 @@ TEST_F(Test_Config, Test_save)
     config->setTradeInNonWorkingHours(false);
     config->setTradeHugeSpread(false);
     config->setHugeSpread(3.0f);
-    config->setTradeLiquidityEtf(false);
-    config->setLiquidityPart(87.0f);
+    config->setTradeLiquidityEtfDaily(false);
+    config->setLiquidityEtfPartDaily(2.0f);
+    config->setTradeLiquidityEtfNightly(false);
+    config->setLiquidityEtfRemainedPartNightly(7.0f);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
@@ -397,8 +425,10 @@ TEST_F(Test_Config, Test_save)
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeSpread(),                          false);
     ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
-    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
-    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(),                   false);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(),                 2.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(),                 false);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(),       7.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
@@ -424,8 +454,10 @@ TEST_F(Test_Config, Test_save)
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeInNonWorkingHours"),                QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeHugeSpread"),                       QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HugeSpread"),                            QVariant(3.0f)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeLiquidityEtf"),                     QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LiquidityPart"),                         QVariant(87.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeLiquidityEtfDaily"),                QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LiquidityEtfPartDaily"),                 QVariant(2.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeLiquidityEtfNightly"),              QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LiquidityEtfRemainedPartNightly"),       QVariant(7.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchase"),                    QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePart"),                QVariant(25.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnover"),                       QVariant(false)));
@@ -452,8 +484,10 @@ TEST_F(Test_Config, Test_load)
     config->setTradeInNonWorkingHours(false);
     config->setTradeHugeSpread(false);
     config->setHugeSpread(3.0f);
-    config->setTradeLiquidityEtf(false);
-    config->setLiquidityPart(87.0f);
+    config->setTradeLiquidityEtfDaily(false);
+    config->setLiquidityEtfPartDaily(2.0f);
+    config->setTradeLiquidityEtfNightly(false);
+    config->setLiquidityEtfRemainedPartNightly(7.0f);
     config->setLimitStockPurchase(false);
     config->setLimitStockPurchasePart(25.0f);
     config->setLimitByTurnover(false);
@@ -473,8 +507,10 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeSpread(),                          false);
     ASSERT_NEAR(config->getHugeSpread(),                            3.0f, 0.0001f);
-    ASSERT_EQ(config->isTradeLiquidityEtf(),                        false);
-    ASSERT_NEAR(config->getLiquidityPart(),                         87.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(),                   false);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(),                 2.0f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(),                 false);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(),       7.0f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       false);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                25.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          false);
@@ -500,8 +536,10 @@ TEST_F(Test_Config, Test_load)
     EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeInNonWorkingHours"),                QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeHugeSpread"),                       QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/HugeSpread"),                            QVariant(3.0f))).WillOnce(Return(QVariant(9.0f)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeLiquidityEtf"),                     QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/LiquidityPart"),                         QVariant(87.0f))).WillOnce(Return(QVariant(97.5f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeLiquidityEtfDaily"),                QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LiquidityEtfPartDaily"),                 QVariant(2.0f))).WillOnce(Return(QVariant(3.5f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeLiquidityEtfNightly"),              QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LiquidityEtfRemainedPartNightly"),       QVariant(7.0f))).WillOnce(Return(QVariant(4.5f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchase"),                    QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePart"),                QVariant(25.0f))).WillOnce(Return(QVariant(5.0f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnover"),                       QVariant(false))).WillOnce(Return(QVariant(true)));
@@ -524,8 +562,10 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config->isTradeHugeSpread(),                          true);
     ASSERT_NEAR(config->getHugeSpread(),                            9.0f, 0.0001f);
-    ASSERT_EQ(config->isTradeLiquidityEtf(),                        true);
-    ASSERT_NEAR(config->getLiquidityPart(),                         97.5f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(),                   true);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(),                 3.5f, 0.0001f);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(),                 true);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(),       4.5f, 0.0001f);
     ASSERT_EQ(config->isLimitStockPurchase(),                       true);
     ASSERT_NEAR(config->getLimitStockPurchasePart(),                5.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnover(),                          true);
@@ -604,22 +644,40 @@ TEST_F(Test_Config, Test_setHugeSpread_and_getHugeSpread)
     ASSERT_NEAR(config->getHugeSpread(), 5.0f, 0.0001f);
 }
 
-TEST_F(Test_Config, Test_setTradeLiquidityEtf_and_isTradeLiquidityEtf)
+TEST_F(Test_Config, Test_setTradeLiquidityEtfDaily_and_isTradeLiquidityEtfDaily)
 {
-    config->setTradeLiquidityEtf(false);
-    ASSERT_EQ(config->isTradeLiquidityEtf(), false);
+    config->setTradeLiquidityEtfDaily(false);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(), false);
 
-    config->setTradeLiquidityEtf(true);
-    ASSERT_EQ(config->isTradeLiquidityEtf(), true);
+    config->setTradeLiquidityEtfDaily(true);
+    ASSERT_EQ(config->isTradeLiquidityEtfDaily(), true);
 }
 
-TEST_F(Test_Config, Test_setLiquidityPart_and_getLiquidityPart)
+TEST_F(Test_Config, Test_setLiquidityEtfPartDaily_and_getLiquidityEtfPartDaily)
 {
-    config->setLiquidityPart(10.0f);
-    ASSERT_NEAR(config->getLiquidityPart(), 10.0f, 0.0001f);
+    config->setLiquidityEtfPartDaily(10.0f);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(), 10.0f, 0.0001f);
 
-    config->setLiquidityPart(50.0f);
-    ASSERT_NEAR(config->getLiquidityPart(), 50.0f, 0.0001f);
+    config->setLiquidityEtfPartDaily(50.0f);
+    ASSERT_NEAR(config->getLiquidityEtfPartDaily(), 50.0f, 0.0001f);
+}
+
+TEST_F(Test_Config, Test_setTradeLiquidityEtfNightly_and_isTradeLiquidityEtfNightly)
+{
+    config->setTradeLiquidityEtfNightly(false);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(), false);
+
+    config->setTradeLiquidityEtfNightly(true);
+    ASSERT_EQ(config->isTradeLiquidityEtfNightly(), true);
+}
+
+TEST_F(Test_Config, Test_setLiquidityEtfRemainedPartNightly_and_getLiquidityEtfRemainedPartNightly)
+{
+    config->setLiquidityEtfRemainedPartNightly(10.0f);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(), 10.0f, 0.0001f);
+
+    config->setLiquidityEtfRemainedPartNightly(50.0f);
+    ASSERT_NEAR(config->getLiquidityEtfRemainedPartNightly(), 50.0f, 0.0001f);
 }
 
 TEST_F(Test_Config, Test_setLimitStockPurchase_and_isLimitStockPurchase)

@@ -505,7 +505,7 @@ void MainWindow::makeDecisionTimerTicked()
                 mHugeSpreadThread->start();
             }
 
-            if (mConfig->isTradeLiquidityEtf())
+            if (mConfig->isTradeLiquidityEtfNightly())
             {
                 mHighLiquidityThread->start();
             }
@@ -729,7 +729,7 @@ void MainWindow::startAutoPilot()
                 mHugeSpreadThread->start();
             }
 
-            if (mConfig->isTradeLiquidityEtf())
+            if (mConfig->isTradeLiquidityEtfNightly())
             {
                 mHighLiquidityThread->start();
             }

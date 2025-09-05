@@ -101,8 +101,10 @@ void SettingsDialog::updateUiFromConfig()
     ui->tradeInNonWorkingHoursCheckBox->setChecked(mConfig->isTradeInNonWorkingHours());
     ui->tradeHugeSpreadCheckBox->setChecked(mConfig->isTradeHugeSpread());
     ui->hugeSpreadDoubleSpinBox->setValue(mConfig->getHugeSpread());
-    ui->tradeLiquidityEtfCheckBox->setChecked(mConfig->isTradeLiquidityEtf());
-    ui->liquidityPartDoubleSpinBox->setValue(mConfig->getLiquidityPart());
+    ui->tradeLiquidityEtfDailyCheckBox->setChecked(mConfig->isTradeLiquidityEtfDaily());
+    ui->liquidityEtfPartDailyDoubleSpinBox->setValue(mConfig->getLiquidityEtfPartDaily());
+    ui->tradeLiquidityEtfNightlyCheckBox->setChecked(mConfig->isTradeLiquidityEtfNightly());
+    ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->setValue(mConfig->getLiquidityEtfRemainedPartNightly());
     ui->limitStockPurchaseCheckBox->setChecked(mConfig->isLimitStockPurchase());
     ui->limitStockPurchasePartDoubleSpinBox->setValue(mConfig->getLimitStockPurchasePart());
     ui->limitByTurnoverCheckBox->setChecked(mConfig->isLimitByTurnover());
@@ -156,18 +158,32 @@ void SettingsDialog::on_hugeSpreadDoubleSpinBox_valueChanged(double value)
     mConfig->setHugeSpread(value);
 }
 
-void SettingsDialog::on_tradeLiquidityEtfCheckBox_checkStateChanged(const Qt::CheckState& value)
+void SettingsDialog::on_tradeLiquidityEtfDailyCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     const bool checked = value == Qt::Checked;
 
-    mConfig->setTradeLiquidityEtf(checked);
+    mConfig->setTradeLiquidityEtfDaily(checked);
 
-    ui->liquidityPartDoubleSpinBox->setEnabled(checked);
+    ui->liquidityEtfPartDailyDoubleSpinBox->setEnabled(checked);
 }
 
-void SettingsDialog::on_liquidityPartDoubleSpinBox_valueChanged(double value)
+void SettingsDialog::on_liquidityEtfPartDailyDoubleSpinBox_valueChanged(double value)
 {
-    mConfig->setLiquidityPart(value);
+    mConfig->setLiquidityEtfPartDaily(value);
+}
+
+void SettingsDialog::on_tradeLiquidityEtfNightlyCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setTradeLiquidityEtfNightly(checked);
+
+    ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_liquidityEtfRemainedPartNightlyDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setLiquidityEtfRemainedPartNightly(value);
 }
 
 void SettingsDialog::on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value)

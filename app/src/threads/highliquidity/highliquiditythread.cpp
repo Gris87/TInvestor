@@ -96,6 +96,7 @@ void HighLiquidityThread::buyEtf()
                 bool   etfFound  = false;
 
                 calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfFound);
+                money -= totalCost * mConfig->getLiquidityEtfRemainedPartNightly() / HUNDRED_PERCENT;
                 money -= keepMoney();
 
                 if (!QThread::currentThread()->isInterruptionRequested() && !etfFound && money > 0)
@@ -103,11 +104,7 @@ void HighLiquidityThread::buyEtf()
                     InstrumentsForTrading instrumentsForTrading;
 
                     instrumentsForTrading[TMON_UID] = TradingInfo(
-                        ASAP_MODE_IMMEDIATELY_TRADE,
-                        -1.0f,
-                        -1.0f,
-                        qMin(totalCost * mConfig->getLiquidityPart() / HUNDRED_PERCENT, money),
-                        tr("Decided to buy because trading day is over")
+                        ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, money, tr("Decided to buy because trading day is over")
                     );
                     emit tradeInstruments(instrumentsForTrading);
                 }

@@ -45,11 +45,17 @@ public:
     virtual void  setHugeSpread(float value) = 0;
     virtual float getHugeSpread()            = 0;
 
-    virtual void setTradeLiquidityEtf(bool value) = 0;
-    virtual bool isTradeLiquidityEtf()            = 0;
+    virtual void setTradeLiquidityEtfDaily(bool value) = 0;
+    virtual bool isTradeLiquidityEtfDaily()            = 0;
 
-    virtual void  setLiquidityPart(float value) = 0;
-    virtual float getLiquidityPart()            = 0;
+    virtual void  setLiquidityEtfPartDaily(float value) = 0;
+    virtual float getLiquidityEtfPartDaily()            = 0;
+
+    virtual void setTradeLiquidityEtfNightly(bool value) = 0;
+    virtual bool isTradeLiquidityEtfNightly()            = 0;
+
+    virtual void  setLiquidityEtfRemainedPartNightly(float value) = 0;
+    virtual float getLiquidityEtfRemainedPartNightly()            = 0;
 
     virtual void setLimitStockPurchase(bool value) = 0;
     virtual bool isLimitStockPurchase()            = 0;

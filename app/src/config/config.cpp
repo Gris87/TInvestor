@@ -11,8 +11,10 @@ constexpr int   MAKE_DECISION_TIMEOUT_DEFAULT                       = 1;
 constexpr bool  TRADE_IN_NON_WORKING_HOURS_DEFAULT                  = true;
 constexpr bool  TRADE_HUGE_SPREAD_DEFAULT                           = true;
 constexpr float HUGE_SPREAD_DEFAULT                                 = 1.0f;
-constexpr bool  TRADE_LIQUIDITY_ETF_DEFAULT                         = true;
-constexpr float LIQUIDITY_PART_DEFAULT                              = 90.0f;
+constexpr bool  TRADE_LIQUIDITY_ETF_DAILY_DEFAULT                   = true;
+constexpr float LIQUIDITY_ETF_PART_DAILY_DEFAULT                    = 1.0f;
+constexpr bool  TRADE_LIQUIDITY_ETF_NIGHTLY_DEFAULT                 = true;
+constexpr float LIQUIDITY_ETF_REMAINED_PART_NIGHTLY_DEFAULT         = 5.0f;
 constexpr bool  LIMIT_STOCK_PURCHASE_DEFAULT                        = true;
 constexpr float LIMIT_STOCK_PURCHASE_PART_DEFAULT                   = 10.0f;
 constexpr bool  LIMIT_BY_TURNOVER_DEFAULT                           = true;
@@ -38,8 +40,10 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mTradeInNonWorkingHours(),
     mTradeHugeSpread(),
     mHugeSpread(),
-    mTradeLiquidityEtf(),
-    mLiquidityPart(),
+    mTradeLiquidityEtfDaily(),
+    mLiquidityEtfPartDaily(),
+    mTradeLiquidityEtfNightly(),
+    mLiquidityEtfRemainedPartNightly(),
     mLimitStockPurchase(),
     mLimitStockPurchasePart(),
     mLimitByTurnover(),
@@ -99,8 +103,10 @@ void Config::assign(IConfig* another)
     mTradeInNonWorkingHours                = config.mTradeInNonWorkingHours;
     mTradeHugeSpread                       = config.mTradeHugeSpread;
     mHugeSpread                            = config.mHugeSpread;
-    mTradeLiquidityEtf                     = config.mTradeLiquidityEtf;
-    mLiquidityPart                         = config.mLiquidityPart;
+    mTradeLiquidityEtfDaily                = config.mTradeLiquidityEtfDaily;
+    mLiquidityEtfPartDaily                 = config.mLiquidityEtfPartDaily;
+    mTradeLiquidityEtfNightly              = config.mTradeLiquidityEtfNightly;
+    mLiquidityEtfRemainedPartNightly       = config.mLiquidityEtfRemainedPartNightly;
     mLimitStockPurchase                    = config.mLimitStockPurchase;
     mLimitStockPurchasePart                = config.mLimitStockPurchasePart;
     mLimitByTurnover                       = config.mLimitByTurnover;
@@ -129,8 +135,10 @@ void Config::makeDefault()
     mTradeInNonWorkingHours                = TRADE_IN_NON_WORKING_HOURS_DEFAULT;
     mTradeHugeSpread                       = TRADE_HUGE_SPREAD_DEFAULT;
     mHugeSpread                            = HUGE_SPREAD_DEFAULT;
-    mTradeLiquidityEtf                     = TRADE_LIQUIDITY_ETF_DEFAULT;
-    mLiquidityPart                         = LIQUIDITY_PART_DEFAULT;
+    mTradeLiquidityEtfDaily                = TRADE_LIQUIDITY_ETF_DAILY_DEFAULT;
+    mLiquidityEtfPartDaily                 = LIQUIDITY_ETF_PART_DAILY_DEFAULT;
+    mTradeLiquidityEtfNightly              = TRADE_LIQUIDITY_ETF_NIGHTLY_DEFAULT;
+    mLiquidityEtfRemainedPartNightly       = LIQUIDITY_ETF_REMAINED_PART_NIGHTLY_DEFAULT;
     mLimitStockPurchase                    = LIMIT_STOCK_PURCHASE_DEFAULT;
     mLimitStockPurchasePart                = LIMIT_STOCK_PURCHASE_PART_DEFAULT;
     mLimitByTurnover                       = LIMIT_BY_TURNOVER_DEFAULT;
@@ -160,8 +168,10 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours);
     settingsEditor->setValue("Config/TradeHugeSpread",                       mTradeHugeSpread);
     settingsEditor->setValue("Config/HugeSpread",                            mHugeSpread);
-    settingsEditor->setValue("Config/TradeLiquidityEtf",                     mTradeLiquidityEtf);
-    settingsEditor->setValue("Config/LiquidityPart",                         mLiquidityPart);
+    settingsEditor->setValue("Config/TradeLiquidityEtfDaily",                mTradeLiquidityEtfDaily);
+    settingsEditor->setValue("Config/LiquidityEtfPartDaily",                 mLiquidityEtfPartDaily);
+    settingsEditor->setValue("Config/TradeLiquidityEtfNightly",              mTradeLiquidityEtfNightly);
+    settingsEditor->setValue("Config/LiquidityEtfRemainedPartNightly",       mLiquidityEtfRemainedPartNightly);
     settingsEditor->setValue("Config/LimitStockPurchase",                    mLimitStockPurchase);
     settingsEditor->setValue("Config/LimitStockPurchasePart",                mLimitStockPurchasePart);
     settingsEditor->setValue("Config/LimitByTurnover",                       mLimitByTurnover);
@@ -192,8 +202,10 @@ void Config::load(ISettingsEditor* settingsEditor)
     mTradeInNonWorkingHours                = settingsEditor->value("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours).toBool();
     mTradeHugeSpread                       = settingsEditor->value("Config/TradeHugeSpread",                       mTradeHugeSpread).toBool();
     mHugeSpread                            = settingsEditor->value("Config/HugeSpread",                            mHugeSpread).toFloat();
-    mTradeLiquidityEtf                     = settingsEditor->value("Config/TradeLiquidityEtf",                     mTradeLiquidityEtf).toBool();
-    mLiquidityPart                         = settingsEditor->value("Config/LiquidityPart",                         mLiquidityPart).toFloat();
+    mTradeLiquidityEtfDaily                = settingsEditor->value("Config/TradeLiquidityEtfDaily",                mTradeLiquidityEtfDaily).toBool();
+    mLiquidityEtfPartDaily                 = settingsEditor->value("Config/LiquidityEtfPartDaily",                 mLiquidityEtfPartDaily).toFloat();
+    mTradeLiquidityEtfNightly              = settingsEditor->value("Config/TradeLiquidityEtfNightly",              mTradeLiquidityEtfNightly).toBool();
+    mLiquidityEtfRemainedPartNightly       = settingsEditor->value("Config/LiquidityEtfRemainedPartNightly",       mLiquidityEtfRemainedPartNightly).toFloat();
     mLimitStockPurchase                    = settingsEditor->value("Config/LimitStockPurchase",                    mLimitStockPurchase).toBool();
     mLimitStockPurchasePart                = settingsEditor->value("Config/LimitStockPurchasePart",                mLimitStockPurchasePart).toFloat();
     mLimitByTurnover                       = settingsEditor->value("Config/LimitByTurnover",                       mLimitByTurnover).toBool();
@@ -302,32 +314,60 @@ float Config::getHugeSpread()
     return mHugeSpread;
 }
 
-void Config::setTradeLiquidityEtf(bool value)
+void Config::setTradeLiquidityEtfDaily(bool value)
 {
     const QWriteLocker lock(mRwMutex);
 
-    mTradeLiquidityEtf = value;
+    mTradeLiquidityEtfDaily = value;
 }
 
-bool Config::isTradeLiquidityEtf()
+bool Config::isTradeLiquidityEtfDaily()
 {
     const QReadLocker lock(mRwMutex);
 
-    return mTradeLiquidityEtf;
+    return mTradeLiquidityEtfDaily;
 }
 
-void Config::setLiquidityPart(float value)
+void Config::setLiquidityEtfPartDaily(float value)
 {
     const QWriteLocker lock(mRwMutex);
 
-    mLiquidityPart = value;
+    mLiquidityEtfPartDaily = value;
 }
 
-float Config::getLiquidityPart()
+float Config::getLiquidityEtfPartDaily()
 {
     const QReadLocker lock(mRwMutex);
 
-    return mLiquidityPart;
+    return mLiquidityEtfPartDaily;
+}
+
+void Config::setTradeLiquidityEtfNightly(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mTradeLiquidityEtfNightly = value;
+}
+
+bool Config::isTradeLiquidityEtfNightly()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mTradeLiquidityEtfNightly;
+}
+
+void Config::setLiquidityEtfRemainedPartNightly(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mLiquidityEtfRemainedPartNightly = value;
+}
+
+float Config::getLiquidityEtfRemainedPartNightly()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mLiquidityEtfRemainedPartNightly;
 }
 
 void Config::setLimitStockPurchase(bool value)
