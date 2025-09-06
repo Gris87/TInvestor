@@ -21,7 +21,7 @@ public:
     IBiDirTradingThread& operator=(const IBiDirTradingThread& another) = delete;
 
     virtual void terminateTrading() = 0;
-    virtual void terminateThread() = 0;
+    virtual void terminateThread()  = 0;
 
 signals:
     void tradingCompleted(const QString& instrumentId);

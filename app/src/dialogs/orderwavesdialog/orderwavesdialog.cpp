@@ -65,7 +65,7 @@ void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 
     if (!orderBook.bids.isEmpty() && !orderBook.asks.isEmpty())
     {
-        const float spreadPrice   = orderBook.asks.constFirst().price - orderBook.bids.constFirst().price;
+        const float spreadPrice = orderBook.asks.constFirst().price - orderBook.bids.constFirst().price;
         const float spreadPercent =
             (orderBook.asks.constFirst().price / orderBook.bids.constFirst().price) * HUNDRED_PERCENT - HUNDRED_PERCENT;
 

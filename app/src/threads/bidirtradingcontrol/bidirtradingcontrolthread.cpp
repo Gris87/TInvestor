@@ -120,9 +120,10 @@ static void detectHugeSpreadStocksForParallel(
 
                     if (spread > hugeSpread)
                     {
-                        resultsArray[threadId][stock->meta.instrumentId] =
-                            BiDirTradingInfo(QObject::tr("Decided to start reselling because spread is %1")
-                                                 .arg(QString::number(spread, 'f', 3) + "%"));
+                        resultsArray[threadId][stock->meta.instrumentId] = BiDirTradingInfo(
+                            QObject::tr("Decided to start reselling because spread is %1")
+                                .arg(QString::number(spread, 'f', 3) + "%")
+                        );
                     }
                 }
             }
