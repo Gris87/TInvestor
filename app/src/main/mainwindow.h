@@ -250,6 +250,7 @@ public slots:
     void autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price);
     void autoPilotTradeInstruments(const InstrumentsForTrading& instruments);
     void autoPilotTradingCompleted(const QString& instrumentId);
+    void autoPilotTradeInstrumentsBiDir(const InstrumentsForBiDirTrading& instruments);
 
 private slots:
     void on_actionAuth_triggered();

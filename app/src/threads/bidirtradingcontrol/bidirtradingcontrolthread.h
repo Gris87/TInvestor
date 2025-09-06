@@ -7,6 +7,7 @@
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
+#include "src/storage/user/iuserstorage.h"
 
 
 
@@ -16,7 +17,11 @@ class BiDirTradingControlThread : public IBiDirTradingControlThread
 
 public:
     explicit BiDirTradingControlThread(
-        IStocksStorage* stocksStorage, IConfig* config, IGrpcClient* grpcClient, QObject* parent = nullptr
+        IStocksStorage* stocksStorage,
+        IUserStorage*   userStorage,
+        IConfig*        config,
+        IGrpcClient*    grpcClient,
+        QObject*        parent = nullptr
     );
     ~BiDirTradingControlThread() override;
 
@@ -33,6 +38,7 @@ private:
     void detectHugeSpreadStocks(bool tradeHugeSpread, bool tradeLiquidityEtfDaily);
 
     IStocksStorage* mStocksStorage;
+    IUserStorage*   mUserStorage;
     IConfig*        mConfig;
     IGrpcClient*    mGrpcClient;
     QString         mAccountId;

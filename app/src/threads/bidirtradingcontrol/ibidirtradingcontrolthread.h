@@ -4,7 +4,7 @@
 
 #include <QThread>
 
-#include "src/domain/trading/tradinginfo.h"
+#include "src/domain/trading/bidirtradinginfo.h"
 
 
 
@@ -26,5 +26,5 @@ public:
     virtual void terminateThread()                      = 0;
 
 signals:
-    void tradeInstruments(const InstrumentsForTrading& instruments); // Instrument UID => TradingInfo
+    void tradeInstruments(const InstrumentsForBiDirTrading& instruments); // Instrument UID => BiDirTradingInfo
 };

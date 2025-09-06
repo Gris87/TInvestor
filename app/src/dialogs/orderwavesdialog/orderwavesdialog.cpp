@@ -66,10 +66,14 @@ void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
     if (!orderBook.bids.isEmpty() && !orderBook.asks.isEmpty())
     {
         const float spreadPrice   = orderBook.asks.constFirst().price - orderBook.bids.constFirst().price;
-        const float spreadPercent = (orderBook.asks.constFirst().price / orderBook.bids.constFirst().price - 1) * HUNDRED_PERCENT;
+        const float spreadPercent =
+            (orderBook.asks.constFirst().price / orderBook.bids.constFirst().price) * HUNDRED_PERCENT - HUNDRED_PERCENT;
 
-        spread = QString("%1 \u20BD (%2%)")
-                     .arg(QString::number(spreadPrice, 'f', mStock->meta.pricePrecision), QString::number(spreadPercent, 'f', 3));
+        spread =
+            QString("%1 \u20BD (%2)")
+                .arg(
+                    QString::number(spreadPrice, 'f', mStock->meta.pricePrecision), QString::number(spreadPercent, 'f', 3) + "%"
+                );
     }
     else
     {
