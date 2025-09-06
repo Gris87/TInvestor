@@ -14,6 +14,7 @@
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 
 
 
@@ -62,6 +63,7 @@ TEST_F(Test_SettingsDialogFactory, Test_newInstance)
     StrictMock<SellDecision2ConfigWidgetFactoryMock> sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock> sellDecision3ConfigWidgetFactoryMock;
     StrictMock<SellDecision4ConfigWidgetFactoryMock> sellDecision4ConfigWidgetFactoryMock;
+    StrictMock<UserStorageMock>                      userStorageMock;
 
     // It will be deleted by `delete ui;`
     StrictMock<DecisionMakerConfigWidgetMock>* simulatorConfigWidgetMock = new StrictMock<DecisionMakerConfigWidgetMock>();
@@ -103,6 +105,10 @@ TEST_F(Test_SettingsDialogFactory, Test_newInstance)
     )
         .WillOnce(Return(autoPilotConfigWidgetMock));
 
+    EXPECT_CALL(userStorageMock, readLock());
+    EXPECT_CALL(userStorageMock, getCommission()).WillOnce(Return(0.04));
+    EXPECT_CALL(userStorageMock, readUnlock());
+
     const std::shared_ptr<ISettingsDialog> dialog = factory->newInstance(
         &configMock,
         &decisionMakerConfigWidgetFactoryMock,
@@ -114,6 +120,7 @@ TEST_F(Test_SettingsDialogFactory, Test_newInstance)
         &sellDecision2ConfigWidgetFactoryMock,
         &sellDecision3ConfigWidgetFactoryMock,
         &sellDecision4ConfigWidgetFactoryMock,
+        &userStorageMock,
         nullptr
     );
     ASSERT_TRUE(dialog != nullptr);

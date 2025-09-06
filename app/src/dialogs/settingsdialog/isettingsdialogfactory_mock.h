@@ -33,6 +33,7 @@ public:
          ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
          ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
          ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
+         IUserStorage*                      userStorage,
          QWidget*                           parent),
         (const, override)
     );

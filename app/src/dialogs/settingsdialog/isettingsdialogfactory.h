@@ -5,6 +5,7 @@
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory.h"
 #include "src/config/iconfig.h"
 #include "src/dialogs/settingsdialog/isettingsdialog.h"
+#include "src/storage/user/iuserstorage.h"
 
 
 
@@ -28,6 +29,7 @@ public:
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
+        IUserStorage*                      userStorage,
         QWidget*                           parent
     ) const = 0;
 };

@@ -530,13 +530,13 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="590"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1329"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1330"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="607"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1177"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1178"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
@@ -556,13 +556,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1177"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1178"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="696"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1208"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1209"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
@@ -577,7 +577,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1208"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1209"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -1129,95 +1129,100 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="248"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="259"/>
+        <source>The commission is too high. It is recommended to purchase Premium</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="289"/>
         <source>Trade high liquidity ETF (e.g. TMON@) during a day</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="278"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="319"/>
         <source>Trade high liquidity ETF (e.g. TMON@) at night with keeping</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="304"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="345"/>
         <source>of money from total portfolio cost</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="331"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="441"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="372"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="482"/>
         <source>Limit stock purchase part less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="375"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="485"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="416"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="526"/>
         <source>and less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="398"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="439"/>
         <source>of average daily turnover</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="508"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="549"/>
         <source>of average daily turnover in non-wokring hours</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="539"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="580"/>
         <source>Store stocks data for</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="546"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="587"/>
         <source> months</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="591"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="261"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="283"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="632"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="272"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="294"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="612"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="648"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="653"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="689"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="627"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="260"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="284"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="668"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="271"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="295"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="684"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="725"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="707"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="748"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="727"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="768"/>
         <source>Default</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="82"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="89"/>
         <source>Autorun on %1 startup</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="255"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="278"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="266"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="289"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>

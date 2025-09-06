@@ -1133,6 +1133,7 @@ void MainWindow::on_actionSettings_triggered()
         mSellDecision2ConfigWidgetFactory,
         mSellDecision3ConfigWidgetFactory,
         mSellDecision4ConfigWidgetFactory,
+        mUserStorage,
         this
     );
 

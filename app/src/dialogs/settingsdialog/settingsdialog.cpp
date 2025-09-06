@@ -6,6 +6,8 @@
 
 
 
+constexpr float LIMIT_COMMISSION = 0.06f;
+
 constexpr int SIMULATION_TAB_ID = 1;
 constexpr int AUTO_PILOT_TAB_ID = 2;
 
@@ -40,6 +42,7 @@ SettingsDialog::SettingsDialog(
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
     ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
+    IUserStorage*                      userStorage,
     QWidget*                           parent
 ) :
     ISettingsDialog(parent),
@@ -78,9 +81,17 @@ SettingsDialog::SettingsDialog(
     ui->layoutForSimulatorConfigWidget->addWidget(mSimulatorConfigWidget);
     ui->layoutForAutoPilotConfigWidget->addWidget(mAutoPilotConfigWidget);
 
+    userStorage->readLock();
+    const float commission = userStorage->getCommission();
+    userStorage->readUnlock();
+
     ui->autorunCheckBox->setText(
         tr("Autorun on %1 startup").arg(QSysInfo::productType().at(0).toUpper() + QSysInfo::productType().mid(1))
     );
+
+    ui->tradeHugeSpreadCheckBox->setEnabled(commission < LIMIT_COMMISSION);
+    ui->hugeSpreadDoubleSpinBox->setEnabled(commission < LIMIT_COMMISSION);
+    ui->tradeHugeSpreadCommissionWidget->setVisible(commission >= LIMIT_COMMISSION);
 }
 
 SettingsDialog::~SettingsDialog()

@@ -15,6 +15,7 @@
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 
 
 
@@ -47,6 +48,7 @@ protected:
         sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
         sellDecision4ConfigWidgetFactoryMock = new StrictMock<SellDecision4ConfigWidgetFactoryMock>();
+        userStorageMock                      = new StrictMock<UserStorageMock>();
 
         EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
         EXPECT_CALL(
@@ -84,6 +86,10 @@ protected:
         )
             .WillOnce(Return(autoPilotConfigWidgetMock));
 
+        EXPECT_CALL(*userStorageMock, readLock());
+        EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+        EXPECT_CALL(*userStorageMock, readUnlock());
+
         dialog = new SettingsDialog(
             configMock,
             decisionMakerConfigWidgetFactoryMock,
@@ -94,7 +100,8 @@ protected:
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
-            sellDecision4ConfigWidgetFactoryMock
+            sellDecision4ConfigWidgetFactoryMock,
+            userStorageMock
         );
     }
 
@@ -118,6 +125,7 @@ protected:
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
         delete sellDecision4ConfigWidgetFactoryMock;
+        delete userStorageMock;
     }
 
     SettingsDialog*                                   dialog;
@@ -135,6 +143,7 @@ protected:
     StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
     StrictMock<SellDecision4ConfigWidgetFactoryMock>* sellDecision4ConfigWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                      userStorageMock;
 };
 
 

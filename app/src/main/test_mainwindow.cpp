@@ -1311,6 +1311,7 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
             sellDecision4ConfigWidgetFactoryMock,
+            userStorageMock,
             mainWindow
         )
     )
