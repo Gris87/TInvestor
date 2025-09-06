@@ -52,9 +52,6 @@ public:
     MOCK_METHOD(void, setTradeLiquidityEtfDaily, (bool value), (override));
     MOCK_METHOD(bool, isTradeLiquidityEtfDaily, (), (override));
 
-    MOCK_METHOD(void, setLiquidityEtfPartDaily, (float value), (override));
-    MOCK_METHOD(float, getLiquidityEtfPartDaily, (), (override));
-
     MOCK_METHOD(void, setTradeLiquidityEtfNightly, (bool value), (override));
     MOCK_METHOD(bool, isTradeLiquidityEtfNightly, (), (override));
 

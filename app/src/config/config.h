@@ -49,9 +49,6 @@ public:
     void setTradeLiquidityEtfDaily(bool value) override;
     bool isTradeLiquidityEtfDaily() override;
 
-    void  setLiquidityEtfPartDaily(float value) override;
-    float getLiquidityEtfPartDaily() override;
-
     void setTradeLiquidityEtfNightly(bool value) override;
     bool isTradeLiquidityEtfNightly() override;
 
@@ -104,7 +101,6 @@ private:
     bool    mTradeHugeSpread;
     float   mHugeSpread;
     bool    mTradeLiquidityEtfDaily;
-    float   mLiquidityEtfPartDaily;
     bool    mTradeLiquidityEtfNightly;
     float   mLiquidityEtfRemainedPartNightly;
     bool    mLimitStockPurchase;

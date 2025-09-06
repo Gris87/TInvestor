@@ -4,6 +4,8 @@
 
 #include "src/threads/bidirtradingcontrol/ibidirtradingcontrolthread.h"
 
+#include <QTimeZone>
+
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
@@ -30,17 +32,18 @@ public:
 
     void run() override;
 
+    void detectHugeSpreadStocks(qint64 timestamp, bool tradeHugeSpread, bool tradeLiquidityEtfDaily);
+
     void setAccountId(const QString& accountId) override;
 
     void terminateThread() override;
 
 private:
-    void detectHugeSpreadStocks(bool tradeHugeSpread, bool tradeLiquidityEtfDaily);
-
     IStocksStorage* mStocksStorage;
     IUserStorage*   mUserStorage;
     IConfig*        mConfig;
     IGrpcClient*    mGrpcClient;
+    QTimeZone       mMoscowTimezone;
     QString         mAccountId;
     qint64          mLastDetectionTimestamp;
     bool            mLastTradeHugeSpread;

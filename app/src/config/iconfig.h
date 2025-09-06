@@ -48,9 +48,6 @@ public:
     virtual void setTradeLiquidityEtfDaily(bool value) = 0;
     virtual bool isTradeLiquidityEtfDaily()            = 0;
 
-    virtual void  setLiquidityEtfPartDaily(float value) = 0;
-    virtual float getLiquidityEtfPartDaily()            = 0;
-
     virtual void setTradeLiquidityEtfNightly(bool value) = 0;
     virtual bool isTradeLiquidityEtfNightly()            = 0;
 

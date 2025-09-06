@@ -1,10 +1,16 @@
-Trade instruments with huge spread (detect periodically among all stocks). Buy few / sell few (average?)
-Trade TMON@ bid <=> ask
+BiDirectional trading
+Keep some TMON at the morning (20%)
+Avoid starting TradingThread with bidir
+Remove TradingThread wheb bidir comes
+Cancel order if bidir comes (in TradingThread destructor? Clear order ID on success)
+Cancel order if bidir must die (in BiDirTradingThread destructor?)
+Create TradingThread to sell all when bidir dies
+Double check that all portfolio and operations requests verified
+Disable some settings base on commision
+Create script for providing details about selling from operations.json
 Improve coverage
 Create release
 
-Disable some settings base on commision
-Create script for providing details about selling from operations.json
 Super ASAP buying for BuyDecision1 with trading based on asks with price raise < 0.50%
 Super ASAP selling for SellDecision1 with trading based on bids with yield > 0.38%
 Buy decision 5: Buy if price is lower than price of last buy during 30 minutes from last sell

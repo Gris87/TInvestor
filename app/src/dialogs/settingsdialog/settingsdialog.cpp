@@ -102,7 +102,6 @@ void SettingsDialog::updateUiFromConfig()
     ui->tradeHugeSpreadCheckBox->setChecked(mConfig->isTradeHugeSpread());
     ui->hugeSpreadDoubleSpinBox->setValue(mConfig->getHugeSpread());
     ui->tradeLiquidityEtfDailyCheckBox->setChecked(mConfig->isTradeLiquidityEtfDaily());
-    ui->liquidityEtfPartDailyDoubleSpinBox->setValue(mConfig->getLiquidityEtfPartDaily());
     ui->tradeLiquidityEtfNightlyCheckBox->setChecked(mConfig->isTradeLiquidityEtfNightly());
     ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->setValue(mConfig->getLiquidityEtfRemainedPartNightly());
     ui->limitStockPurchaseCheckBox->setChecked(mConfig->isLimitStockPurchase());
@@ -163,13 +162,6 @@ void SettingsDialog::on_tradeLiquidityEtfDailyCheckBox_checkStateChanged(const Q
     const bool checked = value == Qt::Checked;
 
     mConfig->setTradeLiquidityEtfDaily(checked);
-
-    ui->liquidityEtfPartDailyDoubleSpinBox->setEnabled(checked);
-}
-
-void SettingsDialog::on_liquidityEtfPartDailyDoubleSpinBox_valueChanged(double value)
-{
-    mConfig->setLiquidityEtfPartDaily(value);
 }
 
 void SettingsDialog::on_tradeLiquidityEtfNightlyCheckBox_checkStateChanged(const Qt::CheckState& value)

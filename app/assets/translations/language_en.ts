@@ -1104,7 +1104,7 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="248"/>
-        <source>Trade high liquidity ETF (e.g. TMON@) during a day with part less than</source>
+        <source>Trade high liquidity ETF (e.g. TMON@) during a day</source>
         <translation></translation>
     </message>
     <message>

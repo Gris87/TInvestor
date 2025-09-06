@@ -139,7 +139,7 @@
             <number>1</number>
            </property>
            <property name="maximum">
-            <number>300</number>
+            <number>5</number>
            </property>
           </widget>
          </item>
@@ -245,26 +245,10 @@
          <item>
           <widget class="QCheckBox" name="tradeLiquidityEtfDailyCheckBox">
            <property name="text">
-            <string>Trade high liquidity ETF (e.g. TMON@) during a day with part less than</string>
+            <string>Trade high liquidity ETF (e.g. TMON@) during a day</string>
            </property>
            <property name="checked">
             <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QDoubleSpinBox" name="liquidityEtfPartDailyDoubleSpinBox">
-           <property name="suffix">
-            <string notr="true">%</string>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-           <property name="singleStep">
-            <double>0.100000000000000</double>
-           </property>
-           <property name="value">
-            <double>1.000000000000000</double>
            </property>
           </widget>
          </item>
