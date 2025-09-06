@@ -15,5 +15,14 @@ public:
     BiDirTradingThreadFactory(const BiDirTradingThreadFactory& another)            = delete;
     BiDirTradingThreadFactory& operator=(const BiDirTradingThreadFactory& another) = delete;
 
-    IBiDirTradingThread* newInstance(QObject* parent) const override;
+    IBiDirTradingThread* newInstance(
+        IInstrumentsStorage* instrumentsStorage,
+        ITimeUtils*          timeUtils,
+        IGrpcClient*         grpcClient,
+        ILogsThread*         logsThread,
+        const QString&       accountId,
+        const QString&       instrumentId,
+        const QString&       cause,
+        QObject*             parent
+    ) const override;
 };

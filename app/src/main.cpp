@@ -55,6 +55,7 @@
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
 #include "src/threads/autopilotdecisionmaker/autopilotdecisionmakerthread.h"
+#include "src/threads/bidirtrading/bidirtradingthreadfactory.h"
 #include "src/threads/bidirtradingcontrol/bidirtradingcontrolthread.h"
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/follow/followthread.h"
@@ -468,6 +469,7 @@ static int runApplication(QApplication* app)
     FollowThread              followThread(&instrumentsStorage, &grpcClient);
     OrderBookThread           orderBookThread(&grpcClient);
     TradingThreadFactory      tradingThreadFactory;
+    BiDirTradingThreadFactory biDirTradingThreadFactory;
 
     MainWindow mainWindow(
         &config,
@@ -525,6 +527,7 @@ static int runApplication(QApplication* app)
         &followThread,
         &orderBookThread,
         &tradingThreadFactory,
+        &biDirTradingThreadFactory,
         &fileDialogFactory,
         &timeUtils,
         &messageBoxUtils,

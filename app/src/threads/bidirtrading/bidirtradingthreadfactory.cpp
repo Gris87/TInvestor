@@ -17,7 +17,16 @@ BiDirTradingThreadFactory::~BiDirTradingThreadFactory()
     qDebug() << "Destroy BiDirTradingThreadFactory";
 }
 
-IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(QObject* parent) const
+IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(
+    IInstrumentsStorage* instrumentsStorage,
+    ITimeUtils*          timeUtils,
+    IGrpcClient*         grpcClient,
+    ILogsThread*         logsThread,
+    const QString&       accountId,
+    const QString&       instrumentId,
+    const QString&       cause,
+    QObject*             parent
+) const
 {
-    return new BiDirTradingThread(parent);
+    return new BiDirTradingThread(instrumentsStorage, timeUtils, grpcClient, logsThread, accountId, instrumentId, cause, parent);
 }

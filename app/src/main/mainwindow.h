@@ -18,6 +18,7 @@
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread.h"
+#include "src/threads/bidirtrading/ibidirtradingthreadfactory.h"
 #include "src/threads/bidirtradingcontrol/ibidirtradingcontrolthread.h"
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/follow/ifollowthread.h"
@@ -114,6 +115,7 @@ public:
         IFollowThread*                          followThread,
         IOrderBookThread*                       orderBookThread,
         ITradingThreadFactory*                  tradingThreadFactory,
+        IBiDirTradingThreadFactory*             bidirTradingThreadFactory,
         IFileDialogFactory*                     fileDialogFactory,
         ITimeUtils*                             timeUtils,
         IMessageBoxUtils*                       messageBoxUtils,
@@ -135,16 +137,17 @@ public:
 
     Ui::MainWindow* ui;
 
-    QTimer                         cleanupTimer;
-    QTimer                         userUpdateTimer;
-    QTimer                         priceCollectTimer;
-    QTimer                         makeDecisionTimer;
-    QTimer                         stocksTableUpdateAllTimer;
-    QTimer                         stocksTableUpdateLastPricesTimer;
-    QTimer                         simulatorPortfolioUpdateLastPricesTimer;
-    QTimer                         autoPilotPortfolioUpdateLastPricesTimer;
-    bool                           authFailedDialogShown;
-    QMap<QString, ITradingThread*> tradingThreads; // Instrument UID => ITradingThread
+    QTimer                              cleanupTimer;
+    QTimer                              userUpdateTimer;
+    QTimer                              priceCollectTimer;
+    QTimer                              makeDecisionTimer;
+    QTimer                              stocksTableUpdateAllTimer;
+    QTimer                              stocksTableUpdateLastPricesTimer;
+    QTimer                              simulatorPortfolioUpdateLastPricesTimer;
+    QTimer                              autoPilotPortfolioUpdateLastPricesTimer;
+    bool                                authFailedDialogShown;
+    QMap<QString, ITradingThread*>      tradingThreads;      // Instrument UID => ITradingThread
+    QMap<QString, IBiDirTradingThread*> biDirTradingThreads; // Instrument UID => IBiDirTradingThread
 
 private:
     void updateStackWidgetToolbar() const;
@@ -196,6 +199,7 @@ private:
     IFollowThread*                          mFollowThread;
     IOrderBookThread*                       mOrderBookThread;
     ITradingThreadFactory*                  mTradingThreadFactory;
+    IBiDirTradingThreadFactory*             mBiDirTradingThreadFactory;
     IFileDialogFactory*                     mFileDialogFactory;
     ITimeUtils*                             mTimeUtils;
     IMessageBoxUtils*                       mMessageBoxUtils;
@@ -250,7 +254,8 @@ public slots:
     void autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price);
     void autoPilotTradeInstruments(const InstrumentsForTrading& instruments);
     void autoPilotTradingCompleted(const QString& instrumentId);
-    void autoPilotTradeInstrumentsBiDir(const InstrumentsForBiDirTrading& instruments);
+    void autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading& instruments);
+    void autoPilotBiDirTradingCompleted(const QString& instrumentId);
 
 private slots:
     void on_actionAuth_triggered();

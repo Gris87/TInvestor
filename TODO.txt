@@ -11,15 +11,11 @@ Create script for providing details about selling from operations.json
 Improve coverage
 Create release
 
-Super ASAP buying for BuyDecision1 with trading based on asks with price raise < 0.50%
-Super ASAP selling for SellDecision1 with trading based on bids with yield > 0.38%
-Buy decision 5: Buy if price is lower than price of last buy during 30 minutes from last sell
-
 Change best config search algorithm
-Find best configs
+Find best configs for different commission
 Different defaults based on commission
+Show warning if decisions config is not default
 Participate in auction
-Split order into chunks
 Trade with USD/EUR
 
 =======================================

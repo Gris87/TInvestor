@@ -2,6 +2,18 @@
 
 #include <gtest/gtest.h>
 
+#include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/threads/logs/ilogsthread_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
+
+
+
+using ::testing::InSequence;
+using ::testing::Return;
+using ::testing::ReturnRef;
+using ::testing::StrictMock;
+
 
 
 class Test_BiDirTradingThread : public ::testing::Test
@@ -9,15 +21,34 @@ class Test_BiDirTradingThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        thread = new BiDirTradingThread();
+        const InSequence seq;
+
+        instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        timeUtilsMock          = new StrictMock<TimeUtilsMock>();
+        grpcClientMock         = new StrictMock<GrpcClientMock>();
+        logsThreadMock         = new StrictMock<LogsThreadMock>();
+
+        EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaaaa"), QString("But why")));
+
+        thread = new BiDirTradingThread(
+            instrumentsStorageMock, timeUtilsMock, grpcClientMock, logsThreadMock, "account-id", "aaaaa", "But why"
+        );
     }
 
     void TearDown() override
     {
         delete thread;
+        delete instrumentsStorageMock;
+        delete timeUtilsMock;
+        delete grpcClientMock;
+        delete logsThreadMock;
     }
 
-    BiDirTradingThread* thread;
+    BiDirTradingThread*                 thread;
+    StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<TimeUtilsMock>*          timeUtilsMock;
+    StrictMock<GrpcClientMock>*         grpcClientMock;
+    StrictMock<LogsThreadMock>*         logsThreadMock;
 };
 
 

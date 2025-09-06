@@ -91,6 +91,7 @@ MainWindow::MainWindow(
     IFollowThread*                          followThread,
     IOrderBookThread*                       orderBookThread,
     ITradingThreadFactory*                  tradingThreadFactory,
+    IBiDirTradingThreadFactory*             biDirTradingThreadFactory,
     IFileDialogFactory*                     fileDialogFactory,
     ITimeUtils*                             timeUtils,
     IMessageBoxUtils*                       messageBoxUtils,
@@ -104,6 +105,7 @@ MainWindow::MainWindow(
     ui(new Ui::MainWindow),
     authFailedDialogShown(false),
     tradingThreads(),
+    biDirTradingThreads(),
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mConfigForSimulation(configForSimulation),
@@ -143,6 +145,7 @@ MainWindow::MainWindow(
     mFollowThread(followThread),
     mOrderBookThread(orderBookThread),
     mTradingThreadFactory(tradingThreadFactory),
+    mBiDirTradingThreadFactory(biDirTradingThreadFactory),
     mFileDialogFactory(fileDialogFactory),
     mTimeUtils(timeUtils),
     mMessageBoxUtils(messageBoxUtils),
@@ -292,7 +295,7 @@ MainWindow::MainWindow(
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(logsRead(const QList<LogEntry>&)),                    this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(portfolioChanged(const Portfolio&)),                  this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
     connect(mAutoPilotDecisionMakerThread,            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),      this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
-    connect(mBiDirTradingControlThread,               SIGNAL(tradeInstruments(const InstrumentsForBiDirTrading&)), this, SLOT(autoPilotTradeInstrumentsBiDir(const InstrumentsForBiDirTrading&)));
+    connect(mBiDirTradingControlThread,               SIGNAL(tradeInstruments(const InstrumentsForBiDirTrading&)), this, SLOT(autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading&)));
     connect(mHighLiquidityThread,                     SIGNAL(tradeInstruments(const InstrumentsForTrading&)),      this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mFollowThread,                            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),      this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),         this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
@@ -333,6 +336,11 @@ MainWindow::~MainWindow()
         it.value()->terminateThread();
     }
 
+    for (auto it = biDirTradingThreads.constBegin(); it != biDirTradingThreads.constEnd(); ++it)
+    {
+        it.value()->terminateThread();
+    }
+
     mCleanupThread->wait();
     mUserUpdateThread->wait();
     mPriceCollectThread->wait();
@@ -350,6 +358,12 @@ MainWindow::~MainWindow()
     mFollowThread->wait();
 
     for (auto it = tradingThreads.constBegin(); it != tradingThreads.constEnd(); ++it)
+    {
+        it.value()->wait();
+        delete it.value();
+    }
+
+    for (auto it = biDirTradingThreads.constBegin(); it != biDirTradingThreads.constEnd(); ++it)
     {
         it.value()->wait();
         delete it.value();
@@ -753,6 +767,11 @@ void MainWindow::stopAutoPilot()
         it.value()->terminateThread();
     }
 
+    for (auto it = biDirTradingThreads.constBegin(); it != biDirTradingThreads.constEnd(); ++it)
+    {
+        it.value()->terminateThread();
+    }
+
     autoPilotPortfolioUpdateLastPricesTimer.stop();
 
     mOperationsThread->wait();
@@ -770,7 +789,14 @@ void MainWindow::stopAutoPilot()
         delete it.value();
     }
 
+    for (auto it = biDirTradingThreads.constBegin(); it != biDirTradingThreads.constEnd(); ++it)
+    {
+        it.value()->wait();
+        delete it.value();
+    }
+
     tradingThreads.clear();
+    biDirTradingThreads.clear();
 }
 
 void MainWindow::simulatorStepProgressChanged(int current, int maximum) const
@@ -897,46 +923,50 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
 {
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {
-        const QString&     instrumentId = it.key();
-        const TradingInfo& tradingInfo  = it.value();
+        const QString& instrumentId = it.key();
 
-        if (tradingInfo.expectedCost == 0)
+        if (!biDirTradingThreads.contains(instrumentId))
         {
-            mAutoPilotDecisionMakerThread->notifyAboutSell(instrumentId);
-        }
+            const TradingInfo& tradingInfo = it.value();
 
-        ITradingThread* tradingThread = tradingThreads.value(instrumentId);
+            if (tradingInfo.expectedCost == 0)
+            {
+                mAutoPilotDecisionMakerThread->notifyAboutSell(instrumentId);
+            }
 
-        if (tradingThread == nullptr)
-        {
-            tradingThread = mTradingThreadFactory->newInstance(
-                mInstrumentsStorage,
-                mUserStorage,
-                mTimeUtils,
-                mGrpcClient,
-                mLogsThread,
-                mAutoPilotAccountId,
-                instrumentId,
-                tradingInfo.asapMode,
-                tradingInfo.avgPrice,
-                tradingInfo.price,
-                tradingInfo.expectedCost,
-                tradingInfo.cause,
-                this
-            );
+            ITradingThread* tradingThread = tradingThreads.value(instrumentId);
 
-            connect(
-                tradingThread, SIGNAL(tradingCompleted(const QString&)), this, SLOT(autoPilotTradingCompleted(const QString&))
-            );
+            if (tradingThread == nullptr)
+            {
+                tradingThread = mTradingThreadFactory->newInstance(
+                    mInstrumentsStorage,
+                    mUserStorage,
+                    mTimeUtils,
+                    mGrpcClient,
+                    mLogsThread,
+                    mAutoPilotAccountId,
+                    instrumentId,
+                    tradingInfo.asapMode,
+                    tradingInfo.avgPrice,
+                    tradingInfo.price,
+                    tradingInfo.expectedCost,
+                    tradingInfo.cause,
+                    this
+                );
 
-            tradingThreads[instrumentId] = tradingThread;
-            tradingThread->start();
-        }
-        else
-        {
-            tradingThread->setAsapMode(tradingInfo.asapMode);
-            tradingThread->setAvgPrice(tradingInfo.avgPrice);
-            tradingThread->setExpectedCost(tradingInfo.expectedCost, tradingInfo.cause);
+                connect(
+                    tradingThread, SIGNAL(tradingCompleted(const QString&)), this, SLOT(autoPilotTradingCompleted(const QString&))
+                );
+
+                tradingThreads[instrumentId] = tradingThread;
+                tradingThread->start();
+            }
+            else
+            {
+                tradingThread->setAsapMode(tradingInfo.asapMode);
+                tradingThread->setAvgPrice(tradingInfo.avgPrice);
+                tradingThread->setExpectedCost(tradingInfo.expectedCost, tradingInfo.cause);
+            }
         }
     }
 }
@@ -950,10 +980,48 @@ void MainWindow::autoPilotTradingCompleted(const QString& instrumentId)
     delete tradingThread;
 }
 
-void MainWindow::autoPilotTradeInstrumentsBiDir(const InstrumentsForBiDirTrading& instruments)
+void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading& instruments)
 {
-    // TODO: Implement
-    qInfo() << instruments.size();
+    for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
+    {
+        const QString&          instrumentId     = it.key();
+        const BiDirTradingInfo& biDirTradingInfo = it.value();
+
+        IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.value(instrumentId);
+
+        if (biDirTradingThread == nullptr)
+        {
+            biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
+                mInstrumentsStorage,
+                mTimeUtils,
+                mGrpcClient,
+                mLogsThread,
+                mAutoPilotAccountId,
+                instrumentId,
+                biDirTradingInfo.cause,
+                this
+            );
+
+            connect(
+                biDirTradingThread,
+                SIGNAL(tradingCompleted(const QString&)),
+                this,
+                SLOT(autoPilotBiDirTradingCompleted(const QString&))
+            );
+
+            biDirTradingThreads[instrumentId] = biDirTradingThread;
+            biDirTradingThread->start();
+        }
+    }
+}
+
+void MainWindow::autoPilotBiDirTradingCompleted(const QString& instrumentId)
+{
+    IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.take(instrumentId);
+    Q_ASSERT_X(biDirTradingThread != nullptr, __FUNCTION__, "Unexpected behavior");
+
+    biDirTradingThread->wait();
+    delete biDirTradingThread;
 }
 
 void MainWindow::on_actionAuth_triggered()
