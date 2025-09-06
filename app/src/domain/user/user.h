@@ -12,7 +12,7 @@ extern const char* const SANDBOX_TOKEN;
 
 struct User
 {
-    User();
+    explicit User();
     User(const User& another) = default;
     ~User()                   = default;
 

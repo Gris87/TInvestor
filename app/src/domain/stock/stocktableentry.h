@@ -8,7 +8,7 @@
 
 struct StockTableEntry
 {
-    StockTableEntry();
+    explicit StockTableEntry();
     StockTableEntry(const StockTableEntry& another) = default;
     ~StockTableEntry()                              = default;
 

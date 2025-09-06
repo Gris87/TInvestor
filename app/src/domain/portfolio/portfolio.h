@@ -11,7 +11,7 @@
 
 struct Portfolio
 {
-    Portfolio();
+    explicit Portfolio();
     Portfolio(const Portfolio& another) = default;
     ~Portfolio()                        = default;
 

@@ -11,7 +11,7 @@
 
 struct PortfolioCategoryItem
 {
-    PortfolioCategoryItem();
+    explicit PortfolioCategoryItem();
     PortfolioCategoryItem(const PortfolioCategoryItem& another) = default;
     ~PortfolioCategoryItem()                                    = default;
 

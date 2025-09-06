@@ -10,7 +10,7 @@
 
 struct OrderBook
 {
-    OrderBook();
+    explicit OrderBook();
     OrderBook(const OrderBook& another) = default;
     ~OrderBook()                        = default;
 

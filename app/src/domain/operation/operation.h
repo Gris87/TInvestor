@@ -12,7 +12,7 @@
 
 struct Operation
 {
-    Operation();
+    explicit Operation();
     Operation(const Operation& another) = default;
     ~Operation()                        = default;
 

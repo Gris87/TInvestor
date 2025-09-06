@@ -10,7 +10,7 @@
 
 struct OperationFifoItem
 {
-    OperationFifoItem();
+    explicit OperationFifoItem();
     OperationFifoItem(const OperationFifoItem& another) = default;
     ~OperationFifoItem()                                = default;
 

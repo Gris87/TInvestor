@@ -8,8 +8,8 @@
 
 struct BiDirTradingInfo
 {
-    BiDirTradingInfo();
-    BiDirTradingInfo(const QString& _cause);
+    explicit BiDirTradingInfo();
+    explicit BiDirTradingInfo(const QString& _cause);
     BiDirTradingInfo(const BiDirTradingInfo& another) = default;
     ~BiDirTradingInfo()                               = default;
 

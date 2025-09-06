@@ -11,7 +11,7 @@
 
 struct PortfolioItem
 {
-    PortfolioItem();
+    explicit PortfolioItem();
     PortfolioItem(const PortfolioItem& another) = default;
     ~PortfolioItem()                            = default;
 

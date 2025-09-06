@@ -8,7 +8,7 @@
 
 struct LogFilter
 {
-    LogFilter();
+    explicit LogFilter();
     LogFilter(const LogFilter& another) = default;
     ~LogFilter()                        = default;
 

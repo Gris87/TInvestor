@@ -8,7 +8,7 @@
 
 struct Account
 {
-    Account();
+    explicit Account();
     Account(const Account& another) = default;
     ~Account()                      = default;
 

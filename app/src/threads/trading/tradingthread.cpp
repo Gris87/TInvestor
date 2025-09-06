@@ -84,10 +84,7 @@ void TradingThread::setAsapMode(AsapMode asapMode)
 {
     const QWriteLocker lock(mRwMutex);
 
-    if (asapMode > mAsapMode)
-    {
-        mAsapMode = asapMode;
-    }
+    mAsapMode = qMax(mAsapMode, asapMode);
 }
 
 void TradingThread::setAvgPrice(float avgPrice)

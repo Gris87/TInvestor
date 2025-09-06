@@ -8,7 +8,7 @@
 
 struct PortfolioMinItem
 {
-    PortfolioMinItem();
+    explicit PortfolioMinItem();
     PortfolioMinItem(const PortfolioMinItem& another) = default;
     ~PortfolioMinItem()                               = default;
 

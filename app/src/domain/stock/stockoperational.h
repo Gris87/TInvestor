@@ -10,7 +10,7 @@
 
 struct StockOperational
 {
-    StockOperational();
+    explicit StockOperational();
     StockOperational(const StockOperational& another) = default;
     ~StockOperational()                               = default;
 

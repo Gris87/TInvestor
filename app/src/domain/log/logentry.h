@@ -25,7 +25,7 @@ extern const char* const LOG_LEVEL_NAMES[LOG_LEVEL_COUNT];
 
 struct LogEntry
 {
-    LogEntry();
+    explicit LogEntry();
     LogEntry(const LogEntry& another) = default;
     ~LogEntry()                       = default;
 

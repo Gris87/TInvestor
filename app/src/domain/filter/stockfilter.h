@@ -17,7 +17,7 @@ enum QualInvestorFilter : quint8
 
 struct StockFilter
 {
-    StockFilter();
+    explicit StockFilter();
     StockFilter(const StockFilter& another) = default;
     ~StockFilter()                          = default;
 

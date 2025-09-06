@@ -11,7 +11,7 @@
 
 struct Instrument
 {
-    Instrument();
+    explicit Instrument();
     Instrument(const Instrument& another) = default;
     ~Instrument()                         = default;
 

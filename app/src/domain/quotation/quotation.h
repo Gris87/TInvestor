@@ -10,7 +10,7 @@
 
 struct Quotation
 {
-    Quotation();
+    explicit Quotation();
     Quotation(const Quotation& another) = default;
     ~Quotation()                        = default;
 

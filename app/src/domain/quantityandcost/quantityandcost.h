@@ -10,6 +10,10 @@
 struct QuantityAndCost
 {
     explicit QuantityAndCost();
+    QuantityAndCost(const QuantityAndCost& another) = default;
+    ~QuantityAndCost()                              = default;
+
+    QuantityAndCost& operator=(const QuantityAndCost& another) = default;
 
     qint64                   quantity;
     QList<OperationFifoItem> fifoItems;
@@ -20,6 +24,10 @@ struct QuantityAndCost
 struct QuantityAndCostDouble
 {
     explicit QuantityAndCostDouble();
+    QuantityAndCostDouble(const QuantityAndCostDouble& another) = default;
+    ~QuantityAndCostDouble()                                    = default;
+
+    QuantityAndCostDouble& operator=(const QuantityAndCostDouble& another) = default;
 
     qint64 quantity;
     double cost;

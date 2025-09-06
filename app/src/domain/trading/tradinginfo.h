@@ -17,8 +17,8 @@ enum AsapMode : quint8
 
 struct TradingInfo
 {
-    TradingInfo();
-    TradingInfo(AsapMode _asapMode, float _avgPrice, float _price, double _expectedCost, const QString& _cause);
+    explicit TradingInfo();
+    explicit TradingInfo(AsapMode _asapMode, float _avgPrice, float _price, double _expectedCost, const QString& _cause);
     TradingInfo(const TradingInfo& another) = default;
     ~TradingInfo()                          = default;
 
