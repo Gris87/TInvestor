@@ -15,7 +15,7 @@ from localization import *
 TELEGRAM_TOKEN = "8347815362:AAH2Xa8Mujy7OBsyJm_FWjZJeZekYaIABns"
 TELEGRAM_SEND_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
 
-OPERATIONS_MAX_INACTIVITY = 5 * 24 * 60 * 60 * 1000  # 5 days
+ONE_DAY = 24 * 60 * 60 * 1000
 
 
 def telegram_bot(args):
@@ -36,7 +36,7 @@ def _check_operations_json(args):
 
     delta = now - last_timestamp
 
-    if delta > OPERATIONS_MAX_INACTIVITY:
+    if delta > args.inactivity_days * ONE_DAY:
         _send_message(args, msg_operations_inactivity)
 
 
@@ -87,6 +87,13 @@ def main():
         type=str,
         default="",
         help="Path to operations.json file"
+    )
+    parser.add_argument(
+        "--inactivity-days",
+        dest="inactivity_days",
+        type=int,
+        default=1,
+        help="How many days we can stay idle"
     )
     args = parser.parse_args()
 
