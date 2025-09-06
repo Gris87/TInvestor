@@ -33,6 +33,8 @@ public:
 
     void run() override;
 
+    void terminateTrading() override;
+
     void terminateThread() override;
 
     [[nodiscard]]
@@ -45,4 +47,5 @@ private:
     ILogsThread*         mLogsThread;
     QString              mAccountId;
     QString              mInstrumentId;
+    bool                 mTerminateTrading;
 };

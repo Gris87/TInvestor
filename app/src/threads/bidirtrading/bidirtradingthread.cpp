@@ -22,7 +22,8 @@ BiDirTradingThread::BiDirTradingThread(
     mGrpcClient(grpcClient),
     mLogsThread(logsThread),
     mAccountId(accountId),
-    mInstrumentId(instrumentId)
+    mInstrumentId(instrumentId),
+    mTerminateTrading()
 {
     qDebug() << "Create BiDirTradingThread";
 
@@ -48,6 +49,11 @@ void BiDirTradingThread::run()
     }
 
     qDebug() << "Finish BiDirTradingThread";
+}
+
+void BiDirTradingThread::terminateTrading()
+{
+    mTerminateTrading = true;
 }
 
 void BiDirTradingThread::terminateThread()

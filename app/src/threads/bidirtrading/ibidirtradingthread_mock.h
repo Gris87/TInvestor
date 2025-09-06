@@ -23,5 +23,6 @@ public:
     BiDirTradingThreadMock& operator=(const BiDirTradingThreadMock& another) = delete;
 
     MOCK_METHOD(void, run, (), (override));
+    MOCK_METHOD(void, terminateTrading, (), (override));
     MOCK_METHOD(void, terminateThread, (), (override));
 };

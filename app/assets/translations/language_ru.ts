@@ -173,6 +173,14 @@
     </message>
 </context>
 <context>
+    <name>BiDirTradingThread</name>
+    <message>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="46"/>
+        <source>Reselling completed successfully</source>
+        <translation>Перепродажа успешно завершена</translation>
+    </message>
+</context>
+<context>
     <name>BuyDecision1ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="37"/>
@@ -355,12 +363,12 @@
 <context>
     <name>HighLiquidityThread</name>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="100"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="104"/>
         <source>Decided to buy because trading day is over</source>
         <translation>Решено покупать, потому что торговый день окончен</translation>
     </message>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="142"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="160"/>
         <source>Decided to sell because it had been a night since buying</source>
         <translation>Решено продать, потому что прошла ночь с момента покупки</translation>
     </message>
@@ -418,13 +426,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="375"/>
+        <location filename="../../src/main/mainwindow.cpp" line="389"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="638"/>
+        <location filename="../../src/main/mainwindow.cpp" line="652"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -450,7 +458,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="520"/>
-        <location filename="../../src/main/mainwindow.cpp" line="740"/>
+        <location filename="../../src/main/mainwindow.cpp" line="754"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -506,65 +514,70 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="376"/>
+        <location filename="../../src/main/mainwindow.cpp" line="390"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="419"/>
+        <location filename="../../src/main/mainwindow.cpp" line="433"/>
         <source>GRPC error happened with code %1</source>
         <translation>Возникла ошибка GRPC с кодом %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="439"/>
+        <location filename="../../src/main/mainwindow.cpp" line="453"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="576"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1223"/>
+        <location filename="../../src/main/mainwindow.cpp" line="590"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1329"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="593"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1071"/>
+        <location filename="../../src/main/mainwindow.cpp" line="607"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1177"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="728"/>
+        <location filename="../../src/main/mainwindow.cpp" line="742"/>
         <source>Auto-pilot started</source>
         <translation>Авто-пилот запущен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="734"/>
+        <location filename="../../src/main/mainwindow.cpp" line="748"/>
         <source>Auto-pilot stopped</source>
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1071"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1060"/>
+        <source>Decided to sell in order to get rid of the leftovers</source>
+        <translation>Решено продать, чтобы избавиться от остатков</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.cpp" line="1177"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="682"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1102"/>
+        <location filename="../../src/main/mainwindow.cpp" line="696"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1208"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="243"/>
+        <location filename="../../src/main/mainwindow.cpp" line="246"/>
         <source>Simulator</source>
         <translation>Симулятор</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="244"/>
+        <location filename="../../src/main/mainwindow.cpp" line="247"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1102"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1208"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -845,22 +858,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="170"/>
+        <location filename="../../src/main.cpp" line="171"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="170"/>
+        <location filename="../../src/main.cpp" line="171"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="196"/>
+        <location filename="../../src/main.cpp" line="197"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="196"/>
+        <location filename="../../src/main.cpp" line="197"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>

@@ -20,6 +20,7 @@ public:
     IBiDirTradingThread(const IBiDirTradingThread& another)            = delete;
     IBiDirTradingThread& operator=(const IBiDirTradingThread& another) = delete;
 
+    virtual void terminateTrading() = 0;
     virtual void terminateThread() = 0;
 
 signals:

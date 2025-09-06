@@ -11,7 +11,7 @@
 const char* const TMON_UID = "498ec3ff-ef27-4729-9703-a5aac48d5789";
 
 constexpr float  HUNDRED_PERCENT             = 100.0f;
-constexpr float  LIMIT_COMMISSION            = 0.05f;
+constexpr float  LIMIT_COMMISSION            = 0.06f;
 constexpr int    NORMAL_SESSION_START_HOUR   = 10;
 constexpr int    NORMAL_SESSION_START_MINUTE = 5;
 constexpr int    NORMAL_SESSION_END_HOUR     = 18;

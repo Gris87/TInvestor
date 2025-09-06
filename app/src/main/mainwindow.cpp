@@ -982,23 +982,55 @@ void MainWindow::autoPilotTradingCompleted(const QString& instrumentId)
 
 void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading& instruments)
 {
+    QStringList tradingThreadsToKill;
+
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {
-        const QString&          instrumentId     = it.key();
-        const BiDirTradingInfo& biDirTradingInfo = it.value();
+        const QString& instrumentId = it.key();
 
-        IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.value(instrumentId);
+        ITradingThread* tradingThread = tradingThreads.value(instrumentId);
 
-        if (biDirTradingThread == nullptr)
+        if (tradingThread != nullptr)
         {
-            biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
+            tradingThread->terminateThread();
+
+            tradingThreadsToKill.append(instrumentId);
+        }
+    }
+
+    for (const QString& instrumentId : tradingThreadsToKill)
+    {
+        ITradingThread* tradingThread = tradingThreads.take(instrumentId);
+        Q_ASSERT_X(tradingThread != nullptr, __FUNCTION__, "Unexpected behavior");
+
+        tradingThread->wait();
+        delete tradingThread;
+    }
+
+    for (auto it = biDirTradingThreads.constBegin(); it != biDirTradingThreads.constEnd(); ++it)
+    {
+        const QString& instrumentId = it.key();
+
+        if (!instruments.contains(instrumentId))
+        {
+            it.value()->terminateTrading();
+        }
+    }
+
+    for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
+    {
+        const QString& instrumentId = it.key();
+
+        if (!biDirTradingThreads.contains(instrumentId))
+        {
+            IBiDirTradingThread* biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
                 mInstrumentsStorage,
                 mTimeUtils,
                 mGrpcClient,
                 mLogsThread,
                 mAutoPilotAccountId,
                 instrumentId,
-                biDirTradingInfo.cause,
+                it.value().cause,
                 this
             );
 
@@ -1022,6 +1054,12 @@ void MainWindow::autoPilotBiDirTradingCompleted(const QString& instrumentId)
 
     biDirTradingThread->wait();
     delete biDirTradingThread;
+
+    InstrumentsForTrading instrumentsForTrading;
+    instrumentsForTrading[instrumentId] =
+        TradingInfo(ASAP_MODE_FOLLOW_PRICE, -1.0f, -1.0f, 0.0, tr("Decided to sell in order to get rid of the leftovers"));
+
+    autoPilotTradeInstruments(instrumentsForTrading);
 }
 
 void MainWindow::on_actionAuth_triggered()
