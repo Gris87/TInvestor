@@ -739,32 +739,6 @@ TEST_F(Test_RawGrpcClient, Test_getPortfolio)
     // clang-format on
 }
 
-TEST_F(Test_RawGrpcClient, Test_getPositions)
-{
-    const InSequence seq;
-
-    grpc::ClientContext                               context;
-    tinkoff::PositionsRequest                         req;
-    const std::shared_ptr<tinkoff::PositionsResponse> resp = std::make_shared<tinkoff::PositionsResponse>();
-
-    context.set_credentials(creds);
-
-    req.set_account_id("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
-
-    QString token = SANDBOX_TOKEN;
-    EXPECT_CALL(*userStorageMock, readLock());
-    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
-    EXPECT_CALL(*userStorageMock, readUnlock());
-
-    const grpc::Status status = client->getPositions(operationsService, &context, req, resp.get());
-
-    // clang-format off
-    ASSERT_EQ(status.ok(),            true);
-    ASSERT_GT(resp->money_size(),     0);
-    ASSERT_NE(resp->money(0).units(), 0);
-    // clang-format on
-}
-
 TEST_F(Test_RawGrpcClient, Test_getOperations)
 {
     const InSequence seq;

@@ -51,64 +51,39 @@ void AutoPilotDecisionMakerThread::run()
 
     blockSignals(false);
 
-    bool success = false;
+    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
 
-    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        const Portfolio portfolio = handlePortfolioResponse(*tinkoffPortfolio);
 
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+
+        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
+            mGrpcClient->getOperations(QThread::currentThread(), mAccountId, timestamp - DATE_RANGE, timestamp + ONE_DAY, "");
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOperations != nullptr)
         {
-            if (validatePortfolioResponse(*tinkoffPortfolio))
+            const InstrumentSells instrumentSells = handleGetOperationsByCursorResponse(*tinkoffOperations);
+
+            mStocksStorage->readLock();
+            const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
+                QThread::currentThread(),
+                QDateTime::currentMSecsSinceEpoch(),
+                mConfig,
+                instrumentSells,
+                portfolio,
+                mStocksStorage->getStocks(),
+                true,
+                false,
+                true
+            );
+            mStocksStorage->readUnlock();
+
+            if (!instrumentsForTrading.isEmpty())
             {
-                const Portfolio portfolio = handlePortfolioResponse(*tinkoffPortfolio);
-
-                const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
-
-                const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations = mGrpcClient->getOperations(
-                    QThread::currentThread(), mAccountId, timestamp - DATE_RANGE, timestamp + ONE_DAY, ""
-                );
-
-                if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOperations != nullptr)
-                {
-                    const InstrumentSells instrumentSells = handleGetOperationsByCursorResponse(*tinkoffOperations);
-
-                    mStocksStorage->readLock();
-                    const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
-                        QThread::currentThread(),
-                        QDateTime::currentMSecsSinceEpoch(),
-                        mConfig,
-                        instrumentSells,
-                        portfolio,
-                        mStocksStorage->getStocks(),
-                        true,
-                        false,
-                        true
-                    );
-                    mStocksStorage->readUnlock();
-
-                    if (!instrumentsForTrading.isEmpty())
-                    {
-                        emit tradeInstruments(instrumentsForTrading);
-                    }
-                }
-
-                success = true;
+                emit tradeInstruments(instrumentsForTrading);
             }
-            else
-            {
-                qDebug() << "Invalid portfolio received. Try one more time";
-
-                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
-                {
-                    break;
-                }
-            }
-        }
-        else
-        {
-            break;
         }
     }
 
@@ -134,6 +109,40 @@ void AutoPilotDecisionMakerThread::terminateThread()
     requestInterruption();
 }
 
+std::shared_ptr<tinkoff::PortfolioResponse> AutoPilotDecisionMakerThread::getValidPortfolio()
+{
+    bool                                        success          = false;
+    std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = nullptr;
+
+    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    {
+        tinkoffPortfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        {
+            if (validatePortfolioResponse(*tinkoffPortfolio))
+            {
+                success = true;
+            }
+            else
+            {
+                qDebug() << "Invalid portfolio received. Try one more time";
+
+                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return tinkoffPortfolio;
+}
+
 bool AutoPilotDecisionMakerThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
 {
     bool res = true;
@@ -146,7 +155,8 @@ bool AutoPilotDecisionMakerThread::validatePortfolioResponse(const tinkoff::Port
 
         if (instrumentId != RUBLE_UID)
         {
-            if (position.average_position_price().units() <= 0 && position.average_position_price().nano() <= 0)
+            if ((position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0) ||
+                (position.average_position_price().units() <= 0 && position.average_position_price().nano() <= 0))
             {
                 res = false;
 

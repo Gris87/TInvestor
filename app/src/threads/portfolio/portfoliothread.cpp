@@ -128,20 +128,32 @@ bool PortfolioThread::createPortfolioStream()
 
 bool PortfolioThread::requestPortfolio()
 {
-    bool res = false;
+    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
 
-    while (!res)
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        handlePortfolioResponse(*tinkoffPortfolio);
+
+        return true;
+    }
+
+    return false;
+}
+
+std::shared_ptr<tinkoff::PortfolioResponse> PortfolioThread::getValidPortfolio()
+{
+    bool                                        success          = false;
+    std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = nullptr;
+
+    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    {
+        tinkoffPortfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
 
         if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
         {
             if (validatePortfolioResponse(*tinkoffPortfolio))
             {
-                handlePortfolioResponse(*tinkoffPortfolio);
-
-                res = true;
+                success = true;
             }
             else
             {
@@ -159,7 +171,7 @@ bool PortfolioThread::requestPortfolio()
         }
     }
 
-    return res;
+    return tinkoffPortfolio;
 }
 
 bool PortfolioThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)

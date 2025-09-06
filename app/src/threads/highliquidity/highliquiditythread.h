@@ -34,10 +34,11 @@ public:
     void terminateThread() override;
 
 private:
-    bool validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    void calculateMoneyAndTotalCost(
-        const tinkoff::PortfolioResponse& tinkoffPortfolio, double& money, double& totalCost, double& etfCost, float& etfPrice
-    );
+    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
+    bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    void                                        calculateMoneyAndTotalCost(
+                                               const tinkoff::PortfolioResponse& tinkoffPortfolio, double& money, double& totalCost, double& etfCost, float& etfPrice
+                                           );
 
     IConfig*     mConfig;
     ITimeUtils*  mTimeUtils;

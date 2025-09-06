@@ -8,12 +8,18 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
+constexpr qint64 MS_IN_SECOND         = 1000LL;
+constexpr qint64 SLEEP_BEFORE_REQUEST = 1LL * MS_IN_SECOND; // 1 second
 
 
-FollowThread::FollowThread(IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent) :
+
+FollowThread::FollowThread(
+    IInstrumentsStorage* instrumentsStorage, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent
+) :
     IFollowThread(parent),
     mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
+    mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mAccountId(),
     mAnotherAccountId(),
@@ -36,9 +42,8 @@ void FollowThread::run()
 
     blockSignals(false);
 
-    const std::shared_ptr<tinkoff::PortfolioResponse> portfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
-    const std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio =
-        mGrpcClient->getPortfolio(QThread::currentThread(), mAnotherAccountId);
+    std::shared_ptr<tinkoff::PortfolioResponse> portfolio        = getValidPortfolio(mAccountId);
+    std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio = getValidPortfolio(mAnotherAccountId);
 
     if (!QThread::currentThread()->isInterruptionRequested() && portfolio != nullptr && anotherPortfolio != nullptr)
     {
@@ -65,11 +70,11 @@ void FollowThread::run()
 
                     if (accountId == mAccountId)
                     {
-                        *portfolio = tinkoffPortfolio;
+                        portfolio = getValidPortfolio(mAccountId);
                     }
                     else
                     {
-                        *anotherPortfolio = tinkoffPortfolio;
+                        anotherPortfolio = getValidPortfolio(mAnotherAccountId);
                     }
 
                     handlePortfolios(portfolio, anotherPortfolio);
@@ -119,6 +124,64 @@ bool FollowThread::createPortfolioStream()
         mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId, mAnotherAccountId);
 
         res = mPortfolioStream != nullptr;
+    }
+
+    return res;
+}
+
+std::shared_ptr<tinkoff::PortfolioResponse> FollowThread::getValidPortfolio(const QString& accountId)
+{
+    bool                                        success          = false;
+    std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = nullptr;
+
+    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    {
+        tinkoffPortfolio = mGrpcClient->getPortfolio(QThread::currentThread(), accountId);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        {
+            if (validatePortfolioResponse(*tinkoffPortfolio))
+            {
+                success = true;
+            }
+            else
+            {
+                qDebug() << "Invalid portfolio received. Try one more time";
+
+                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return tinkoffPortfolio;
+}
+
+bool FollowThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
+{
+    bool res = true;
+
+    for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
+    {
+        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
+
+        const QString instrumentId = QString::fromStdString(position.instrument_uid());
+
+        if (instrumentId != RUBLE_UID)
+        {
+            if (position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0)
+            {
+                res = false;
+
+                break;
+            }
+        }
     }
 
     return res;

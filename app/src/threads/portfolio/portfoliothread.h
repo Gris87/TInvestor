@@ -38,9 +38,10 @@ public:
     bool createPortfolioStream();
 
 private:
-    bool requestPortfolio();
-    bool validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    void handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    bool                                        requestPortfolio();
+    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
+    bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    void                                        handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
 
     QReadWriteLock*                  mRwMutex;
     IInstrumentsStorage*             mInstrumentsStorage;

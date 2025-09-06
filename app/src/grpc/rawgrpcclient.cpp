@@ -138,18 +138,6 @@ grpc::Status RawGrpcClient::getPortfolio(
     return service->GetPortfolio(context, req, resp);
 }
 
-grpc::Status RawGrpcClient::getPositions(
-    const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
-    grpc::ClientContext*                                     context,
-    const tinkoff::PositionsRequest&                         req,
-    tinkoff::PositionsResponse*                              resp
-)
-{
-    const QMutexLocker lock(mMutex);
-
-    return service->GetPositions(context, req, resp);
-}
-
 grpc::Status RawGrpcClient::getOperations(
     const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
     grpc::ClientContext*                                     context,

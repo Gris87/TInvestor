@@ -75,108 +75,59 @@ void HighLiquidityThread::makeDecisionBaseOnTimestamp(qint64 timestamp)
 
 void HighLiquidityThread::buyEtf()
 {
-    bool success = false;
+    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
 
-    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        double money     = 0.0;
+        double totalCost = 0.0;
+        double etfCost   = 0.0;
+        float  etfPrice  = 0.0f;
 
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfCost, etfPrice);
+
+        const double expectedCost = money + etfCost - totalCost * mConfig->getLiquidityEtfRemainedPartNightly() / HUNDRED_PERCENT;
+
+        if (!QThread::currentThread()->isInterruptionRequested() && expectedCost - etfCost > etfPrice)
         {
-            if (validatePortfolioResponse(*tinkoffPortfolio))
-            {
-                double money     = 0.0;
-                double totalCost = 0.0;
-                double etfCost   = 0.0;
-                float  etfPrice  = 0.0f;
+            InstrumentsForTrading instrumentsForTrading;
 
-                calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfCost, etfPrice);
-
-                const double expectedCost =
-                    money + etfCost - totalCost * mConfig->getLiquidityEtfRemainedPartNightly() / HUNDRED_PERCENT;
-
-                if (!QThread::currentThread()->isInterruptionRequested() && expectedCost - etfCost > etfPrice)
-                {
-                    InstrumentsForTrading instrumentsForTrading;
-
-                    instrumentsForTrading[TMON_UID] = TradingInfo(
-                        ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, expectedCost, tr("Decided to buy because trading day is over")
-                    );
-                    emit tradeInstruments(instrumentsForTrading);
-                }
-
-                success = true;
-            }
-            else
-            {
-                qDebug() << "Invalid portfolio received. Try one more time";
-
-                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
-                {
-                    break;
-                }
-            }
-        }
-        else
-        {
-            break;
+            instrumentsForTrading[TMON_UID] = TradingInfo(
+                ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, expectedCost, tr("Decided to buy because trading day is over")
+            );
+            emit tradeInstruments(instrumentsForTrading);
         }
     }
 }
 
 void HighLiquidityThread::sellEtf()
 {
-    bool success = false;
+    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
 
-    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        double money     = 0.0;
+        double totalCost = 0.0;
+        double etfCost   = 0.0;
+        float  etfPrice  = 0.0f;
 
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfCost, etfPrice);
+
+        const double expectedCost =
+            mConfig->isTradeLiquidityEtfDaily() ? totalCost * KEEP_ETF_AT_THE_MORNING / HUNDRED_PERCENT : 0.0;
+
+        if (etfCost - expectedCost > etfPrice)
         {
-            if (validatePortfolioResponse(*tinkoffPortfolio))
-            {
-                double money     = 0.0;
-                double totalCost = 0.0;
-                double etfCost   = 0.0;
-                float  etfPrice  = 0.0f;
+            InstrumentsForTrading instrumentsForTrading;
 
-                calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfCost, etfPrice);
-
-                const double expectedCost =
-                    mConfig->isTradeLiquidityEtfDaily() ? totalCost * KEEP_ETF_AT_THE_MORNING / HUNDRED_PERCENT : 0.0;
-
-                if (etfCost - expectedCost > etfPrice)
-                {
-                    InstrumentsForTrading instrumentsForTrading;
-
-                    instrumentsForTrading[TMON_UID] = TradingInfo(
-                        ASAP_MODE_IMMEDIATELY_TRADE,
-                        -1.0f,
-                        -1.0f,
-                        expectedCost,
-                        tr("Decided to sell because it had been a night since buying")
-                    );
-                    emit tradeInstruments(instrumentsForTrading);
-                }
-
-                success = true;
-            }
-            else
-            {
-                qDebug() << "Invalid portfolio received. Try one more time";
-
-                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
-                {
-                    break;
-                }
-            }
-        }
-        else
-        {
-            break;
+            instrumentsForTrading[TMON_UID] = TradingInfo(
+                ASAP_MODE_IMMEDIATELY_TRADE,
+                -1.0f,
+                -1.0f,
+                expectedCost,
+                tr("Decided to sell because it had been a night since buying")
+            );
+            emit tradeInstruments(instrumentsForTrading);
         }
     }
 }
@@ -191,6 +142,40 @@ void HighLiquidityThread::terminateThread()
     blockSignals(true);
 
     requestInterruption();
+}
+
+std::shared_ptr<tinkoff::PortfolioResponse> HighLiquidityThread::getValidPortfolio()
+{
+    bool                                        success          = false;
+    std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = nullptr;
+
+    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    {
+        tinkoffPortfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        {
+            if (validatePortfolioResponse(*tinkoffPortfolio))
+            {
+                success = true;
+            }
+            else
+            {
+                qDebug() << "Invalid portfolio received. Try one more time";
+
+                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return tinkoffPortfolio;
 }
 
 bool HighLiquidityThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)

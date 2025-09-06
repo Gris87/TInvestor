@@ -94,21 +94,32 @@ TEST_F(Test_TradingThread, Test_run)
     tinkoff::PortfolioPosition* position1 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
     tinkoff::PortfolioPosition* position2 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
 
-    tinkoff::Quotation*  tinkoffQuantity     = new tinkoff::Quotation();  // position2 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::Quotation*  tinkoffQuantity1     = new tinkoff::Quotation();  // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::Quotation*  tinkoffQuantity2     = new tinkoff::Quotation();  // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo2 = new tinkoff::MoneyValue(); // position2 will take ownership
 
-    tinkoffQuantity->set_units(1000);
-    tinkoffQuantity->set_nano(0);
+    tinkoffQuantity1->set_units(1000);
+    tinkoffQuantity1->set_nano(0);
 
-    tinkoffAvgPriceFifo->set_currency("rub");
-    tinkoffAvgPriceFifo->set_units(50);
-    tinkoffAvgPriceFifo->set_nano(500000000);
+    tinkoffAvgPriceFifo1->set_currency("rub");
+    tinkoffAvgPriceFifo1->set_units(50);
+    tinkoffAvgPriceFifo1->set_nano(500000000);
+
+    tinkoffQuantity2->set_units(1000);
+    tinkoffQuantity2->set_nano(0);
+
+    tinkoffAvgPriceFifo2->set_currency("rub");
+    tinkoffAvgPriceFifo2->set_units(50);
+    tinkoffAvgPriceFifo2->set_nano(500000000);
 
     position1->set_instrument_uid("bbbbb");
+    position1->set_allocated_quantity(tinkoffQuantity1);
+    position1->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo1);
 
     position2->set_instrument_uid("aaaaa");
-    position2->set_allocated_quantity(tinkoffQuantity);
-    position2->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo);
+    position2->set_allocated_quantity(tinkoffQuantity2);
+    position2->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo2);
 
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));

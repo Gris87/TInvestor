@@ -289,30 +289,6 @@ TEST_F(Test_GrpcClient, Test_getPortfolio)
     ASSERT_EQ(client->getPortfolio(QThread::currentThread(), "aaaaa"), nullptr);
 }
 
-TEST_F(Test_GrpcClient, Test_getPositions)
-{
-    const InSequence seq;
-
-    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
-    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
-    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
-
-    EXPECT_CALL(*rawGrpcClientMock, getPositions(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
-
-    ASSERT_NE(client->getPositions(QThread::currentThread(), "aaaaa"), nullptr);
-
-    EXPECT_CALL(*rawGrpcClientMock, getPositions(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
-    EXPECT_CALL(*rawGrpcClientMock, getPositions(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
-
-    ASSERT_EQ(client->getPositions(QThread::currentThread(), "aaaaa"), nullptr);
-
-    EXPECT_CALL(*rawGrpcClientMock, getPositions(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
-
-    ASSERT_EQ(client->getPositions(QThread::currentThread(), "aaaaa"), nullptr);
-}
-
 TEST_F(Test_GrpcClient, Test_getOperations)
 {
     const InSequence seq;

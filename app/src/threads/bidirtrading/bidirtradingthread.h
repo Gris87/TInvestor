@@ -34,10 +34,8 @@ public:
     void run() override;
 
     void terminateTrading() override;
-
     void terminateThread() override;
 
-    [[nodiscard]]
     bool trade();
 
 private:

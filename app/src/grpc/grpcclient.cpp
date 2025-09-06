@@ -326,30 +326,6 @@ std::shared_ptr<tinkoff::PortfolioResponse> GrpcClient::getPortfolio(QThread* pa
     return repeatRequest(parentThread, getPortfolioAction, mOperationsService, &context, req, resp, false);
 }
 
-static grpc::Status getPositionsAction(
-    IRawGrpcClient*                                          rawGrpcClient,
-    const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
-    grpc::ClientContext*                                     context,
-    const tinkoff::PositionsRequest&                         req,
-    const std::shared_ptr<tinkoff::PositionsResponse>&       resp
-)
-{
-    return rawGrpcClient->getPositions(service, context, req, resp.get());
-}
-
-std::shared_ptr<tinkoff::PositionsResponse> GrpcClient::getPositions(QThread* parentThread, const QString& accountId)
-{
-    grpc::ClientContext                               context;
-    tinkoff::PositionsRequest                         req;
-    const std::shared_ptr<tinkoff::PositionsResponse> resp = std::make_shared<tinkoff::PositionsResponse>();
-
-    context.set_credentials(mCreds);
-
-    req.set_account_id(accountId.toStdString());
-
-    return repeatRequest(parentThread, getPositionsAction, mOperationsService, &context, req, resp, false);
-}
-
 static grpc::Status getOperationsAction(
     IRawGrpcClient*                                                rawGrpcClient,
     const std::unique_ptr<tinkoff::OperationsService::Stub>&       service,

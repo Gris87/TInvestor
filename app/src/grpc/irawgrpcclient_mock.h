@@ -112,15 +112,6 @@ public:
     );
     MOCK_METHOD(
         grpc::Status,
-        getPositions,
-        (const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
-         grpc::ClientContext*                                     context,
-         const tinkoff::PositionsRequest&                         req,
-         tinkoff::PositionsResponse*                              resp),
-        (override)
-    );
-    MOCK_METHOD(
-        grpc::Status,
         getOperations,
         (const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
          grpc::ClientContext*                                     context,

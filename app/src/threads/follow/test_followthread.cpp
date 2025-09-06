@@ -4,6 +4,7 @@
 
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
 
 
 
@@ -24,20 +25,23 @@ protected:
     void SetUp() override
     {
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
 
-        thread = new FollowThread(instrumentsStorageMock, grpcClientMock);
+        thread = new FollowThread(instrumentsStorageMock, timeUtilsMock, grpcClientMock);
     }
 
     void TearDown() override
     {
         delete thread;
         delete instrumentsStorageMock;
+        delete timeUtilsMock;
         delete grpcClientMock;
     }
 
     FollowThread*                       thread;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
 };
 
@@ -154,10 +158,16 @@ TEST_F(Test_FollowThread, Test_run)
     portfolioResponse3->set_account_id("account-id");
     portfolioResponse4->set_account_id("another-account-id");
 
-    tinkoff::PortfolioPosition* position5 = portfolioResponse3->add_positions(); // portfolioResponse3 will take ownership
-    tinkoff::PortfolioPosition* position6 = portfolioResponse3->add_positions(); // portfolioResponse3 will take ownership
-    tinkoff::PortfolioPosition* position7 = portfolioResponse4->add_positions(); // portfolioResponse4 will take ownership
-    tinkoff::PortfolioPosition* position8 = portfolioResponse4->add_positions(); // portfolioResponse4 will take ownership
+    portfolioStreamResponse1->set_allocated_portfolio(portfolioResponse3);
+    portfolioStreamResponse2->set_allocated_portfolio(portfolioResponse4);
+
+    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse5(new tinkoff::PortfolioResponse());
+    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse6(new tinkoff::PortfolioResponse());
+
+    tinkoff::PortfolioPosition* position5 = portfolioResponse5->add_positions(); // portfolioResponse5 will take ownership
+    tinkoff::PortfolioPosition* position6 = portfolioResponse5->add_positions(); // portfolioResponse5 will take ownership
+    tinkoff::PortfolioPosition* position7 = portfolioResponse6->add_positions(); // portfolioResponse6 will take ownership
+    tinkoff::PortfolioPosition* position8 = portfolioResponse6->add_positions(); // portfolioResponse6 will take ownership
 
     tinkoff::Quotation*  tinkoffQuantity5     = new tinkoff::Quotation();  // position5 will take ownership
     tinkoff::MoneyValue* tinkoffCurrentPrice5 = new tinkoff::MoneyValue(); // position5 will take ownership
@@ -239,9 +249,6 @@ TEST_F(Test_FollowThread, Test_run)
     position8->set_allocated_current_price(tinkoffCurrentPrice8);
     position8->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo8);
 
-    portfolioStreamResponse1->set_allocated_portfolio(portfolioResponse3);
-    portfolioStreamResponse2->set_allocated_portfolio(portfolioResponse4);
-
     Instruments instruments;
     Instrument  instrument1;
     Instrument  instrument2;
@@ -270,10 +277,14 @@ TEST_F(Test_FollowThread, Test_run)
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"), QString("another-account-id")))
         .WillOnce(Return(portfolioStream));
     EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(portfolioStreamResponse1));
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse5));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(portfolioStreamResponse2));
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("another-account-id")))
+        .WillOnce(Return(portfolioResponse6));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());

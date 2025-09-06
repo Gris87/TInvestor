@@ -466,7 +466,7 @@ static int runApplication(QApplication* app)
     );
     BiDirTradingControlThread biDirTradingControlThread(&stocksStorage, &userStorage, &config, &grpcClient);
     HighLiquidityThread       highLiquidityThread(&config, &timeUtils, &grpcClient);
-    FollowThread              followThread(&instrumentsStorage, &grpcClient);
+    FollowThread              followThread(&instrumentsStorage, &timeUtils, &grpcClient);
     OrderBookThread           orderBookThread(&grpcClient);
     TradingThreadFactory      tradingThreadFactory;
     BiDirTradingThreadFactory biDirTradingThreadFactory;

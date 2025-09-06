@@ -77,12 +77,6 @@ public:
         const tinkoff::PortfolioRequest&                         req,
         tinkoff::PortfolioResponse*                              resp
     ) override;
-    grpc::Status getPositions(
-        const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
-        grpc::ClientContext*                                     context,
-        const tinkoff::PositionsRequest&                         req,
-        tinkoff::PositionsResponse*                              resp
-    ) override;
     grpc::Status getOperations(
         const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
         grpc::ClientContext*                                     context,

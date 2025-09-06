@@ -219,23 +219,11 @@ bool OperationsThread::requestOperations()
     while (true)
     {
         const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
-            mGrpcClient->getOperations(QThread::currentThread(), mAccountId, startTimestamp, endTimestamp, cursor);
+            getValidOperations(startTimestamp, endTimestamp, cursor);
 
         if (QThread::currentThread()->isInterruptionRequested() || tinkoffOperations == nullptr)
         {
             return false;
-        }
-
-        if (!validateOperations(*tinkoffOperations))
-        {
-            qDebug() << "Invalid operations received. Try one more time";
-
-            if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
-            {
-                return false;
-            }
-
-            continue;
         }
 
         if (tinkoffOperations->items_size() > 0)
@@ -343,6 +331,42 @@ bool OperationsThread::requestOperations()
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
+std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
+OperationsThread::getValidOperations(qint64 startTimestamp, qint64 endTimestamp, const QString& cursor)
+{
+    bool                                                    success           = false;
+    std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations = nullptr;
+
+    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    {
+        tinkoffOperations =
+            mGrpcClient->getOperations(QThread::currentThread(), mAccountId, startTimestamp, endTimestamp, cursor);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOperations != nullptr)
+        {
+            if (validateOperations(*tinkoffOperations))
+            {
+                success = true;
+            }
+            else
+            {
+                qDebug() << "Invalid operations received. Try one more time";
+
+                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return tinkoffOperations;
+}
+
 bool OperationsThread::validateOperations(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations)
 {
     bool res = true;
@@ -357,6 +381,64 @@ bool OperationsThread::validateOperations(const tinkoff::GetOperationsByCursorRe
             (operationType == tinkoff::OPERATION_TYPE_BUY || operationType == tinkoff::OPERATION_TYPE_SELL))
         {
             if (tinkoffOperation.commission().units() == 0 && tinkoffOperation.commission().nano() == 0)
+            {
+                res = false;
+
+                break;
+            }
+        }
+    }
+
+    return res;
+}
+
+std::shared_ptr<tinkoff::PortfolioResponse> OperationsThread::getValidPortfolio()
+{
+    bool                                        success          = false;
+    std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = nullptr;
+
+    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    {
+        tinkoffPortfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        {
+            if (validatePortfolioResponse(*tinkoffPortfolio))
+            {
+                success = true;
+            }
+            else
+            {
+                qDebug() << "Invalid portfolio received. Try one more time";
+
+                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return tinkoffPortfolio;
+}
+
+bool OperationsThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
+{
+    bool res = true;
+
+    for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
+    {
+        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
+
+        const QString instrumentId = QString::fromStdString(position.instrument_uid());
+
+        if (instrumentId != RUBLE_UID)
+        {
+            if (position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0)
             {
                 res = false;
 
@@ -620,8 +702,7 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
 
 void OperationsThread::alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation)
 {
-    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-        mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {

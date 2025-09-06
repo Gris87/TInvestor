@@ -6,6 +6,8 @@
 
 
 
+const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+
 constexpr float  HUNDRED_PERCENT             = 100.0f;
 constexpr float  MAXIMUM_PRICE_RAISE_PERCENT = 0.50f;
 constexpr float  MINIMUM_YIELD_PERCENT       = 0.30f;
@@ -13,6 +15,7 @@ constexpr qint64 MS_IN_SECOND                = 1000LL;
 constexpr qint64 SLEEP_DELAY                 = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY          = 3LL * MS_IN_SECOND;  // 3 seconds
 constexpr qint64 ORDER_RETRY_DELAY           = 1LL * MS_IN_SECOND;  // 1 second
+constexpr qint64 SLEEP_BEFORE_REQUEST        = 1LL * MS_IN_SECOND;  // 1 second
 constexpr double DOUBLE_EPSILON              = 0.0001;
 
 
@@ -143,15 +146,12 @@ bool TradingThread::trade()
 
     while (true)
     {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
 
         if (QThread::currentThread()->isInterruptionRequested() || tinkoffPortfolio == nullptr)
         {
             return false;
         }
-
-        // TODO: Validate portfolio
 
         const double cost     = handlePortfolioResponse(*tinkoffPortfolio);
         const double expected = expectedCost();
@@ -196,6 +196,64 @@ void TradingThread::getInstrumentData()
     mMinPriceIncrement = instrument.minPriceIncrement;
 
     mInstrumentsStorage->readUnlock();
+}
+
+std::shared_ptr<tinkoff::PortfolioResponse> TradingThread::getValidPortfolio()
+{
+    bool                                        success          = false;
+    std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = nullptr;
+
+    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    {
+        tinkoffPortfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        {
+            if (validatePortfolioResponse(*tinkoffPortfolio))
+            {
+                success = true;
+            }
+            else
+            {
+                qDebug() << "Invalid portfolio received. Try one more time";
+
+                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return tinkoffPortfolio;
+}
+
+bool TradingThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
+{
+    bool res = true;
+
+    for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
+    {
+        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
+
+        const QString instrumentId = QString::fromStdString(position.instrument_uid());
+
+        if (instrumentId != RUBLE_UID)
+        {
+            if (position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0)
+            {
+                res = false;
+
+                break;
+            }
+        }
+    }
+
+    return res;
 }
 
 double TradingThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
