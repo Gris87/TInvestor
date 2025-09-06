@@ -165,6 +165,14 @@
     </message>
 </context>
 <context>
+    <name>BiDirTradingControlThread</name>
+    <message>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="173"/>
+        <source>Decided to start reselling of high liquidity ETF because it requested from config</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>BuyDecision1ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="37"/>
@@ -347,12 +355,12 @@
 <context>
     <name>HighLiquidityThread</name>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="107"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="100"/>
         <source>Decided to buy because trading day is over</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="149"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="142"/>
         <source>Decided to sell because it had been a night since buying</source>
         <translation></translation>
     </message>
@@ -514,13 +522,13 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="576"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1217"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1223"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="593"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1065"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1071"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
@@ -535,13 +543,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1065"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1071"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="682"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1096"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1102"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
@@ -556,7 +564,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1096"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1102"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -680,7 +688,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.cpp" line="82"/>
+        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.cpp" line="86"/>
         <source>%1 / Spread: %2</source>
         <translation></translation>
     </message>
@@ -972,6 +980,11 @@
         <source>Order completed. %1/%1 bought with a price %2</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="124"/>
+        <source>Decided to start reselling because spread is %1</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>SellDecision1ConfigWidget</name>
@@ -1108,79 +1121,79 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="294"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="278"/>
         <source>Trade high liquidity ETF (e.g. TMON@) at night with keeping</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="320"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="304"/>
         <source>of money from total portfolio cost</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="347"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="457"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="331"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="441"/>
         <source>Limit stock purchase part less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="391"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="501"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="375"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="485"/>
         <source>and less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="414"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="398"/>
         <source>of average daily turnover</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="524"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="508"/>
         <source>of average daily turnover in non-wokring hours</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="555"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="539"/>
         <source>Store stocks data for</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="562"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="546"/>
         <source> months</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="607"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="269"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="291"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="591"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="261"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="283"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="628"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="664"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="612"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="648"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="643"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="268"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="292"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="627"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="260"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="284"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="700"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="684"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="723"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="707"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="743"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="727"/>
         <source>Default</source>
         <translation></translation>
     </message>
@@ -1190,8 +1203,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="263"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="286"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="255"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="278"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>
@@ -1440,79 +1453,79 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="612"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="663"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="609"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="660"/>
         <source>Order cancelled</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="364"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="361"/>
         <source>Order to sell %1 created with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="344"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="341"/>
         <source>Failed to create order to sell %1 with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="371"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="564"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="368"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="561"/>
         <source>while market price %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="385"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="382"/>
         <source>Order to sell %1 rejected with a price %2. Let&apos;s try again</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="438"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="435"/>
         <source>Trade interrupted because the price reached %1 with raise %2 from the price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="537"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="534"/>
         <source>Failed to create order to buy %1 with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="557"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="554"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="578"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="575"/>
         <source>Order to buy %1 rejected with a price %2. Let&apos;s try again</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="629"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="626"/>
         <source>%1/%2 bought with a price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="639"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="636"/>
         <source>%1/%2 sold with a price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="651"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="648"/>
         <source>Order completed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="655"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="652"/>
         <source>Order partially completed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="659"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="656"/>
         <source>Order rejected</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="667"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="664"/>
         <source>Order is still waiting</source>
         <translation></translation>
     </message>

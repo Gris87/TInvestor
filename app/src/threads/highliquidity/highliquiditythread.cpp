@@ -11,6 +11,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 const char* const TMON_UID  = "498ec3ff-ef27-4729-9703-a5aac48d5789";
 
 constexpr float  HUNDRED_PERCENT             = 100.0f;
+constexpr float  KEEP_ETF_AT_THE_MORNING     = 15.0f;
 constexpr int    NORMAL_SESSION_START_HOUR   = 10;
 constexpr int    NORMAL_SESSION_START_MINUTE = 0;
 constexpr int    NORMAL_SESSION_END_HOUR     = 18;
@@ -18,7 +19,7 @@ constexpr int    NORMAL_SESSION_END_MINUTE   = 30;
 constexpr int    EXTRA_SESSION_END_HOUR      = 23;
 constexpr int    EXTRA_SESSION_END_MINUTE    = 40;
 constexpr qint64 MS_IN_SECOND                = 1000LL;
-constexpr qint64 SLEEP_BEFORE_REQUEST        = 1LL * MS_IN_SECOND; // 1 second
+constexpr qint64 SLEEP_BEFORE_REQUEST        = 5LL * MS_IN_SECOND; // 5 seconds
 
 
 
@@ -87,17 +88,20 @@ void HighLiquidityThread::buyEtf()
             {
                 double money     = 0.0;
                 double totalCost = 0.0;
-                bool   etfFound  = false;
+                double etfCost   = 0.0;
+                float  etfPrice  = 0.0f;
 
-                calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfFound);
-                money -= totalCost * mConfig->getLiquidityEtfRemainedPartNightly() / HUNDRED_PERCENT;
+                calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfCost, etfPrice);
 
-                if (!QThread::currentThread()->isInterruptionRequested() && !etfFound && money > 0)
+                const double expectedCost =
+                    money + etfCost - totalCost * mConfig->getLiquidityEtfRemainedPartNightly() / HUNDRED_PERCENT;
+
+                if (!QThread::currentThread()->isInterruptionRequested() && expectedCost - etfCost > etfPrice)
                 {
                     InstrumentsForTrading instrumentsForTrading;
 
                     instrumentsForTrading[TMON_UID] = TradingInfo(
-                        ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, money, tr("Decided to buy because trading day is over")
+                        ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, expectedCost, tr("Decided to buy because trading day is over")
                     );
                     emit tradeInstruments(instrumentsForTrading);
                 }
@@ -123,28 +127,56 @@ void HighLiquidityThread::buyEtf()
 
 void HighLiquidityThread::sellEtf()
 {
-    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-        mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+    bool success = false;
 
-    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+    while (!QThread::currentThread()->isInterruptionRequested() && !success)
     {
-        for (int i = 0; i < tinkoffPortfolio->positions_size(); ++i)
+        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
         {
-            const tinkoff::PortfolioPosition& position = tinkoffPortfolio->positions(i);
-
-            const QString instrumentId = QString::fromStdString(position.instrument_uid());
-
-            if (instrumentId == TMON_UID)
+            if (validatePortfolioResponse(*tinkoffPortfolio))
             {
-                InstrumentsForTrading instrumentsForTrading;
+                double money     = 0.0;
+                double totalCost = 0.0;
+                double etfCost   = 0.0;
+                float  etfPrice  = 0.0f;
 
-                instrumentsForTrading[instrumentId] = TradingInfo(
-                    ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, 0.0, tr("Decided to sell because it had been a night since buying")
-                );
-                emit tradeInstruments(instrumentsForTrading);
+                calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfCost, etfPrice);
 
-                break;
+                const double expectedCost =
+                    mConfig->isTradeLiquidityEtfDaily() ? totalCost * KEEP_ETF_AT_THE_MORNING / HUNDRED_PERCENT : 0.0;
+
+                if (etfCost - expectedCost > etfPrice)
+                {
+                    InstrumentsForTrading instrumentsForTrading;
+
+                    instrumentsForTrading[TMON_UID] = TradingInfo(
+                        ASAP_MODE_IMMEDIATELY_TRADE,
+                        -1.0f,
+                        -1.0f,
+                        expectedCost,
+                        tr("Decided to sell because it had been a night since buying")
+                    );
+                    emit tradeInstruments(instrumentsForTrading);
+                }
+
+                success = true;
             }
+            else
+            {
+                qDebug() << "Invalid portfolio received. Try one more time";
+
+                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            break;
         }
     }
 }
@@ -186,12 +218,13 @@ bool HighLiquidityThread::validatePortfolioResponse(const tinkoff::PortfolioResp
 }
 
 void HighLiquidityThread::calculateMoneyAndTotalCost(
-    const tinkoff::PortfolioResponse& tinkoffPortfolio, double& money, double& totalCost, bool& etfFound
+    const tinkoff::PortfolioResponse& tinkoffPortfolio, double& money, double& totalCost, double& etfCost, float& etfPrice
 )
 {
     money     = 0.0;
     totalCost = 0.0;
-    etfFound  = false;
+    etfCost   = 0.0;
+    etfPrice  = 0.0f;
 
     for (int i = 0; i < tinkoffPortfolio.positions_size() && !QThread::currentThread()->isInterruptionRequested(); ++i)
     {
@@ -206,12 +239,15 @@ void HighLiquidityThread::calculateMoneyAndTotalCost(
         }
         else
         {
+            const double cost = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price_fifo());
+
             if (instrumentId == TMON_UID)
             {
-                etfFound = true;
+                etfCost  = cost;
+                etfPrice = quotationToFloat(position.current_price());
             }
 
-            totalCost += quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price_fifo());
+            totalCost += cost;
         }
     }
 }

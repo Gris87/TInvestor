@@ -1,5 +1,4 @@
 BiDirectional trading
-Keep some TMON at the morning (20%)
 Avoid starting TradingThread with bidir
 Remove TradingThread wheb bidir comes
 Cancel order if bidir comes (in TradingThread destructor? Clear order ID on success)
@@ -7,6 +6,7 @@ Cancel order if bidir must die (in BiDirTradingThread destructor?)
 Create TradingThread to sell all when bidir dies
 Double check that all portfolio and operations requests verified
 Disable some settings base on commision
+Add option for telegram bot notification about inactivity days
 Create script for providing details about selling from operations.json
 Improve coverage
 Create release
