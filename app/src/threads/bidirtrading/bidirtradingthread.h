@@ -60,7 +60,7 @@ private:
     void checkIfNeedToCancelAndCreateOrder(
         const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
     );
-    void sellWithPrice(qint64 amountOfLots, const Quotation& price);
+    void sellWithPrice(const Quotation& price);
     void buyWithPrice(qint64 amountOfLots, const Quotation& price);
 
     void cancelBuyOrder();
@@ -81,6 +81,4 @@ private:
     Quotation            mMinPriceIncrement;
     QString              mBuyOrderId;
     QString              mSellOrderId;
-    Quotation            mLastBuyOrderPrice;
-    Quotation            mLastSellOrderPrice;
 };

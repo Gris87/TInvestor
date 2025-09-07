@@ -13,6 +13,7 @@ constexpr float  HUNDRED_PERCENT      = 100.0f;
 constexpr qint64 MS_IN_SECOND         = 1000LL;
 constexpr qint64 SLEEP_DELAY          = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY   = 3LL * MS_IN_SECOND;  // 3 seconds
+constexpr qint64 ORDER_RETRY_DELAY    = 1LL * MS_IN_SECOND;  // 1 second
 constexpr qint64 SLEEP_BEFORE_REQUEST = 1LL * MS_IN_SECOND;  // 1 second
 
 
@@ -45,9 +46,7 @@ BiDirTradingThread::BiDirTradingThread(
     mInstrumentLot(),
     mMinPriceIncrement(),
     mBuyOrderId(),
-    mSellOrderId(),
-    mLastBuyOrderPrice(),
-    mLastSellOrderPrice()
+    mSellOrderId()
 {
     qDebug() << "Create BiDirTradingThread";
 
@@ -211,7 +210,7 @@ bool BiDirTradingThread::trade()
 
             if (needToOrderSell)
             {
-                sellWithPrice(instrumentLots, sellPrice);
+                sellWithPrice(sellPrice);
             }
         }
 
@@ -341,7 +340,7 @@ void BiDirTradingThread::checkIfNeedToCancelAndCreateOrder(
 
         if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
         {
-            if (quotationConvert(tinkoffOrder->initial_order_price()) == price &&
+            if (quotationConvert(tinkoffOrder->initial_security_price()) == price &&
                 tinkoffOrder->lots_requested() - tinkoffOrder->lots_executed() == amountOfLots)
             {
                 needToOrder = false;
@@ -354,14 +353,102 @@ void BiDirTradingThread::checkIfNeedToCancelAndCreateOrder(
     }
 }
 
-void BiDirTradingThread::sellWithPrice(qint64 amountOfLots, const Quotation& price)
+void BiDirTradingThread::sellWithPrice(const Quotation& price)
 {
-    qInfo() << "SELL" << amountOfLots << quotationToDouble(price);
+    while (true)
+    {
+        const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
+            mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
+
+        if (QThread::currentThread()->isInterruptionRequested() || tinkoffMaxLots == nullptr)
+        {
+            return;
+        }
+
+        const qint64 amountToSell = tinkoffMaxLots->sell_limits().sell_max_lots();
+
+        if (amountToSell > 0)
+        {
+            const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
+                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price
+            );
+
+            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
+            {
+                if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
+                {
+                    return;
+                }
+
+                continue;
+            }
+
+            if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
+            {
+                mSellOrderId = QString::fromStdString(tinkoffOrder->order_id());
+
+                break;
+            }
+
+            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
+            {
+                return;
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
 }
 
 void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& price)
 {
-    qInfo() << "BUY" << amountOfLots << quotationToDouble(price);
+    while (true)
+    {
+        const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
+            mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
+
+        if (QThread::currentThread()->isInterruptionRequested() || tinkoffMaxLots == nullptr)
+        {
+            return;
+        }
+
+        const qint64 amountToBuy = qMin(amountOfLots, tinkoffMaxLots->buy_limits().buy_max_lots());
+
+        if (amountToBuy > 0)
+        {
+            const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
+                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price
+            );
+
+            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
+            {
+                if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
+                {
+                    return;
+                }
+
+                continue;
+            }
+
+            if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
+            {
+                mBuyOrderId = QString::fromStdString(tinkoffOrder->order_id());
+
+                break;
+            }
+
+            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
+            {
+                return;
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
 }
 
 void BiDirTradingThread::cancelBuyOrder()
