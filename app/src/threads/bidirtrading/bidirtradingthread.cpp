@@ -129,10 +129,29 @@ bool BiDirTradingThread::trade()
             break;
         }
 
+        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
+
+        if (QThread::currentThread()->isInterruptionRequested() || tinkoffPortfolio == nullptr)
+        {
+            return false;
+        }
+
+        double totalCost      = 0.0;
+        qint64 instrumentLots = 0;
+
+        calculateTotalCostAndInstrumentLots(*tinkoffPortfolio, totalCost, instrumentLots);
+
         const float bidPrice = quotationToFloat(tinkoffOrderBook->bids(0).price());
         const float askPrice = quotationToFloat(tinkoffOrderBook->asks(0).price());
 
-        bool good = true;
+        const qint64 coefBuy  = static_cast<qint64>(std::floor(bidPrice / quotationToDouble(mMinPriceIncrement)));
+        const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
+
+        const Quotation buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
+        const Quotation sellPrice = quotationMultiply(mMinPriceIncrement, coefSell);
+
+        bool   good      = true;
+        qint64 lotsToBuy = 0;
 
         if (mInstrumentId != TMON_UID)
         {
@@ -142,30 +161,12 @@ bool BiDirTradingThread::trade()
 
         if (good)
         {
-            const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
-
-            if (QThread::currentThread()->isInterruptionRequested() || tinkoffPortfolio == nullptr)
-            {
-                return false;
-            }
-
             const double lotPrice = mInstrumentLot * bidPrice;
-
-            const qint64 coefBuy  = static_cast<qint64>(std::floor(bidPrice / quotationToDouble(mMinPriceIncrement)));
-            const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
-
-            const Quotation buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
-            const Quotation sellPrice = quotationMultiply(mMinPriceIncrement, coefSell);
-
-            double totalCost      = 0.0;
-            qint64 instrumentLots = 0;
-
-            calculateTotalCostAndInstrumentLots(*tinkoffPortfolio, totalCost, instrumentLots);
 
             const qint64 lotsToKeep = mTradeUtils->calculateAmountOfLotsToBuy(
                 mConfig, QDateTime::currentMSecsSinceEpoch(), totalCost, totalCost, turnover(), lotPrice, lotPrice
             );
-            qint64 lotsToBuy = qMax(lotsToKeep - instrumentLots, 0);
+            lotsToBuy = qMax(lotsToKeep - instrumentLots, 0);
 
             for (int i = 0; i < tinkoffOrderBook->bids_size(); ++i)
             {
@@ -176,42 +177,42 @@ bool BiDirTradingThread::trade()
             {
                 lotsToBuy = qMin(lotsToBuy, tinkoffOrderBook->asks(i).quantity());
             }
+        }
 
-            bool needToCancelBuy  = false;
-            bool needToCancelSell = false;
-            bool needToOrderBuy   = false;
-            bool needToOrderSell  = false;
+        bool needToCancelBuy  = false;
+        bool needToCancelSell = false;
+        bool needToOrderBuy   = false;
+        bool needToOrderSell  = false;
 
-            checkIfNeedToCancelAndCreateOrder(mBuyOrderId, lotsToBuy, buyPrice, needToCancelBuy, needToOrderBuy);
-            checkIfNeedToCancelAndCreateOrder(mSellOrderId, instrumentLots, sellPrice, needToCancelSell, needToOrderSell);
+        checkIfNeedToCancelAndCreateOrder(mBuyOrderId, lotsToBuy, buyPrice, needToCancelBuy, needToOrderBuy);
+        checkIfNeedToCancelAndCreateOrder(mSellOrderId, instrumentLots, sellPrice, needToCancelSell, needToOrderSell);
 
-            if (needToCancelBuy)
+        if (needToCancelBuy)
+        {
+            cancelBuyOrder();
+        }
+
+        if (needToCancelSell)
+        {
+            cancelSellOrder();
+        }
+
+        if (needToCancelBuy || needToCancelSell)
+        {
+            if (mTimeUtils->interruptibleSleep(ORDER_CANCEL_DELAY, QThread::currentThread()))
             {
-                cancelBuyOrder();
+                return false;
             }
+        }
 
-            if (needToCancelSell)
-            {
-                cancelSellOrder();
-            }
+        if (needToOrderBuy)
+        {
+            buyWithPrice(lotsToBuy, buyPrice);
+        }
 
-            if (needToCancelBuy || needToCancelSell)
-            {
-                if (mTimeUtils->interruptibleSleep(ORDER_CANCEL_DELAY, QThread::currentThread()))
-                {
-                    return false;
-                }
-            }
-
-            if (needToOrderBuy)
-            {
-                buyWithPrice(lotsToBuy, buyPrice);
-            }
-
-            if (needToOrderSell)
-            {
-                sellWithPrice(sellPrice);
-            }
+        if (needToOrderSell)
+        {
+            sellWithPrice(sellPrice);
         }
 
         if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
