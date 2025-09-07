@@ -31,6 +31,7 @@ BiDirTradingThread::BiDirTradingThread(
     QObject*             parent
 ) :
     IBiDirTradingThread(parent),
+    mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
     mConfig(config),
     mTimeUtils(timeUtils),
@@ -59,6 +60,8 @@ BiDirTradingThread::~BiDirTradingThread()
 
     cancelBuyOrder();
     cancelSellOrder();
+
+    delete mRwMutex;
 }
 
 void BiDirTradingThread::run()
@@ -80,6 +83,20 @@ void BiDirTradingThread::run()
     qDebug() << "Finish BiDirTradingThread";
 }
 
+void BiDirTradingThread::setTurnover(qint64 turnover)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mTurnover = turnover;
+}
+
+qint64 BiDirTradingThread::turnover() const
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mTurnover;
+}
+
 void BiDirTradingThread::terminateTrading()
 {
     mTerminateTrading = true;
@@ -99,7 +116,7 @@ bool BiDirTradingThread::trade()
     while (!mTerminateTrading)
     {
         const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-            mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, 5);
+            mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, 3);
 
         if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrderBook == nullptr)
         {
@@ -147,9 +164,19 @@ bool BiDirTradingThread::trade()
             calculateTotalCostAndInstrumentLots(*tinkoffPortfolio, totalCost, instrumentLots);
 
             const qint64 lotsToKeep = mTradeUtils->calculateAmountOfLotsToBuy(
-                mConfig, QDateTime::currentMSecsSinceEpoch(), totalCost, totalCost, mTurnover, lotPrice, lotPrice
+                mConfig, QDateTime::currentMSecsSinceEpoch(), totalCost, totalCost, turnover(), lotPrice, lotPrice
             );
-            const qint64 lotsToBuy = qMax(lotsToKeep - instrumentLots, 0);
+            qint64 lotsToBuy = qMax(lotsToKeep - instrumentLots, 0);
+
+            for (int i = 0; i < tinkoffOrderBook->bids_size(); ++i)
+            {
+                lotsToBuy = qMin(lotsToBuy, tinkoffOrderBook->bids(i).quantity());
+            }
+
+            for (int i = 0; i < tinkoffOrderBook->asks_size(); ++i)
+            {
+                lotsToBuy = qMin(lotsToBuy, tinkoffOrderBook->asks(i).quantity());
+            }
 
             bool needToCancelBuy  = false;
             bool needToCancelSell = false;
@@ -179,10 +206,12 @@ bool BiDirTradingThread::trade()
 
             if (needToOrderBuy)
             {
+                buyWithPrice(lotsToBuy, buyPrice);
             }
 
             if (needToOrderSell)
             {
+                sellWithPrice(instrumentLots, sellPrice);
             }
         }
 
@@ -319,10 +348,20 @@ void BiDirTradingThread::checkIfNeedToCancelAndCreateOrder(
             }
             else
             {
-                needToCancel = true;
+                needToCancel = tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_FILL;
             }
         }
     }
+}
+
+void BiDirTradingThread::sellWithPrice(qint64 amountOfLots, const Quotation& price)
+{
+    qInfo() << "SELL" << amountOfLots << quotationToDouble(price);
+}
+
+void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& price)
+{
+    qInfo() << "BUY" << amountOfLots << quotationToDouble(price);
 }
 
 void BiDirTradingThread::cancelBuyOrder()

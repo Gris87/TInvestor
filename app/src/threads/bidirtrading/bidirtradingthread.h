@@ -4,6 +4,8 @@
 
 #include "src/threads/bidirtrading/ibidirtradingthread.h"
 
+#include <QReadWriteLock>
+
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
@@ -38,6 +40,11 @@ public:
 
     void run() override;
 
+    void setTurnover(qint64 turnover) override;
+
+    [[nodiscard]]
+    qint64 turnover() const;
+
     void terminateTrading() override;
     void terminateThread() override;
 
@@ -53,10 +60,13 @@ private:
     void checkIfNeedToCancelAndCreateOrder(
         const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
     );
+    void sellWithPrice(qint64 amountOfLots, const Quotation& price);
+    void buyWithPrice(qint64 amountOfLots, const Quotation& price);
 
     void cancelBuyOrder();
     void cancelSellOrder();
 
+    QReadWriteLock*      mRwMutex;
     IInstrumentsStorage* mInstrumentsStorage;
     IConfig*             mConfig;
     ITimeUtils*          mTimeUtils;

@@ -1021,13 +1021,14 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
 
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {
-        const QString& instrumentId = it.key();
+        const QString&          instrumentId     = it.key();
+        const BiDirTradingInfo& biDirTradingInfo = it.value();
 
-        if (!biDirTradingThreads.contains(instrumentId))
+        IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.value(instrumentId);
+
+        if (biDirTradingThread == nullptr)
         {
-            const BiDirTradingInfo& biDirTradingInfo = it.value();
-
-            IBiDirTradingThread* biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
+            biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
                 mInstrumentsStorage,
                 mConfig,
                 mTimeUtils,
@@ -1050,6 +1051,10 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
 
             biDirTradingThreads[instrumentId] = biDirTradingThread;
             biDirTradingThread->start();
+        }
+        else
+        {
+            biDirTradingThread->setTurnover(biDirTradingInfo.turnover);
         }
     }
 }

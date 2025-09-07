@@ -464,7 +464,7 @@ static int runApplication(QApplication* app)
     AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(
         &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &timeUtils, &grpcClient
     );
-    BiDirTradingControlThread biDirTradingControlThread(&stocksStorage, &userStorage, &config, &grpcClient);
+    BiDirTradingControlThread biDirTradingControlThread(&stocksStorage, &userStorage, &config, &timeUtils, &grpcClient);
     HighLiquidityThread       highLiquidityThread(&config, &timeUtils, &grpcClient);
     FollowThread              followThread(&instrumentsStorage, &timeUtils, &grpcClient);
     OrderBookThread           orderBookThread(&grpcClient);

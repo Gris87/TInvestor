@@ -98,10 +98,7 @@ void TradingThread::setAvgPrice(float avgPrice)
 {
     const QWriteLocker lock(mRwMutex);
 
-    if (mAvgPrice != avgPrice)
-    {
-        mAvgPrice = avgPrice;
-    }
+    mAvgPrice = avgPrice;
 }
 
 void TradingThread::setExpectedCost(double expectedCost, const QString& cause)

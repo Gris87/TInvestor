@@ -6,6 +6,7 @@
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
 
 
 
@@ -24,9 +25,10 @@ protected:
         stocksStorageMock = new StrictMock<StocksStorageMock>();
         userStorageMock   = new StrictMock<UserStorageMock>();
         configMock        = new StrictMock<ConfigMock>();
+        timeUtilsMock     = new StrictMock<TimeUtilsMock>();
         grpcClientMock    = new StrictMock<GrpcClientMock>();
 
-        thread = new BiDirTradingControlThread(stocksStorageMock, userStorageMock, configMock, grpcClientMock);
+        thread = new BiDirTradingControlThread(stocksStorageMock, userStorageMock, configMock, timeUtilsMock, grpcClientMock);
     }
 
     void TearDown() override
@@ -35,6 +37,7 @@ protected:
         delete stocksStorageMock;
         delete userStorageMock;
         delete configMock;
+        delete timeUtilsMock;
         delete grpcClientMock;
     }
 
@@ -42,6 +45,7 @@ protected:
     StrictMock<StocksStorageMock>* stocksStorageMock;
     StrictMock<UserStorageMock>*   userStorageMock;
     StrictMock<ConfigMock>*        configMock;
+    StrictMock<TimeUtilsMock>*     timeUtilsMock;
     StrictMock<GrpcClientMock>*    grpcClientMock;
 };
 

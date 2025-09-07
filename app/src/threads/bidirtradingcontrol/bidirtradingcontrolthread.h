@@ -10,6 +10,7 @@
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
+#include "src/utils/timeutils/itimeutils.h"
 
 
 
@@ -22,6 +23,7 @@ public:
         IStocksStorage* stocksStorage,
         IUserStorage*   userStorage,
         IConfig*        config,
+        ITimeUtils*     timeUtils,
         IGrpcClient*    grpcClient,
         QObject*        parent = nullptr
     );
@@ -42,6 +44,7 @@ private:
     IStocksStorage* mStocksStorage;
     IUserStorage*   mUserStorage;
     IConfig*        mConfig;
+    ITimeUtils*     mTimeUtils;
     IGrpcClient*    mGrpcClient;
     QTimeZone       mMoscowTimezone;
     QString         mAccountId;

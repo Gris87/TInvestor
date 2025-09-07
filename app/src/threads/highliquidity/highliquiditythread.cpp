@@ -51,6 +51,11 @@ void HighLiquidityThread::run()
 
 void HighLiquidityThread::makeDecisionBaseOnTimestamp(qint64 timestamp)
 {
+    if (!mConfig->isTradeInNonWorkingHours() && !mTimeUtils->isWorkingHours(timestamp))
+    {
+        return;
+    }
+
     const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
     const QTime     time      = dateTime.time();
     const QTime     startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);

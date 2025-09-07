@@ -26,12 +26,18 @@ constexpr qint64 DETECTION_INTERVAL          = 15LL * ONE_MINUTE; // 15 minutes
 
 
 BiDirTradingControlThread::BiDirTradingControlThread(
-    IStocksStorage* stocksStorage, IUserStorage* userStorage, IConfig* config, IGrpcClient* grpcClient, QObject* parent
+    IStocksStorage* stocksStorage,
+    IUserStorage*   userStorage,
+    IConfig*        config,
+    ITimeUtils*     timeUtils,
+    IGrpcClient*    grpcClient,
+    QObject*        parent
 ) :
     IBiDirTradingControlThread(parent),
     mStocksStorage(stocksStorage),
     mUserStorage(userStorage),
     mConfig(config),
+    mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mMoscowTimezone("Europe/Moscow"),
     mAccountId(),
@@ -139,42 +145,47 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp, bool tr
 {
     InstrumentsForBiDirTrading instrumentsForTrading;
 
-    if (tradeHugeSpread)
+    if (mConfig->isTradeInNonWorkingHours() || mTimeUtils->isWorkingHours(timestamp))
     {
-        mUserStorage->readLock();
-        const bool  qualifiedUser = mUserStorage->isQualified();
-        const float commission    = mUserStorage->getCommission();
-        mUserStorage->readUnlock();
-
-        if (commission < LIMIT_COMMISSION)
+        if (tradeHugeSpread)
         {
-            mStocksStorage->readLock();
-            QList<Stock*> stocks = mStocksStorage->getStocks();
-            mStocksStorage->readUnlock();
+            mUserStorage->readLock();
+            const bool  qualifiedUser = mUserStorage->isQualified();
+            const float commission    = mUserStorage->getCommission();
+            mUserStorage->readUnlock();
 
-            DetectHugeSpreadStocksInfo detectHugeSpreadStocksInfo(mGrpcClient, qualifiedUser, mConfig->getHugeSpread());
-            processInParallel(QThread::currentThread(), stocks, detectHugeSpreadStocksForParallel, &detectHugeSpreadStocksInfo);
-
-            for (const InstrumentsForBiDirTrading& result : std::as_const(detectHugeSpreadStocksInfo.results))
+            if (commission < LIMIT_COMMISSION)
             {
-                instrumentsForTrading.insert(result);
+                mStocksStorage->readLock();
+                QList<Stock*> stocks = mStocksStorage->getStocks();
+                mStocksStorage->readUnlock();
+
+                DetectHugeSpreadStocksInfo detectHugeSpreadStocksInfo(mGrpcClient, qualifiedUser, mConfig->getHugeSpread());
+                processInParallel(
+                    QThread::currentThread(), stocks, detectHugeSpreadStocksForParallel, &detectHugeSpreadStocksInfo
+                );
+
+                for (const InstrumentsForBiDirTrading& result : std::as_const(detectHugeSpreadStocksInfo.results))
+                {
+                    instrumentsForTrading.insert(result);
+                }
             }
         }
-    }
 
-    if (tradeLiquidityEtfDaily)
-    {
-        const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
-        const QTime     time      = dateTime.time();
-        const QTime     startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
-        const QTime     endTime   = mConfig->isTradeInNonWorkingHours() ? QTime(EXTRA_SESSION_END_HOUR, EXTRA_SESSION_END_MINUTE)
-                                                                        : QTime(NORMAL_SESSION_END_HOUR, NORMAL_SESSION_END_MINUTE);
-
-        if (time >= startTime && time < endTime)
+        if (tradeLiquidityEtfDaily)
         {
-            instrumentsForTrading[TMON_UID] = BiDirTradingInfo(
-                TMON_TURNOVER, tr("Decided to start reselling of high liquidity ETF because it requested from config")
-            );
+            const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
+            const QTime     time      = dateTime.time();
+            const QTime     startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
+            const QTime endTime = mConfig->isTradeInNonWorkingHours() ? QTime(EXTRA_SESSION_END_HOUR, EXTRA_SESSION_END_MINUTE)
+                                                                      : QTime(NORMAL_SESSION_END_HOUR, NORMAL_SESSION_END_MINUTE);
+
+            if (time >= startTime && time < endTime)
+            {
+                instrumentsForTrading[TMON_UID] = BiDirTradingInfo(
+                    TMON_TURNOVER, tr("Decided to start reselling of high liquidity ETF because it requested from config")
+                );
+            }
         }
     }
 
