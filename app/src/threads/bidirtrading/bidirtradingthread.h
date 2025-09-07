@@ -47,9 +47,12 @@ public:
 private:
     std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
     bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    void                                        calculateTotalCostAndInstrumentCost(
-                                               const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, double& instrumentCost, qint64& instrumentLots
+    void                                        calculateTotalCostAndInstrumentLots(
+                                               const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots
                                            );
+    void checkIfNeedToCancelAndCreateOrder(
+        const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
+    );
 
     void cancelBuyOrder();
     void cancelSellOrder();

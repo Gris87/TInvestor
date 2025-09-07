@@ -12,6 +12,7 @@ const char* const TMON_UID  = "498ec3ff-ef27-4729-9703-a5aac48d5789";
 constexpr float  HUNDRED_PERCENT      = 100.0f;
 constexpr qint64 MS_IN_SECOND         = 1000LL;
 constexpr qint64 SLEEP_DELAY          = 30LL * MS_IN_SECOND; // 30 seconds
+constexpr qint64 ORDER_CANCEL_DELAY   = 3LL * MS_IN_SECOND;  // 3 seconds
 constexpr qint64 SLEEP_BEFORE_REQUEST = 1LL * MS_IN_SECOND;  // 1 second
 
 
@@ -134,19 +135,55 @@ bool BiDirTradingThread::trade()
 
             const double lotPrice = mInstrumentLot * bidPrice;
 
+            const qint64 coefBuy  = static_cast<qint64>(std::floor(bidPrice / quotationToDouble(mMinPriceIncrement)));
+            const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
+
+            const Quotation buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
+            const Quotation sellPrice = quotationMultiply(mMinPriceIncrement, coefSell);
+
             double totalCost      = 0.0;
-            double instrumentCost = 0.0;
             qint64 instrumentLots = 0;
 
-            calculateTotalCostAndInstrumentCost(*tinkoffPortfolio, totalCost, instrumentCost, instrumentLots);
+            calculateTotalCostAndInstrumentLots(*tinkoffPortfolio, totalCost, instrumentLots);
 
             const qint64 lotsToKeep = mTradeUtils->calculateAmountOfLotsToBuy(
                 mConfig, QDateTime::currentMSecsSinceEpoch(), totalCost, totalCost, mTurnover, lotPrice, lotPrice
             );
-
             const qint64 lotsToBuy = qMax(lotsToKeep - instrumentLots, 0);
 
-            qInfo() << totalCost << instrumentCost << lotsToKeep << instrumentLots << lotsToBuy;
+            bool needToCancelBuy  = false;
+            bool needToCancelSell = false;
+            bool needToOrderBuy   = false;
+            bool needToOrderSell  = false;
+
+            checkIfNeedToCancelAndCreateOrder(mBuyOrderId, lotsToBuy, buyPrice, needToCancelBuy, needToOrderBuy);
+            checkIfNeedToCancelAndCreateOrder(mSellOrderId, instrumentLots, sellPrice, needToCancelSell, needToOrderSell);
+
+            if (needToCancelBuy)
+            {
+                cancelBuyOrder();
+            }
+
+            if (needToCancelSell)
+            {
+                cancelSellOrder();
+            }
+
+            if (needToCancelBuy || needToCancelSell)
+            {
+                if (mTimeUtils->interruptibleSleep(ORDER_CANCEL_DELAY, QThread::currentThread()))
+                {
+                    return false;
+                }
+            }
+
+            if (needToOrderBuy)
+            {
+            }
+
+            if (needToOrderSell)
+            {
+            }
         }
 
         if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
@@ -230,12 +267,11 @@ bool BiDirTradingThread::validatePortfolioResponse(const tinkoff::PortfolioRespo
     return res;
 }
 
-void BiDirTradingThread::calculateTotalCostAndInstrumentCost(
-    const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, double& instrumentCost, qint64& instrumentLots
+void BiDirTradingThread::calculateTotalCostAndInstrumentLots(
+    const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots
 )
 {
     totalCost      = 0.0;
-    instrumentCost = 0.0;
     instrumentLots = 0;
 
     for (int i = 0; i < tinkoffPortfolio.positions_size() && !QThread::currentThread()->isInterruptionRequested(); ++i)
@@ -255,10 +291,36 @@ void BiDirTradingThread::calculateTotalCostAndInstrumentCost(
             if (instrumentId == mInstrumentId)
             {
                 instrumentLots = quotationToDouble(position.quantity()) / mInstrumentLot;
-                instrumentCost = cost;
             }
 
             totalCost += cost;
+        }
+    }
+}
+
+void BiDirTradingThread::checkIfNeedToCancelAndCreateOrder(
+    const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
+)
+{
+    needToCancel = false;
+    needToOrder  = amountOfLots > 0;
+
+    if (orderId != "")
+    {
+        const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
+            mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, orderId);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
+        {
+            if (quotationConvert(tinkoffOrder->initial_order_price()) == price &&
+                tinkoffOrder->lots_requested() - tinkoffOrder->lots_executed() == amountOfLots)
+            {
+                needToOrder = false;
+            }
+            else
+            {
+                needToCancel = true;
+            }
         }
     }
 }
