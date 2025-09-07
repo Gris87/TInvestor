@@ -2,6 +2,7 @@
 
 
 
+#include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/threads/bidirtrading/ibidirtradingthread.h"
@@ -21,6 +22,7 @@ public:
 
     virtual IBiDirTradingThread* newInstance(
         IInstrumentsStorage* instrumentsStorage,
+        IConfig*             config,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
         ILogsThread*         logsThread,

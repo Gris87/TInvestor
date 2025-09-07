@@ -1025,6 +1025,7 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
         {
             IBiDirTradingThread* biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
                 mInstrumentsStorage,
+                mConfig,
                 mTimeUtils,
                 mGrpcClient,
                 mLogsThread,
@@ -1369,6 +1370,14 @@ void MainWindow::applyConfig()
     mAutorunEnabler->setEnabled(mConfig->isAutorun());
     setCpuCount(mConfig->getCpuUsage());
     makeDecisionTimer.setInterval(mConfig->getMakeDecisionTimeout() * ONE_MINUTE);
+
+    if (!mConfig->isTradeHugeSpread() && !mConfig->isTradeLiquidityEtfDaily())
+    {
+        mBiDirTradingControlThread->terminateThread();
+        mBiDirTradingControlThread->wait();
+
+        autoPilotBiDirTradeInstruments(InstrumentsForBiDirTrading());
+    }
 }
 
 void MainWindow::saveWindowState()

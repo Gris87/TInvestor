@@ -4,6 +4,7 @@
 
 #include "src/threads/bidirtrading/ibidirtradingthread.h"
 
+#include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/threads/logs/ilogsthread.h"
@@ -18,6 +19,7 @@ class BiDirTradingThread : public IBiDirTradingThread
 public:
     explicit BiDirTradingThread(
         IInstrumentsStorage* instrumentsStorage,
+        IConfig*             config,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
         ILogsThread*         logsThread,
@@ -47,6 +49,7 @@ private:
     void cancelSellOrder();
 
     IInstrumentsStorage* mInstrumentsStorage;
+    IConfig*             mConfig;
     ITimeUtils*          mTimeUtils;
     IGrpcClient*         mGrpcClient;
     ILogsThread*         mLogsThread;

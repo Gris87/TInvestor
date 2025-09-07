@@ -19,6 +19,7 @@ BiDirTradingThreadFactory::~BiDirTradingThreadFactory()
 
 IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(
     IInstrumentsStorage* instrumentsStorage,
+    IConfig*             config,
     ITimeUtils*          timeUtils,
     IGrpcClient*         grpcClient,
     ILogsThread*         logsThread,
@@ -28,5 +29,7 @@ IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(
     QObject*             parent
 ) const
 {
-    return new BiDirTradingThread(instrumentsStorage, timeUtils, grpcClient, logsThread, accountId, instrumentId, cause, parent);
+    return new BiDirTradingThread(
+        instrumentsStorage, config, timeUtils, grpcClient, logsThread, accountId, instrumentId, cause, parent
+    );
 }

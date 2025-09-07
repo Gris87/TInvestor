@@ -7,7 +7,9 @@
 
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+const char* const TMON_UID  = "498ec3ff-ef27-4729-9703-a5aac48d5789";
 
+constexpr float  HUNDRED_PERCENT      = 100.0f;
 constexpr qint64 MS_IN_SECOND         = 1000LL;
 constexpr qint64 SLEEP_DELAY          = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 SLEEP_BEFORE_REQUEST = 1LL * MS_IN_SECOND;  // 1 second
@@ -16,6 +18,7 @@ constexpr qint64 SLEEP_BEFORE_REQUEST = 1LL * MS_IN_SECOND;  // 1 second
 
 BiDirTradingThread::BiDirTradingThread(
     IInstrumentsStorage* instrumentsStorage,
+    IConfig*             config,
     ITimeUtils*          timeUtils,
     IGrpcClient*         grpcClient,
     ILogsThread*         logsThread,
@@ -26,6 +29,7 @@ BiDirTradingThread::BiDirTradingThread(
 ) :
     IBiDirTradingThread(parent),
     mInstrumentsStorage(instrumentsStorage),
+    mConfig(config),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mLogsThread(logsThread),
@@ -89,6 +93,37 @@ bool BiDirTradingThread::trade()
 
     while (!mTerminateTrading)
     {
+        const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
+            mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, 5);
+
+        if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrderBook == nullptr)
+        {
+            return false;
+        }
+
+        if (tinkoffOrderBook->bids_size() <= 0 || tinkoffOrderBook->asks_size() <= 0)
+        {
+            mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Impossible to continue reselling"));
+
+            break;
+        }
+
+        const float bidPrice = quotationToFloat(tinkoffOrderBook->bids(0).price());
+        const float askPrice = quotationToFloat(tinkoffOrderBook->asks(0).price());
+
+        bool good = true;
+
+        if (mInstrumentId != TMON_UID)
+        {
+            const float spread = (askPrice / bidPrice) * HUNDRED_PERCENT - HUNDRED_PERCENT;
+            good               = spread > mConfig->getHugeSpread();
+        }
+
+        if (good)
+        {
+            qInfo() << "Do something"; // TODO: Implement
+        }
+
         if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
         {
             return false;

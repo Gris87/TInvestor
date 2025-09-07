@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
@@ -24,6 +25,7 @@ protected:
         const InSequence seq;
 
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        configMock             = new StrictMock<ConfigMock>();
         timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
         logsThreadMock         = new StrictMock<LogsThreadMock>();
@@ -31,7 +33,7 @@ protected:
         EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaaaa"), QString("But why")));
 
         thread = new BiDirTradingThread(
-            instrumentsStorageMock, timeUtilsMock, grpcClientMock, logsThreadMock, "account-id", "aaaaa", "But why"
+            instrumentsStorageMock, configMock, timeUtilsMock, grpcClientMock, logsThreadMock, "account-id", "aaaaa", "But why"
         );
     }
 
@@ -39,6 +41,7 @@ protected:
     {
         delete thread;
         delete instrumentsStorageMock;
+        delete configMock;
         delete timeUtilsMock;
         delete grpcClientMock;
         delete logsThreadMock;
@@ -46,6 +49,7 @@ protected:
 
     BiDirTradingThread*                 thread;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<ConfigMock>*             configMock;
     StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
     StrictMock<LogsThreadMock>*         logsThreadMock;

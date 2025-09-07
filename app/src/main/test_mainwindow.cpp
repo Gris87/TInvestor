@@ -265,6 +265,7 @@ protected:
         EXPECT_CALL(*autorunEnablerMock, setEnabled(true));
         EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
         EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(1));
+        EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
@@ -1326,6 +1327,9 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*autorunEnablerMock, setEnabled(false));
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
+    EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeLiquidityEtfDaily()).WillOnce(Return(false));
+    EXPECT_CALL(*biDirTradingControlThreadMock, terminateThread());
 
     mainWindow->ui->actionSettings->trigger();
 
@@ -1626,6 +1630,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            configMock,
             timeUtilsMock,
             grpcClientMock,
             logsThreadMock,
@@ -1777,6 +1782,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            configMock,
             timeUtilsMock,
             grpcClientMock,
             logsThreadMock,

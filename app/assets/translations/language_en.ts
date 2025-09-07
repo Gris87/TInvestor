@@ -167,7 +167,7 @@
 <context>
     <name>BiDirTradingControlThread</name>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="173"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="174"/>
         <source>Decided to start reselling of high liquidity ETF because it requested from config</source>
         <translation></translation>
     </message>
@@ -175,8 +175,13 @@
 <context>
     <name>BiDirTradingThread</name>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="46"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="67"/>
         <source>Reselling completed successfully</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="106"/>
+        <source>Impossible to continue reselling</source>
         <translation></translation>
     </message>
 </context>
@@ -348,14 +353,14 @@
 <context>
     <name>FollowThread</name>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="244"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="272"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="307"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="335"/>
         <source>Decided to sell up to cost %1 due to following account &quot;%2&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="224"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="255"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="287"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="318"/>
         <source>Decided to buy up to cost %1 due to following account &quot;%2&quot;</source>
         <translation></translation>
     </message>
@@ -363,12 +368,12 @@
 <context>
     <name>HighLiquidityThread</name>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="104"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="97"/>
         <source>Decided to buy because trading day is over</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="160"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="129"/>
         <source>Decided to sell because it had been a night since buying</source>
         <translation></translation>
     </message>
@@ -530,13 +535,13 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="590"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1330"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1331"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="607"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1178"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1179"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
@@ -551,18 +556,18 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1060"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1061"/>
         <source>Decided to sell in order to get rid of the leftovers</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1178"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1179"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="696"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1209"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1210"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
@@ -577,7 +582,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1209"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1210"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -1466,84 +1471,84 @@
 <context>
     <name>TradingThread</name>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="75"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="80"/>
         <source>Trade completed successfully</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="609"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="660"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="671"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="722"/>
         <source>Order cancelled</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="361"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="423"/>
         <source>Order to sell %1 created with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="341"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="403"/>
         <source>Failed to create order to sell %1 with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="368"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="561"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="430"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="623"/>
         <source>while market price %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="382"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="444"/>
         <source>Order to sell %1 rejected with a price %2. Let&apos;s try again</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="435"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="497"/>
         <source>Trade interrupted because the price reached %1 with raise %2 from the price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="534"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="596"/>
         <source>Failed to create order to buy %1 with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="554"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="616"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="575"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="637"/>
         <source>Order to buy %1 rejected with a price %2. Let&apos;s try again</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="626"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="688"/>
         <source>%1/%2 bought with a price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="636"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="698"/>
         <source>%1/%2 sold with a price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="648"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="710"/>
         <source>Order completed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="652"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="714"/>
         <source>Order partially completed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="656"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="718"/>
         <source>Order rejected</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="664"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="726"/>
         <source>Order is still waiting</source>
         <translation></translation>
     </message>

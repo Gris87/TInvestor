@@ -17,6 +17,7 @@ public:
 
     IBiDirTradingThread* newInstance(
         IInstrumentsStorage* instrumentsStorage,
+        IConfig*             config,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
         ILogsThread*         logsThread,
