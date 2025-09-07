@@ -86,7 +86,8 @@ void HighLiquidityThread::buyEtf()
 
         calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfCost, etfPrice);
 
-        const double expectedCost = money + etfCost - totalCost * mConfig->getLiquidityEtfRemainedPartNightly() / HUNDRED_PERCENT;
+        const double expectedCost =
+            money + etfCost - (totalCost * mConfig->getLiquidityEtfRemainedPartNightly() / HUNDRED_PERCENT);
 
         if (!QThread::currentThread()->isInterruptionRequested() && expectedCost - etfCost > etfPrice)
         {

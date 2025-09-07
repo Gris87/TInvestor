@@ -153,7 +153,7 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp, bool tr
             DetectHugeSpreadStocksInfo detectHugeSpreadStocksInfo(mGrpcClient, qualifiedUser, mConfig->getHugeSpread());
             processInParallel(QThread::currentThread(), stocks, detectHugeSpreadStocksForParallel, &detectHugeSpreadStocksInfo);
 
-            for (const InstrumentsForBiDirTrading& result : detectHugeSpreadStocksInfo.results)
+            for (const InstrumentsForBiDirTrading& result : std::as_const(detectHugeSpreadStocksInfo.results))
             {
                 instrumentsForTrading.insert(result);
             }

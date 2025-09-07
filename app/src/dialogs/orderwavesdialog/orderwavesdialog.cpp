@@ -67,7 +67,7 @@ void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
     {
         const float spreadPrice = orderBook.asks.constFirst().price - orderBook.bids.constFirst().price;
         const float spreadPercent =
-            (orderBook.asks.constFirst().price / orderBook.bids.constFirst().price) * HUNDRED_PERCENT - HUNDRED_PERCENT;
+            ((orderBook.asks.constFirst().price / orderBook.bids.constFirst().price) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
         spread =
             QString("%1 \u20BD (%2)")

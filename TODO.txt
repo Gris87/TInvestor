@@ -1,7 +1,5 @@
 BiDirectional trading
-Cancel order if bidir comes (in TradingThread destructor? Clear order ID on success)
 Cancel order if bidir must die (in BiDirTradingThread destructor?)
-Double check that all portfolio and operations requests verified
 Create script for providing details about selling from operations.json and logs.json
 Improve coverage
 Create release

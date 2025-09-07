@@ -64,6 +64,8 @@ TradingThread::~TradingThread()
 {
     qDebug() << "Destroy TradingThread";
 
+    cancelOrder();
+
     delete mRwMutex;
 }
 
@@ -76,6 +78,8 @@ void TradingThread::run()
     if (trade())
     {
         mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Trade completed successfully"));
+
+        mOrderId = "";
 
         emit tradingCompleted(mInstrumentId);
     }
