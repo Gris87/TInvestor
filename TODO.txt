@@ -1,5 +1,4 @@
 BiDirectional trading
-Cancel order if bidir must die (in BiDirTradingThread destructor?)
 Create script for providing details about selling from operations.json and logs.json
 Improve coverage
 Create release

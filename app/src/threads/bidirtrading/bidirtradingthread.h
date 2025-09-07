@@ -37,8 +37,15 @@ public:
     void terminateThread() override;
 
     bool trade();
+    void getInstrumentData();
 
 private:
+    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
+    bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+
+    void cancelBuyOrder();
+    void cancelSellOrder();
+
     IInstrumentsStorage* mInstrumentsStorage;
     ITimeUtils*          mTimeUtils;
     IGrpcClient*         mGrpcClient;
@@ -46,4 +53,10 @@ private:
     QString              mAccountId;
     QString              mInstrumentId;
     bool                 mTerminateTrading;
+    qint32               mInstrumentLot;
+    Quotation            mMinPriceIncrement;
+    QString              mBuyOrderId;
+    QString              mSellOrderId;
+    Quotation            mLastBuyOrderPrice;
+    Quotation            mLastSellOrderPrice;
 };
