@@ -530,6 +530,7 @@ static int runApplication(QApplication* app)
         &biDirTradingThreadFactory,
         &fileDialogFactory,
         &timeUtils,
+        &tradeUtils,
         &messageBoxUtils,
         &settingsEditor,
         &simulatorSettingsEditor,

@@ -26,10 +26,12 @@ public:
         (IInstrumentsStorage * instrumentsStorage,
          IConfig*       config,
          ITimeUtils*    timeUtils,
+         ITradeUtils*   tradeUtils,
          IGrpcClient*   grpcClient,
          ILogsThread*   logsThread,
          const QString& accountId,
          const QString& instrumentId,
+         qint64         turnover,
          const QString& cause,
          QObject*       parent),
         (const, override)

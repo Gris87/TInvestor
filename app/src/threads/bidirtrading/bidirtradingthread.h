@@ -9,6 +9,7 @@
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/threads/logs/ilogsthread.h"
 #include "src/utils/timeutils/itimeutils.h"
+#include "src/utils/tradeutils/itradeutils.h"
 
 
 
@@ -21,10 +22,12 @@ public:
         IInstrumentsStorage* instrumentsStorage,
         IConfig*             config,
         ITimeUtils*          timeUtils,
+        ITradeUtils*         tradeUtils,
         IGrpcClient*         grpcClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,
+        qint64               turnover,
         const QString&       cause,
         QObject*             parent = nullptr
     );
@@ -44,6 +47,9 @@ public:
 private:
     std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
     bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    void                                        calculateTotalCostAndInstrumentCost(
+                                               const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, double& instrumentCost, qint64& instrumentLots
+                                           );
 
     void cancelBuyOrder();
     void cancelSellOrder();
@@ -51,10 +57,12 @@ private:
     IInstrumentsStorage* mInstrumentsStorage;
     IConfig*             mConfig;
     ITimeUtils*          mTimeUtils;
+    ITradeUtils*         mTradeUtils;
     IGrpcClient*         mGrpcClient;
     ILogsThread*         mLogsThread;
     QString              mAccountId;
     QString              mInstrumentId;
+    qint64               mTurnover;
     bool                 mTerminateTrading;
     qint32               mInstrumentLot;
     Quotation            mMinPriceIncrement;

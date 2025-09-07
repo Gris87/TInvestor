@@ -20,10 +20,12 @@ BiDirTradingThread::BiDirTradingThread(
     IInstrumentsStorage* instrumentsStorage,
     IConfig*             config,
     ITimeUtils*          timeUtils,
+    ITradeUtils*         tradeUtils,
     IGrpcClient*         grpcClient,
     ILogsThread*         logsThread,
     const QString&       accountId,
     const QString&       instrumentId,
+    qint64               turnover,
     const QString&       cause,
     QObject*             parent
 ) :
@@ -31,10 +33,12 @@ BiDirTradingThread::BiDirTradingThread(
     mInstrumentsStorage(instrumentsStorage),
     mConfig(config),
     mTimeUtils(timeUtils),
+    mTradeUtils(tradeUtils),
     mGrpcClient(grpcClient),
     mLogsThread(logsThread),
     mAccountId(accountId),
     mInstrumentId(instrumentId),
+    mTurnover(turnover),
     mTerminateTrading(),
     mInstrumentLot(),
     mMinPriceIncrement(),
@@ -121,7 +125,28 @@ bool BiDirTradingThread::trade()
 
         if (good)
         {
-            qInfo() << "Do something"; // TODO: Implement
+            const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
+
+            if (QThread::currentThread()->isInterruptionRequested() || tinkoffPortfolio == nullptr)
+            {
+                return false;
+            }
+
+            const double lotPrice = mInstrumentLot * bidPrice;
+
+            double totalCost      = 0.0;
+            double instrumentCost = 0.0;
+            qint64 instrumentLots = 0;
+
+            calculateTotalCostAndInstrumentCost(*tinkoffPortfolio, totalCost, instrumentCost, instrumentLots);
+
+            const qint64 lotsToKeep = mTradeUtils->calculateAmountOfLotsToBuy(
+                mConfig, QDateTime::currentMSecsSinceEpoch(), totalCost, totalCost, mTurnover, lotPrice, lotPrice
+            );
+
+            const qint64 lotsToBuy = qMax(lotsToKeep - instrumentLots, 0);
+
+            qInfo() << totalCost << instrumentCost << lotsToKeep << instrumentLots << lotsToBuy;
         }
 
         if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
@@ -203,6 +228,39 @@ bool BiDirTradingThread::validatePortfolioResponse(const tinkoff::PortfolioRespo
     }
 
     return res;
+}
+
+void BiDirTradingThread::calculateTotalCostAndInstrumentCost(
+    const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, double& instrumentCost, qint64& instrumentLots
+)
+{
+    totalCost      = 0.0;
+    instrumentCost = 0.0;
+    instrumentLots = 0;
+
+    for (int i = 0; i < tinkoffPortfolio.positions_size() && !QThread::currentThread()->isInterruptionRequested(); ++i)
+    {
+        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
+
+        const QString instrumentId = QString::fromStdString(position.instrument_uid());
+
+        if (instrumentId == RUBLE_UID)
+        {
+            totalCost += quotationToDouble(position.quantity());
+        }
+        else
+        {
+            const double cost = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price_fifo());
+
+            if (instrumentId == mInstrumentId)
+            {
+                instrumentLots = quotationToDouble(position.quantity()) / mInstrumentLot;
+                instrumentCost = cost;
+            }
+
+            totalCost += cost;
+        }
+    }
 }
 
 void BiDirTradingThread::cancelBuyOrder()

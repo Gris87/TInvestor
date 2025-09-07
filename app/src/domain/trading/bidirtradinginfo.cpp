@@ -3,11 +3,13 @@
 
 
 BiDirTradingInfo::BiDirTradingInfo() :
+    turnover(),
     cause()
 {
 }
 
-BiDirTradingInfo::BiDirTradingInfo(const QString& _cause) :
+BiDirTradingInfo::BiDirTradingInfo(qint64 _turnover, const QString& _cause) :
+    turnover(_turnover),
     cause(_cause)
 {
 }

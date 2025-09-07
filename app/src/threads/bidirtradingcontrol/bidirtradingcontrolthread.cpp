@@ -18,6 +18,7 @@ constexpr int    NORMAL_SESSION_END_HOUR     = 18;
 constexpr int    NORMAL_SESSION_END_MINUTE   = 20;
 constexpr int    EXTRA_SESSION_END_HOUR      = 23;
 constexpr int    EXTRA_SESSION_END_MINUTE    = 30;
+constexpr qint64 TMON_TURNOVER               = 10000000000LL; // 10 B
 constexpr qint64 MS_IN_SECOND                = 1000LL;
 constexpr qint64 ONE_MINUTE                  = 60LL * MS_IN_SECOND;
 constexpr qint64 DETECTION_INTERVAL          = 15LL * ONE_MINUTE; // 15 minutes
@@ -121,6 +122,7 @@ static void detectHugeSpreadStocksForParallel(
                     if (spread > hugeSpread)
                     {
                         resultsArray[threadId][stock->meta.instrumentId] = BiDirTradingInfo(
+                            stock->meta.turnover,
                             QObject::tr("Decided to start reselling because spread is %1")
                                 .arg(QString::number(spread, 'f', 3) + "%")
                         );
@@ -170,8 +172,9 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp, bool tr
 
         if (time >= startTime && time < endTime)
         {
-            instrumentsForTrading[TMON_UID] =
-                BiDirTradingInfo(tr("Decided to start reselling of high liquidity ETF because it requested from config"));
+            instrumentsForTrading[TMON_UID] = BiDirTradingInfo(
+                TMON_TURNOVER, tr("Decided to start reselling of high liquidity ETF because it requested from config")
+            );
         }
     }
 

@@ -21,15 +21,27 @@ IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(
     IInstrumentsStorage* instrumentsStorage,
     IConfig*             config,
     ITimeUtils*          timeUtils,
+    ITradeUtils*         tradeUtils,
     IGrpcClient*         grpcClient,
     ILogsThread*         logsThread,
     const QString&       accountId,
     const QString&       instrumentId,
+    qint64               turnover,
     const QString&       cause,
     QObject*             parent
 ) const
 {
     return new BiDirTradingThread(
-        instrumentsStorage, config, timeUtils, grpcClient, logsThread, accountId, instrumentId, cause, parent
+        instrumentsStorage,
+        config,
+        timeUtils,
+        tradeUtils,
+        grpcClient,
+        logsThread,
+        accountId,
+        instrumentId,
+        turnover,
+        cause,
+        parent
     );
 }

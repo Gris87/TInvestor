@@ -37,6 +37,7 @@
 #include "src/utils/autorunenabler/iautorunenabler.h"
 #include "src/utils/http/ihttpclient.h"
 #include "src/utils/timeutils/itimeutils.h"
+#include "src/utils/tradeutils/itradeutils.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidgetfactory.h"
@@ -118,6 +119,7 @@ public:
         IBiDirTradingThreadFactory*             bidirTradingThreadFactory,
         IFileDialogFactory*                     fileDialogFactory,
         ITimeUtils*                             timeUtils,
+        ITradeUtils*                            tradeUtils,
         IMessageBoxUtils*                       messageBoxUtils,
         ISettingsEditor*                        settingsEditor,
         ISettingsEditor*                        simulatorSettingsEditor,
@@ -202,6 +204,7 @@ private:
     IBiDirTradingThreadFactory*             mBiDirTradingThreadFactory;
     IFileDialogFactory*                     mFileDialogFactory;
     ITimeUtils*                             mTimeUtils;
+    ITradeUtils*                            mTradeUtils;
     IMessageBoxUtils*                       mMessageBoxUtils;
     ISettingsEditor*                        mSettingsEditor;
     ISettingsEditor*                        mSimulatorSettingsEditor;

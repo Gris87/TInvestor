@@ -53,6 +53,7 @@
 #include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
+#include "src/utils/tradeutils/itradeutils_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
 #include "src/widgets/actionstableitemwidget/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h"
@@ -160,6 +161,7 @@ protected:
         biDirTradingThreadFactoryMock             = new StrictMock<BiDirTradingThreadFactoryMock>();
         fileDialogFactoryMock                     = new StrictMock<FileDialogFactoryMock>();
         timeUtilsMock                             = new StrictMock<TimeUtilsMock>();
+        tradeUtilsMock                            = new StrictMock<TradeUtilsMock>();
         messageBoxUtilsMock                       = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                        = new StrictMock<SettingsEditorMock>();
         simulatorSettingsEditorMock               = new StrictMock<SettingsEditorMock>();
@@ -337,6 +339,7 @@ protected:
             biDirTradingThreadFactoryMock,
             fileDialogFactoryMock,
             timeUtilsMock,
+            tradeUtilsMock,
             messageBoxUtilsMock,
             settingsEditorMock,
             simulatorSettingsEditorMock,
@@ -435,6 +438,7 @@ protected:
         delete biDirTradingThreadFactoryMock;
         delete fileDialogFactoryMock;
         delete timeUtilsMock;
+        delete tradeUtilsMock;
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
         delete simulatorSettingsEditorMock;
@@ -509,6 +513,7 @@ protected:
     StrictMock<BiDirTradingThreadFactoryMock>*             biDirTradingThreadFactoryMock;
     StrictMock<FileDialogFactoryMock>*                     fileDialogFactoryMock;
     StrictMock<TimeUtilsMock>*                             timeUtilsMock;
+    StrictMock<TradeUtilsMock>*                            tradeUtilsMock;
     StrictMock<MessageBoxUtilsMock>*                       messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                        settingsEditorMock;
     StrictMock<SettingsEditorMock>*                        simulatorSettingsEditorMock;
@@ -1622,7 +1627,8 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     InstrumentsForBiDirTrading biDirInstruments;
     BiDirTradingInfo           biDirTradingInfo;
 
-    biDirTradingInfo.cause = "Need to buy";
+    biDirTradingInfo.turnover = 1000000;
+    biDirTradingInfo.cause    = "Need to buy";
 
     biDirInstruments["bbb-bbb"] = biDirTradingInfo;
 
@@ -1632,10 +1638,12 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             instrumentsStorageMock,
             configMock,
             timeUtilsMock,
+            tradeUtilsMock,
             grpcClientMock,
             logsThreadMock,
             QString("aaaaaa"),
             QString("bbb-bbb"),
+            1000000,
             QString("Need to buy"),
             mainWindow
         )
@@ -1784,10 +1792,12 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             instrumentsStorageMock,
             configMock,
             timeUtilsMock,
+            tradeUtilsMock,
             grpcClientMock,
             logsThreadMock,
             QString("aaaaaa"),
             QString("bbb-bbb"),
+            1000000,
             QString("Need to buy"),
             mainWindow
         )

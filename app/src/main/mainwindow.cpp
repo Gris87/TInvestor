@@ -94,6 +94,7 @@ MainWindow::MainWindow(
     IBiDirTradingThreadFactory*             biDirTradingThreadFactory,
     IFileDialogFactory*                     fileDialogFactory,
     ITimeUtils*                             timeUtils,
+    ITradeUtils*                            tradeUtils,
     IMessageBoxUtils*                       messageBoxUtils,
     ISettingsEditor*                        settingsEditor,
     ISettingsEditor*                        simulatorSettingsEditor,
@@ -148,6 +149,7 @@ MainWindow::MainWindow(
     mBiDirTradingThreadFactory(biDirTradingThreadFactory),
     mFileDialogFactory(fileDialogFactory),
     mTimeUtils(timeUtils),
+    mTradeUtils(tradeUtils),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mSimulatorSettingsEditor(simulatorSettingsEditor),
@@ -1023,15 +1025,19 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
 
         if (!biDirTradingThreads.contains(instrumentId))
         {
+            const BiDirTradingInfo& biDirTradingInfo = it.value();
+
             IBiDirTradingThread* biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
                 mInstrumentsStorage,
                 mConfig,
                 mTimeUtils,
+                mTradeUtils,
                 mGrpcClient,
                 mLogsThread,
                 mAutoPilotAccountId,
                 instrumentId,
-                it.value().cause,
+                biDirTradingInfo.turnover,
+                biDirTradingInfo.cause,
                 this
             );
 

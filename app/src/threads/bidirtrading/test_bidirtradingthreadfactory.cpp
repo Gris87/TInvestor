@@ -7,6 +7,7 @@
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
+#include "src/utils/tradeutils/itradeutils_mock.h"
 
 
 
@@ -44,6 +45,7 @@ TEST_F(Test_BiDirTradingThreadFactory, Test_newInstance)
     StrictMock<InstrumentsStorageMock> instrumentsStorageMock;
     StrictMock<ConfigMock>             configMock;
     StrictMock<TimeUtilsMock>          timeUtilsMock;
+    StrictMock<TradeUtilsMock>         tradeUtilsMock;
     StrictMock<GrpcClientMock>         grpcClientMock;
     StrictMock<LogsThreadMock>         logsThreadMock;
 
@@ -53,10 +55,12 @@ TEST_F(Test_BiDirTradingThreadFactory, Test_newInstance)
         &instrumentsStorageMock,
         &configMock,
         &timeUtilsMock,
+        &tradeUtilsMock,
         &grpcClientMock,
         &logsThreadMock,
         "aaaaa",
         "bbbbb",
+        1000000,
         "But why",
         nullptr
     );

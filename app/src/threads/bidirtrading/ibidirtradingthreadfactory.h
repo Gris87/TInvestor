@@ -8,6 +8,7 @@
 #include "src/threads/bidirtrading/ibidirtradingthread.h"
 #include "src/threads/logs/ilogsthread.h"
 #include "src/utils/timeutils/itimeutils.h"
+#include "src/utils/tradeutils/itradeutils.h"
 
 
 
@@ -24,10 +25,12 @@ public:
         IInstrumentsStorage* instrumentsStorage,
         IConfig*             config,
         ITimeUtils*          timeUtils,
+        ITradeUtils*         tradeUtils,
         IGrpcClient*         grpcClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,
+        qint64               turnover,
         const QString&       cause,
         QObject*             parent
     ) const = 0;
