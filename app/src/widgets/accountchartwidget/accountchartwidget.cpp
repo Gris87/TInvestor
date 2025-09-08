@@ -862,8 +862,8 @@ void AccountChartWidget::barSeriesHovered(bool status, int index, QBarSet* barSe
         const qreal   value        = barSet->at(index);
         const QPointF nearestPoint = QPointF(index, qMax(value, 0.0f));
 
-        const QString prefix       = value > 0 ? "+" : "";
-        const QString suffix       = mChartType == CHART_TYPE_MONTHLY_YIELD ? "%" : " \u20BD";
+        const QString prefix = value > 0 ? "+" : "";
+        const QString suffix = mChartType == CHART_TYPE_MONTHLY_YIELD ? "%" : " \u20BD";
         const QString xDescription =
             mChartType == CHART_TYPE_MONTHLY_YIELD ? mMonthlyYieldAxisX.at(index) : mDailyYieldAxisX.at(index);
 
