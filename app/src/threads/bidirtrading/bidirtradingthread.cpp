@@ -108,6 +108,7 @@ void BiDirTradingThread::terminateThread()
     requestInterruption();
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 bool BiDirTradingThread::trade()
 {
     getInstrumentData();
@@ -155,7 +156,7 @@ bool BiDirTradingThread::trade()
 
         if (mInstrumentId != TMON_UID)
         {
-            const float spread = (askPrice / bidPrice) * HUNDRED_PERCENT - HUNDRED_PERCENT;
+            const float spread = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
             good               = spread > mConfig->getHugeSpread();
         }
 
@@ -223,6 +224,7 @@ bool BiDirTradingThread::trade()
 
     return true;
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void BiDirTradingThread::getInstrumentData()
 {

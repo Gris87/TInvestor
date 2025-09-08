@@ -123,7 +123,7 @@ static void detectHugeSpreadStocksForParallel(
                     const float bidPrice = quotationToFloat(tinkoffOrderBook->bids(0).price());
                     const float askPrice = quotationToFloat(tinkoffOrderBook->asks(0).price());
 
-                    const float spread = (askPrice / bidPrice) * HUNDRED_PERCENT - HUNDRED_PERCENT;
+                    const float spread = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
                     if (spread > hugeSpread)
                     {
@@ -145,7 +145,12 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp, bool tr
 {
     InstrumentsForBiDirTrading instrumentsForTrading;
 
-    if (mConfig->isTradeInNonWorkingHours() || mTimeUtils->isWorkingHours(timestamp))
+    const QDateTime dateTime = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
+    const QTime     time     = dateTime.time();
+
+    QTime endTime = QTime(EXTRA_SESSION_END_HOUR, EXTRA_SESSION_END_MINUTE);
+
+    if ((mConfig->isTradeInNonWorkingHours() || mTimeUtils->isWorkingHours(timestamp)) && time < endTime)
     {
         if (tradeHugeSpread)
         {
@@ -174,11 +179,12 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp, bool tr
 
         if (tradeLiquidityEtfDaily)
         {
-            const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
-            const QTime     time      = dateTime.time();
-            const QTime     startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
-            const QTime endTime = mConfig->isTradeInNonWorkingHours() ? QTime(EXTRA_SESSION_END_HOUR, EXTRA_SESSION_END_MINUTE)
-                                                                      : QTime(NORMAL_SESSION_END_HOUR, NORMAL_SESSION_END_MINUTE);
+            const QTime startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
+
+            if (!mConfig->isTradeInNonWorkingHours())
+            {
+                endTime = QTime(NORMAL_SESSION_END_HOUR, NORMAL_SESSION_END_MINUTE);
+            }
 
             if (time >= startTime && time < endTime)
             {
