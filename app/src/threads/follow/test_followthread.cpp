@@ -310,3 +310,35 @@ TEST_F(Test_FollowThread, Test_terminateThread)
 
     thread->terminateThread();
 }
+
+TEST_F(Test_FollowThread, Test_getValidPortfolio)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id"))).WillOnce(Return(nullptr));
+
+    ASSERT_EQ(thread->getValidPortfolio("account-id"), nullptr);
+
+    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
+
+    tinkoff::PortfolioPosition* position = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(thread->getValidPortfolio("account-id"), nullptr);
+
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo = new tinkoff::MoneyValue(); // position will take ownership
+
+    tinkoffAvgPriceFifo->set_currency("rub");
+    tinkoffAvgPriceFifo->set_units(1);
+    tinkoffAvgPriceFifo->set_nano(0);
+
+    position->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo);
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+
+    ASSERT_NE(thread->getValidPortfolio("account-id"), nullptr);
+}

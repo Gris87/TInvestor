@@ -152,18 +152,18 @@ void HighLiquidityThread::terminateThread()
 
 std::shared_ptr<tinkoff::PortfolioResponse> HighLiquidityThread::getValidPortfolio()
 {
-    bool                                        success          = false;
-    std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = nullptr;
+    std::shared_ptr<tinkoff::PortfolioResponse> res = nullptr;
 
-    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    while (!QThread::currentThread()->isInterruptionRequested() && res == nullptr)
     {
-        tinkoffPortfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
 
         if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
         {
             if (validatePortfolioResponse(*tinkoffPortfolio))
             {
-                success = true;
+                res = tinkoffPortfolio;
             }
             else
             {
@@ -181,7 +181,7 @@ std::shared_ptr<tinkoff::PortfolioResponse> HighLiquidityThread::getValidPortfol
         }
     }
 
-    return tinkoffPortfolio;
+    return res;
 }
 
 bool HighLiquidityThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)

@@ -470,6 +470,13 @@ TEST_F(Test_OperationsThread, Test_getValidOperations)
 
     thread->setAccountId("account-hash", "account-id");
 
+    EXPECT_CALL(
+        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1704056400000, 1704142800000, QString(""))
+    )
+        .WillOnce(Return(nullptr));
+
+    ASSERT_EQ(thread->getValidOperations(1704056400000, 1704142800000, ""), nullptr);
+
     const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperationsByCursorResponse(
         new tinkoff::GetOperationsByCursorResponse()
     );
@@ -486,7 +493,7 @@ TEST_F(Test_OperationsThread, Test_getValidOperations)
         .WillOnce(Return(getOperationsByCursorResponse));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
-    ASSERT_NE(thread->getValidOperations(1704056400000, 1704142800000, ""), nullptr);
+    ASSERT_EQ(thread->getValidOperations(1704056400000, 1704142800000, ""), nullptr);
 
     tinkoff::MoneyValue* commission = new tinkoff::MoneyValue(); // operationItem will take ownership
 
@@ -511,6 +518,10 @@ TEST_F(Test_OperationsThread, Test_getValidPortfolio)
 
     thread->setAccountId("account-hash", "account-id");
 
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id"))).WillOnce(Return(nullptr));
+
+    ASSERT_EQ(thread->getValidPortfolio(), nullptr);
+
     const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
 
     tinkoff::PortfolioPosition* position = portfolioResponse->add_positions(); // portfolioResponse will take ownership
@@ -519,9 +530,9 @@ TEST_F(Test_OperationsThread, Test_getValidPortfolio)
         .WillOnce(Return(portfolioResponse));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
-    ASSERT_NE(thread->getValidPortfolio(), nullptr);
+    ASSERT_EQ(thread->getValidPortfolio(), nullptr);
 
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo = new tinkoff::MoneyValue(); // position will take ownership
 
     tinkoffAvgPriceFifo->set_currency("rub");
     tinkoffAvgPriceFifo->set_units(1);

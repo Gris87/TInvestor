@@ -334,19 +334,18 @@ bool OperationsThread::requestOperations()
 std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
 OperationsThread::getValidOperations(qint64 startTimestamp, qint64 endTimestamp, const QString& cursor)
 {
-    bool                                                    success           = false;
-    std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations = nullptr;
+    std::shared_ptr<tinkoff::GetOperationsByCursorResponse> res = nullptr;
 
-    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    while (!QThread::currentThread()->isInterruptionRequested() && res == nullptr)
     {
-        tinkoffOperations =
+        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
             mGrpcClient->getOperations(QThread::currentThread(), mAccountId, startTimestamp, endTimestamp, cursor);
 
         if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOperations != nullptr)
         {
             if (validateOperations(*tinkoffOperations))
             {
-                success = true;
+                res = tinkoffOperations;
             }
             else
             {
@@ -364,7 +363,7 @@ OperationsThread::getValidOperations(qint64 startTimestamp, qint64 endTimestamp,
         }
     }
 
-    return tinkoffOperations;
+    return res;
 }
 
 bool OperationsThread::validateOperations(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations)
@@ -394,18 +393,18 @@ bool OperationsThread::validateOperations(const tinkoff::GetOperationsByCursorRe
 
 std::shared_ptr<tinkoff::PortfolioResponse> OperationsThread::getValidPortfolio()
 {
-    bool                                        success          = false;
-    std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = nullptr;
+    std::shared_ptr<tinkoff::PortfolioResponse> res = nullptr;
 
-    while (!QThread::currentThread()->isInterruptionRequested() && !success)
+    while (!QThread::currentThread()->isInterruptionRequested() && res == nullptr)
     {
-        tinkoffPortfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
 
         if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
         {
             if (validatePortfolioResponse(*tinkoffPortfolio))
             {
-                success = true;
+                res = tinkoffPortfolio;
             }
             else
             {
@@ -423,7 +422,7 @@ std::shared_ptr<tinkoff::PortfolioResponse> OperationsThread::getValidPortfolio(
         }
     }
 
-    return tinkoffPortfolio;
+    return res;
 }
 
 bool OperationsThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)

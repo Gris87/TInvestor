@@ -812,3 +812,8 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
             )
     );
 }
+
+TEST_F(Test_BuyDecision2, Test_asapMode)
+{
+    ASSERT_EQ(buyDecision2->asapMode(), ASAP_MODE_NONE);
+}

@@ -36,10 +36,10 @@ public:
     void terminateThread() override;
 
     bool createPortfolioStream();
+    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
 
 private:
     bool                                        requestPortfolio();
-    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
     bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     void                                        handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
 

@@ -33,9 +33,9 @@ public:
     void terminateThread() override;
 
     bool createPortfolioStream();
+    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio(const QString& accountId);
 
 private:
-    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio(const QString& accountId);
     bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     void                                        handlePortfolios(
                                                const std::shared_ptr<tinkoff::PortfolioResponse>& portfolio,

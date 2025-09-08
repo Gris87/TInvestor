@@ -652,3 +652,8 @@ TEST_F(Test_BuyDecision1, Test_makeDecision)
             .arg(QDateTime::fromMSecsSinceEpoch(stock.data.at(10).timestamp).toString(DATETIME_FORMAT))
     );
 }
+
+TEST_F(Test_BuyDecision1, Test_asapMode)
+{
+    ASSERT_EQ(buyDecision1->asapMode(), ASAP_MODE_NONE);
+}

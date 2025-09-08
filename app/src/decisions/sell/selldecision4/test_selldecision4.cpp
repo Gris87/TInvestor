@@ -351,3 +351,8 @@ TEST_F(Test_SellDecision4, Test_makeDecision)
 
     ASSERT_EQ(cause, "Decided to sell because the price fall to 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD");
 }
+
+TEST_F(Test_SellDecision4, Test_asapMode)
+{
+    ASSERT_EQ(sellDecision4->asapMode(), ASAP_MODE_FOLLOW_PRICE);
+}
