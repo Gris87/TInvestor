@@ -222,7 +222,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
 
     operationItem2->set_allocated_date(dateTimestamp2);
     operationItem2->set_type(tinkoff::OPERATION_TYPE_INPUT);
-    operationItem2->set_instrument_uid(RUBLE_UID);
+    operationItem2->set_instrument_uid("");
     operationItem2->set_position_uid("");
     operationItem2->set_description("Give more money");
     operationItem2->set_allocated_price(price2);
@@ -460,6 +460,79 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     EXPECT_CALL(*operationsDatabaseMock, appendOperations(operations, -1));
 
     thread->requestOperations();
+}
+
+TEST_F(Test_OperationsThread, Test_getValidOperations)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*operationsDatabaseMock, setAccount(QString("account-hash")));
+
+    thread->setAccountId("account-hash", "account-id");
+
+    const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperationsByCursorResponse(
+        new tinkoff::GetOperationsByCursorResponse()
+    );
+
+    tinkoff::OperationItem* operationItem =
+        getOperationsByCursorResponse->add_items(); // getOperationsByCursorResponse will take ownership
+
+    operationItem->set_instrument_kind(tinkoff::INSTRUMENT_TYPE_SHARE);
+    operationItem->set_type(tinkoff::OPERATION_TYPE_BUY);
+
+    EXPECT_CALL(
+        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1704056400000, 1704142800000, QString(""))
+    )
+        .WillOnce(Return(getOperationsByCursorResponse));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_NE(thread->getValidOperations(1704056400000, 1704142800000, ""), nullptr);
+
+    tinkoff::MoneyValue* commission = new tinkoff::MoneyValue(); // operationItem will take ownership
+
+    commission->set_units(-1);
+    commission->set_nano(-266500000);
+
+    operationItem->set_allocated_commission(commission);
+
+    EXPECT_CALL(
+        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1704056400000, 1704142800000, QString(""))
+    )
+        .WillOnce(Return(getOperationsByCursorResponse));
+
+    ASSERT_NE(thread->getValidOperations(1704056400000, 1704142800000, ""), nullptr);
+}
+
+TEST_F(Test_OperationsThread, Test_getValidPortfolio)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*operationsDatabaseMock, setAccount(QString("account-hash")));
+
+    thread->setAccountId("account-hash", "account-id");
+
+    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
+
+    tinkoff::PortfolioPosition* position = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_NE(thread->getValidPortfolio(), nullptr);
+
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo = new tinkoff::MoneyValue(); // position1 will take ownership
+
+    tinkoffAvgPriceFifo->set_currency("rub");
+    tinkoffAvgPriceFifo->set_units(1);
+    tinkoffAvgPriceFifo->set_nano(0);
+
+    position->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo);
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+
+    ASSERT_NE(thread->getValidPortfolio(), nullptr);
 }
 
 TEST_F(Test_OperationsThread, Test_handleOperationItem)

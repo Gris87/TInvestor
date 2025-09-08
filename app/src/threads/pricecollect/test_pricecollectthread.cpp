@@ -27,6 +27,7 @@
 using ::testing::_;
 using ::testing::Ge;
 using ::testing::InSequence;
+using ::testing::Invoke;
 using ::testing::Ne;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -423,12 +424,24 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*qZipFactoryMock, newInstance(&zipBuffer)).WillOnce(Return(std::shared_ptr<IQZip>(qZipMock3)));
     EXPECT_CALL(*qZipMock3, open(QuaZip::mdUnzip)).WillOnce(Return(false));
 
-    EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 2));
+    EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 2))
+        .WillOnce(Invoke([](Stock* s, const StockData* dataArray, int dataArraySize) {
+            for (int i = 0; i < dataArraySize; ++i)
+            {
+                s->data.append(dataArray[i]);
+            }
+        }));
     EXPECT_CALL(*grpcClientMock, getCandles(QThread::currentThread(), QString("aaaaa"), 60000, Ge(1704056400000)))
         .WillOnce(Return(getCandlesResponse));
     EXPECT_CALL(*grpcClientMock, getCandles(QThread::currentThread(), QString("aaaaa"), 60000, 1000000))
         .WillOnce(Return(emptyCandlesResponse));
-    EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 1));
+    EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 1))
+        .WillOnce(Invoke([](Stock* s, const StockData* dataArray, int dataArraySize) {
+            for (int i = 0; i < dataArraySize; ++i)
+            {
+                s->data.append(dataArray[i]);
+            }
+        }));
 
     EXPECT_CALL(*dirFactoryMock, newInstance(QString(appDir + "/cache/stocks")))
         .WillOnce(Return(std::shared_ptr<IDir>(dirMock2)));

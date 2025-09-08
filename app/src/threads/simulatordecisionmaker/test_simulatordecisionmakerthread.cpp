@@ -137,6 +137,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
 {
     const InSequence seq;
 
+    ASSERT_EQ(thread->isLoaded(), false);
     thread->reset();
 
     Instruments instruments;

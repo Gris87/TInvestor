@@ -10,6 +10,13 @@
 
 
 
+constexpr qint64 MS_IN_SECOND = 1000LL;
+constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR     = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY      = 24LL * ONE_HOUR;
+
+
+
 using ::testing::_;
 using ::testing::FloatEq;
 using ::testing::InSequence;
@@ -120,6 +127,19 @@ TEST_F(Test_AccountChartWidget, Test_operationsRead_and_operationsAdded)
     operations[0].totalYieldWithCommissionPercent = 2.0f;
 
     accountChartWidget->operationsAdded(operations);
+
+    operations.clear();
+
+    for (int i = 0; i < 100; ++i)
+    {
+        operation.timestamp                       = 1704056400000 + i * ONE_DAY;
+        operation.originalTimestamp               = 1704056400000 + i * ONE_DAY;
+        operation.totalYieldWithCommissionPercent = 1.0f;
+
+        operations.append(operation);
+    }
+
+    accountChartWidget->operationsRead(operations);
 }
 
 TEST_F(Test_AccountChartWidget, Test_contextMenuRequested)
