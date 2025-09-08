@@ -416,6 +416,7 @@ TEST_F(Test_DecisionMakerWidget, Test_on_yieldButton_clicked)
     // clang-format off
     ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         true);
     ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
+    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
     ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
     ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
     // clang-format on
@@ -432,6 +433,24 @@ TEST_F(Test_DecisionMakerWidget, Test_on_monthlyYieldButton_clicked)
     // clang-format off
     ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
     ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  true);
+    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
+    ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
+    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
+    // clang-format on
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_on_dailyYieldButton_clicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*accountChartWidgetMock, switchChart(CHART_TYPE_DAILY_YIELD));
+
+    decisionMakerWidget->ui->dailyYieldButton->click();
+
+    // clang-format off
+    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
+    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
+    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    true);
     ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
     ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
     // clang-format on
@@ -448,6 +467,7 @@ TEST_F(Test_DecisionMakerWidget, Test_on_remainedMoneyButton_clicked)
     // clang-format off
     ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
     ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
+    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
     ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), true);
     ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
     // clang-format on
@@ -464,6 +484,7 @@ TEST_F(Test_DecisionMakerWidget, Test_on_totalMoneyButton_clicked)
     // clang-format off
     ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
     ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
+    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
     ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
     ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    true);
     // clang-format on

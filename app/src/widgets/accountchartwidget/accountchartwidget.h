@@ -54,6 +54,7 @@ public slots:
 private:
     void initYieldChart();
     void initMonthlyYieldChart();
+    void initDailyYieldChart();
     void initRemainedMoneyChart();
     void initTotalMoneyChart();
     void initChartStyle(QChart* chart, QAbstractAxis* axisX, QAbstractAxis* axisY);
@@ -82,6 +83,14 @@ private:
     QList<qreal>        mMonthlyYieldNegativePoints;
     QBarCategoryAxis    mMonthlyYieldAxisX;
     QValueAxis          mMonthlyYieldAxisY;
+    QChart              mDailyYieldChart;
+    QStackedBarSeries   mDailyYieldSeries;
+    QBarSet             mDailyYieldPositiveBarSet;
+    QBarSet             mDailyYieldNegativeBarSet;
+    QList<qreal>        mDailyYieldPositivePoints;
+    QList<qreal>        mDailyYieldNegativePoints;
+    QBarCategoryAxis    mDailyYieldAxisX;
+    QValueAxis          mDailyYieldAxisY;
     QChart              mRemainedMoneyChart;
     QLineSeries         mRemainedMoneySeries;
     QDateTimeAxis       mRemainedMoneyAxisX;
@@ -94,12 +103,17 @@ private:
     qint64              mLastMonthLimitsStart;
     qint64              mLastMonthLimitsEnd;
     float               mLastMonthlyYield;
+    qint64              mLastDayLimitsStart;
+    qint64              mLastDayLimitsEnd;
+    float               mLastDailyYield;
     qint64              mAxisXMin;
     qint64              mAxisXMax;
     float               mYieldAxisYMin;
     float               mYieldAxisYMax;
     float               mMonthlyYieldAxisYMin;
     float               mMonthlyYieldAxisYMax;
+    float               mDailyYieldAxisYMin;
+    float               mDailyYieldAxisYMax;
     float               mRemainedMoneyAxisYMin;
     float               mRemainedMoneyAxisYMax;
     float               mTotalMoneyAxisYMin;

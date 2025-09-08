@@ -1,4 +1,3 @@
-Add daily yield chart
 Create script for providing details about selling from operations.json and logs.json
 Improve coverage
 Create release

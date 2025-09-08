@@ -77,6 +77,7 @@ TEST_F(Test_AccountChartWidget, Test_switchChart)
 {
     accountChartWidget->switchChart(CHART_TYPE_YIELD);
     accountChartWidget->switchChart(CHART_TYPE_MONTHLY_YIELD);
+    accountChartWidget->switchChart(CHART_TYPE_DAILY_YIELD);
     accountChartWidget->switchChart(CHART_TYPE_REMAINED_MONEY);
     accountChartWidget->switchChart(CHART_TYPE_TOTAL_MONEY);
 

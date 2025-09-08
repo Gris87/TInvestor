@@ -191,6 +191,7 @@ void DecisionMakerWidget::on_yieldButton_clicked()
 
     ui->yieldButton->setChecked(true);
     ui->monthlyYieldButton->setChecked(false);
+    ui->dailyYieldButton->setChecked(false);
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(false);
 }
@@ -201,6 +202,18 @@ void DecisionMakerWidget::on_monthlyYieldButton_clicked()
 
     ui->yieldButton->setChecked(false);
     ui->monthlyYieldButton->setChecked(true);
+    ui->dailyYieldButton->setChecked(false);
+    ui->remainedMoneyButton->setChecked(false);
+    ui->totalMoneyButton->setChecked(false);
+}
+
+void DecisionMakerWidget::on_dailyYieldButton_clicked()
+{
+    mAccountChartWidget->switchChart(CHART_TYPE_DAILY_YIELD);
+
+    ui->yieldButton->setChecked(false);
+    ui->monthlyYieldButton->setChecked(false);
+    ui->dailyYieldButton->setChecked(true);
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(false);
 }
@@ -211,6 +224,7 @@ void DecisionMakerWidget::on_remainedMoneyButton_clicked()
 
     ui->yieldButton->setChecked(false);
     ui->monthlyYieldButton->setChecked(false);
+    ui->dailyYieldButton->setChecked(false);
     ui->remainedMoneyButton->setChecked(true);
     ui->totalMoneyButton->setChecked(false);
 }
@@ -221,6 +235,7 @@ void DecisionMakerWidget::on_totalMoneyButton_clicked()
 
     ui->yieldButton->setChecked(false);
     ui->monthlyYieldButton->setChecked(false);
+    ui->dailyYieldButton->setChecked(false);
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(true);
 }
