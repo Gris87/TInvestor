@@ -333,6 +333,7 @@ TEST_F(Test_AccountChartWidget, Test_barSeriesHovered)
     operations << operation;
 
     accountChartWidget->operationsRead(operations);
+    accountChartWidget->switchChart(CHART_TYPE_MONTHLY_YIELD);
 
     // clang-format off
     ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
