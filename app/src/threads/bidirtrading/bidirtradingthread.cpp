@@ -142,8 +142,8 @@ bool BiDirTradingThread::trade()
 
         calculateTotalCostAndInstrumentLots(*tinkoffPortfolio, totalCost, instrumentLots);
 
-        const float bidPrice = quotationToFloat(tinkoffOrderBook->bids(0).price());
-        const float askPrice = quotationToFloat(tinkoffOrderBook->asks(0).price());
+        const double bidPrice = quotationToDouble(tinkoffOrderBook->bids(0).price());
+        const double askPrice = quotationToDouble(tinkoffOrderBook->asks(0).price());
 
         const qint64 coefBuy  = static_cast<qint64>(std::floor(bidPrice / quotationToDouble(mMinPriceIncrement)));
         const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
