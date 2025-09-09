@@ -145,8 +145,8 @@ bool BiDirTradingThread::trade()
         const double bidPrice = quotationToDouble(tinkoffOrderBook->bids(0).price());
         const double askPrice = quotationToDouble(tinkoffOrderBook->asks(0).price());
 
-        const qint64 coefBuy  = static_cast<qint64>(std::floor(bidPrice / quotationToDouble(mMinPriceIncrement)));
-        const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
+        const qint64 coefBuy  = qRound64(bidPrice / quotationToDouble(mMinPriceIncrement));
+        const qint64 coefSell = qRound64(askPrice / quotationToDouble(mMinPriceIncrement));
 
         const Quotation buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
         const Quotation sellPrice = quotationMultiply(mMinPriceIncrement, coefSell);
