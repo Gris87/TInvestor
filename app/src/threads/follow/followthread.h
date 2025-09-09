@@ -32,15 +32,15 @@ public:
 
     void terminateThread() override;
 
-    bool createPortfolioStream();
+    bool                                        createPortfolioStream();
     std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio(const QString& accountId);
 
 private:
-    bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    void                                        handlePortfolios(
-                                               const std::shared_ptr<tinkoff::PortfolioResponse>& portfolio,
-                                               const std::shared_ptr<tinkoff::PortfolioResponse>& anotherPortfolio
-                                           );
+    bool validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    void handlePortfolios(
+        const std::shared_ptr<tinkoff::PortfolioResponse>& portfolio,
+        const std::shared_ptr<tinkoff::PortfolioResponse>& anotherPortfolio
+    );
     PortfolioMinItems buildInstrumentToCostMap(const std::shared_ptr<tinkoff::PortfolioResponse>& tinkoffPortfolio);
     double            calculateTotalCost(const PortfolioMinItems& instruments);
     void              buildInstrumentsForTrading(

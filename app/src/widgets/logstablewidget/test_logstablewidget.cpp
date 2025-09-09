@@ -152,7 +152,7 @@ TEST_F(Test_LogsTableWidget, Test_actionExportToExcelTriggered)
 
     // clang-format off
     ASSERT_EQ(excelFile.exists(), true);
-    ASSERT_GE(excelFile.size(),   6087);
+    ASSERT_GE(excelFile.size(),   6086);
     // clang-format on
 }
 

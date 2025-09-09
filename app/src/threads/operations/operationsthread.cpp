@@ -234,7 +234,11 @@ bool OperationsThread::requestOperations()
             {
                 const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations->items(i);
 
-                if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
+                const tinkoff::OperationType operationType = tinkoffOperation.type();
+
+                if (operationType != tinkoff::OPERATION_TYPE_BROKER_FEE &&
+                    ((operationType != tinkoff::OPERATION_TYPE_BUY && operationType != tinkoff::OPERATION_TYPE_SELL) ||
+                     (tinkoffOperation.quantity_rest() == 0 || tinkoffOperation.has_cancel_date_time())))
                 {
                     QString instrumentId = QString::fromStdString(tinkoffOperation.instrument_uid());
 
@@ -283,7 +287,11 @@ bool OperationsThread::requestOperations()
             {
                 const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations->items(j);
 
-                if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
+                const tinkoff::OperationType operationType = tinkoffOperation.type();
+
+                if (operationType != tinkoff::OPERATION_TYPE_BROKER_FEE &&
+                    ((operationType != tinkoff::OPERATION_TYPE_BUY && operationType != tinkoff::OPERATION_TYPE_SELL) ||
+                     (tinkoffOperation.quantity_rest() == 0 || tinkoffOperation.has_cancel_date_time())))
                 {
                     QString instrumentId = QString::fromStdString(tinkoffOperation.instrument_uid());
 

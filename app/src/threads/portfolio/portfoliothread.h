@@ -35,13 +35,13 @@ public:
     void setAccountId(const QString& accountId) override;
     void terminateThread() override;
 
-    bool createPortfolioStream();
+    bool                                        createPortfolioStream();
     std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
 
 private:
-    bool                                        requestPortfolio();
-    bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    void                                        handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    bool requestPortfolio();
+    bool validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    void handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
 
     QReadWriteLock*                  mRwMutex;
     IInstrumentsStorage*             mInstrumentsStorage;

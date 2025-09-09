@@ -1,4 +1,3 @@
-What if cancel buy order in bi-directional trading
 Create script for providing details about selling from operations.json and logs.json
 Improve coverage
 Create release

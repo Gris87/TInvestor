@@ -343,14 +343,19 @@ void BiDirTradingThread::checkIfNeedToCancelAndCreateOrder(
 
         if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
         {
-            if (quotationConvert(tinkoffOrder->initial_security_price()) == price &&
-                tinkoffOrder->lots_requested() - tinkoffOrder->lots_executed() == amountOfLots)
+            const tinkoff::OrderExecutionReportStatus status = tinkoffOrder->execution_report_status();
+
+            if (status == tinkoff::EXECUTION_REPORT_STATUS_NEW || status == tinkoff::EXECUTION_REPORT_STATUS_PARTIALLYFILL)
             {
-                needToOrder = false;
-            }
-            else
-            {
-                needToCancel = tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_FILL;
+                if (quotationConvert(tinkoffOrder->initial_security_price()) == price &&
+                    tinkoffOrder->lots_requested() - tinkoffOrder->lots_executed() == amountOfLots)
+                {
+                    needToOrder = false;
+                }
+                else
+                {
+                    needToCancel = true;
+                }
             }
         }
     }
