@@ -146,21 +146,24 @@ bool BiDirTradingThread::trade()
 
         double totalCost          = 0.0;
         qint64 instrumentLots     = 0;
-        double instrumentAvgPrice = 0.0;
+        double instrumentAvgPrice = -1.0;
 
         calculateTotalCostAndInstrumentLots(*tinkoffPortfolio, totalCost, instrumentLots, instrumentAvgPrice);
 
         const double bidPrice = quotationToDouble(tinkoffOrderBook->bids(0).price());
         double       askPrice = quotationToDouble(tinkoffOrderBook->asks(0).price());
 
-        ISellDecision4Config* sellDecision4Config = chooseDecisionConfig()->getSellDecision4Config();
-        const float           yield               = ((askPrice / instrumentAvgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-        if (!sellDecision4Config->isEnabled() || yield > -sellDecision4Config->getLoseYield() + (2 * commission))
+        if (instrumentAvgPrice > 0)
         {
-            askPrice = qMax(
-                askPrice, instrumentAvgPrice * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT
-            );
+            ISellDecision4Config* sellDecision4Config = chooseDecisionConfig()->getSellDecision4Config();
+            const float           yield               = ((askPrice / instrumentAvgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+            if (!sellDecision4Config->isEnabled() || yield > -sellDecision4Config->getLoseYield() + (2 * commission))
+            {
+                askPrice = qMax(
+                    askPrice, instrumentAvgPrice * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT
+                );
+            }
         }
 
         const qint64 coefBuy  = static_cast<qint64>(std::floor(bidPrice / quotationToDouble(mMinPriceIncrement)));
@@ -323,7 +326,7 @@ void BiDirTradingThread::calculateTotalCostAndInstrumentLots(
 {
     totalCost          = 0.0;
     instrumentLots     = 0;
-    instrumentAvgPrice = 0.0;
+    instrumentAvgPrice = -1.0;
 
     for (int i = 0; i < tinkoffPortfolio.positions_size() && !QThread::currentThread()->isInterruptionRequested(); ++i)
     {
