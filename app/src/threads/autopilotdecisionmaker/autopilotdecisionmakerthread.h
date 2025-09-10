@@ -38,10 +38,11 @@ public:
 
     void terminateThread() override;
 
-private:
     std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
-    bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    Portfolio                                   handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+
+private:
+    bool            validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    Portfolio       handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     InstrumentSells handleGetOperationsByCursorResponse(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations);
     InstrumentSells mergeInstrumentSells(InstrumentSells instrumentsFromOperations);
 

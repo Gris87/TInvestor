@@ -56,19 +56,20 @@ public:
 
     void terminateThread() override;
 
+    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
+
     bool trade();
     void getInstrumentData();
     bool sell(double expected, double delta);
     bool buy(double expected, double delta);
 
 private:
-    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
-    bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    double                                      handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    bool sellWithPrice(double expected, double delta, const Quotation& price, float marketPrice);
-    bool sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
-    bool buyWithPrice(double expected, double delta, const Quotation& price, float marketPrice);
-    bool buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
+    bool   validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    bool   sellWithPrice(double expected, double delta, const Quotation& price, float marketPrice);
+    bool   sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
+    bool   buyWithPrice(double expected, double delta, const Quotation& price, float marketPrice);
+    bool   buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
 
     void cancelOrder();
     void informAboutOrderState(const tinkoff::OrderState& tinkoffOrder);

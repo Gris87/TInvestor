@@ -22,6 +22,13 @@ using ::testing::StrictMock;
 
 
 
+MATCHER_P(IsInstrumentSellsEqWithoutTimestamp, another, "")
+{
+    return arg.keys() == another.keys();
+}
+
+
+
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 class Test_AutoPilotDecisionMakerThread : public ::testing::Test
 {
@@ -66,7 +73,8 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
 {
     const InSequence seq;
 
-    thread->setAccountId("aaaaa");
+    thread->setAccountId("account-id");
+    thread->notifyAboutSell("bbb-bbb");
 
     const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
 
@@ -169,7 +177,7 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
 
     operationItem1->set_allocated_date(dateTimestamp1);
     operationItem1->set_type(tinkoff::OPERATION_TYPE_SELL);
-    operationItem1->set_instrument_uid("aaaaa");
+    operationItem1->set_instrument_uid("aaa-aaa");
     operationItem1->set_position_uid("position-id");
     operationItem1->set_description("Sell 10 ivashka durashka shares");
     operationItem1->set_allocated_price(price1);
@@ -199,7 +207,7 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
 
     operationItem2->set_allocated_date(dateTimestamp2);
     operationItem2->set_type(tinkoff::OPERATION_TYPE_BUY);
-    operationItem2->set_instrument_uid("aaaaa");
+    operationItem2->set_instrument_uid("aaa-aaa");
     operationItem2->set_position_uid("position-id");
     operationItem2->set_description("Buy 10 ivashka durashka shares");
     operationItem2->set_allocated_price(price2);
@@ -208,7 +216,8 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     operationItem2->set_allocated_commission(commission2);
 
     InstrumentSells instrumentSells;
-    instrumentSells["aaaaa"] = 1704056460000;
+    instrumentSells["aaa-aaa"] = 1704056460000;
+    instrumentSells["bbb-bbb"] = 0;
 
     Portfolio             portfolio;
     PortfolioCategoryItem category1;
@@ -253,10 +262,11 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
 
     instrumentsForTrading["aaa-aaa"] = tradingInfo;
 
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("aaaaa"))).WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
     EXPECT_CALL(
         *grpcClientMock,
-        getOperations(QThread::currentThread(), QString("aaaaa"), Ge(1704056400000), Ge(1704056400000), QString(""))
+        getOperations(QThread::currentThread(), QString("account-id"), Ge(1704056400000), Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(getOperationsByCursorResponse));
     EXPECT_CALL(*stocksStorageMock, readLock());
@@ -264,7 +274,15 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     EXPECT_CALL(
         *decisionMakerMock,
         makeDecision(
-            QThread::currentThread(), Ge(1704056400000), configMock, instrumentSells, portfolio, stocks, true, false, true
+            QThread::currentThread(),
+            Ge(1704056400000),
+            configMock,
+            IsInstrumentSellsEqWithoutTimestamp(instrumentSells),
+            portfolio,
+            stocks,
+            true,
+            false,
+            true
         )
     )
         .WillOnce(Return(instrumentsForTrading));
@@ -276,5 +294,45 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
 TEST_F(Test_AutoPilotDecisionMakerThread, Test_terminateThread)
 {
     thread->terminateThread();
+}
+
+TEST_F(Test_AutoPilotDecisionMakerThread, Test_getValidPortfolio)
+{
+    const InSequence seq;
+
+    thread->setAccountId("account-id");
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id"))).WillOnce(Return(nullptr));
+
+    ASSERT_EQ(thread->getValidPortfolio(), nullptr);
+
+    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
+
+    tinkoff::PortfolioPosition* position = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(thread->getValidPortfolio(), nullptr);
+
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo = new tinkoff::MoneyValue(); // position will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceWavg = new tinkoff::MoneyValue(); // position will take ownership
+
+    tinkoffAvgPriceFifo->set_currency("rub");
+    tinkoffAvgPriceFifo->set_units(1);
+    tinkoffAvgPriceFifo->set_nano(0);
+
+    tinkoffAvgPriceWavg->set_currency("rub");
+    tinkoffAvgPriceWavg->set_units(1);
+    tinkoffAvgPriceWavg->set_nano(0);
+
+    position->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo);
+    position->set_allocated_average_position_price(tinkoffAvgPriceWavg);
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+
+    ASSERT_NE(thread->getValidPortfolio(), nullptr);
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init)

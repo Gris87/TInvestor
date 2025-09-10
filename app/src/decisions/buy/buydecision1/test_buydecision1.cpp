@@ -88,7 +88,7 @@ TEST_F(Test_BuyDecision1, Test_makeDecision)
     StrictMock<DecisionMakerConfigMock> configMock;
     StrictMock<BuyDecision1ConfigMock>  decisionConfigMock;
 
-    buyDecision1->testSetStepForTripleCheck(2);
+    buyDecision1->testSetStepForTripleCheck(3);
 
     Stock stock;
     stock.meta.pricePrecision = 2;
@@ -207,8 +207,8 @@ TEST_F(Test_BuyDecision1, Test_makeDecision)
             100.0f,
             100.0f,
             100.0f,
-            100.0f,
-            100.0f,
+            150.0f,
+            150.0f,
             150.0f,
             150.0f,
             150.0f,
@@ -394,8 +394,8 @@ TEST_F(Test_BuyDecision1, Test_makeDecision)
             100.0f,
             100.0f,
             100.0f,
-            100.0f,
-            100.0f,
+            150.0f,
+            150.0f,
             150.0f,
             150.0f,
             150.0f,
@@ -575,8 +575,8 @@ TEST_F(Test_BuyDecision1, Test_makeDecision)
             100.0f,
             100.0f,
             100.0f,
-            100.0f,
-            100.0f,
+            150.0f,
+            150.0f,
             150.0f,
             150.0f,
             150.0f,
