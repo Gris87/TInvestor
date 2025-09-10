@@ -1030,6 +1030,7 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
         {
             biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
                 mInstrumentsStorage,
+                mUserStorage,
                 mConfig,
                 mTimeUtils,
                 mTradeUtils,
@@ -1066,12 +1067,6 @@ void MainWindow::autoPilotBiDirTradingCompleted(const QString& instrumentId)
 
     biDirTradingThread->wait();
     delete biDirTradingThread;
-
-    InstrumentsForTrading instrumentsForTrading;
-    instrumentsForTrading[instrumentId] =
-        TradingInfo(ASAP_MODE_FOLLOW_PRICE, -1.0f, -1.0f, 0.0, tr("Decided to sell in order to get rid of the leftovers"));
-
-    autoPilotTradeInstruments(instrumentsForTrading);
 }
 
 void MainWindow::on_actionAuth_triggered()

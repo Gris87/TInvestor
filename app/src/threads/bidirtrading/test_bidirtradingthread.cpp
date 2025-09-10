@@ -5,6 +5,7 @@
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
 #include "src/utils/tradeutils/itradeutils_mock.h"
@@ -26,6 +27,7 @@ protected:
         const InSequence seq;
 
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        userStorageMock        = new StrictMock<UserStorageMock>();
         configMock             = new StrictMock<ConfigMock>();
         timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         tradeUtilsMock         = new StrictMock<TradeUtilsMock>();
@@ -36,6 +38,7 @@ protected:
 
         thread = new BiDirTradingThread(
             instrumentsStorageMock,
+            userStorageMock,
             configMock,
             timeUtilsMock,
             tradeUtilsMock,
@@ -52,6 +55,7 @@ protected:
     {
         delete thread;
         delete instrumentsStorageMock;
+        delete userStorageMock;
         delete configMock;
         delete timeUtilsMock;
         delete tradeUtilsMock;
@@ -61,6 +65,7 @@ protected:
 
     BiDirTradingThread*                 thread;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<UserStorageMock>*        userStorageMock;
     StrictMock<ConfigMock>*             configMock;
     StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<TradeUtilsMock>*         tradeUtilsMock;

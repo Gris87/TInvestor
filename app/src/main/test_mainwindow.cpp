@@ -1173,8 +1173,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     // const InSequence seq;
 
     // Will be deleted in MainWindow destructor
-    StrictMock<TradingThreadMock>*      tradingThreadMock1      = new StrictMock<TradingThreadMock>();
-    StrictMock<TradingThreadMock>*      tradingThreadMock2      = new StrictMock<TradingThreadMock>();
+    StrictMock<TradingThreadMock>*      tradingThreadMock       = new StrictMock<TradingThreadMock>();
     StrictMock<BiDirTradingThreadMock>* biDirTradingThreadMock1 = new StrictMock<BiDirTradingThreadMock>();
     StrictMock<BiDirTradingThreadMock>* biDirTradingThreadMock2 = new StrictMock<BiDirTradingThreadMock>();
 
@@ -1212,16 +1211,16 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
             mainWindow
         )
     )
-        .WillOnce(Return(tradingThreadMock1));
-    EXPECT_CALL(*tradingThreadMock1, run());
+        .WillOnce(Return(tradingThreadMock));
+    EXPECT_CALL(*tradingThreadMock, run());
 
     mainWindow->autoPilotTradeInstruments(instruments);
 
-    tradingThreadMock1->wait();
+    tradingThreadMock->wait();
 
     // clang-format off
     ASSERT_EQ(mainWindow->tradingThreads.size(),      1);
-    ASSERT_EQ(mainWindow->tradingThreads["aaaaa"],    tradingThreadMock1);
+    ASSERT_EQ(mainWindow->tradingThreads["aaaaa"],    tradingThreadMock);
     ASSERT_EQ(mainWindow->biDirTradingThreads.size(), 0);
     // clang-format on
 
@@ -1246,11 +1245,12 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
 
     instruments3["aaaaa"] = tradingInfo3;
 
-    EXPECT_CALL(*tradingThreadMock1, terminateThread());
+    EXPECT_CALL(*tradingThreadMock, terminateThread());
     EXPECT_CALL(
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            userStorageMock,
             configMock,
             timeUtilsMock,
             tradeUtilsMock,
@@ -1269,6 +1269,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            userStorageMock,
             configMock,
             timeUtilsMock,
             tradeUtilsMock,
@@ -1308,42 +1309,16 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     ASSERT_EQ(mainWindow->biDirTradingThreads["bbbbb"], biDirTradingThreadMock2);
     // clang-format on
 
-    EXPECT_CALL(*autoPilotDecisionMakerThreadMock, notifyAboutSell(QString("aaaaa")));
-    EXPECT_CALL(
-        *tradingThreadFactoryMock,
-        newInstance(
-            instrumentsStorageMock,
-            userStorageMock,
-            timeUtilsMock,
-            grpcClientMock,
-            logsThreadMock,
-            QString(""),
-            QString("aaaaa"),
-            ASAP_MODE_FOLLOW_PRICE,
-            FloatEq(-1.0f),
-            FloatEq(-1.0f),
-            DoubleEq(0.0),
-            QString("Decided to sell in order to get rid of the leftovers"),
-            mainWindow
-        )
-    )
-        .WillOnce(Return(tradingThreadMock2));
-    EXPECT_CALL(*tradingThreadMock2, run());
-
     mainWindow->autoPilotTradeInstruments(instruments);
-
-    tradingThreadMock2->wait();
 
     mainWindow->autoPilotBiDirTradingCompleted("aaaaa");
 
     // clang-format off
-    ASSERT_EQ(mainWindow->tradingThreads.size(),        1);
-    ASSERT_EQ(mainWindow->tradingThreads["aaaaa"],      tradingThreadMock2);
+    ASSERT_EQ(mainWindow->tradingThreads.size(),        0);
     ASSERT_EQ(mainWindow->biDirTradingThreads.size(),   1);
     ASSERT_EQ(mainWindow->biDirTradingThreads["bbbbb"], biDirTradingThreadMock2);
     // clang-format on
 
-    EXPECT_CALL(*tradingThreadMock2, terminateThread());
     EXPECT_CALL(*biDirTradingThreadMock2, terminateThread());
 }
 
@@ -1815,6 +1790,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            userStorageMock,
             configMock,
             timeUtilsMock,
             tradeUtilsMock,
@@ -1969,6 +1945,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            userStorageMock,
             configMock,
             timeUtilsMock,
             tradeUtilsMock,

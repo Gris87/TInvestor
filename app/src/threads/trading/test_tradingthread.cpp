@@ -220,8 +220,6 @@ TEST_F(Test_TradingThread, Test_getValidPortfolio)
 
 TEST_F(Test_TradingThread, Test_setAsapMode_and_asapMode)
 {
-    const InSequence seq;
-
     ASSERT_EQ(thread->asapMode(), ASAP_MODE_NONE);
 
     thread->setAsapMode(ASAP_MODE_FOLLOW_PRICE);
@@ -236,8 +234,6 @@ TEST_F(Test_TradingThread, Test_setAsapMode_and_asapMode)
 
 TEST_F(Test_TradingThread, Test_setAvgPrice_and_avgPrice)
 {
-    const InSequence seq;
-
     ASSERT_NEAR(thread->avgPrice(), 10.0f, 0.0001f);
 
     thread->setAvgPrice(150.0f);

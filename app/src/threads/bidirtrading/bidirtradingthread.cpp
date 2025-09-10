@@ -9,17 +9,19 @@
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 const char* const TMON_UID  = "498ec3ff-ef27-4729-9703-a5aac48d5789";
 
-constexpr float  HUNDRED_PERCENT      = 100.0f;
-constexpr qint64 MS_IN_SECOND         = 1000LL;
-constexpr qint64 SLEEP_DELAY          = 30LL * MS_IN_SECOND; // 30 seconds
-constexpr qint64 ORDER_CANCEL_DELAY   = 3LL * MS_IN_SECOND;  // 3 seconds
-constexpr qint64 ORDER_RETRY_DELAY    = 1LL * MS_IN_SECOND;  // 1 second
-constexpr qint64 SLEEP_BEFORE_REQUEST = 1LL * MS_IN_SECOND;  // 1 second
+constexpr float  HUNDRED_PERCENT       = 100.0f;
+constexpr float  MINIMUM_YIELD_PERCENT = 0.10f;
+constexpr qint64 MS_IN_SECOND          = 1000LL;
+constexpr qint64 SLEEP_DELAY           = 30LL * MS_IN_SECOND; // 30 seconds
+constexpr qint64 ORDER_CANCEL_DELAY    = 3LL * MS_IN_SECOND;  // 3 seconds
+constexpr qint64 ORDER_RETRY_DELAY     = 1LL * MS_IN_SECOND;  // 1 second
+constexpr qint64 SLEEP_BEFORE_REQUEST  = 1LL * MS_IN_SECOND;  // 1 second
 
 
 
 BiDirTradingThread::BiDirTradingThread(
     IInstrumentsStorage* instrumentsStorage,
+    IUserStorage*        userStorage,
     IConfig*             config,
     ITimeUtils*          timeUtils,
     ITradeUtils*         tradeUtils,
@@ -34,6 +36,7 @@ BiDirTradingThread::BiDirTradingThread(
     IBiDirTradingThread(parent),
     mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
+    mUserStorage(userStorage),
     mConfig(config),
     mTimeUtils(timeUtils),
     mTradeUtils(tradeUtils),
@@ -113,6 +116,10 @@ bool BiDirTradingThread::trade()
 {
     getInstrumentData();
 
+    mUserStorage->readLock();
+    const float commission = mUserStorage->getCommission();
+    mUserStorage->readUnlock();
+
     while (!mTerminateTrading)
     {
         const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
@@ -137,16 +144,27 @@ bool BiDirTradingThread::trade()
             return false;
         }
 
-        double totalCost      = 0.0;
-        qint64 instrumentLots = 0;
+        double totalCost          = 0.0;
+        qint64 instrumentLots     = 0;
+        double instrumentAvgPrice = 0.0;
 
-        calculateTotalCostAndInstrumentLots(*tinkoffPortfolio, totalCost, instrumentLots);
+        calculateTotalCostAndInstrumentLots(*tinkoffPortfolio, totalCost, instrumentLots, instrumentAvgPrice);
 
         const double bidPrice = quotationToDouble(tinkoffOrderBook->bids(0).price());
-        const double askPrice = quotationToDouble(tinkoffOrderBook->asks(0).price());
+        double       askPrice = quotationToDouble(tinkoffOrderBook->asks(0).price());
 
-        const qint64 coefBuy  = qRound64(bidPrice / quotationToDouble(mMinPriceIncrement));
-        const qint64 coefSell = qRound64(askPrice / quotationToDouble(mMinPriceIncrement));
+        ISellDecision4Config* sellDecision4Config = chooseDecisionConfig()->getSellDecision4Config();
+        const float           yield               = ((askPrice / instrumentAvgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+        if (!sellDecision4Config->isEnabled() || yield > -sellDecision4Config->getLoseYield() + (2 * commission))
+        {
+            askPrice = qMax(
+                askPrice, instrumentAvgPrice * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT
+            );
+        }
+
+        const qint64 coefBuy  = static_cast<qint64>(std::floor(bidPrice / quotationToDouble(mMinPriceIncrement)));
+        const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
 
         const Quotation buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
         const Quotation sellPrice = quotationMultiply(mMinPriceIncrement, coefSell);
@@ -286,7 +304,8 @@ bool BiDirTradingThread::validatePortfolioResponse(const tinkoff::PortfolioRespo
 
         if (instrumentId != RUBLE_UID)
         {
-            if (position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0)
+            if ((position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0) ||
+                (position.average_position_price().units() <= 0 && position.average_position_price().nano() <= 0))
             {
                 res = false;
 
@@ -299,11 +318,12 @@ bool BiDirTradingThread::validatePortfolioResponse(const tinkoff::PortfolioRespo
 }
 
 void BiDirTradingThread::calculateTotalCostAndInstrumentLots(
-    const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots
+    const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots, double& instrumentAvgPrice
 )
 {
-    totalCost      = 0.0;
-    instrumentLots = 0;
+    totalCost          = 0.0;
+    instrumentLots     = 0;
+    instrumentAvgPrice = 0.0;
 
     for (int i = 0; i < tinkoffPortfolio.positions_size() && !QThread::currentThread()->isInterruptionRequested(); ++i)
     {
@@ -321,12 +341,23 @@ void BiDirTradingThread::calculateTotalCostAndInstrumentLots(
 
             if (instrumentId == mInstrumentId)
             {
-                instrumentLots = quotationToDouble(position.quantity()) / mInstrumentLot;
+                instrumentLots     = quotationToDouble(position.quantity()) / mInstrumentLot;
+                instrumentAvgPrice = quotationToDouble(position.average_position_price());
             }
 
             totalCost += cost;
         }
     }
+}
+
+IDecisionMakerConfig* BiDirTradingThread::chooseDecisionConfig()
+{
+    if (mConfig->isSimulatorConfigCommon())
+    {
+        return mConfig->getSimulatorConfig();
+    }
+
+    return mConfig->getAutoPilotConfig();
 }
 
 void BiDirTradingThread::checkIfNeedToCancelAndCreateOrder(

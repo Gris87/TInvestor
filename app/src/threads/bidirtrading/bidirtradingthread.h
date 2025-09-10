@@ -9,6 +9,7 @@
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/storage/user/iuserstorage.h"
 #include "src/threads/logs/ilogsthread.h"
 #include "src/utils/timeutils/itimeutils.h"
 #include "src/utils/tradeutils/itradeutils.h"
@@ -22,6 +23,7 @@ class BiDirTradingThread : public IBiDirTradingThread
 public:
     explicit BiDirTradingThread(
         IInstrumentsStorage* instrumentsStorage,
+        IUserStorage*        userStorage,
         IConfig*             config,
         ITimeUtils*          timeUtils,
         ITradeUtils*         tradeUtils,
@@ -55,11 +57,12 @@ private:
     std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
     bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     void                                        calculateTotalCostAndInstrumentLots(
-                                               const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots
+                                               const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots, double& instrumentAvgPrice
                                            );
-    void checkIfNeedToCancelAndCreateOrder(
-        const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
-    );
+    IDecisionMakerConfig* chooseDecisionConfig();
+    void                  checkIfNeedToCancelAndCreateOrder(
+                         const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
+                     );
     void sellWithPrice(const Quotation& price);
     void buyWithPrice(qint64 amountOfLots, const Quotation& price);
 
@@ -68,6 +71,7 @@ private:
 
     QReadWriteLock*      mRwMutex;
     IInstrumentsStorage* mInstrumentsStorage;
+    IUserStorage*        mUserStorage;
     IConfig*             mConfig;
     ITimeUtils*          mTimeUtils;
     ITradeUtils*         mTradeUtils;
