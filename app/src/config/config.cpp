@@ -11,6 +11,10 @@ constexpr int   MAKE_DECISION_TIMEOUT_DEFAULT                       = 1;
 constexpr bool  TRADE_IN_NON_WORKING_HOURS_DEFAULT                  = true;
 constexpr bool  TRADE_HUGE_SPREAD_DEFAULT                           = true;
 constexpr float HUGE_SPREAD_DEFAULT                                 = 1.0f;
+constexpr bool  HUGE_SPREAD_LIMIT_STOCK_PURCHASE_DEFAULT            = true;
+constexpr float HUGE_SPREAD_LIMIT_STOCK_PURCHASE_PART_DEFAULT       = 3.0f;
+constexpr bool  HUGE_SPREAD_LIMIT_BY_TURNOVER_DEFAULT               = true;
+constexpr float HUGE_SPREAD_LIMIT_BY_TURNOVER_PERCENT_DEFAULT       = 1.0f;
 constexpr bool  TRADE_LIQUIDITY_ETF_NIGHTLY_DEFAULT                 = true;
 constexpr float LIQUIDITY_ETF_REMAINED_PART_NIGHTLY_DEFAULT         = 5.0f;
 constexpr bool  LIMIT_STOCK_PURCHASE_DEFAULT                        = true;
@@ -38,6 +42,10 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mTradeInNonWorkingHours(),
     mTradeHugeSpread(),
     mHugeSpread(),
+    mHugeSpreadLimitStockPurchase(),
+    mHugeSpreadLimitStockPurchasePart(),
+    mHugeSpreadLimitByTurnover(),
+    mHugeSpreadLimitByTurnoverPercent(),
     mTradeLiquidityEtfNightly(),
     mLiquidityEtfRemainedPartNightly(),
     mLimitStockPurchase(),
@@ -99,6 +107,10 @@ void Config::assign(IConfig* another)
     mTradeInNonWorkingHours                = config.mTradeInNonWorkingHours;
     mTradeHugeSpread                       = config.mTradeHugeSpread;
     mHugeSpread                            = config.mHugeSpread;
+    mHugeSpreadLimitStockPurchase          = config.mHugeSpreadLimitStockPurchase;
+    mHugeSpreadLimitStockPurchasePart      = config.mHugeSpreadLimitStockPurchasePart;
+    mHugeSpreadLimitByTurnover             = config.mHugeSpreadLimitByTurnover;
+    mHugeSpreadLimitByTurnoverPercent      = config.mHugeSpreadLimitByTurnoverPercent;
     mTradeLiquidityEtfNightly              = config.mTradeLiquidityEtfNightly;
     mLiquidityEtfRemainedPartNightly       = config.mLiquidityEtfRemainedPartNightly;
     mLimitStockPurchase                    = config.mLimitStockPurchase;
@@ -129,6 +141,10 @@ void Config::makeDefault()
     mTradeInNonWorkingHours                = TRADE_IN_NON_WORKING_HOURS_DEFAULT;
     mTradeHugeSpread                       = TRADE_HUGE_SPREAD_DEFAULT;
     mHugeSpread                            = HUGE_SPREAD_DEFAULT;
+    mHugeSpreadLimitStockPurchase          = HUGE_SPREAD_LIMIT_STOCK_PURCHASE_DEFAULT;
+    mHugeSpreadLimitStockPurchasePart      = HUGE_SPREAD_LIMIT_STOCK_PURCHASE_PART_DEFAULT;
+    mHugeSpreadLimitByTurnover             = HUGE_SPREAD_LIMIT_BY_TURNOVER_DEFAULT;
+    mHugeSpreadLimitByTurnoverPercent      = HUGE_SPREAD_LIMIT_BY_TURNOVER_PERCENT_DEFAULT;
     mTradeLiquidityEtfNightly              = TRADE_LIQUIDITY_ETF_NIGHTLY_DEFAULT;
     mLiquidityEtfRemainedPartNightly       = LIQUIDITY_ETF_REMAINED_PART_NIGHTLY_DEFAULT;
     mLimitStockPurchase                    = LIMIT_STOCK_PURCHASE_DEFAULT;
@@ -160,6 +176,10 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours);
     settingsEditor->setValue("Config/TradeHugeSpread",                       mTradeHugeSpread);
     settingsEditor->setValue("Config/HugeSpread",                            mHugeSpread);
+    settingsEditor->setValue("Config/HugeSpreadLimitStockPurchase",          mHugeSpreadLimitStockPurchase);
+    settingsEditor->setValue("Config/HugeSpreadLimitStockPurchasePart",      mHugeSpreadLimitStockPurchasePart);
+    settingsEditor->setValue("Config/HugeSpreadLimitByTurnover",             mHugeSpreadLimitByTurnover);
+    settingsEditor->setValue("Config/HugeSpreadLimitByTurnoverPercent",      mHugeSpreadLimitByTurnoverPercent);
     settingsEditor->setValue("Config/TradeLiquidityEtfNightly",              mTradeLiquidityEtfNightly);
     settingsEditor->setValue("Config/LiquidityEtfRemainedPartNightly",       mLiquidityEtfRemainedPartNightly);
     settingsEditor->setValue("Config/LimitStockPurchase",                    mLimitStockPurchase);
@@ -192,6 +212,10 @@ void Config::load(ISettingsEditor* settingsEditor)
     mTradeInNonWorkingHours                = settingsEditor->value("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours).toBool();
     mTradeHugeSpread                       = settingsEditor->value("Config/TradeHugeSpread",                       mTradeHugeSpread).toBool();
     mHugeSpread                            = settingsEditor->value("Config/HugeSpread",                            mHugeSpread).toFloat();
+    mHugeSpreadLimitStockPurchase          = settingsEditor->value("Config/HugeSpreadLimitStockPurchase",          mHugeSpreadLimitStockPurchase).toBool();
+    mHugeSpreadLimitStockPurchasePart      = settingsEditor->value("Config/HugeSpreadLimitStockPurchasePart",      mHugeSpreadLimitStockPurchasePart).toFloat();
+    mHugeSpreadLimitByTurnover             = settingsEditor->value("Config/HugeSpreadLimitByTurnover",             mHugeSpreadLimitByTurnover).toBool();
+    mHugeSpreadLimitByTurnoverPercent      = settingsEditor->value("Config/HugeSpreadLimitByTurnoverPercent",      mHugeSpreadLimitByTurnoverPercent).toFloat();
     mTradeLiquidityEtfNightly              = settingsEditor->value("Config/TradeLiquidityEtfNightly",              mTradeLiquidityEtfNightly).toBool();
     mLiquidityEtfRemainedPartNightly       = settingsEditor->value("Config/LiquidityEtfRemainedPartNightly",       mLiquidityEtfRemainedPartNightly).toFloat();
     mLimitStockPurchase                    = settingsEditor->value("Config/LimitStockPurchase",                    mLimitStockPurchase).toBool();
@@ -300,6 +324,62 @@ float Config::getHugeSpread()
     const QReadLocker lock(mRwMutex);
 
     return mHugeSpread;
+}
+
+void Config::setHugeSpreadLimitStockPurchase(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHugeSpreadLimitStockPurchase = value;
+}
+
+bool Config::isHugeSpreadLimitStockPurchase()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHugeSpreadLimitStockPurchase;
+}
+
+void Config::setHugeSpreadLimitStockPurchasePart(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHugeSpreadLimitStockPurchasePart = value;
+}
+
+float Config::getHugeSpreadLimitStockPurchasePart()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHugeSpreadLimitStockPurchasePart;
+}
+
+void Config::setHugeSpreadLimitByTurnover(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHugeSpreadLimitByTurnover = value;
+}
+
+bool Config::isHugeSpreadLimitByTurnover()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHugeSpreadLimitByTurnover;
+}
+
+void Config::setHugeSpreadLimitByTurnoverPercent(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHugeSpreadLimitByTurnoverPercent = value;
+}
+
+float Config::getHugeSpreadLimitByTurnoverPercent()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHugeSpreadLimitByTurnoverPercent;
 }
 
 void Config::setTradeLiquidityEtfNightly(bool value)

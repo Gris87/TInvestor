@@ -204,22 +204,120 @@
           </widget>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="hugeSpreadDoubleSpinBox">
-           <property name="suffix">
-            <string notr="true">%</string>
-           </property>
-           <property name="minimum">
-            <double>0.300000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>5.000000000000000</double>
-           </property>
-           <property name="singleStep">
-            <double>0.100000000000000</double>
-           </property>
-           <property name="value">
-            <double>1.000000000000000</double>
-           </property>
+          <widget class="QWidget" name="hugeSpreadWidget" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <property name="spacing">
+             <number>4</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QDoubleSpinBox" name="hugeSpreadDoubleSpinBox">
+              <property name="suffix">
+               <string notr="true">%</string>
+              </property>
+              <property name="minimum">
+               <double>0.300000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>5.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="hugeSpreadLimitStockPurchaseCheckBox">
+              <property name="text">
+               <string>and limit stock purchase part less than</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="hugeSpreadLimitByTurnoverWidget" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_14">
+               <property name="spacing">
+                <number>4</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QDoubleSpinBox" name="hugeSpreadLimitStockPurchasePartDoubleSpinBox">
+                 <property name="suffix">
+                  <string notr="true">%</string>
+                 </property>
+                 <property name="maximum">
+                  <double>100.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>3.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="hugeSpreadLimitByTurnoverCheckBox">
+                 <property name="text">
+                  <string>and less than</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="hugeSpreadLimitByTurnoverPercentDoubleSpinBox">
+                 <property name="suffix">
+                  <string notr="true">%</string>
+                 </property>
+                 <property name="maximum">
+                  <double>100.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_8">
+                 <property name="text">
+                  <string>of average daily turnover</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
@@ -256,7 +354,7 @@
             <item>
              <widget class="QLabel" name="label_6">
               <property name="text">
-               <string>The commission is too high. It is recommended to purchase Premium</string>
+               <string>T-Bank Premium only</string>
               </property>
              </widget>
             </item>

@@ -90,7 +90,7 @@ SettingsDialog::SettingsDialog(
     );
 
     ui->tradeHugeSpreadCheckBox->setEnabled(commission < LIMIT_COMMISSION);
-    ui->hugeSpreadDoubleSpinBox->setEnabled(commission < LIMIT_COMMISSION);
+    ui->hugeSpreadWidget->setEnabled(commission < LIMIT_COMMISSION);
     ui->tradeHugeSpreadCommissionWidget->setVisible(commission >= LIMIT_COMMISSION);
 }
 
@@ -112,6 +112,10 @@ void SettingsDialog::updateUiFromConfig()
     ui->tradeInNonWorkingHoursCheckBox->setChecked(mConfig->isTradeInNonWorkingHours());
     ui->tradeHugeSpreadCheckBox->setChecked(mConfig->isTradeHugeSpread());
     ui->hugeSpreadDoubleSpinBox->setValue(mConfig->getHugeSpread());
+    ui->hugeSpreadLimitStockPurchaseCheckBox->setChecked(mConfig->isHugeSpreadLimitStockPurchase());
+    ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->setValue(mConfig->getHugeSpreadLimitStockPurchasePart());
+    ui->hugeSpreadLimitByTurnoverCheckBox->setChecked(mConfig->isHugeSpreadLimitByTurnover());
+    ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->setValue(mConfig->getHugeSpreadLimitByTurnoverPercent());
     ui->tradeLiquidityEtfNightlyCheckBox->setChecked(mConfig->isTradeLiquidityEtfNightly());
     ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->setValue(mConfig->getLiquidityEtfRemainedPartNightly());
     ui->limitStockPurchaseCheckBox->setChecked(mConfig->isLimitStockPurchase());
@@ -159,12 +163,40 @@ void SettingsDialog::on_tradeHugeSpreadCheckBox_checkStateChanged(const Qt::Chec
 
     mConfig->setTradeHugeSpread(checked);
 
-    ui->hugeSpreadDoubleSpinBox->setEnabled(checked);
+    ui->hugeSpreadWidget->setEnabled(checked);
 }
 
 void SettingsDialog::on_hugeSpreadDoubleSpinBox_valueChanged(double value)
 {
     mConfig->setHugeSpread(value);
+}
+
+void SettingsDialog::on_hugeSpreadLimitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setHugeSpreadLimitStockPurchase(checked);
+
+    ui->hugeSpreadLimitByTurnoverWidget->setEnabled(checked);
+}
+
+void SettingsDialog::on_hugeSpreadLimitStockPurchasePartDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setHugeSpreadLimitStockPurchasePart(value);
+}
+
+void SettingsDialog::on_hugeSpreadLimitByTurnoverCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setHugeSpreadLimitByTurnover(checked);
+
+    ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_hugeSpreadLimitByTurnoverPercentDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setHugeSpreadLimitByTurnoverPercent(value);
 }
 
 void SettingsDialog::on_tradeLiquidityEtfNightlyCheckBox_checkStateChanged(const Qt::CheckState& value)

@@ -162,6 +162,10 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
     dialog->ui->tradeHugeSpreadCheckBox->blockSignals(true);
     dialog->ui->hugeSpreadDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitByTurnoverCheckBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->blockSignals(true);
     dialog->ui->tradeLiquidityEtfNightlyCheckBox->blockSignals(true);
     dialog->ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
@@ -185,6 +189,10 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(3.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(1.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitByTurnover()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitByTurnoverPercent()).WillOnce(Return(3.0f));
     EXPECT_CALL(*configMock, isTradeLiquidityEtfNightly()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLiquidityEtfRemainedPartNightly()).WillOnce(Return(7.0f));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
@@ -208,6 +216,10 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   true);
     ASSERT_EQ(dialog->ui->tradeHugeSpreadCheckBox->isChecked(),                          true);
     ASSERT_NEAR(dialog->ui->hugeSpreadDoubleSpinBox->value(),                            3.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->isChecked(),             true);
+    ASSERT_NEAR(dialog->ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->value(),      1.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeSpreadLimitByTurnoverCheckBox->isChecked(),                true);
+    ASSERT_NEAR(dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->value(),      3.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->tradeLiquidityEtfNightlyCheckBox->isChecked(),                 true);
     ASSERT_NEAR(dialog->ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->value(),       7.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),                       true);
@@ -232,6 +244,10 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(4.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitByTurnover()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitByTurnoverPercent()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isTradeLiquidityEtfNightly()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getLiquidityEtfRemainedPartNightly()).WillOnce(Return(10.0f));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
@@ -255,6 +271,10 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   false);
     ASSERT_EQ(dialog->ui->tradeHugeSpreadCheckBox->isChecked(),                          false);
     ASSERT_NEAR(dialog->ui->hugeSpreadDoubleSpinBox->value(),                            2.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->isChecked(),             false);
+    ASSERT_NEAR(dialog->ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->value(),      4.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeSpreadLimitByTurnoverCheckBox->isChecked(),                false);
+    ASSERT_NEAR(dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->value(),      2.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->tradeLiquidityEtfNightlyCheckBox->isChecked(),                 false);
     ASSERT_NEAR(dialog->ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->value(),       10.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),                       false);
@@ -343,11 +363,11 @@ TEST_F(Test_SettingsDialog, Test_on_tradeHugeSpreadCheckBox_checkStateChanged)
 
     EXPECT_CALL(*configMock, setTradeHugeSpread(true));
     dialog->ui->tradeHugeSpreadCheckBox->setChecked(true);
-    ASSERT_EQ(dialog->ui->hugeSpreadDoubleSpinBox->isEnabled(), true);
+    ASSERT_EQ(dialog->ui->hugeSpreadWidget->isEnabled(), true);
 
     EXPECT_CALL(*configMock, setTradeHugeSpread(false));
     dialog->ui->tradeHugeSpreadCheckBox->setChecked(false);
-    ASSERT_EQ(dialog->ui->hugeSpreadDoubleSpinBox->isEnabled(), false);
+    ASSERT_EQ(dialog->ui->hugeSpreadWidget->isEnabled(), false);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_hugeSpreadDoubleSpinBox_valueChanged)
@@ -363,6 +383,70 @@ TEST_F(Test_SettingsDialog, Test_on_hugeSpreadDoubleSpinBox_valueChanged)
 
     EXPECT_CALL(*configMock, setHugeSpread(3.0f));
     dialog->ui->hugeSpreadDoubleSpinBox->setValue(3.0f);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_hugeSpreadLimitStockPurchaseCheckBox_checkStateChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->setChecked(false);
+    dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHugeSpreadLimitStockPurchase(true));
+    dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->hugeSpreadLimitByTurnoverWidget->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setHugeSpreadLimitStockPurchase(false));
+    dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->hugeSpreadLimitByTurnoverWidget->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_hugeSpreadLimitStockPurchasePartDoubleSpinBox_valueChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->setValue(1.0f);
+    dialog->ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHugeSpreadLimitStockPurchasePart(2.0f));
+    dialog->ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->setValue(2.0f);
+
+    EXPECT_CALL(*configMock, setHugeSpreadLimitStockPurchasePart(3.0f));
+    dialog->ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->setValue(3.0f);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_hugeSpreadLimitByTurnoverCheckBox_checkStateChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->hugeSpreadLimitByTurnoverCheckBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitByTurnoverCheckBox->setChecked(false);
+    dialog->ui->hugeSpreadLimitByTurnoverCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHugeSpreadLimitByTurnover(true));
+    dialog->ui->hugeSpreadLimitByTurnoverCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setHugeSpreadLimitByTurnover(false));
+    dialog->ui->hugeSpreadLimitByTurnoverCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_hugeSpreadLimitByTurnoverPercentDoubleSpinBox_valueChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->setValue(1);
+    dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHugeSpreadLimitByTurnoverPercent(2.0f));
+    dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->setValue(2.0f);
+
+    EXPECT_CALL(*configMock, setHugeSpreadLimitByTurnoverPercent(3.0f));
+    dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->setValue(3.0f);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_tradeLiquidityEtfNightlyCheckBox_checkStateChanged)
@@ -678,6 +762,10 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
     dialog->ui->tradeHugeSpreadCheckBox->blockSignals(true);
     dialog->ui->hugeSpreadDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitByTurnoverCheckBox->blockSignals(true);
+    dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->blockSignals(true);
     dialog->ui->tradeLiquidityEtfNightlyCheckBox->blockSignals(true);
     dialog->ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
@@ -703,6 +791,10 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(1.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(3.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitByTurnover()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitByTurnoverPercent()).WillOnce(Return(1.0f));
     EXPECT_CALL(*configMock, isTradeLiquidityEtfNightly()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLiquidityEtfRemainedPartNightly()).WillOnce(Return(5.0f));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
@@ -726,6 +818,10 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   true);
     ASSERT_EQ(dialog->ui->tradeHugeSpreadCheckBox->isChecked(),                          true);
     ASSERT_NEAR(dialog->ui->hugeSpreadDoubleSpinBox->value(),                            1.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->isChecked(),             true);
+    ASSERT_NEAR(dialog->ui->hugeSpreadLimitStockPurchasePartDoubleSpinBox->value(),      3.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeSpreadLimitByTurnoverCheckBox->isChecked(),                true);
+    ASSERT_NEAR(dialog->ui->hugeSpreadLimitByTurnoverPercentDoubleSpinBox->value(),      1.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->tradeLiquidityEtfNightlyCheckBox->isChecked(),                 true);
     ASSERT_NEAR(dialog->ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->value(),       5.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),                       true);

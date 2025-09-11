@@ -49,6 +49,18 @@ public:
     MOCK_METHOD(void, setHugeSpread, (float value), (override));
     MOCK_METHOD(float, getHugeSpread, (), (override));
 
+    MOCK_METHOD(void, setHugeSpreadLimitStockPurchase, (bool value), (override));
+    MOCK_METHOD(bool, isHugeSpreadLimitStockPurchase, (), (override));
+
+    MOCK_METHOD(void, setHugeSpreadLimitStockPurchasePart, (float value), (override));
+    MOCK_METHOD(float, getHugeSpreadLimitStockPurchasePart, (), (override));
+
+    MOCK_METHOD(void, setHugeSpreadLimitByTurnover, (bool value), (override));
+    MOCK_METHOD(bool, isHugeSpreadLimitByTurnover, (), (override));
+
+    MOCK_METHOD(void, setHugeSpreadLimitByTurnoverPercent, (float value), (override));
+    MOCK_METHOD(float, getHugeSpreadLimitByTurnoverPercent, (), (override));
+
     MOCK_METHOD(void, setTradeLiquidityEtfNightly, (bool value), (override));
     MOCK_METHOD(bool, isTradeLiquidityEtfNightly, (), (override));
 

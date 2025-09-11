@@ -45,6 +45,18 @@ public:
     virtual void  setHugeSpread(float value) = 0;
     virtual float getHugeSpread()            = 0;
 
+    virtual void setHugeSpreadLimitStockPurchase(bool value) = 0;
+    virtual bool isHugeSpreadLimitStockPurchase()            = 0;
+
+    virtual void  setHugeSpreadLimitStockPurchasePart(float value) = 0;
+    virtual float getHugeSpreadLimitStockPurchasePart()            = 0;
+
+    virtual void setHugeSpreadLimitByTurnover(bool value) = 0;
+    virtual bool isHugeSpreadLimitByTurnover()            = 0;
+
+    virtual void  setHugeSpreadLimitByTurnoverPercent(float value) = 0;
+    virtual float getHugeSpreadLimitByTurnoverPercent()            = 0;
+
     virtual void setTradeLiquidityEtfNightly(bool value) = 0;
     virtual bool isTradeLiquidityEtfNightly()            = 0;
 

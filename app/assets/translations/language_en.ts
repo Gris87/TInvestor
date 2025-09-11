@@ -4,118 +4,118 @@
 <context>
     <name>AccountChartWidget</name>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="255"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="256"/>
         <source>Remained money on account</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="181"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="198"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="228"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="259"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="277"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="182"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="199"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="229"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="260"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="278"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="104"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
         <source>Jan</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="104"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
         <source>Feb</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="104"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
         <source>Mar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="104"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
         <source>Apr</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="104"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
         <source>May</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="104"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
         <source>Jun</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="104"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
         <source>Jul</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="104"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
         <source>Aug</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="106"/>
         <source>Sep</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="106"/>
         <source>Oct</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="106"/>
         <source>Nov</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="106"/>
         <source>Dec</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="177"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="178"/>
         <source>Yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="195"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="196"/>
         <source>Yield per month</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="225"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="226"/>
         <source>Yield per day</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="230"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="261"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="279"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="231"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="262"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="280"/>
         <source>Money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="273"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="274"/>
         <source>Total money on account</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="595"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="603"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="605"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="613"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="605"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="613"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
@@ -172,22 +172,14 @@
     </message>
 </context>
 <context>
-    <name>BiDirTradingControlThread</name>
-    <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="192"/>
-        <source>Decided to start reselling of high liquidity ETF because it requested from config</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>BiDirTradingThread</name>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="74"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="76"/>
         <source>Reselling completed successfully</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="128"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="134"/>
         <source>Impossible to continue reselling</source>
         <translation></translation>
     </message>
@@ -385,7 +377,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="134"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="127"/>
         <source>Decided to sell because it had been a night since buying</source>
         <translation></translation>
     </message>
@@ -547,13 +539,13 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="592"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1342"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1337"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="609"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1190"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1185"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
@@ -568,18 +560,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1072"/>
-        <source>Decided to sell in order to get rid of the leftovers</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1190"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1185"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="698"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1221"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1216"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
@@ -594,7 +581,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1221"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1216"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -1011,7 +998,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="132"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="118"/>
         <source>Decided to start reselling because spread is %1</source>
         <translation></translation>
     </message>
@@ -1146,89 +1133,91 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="259"/>
-        <source>The commission is too high. It is recommended to purchase Premium</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="289"/>
-        <source>Trade high liquidity ETF (e.g. TMON@) during a day</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="319"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="387"/>
         <source>Trade high liquidity ETF (e.g. TMON@) at night with keeping</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="345"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="413"/>
         <source>of money from total portfolio cost</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="372"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="482"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="440"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="550"/>
         <source>Limit stock purchase part less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="416"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="526"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="290"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="484"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="594"/>
         <source>and less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="439"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="246"/>
+        <source>and limit stock purchase part less than</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="313"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="507"/>
         <source>of average daily turnover</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="549"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="357"/>
+        <source>T-Bank Premium only</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="617"/>
         <source>of average daily turnover in non-wokring hours</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="580"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="648"/>
         <source>Store stocks data for</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="587"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="655"/>
         <source> months</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="632"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="272"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="294"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="700"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="296"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="318"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="653"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="689"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="721"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="757"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="668"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="271"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="736"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="295"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="319"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="725"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="793"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="748"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="816"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="768"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="836"/>
         <source>Default</source>
         <translation></translation>
     </message>
@@ -1238,8 +1227,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="266"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="289"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="290"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="313"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>

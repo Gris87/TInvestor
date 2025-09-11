@@ -46,6 +46,18 @@ public:
     void  setHugeSpread(float value) override;
     float getHugeSpread() override;
 
+    void setHugeSpreadLimitStockPurchase(bool value) override;
+    bool isHugeSpreadLimitStockPurchase() override;
+
+    void  setHugeSpreadLimitStockPurchasePart(float value) override;
+    float getHugeSpreadLimitStockPurchasePart() override;
+
+    void setHugeSpreadLimitByTurnover(bool value) override;
+    bool isHugeSpreadLimitByTurnover() override;
+
+    void  setHugeSpreadLimitByTurnoverPercent(float value) override;
+    float getHugeSpreadLimitByTurnoverPercent() override;
+
     void setTradeLiquidityEtfNightly(bool value) override;
     bool isTradeLiquidityEtfNightly() override;
 
@@ -97,6 +109,10 @@ private:
     bool    mTradeInNonWorkingHours;
     bool    mTradeHugeSpread;
     float   mHugeSpread;
+    bool    mHugeSpreadLimitStockPurchase;
+    float   mHugeSpreadLimitStockPurchasePart;
+    bool    mHugeSpreadLimitByTurnover;
+    float   mHugeSpreadLimitByTurnoverPercent;
     bool    mTradeLiquidityEtfNightly;
     float   mLiquidityEtfRemainedPartNightly;
     bool    mLimitStockPurchase;
