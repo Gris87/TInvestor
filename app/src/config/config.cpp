@@ -11,7 +11,6 @@ constexpr int   MAKE_DECISION_TIMEOUT_DEFAULT                       = 1;
 constexpr bool  TRADE_IN_NON_WORKING_HOURS_DEFAULT                  = true;
 constexpr bool  TRADE_HUGE_SPREAD_DEFAULT                           = true;
 constexpr float HUGE_SPREAD_DEFAULT                                 = 1.0f;
-constexpr bool  TRADE_LIQUIDITY_ETF_DAILY_DEFAULT                   = true;
 constexpr bool  TRADE_LIQUIDITY_ETF_NIGHTLY_DEFAULT                 = true;
 constexpr float LIQUIDITY_ETF_REMAINED_PART_NIGHTLY_DEFAULT         = 5.0f;
 constexpr bool  LIMIT_STOCK_PURCHASE_DEFAULT                        = true;
@@ -39,7 +38,6 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mTradeInNonWorkingHours(),
     mTradeHugeSpread(),
     mHugeSpread(),
-    mTradeLiquidityEtfDaily(),
     mTradeLiquidityEtfNightly(),
     mLiquidityEtfRemainedPartNightly(),
     mLimitStockPurchase(),
@@ -101,7 +99,6 @@ void Config::assign(IConfig* another)
     mTradeInNonWorkingHours                = config.mTradeInNonWorkingHours;
     mTradeHugeSpread                       = config.mTradeHugeSpread;
     mHugeSpread                            = config.mHugeSpread;
-    mTradeLiquidityEtfDaily                = config.mTradeLiquidityEtfDaily;
     mTradeLiquidityEtfNightly              = config.mTradeLiquidityEtfNightly;
     mLiquidityEtfRemainedPartNightly       = config.mLiquidityEtfRemainedPartNightly;
     mLimitStockPurchase                    = config.mLimitStockPurchase;
@@ -132,7 +129,6 @@ void Config::makeDefault()
     mTradeInNonWorkingHours                = TRADE_IN_NON_WORKING_HOURS_DEFAULT;
     mTradeHugeSpread                       = TRADE_HUGE_SPREAD_DEFAULT;
     mHugeSpread                            = HUGE_SPREAD_DEFAULT;
-    mTradeLiquidityEtfDaily                = TRADE_LIQUIDITY_ETF_DAILY_DEFAULT;
     mTradeLiquidityEtfNightly              = TRADE_LIQUIDITY_ETF_NIGHTLY_DEFAULT;
     mLiquidityEtfRemainedPartNightly       = LIQUIDITY_ETF_REMAINED_PART_NIGHTLY_DEFAULT;
     mLimitStockPurchase                    = LIMIT_STOCK_PURCHASE_DEFAULT;
@@ -164,7 +160,6 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours);
     settingsEditor->setValue("Config/TradeHugeSpread",                       mTradeHugeSpread);
     settingsEditor->setValue("Config/HugeSpread",                            mHugeSpread);
-    settingsEditor->setValue("Config/TradeLiquidityEtfDaily",                mTradeLiquidityEtfDaily);
     settingsEditor->setValue("Config/TradeLiquidityEtfNightly",              mTradeLiquidityEtfNightly);
     settingsEditor->setValue("Config/LiquidityEtfRemainedPartNightly",       mLiquidityEtfRemainedPartNightly);
     settingsEditor->setValue("Config/LimitStockPurchase",                    mLimitStockPurchase);
@@ -197,7 +192,6 @@ void Config::load(ISettingsEditor* settingsEditor)
     mTradeInNonWorkingHours                = settingsEditor->value("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours).toBool();
     mTradeHugeSpread                       = settingsEditor->value("Config/TradeHugeSpread",                       mTradeHugeSpread).toBool();
     mHugeSpread                            = settingsEditor->value("Config/HugeSpread",                            mHugeSpread).toFloat();
-    mTradeLiquidityEtfDaily                = settingsEditor->value("Config/TradeLiquidityEtfDaily",                mTradeLiquidityEtfDaily).toBool();
     mTradeLiquidityEtfNightly              = settingsEditor->value("Config/TradeLiquidityEtfNightly",              mTradeLiquidityEtfNightly).toBool();
     mLiquidityEtfRemainedPartNightly       = settingsEditor->value("Config/LiquidityEtfRemainedPartNightly",       mLiquidityEtfRemainedPartNightly).toFloat();
     mLimitStockPurchase                    = settingsEditor->value("Config/LimitStockPurchase",                    mLimitStockPurchase).toBool();
@@ -306,20 +300,6 @@ float Config::getHugeSpread()
     const QReadLocker lock(mRwMutex);
 
     return mHugeSpread;
-}
-
-void Config::setTradeLiquidityEtfDaily(bool value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mTradeLiquidityEtfDaily = value;
-}
-
-bool Config::isTradeLiquidityEtfDaily()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mTradeLiquidityEtfDaily;
 }
 
 void Config::setTradeLiquidityEtfNightly(bool value)

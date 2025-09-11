@@ -34,7 +34,7 @@ public:
 
     void run() override;
 
-    void detectHugeSpreadStocks(qint64 timestamp, bool tradeHugeSpread, bool tradeLiquidityEtfDaily);
+    void detectHugeSpreadStocks(qint64 timestamp);
 
     void setAccountId(const QString& accountId) override;
 
@@ -49,6 +49,4 @@ private:
     QTimeZone       mMoscowTimezone;
     QString         mAccountId;
     qint64          mLastDetectionTimestamp;
-    bool            mLastTradeHugeSpread;
-    bool            mLastTradeLiquidityEtfDaily;
 };

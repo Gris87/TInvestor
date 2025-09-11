@@ -7,7 +7,6 @@
 
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
-const char* const TMON_UID  = "498ec3ff-ef27-4729-9703-a5aac48d5789";
 
 constexpr float  HUNDRED_PERCENT       = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT = 0.10f;
@@ -172,16 +171,10 @@ bool BiDirTradingThread::trade()
         const Quotation buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
         const Quotation sellPrice = quotationMultiply(mMinPriceIncrement, coefSell);
 
-        bool   good      = true;
-        qint64 lotsToBuy = 0;
+        qint64      lotsToBuy = 0;
+        const float spread    = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
-        if (mInstrumentId != TMON_UID)
-        {
-            const float spread = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-            good               = spread > mConfig->getHugeSpread();
-        }
-
-        if (good)
+        if (spread > mConfig->getHugeSpread())
         {
             const double lotPrice = mInstrumentLot * bidPrice;
 

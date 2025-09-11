@@ -59,7 +59,6 @@ private slots:
     void on_tradeInNonWorkingHoursCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_tradeHugeSpreadCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_hugeSpreadDoubleSpinBox_valueChanged(double value);
-    void on_tradeLiquidityEtfDailyCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_tradeLiquidityEtfNightlyCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_liquidityEtfRemainedPartNightlyDoubleSpinBox_valueChanged(double value);
     void on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value);

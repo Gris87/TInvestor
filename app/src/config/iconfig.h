@@ -45,9 +45,6 @@ public:
     virtual void  setHugeSpread(float value) = 0;
     virtual float getHugeSpread()            = 0;
 
-    virtual void setTradeLiquidityEtfDaily(bool value) = 0;
-    virtual bool isTradeLiquidityEtfDaily()            = 0;
-
     virtual void setTradeLiquidityEtfNightly(bool value) = 0;
     virtual bool isTradeLiquidityEtfNightly()            = 0;
 

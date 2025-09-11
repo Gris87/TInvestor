@@ -119,19 +119,12 @@ void HighLiquidityThread::sellEtf()
 
         calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfCost, etfPrice);
 
-        const double expectedCost =
-            mConfig->isTradeLiquidityEtfDaily() ? totalCost * KEEP_ETF_AT_THE_MORNING / HUNDRED_PERCENT : 0.0;
-
-        if (etfCost - expectedCost > etfPrice)
+        if (etfCost > etfPrice)
         {
             InstrumentsForTrading instrumentsForTrading;
 
             instrumentsForTrading[TMON_UID] = TradingInfo(
-                ASAP_MODE_IMMEDIATELY_TRADE,
-                -1.0f,
-                -1.0f,
-                expectedCost,
-                tr("Decided to sell because it had been a night since buying")
+                ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, 0.0, tr("Decided to sell because it had been a night since buying")
             );
             emit tradeInstruments(instrumentsForTrading);
         }

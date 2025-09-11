@@ -8,20 +8,13 @@
 
 
 
-const char* const TMON_UID = "498ec3ff-ef27-4729-9703-a5aac48d5789";
-
-constexpr float  HUNDRED_PERCENT             = 100.0f;
-constexpr float  LIMIT_COMMISSION            = 0.06f;
-constexpr int    NORMAL_SESSION_START_HOUR   = 10;
-constexpr int    NORMAL_SESSION_START_MINUTE = 5;
-constexpr int    NORMAL_SESSION_END_HOUR     = 18;
-constexpr int    NORMAL_SESSION_END_MINUTE   = 20;
-constexpr int    EXTRA_SESSION_END_HOUR      = 23;
-constexpr int    EXTRA_SESSION_END_MINUTE    = 30;
-constexpr qint64 TMON_TURNOVER               = 10000000000LL; // 10 B
-constexpr qint64 MS_IN_SECOND                = 1000LL;
-constexpr qint64 ONE_MINUTE                  = 60LL * MS_IN_SECOND;
-constexpr qint64 DETECTION_INTERVAL          = 15LL * ONE_MINUTE; // 15 minutes
+constexpr float  HUNDRED_PERCENT          = 100.0f;
+constexpr float  LIMIT_COMMISSION         = 0.06f;
+constexpr int    EXTRA_SESSION_END_HOUR   = 23;
+constexpr int    EXTRA_SESSION_END_MINUTE = 30;
+constexpr qint64 MS_IN_SECOND             = 1000LL;
+constexpr qint64 ONE_MINUTE               = 60LL * MS_IN_SECOND;
+constexpr qint64 DETECTION_INTERVAL       = 15LL * ONE_MINUTE; // 15 minutes
 
 
 
@@ -41,9 +34,7 @@ BiDirTradingControlThread::BiDirTradingControlThread(
     mGrpcClient(grpcClient),
     mMoscowTimezone("Europe/Moscow"),
     mAccountId(),
-    mLastDetectionTimestamp(),
-    mLastTradeHugeSpread(),
-    mLastTradeLiquidityEtfDaily()
+    mLastDetectionTimestamp()
 {
     qDebug() << "Create BiDirTradingControlThread";
 }
@@ -59,18 +50,13 @@ void BiDirTradingControlThread::run()
 
     blockSignals(false);
 
-    const qint64 timestamp              = QDateTime::currentMSecsSinceEpoch();
-    const bool   tradeHugeSpread        = mConfig->isTradeHugeSpread();
-    const bool   tradeLiquidityEtfDaily = mConfig->isTradeLiquidityEtfDaily();
+    const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
 
-    if (timestamp - mLastDetectionTimestamp > DETECTION_INTERVAL || mLastTradeHugeSpread != tradeHugeSpread ||
-        mLastTradeLiquidityEtfDaily != tradeLiquidityEtfDaily)
+    if (timestamp - mLastDetectionTimestamp > DETECTION_INTERVAL)
     {
-        detectHugeSpreadStocks(timestamp, tradeHugeSpread, tradeLiquidityEtfDaily);
+        detectHugeSpreadStocks(timestamp);
 
-        mLastDetectionTimestamp     = timestamp;
-        mLastTradeHugeSpread        = tradeHugeSpread;
-        mLastTradeLiquidityEtfDaily = tradeLiquidityEtfDaily;
+        mLastDetectionTimestamp = timestamp;
     }
 
     qDebug() << "Finish BiDirTradingControlThread";
@@ -141,56 +127,34 @@ static void detectHugeSpreadStocksForParallel(
     }
 }
 
-void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp, bool tradeHugeSpread, bool tradeLiquidityEtfDaily)
+void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
 {
     InstrumentsForBiDirTrading instrumentsForTrading;
 
     const QDateTime dateTime = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
     const QTime     time     = dateTime.time();
 
-    QTime endTime = QTime(EXTRA_SESSION_END_HOUR, EXTRA_SESSION_END_MINUTE);
+    const QTime endTime = QTime(EXTRA_SESSION_END_HOUR, EXTRA_SESSION_END_MINUTE);
 
     if ((mConfig->isTradeInNonWorkingHours() || mTimeUtils->isWorkingHours(timestamp)) && time < endTime)
     {
-        if (tradeHugeSpread)
+        mUserStorage->readLock();
+        const bool  qualifiedUser = mUserStorage->isQualified();
+        const float commission    = mUserStorage->getCommission();
+        mUserStorage->readUnlock();
+
+        if (commission < LIMIT_COMMISSION)
         {
-            mUserStorage->readLock();
-            const bool  qualifiedUser = mUserStorage->isQualified();
-            const float commission    = mUserStorage->getCommission();
-            mUserStorage->readUnlock();
+            mStocksStorage->readLock();
+            QList<Stock*> stocks = mStocksStorage->getStocks();
+            mStocksStorage->readUnlock();
 
-            if (commission < LIMIT_COMMISSION)
+            DetectHugeSpreadStocksInfo detectHugeSpreadStocksInfo(mGrpcClient, qualifiedUser, mConfig->getHugeSpread());
+            processInParallel(QThread::currentThread(), stocks, detectHugeSpreadStocksForParallel, &detectHugeSpreadStocksInfo);
+
+            for (const InstrumentsForBiDirTrading& result : std::as_const(detectHugeSpreadStocksInfo.results))
             {
-                mStocksStorage->readLock();
-                QList<Stock*> stocks = mStocksStorage->getStocks();
-                mStocksStorage->readUnlock();
-
-                DetectHugeSpreadStocksInfo detectHugeSpreadStocksInfo(mGrpcClient, qualifiedUser, mConfig->getHugeSpread());
-                processInParallel(
-                    QThread::currentThread(), stocks, detectHugeSpreadStocksForParallel, &detectHugeSpreadStocksInfo
-                );
-
-                for (const InstrumentsForBiDirTrading& result : std::as_const(detectHugeSpreadStocksInfo.results))
-                {
-                    instrumentsForTrading.insert(result);
-                }
-            }
-        }
-
-        if (tradeLiquidityEtfDaily)
-        {
-            const QTime startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
-
-            if (!mConfig->isTradeInNonWorkingHours())
-            {
-                endTime = QTime(NORMAL_SESSION_END_HOUR, NORMAL_SESSION_END_MINUTE);
-            }
-
-            if (time >= startTime && time < endTime)
-            {
-                instrumentsForTrading[TMON_UID] = BiDirTradingInfo(
-                    TMON_TURNOVER, tr("Decided to start reselling of high liquidity ETF because it requested from config")
-                );
+                instrumentsForTrading.insert(result);
             }
         }
     }

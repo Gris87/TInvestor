@@ -1487,7 +1487,6 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, isTradeLiquidityEtfDaily()).WillOnce(Return(false));
     EXPECT_CALL(*biDirTradingControlThreadMock, terminateThread());
 
     mainWindow->ui->actionSettings->trigger();

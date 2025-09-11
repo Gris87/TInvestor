@@ -3,6 +3,7 @@ Create script for providing details about selling from operations.json and logs.
 Improve coverage
 Create release
 
+Buy more if we lose money
 Buy with huge spread and amount of bids is more than 2 times
 Change best config search algorithm
 Find best configs for different commission

@@ -162,7 +162,6 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
     dialog->ui->tradeHugeSpreadCheckBox->blockSignals(true);
     dialog->ui->hugeSpreadDoubleSpinBox->blockSignals(true);
-    dialog->ui->tradeLiquidityEtfDailyCheckBox->blockSignals(true);
     dialog->ui->tradeLiquidityEtfNightlyCheckBox->blockSignals(true);
     dialog->ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
@@ -186,7 +185,6 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(3.0f));
-    EXPECT_CALL(*configMock, isTradeLiquidityEtfDaily()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeLiquidityEtfNightly()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLiquidityEtfRemainedPartNightly()).WillOnce(Return(7.0f));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
@@ -210,7 +208,6 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   true);
     ASSERT_EQ(dialog->ui->tradeHugeSpreadCheckBox->isChecked(),                          true);
     ASSERT_NEAR(dialog->ui->hugeSpreadDoubleSpinBox->value(),                            3.0f, 0.0001f);
-    ASSERT_EQ(dialog->ui->tradeLiquidityEtfDailyCheckBox->isChecked(),                   true);
     ASSERT_EQ(dialog->ui->tradeLiquidityEtfNightlyCheckBox->isChecked(),                 true);
     ASSERT_NEAR(dialog->ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->value(),       7.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),                       true);
@@ -235,7 +232,6 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(2.0f));
-    EXPECT_CALL(*configMock, isTradeLiquidityEtfDaily()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isTradeLiquidityEtfNightly()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getLiquidityEtfRemainedPartNightly()).WillOnce(Return(10.0f));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
@@ -259,7 +255,6 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   false);
     ASSERT_EQ(dialog->ui->tradeHugeSpreadCheckBox->isChecked(),                          false);
     ASSERT_NEAR(dialog->ui->hugeSpreadDoubleSpinBox->value(),                            2.0f, 0.0001f);
-    ASSERT_EQ(dialog->ui->tradeLiquidityEtfDailyCheckBox->isChecked(),                   false);
     ASSERT_EQ(dialog->ui->tradeLiquidityEtfNightlyCheckBox->isChecked(),                 false);
     ASSERT_NEAR(dialog->ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->value(),       10.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),                       false);
@@ -368,21 +363,6 @@ TEST_F(Test_SettingsDialog, Test_on_hugeSpreadDoubleSpinBox_valueChanged)
 
     EXPECT_CALL(*configMock, setHugeSpread(3.0f));
     dialog->ui->hugeSpreadDoubleSpinBox->setValue(3.0f);
-}
-
-TEST_F(Test_SettingsDialog, Test_on_tradeLiquidityEtfDailyCheckBox_checkStateChanged)
-{
-    const InSequence seq;
-
-    dialog->ui->tradeLiquidityEtfDailyCheckBox->blockSignals(true);
-    dialog->ui->tradeLiquidityEtfDailyCheckBox->setChecked(false);
-    dialog->ui->tradeLiquidityEtfDailyCheckBox->blockSignals(false);
-
-    EXPECT_CALL(*configMock, setTradeLiquidityEtfDaily(true));
-    dialog->ui->tradeLiquidityEtfDailyCheckBox->setChecked(true);
-
-    EXPECT_CALL(*configMock, setTradeLiquidityEtfDaily(false));
-    dialog->ui->tradeLiquidityEtfDailyCheckBox->setChecked(false);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_tradeLiquidityEtfNightlyCheckBox_checkStateChanged)
@@ -698,7 +678,6 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
     dialog->ui->tradeHugeSpreadCheckBox->blockSignals(true);
     dialog->ui->hugeSpreadDoubleSpinBox->blockSignals(true);
-    dialog->ui->tradeLiquidityEtfDailyCheckBox->blockSignals(true);
     dialog->ui->tradeLiquidityEtfNightlyCheckBox->blockSignals(true);
     dialog->ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
@@ -724,7 +703,6 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(1.0f));
-    EXPECT_CALL(*configMock, isTradeLiquidityEtfDaily()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeLiquidityEtfNightly()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLiquidityEtfRemainedPartNightly()).WillOnce(Return(5.0f));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
@@ -748,7 +726,6 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   true);
     ASSERT_EQ(dialog->ui->tradeHugeSpreadCheckBox->isChecked(),                          true);
     ASSERT_NEAR(dialog->ui->hugeSpreadDoubleSpinBox->value(),                            1.0f, 0.0001f);
-    ASSERT_EQ(dialog->ui->tradeLiquidityEtfDailyCheckBox->isChecked(),                   true);
     ASSERT_EQ(dialog->ui->tradeLiquidityEtfNightlyCheckBox->isChecked(),                 true);
     ASSERT_NEAR(dialog->ui->liquidityEtfRemainedPartNightlyDoubleSpinBox->value(),       5.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),                       true);
