@@ -32,4 +32,19 @@ public:
          double lotPriceWithCommission),
         (const, override)
     );
+
+    MOCK_METHOD(
+        qint64,
+        calculateAmountOfLotsToBuy,
+        (bool   limitStockPurchase,
+         double limitStockPurchasePart,
+         bool   limitByTurnover,
+         double limitByTurnoverPercent,
+         double money,
+         double totalCost,
+         double turnover,
+         double lotPrice,
+         double lotPriceWithCommission),
+        (const, override)
+    );
 };

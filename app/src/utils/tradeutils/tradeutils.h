@@ -28,9 +28,8 @@ public:
         double   lotPriceWithCommission
     ) const override;
 
-private:
     [[nodiscard]]
-    qint64 calculateAmountOfLotsToBuyInternal(
+    qint64 calculateAmountOfLotsToBuy(
         bool   limitStockPurchase,
         double limitStockPurchasePart,
         bool   limitByTurnover,
@@ -40,7 +39,8 @@ private:
         double turnover,
         double lotPrice,
         double lotPriceWithCommission
-    ) const;
+    ) const override;
 
+private:
     ITimeUtils* mTimeUtils;
 };

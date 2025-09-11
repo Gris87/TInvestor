@@ -59,7 +59,7 @@ qint64 TradeUtils::calculateAmountOfLotsToBuy(
         limitByTurnoverPercent = config->getLimitByTurnoverPercent();
     }
 
-    return calculateAmountOfLotsToBuyInternal(
+    return calculateAmountOfLotsToBuy(
         limitStockPurchase,
         limitStockPurchasePart,
         limitByTurnover,
@@ -72,7 +72,7 @@ qint64 TradeUtils::calculateAmountOfLotsToBuy(
     );
 }
 
-qint64 TradeUtils::calculateAmountOfLotsToBuyInternal(
+qint64 TradeUtils::calculateAmountOfLotsToBuy(
     bool   limitStockPurchase,
     double limitStockPurchasePart,
     bool   limitByTurnover,

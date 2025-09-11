@@ -25,4 +25,17 @@ public:
         double   lotPrice,
         double   lotPriceWithCommission
     ) const = 0;
+
+    [[nodiscard]]
+    virtual qint64 calculateAmountOfLotsToBuy(
+        bool   limitStockPurchase,
+        double limitStockPurchasePart,
+        bool   limitByTurnover,
+        double limitByTurnoverPercent,
+        double money,
+        double totalCost,
+        double turnover,
+        double lotPrice,
+        double lotPriceWithCommission
+    ) const = 0;
 };

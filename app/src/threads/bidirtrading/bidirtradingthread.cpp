@@ -165,7 +165,7 @@ bool BiDirTradingThread::trade()
             }
         }
 
-        const qint64 coefBuy  = static_cast<qint64>(std::floor(bidPrice / quotationToDouble(mMinPriceIncrement)));
+        const qint64 coefBuy  = qRound64(bidPrice / quotationToDouble(mMinPriceIncrement));
         const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
 
         const Quotation buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
@@ -176,10 +176,23 @@ bool BiDirTradingThread::trade()
 
         if (spread > mConfig->getHugeSpread())
         {
+            const bool   limitStockPurchase     = mConfig->isLimitStockPurchase();
+            const double limitStockPurchasePart = mConfig->getLimitStockPurchasePart();
+            const bool   limitByTurnover        = mConfig->isLimitByTurnover();
+            const double limitByTurnoverPercent = mConfig->getLimitByTurnoverPercent();
+
             const double lotPrice = mInstrumentLot * bidPrice;
 
             const qint64 lotsToKeep = mTradeUtils->calculateAmountOfLotsToBuy(
-                mConfig, QDateTime::currentMSecsSinceEpoch(), totalCost, totalCost, turnover(), lotPrice, lotPrice
+                limitStockPurchase,
+                limitStockPurchasePart,
+                limitByTurnover,
+                limitByTurnoverPercent,
+                totalCost,
+                totalCost,
+                turnover(),
+                lotPrice,
+                lotPrice
             );
             lotsToBuy = qMax(lotsToKeep - instrumentLots, 0);
 
