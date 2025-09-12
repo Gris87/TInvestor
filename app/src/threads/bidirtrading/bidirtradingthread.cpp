@@ -176,10 +176,10 @@ bool BiDirTradingThread::trade()
 
         if (spread > mConfig->getHugeSpread())
         {
-            const bool   limitStockPurchase     = mConfig->isLimitStockPurchase();
-            const double limitStockPurchasePart = mConfig->getLimitStockPurchasePart();
-            const bool   limitByTurnover        = mConfig->isLimitByTurnover();
-            const double limitByTurnoverPercent = mConfig->getLimitByTurnoverPercent();
+            const bool   limitStockPurchase     = mConfig->isHugeSpreadLimitStockPurchase();
+            const double limitStockPurchasePart = mConfig->getHugeSpreadLimitStockPurchasePart();
+            const bool   limitByTurnover        = mConfig->isHugeSpreadLimitByTurnover();
+            const double limitByTurnoverPercent = mConfig->getHugeSpreadLimitByTurnoverPercent();
 
             const double lotPrice = mInstrumentLot * bidPrice;
 

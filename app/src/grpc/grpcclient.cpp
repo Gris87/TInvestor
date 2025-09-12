@@ -498,137 +498,243 @@ GrpcClient::cancelOrder(QThread* parentThread, const QString& accountId, const Q
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStreamForLastPrice(const QStringList& instrumentIds)
 {
-    std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
-
-    tinkoff::MarketDataServerSideStreamRequest req;
-    tinkoff::SubscribeLastPriceRequest*        subscribeLastPriceRequest =
-        new tinkoff::SubscribeLastPriceRequest(); // req will take ownership
-
-    subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
-
-    for (const QString& instrumentId : instrumentIds)
+    try
     {
-        subscribeLastPriceRequest->add_instruments()->set_instrument_id(instrumentId.toStdString());
+        std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
+
+        tinkoff::MarketDataServerSideStreamRequest req;
+        tinkoff::SubscribeLastPriceRequest*        subscribeLastPriceRequest =
+            new tinkoff::SubscribeLastPriceRequest(); // req will take ownership
+
+        subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
+
+        for (const QString& instrumentId : instrumentIds)
+        {
+            subscribeLastPriceRequest->add_instruments()->set_instrument_id(instrumentId.toStdString());
+        }
+
+        req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
+
+        res->context.set_credentials(mCreds);
+        res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context, req);
+
+        return res;
     }
+    catch (...)
+    {
+        qWarning() << "GRPC exception caught";
 
-    req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
+        emitAuthFailed(
+            grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in createMarketDataStreamForLastPrice()")
+        );
 
-    res->context.set_credentials(mCreds);
-    res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context, req);
-
-    return res;
+        return nullptr;
+    }
 }
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStreamForOrderBook(const QString& instrumentId, int depth)
 {
-    std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
+    try
+    {
+        std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
 
-    tinkoff::MarketDataServerSideStreamRequest req;
-    tinkoff::SubscribeOrderBookRequest*        subscribeOrderBookRequest =
-        new tinkoff::SubscribeOrderBookRequest(); // req will take ownership
+        tinkoff::MarketDataServerSideStreamRequest req;
+        tinkoff::SubscribeOrderBookRequest*        subscribeOrderBookRequest =
+            new tinkoff::SubscribeOrderBookRequest(); // req will take ownership
 
-    subscribeOrderBookRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
-    tinkoff::OrderBookInstrument* orderBook = subscribeOrderBookRequest->add_instruments();
+        subscribeOrderBookRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
+        tinkoff::OrderBookInstrument* orderBook = subscribeOrderBookRequest->add_instruments();
 
-    orderBook->set_instrument_id(instrumentId.toStdString());
-    orderBook->set_depth(depth);
-    orderBook->set_order_book_type(tinkoff::ORDERBOOK_TYPE_ALL);
+        orderBook->set_instrument_id(instrumentId.toStdString());
+        orderBook->set_depth(depth);
+        orderBook->set_order_book_type(tinkoff::ORDERBOOK_TYPE_ALL);
 
-    req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
+        req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
 
-    res->context.set_credentials(mCreds);
-    res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context, req);
+        res->context.set_credentials(mCreds);
+        res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context, req);
 
-    return res;
+        return res;
+    }
+    catch (...)
+    {
+        qWarning() << "GRPC exception caught";
+
+        emitAuthFailed(
+            grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in createMarketDataStreamForOrderBook()")
+        );
+
+        return nullptr;
+    }
 }
 
 std::shared_ptr<tinkoff::MarketDataResponse> GrpcClient::readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    std::shared_ptr<tinkoff::MarketDataResponse> resp = std::make_shared<tinkoff::MarketDataResponse>();
-
-    if (!mRawGrpcClient->readMarketDataStream(marketDataStream, resp.get()))
+    try
     {
-        // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readMarketDataStream()"); // Not a problem
+        std::shared_ptr<tinkoff::MarketDataResponse> resp = std::make_shared<tinkoff::MarketDataResponse>();
+
+        if (!mRawGrpcClient->readMarketDataStream(marketDataStream, resp.get()))
+        {
+            // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readMarketDataStream()"); // Not a problem
+
+            return nullptr;
+        }
+
+        return resp;
+    }
+    catch (...)
+    {
+        qWarning() << "GRPC exception caught";
+
+        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in readMarketDataStream()"));
 
         return nullptr;
     }
-
-    return resp;
 }
 
 void GrpcClient::cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    marketDataStream->context.TryCancel();
+    try
+    {
+        marketDataStream->context.TryCancel();
+    }
+    catch (...)
+    {
+        qWarning() << "GRPC exception caught";
+
+        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in cancelMarketDataStream()"));
+    }
 }
 
 void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    const grpc::Status     status    = mRawGrpcClient->finishMarketDataStream(marketDataStream);
-    const grpc::StatusCode errorCode = status.error_code();
-
-    if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
-        errorCode != grpc::StatusCode::CANCELLED)
+    try
     {
-        emitAuthFailed(status);
+        const grpc::Status     status    = mRawGrpcClient->finishMarketDataStream(marketDataStream);
+        const grpc::StatusCode errorCode = status.error_code();
+
+        if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
+            errorCode != grpc::StatusCode::CANCELLED)
+        {
+            emitAuthFailed(status);
+        }
+    }
+    catch (...)
+    {
+        qWarning() << "GRPC exception caught";
+
+        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in finishMarketDataStream()"));
     }
 }
 
 std::shared_ptr<PortfolioStream> GrpcClient::createPortfolioStream(const QString& accountId)
 {
-    std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();
+    try
+    {
+        std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();
 
-    tinkoff::PortfolioStreamRequest req;
-    req.add_accounts(accountId.toStdString());
+        tinkoff::PortfolioStreamRequest req;
+        req.add_accounts(accountId.toStdString());
 
-    res->context.set_credentials(mCreds);
-    res->stream = mRawGrpcClient->createPortfolioStream(mOperationsStreamService, &res->context, req);
+        res->context.set_credentials(mCreds);
+        res->stream = mRawGrpcClient->createPortfolioStream(mOperationsStreamService, &res->context, req);
 
-    return res;
+        return res;
+    }
+    catch (...)
+    {
+        qWarning() << "GRPC exception caught";
+
+        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in createPortfolioStream()"));
+
+        return nullptr;
+    }
 }
 
 std::shared_ptr<PortfolioStream> GrpcClient::createPortfolioStream(const QString& accountId, const QString& anotherAccountId)
 {
-    std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();
+    try
+    {
+        std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();
 
-    tinkoff::PortfolioStreamRequest req;
-    req.add_accounts(accountId.toStdString());
-    req.add_accounts(anotherAccountId.toStdString());
+        tinkoff::PortfolioStreamRequest req;
+        req.add_accounts(accountId.toStdString());
+        req.add_accounts(anotherAccountId.toStdString());
 
-    res->context.set_credentials(mCreds);
-    res->stream = mRawGrpcClient->createPortfolioStream(mOperationsStreamService, &res->context, req);
+        res->context.set_credentials(mCreds);
+        res->stream = mRawGrpcClient->createPortfolioStream(mOperationsStreamService, &res->context, req);
 
-    return res;
+        return res;
+    }
+    catch (...)
+    {
+        qWarning() << "GRPC exception caught";
+
+        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in createPortfolioStream()"));
+
+        return nullptr;
+    }
 }
 
 std::shared_ptr<tinkoff::PortfolioStreamResponse>
 GrpcClient::readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
 {
-    std::shared_ptr<tinkoff::PortfolioStreamResponse> resp = std::make_shared<tinkoff::PortfolioStreamResponse>();
-
-    if (!mRawGrpcClient->readPortfolioStream(portfolioStream, resp.get()))
+    try
     {
-        // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readPortfolioStream()"); // Not a problem
+        std::shared_ptr<tinkoff::PortfolioStreamResponse> resp = std::make_shared<tinkoff::PortfolioStreamResponse>();
+
+        if (!mRawGrpcClient->readPortfolioStream(portfolioStream, resp.get()))
+        {
+            // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readPortfolioStream()"); // Not a problem
+
+            return nullptr;
+        }
+
+        return resp;
+    }
+    catch (...)
+    {
+        qWarning() << "GRPC exception caught";
+
+        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in readPortfolioStream()"));
 
         return nullptr;
     }
-
-    return resp;
 }
 
 void GrpcClient::cancelPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
 {
-    portfolioStream->context.TryCancel();
+    try
+    {
+        portfolioStream->context.TryCancel();
+    }
+    catch (...)
+    {
+        qWarning() << "GRPC exception caught";
+
+        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in cancelPortfolioStream()"));
+    }
 }
 
 void GrpcClient::finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
 {
-    const grpc::Status     status    = mRawGrpcClient->finishPortfolioStream(portfolioStream);
-    const grpc::StatusCode errorCode = status.error_code();
-
-    if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
-        errorCode != grpc::StatusCode::CANCELLED)
+    try
     {
-        emitAuthFailed(status);
+        const grpc::Status     status    = mRawGrpcClient->finishPortfolioStream(portfolioStream);
+        const grpc::StatusCode errorCode = status.error_code();
+
+        if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
+            errorCode != grpc::StatusCode::CANCELLED)
+        {
+            emitAuthFailed(status);
+        }
+    }
+    catch (...)
+    {
+        qWarning() << "GRPC exception caught";
+
+        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in finishPortfolioStream()"));
     }
 }
 

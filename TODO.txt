@@ -1,4 +1,3 @@
-Add limit for Huge spread trading
 Grpc retrier
 Improve coverage
 Create release
@@ -8,6 +7,9 @@ Change best config search algorithm
 Find best configs for different commission
 Different defaults based on commission
 Show warning if decisions config is not default
+Improve coverage
+Create release
+
 Participate in auction
 Trade with USD/EUR
 

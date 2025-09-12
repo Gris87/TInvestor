@@ -47,7 +47,18 @@ public:
 
         while (running)
         {
-            const grpc::Status status = action(mRawGrpcClient, service, context, req, resp);
+            grpc::Status status;
+
+            try
+            {
+                status = action(mRawGrpcClient, service, context, req, resp);
+            }
+            catch (...)
+            {
+                qWarning() << "GRPC exception caught";
+
+                status = grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in repeatRequest()");
+            }
 
             if (!parentThread->isInterruptionRequested() && !status.ok())
             {
