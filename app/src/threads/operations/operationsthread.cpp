@@ -26,6 +26,7 @@ OperationsThread::OperationsThread(
     ILogosStorage*       logosStorage,
     ITimeUtils*          timeUtils,
     IGrpcClient*         grpcClient,
+    IGrpcRetryClient*    grpcRetryClient,
     IOptimizer*          optimizer,
     QObject*             parent
 ) :
@@ -36,6 +37,7 @@ OperationsThread::OperationsThread(
     mLogosStorage(logosStorage),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
+    mGrpcRetryClient(grpcRetryClient),
     mOptimizer(optimizer),
     mAccountId(),
     mPortfolioStream(),
@@ -219,7 +221,7 @@ bool OperationsThread::requestOperations()
     while (true)
     {
         const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
-            getValidOperations(startTimestamp, endTimestamp, cursor);
+            mGrpcRetryClient->getValidOperations(QThread::currentThread(), mAccountId, startTimestamp, endTimestamp, cursor);
 
         if (QThread::currentThread()->isInterruptionRequested() || tinkoffOperations == nullptr)
         {
@@ -338,66 +340,6 @@ bool OperationsThread::requestOperations()
     return true;
 }
 // NOLINTEND(readability-function-cognitive-complexity)
-
-std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
-OperationsThread::getValidOperations(qint64 startTimestamp, qint64 endTimestamp, const QString& cursor)
-{
-    std::shared_ptr<tinkoff::GetOperationsByCursorResponse> res = nullptr;
-
-    while (!QThread::currentThread()->isInterruptionRequested() && res == nullptr)
-    {
-        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
-            mGrpcClient->getOperations(QThread::currentThread(), mAccountId, startTimestamp, endTimestamp, cursor);
-
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOperations != nullptr)
-        {
-            if (validateOperations(*tinkoffOperations))
-            {
-                res = tinkoffOperations;
-            }
-            else
-            {
-                qDebug() << "Invalid operations received. Try one more time";
-
-                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
-                {
-                    break;
-                }
-            }
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    return res;
-}
-
-bool OperationsThread::validateOperations(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations)
-{
-    bool res = true;
-
-    for (int i = 0; i < tinkoffOperations.items_size(); ++i)
-    {
-        const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations.items(i);
-        const tinkoff::OperationType  operationType    = tinkoffOperation.type();
-        const tinkoff::InstrumentType instrumentKind   = tinkoffOperation.instrument_kind();
-
-        if (instrumentKind == tinkoff::INSTRUMENT_TYPE_SHARE &&
-            (operationType == tinkoff::OPERATION_TYPE_BUY || operationType == tinkoff::OPERATION_TYPE_SELL))
-        {
-            if (tinkoffOperation.commission().units() == 0 && tinkoffOperation.commission().nano() == 0)
-            {
-                res = false;
-
-                break;
-            }
-        }
-    }
-
-    return res;
-}
 
 std::shared_ptr<tinkoff::PortfolioResponse> OperationsThread::getValidPortfolio()
 {

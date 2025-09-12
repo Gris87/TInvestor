@@ -4,6 +4,7 @@
 
 #include "src/db/operations/ioperationsdatabase_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/grpc/igrpcretryclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/optimizer/ioptimizer_mock.h"
@@ -34,10 +35,17 @@ protected:
         logosStorageMock       = new StrictMock<LogosStorageMock>();
         timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
+        grpcRetryClientMock    = new StrictMock<GrpcRetryClientMock>();
         optimizerMock          = new StrictMock<OptimizerMock>();
 
         thread = new OperationsThread(
-            operationsDatabaseMock, instrumentsStorageMock, logosStorageMock, timeUtilsMock, grpcClientMock, optimizerMock
+            operationsDatabaseMock,
+            instrumentsStorageMock,
+            logosStorageMock,
+            timeUtilsMock,
+            grpcClientMock,
+            grpcRetryClientMock,
+            optimizerMock
         );
     }
 
@@ -49,6 +57,7 @@ protected:
         delete logosStorageMock;
         delete timeUtilsMock;
         delete grpcClientMock;
+        delete grpcRetryClientMock;
         delete optimizerMock;
     }
 
@@ -58,6 +67,7 @@ protected:
     StrictMock<LogosStorageMock>*       logosStorageMock;
     StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
+    StrictMock<GrpcRetryClientMock>*    grpcRetryClientMock;
     StrictMock<OptimizerMock>*          optimizerMock;
 };
 
@@ -101,13 +111,15 @@ TEST_F(Test_OperationsThread, Test_run)
     EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream1));
     EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
+        *grpcRetryClientMock,
+        getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(getOperationsByCursorResponse1));
     EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream1)).WillOnce(Return(portfolioStreamResponse1));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
+        *grpcRetryClientMock,
+        getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(nullptr));
     EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream1)).WillOnce(Return(nullptr));
@@ -118,7 +130,8 @@ TEST_F(Test_OperationsThread, Test_run)
     EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream2));
     EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
+        *grpcRetryClientMock,
+        getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(getOperationsByCursorResponse2));
     EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream2)).WillOnce(Return(portfolioStreamResponse2));
@@ -321,12 +334,13 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     operations << operation1 << operation2;
 
     EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
+        *grpcRetryClientMock,
+        getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(getOperationsByCursorResponse1));
     EXPECT_CALL(
-        *grpcClientMock,
-        getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString("next-cursor"))
+        *grpcRetryClientMock,
+        getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString("next-cursor"))
     )
         .WillOnce(Return(getOperationsByCursorResponse2));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -445,8 +459,8 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     operations << operation3;
 
     EXPECT_CALL(
-        *grpcClientMock,
-        getOperations(QThread::currentThread(), QString("account-id"), 1703970060000, Ge(1704056461000), QString(""))
+        *grpcRetryClientMock,
+        getValidOperations(QThread::currentThread(), QString("account-id"), 1703970060000, Ge(1704056461000), QString(""))
     )
         .WillOnce(Return(getOperationsByCursorResponse3));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -460,90 +474,6 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     EXPECT_CALL(*operationsDatabaseMock, appendOperations(operations, -1));
 
     thread->requestOperations();
-}
-
-TEST_F(Test_OperationsThread, Test_getValidOperations)
-{
-    const InSequence seq;
-
-    EXPECT_CALL(*operationsDatabaseMock, setAccount(QString("account-hash")));
-
-    thread->setAccountId("account-hash", "account-id");
-
-    EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1704056400000, 1704142800000, QString(""))
-    )
-        .WillOnce(Return(nullptr));
-
-    ASSERT_EQ(thread->getValidOperations(1704056400000, 1704142800000, ""), nullptr);
-
-    const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperationsByCursorResponse(
-        new tinkoff::GetOperationsByCursorResponse()
-    );
-
-    tinkoff::OperationItem* operationItem =
-        getOperationsByCursorResponse->add_items(); // getOperationsByCursorResponse will take ownership
-
-    operationItem->set_instrument_kind(tinkoff::INSTRUMENT_TYPE_SHARE);
-    operationItem->set_type(tinkoff::OPERATION_TYPE_BUY);
-
-    EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1704056400000, 1704142800000, QString(""))
-    )
-        .WillOnce(Return(getOperationsByCursorResponse));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
-
-    ASSERT_EQ(thread->getValidOperations(1704056400000, 1704142800000, ""), nullptr);
-
-    tinkoff::MoneyValue* commission = new tinkoff::MoneyValue(); // operationItem will take ownership
-
-    commission->set_units(-1);
-    commission->set_nano(-266500000);
-
-    operationItem->set_allocated_commission(commission);
-
-    EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1704056400000, 1704142800000, QString(""))
-    )
-        .WillOnce(Return(getOperationsByCursorResponse));
-
-    ASSERT_NE(thread->getValidOperations(1704056400000, 1704142800000, ""), nullptr);
-}
-
-TEST_F(Test_OperationsThread, Test_getValidPortfolio)
-{
-    const InSequence seq;
-
-    EXPECT_CALL(*operationsDatabaseMock, setAccount(QString("account-hash")));
-
-    thread->setAccountId("account-hash", "account-id");
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id"))).WillOnce(Return(nullptr));
-
-    ASSERT_EQ(thread->getValidPortfolio(), nullptr);
-
-    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
-
-    tinkoff::PortfolioPosition* position = portfolioResponse->add_positions(); // portfolioResponse will take ownership
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
-
-    ASSERT_EQ(thread->getValidPortfolio(), nullptr);
-
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo = new tinkoff::MoneyValue(); // position will take ownership
-
-    tinkoffAvgPriceFifo->set_currency("rub");
-    tinkoffAvgPriceFifo->set_units(1);
-    tinkoffAvgPriceFifo->set_nano(0);
-
-    position->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo);
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(portfolioResponse));
-
-    ASSERT_NE(thread->getValidPortfolio(), nullptr);
 }
 
 TEST_F(Test_OperationsThread, Test_handleOperationItem)
@@ -1678,7 +1608,8 @@ TEST_F(Test_OperationsThread, Test_optimize)
     EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
     EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
+        *grpcRetryClientMock,
+        getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
         .WillOnce(Return(getOperationsByCursorResponse));
     EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));

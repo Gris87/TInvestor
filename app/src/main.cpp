@@ -48,6 +48,7 @@
 #include "src/dialogs/startautopilotdialog/startautopilotdialogfactory.h"
 #include "src/dialogs/startsimulationdialog/startsimulationdialogfactory.h"
 #include "src/grpc/grpcclient.h"
+#include "src/grpc/grpcretryclient.h"
 #include "src/grpc/rawgrpcclient.h"
 #include "src/main/mainwindow.h"
 #include "src/storage/instruments/instrumentsstorage.h"
@@ -385,6 +386,7 @@ static int runApplication(QApplication* app)
     HttpClient        httpClient;
     RawGrpcClient     rawGrpcClient;
     GrpcClient        grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
+    GrpcRetryClient   grpcRetryClient(&grpcClient, &timeUtils);
     Optimizer         optimizer;
 
     BuyDecision1  buyDecision1;
@@ -428,7 +430,7 @@ static int runApplication(QApplication* app)
     LastPriceThread          lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     PortfolioLastPriceThread simulatorPortfolioLastPriceThread(&timeUtils, &grpcClient);
     OperationsThread         operationsThread(
-        &autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &timeUtils, &grpcClient, &optimizer
+        &autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &timeUtils, &grpcClient, &grpcRetryClient, &optimizer
     );
     LogsThread                   logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage, &optimizer);
     PortfolioThread              portfolioThread(&instrumentsStorage, &logosStorage, &timeUtils, &grpcClient);

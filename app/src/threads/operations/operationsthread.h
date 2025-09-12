@@ -10,6 +10,7 @@
 #include "src/domain/quantityandcost/quantityandcost.h"
 #include "src/domain/quotation/quotation.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/optimizer/ioptimizer.h"
@@ -28,6 +29,7 @@ public:
         ILogosStorage*       logosStorage,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
+        IGrpcRetryClient*    grpcRetryClient,
         IOptimizer*          optimizer,
         QObject*             parent = nullptr
     );
@@ -43,10 +45,7 @@ public:
 
     bool createPortfolioStream();
 
-    bool requestOperations();
-    std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
-         getValidOperations(qint64 startTimestamp, qint64 endTimestamp, const QString& cursor);
-    bool validateOperations(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations);
+    bool                                        requestOperations();
     std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
     bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     void handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
@@ -77,6 +76,7 @@ private:
     ILogosStorage*                   mLogosStorage;
     ITimeUtils*                      mTimeUtils;
     IGrpcClient*                     mGrpcClient;
+    IGrpcRetryClient*                mGrpcRetryClient;
     IOptimizer*                      mOptimizer;
     QString                          mAccountId;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
