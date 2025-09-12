@@ -45,9 +45,7 @@ public:
 
     bool createPortfolioStream();
 
-    bool                                        requestOperations();
-    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
-    bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    bool requestOperations();
     void handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
     void alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation);
 

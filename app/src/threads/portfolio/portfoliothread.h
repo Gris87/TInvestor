@@ -7,6 +7,7 @@
 #include <QReadWriteLock>
 
 #include "src/grpc/igrpcclient.h"
+#include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/timeutils/itimeutils.h"
@@ -23,6 +24,7 @@ public:
         ILogosStorage*       logosStorage,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
+        IGrpcRetryClient*    grpcRetryClient,
         QObject*             parent = nullptr
     );
     ~PortfolioThread() override;
@@ -35,12 +37,10 @@ public:
     void setAccountId(const QString& accountId) override;
     void terminateThread() override;
 
-    bool                                        createPortfolioStream();
-    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
+    bool createPortfolioStream();
 
 private:
     bool requestPortfolio();
-    bool validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     void handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
 
     QReadWriteLock*                  mRwMutex;
@@ -48,6 +48,7 @@ private:
     ILogosStorage*                   mLogosStorage;
     ITimeUtils*                      mTimeUtils;
     IGrpcClient*                     mGrpcClient;
+    IGrpcRetryClient*                mGrpcRetryClient;
     QString                          mAccountId;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
     QStringList                      mSortedCategories;

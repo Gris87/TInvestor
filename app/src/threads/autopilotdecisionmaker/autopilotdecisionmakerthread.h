@@ -8,6 +8,7 @@
 
 #include "src/decisions/idecisionmaker.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/grpc/igrpcretryclient.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/utils/timeutils/itimeutils.h"
 
@@ -19,12 +20,13 @@ class AutoPilotDecisionMakerThread : public IAutoPilotDecisionMakerThread
 
 public:
     explicit AutoPilotDecisionMakerThread(
-        IStocksStorage* stocksStorage,
-        IConfig*        config,
-        IDecisionMaker* decisionMaker,
-        ITimeUtils*     timeUtils,
-        IGrpcClient*    grpcClient,
-        QObject*        parent = nullptr
+        IStocksStorage*   stocksStorage,
+        IConfig*          config,
+        IDecisionMaker*   decisionMaker,
+        ITimeUtils*       timeUtils,
+        IGrpcClient*      grpcClient,
+        IGrpcRetryClient* grpcRetryClient,
+        QObject*          parent = nullptr
     );
     ~AutoPilotDecisionMakerThread() override;
 
@@ -38,20 +40,18 @@ public:
 
     void terminateThread() override;
 
-    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
-
 private:
-    bool            validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     Portfolio       handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     InstrumentSells handleGetOperationsByCursorResponse(const tinkoff::GetOperationsByCursorResponse& tinkoffOperations);
     InstrumentSells mergeInstrumentSells(InstrumentSells instrumentsFromOperations);
 
-    QReadWriteLock* mRwMutex;
-    IStocksStorage* mStocksStorage;
-    IConfig*        mConfig;
-    IDecisionMaker* mDecisionMaker;
-    ITimeUtils*     mTimeUtils;
-    IGrpcClient*    mGrpcClient;
-    QString         mAccountId;
-    InstrumentSells mSellNotifications;
+    QReadWriteLock*   mRwMutex;
+    IStocksStorage*   mStocksStorage;
+    IConfig*          mConfig;
+    IDecisionMaker*   mDecisionMaker;
+    ITimeUtils*       mTimeUtils;
+    IGrpcClient*      mGrpcClient;
+    IGrpcRetryClient* mGrpcRetryClient;
+    QString           mAccountId;
+    InstrumentSells   mSellNotifications;
 };

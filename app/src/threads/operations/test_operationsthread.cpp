@@ -355,7 +355,8 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id"))).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(nullptr));
     EXPECT_CALL(*operationsDatabaseMock, writeOperations(operations, -1));
 
     thread->requestOperations();
@@ -469,7 +470,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
     EXPECT_CALL(*operationsDatabaseMock, appendOperations(operations, -1));
 
@@ -1279,7 +1280,7 @@ TEST_F(Test_OperationsThread, Test_alignRemainedAndTotalMoneyFromPortfolio)
 
     Operation operation;
 
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
 
     thread->alignRemainedAndTotalMoneyFromPortfolio(&operation);
@@ -1307,7 +1308,7 @@ TEST_F(Test_OperationsThread, Test_alignRemainedAndTotalMoneyFromPortfolio)
     position2->set_allocated_quantity(tinkoffQuantity2);
     position2->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo2);
 
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
 
     thread->alignRemainedAndTotalMoneyFromPortfolio(&operation);
@@ -1335,7 +1336,7 @@ TEST_F(Test_OperationsThread, Test_alignRemainedAndTotalMoneyFromPortfolio)
     position3->set_allocated_quantity(tinkoffQuantity3);
     position3->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo3);
 
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
 
     thread->alignRemainedAndTotalMoneyFromPortfolio(&operation);

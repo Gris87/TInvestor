@@ -433,7 +433,7 @@ static int runApplication(QApplication* app)
         &autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &timeUtils, &grpcClient, &grpcRetryClient, &optimizer
     );
     LogsThread                   logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage, &optimizer);
-    PortfolioThread              portfolioThread(&instrumentsStorage, &logosStorage, &timeUtils, &grpcClient);
+    PortfolioThread              portfolioThread(&instrumentsStorage, &logosStorage, &timeUtils, &grpcClient, &grpcRetryClient);
     PortfolioLastPriceThread     autoPilotPortfolioLastPriceThread(&timeUtils, &grpcClient);
     SimulatorDecisionMakerThread simulatorDecisionMakerThread(
         &simulatorSettingsEditor,
@@ -464,7 +464,7 @@ static int runApplication(QApplication* app)
         &optimizer
     );
     AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(
-        &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &timeUtils, &grpcClient
+        &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &timeUtils, &grpcClient, &grpcRetryClient
     );
     BiDirTradingControlThread biDirTradingControlThread(&stocksStorage, &userStorage, &config, &timeUtils, &grpcClient);
     HighLiquidityThread       highLiquidityThread(&config, &timeUtils, &grpcClient);

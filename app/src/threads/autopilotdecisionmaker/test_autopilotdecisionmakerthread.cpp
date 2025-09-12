@@ -5,6 +5,7 @@
 #include "src/config/iconfig_mock.h"
 #include "src/decisions/idecisionmaker_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/grpc/igrpcretryclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
 
@@ -35,14 +36,16 @@ class Test_AutoPilotDecisionMakerThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        stocksStorageMock = new StrictMock<StocksStorageMock>();
-        configMock        = new StrictMock<ConfigMock>();
-        decisionMakerMock = new StrictMock<DecisionMakerMock>();
-        timeUtilsMock     = new StrictMock<TimeUtilsMock>();
-        grpcClientMock    = new StrictMock<GrpcClientMock>();
+        stocksStorageMock   = new StrictMock<StocksStorageMock>();
+        configMock          = new StrictMock<ConfigMock>();
+        decisionMakerMock   = new StrictMock<DecisionMakerMock>();
+        timeUtilsMock       = new StrictMock<TimeUtilsMock>();
+        grpcClientMock      = new StrictMock<GrpcClientMock>();
+        grpcRetryClientMock = new StrictMock<GrpcRetryClientMock>();
 
-        thread =
-            new AutoPilotDecisionMakerThread(stocksStorageMock, configMock, decisionMakerMock, timeUtilsMock, grpcClientMock);
+        thread = new AutoPilotDecisionMakerThread(
+            stocksStorageMock, configMock, decisionMakerMock, timeUtilsMock, grpcClientMock, grpcRetryClientMock
+        );
     }
 
     void TearDown() override
@@ -53,14 +56,16 @@ protected:
         delete decisionMakerMock;
         delete timeUtilsMock;
         delete grpcClientMock;
+        delete grpcRetryClientMock;
     }
 
-    AutoPilotDecisionMakerThread*  thread;
-    StrictMock<StocksStorageMock>* stocksStorageMock;
-    StrictMock<ConfigMock>*        configMock;
-    StrictMock<DecisionMakerMock>* decisionMakerMock;
-    StrictMock<TimeUtilsMock>*     timeUtilsMock;
-    StrictMock<GrpcClientMock>*    grpcClientMock;
+    AutoPilotDecisionMakerThread*    thread;
+    StrictMock<StocksStorageMock>*   stocksStorageMock;
+    StrictMock<ConfigMock>*          configMock;
+    StrictMock<DecisionMakerMock>*   decisionMakerMock;
+    StrictMock<TimeUtilsMock>*       timeUtilsMock;
+    StrictMock<GrpcClientMock>*      grpcClientMock;
+    StrictMock<GrpcRetryClientMock>* grpcRetryClientMock;
 };
 
 
@@ -262,7 +267,7 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
 
     instrumentsForTrading["aaa-aaa"] = tradingInfo;
 
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
     EXPECT_CALL(
         *grpcClientMock,
@@ -294,45 +299,5 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
 TEST_F(Test_AutoPilotDecisionMakerThread, Test_terminateThread)
 {
     thread->terminateThread();
-}
-
-TEST_F(Test_AutoPilotDecisionMakerThread, Test_getValidPortfolio)
-{
-    const InSequence seq;
-
-    thread->setAccountId("account-id");
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id"))).WillOnce(Return(nullptr));
-
-    ASSERT_EQ(thread->getValidPortfolio(), nullptr);
-
-    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
-
-    tinkoff::PortfolioPosition* position = portfolioResponse->add_positions(); // portfolioResponse will take ownership
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
-
-    ASSERT_EQ(thread->getValidPortfolio(), nullptr);
-
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo = new tinkoff::MoneyValue(); // position will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceWavg = new tinkoff::MoneyValue(); // position will take ownership
-
-    tinkoffAvgPriceFifo->set_currency("rub");
-    tinkoffAvgPriceFifo->set_units(1);
-    tinkoffAvgPriceFifo->set_nano(0);
-
-    tinkoffAvgPriceWavg->set_currency("rub");
-    tinkoffAvgPriceWavg->set_units(1);
-    tinkoffAvgPriceWavg->set_nano(0);
-
-    position->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo);
-    position->set_allocated_average_position_price(tinkoffAvgPriceWavg);
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(portfolioResponse));
-
-    ASSERT_NE(thread->getValidPortfolio(), nullptr);
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init)
