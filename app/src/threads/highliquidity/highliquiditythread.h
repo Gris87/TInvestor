@@ -8,6 +8,7 @@
 
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/grpc/igrpcretryclient.h"
 #include "src/utils/timeutils/itimeutils.h"
 
 
@@ -17,7 +18,13 @@ class HighLiquidityThread : public IHighLiquidityThread
     Q_OBJECT
 
 public:
-    explicit HighLiquidityThread(IConfig* config, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent = nullptr);
+    explicit HighLiquidityThread(
+        IConfig*          config,
+        ITimeUtils*       timeUtils,
+        IGrpcClient*      grpcClient,
+        IGrpcRetryClient* grpcRetryClient,
+        QObject*          parent = nullptr
+    );
     ~HighLiquidityThread() override;
 
     HighLiquidityThread(const HighLiquidityThread& another)            = delete;
@@ -40,9 +47,10 @@ private:
                                                const tinkoff::PortfolioResponse& tinkoffPortfolio, double& money, double& totalCost, double& etfCost, float& etfPrice
                                            );
 
-    IConfig*     mConfig;
-    ITimeUtils*  mTimeUtils;
-    IGrpcClient* mGrpcClient;
-    QTimeZone    mMoscowTimezone;
-    QString      mAccountId;
+    IConfig*          mConfig;
+    ITimeUtils*       mTimeUtils;
+    IGrpcClient*      mGrpcClient;
+    IGrpcRetryClient* mGrpcRetryClient;
+    QTimeZone         mMoscowTimezone;
+    QString           mAccountId;
 };

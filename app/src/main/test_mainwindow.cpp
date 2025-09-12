@@ -24,6 +24,7 @@
 #include "src/dialogs/startsimulationdialog/istartsimulationdialog_mock.h"
 #include "src/dialogs/startsimulationdialog/istartsimulationdialogfactory_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/grpc/igrpcretryclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
@@ -141,6 +142,7 @@ protected:
         logosStorageMock                          = new StrictMock<LogosStorageMock>();
         httpClientMock                            = new StrictMock<HttpClientMock>();
         grpcClientMock                            = new StrictMock<GrpcClientMock>();
+        grpcRetryClientMock                       = new StrictMock<GrpcRetryClientMock>();
         cleanupThreadMock                         = new StrictMock<CleanupThreadMock>();
         userUpdateThreadMock                      = new StrictMock<UserUpdateThreadMock>();
         priceCollectThreadMock                    = new StrictMock<PriceCollectThreadMock>();
@@ -319,6 +321,7 @@ protected:
             logosStorageMock,
             httpClientMock,
             grpcClientMock,
+            grpcRetryClientMock,
             cleanupThreadMock,
             userUpdateThreadMock,
             priceCollectThreadMock,
@@ -418,6 +421,7 @@ protected:
         delete logosStorageMock;
         delete httpClientMock;
         delete grpcClientMock;
+        delete grpcRetryClientMock;
         delete cleanupThreadMock;
         delete userUpdateThreadMock;
         delete priceCollectThreadMock;
@@ -493,6 +497,7 @@ protected:
     StrictMock<LogosStorageMock>*                          logosStorageMock;
     StrictMock<HttpClientMock>*                            httpClientMock;
     StrictMock<GrpcClientMock>*                            grpcClientMock;
+    StrictMock<GrpcRetryClientMock>*                       grpcRetryClientMock;
     StrictMock<CleanupThreadMock>*                         cleanupThreadMock;
     StrictMock<UserUpdateThreadMock>*                      userUpdateThreadMock;
     StrictMock<PriceCollectThreadMock>*                    priceCollectThreadMock;
@@ -1100,6 +1105,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
             userStorageMock,
             timeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             QString(""),
             QString("aaaaa"),
@@ -1120,6 +1126,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
             userStorageMock,
             timeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             QString(""),
             QString("bbbbb"),
@@ -1200,6 +1207,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
             userStorageMock,
             timeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             QString(""),
             QString("aaaaa"),
@@ -1255,6 +1263,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
             timeUtilsMock,
             tradeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             QString(""),
             QString("aaaaa"),
@@ -1274,6 +1283,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
             timeUtilsMock,
             tradeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             QString(""),
             QString("bbbbb"),
@@ -1754,6 +1764,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             userStorageMock,
             timeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             QString("aaaaaa"),
             QString("aaa-aaa"),
@@ -1794,6 +1805,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             timeUtilsMock,
             tradeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             QString("aaaaaa"),
             QString("bbb-bbb"),
@@ -1917,6 +1929,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             userStorageMock,
             timeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             QString("aaaaaa"),
             QString("aaa-aaa"),
@@ -1949,6 +1962,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             timeUtilsMock,
             tradeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             QString("aaaaaa"),
             QString("bbb-bbb"),

@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/grpc/igrpcretryclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
 
@@ -27,8 +28,9 @@ protected:
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
+        grpcRetryClientMock    = new StrictMock<GrpcRetryClientMock>();
 
-        thread = new FollowThread(instrumentsStorageMock, timeUtilsMock, grpcClientMock);
+        thread = new FollowThread(instrumentsStorageMock, timeUtilsMock, grpcClientMock, grpcRetryClientMock);
     }
 
     void TearDown() override
@@ -37,12 +39,14 @@ protected:
         delete instrumentsStorageMock;
         delete timeUtilsMock;
         delete grpcClientMock;
+        delete grpcRetryClientMock;
     }
 
     FollowThread*                       thread;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
     StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
+    StrictMock<GrpcRetryClientMock>*    grpcRetryClientMock;
 };
 
 
@@ -270,20 +274,20 @@ TEST_F(Test_FollowThread, Test_run)
     instruments["aaaaa"] = instrument1;
     instruments["bbbbb"] = instrument2;
 
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse1));
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("another-account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("another-account-id")))
         .WillOnce(Return(portfolioResponse2));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"), QString("another-account-id")))
         .WillOnce(Return(portfolioStream));
     EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(portfolioStreamResponse1));
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse5));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(portfolioStreamResponse2));
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("another-account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("another-account-id")))
         .WillOnce(Return(portfolioResponse6));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
@@ -309,36 +313,4 @@ TEST_F(Test_FollowThread, Test_terminateThread)
     EXPECT_CALL(*grpcClientMock, cancelPortfolioStream(portfolioStream));
 
     thread->terminateThread();
-}
-
-TEST_F(Test_FollowThread, Test_getValidPortfolio)
-{
-    const InSequence seq;
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id"))).WillOnce(Return(nullptr));
-
-    ASSERT_EQ(thread->getValidPortfolio("account-id"), nullptr);
-
-    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
-
-    tinkoff::PortfolioPosition* position = portfolioResponse->add_positions(); // portfolioResponse will take ownership
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
-
-    ASSERT_EQ(thread->getValidPortfolio("account-id"), nullptr);
-
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo = new tinkoff::MoneyValue(); // position will take ownership
-
-    tinkoffAvgPriceFifo->set_currency("rub");
-    tinkoffAvgPriceFifo->set_units(1);
-    tinkoffAvgPriceFifo->set_nano(0);
-
-    position->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo);
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(portfolioResponse));
-
-    ASSERT_NE(thread->getValidPortfolio("account-id"), nullptr);
 }

@@ -44,8 +44,8 @@ std::shared_ptr<tinkoff::PortfolioResponse> GrpcRetryClient::getValidPortfolio(Q
 
                 if (instrumentId != RUBLE_UID)
                 {
-                    if ((position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0
-                        ) ||
+                    if ((position.average_position_price_fifo().units() <= 0 &&
+                         position.average_position_price_fifo().nano() <= 0) ||
                         (position.average_position_price().units() <= 0 && position.average_position_price().nano() <= 0))
                     {
                         valid = false;

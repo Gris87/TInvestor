@@ -467,8 +467,8 @@ static int runApplication(QApplication* app)
         &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &timeUtils, &grpcClient, &grpcRetryClient
     );
     BiDirTradingControlThread biDirTradingControlThread(&stocksStorage, &userStorage, &config, &timeUtils, &grpcClient);
-    HighLiquidityThread       highLiquidityThread(&config, &timeUtils, &grpcClient);
-    FollowThread              followThread(&instrumentsStorage, &timeUtils, &grpcClient);
+    HighLiquidityThread       highLiquidityThread(&config, &timeUtils, &grpcClient, &grpcRetryClient);
+    FollowThread              followThread(&instrumentsStorage, &timeUtils, &grpcClient, &grpcRetryClient);
     OrderBookThread           orderBookThread(&grpcClient);
     TradingThreadFactory      tradingThreadFactory;
     BiDirTradingThreadFactory biDirTradingThreadFactory;
@@ -512,6 +512,7 @@ static int runApplication(QApplication* app)
         &logosStorage,
         &httpClient,
         &grpcClient,
+        &grpcRetryClient,
         &cleanupThread,
         &userUpdateThread,
         &priceCollectThread,

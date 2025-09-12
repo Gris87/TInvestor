@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/grpc/igrpcretryclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
@@ -28,6 +29,7 @@ protected:
         userStorageMock        = new StrictMock<UserStorageMock>();
         timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
+        grpcRetryClientMock    = new StrictMock<GrpcRetryClientMock>();
         logsThreadMock         = new StrictMock<LogsThreadMock>();
 
         EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaaaa"), QString("But why")));
@@ -37,6 +39,7 @@ protected:
             userStorageMock,
             timeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             "account-id",
             "aaaaa",
@@ -55,6 +58,7 @@ protected:
         delete userStorageMock;
         delete timeUtilsMock;
         delete grpcClientMock;
+        delete grpcRetryClientMock;
         delete logsThreadMock;
     }
 
@@ -63,6 +67,7 @@ protected:
     StrictMock<UserStorageMock>*        userStorageMock;
     StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
+    StrictMock<GrpcRetryClientMock>*    grpcRetryClientMock;
     StrictMock<LogsThreadMock>*         logsThreadMock;
 };
 
@@ -124,11 +129,11 @@ TEST_F(Test_TradingThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1)).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(30000, QThread::currentThread())).WillOnce(Return(false));
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse2));
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1)).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(30000, QThread::currentThread())).WillOnce(Return(true));
@@ -138,7 +143,8 @@ TEST_F(Test_TradingThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id"))).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(nullptr));
 
     thread->run();
 
@@ -170,7 +176,7 @@ TEST_F(Test_TradingThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse2));
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
         .WillOnce(Return(getOrderBookResponse));
@@ -184,38 +190,6 @@ TEST_F(Test_TradingThread, Test_run)
 TEST_F(Test_TradingThread, Test_terminateThread)
 {
     thread->terminateThread();
-}
-
-TEST_F(Test_TradingThread, Test_getValidPortfolio)
-{
-    const InSequence seq;
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id"))).WillOnce(Return(nullptr));
-
-    ASSERT_EQ(thread->getValidPortfolio(), nullptr);
-
-    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
-
-    tinkoff::PortfolioPosition* position = portfolioResponse->add_positions(); // portfolioResponse will take ownership
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
-
-    ASSERT_EQ(thread->getValidPortfolio(), nullptr);
-
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo = new tinkoff::MoneyValue(); // position will take ownership
-
-    tinkoffAvgPriceFifo->set_currency("rub");
-    tinkoffAvgPriceFifo->set_units(1);
-    tinkoffAvgPriceFifo->set_nano(0);
-
-    position->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo);
-
-    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(portfolioResponse));
-
-    ASSERT_NE(thread->getValidPortfolio(), nullptr);
 }
 
 TEST_F(Test_TradingThread, Test_setAsapMode_and_asapMode)

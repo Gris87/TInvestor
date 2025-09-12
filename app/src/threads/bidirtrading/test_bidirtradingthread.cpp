@@ -4,6 +4,7 @@
 
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/grpc/igrpcretryclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
@@ -32,6 +33,7 @@ protected:
         timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         tradeUtilsMock         = new StrictMock<TradeUtilsMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
+        grpcRetryClientMock    = new StrictMock<GrpcRetryClientMock>();
         logsThreadMock         = new StrictMock<LogsThreadMock>();
 
         EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaaaa"), QString("But why")));
@@ -43,6 +45,7 @@ protected:
             timeUtilsMock,
             tradeUtilsMock,
             grpcClientMock,
+            grpcRetryClientMock,
             logsThreadMock,
             "account-id",
             "aaaaa",
@@ -60,6 +63,7 @@ protected:
         delete timeUtilsMock;
         delete tradeUtilsMock;
         delete grpcClientMock;
+        delete grpcRetryClientMock;
         delete logsThreadMock;
     }
 
@@ -70,6 +74,7 @@ protected:
     StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<TradeUtilsMock>*         tradeUtilsMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
+    StrictMock<GrpcRetryClientMock>*    grpcRetryClientMock;
     StrictMock<LogsThreadMock>*         logsThreadMock;
 };
 

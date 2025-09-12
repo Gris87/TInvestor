@@ -4,6 +4,7 @@
 
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/bidirtrading/ibidirtradingthread.h"
@@ -29,6 +30,7 @@ public:
         ITimeUtils*          timeUtils,
         ITradeUtils*         tradeUtils,
         IGrpcClient*         grpcClient,
+        IGrpcRetryClient*    grpcRetryClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,

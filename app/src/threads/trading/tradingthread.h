@@ -7,6 +7,7 @@
 #include <QReadWriteLock>
 
 #include "src/grpc/igrpcclient.h"
+#include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/logs/ilogsthread.h"
@@ -24,6 +25,7 @@ public:
         IUserStorage*        userStorage,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
+        IGrpcRetryClient*    grpcRetryClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,
@@ -56,15 +58,12 @@ public:
 
     void terminateThread() override;
 
-    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
-
     bool trade();
     void getInstrumentData();
     bool sell(double expected, double delta);
     bool buy(double expected, double delta);
 
 private:
-    bool   validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     bool   sellWithPrice(double expected, double delta, const Quotation& price, float marketPrice);
     bool   sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
@@ -79,6 +78,7 @@ private:
     IUserStorage*        mUserStorage;
     ITimeUtils*          mTimeUtils;
     IGrpcClient*         mGrpcClient;
+    IGrpcRetryClient*    mGrpcRetryClient;
     ILogsThread*         mLogsThread;
     QString              mAccountId;
     QString              mInstrumentId;

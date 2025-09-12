@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/grpc/igrpcretryclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
@@ -45,6 +46,7 @@ TEST_F(Test_TradingThreadFactory, Test_newInstance)
     StrictMock<UserStorageMock>        userStorageMock;
     StrictMock<TimeUtilsMock>          timeUtilsMock;
     StrictMock<GrpcClientMock>         grpcClientMock;
+    StrictMock<GrpcRetryClientMock>    grpcRetryClientMock;
     StrictMock<LogsThreadMock>         logsThreadMock;
 
     EXPECT_CALL(logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("bbbbb"), QString("But why")));
@@ -54,6 +56,7 @@ TEST_F(Test_TradingThreadFactory, Test_newInstance)
         &userStorageMock,
         &timeUtilsMock,
         &grpcClientMock,
+        &grpcRetryClientMock,
         &logsThreadMock,
         "aaaaa",
         "bbbbb",

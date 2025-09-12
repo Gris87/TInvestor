@@ -22,6 +22,7 @@ public:
         ITimeUtils*          timeUtils,
         ITradeUtils*         tradeUtils,
         IGrpcClient*         grpcClient,
+        IGrpcRetryClient*    grpcRetryClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,

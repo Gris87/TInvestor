@@ -8,6 +8,7 @@
 
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/logs/ilogsthread.h"
@@ -28,6 +29,7 @@ public:
         ITimeUtils*          timeUtils,
         ITradeUtils*         tradeUtils,
         IGrpcClient*         grpcClient,
+        IGrpcRetryClient*    grpcRetryClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,
@@ -54,11 +56,9 @@ public:
     void getInstrumentData();
 
 private:
-    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio();
-    bool                                        validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    void                                        calculateTotalCostAndInstrumentLots(
-                                               const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots, double& instrumentAvgPrice
-                                           );
+    void calculateTotalCostAndInstrumentLots(
+        const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots, double& instrumentAvgPrice
+    );
     IDecisionMakerConfig* chooseDecisionConfig();
     void                  checkIfNeedToCancelAndCreateOrder(
                          const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
@@ -76,6 +76,7 @@ private:
     ITimeUtils*          mTimeUtils;
     ITradeUtils*         mTradeUtils;
     IGrpcClient*         mGrpcClient;
+    IGrpcRetryClient*    mGrpcRetryClient;
     ILogsThread*         mLogsThread;
     QString              mAccountId;
     QString              mInstrumentId;

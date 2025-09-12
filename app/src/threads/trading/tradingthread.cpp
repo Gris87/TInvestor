@@ -25,6 +25,7 @@ TradingThread::TradingThread(
     IUserStorage*        userStorage,
     ITimeUtils*          timeUtils,
     IGrpcClient*         grpcClient,
+    IGrpcRetryClient*    grpcRetryClient,
     ILogsThread*         logsThread,
     const QString&       accountId,
     const QString&       instrumentId,
@@ -41,6 +42,7 @@ TradingThread::TradingThread(
     mUserStorage(userStorage),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
+    mGrpcRetryClient(grpcRetryClient),
     mLogsThread(logsThread),
     mAccountId(accountId),
     mInstrumentId(instrumentId),
@@ -147,7 +149,8 @@ bool TradingThread::trade()
 
     while (true)
     {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
+        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+            mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);
 
         if (QThread::currentThread()->isInterruptionRequested() || tinkoffPortfolio == nullptr)
         {
@@ -197,64 +200,6 @@ void TradingThread::getInstrumentData()
     mMinPriceIncrement = instrument.minPriceIncrement;
 
     mInstrumentsStorage->readUnlock();
-}
-
-std::shared_ptr<tinkoff::PortfolioResponse> TradingThread::getValidPortfolio()
-{
-    std::shared_ptr<tinkoff::PortfolioResponse> res = nullptr;
-
-    while (!QThread::currentThread()->isInterruptionRequested() && res == nullptr)
-    {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
-
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
-        {
-            if (validatePortfolioResponse(*tinkoffPortfolio))
-            {
-                res = tinkoffPortfolio;
-            }
-            else
-            {
-                qDebug() << "Invalid portfolio received. Try one more time";
-
-                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
-                {
-                    break;
-                }
-            }
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    return res;
-}
-
-bool TradingThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
-{
-    bool res = true;
-
-    for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
-    {
-        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
-
-        const QString instrumentId = QString::fromStdString(position.instrument_uid());
-
-        if (instrumentId != RUBLE_UID)
-        {
-            if (position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0)
-            {
-                res = false;
-
-                break;
-            }
-        }
-    }
-
-    return res;
 }
 
 double TradingThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)

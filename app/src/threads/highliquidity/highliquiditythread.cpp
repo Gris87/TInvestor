@@ -23,11 +23,14 @@ constexpr qint64 SLEEP_BEFORE_REQUEST        = 5LL * MS_IN_SECOND; // 5 seconds
 
 
 
-HighLiquidityThread::HighLiquidityThread(IConfig* config, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent) :
+HighLiquidityThread::HighLiquidityThread(
+    IConfig* config, ITimeUtils* timeUtils, IGrpcClient* grpcClient, IGrpcRetryClient* grpcRetryClient, QObject* parent
+) :
     IHighLiquidityThread(parent),
     mConfig(config),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
+    mGrpcRetryClient(grpcRetryClient),
     mMoscowTimezone("Europe/Moscow"),
     mAccountId()
 {
@@ -80,7 +83,8 @@ void HighLiquidityThread::makeDecisionBaseOnTimestamp(qint64 timestamp)
 
 void HighLiquidityThread::buyEtf()
 {
-    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
+    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+        mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
@@ -108,7 +112,8 @@ void HighLiquidityThread::buyEtf()
 
 void HighLiquidityThread::sellEtf()
 {
-    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio = getValidPortfolio();
+    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+        mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
@@ -141,64 +146,6 @@ void HighLiquidityThread::terminateThread()
     blockSignals(true);
 
     requestInterruption();
-}
-
-std::shared_ptr<tinkoff::PortfolioResponse> HighLiquidityThread::getValidPortfolio()
-{
-    std::shared_ptr<tinkoff::PortfolioResponse> res = nullptr;
-
-    while (!QThread::currentThread()->isInterruptionRequested() && res == nullptr)
-    {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
-
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
-        {
-            if (validatePortfolioResponse(*tinkoffPortfolio))
-            {
-                res = tinkoffPortfolio;
-            }
-            else
-            {
-                qDebug() << "Invalid portfolio received. Try one more time";
-
-                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
-                {
-                    break;
-                }
-            }
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    return res;
-}
-
-bool HighLiquidityThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
-{
-    bool res = true;
-
-    for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
-    {
-        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
-
-        const QString instrumentId = QString::fromStdString(position.instrument_uid());
-
-        if (instrumentId != RUBLE_UID)
-        {
-            if (position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0)
-            {
-                res = false;
-
-                break;
-            }
-        }
-    }
-
-    return res;
 }
 
 void HighLiquidityThread::calculateMoneyAndTotalCost(

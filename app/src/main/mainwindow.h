@@ -13,6 +13,7 @@
 #include "src/dialogs/startautopilotdialog/istartautopilotdialogfactory.h"
 #include "src/dialogs/startsimulationdialog/istartsimulationdialogfactory.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
@@ -99,6 +100,7 @@ public:
         ILogosStorage*                          logosStorage,
         IHttpClient*                            httpClient,
         IGrpcClient*                            grpcClient,
+        IGrpcRetryClient*                       grpcRetryClient,
         ICleanupThread*                         cleanupThread,
         IUserUpdateThread*                      userUpdateThread,
         IPriceCollectThread*                    priceCollectThread,
@@ -184,6 +186,7 @@ private:
     ILogosStorage*                          mLogosStorage;
     IHttpClient*                            mHttpClient;
     IGrpcClient*                            mGrpcClient;
+    IGrpcRetryClient*                       mGrpcRetryClient;
     ICleanupThread*                         mCleanupThread;
     IUserUpdateThread*                      mUserUpdateThread;
     IPriceCollectThread*                    mPriceCollectThread;

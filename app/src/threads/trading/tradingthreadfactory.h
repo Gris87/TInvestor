@@ -20,6 +20,7 @@ public:
         IUserStorage*        userStorage,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
+        IGrpcRetryClient*    grpcRetryClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,

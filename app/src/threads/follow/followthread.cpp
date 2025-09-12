@@ -8,19 +8,21 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr qint64 MS_IN_SECOND         = 1000LL;
-constexpr qint64 SLEEP_BEFORE_REQUEST = 1LL * MS_IN_SECOND; // 1 second
-
 
 
 FollowThread::FollowThread(
-    IInstrumentsStorage* instrumentsStorage, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent
+    IInstrumentsStorage* instrumentsStorage,
+    ITimeUtils*          timeUtils,
+    IGrpcClient*         grpcClient,
+    IGrpcRetryClient*    grpcRetryClient,
+    QObject*             parent
 ) :
     IFollowThread(parent),
     mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
+    mGrpcRetryClient(grpcRetryClient),
     mAccountId(),
     mAnotherAccountId(),
     mPortfolioStream()
@@ -42,8 +44,10 @@ void FollowThread::run()
 
     blockSignals(false);
 
-    std::shared_ptr<tinkoff::PortfolioResponse> portfolio        = getValidPortfolio(mAccountId);
-    std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio = getValidPortfolio(mAnotherAccountId);
+    std::shared_ptr<tinkoff::PortfolioResponse> portfolio =
+        mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);
+    std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio =
+        mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAnotherAccountId);
 
     if (!QThread::currentThread()->isInterruptionRequested() && portfolio != nullptr && anotherPortfolio != nullptr)
     {
@@ -70,11 +74,11 @@ void FollowThread::run()
 
                     if (accountId == mAccountId)
                     {
-                        portfolio = getValidPortfolio(mAccountId);
+                        portfolio = mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);
                     }
                     else
                     {
-                        anotherPortfolio = getValidPortfolio(mAnotherAccountId);
+                        anotherPortfolio = mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAnotherAccountId);
                     }
 
                     handlePortfolios(portfolio, anotherPortfolio);
@@ -124,64 +128,6 @@ bool FollowThread::createPortfolioStream()
         mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId, mAnotherAccountId);
 
         res = mPortfolioStream != nullptr;
-    }
-
-    return res;
-}
-
-std::shared_ptr<tinkoff::PortfolioResponse> FollowThread::getValidPortfolio(const QString& accountId)
-{
-    std::shared_ptr<tinkoff::PortfolioResponse> res = nullptr;
-
-    while (!QThread::currentThread()->isInterruptionRequested() && res == nullptr)
-    {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), accountId);
-
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
-        {
-            if (validatePortfolioResponse(*tinkoffPortfolio))
-            {
-                res = tinkoffPortfolio;
-            }
-            else
-            {
-                qDebug() << "Invalid portfolio received. Try one more time";
-
-                if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
-                {
-                    break;
-                }
-            }
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    return res;
-}
-
-bool FollowThread::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
-{
-    bool res = true;
-
-    for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
-    {
-        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
-
-        const QString instrumentId = QString::fromStdString(position.instrument_uid());
-
-        if (instrumentId != RUBLE_UID)
-        {
-            if (position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0)
-            {
-                res = false;
-
-                break;
-            }
-        }
     }
 
     return res;

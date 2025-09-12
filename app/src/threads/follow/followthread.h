@@ -8,6 +8,7 @@
 
 #include "src/domain/portfolio/portfoliominitem.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/utils/timeutils/itimeutils.h"
 
@@ -19,7 +20,11 @@ class FollowThread : public IFollowThread
 
 public:
     explicit FollowThread(
-        IInstrumentsStorage* instrumentsStorage, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent = nullptr
+        IInstrumentsStorage* instrumentsStorage,
+        ITimeUtils*          timeUtils,
+        IGrpcClient*         grpcClient,
+        IGrpcRetryClient*    grpcRetryClient,
+        QObject*             parent = nullptr
     );
     ~FollowThread() override;
 
@@ -32,11 +37,9 @@ public:
 
     void terminateThread() override;
 
-    bool                                        createPortfolioStream();
-    std::shared_ptr<tinkoff::PortfolioResponse> getValidPortfolio(const QString& accountId);
+    bool createPortfolioStream();
 
 private:
-    bool validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     void handlePortfolios(
         const std::shared_ptr<tinkoff::PortfolioResponse>& portfolio,
         const std::shared_ptr<tinkoff::PortfolioResponse>& anotherPortfolio
@@ -59,6 +62,7 @@ private:
     IInstrumentsStorage*             mInstrumentsStorage;
     ITimeUtils*                      mTimeUtils;
     IGrpcClient*                     mGrpcClient;
+    IGrpcRetryClient*                mGrpcRetryClient;
     QString                          mAccountId;
     QString                          mAnotherAccountId;
     QString                          mAnotherAccountName;

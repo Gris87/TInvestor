@@ -4,6 +4,7 @@
 
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/grpc/igrpcretryclient_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
 
 
@@ -20,11 +21,12 @@ class Test_HighLiquidityThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        configMock     = new StrictMock<ConfigMock>();
-        timeUtilsMock  = new StrictMock<TimeUtilsMock>();
-        grpcClientMock = new StrictMock<GrpcClientMock>();
+        configMock          = new StrictMock<ConfigMock>();
+        timeUtilsMock       = new StrictMock<TimeUtilsMock>();
+        grpcClientMock      = new StrictMock<GrpcClientMock>();
+        grpcRetryClientMock = new StrictMock<GrpcRetryClientMock>();
 
-        thread = new HighLiquidityThread(configMock, timeUtilsMock, grpcClientMock);
+        thread = new HighLiquidityThread(configMock, timeUtilsMock, grpcClientMock, grpcRetryClientMock);
     }
 
     void TearDown() override
@@ -33,12 +35,14 @@ protected:
         delete configMock;
         delete timeUtilsMock;
         delete grpcClientMock;
+        delete grpcRetryClientMock;
     }
 
-    HighLiquidityThread*        thread;
-    StrictMock<ConfigMock>*     configMock;
-    StrictMock<TimeUtilsMock>*  timeUtilsMock;
-    StrictMock<GrpcClientMock>* grpcClientMock;
+    HighLiquidityThread*             thread;
+    StrictMock<ConfigMock>*          configMock;
+    StrictMock<TimeUtilsMock>*       timeUtilsMock;
+    StrictMock<GrpcClientMock>*      grpcClientMock;
+    StrictMock<GrpcRetryClientMock>* grpcRetryClientMock;
 };
 
 

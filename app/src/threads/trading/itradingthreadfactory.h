@@ -3,6 +3,7 @@
 
 
 #include "src/grpc/igrpcclient.h"
+#include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/logs/ilogsthread.h"
@@ -25,6 +26,7 @@ public:
         IUserStorage*        userStorage,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
+        IGrpcRetryClient*    grpcRetryClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,
