@@ -78,6 +78,7 @@ SOURCES += \
     src/domain/user/test_account.cpp \
     src/domain/user/test_user.cpp \
     src/grpc/test_grpcclient.cpp \
+    src/grpc/test_grpcretryclient.cpp \
     src/grpc/test_rawgrpcclient.cpp \
     src/grpc/test_utils.cpp \
     src/main/test_mainwindow.cpp \
@@ -211,6 +212,7 @@ HEADERS += \
     src/dialogs/startsimulationdialog/istartsimulationdialog_mock.h \
     src/dialogs/startsimulationdialog/istartsimulationdialogfactory_mock.h \
     src/grpc/igrpcclient_mock.h \
+    src/grpc/igrpcretryclient_mock.h \
     src/grpc/irawgrpcclient_mock.h \
     src/storage/instruments/iinstrumentsstorage_mock.h \
     src/storage/logos/ilogosstorage_mock.h \

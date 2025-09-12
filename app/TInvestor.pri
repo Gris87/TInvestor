@@ -82,6 +82,7 @@ SOURCES += \
     src/domain/user/account.cpp \
     src/domain/user/user.cpp \
     src/grpc/grpcclient.cpp \
+    src/grpc/grpcretryclient.cpp \
     src/grpc/rawgrpcclient.cpp \
     src/grpc/utils.cpp \
     src/main/mainwindow.cpp \
@@ -293,7 +294,9 @@ HEADERS += \
     src/domain/user/account.h \
     src/domain/user/user.h \
     src/grpc/grpcclient.h \
+    src/grpc/grpcretryclient.h \
     src/grpc/igrpcclient.h \
+    src/grpc/igrpcretryclient.h \
     src/grpc/investapiuthenticator.h \
     src/grpc/irawgrpcclient.h \
     src/grpc/rawgrpcclient.h \

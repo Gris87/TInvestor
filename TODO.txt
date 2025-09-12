@@ -1,7 +1,9 @@
 Grpc retrier
+Update dependencies
 Improve coverage
 Create release
 
+Double check for QObject usage
 Buy more if we lose money
 Change best config search algorithm
 Find best configs for different commission
