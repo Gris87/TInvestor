@@ -23,15 +23,15 @@ public:
     GrpcRetryClientMock& operator=(const GrpcRetryClientMock& another) = delete;
 
     MOCK_METHOD(
-        std::shared_ptr<tinkoff::PortfolioResponse>,
-        getValidPortfolio,
-        (QThread * parentThread, const QString& accountId),
-        (override)
-    );
-    MOCK_METHOD(
         std::shared_ptr<tinkoff::GetOperationsByCursorResponse>,
         getValidOperations,
         (QThread * parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor),
+        (override)
+    );
+    MOCK_METHOD(
+        std::shared_ptr<tinkoff::PortfolioResponse>,
+        getValidPortfolio,
+        (QThread * parentThread, const QString& accountId),
         (override)
     );
 };

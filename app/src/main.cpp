@@ -386,7 +386,7 @@ static int runApplication(QApplication* app)
     HttpClient        httpClient;
     RawGrpcClient     rawGrpcClient;
     GrpcClient        grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
-    GrpcRetryClient   grpcRetryClient(&grpcClient, &timeUtils);
+    GrpcRetryClient   grpcRetryClient(&userStorage, &grpcClient, &timeUtils);
     Optimizer         optimizer;
 
     BuyDecision1  buyDecision1;

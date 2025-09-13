@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
 
 
@@ -20,22 +21,25 @@ class Test_GrpcRetryClient : public ::testing::Test
 protected:
     void SetUp() override
     {
-        grpcClientMock = new StrictMock<GrpcClientMock>();
-        timeUtilsMock  = new StrictMock<TimeUtilsMock>();
+        userStorageMock = new StrictMock<UserStorageMock>();
+        grpcClientMock  = new StrictMock<GrpcClientMock>();
+        timeUtilsMock   = new StrictMock<TimeUtilsMock>();
 
-        client = new GrpcRetryClient(grpcClientMock, timeUtilsMock);
+        client = new GrpcRetryClient(userStorageMock, grpcClientMock, timeUtilsMock);
     }
 
     void TearDown() override
     {
         delete client;
+        delete userStorageMock;
         delete grpcClientMock;
         delete timeUtilsMock;
     }
 
-    GrpcRetryClient*            client;
-    StrictMock<GrpcClientMock>* grpcClientMock;
-    StrictMock<TimeUtilsMock>*  timeUtilsMock;
+    GrpcRetryClient*             client;
+    StrictMock<UserStorageMock>* userStorageMock;
+    StrictMock<GrpcClientMock>*  grpcClientMock;
+    StrictMock<TimeUtilsMock>*   timeUtilsMock;
 };
 
 
@@ -48,12 +52,9 @@ TEST_F(Test_GrpcRetryClient, Test_getValidOperations)
 {
     const InSequence seq;
 
-    EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1704056400000, 1704142800000, QString(""))
-    )
-        .WillOnce(Return(nullptr));
-
-    ASSERT_EQ(client->getValidOperations(QThread::currentThread(), "account-id", 1704056400000, 1704142800000, ""), nullptr);
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperationsByCursorResponse(
         new tinkoff::GetOperationsByCursorResponse()
@@ -64,21 +65,6 @@ TEST_F(Test_GrpcRetryClient, Test_getValidOperations)
 
     operationItem->set_instrument_kind(tinkoff::INSTRUMENT_TYPE_SHARE);
     operationItem->set_type(tinkoff::OPERATION_TYPE_BUY);
-
-    EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1704056400000, 1704142800000, QString(""))
-    )
-        .WillOnce(Return(getOperationsByCursorResponse));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
-
-    ASSERT_EQ(client->getValidOperations(QThread::currentThread(), "account-id", 1704056400000, 1704142800000, ""), nullptr);
-
-    tinkoff::MoneyValue* commission = new tinkoff::MoneyValue(); // operationItem will take ownership
-
-    commission->set_units(-1);
-    commission->set_nano(-266500000);
-
-    operationItem->set_allocated_commission(commission);
 
     EXPECT_CALL(
         *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1704056400000, 1704142800000, QString(""))

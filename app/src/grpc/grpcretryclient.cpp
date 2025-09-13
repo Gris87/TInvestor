@@ -2,17 +2,23 @@
 
 #include <QDebug>
 
+#include "src/grpc/utils.h"
+
 
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr qint64 MS_IN_SECOND          = 1000LL;
-constexpr qint64 SLEEP_BETWEEN_REQUEST = 1LL * MS_IN_SECOND; // 1 second
+constexpr float  HUNDRED_PERCENT         = 100.0f;
+constexpr double ROUND_2_DECIMALS_DOUBLE = 100.0;
+constexpr int    ROUND_2_DECIMALS_NANO   = 10000000;
+constexpr qint64 MS_IN_SECOND            = 1000LL;
+constexpr qint64 SLEEP_BETWEEN_REQUEST   = 1LL * MS_IN_SECOND; // 1 second
 
 
 
-GrpcRetryClient::GrpcRetryClient(IGrpcClient* grpcClient, ITimeUtils* timeUtils, QObject* parent) :
+GrpcRetryClient::GrpcRetryClient(IUserStorage* userStorage, IGrpcClient* grpcClient, ITimeUtils* timeUtils, QObject* parent) :
     IGrpcRetryClient(parent),
+    mUserStorage(userStorage),
     mGrpcClient(grpcClient),
     mTimeUtils(timeUtils)
 {
@@ -22,6 +28,52 @@ GrpcRetryClient::GrpcRetryClient(IGrpcClient* grpcClient, ITimeUtils* timeUtils,
 GrpcRetryClient::~GrpcRetryClient()
 {
     qDebug() << "Destroy GrpcRetryClient";
+}
+
+std::shared_ptr<tinkoff::GetOperationsByCursorResponse> GrpcRetryClient::getValidOperations(
+    QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor
+)
+{
+    mUserStorage->readLock();
+    const float commission = mUserStorage->getCommission();
+    mUserStorage->readUnlock();
+
+    const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
+        mGrpcClient->getOperations(parentThread, accountId, from, to, cursor);
+
+    if (!parentThread->isInterruptionRequested() && tinkoffOperations != nullptr)
+    {
+        for (int i = 0; i < tinkoffOperations->items_size(); ++i)
+        {
+            tinkoff::OperationItem&       tinkoffOperation = const_cast<tinkoff::OperationItem&>(tinkoffOperations->items(i));
+            const tinkoff::OperationType  operationType    = tinkoffOperation.type();
+            const tinkoff::InstrumentType instrumentKind   = tinkoffOperation.instrument_kind();
+
+            if (instrumentKind == tinkoff::INSTRUMENT_TYPE_SHARE &&
+                (operationType == tinkoff::OPERATION_TYPE_BUY || operationType == tinkoff::OPERATION_TYPE_SELL))
+            {
+                if (tinkoffOperation.commission().units() == 0 && tinkoffOperation.commission().nano() == 0)
+                {
+                    const double    payment             = quotationToDouble(tinkoffOperation.payment());
+                    const Quotation commissionQuotation = quotationFromDouble(
+                        qRound64(((-qAbs(payment) * commission) / HUNDRED_PERCENT) * ROUND_2_DECIMALS_DOUBLE) /
+                        ROUND_2_DECIMALS_DOUBLE
+                    );
+
+                    tinkoff::MoneyValue* commissionMoney = new tinkoff::MoneyValue(); // tinkoffOperation will take ownership
+
+                    commissionMoney->set_units(commissionQuotation.units);
+                    commissionMoney->set_nano(
+                        qRound64(static_cast<double>(commissionQuotation.nano) / ROUND_2_DECIMALS_NANO) * ROUND_2_DECIMALS_NANO
+                    );
+
+                    tinkoffOperation.set_allocated_commission(commissionMoney);
+                }
+            }
+        }
+    }
+
+    return tinkoffOperations;
 }
 
 std::shared_ptr<tinkoff::PortfolioResponse> GrpcRetryClient::getValidPortfolio(QThread* parentThread, const QString& accountId)
@@ -34,28 +86,7 @@ std::shared_ptr<tinkoff::PortfolioResponse> GrpcRetryClient::getValidPortfolio(Q
 
         if (!parentThread->isInterruptionRequested() && tinkoffPortfolio != nullptr)
         {
-            bool valid = true;
-
-            for (int i = 0; i < tinkoffPortfolio->positions_size(); ++i)
-            {
-                const tinkoff::PortfolioPosition& position = tinkoffPortfolio->positions(i);
-
-                const QString instrumentId = QString::fromStdString(position.instrument_uid());
-
-                if (instrumentId != RUBLE_UID)
-                {
-                    if ((position.average_position_price_fifo().units() <= 0 &&
-                         position.average_position_price_fifo().nano() <= 0) ||
-                        (position.average_position_price().units() <= 0 && position.average_position_price().nano() <= 0))
-                    {
-                        valid = false;
-
-                        break;
-                    }
-                }
-            }
-
-            if (valid)
+            if (validatePortfolioResponse(*tinkoffPortfolio))
             {
                 res = tinkoffPortfolio;
             }
@@ -78,56 +109,25 @@ std::shared_ptr<tinkoff::PortfolioResponse> GrpcRetryClient::getValidPortfolio(Q
     return res;
 }
 
-std::shared_ptr<tinkoff::GetOperationsByCursorResponse> GrpcRetryClient::getValidOperations(
-    QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor
-)
+bool GrpcRetryClient::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
 {
-    std::shared_ptr<tinkoff::GetOperationsByCursorResponse> res = nullptr;
+    bool res = true;
 
-    while (!parentThread->isInterruptionRequested() && res == nullptr)
+    for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
     {
-        const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations =
-            mGrpcClient->getOperations(parentThread, accountId, from, to, cursor);
+        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
 
-        if (!parentThread->isInterruptionRequested() && tinkoffOperations != nullptr)
+        const QString instrumentId = QString::fromStdString(position.instrument_uid());
+
+        if (instrumentId != RUBLE_UID)
         {
-            bool valid = true;
-
-            for (int i = 0; i < tinkoffOperations->items_size(); ++i)
+            if ((position.average_position_price_fifo().units() <= 0 && position.average_position_price_fifo().nano() <= 0) ||
+                (position.average_position_price().units() <= 0 && position.average_position_price().nano() <= 0))
             {
-                const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations->items(i);
-                const tinkoff::OperationType  operationType    = tinkoffOperation.type();
-                const tinkoff::InstrumentType instrumentKind   = tinkoffOperation.instrument_kind();
+                res = false;
 
-                if (instrumentKind == tinkoff::INSTRUMENT_TYPE_SHARE &&
-                    (operationType == tinkoff::OPERATION_TYPE_BUY || operationType == tinkoff::OPERATION_TYPE_SELL))
-                {
-                    if (tinkoffOperation.commission().units() == 0 && tinkoffOperation.commission().nano() == 0)
-                    {
-                        valid = false;
-
-                        break;
-                    }
-                }
+                break;
             }
-
-            if (valid)
-            {
-                res = tinkoffOperations;
-            }
-            else
-            {
-                qDebug() << "Invalid operations received. Try one more time";
-
-                if (mTimeUtils->interruptibleSleep(SLEEP_BETWEEN_REQUEST, parentThread))
-                {
-                    break;
-                }
-            }
-        }
-        else
-        {
-            break;
         }
     }
 
