@@ -76,188 +76,188 @@ GrpcClient::~GrpcClient()
 static grpc::Status getUserInfoAction(
     IRawGrpcClient*                                     rawGrpcClient,
     const std::unique_ptr<tinkoff::UsersService::Stub>& service,
-    grpc::ClientContext*                                context,
+    std::shared_ptr<grpc::CallCredentials>              creds,
     const tinkoff::GetInfoRequest&                      req,
     const std::shared_ptr<tinkoff::GetInfoResponse>&    resp
 )
 {
-    return rawGrpcClient->getUserInfo(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->getUserInfo(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo(QThread* parentThread)
 {
-    grpc::ClientContext                             context;
     const tinkoff::GetInfoRequest                   req;
     const std::shared_ptr<tinkoff::GetInfoResponse> resp = std::make_shared<tinkoff::GetInfoResponse>();
 
-    context.set_credentials(mCreds);
-
-    return repeatRequest(parentThread, getUserInfoAction, mUsersService, &context, req, resp, false);
+    return repeatRequest(parentThread, getUserInfoAction, mUsersService, req, resp, false);
 }
 
 static grpc::Status getAccountsAction(
     IRawGrpcClient*                                      rawGrpcClient,
     const std::unique_ptr<tinkoff::UsersService::Stub>&  service,
-    grpc::ClientContext*                                 context,
+    std::shared_ptr<grpc::CallCredentials>               creds,
     const tinkoff::GetAccountsRequest&                   req,
     const std::shared_ptr<tinkoff::GetAccountsResponse>& resp
 )
 {
-    return rawGrpcClient->getAccounts(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->getAccounts(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts(QThread* parentThread)
 {
-    grpc::ClientContext                                 context;
     tinkoff::GetAccountsRequest                         req;
     const std::shared_ptr<tinkoff::GetAccountsResponse> resp = std::make_shared<tinkoff::GetAccountsResponse>();
 
-    context.set_credentials(mCreds);
-
     req.set_status(tinkoff::ACCOUNT_STATUS_OPEN);
 
-    return repeatRequest(parentThread, getAccountsAction, mUsersService, &context, req, resp, false);
+    return repeatRequest(parentThread, getAccountsAction, mUsersService, req, resp, false);
 }
 
 static grpc::Status findStocksAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    grpc::ClientContext*                                      context,
+    std::shared_ptr<grpc::CallCredentials>                    creds,
     const tinkoff::InstrumentsRequest&                        req,
     const std::shared_ptr<tinkoff::SharesResponse>&           resp
 )
 {
-    return rawGrpcClient->findStocks(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->findStocks(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentThread, tinkoff::InstrumentStatus instrumentStatus)
 {
-    grpc::ClientContext                            context;
     tinkoff::InstrumentsRequest                    req;
     const std::shared_ptr<tinkoff::SharesResponse> resp = std::make_shared<tinkoff::SharesResponse>();
 
-    context.set_credentials(mCreds);
-
     req.set_instrument_status(instrumentStatus);
 
-    return repeatRequest(parentThread, findStocksAction, mInstrumentsService, &context, req, resp, false);
+    return repeatRequest(parentThread, findStocksAction, mInstrumentsService, req, resp, false);
 }
 
 static grpc::Status findBondsAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    grpc::ClientContext*                                      context,
+    std::shared_ptr<grpc::CallCredentials>                    creds,
     const tinkoff::InstrumentsRequest&                        req,
     const std::shared_ptr<tinkoff::BondsResponse>&            resp
 )
 {
-    return rawGrpcClient->findBonds(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->findBonds(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::BondsResponse> GrpcClient::findBonds(QThread* parentThread)
 {
-    grpc::ClientContext                           context;
     tinkoff::InstrumentsRequest                   req;
     const std::shared_ptr<tinkoff::BondsResponse> resp = std::make_shared<tinkoff::BondsResponse>();
 
-    context.set_credentials(mCreds);
-
     req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
-    return repeatRequest(parentThread, findBondsAction, mInstrumentsService, &context, req, resp, false);
+    return repeatRequest(parentThread, findBondsAction, mInstrumentsService, req, resp, false);
 }
 
 static grpc::Status findCurrenciesAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    grpc::ClientContext*                                      context,
+    std::shared_ptr<grpc::CallCredentials>                    creds,
     const tinkoff::InstrumentsRequest&                        req,
     const std::shared_ptr<tinkoff::CurrenciesResponse>&       resp
 )
 {
-    return rawGrpcClient->findCurrencies(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->findCurrencies(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::CurrenciesResponse> GrpcClient::findCurrencies(QThread* parentThread)
 {
-    grpc::ClientContext                                context;
     tinkoff::InstrumentsRequest                        req;
     const std::shared_ptr<tinkoff::CurrenciesResponse> resp = std::make_shared<tinkoff::CurrenciesResponse>();
 
-    context.set_credentials(mCreds);
-
     req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
-    return repeatRequest(parentThread, findCurrenciesAction, mInstrumentsService, &context, req, resp, false);
+    return repeatRequest(parentThread, findCurrenciesAction, mInstrumentsService, req, resp, false);
 }
 
 static grpc::Status findEtfsAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    grpc::ClientContext*                                      context,
+    std::shared_ptr<grpc::CallCredentials>                    creds,
     const tinkoff::InstrumentsRequest&                        req,
     const std::shared_ptr<tinkoff::EtfsResponse>&             resp
 )
 {
-    return rawGrpcClient->findEtfs(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->findEtfs(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::EtfsResponse> GrpcClient::findEtfs(QThread* parentThread)
 {
-    grpc::ClientContext                          context;
     tinkoff::InstrumentsRequest                  req;
     const std::shared_ptr<tinkoff::EtfsResponse> resp = std::make_shared<tinkoff::EtfsResponse>();
 
-    context.set_credentials(mCreds);
-
     req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
-    return repeatRequest(parentThread, findEtfsAction, mInstrumentsService, &context, req, resp, false);
+    return repeatRequest(parentThread, findEtfsAction, mInstrumentsService, req, resp, false);
 }
 
 static grpc::Status findFuturesAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    grpc::ClientContext*                                      context,
+    std::shared_ptr<grpc::CallCredentials>                    creds,
     const tinkoff::InstrumentsRequest&                        req,
     const std::shared_ptr<tinkoff::FuturesResponse>&          resp
 )
 {
-    return rawGrpcClient->findFutures(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->findFutures(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::FuturesResponse> GrpcClient::findFutures(QThread* parentThread)
 {
-    grpc::ClientContext                             context;
     tinkoff::InstrumentsRequest                     req;
     const std::shared_ptr<tinkoff::FuturesResponse> resp = std::make_shared<tinkoff::FuturesResponse>();
 
-    context.set_credentials(mCreds);
-
     req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
-    return repeatRequest(parentThread, findFuturesAction, mInstrumentsService, &context, req, resp, false);
+    return repeatRequest(parentThread, findFuturesAction, mInstrumentsService, req, resp, false);
 }
 
 static grpc::Status getCandlesAction(
     IRawGrpcClient*                                          rawGrpcClient,
     const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
-    grpc::ClientContext*                                     context,
+    std::shared_ptr<grpc::CallCredentials>                   creds,
     const tinkoff::GetCandlesRequest&                        req,
     const std::shared_ptr<tinkoff::GetCandlesResponse>&      resp
 )
 {
-    return rawGrpcClient->getCandles(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->getCandles(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::GetCandlesResponse>
 GrpcClient::getCandles(QThread* parentThread, const QString& instrumentId, qint64 from, qint64 to)
 {
-    grpc::ClientContext                                context;
     tinkoff::GetCandlesRequest                         req;
     const std::shared_ptr<tinkoff::GetCandlesResponse> resp = std::make_shared<tinkoff::GetCandlesResponse>();
-
-    context.set_credentials(mCreds);
 
     google::protobuf::Timestamp* fromTimestamp = new google::protobuf::Timestamp(); // req will take ownership
     google::protobuf::Timestamp* toTimestamp   = new google::protobuf::Timestamp(); // req will take ownership
@@ -273,79 +273,79 @@ GrpcClient::getCandles(QThread* parentThread, const QString& instrumentId, qint6
     req.set_interval(tinkoff::CANDLE_INTERVAL_1_MIN);
     req.set_limit(MAX_LIMIT_FOR_INTERVAL_1_MIN);
 
-    return repeatRequest(parentThread, getCandlesAction, mMarketDataService, &context, req, resp, false);
+    return repeatRequest(parentThread, getCandlesAction, mMarketDataService, req, resp, false);
 }
 
 static grpc::Status getOrderBookAction(
     IRawGrpcClient*                                          rawGrpcClient,
     const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
-    grpc::ClientContext*                                     context,
+    std::shared_ptr<grpc::CallCredentials>                   creds,
     const tinkoff::GetOrderBookRequest&                      req,
     const std::shared_ptr<tinkoff::GetOrderBookResponse>&    resp
 )
 {
-    return rawGrpcClient->getOrderBook(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->getOrderBook(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::GetOrderBookResponse>
 GrpcClient::getOrderBook(QThread* parentThread, const QString& instrumentId, int depth)
 {
-    grpc::ClientContext                                  context;
     tinkoff::GetOrderBookRequest                         req;
     const std::shared_ptr<tinkoff::GetOrderBookResponse> resp = std::make_shared<tinkoff::GetOrderBookResponse>();
-
-    context.set_credentials(mCreds);
 
     req.set_instrument_id(instrumentId.toStdString());
     req.set_depth(depth);
 
-    return repeatRequest(parentThread, getOrderBookAction, mMarketDataService, &context, req, resp, false);
+    return repeatRequest(parentThread, getOrderBookAction, mMarketDataService, req, resp, false);
 }
 
 static grpc::Status getPortfolioAction(
     IRawGrpcClient*                                          rawGrpcClient,
     const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
-    grpc::ClientContext*                                     context,
+    std::shared_ptr<grpc::CallCredentials>                   creds,
     const tinkoff::PortfolioRequest&                         req,
     const std::shared_ptr<tinkoff::PortfolioResponse>&       resp
 )
 {
-    return rawGrpcClient->getPortfolio(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->getPortfolio(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::PortfolioResponse> GrpcClient::getPortfolio(QThread* parentThread, const QString& accountId)
 {
-    grpc::ClientContext                               context;
     tinkoff::PortfolioRequest                         req;
     const std::shared_ptr<tinkoff::PortfolioResponse> resp = std::make_shared<tinkoff::PortfolioResponse>();
 
-    context.set_credentials(mCreds);
-
     req.set_account_id(accountId.toStdString());
 
-    return repeatRequest(parentThread, getPortfolioAction, mOperationsService, &context, req, resp, false);
+    return repeatRequest(parentThread, getPortfolioAction, mOperationsService, req, resp, false);
 }
 
 static grpc::Status getOperationsAction(
     IRawGrpcClient*                                                rawGrpcClient,
     const std::unique_ptr<tinkoff::OperationsService::Stub>&       service,
-    grpc::ClientContext*                                           context,
+    std::shared_ptr<grpc::CallCredentials>                         creds,
     const tinkoff::GetOperationsByCursorRequest&                   req,
     const std::shared_ptr<tinkoff::GetOperationsByCursorResponse>& resp
 )
 {
-    return rawGrpcClient->getOperations(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->getOperations(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
 GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor)
 {
-    grpc::ClientContext                                           context;
     tinkoff::GetOperationsByCursorRequest                         req;
     const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> resp =
         std::make_shared<tinkoff::GetOperationsByCursorResponse>();
-
-    context.set_credentials(mCreds);
 
     google::protobuf::Timestamp* fromTimestamp = new google::protobuf::Timestamp(); // req will take ownership
     google::protobuf::Timestamp* toTimestamp   = new google::protobuf::Timestamp(); // req will take ownership
@@ -363,28 +363,28 @@ GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint6
     req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
     req.set_without_trades(true);
 
-    return repeatRequest(parentThread, getOperationsAction, mOperationsService, &context, req, resp, false);
+    return repeatRequest(parentThread, getOperationsAction, mOperationsService, req, resp, false);
 }
 
 static grpc::Status getMaxLotsAction(
     IRawGrpcClient*                                      rawGrpcClient,
     const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
-    grpc::ClientContext*                                 context,
+    std::shared_ptr<grpc::CallCredentials>               creds,
     const tinkoff::GetMaxLotsRequest&                    req,
     const std::shared_ptr<tinkoff::GetMaxLotsResponse>&  resp
 )
 {
-    return rawGrpcClient->getMaxLots(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->getMaxLots(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::GetMaxLotsResponse>
 GrpcClient::getMaxLots(QThread* parentThread, const QString& accountId, const QString& instrumentId, const Quotation& price)
 {
-    grpc::ClientContext                                context;
     tinkoff::GetMaxLotsRequest                         req;
     const std::shared_ptr<tinkoff::GetMaxLotsResponse> resp = std::make_shared<tinkoff::GetMaxLotsResponse>();
-
-    context.set_credentials(mCreds);
 
     tinkoff::Quotation* tinkoffPrice = new tinkoff::Quotation(); // req will take ownership
 
@@ -395,18 +395,21 @@ GrpcClient::getMaxLots(QThread* parentThread, const QString& accountId, const QS
     req.set_instrument_id(instrumentId.toStdString());
     req.set_allocated_price(tinkoffPrice);
 
-    return repeatRequest(parentThread, getMaxLotsAction, mOrdersService, &context, req, resp, false);
+    return repeatRequest(parentThread, getMaxLotsAction, mOrdersService, req, resp, false);
 }
 
 static grpc::Status postOrderAction(
     IRawGrpcClient*                                      rawGrpcClient,
     const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
-    grpc::ClientContext*                                 context,
+    std::shared_ptr<grpc::CallCredentials>               creds,
     const tinkoff::PostOrderRequest&                     req,
     const std::shared_ptr<tinkoff::PostOrderResponse>&   resp
 )
 {
-    return rawGrpcClient->postOrder(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->postOrder(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
@@ -418,11 +421,8 @@ std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
     const Quotation&        price
 )
 {
-    grpc::ClientContext                               context;
     tinkoff::PostOrderRequest                         req;
     const std::shared_ptr<tinkoff::PostOrderResponse> resp = std::make_shared<tinkoff::PostOrderResponse>();
-
-    context.set_credentials(mCreds);
 
     tinkoff::Quotation* tinkoffPrice = new tinkoff::Quotation(); // req will take ownership
 
@@ -438,303 +438,197 @@ std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
     req.set_time_in_force(tinkoff::TIME_IN_FORCE_DAY);
     req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
 
-    return repeatRequest(parentThread, postOrderAction, mOrdersService, &context, req, resp, true);
+    return repeatRequest(parentThread, postOrderAction, mOrdersService, req, resp, true);
 }
 
 static grpc::Status getOrderStateAction(
     IRawGrpcClient*                                      rawGrpcClient,
     const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
-    grpc::ClientContext*                                 context,
+    std::shared_ptr<grpc::CallCredentials>               creds,
     const tinkoff::GetOrderStateRequest&                 req,
     const std::shared_ptr<tinkoff::OrderState>&          resp
 )
 {
-    return rawGrpcClient->getOrderState(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->getOrderState(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::OrderState>
 GrpcClient::getOrderState(QThread* parentThread, const QString& accountId, const QString& orderId)
 {
-    grpc::ClientContext                        context;
     tinkoff::GetOrderStateRequest              req;
     const std::shared_ptr<tinkoff::OrderState> resp = std::make_shared<tinkoff::OrderState>();
-
-    context.set_credentials(mCreds);
 
     req.set_account_id(accountId.toStdString());
     req.set_order_id(orderId.toStdString());
     req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
     req.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
 
-    return repeatRequest(parentThread, getOrderStateAction, mOrdersService, &context, req, resp, true);
+    return repeatRequest(parentThread, getOrderStateAction, mOrdersService, req, resp, true);
 }
 
 static grpc::Status cancelOrderAction(
     IRawGrpcClient*                                      rawGrpcClient,
     const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
-    grpc::ClientContext*                                 context,
+    std::shared_ptr<grpc::CallCredentials>               creds,
     const tinkoff::CancelOrderRequest&                   req,
     const std::shared_ptr<tinkoff::CancelOrderResponse>& resp
 )
 {
-    return rawGrpcClient->cancelOrder(service, context, req, resp.get());
+    grpc::ClientContext context;
+    context.set_credentials(creds);
+
+    return rawGrpcClient->cancelOrder(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::CancelOrderResponse>
 GrpcClient::cancelOrder(QThread* parentThread, const QString& accountId, const QString& orderId)
 {
-    grpc::ClientContext                                 context;
     tinkoff::CancelOrderRequest                         req;
     const std::shared_ptr<tinkoff::CancelOrderResponse> resp = std::make_shared<tinkoff::CancelOrderResponse>();
-
-    context.set_credentials(mCreds);
 
     req.set_account_id(accountId.toStdString());
     req.set_order_id(orderId.toStdString());
     req.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
 
-    return repeatRequest(parentThread, cancelOrderAction, mOrdersService, &context, req, resp, true);
+    return repeatRequest(parentThread, cancelOrderAction, mOrdersService, req, resp, true);
 }
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStreamForLastPrice(const QStringList& instrumentIds)
 {
-    try
+    std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
+
+    tinkoff::MarketDataServerSideStreamRequest req;
+    tinkoff::SubscribeLastPriceRequest*        subscribeLastPriceRequest =
+        new tinkoff::SubscribeLastPriceRequest(); // req will take ownership
+
+    subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
+
+    for (const QString& instrumentId : instrumentIds)
     {
-        std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
-
-        tinkoff::MarketDataServerSideStreamRequest req;
-        tinkoff::SubscribeLastPriceRequest*        subscribeLastPriceRequest =
-            new tinkoff::SubscribeLastPriceRequest(); // req will take ownership
-
-        subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
-
-        for (const QString& instrumentId : instrumentIds)
-        {
-            subscribeLastPriceRequest->add_instruments()->set_instrument_id(instrumentId.toStdString());
-        }
-
-        req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
-
-        res->context.set_credentials(mCreds);
-        res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context, req);
-
-        return res;
+        subscribeLastPriceRequest->add_instruments()->set_instrument_id(instrumentId.toStdString());
     }
-    catch (...)
-    {
-        qWarning() << "GRPC exception caught";
 
-        emitAuthFailed(
-            grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in createMarketDataStreamForLastPrice()")
-        );
+    req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
 
-        return nullptr;
-    }
+    res->context.set_credentials(mCreds);
+    res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context, req);
+
+    return res;
 }
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStreamForOrderBook(const QString& instrumentId, int depth)
 {
-    try
-    {
-        std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
+    std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
 
-        tinkoff::MarketDataServerSideStreamRequest req;
-        tinkoff::SubscribeOrderBookRequest*        subscribeOrderBookRequest =
-            new tinkoff::SubscribeOrderBookRequest(); // req will take ownership
+    tinkoff::MarketDataServerSideStreamRequest req;
+    tinkoff::SubscribeOrderBookRequest*        subscribeOrderBookRequest =
+        new tinkoff::SubscribeOrderBookRequest(); // req will take ownership
 
-        subscribeOrderBookRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
-        tinkoff::OrderBookInstrument* orderBook = subscribeOrderBookRequest->add_instruments();
+    subscribeOrderBookRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
+    tinkoff::OrderBookInstrument* orderBook = subscribeOrderBookRequest->add_instruments();
 
-        orderBook->set_instrument_id(instrumentId.toStdString());
-        orderBook->set_depth(depth);
-        orderBook->set_order_book_type(tinkoff::ORDERBOOK_TYPE_ALL);
+    orderBook->set_instrument_id(instrumentId.toStdString());
+    orderBook->set_depth(depth);
+    orderBook->set_order_book_type(tinkoff::ORDERBOOK_TYPE_ALL);
 
-        req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
+    req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
 
-        res->context.set_credentials(mCreds);
-        res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context, req);
+    res->context.set_credentials(mCreds);
+    res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context, req);
 
-        return res;
-    }
-    catch (...)
-    {
-        qWarning() << "GRPC exception caught";
-
-        emitAuthFailed(
-            grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in createMarketDataStreamForOrderBook()")
-        );
-
-        return nullptr;
-    }
+    return res;
 }
 
 std::shared_ptr<tinkoff::MarketDataResponse> GrpcClient::readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    try
+    std::shared_ptr<tinkoff::MarketDataResponse> resp = std::make_shared<tinkoff::MarketDataResponse>();
+
+    if (!mRawGrpcClient->readMarketDataStream(marketDataStream, resp.get()))
     {
-        std::shared_ptr<tinkoff::MarketDataResponse> resp = std::make_shared<tinkoff::MarketDataResponse>();
-
-        if (!mRawGrpcClient->readMarketDataStream(marketDataStream, resp.get()))
-        {
-            // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readMarketDataStream()"); // Not a problem
-
-            return nullptr;
-        }
-
-        return resp;
-    }
-    catch (...)
-    {
-        qWarning() << "GRPC exception caught";
-
-        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in readMarketDataStream()"));
+        // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readMarketDataStream()"); // Not a problem
 
         return nullptr;
     }
+
+    return resp;
 }
 
 void GrpcClient::cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    try
-    {
-        marketDataStream->context.TryCancel();
-    }
-    catch (...)
-    {
-        qWarning() << "GRPC exception caught";
-
-        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in cancelMarketDataStream()"));
-    }
+    marketDataStream->context.TryCancel();
 }
 
 void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    try
-    {
-        const grpc::Status     status    = mRawGrpcClient->finishMarketDataStream(marketDataStream);
-        const grpc::StatusCode errorCode = status.error_code();
+    const grpc::Status     status    = mRawGrpcClient->finishMarketDataStream(marketDataStream);
+    const grpc::StatusCode errorCode = status.error_code();
 
-        if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
-            errorCode != grpc::StatusCode::CANCELLED)
-        {
-            emitAuthFailed(status);
-        }
-    }
-    catch (...)
+    if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
+        errorCode != grpc::StatusCode::CANCELLED)
     {
-        qWarning() << "GRPC exception caught";
-
-        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in finishMarketDataStream()"));
+        emitAuthFailed(status);
     }
 }
 
 std::shared_ptr<PortfolioStream> GrpcClient::createPortfolioStream(const QString& accountId)
 {
-    try
-    {
-        std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();
+    std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();
 
-        tinkoff::PortfolioStreamRequest req;
-        req.add_accounts(accountId.toStdString());
+    tinkoff::PortfolioStreamRequest req;
+    req.add_accounts(accountId.toStdString());
 
-        res->context.set_credentials(mCreds);
-        res->stream = mRawGrpcClient->createPortfolioStream(mOperationsStreamService, &res->context, req);
+    res->context.set_credentials(mCreds);
+    res->stream = mRawGrpcClient->createPortfolioStream(mOperationsStreamService, &res->context, req);
 
-        return res;
-    }
-    catch (...)
-    {
-        qWarning() << "GRPC exception caught";
-
-        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in createPortfolioStream()"));
-
-        return nullptr;
-    }
+    return res;
 }
 
 std::shared_ptr<PortfolioStream> GrpcClient::createPortfolioStream(const QString& accountId, const QString& anotherAccountId)
 {
-    try
-    {
-        std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();
+    std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();
 
-        tinkoff::PortfolioStreamRequest req;
-        req.add_accounts(accountId.toStdString());
-        req.add_accounts(anotherAccountId.toStdString());
+    tinkoff::PortfolioStreamRequest req;
+    req.add_accounts(accountId.toStdString());
+    req.add_accounts(anotherAccountId.toStdString());
 
-        res->context.set_credentials(mCreds);
-        res->stream = mRawGrpcClient->createPortfolioStream(mOperationsStreamService, &res->context, req);
+    res->context.set_credentials(mCreds);
+    res->stream = mRawGrpcClient->createPortfolioStream(mOperationsStreamService, &res->context, req);
 
-        return res;
-    }
-    catch (...)
-    {
-        qWarning() << "GRPC exception caught";
-
-        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in createPortfolioStream()"));
-
-        return nullptr;
-    }
+    return res;
 }
 
 std::shared_ptr<tinkoff::PortfolioStreamResponse>
 GrpcClient::readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
 {
-    try
+    std::shared_ptr<tinkoff::PortfolioStreamResponse> resp = std::make_shared<tinkoff::PortfolioStreamResponse>();
+
+    if (!mRawGrpcClient->readPortfolioStream(portfolioStream, resp.get()))
     {
-        std::shared_ptr<tinkoff::PortfolioStreamResponse> resp = std::make_shared<tinkoff::PortfolioStreamResponse>();
-
-        if (!mRawGrpcClient->readPortfolioStream(portfolioStream, resp.get()))
-        {
-            // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readPortfolioStream()"); // Not a problem
-
-            return nullptr;
-        }
-
-        return resp;
-    }
-    catch (...)
-    {
-        qWarning() << "GRPC exception caught";
-
-        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in readPortfolioStream()"));
+        // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readPortfolioStream()"); // Not a problem
 
         return nullptr;
     }
+
+    return resp;
 }
 
 void GrpcClient::cancelPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
 {
-    try
-    {
-        portfolioStream->context.TryCancel();
-    }
-    catch (...)
-    {
-        qWarning() << "GRPC exception caught";
-
-        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in cancelPortfolioStream()"));
-    }
+    portfolioStream->context.TryCancel();
 }
 
 void GrpcClient::finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
 {
-    try
-    {
-        const grpc::Status     status    = mRawGrpcClient->finishPortfolioStream(portfolioStream);
-        const grpc::StatusCode errorCode = status.error_code();
+    const grpc::Status     status    = mRawGrpcClient->finishPortfolioStream(portfolioStream);
+    const grpc::StatusCode errorCode = status.error_code();
 
-        if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
-            errorCode != grpc::StatusCode::CANCELLED)
-        {
-            emitAuthFailed(status);
-        }
-    }
-    catch (...)
+    if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
+        errorCode != grpc::StatusCode::CANCELLED)
     {
-        qWarning() << "GRPC exception caught";
-
-        emitAuthFailed(grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in finishPortfolioStream()"));
+        emitAuthFailed(status);
     }
 }
 

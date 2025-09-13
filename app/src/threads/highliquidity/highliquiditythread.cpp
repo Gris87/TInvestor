@@ -10,16 +10,13 @@
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 const char* const TMON_UID  = "498ec3ff-ef27-4729-9703-a5aac48d5789";
 
-constexpr float  HUNDRED_PERCENT             = 100.0f;
-constexpr float  KEEP_ETF_AT_THE_MORNING     = 15.0f;
-constexpr int    NORMAL_SESSION_START_HOUR   = 10;
-constexpr int    NORMAL_SESSION_START_MINUTE = 0;
-constexpr int    NORMAL_SESSION_END_HOUR     = 18;
-constexpr int    NORMAL_SESSION_END_MINUTE   = 30;
-constexpr int    EXTRA_SESSION_END_HOUR      = 23;
-constexpr int    EXTRA_SESSION_END_MINUTE    = 40;
-constexpr qint64 MS_IN_SECOND                = 1000LL;
-constexpr qint64 SLEEP_BEFORE_REQUEST        = 5LL * MS_IN_SECOND; // 5 seconds
+constexpr float HUNDRED_PERCENT             = 100.0f;
+constexpr int   NORMAL_SESSION_START_HOUR   = 10;
+constexpr int   NORMAL_SESSION_START_MINUTE = 0;
+constexpr int   NORMAL_SESSION_END_HOUR     = 18;
+constexpr int   NORMAL_SESSION_END_MINUTE   = 30;
+constexpr int   EXTRA_SESSION_END_HOUR      = 23;
+constexpr int   EXTRA_SESSION_END_MINUTE    = 40;
 
 
 
@@ -113,25 +110,27 @@ void HighLiquidityThread::buyEtf()
 void HighLiquidityThread::sellEtf()
 {
     const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-        mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);
+        mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
-        double money     = 0.0;
-        double totalCost = 0.0;
-        double etfCost   = 0.0;
-        float  etfPrice  = 0.0f;
-
-        calculateMoneyAndTotalCost(*tinkoffPortfolio, money, totalCost, etfCost, etfPrice);
-
-        if (etfCost > etfPrice)
+        for (int i = 0; i < tinkoffPortfolio->positions_size(); ++i)
         {
-            InstrumentsForTrading instrumentsForTrading;
+            const tinkoff::PortfolioPosition& position = tinkoffPortfolio->positions(i);
 
-            instrumentsForTrading[TMON_UID] = TradingInfo(
-                ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, 0.0, tr("Decided to sell because it had been a night since buying")
-            );
-            emit tradeInstruments(instrumentsForTrading);
+            const QString instrumentId = QString::fromStdString(position.instrument_uid());
+
+            if (instrumentId == TMON_UID)
+            {
+                InstrumentsForTrading instrumentsForTrading;
+
+                instrumentsForTrading[instrumentId] = TradingInfo(
+                    ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, 0.0, tr("Decided to sell because it had been a night since buying")
+                );
+                emit tradeInstruments(instrumentsForTrading);
+
+                break;
+            }
         }
     }
 }

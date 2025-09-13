@@ -30,35 +30,23 @@ public:
     RESP_T repeatRequest(
         QThread*     parentThread,
         grpc::Status action(
-            IRawGrpcClient*      rawGrpcClient,
-            const SERVICE_T&     service,
-            grpc::ClientContext* context,
-            const REQ_T&         req,
-            const RESP_T&        resp
+            IRawGrpcClient*                        rawGrpcClient,
+            const SERVICE_T&                       service,
+            std::shared_ptr<grpc::CallCredentials> creds,
+            const REQ_T&                           req,
+            const RESP_T&                          resp
         ),
-        const SERVICE_T&     service,
-        grpc::ClientContext* context,
-        const REQ_T&         req,
-        const RESP_T&        resp,
-        bool                 ignoreInvalidArg
+        const SERVICE_T& service,
+        const REQ_T&     req,
+        const RESP_T&    resp,
+        bool             ignoreInvalidArg
     )
     {
         bool running = true;
 
         while (running)
         {
-            grpc::Status status;
-
-            try
-            {
-                status = action(mRawGrpcClient, service, context, req, resp);
-            }
-            catch (...)
-            {
-                qWarning() << "GRPC exception caught";
-
-                status = grpc::Status(grpc::StatusCode::INTERNAL, "GRPC exception caught", "in repeatRequest()");
-            }
+            const grpc::Status status = action(mRawGrpcClient, service, mCreds, req, resp);
 
             if (!parentThread->isInterruptionRequested() && !status.ok())
             {
