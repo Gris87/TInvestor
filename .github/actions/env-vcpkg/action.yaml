@@ -136,7 +136,6 @@ runs:
         Remove-Item "installed/vcpkg" -Recurse -Force
         Remove-Item "installed/${PACKAGE_NAME}/lib/pkgconfig" -Recurse -Force
         Remove-Item "installed/${PACKAGE_NAME}/share" -Recurse -Force
-        Remove-Item "installed/${PACKAGE_NAME}/tools" -Recurse -Force
 
         Copy-Item installed -Destination "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed" -Recurse
 

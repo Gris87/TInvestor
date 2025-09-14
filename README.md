@@ -56,9 +56,9 @@ You have to install prerequisites in order to build TInvestor.
 
 - Please visit [CMake download page](https://cmake.org/download) and install CMake 4.0.1
 
-3. Install Qt 6.9.0
+3. Install Qt 6.9.2
 
-- Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.9.0. Please also install addons qt5compat and qtcharts
+- Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.9.2. Please also install addons qt5compat and qtcharts
 
 4. Install zlib 1.3.1
 
@@ -95,7 +95,7 @@ cmake --install . --config Release
 - Run commands below
 
 ```
-set QTDIR=SET_PATH_TO_QT (for example: C:\Qt\6.9.0\msvc2022_64)
+set QTDIR=SET_PATH_TO_QT (for example: C:\Qt\6.9.2\msvc2022_64)
 set ZLIB_PATH=SET_PATH_TO_ZLIB (for example: C:\Qt\zlib)
 set QUAZIP_PATH=SET_PATH_TO_QUAZIP (for example: C:\Qt\quazip)
 
@@ -135,13 +135,13 @@ set VCPKG_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\vcpkg)
 
 git clone git@github.com:microsoft/vcpkg.git %VCPKG_PATH%
 cd %VCPKG_PATH%
-git checkout 2025.04.09 -b temp
+git checkout 2025.08.27 -b temp
 bootstrap-vcpkg.bat
 vcpkg integrate install
 vcpkg install grpc
 ```
 
-7. Install googletest 1.16.0
+7. Install googletest 1.17.0
 
 - Run commands below
 
@@ -150,7 +150,7 @@ set GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: C:\Qt\googletest)
 
 git clone git@github.com:google/googletest.git %GOOGLETEST_PATH%
 cd %GOOGLETEST_PATH%
-git checkout v1.16.0 -b temp
+git checkout v1.17.0 -b temp
 ```
 
 8. Setup environment variables
@@ -185,9 +185,9 @@ sudo apt-get install -y \
     libxcb-sync1 libxcb-util1 libxcb-xfixes0 libxcb-xkb1 libxcb1
 ```
 
-2. Install Qt 6.9.0
+2. Install Qt 6.9.2
 
-- Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.9.0. Please also install addons qt5compat and qtcharts
+- Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.9.2. Please also install addons qt5compat and qtcharts
 
 3. Install zlib 1.3.1
 
@@ -224,7 +224,7 @@ cmake --install . --config Release
 - Run commands below
 
 ```
-QTDIR=SET_PATH_TO_QT (for example: /home/user/Qt/6.9.0/gcc_64)
+QTDIR=SET_PATH_TO_QT (for example: /home/user/Qt/6.9.2/gcc_64)
 ZLIB_PATH=SET_PATH_TO_ZLIB (for example: /home/user/Qt/zlib)
 QUAZIP_PATH=SET_PATH_TO_QUAZIP (for example: /home/user/Qt/quazip)
 
@@ -264,13 +264,13 @@ VCPKG_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/vcpkg)
 
 git clone git@github.com:microsoft/vcpkg.git ${VCPKG_PATH}
 cd ${VCPKG_PATH}
-git checkout 2025.04.09 -b temp
+git checkout 2025.08.27 -b temp
 ./bootstrap-vcpkg.sh
 ./vcpkg integrate install
 ./vcpkg install grpc
 ```
 
-6. Install googletest 1.16.0
+6. Install googletest 1.17.0
 
 - Run commands below
 
@@ -279,7 +279,7 @@ GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: /home/user/Qt/googletest)
 
 git clone git@github.com:google/googletest.git ${GOOGLETEST_PATH}
 cd ${GOOGLETEST_PATH}
-git checkout v1.16.0 -b temp
+git checkout v1.17.0 -b temp
 ```
 
 7. Setup environment variables

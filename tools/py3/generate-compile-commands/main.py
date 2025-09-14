@@ -239,16 +239,16 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}\\include\\QtOpenGL")
 
         if duplicate_for_tests:
-            res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.0")
-            res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.0\\QtGui")
+            res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.2")
+            res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.2\\QtGui")
 
         res.append(f"-I{args.qt_path}\\include\\QtGui")
         res.append(f"-I{args.qt_path}\\include\\QtNetwork")
         res.append(f"-I{args.qt_path}\\include\\QtSql")
 
         if duplicate_for_tests:
-            res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.0")
-            res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.0\\QtCore")
+            res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.2")
+            res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.2\\QtCore")
 
         res.append(f"-I{args.qt_path}\\include\\QtCore")
 
@@ -275,12 +275,12 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
             res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
 
         res.append(f"-I{cwd}\\libs\\qxlsx")
-        res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.0")
-        res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.0\\QtGui")
+        res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.2")
+        res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.2\\QtGui")
         res.append(f"-I{args.qt_path}\\include")
         res.append(f"-I{args.qt_path}\\include\\QtGui")
-        res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.0")
-        res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.0\\QtCore")
+        res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.2")
+        res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.2\\QtCore")
         res.append(f"-I{args.qt_path}\\include\\QtCore")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\qxlsx\\build\\gen\\qxlsx\\moc")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\qxlsx")
@@ -499,16 +499,16 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}/include/QtOpenGL")
 
         if duplicate_for_tests:
-            res.append(f"-I{args.qt_path}/include/QtGui/6.9.0")
-            res.append(f"-I{args.qt_path}/include/QtGui/6.9.0/QtGui")
+            res.append(f"-I{args.qt_path}/include/QtGui/6.9.2")
+            res.append(f"-I{args.qt_path}/include/QtGui/6.9.2/QtGui")
 
         res.append(f"-I{args.qt_path}/include/QtGui")
         res.append(f"-I{args.qt_path}/include/QtNetwork")
         res.append(f"-I{args.qt_path}/include/QtSql")
 
         if duplicate_for_tests:
-            res.append(f"-I{args.qt_path}/include/QtCore/6.9.0")
-            res.append(f"-I{args.qt_path}/include/QtCore/6.9.0/QtCore")
+            res.append(f"-I{args.qt_path}/include/QtCore/6.9.2")
+            res.append(f"-I{args.qt_path}/include/QtCore/6.9.2/QtCore")
 
         res.append(f"-I{args.qt_path}/include/QtCore")
 
@@ -535,12 +535,12 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
             res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
 
         res.append(f"-I{cwd}/libs/qxlsx")
-        res.append(f"-I{args.qt_path}/include/QtGui/6.9.0")
-        res.append(f"-I{args.qt_path}/include/QtGui/6.9.0/QtGui")
+        res.append(f"-I{args.qt_path}/include/QtGui/6.9.2")
+        res.append(f"-I{args.qt_path}/include/QtGui/6.9.2/QtGui")
         res.append(f"-I{args.qt_path}/include")
         res.append(f"-I{args.qt_path}/include/QtGui")
-        res.append(f"-I{args.qt_path}/include/QtCore/6.9.0")
-        res.append(f"-I{args.qt_path}/include/QtCore/6.9.0/QtCore")
+        res.append(f"-I{args.qt_path}/include/QtCore/6.9.2")
+        res.append(f"-I{args.qt_path}/include/QtCore/6.9.2/QtCore")
         res.append(f"-I{args.qt_path}/include/QtCore")
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/qxlsx/build/gen/qxlsx/moc")
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/qxlsx")
@@ -698,7 +698,7 @@ def main():
         "--qt-path",
         dest="qt_path",
         type=str,
-        default="E:\\Qt\\6.9.0\\msvc2022_64",
+        default="E:\\Qt\\6.9.2\\msvc2022_64",
         help="Path to Qt",
     )
     parser.add_argument(
@@ -712,7 +712,7 @@ def main():
         "--quazip-path",
         dest="quazip_path",
         type=str,
-        default="E:\\Qt\\quazip-1.5\\install\\include\\QuaZip-Qt6-1.5",
+        default="E:\\Qt\\quazip\\install\\include\\QuaZip-Qt6-1.5",
         help="Path to quazip",
     )
     parser.add_argument(
@@ -726,7 +726,7 @@ def main():
         "--google-test-path",
         dest="google_test_path",
         type=str,
-        default="E:\\Qt\\googletest-1.16.0",
+        default="E:\\Qt\\googletest",
         help="Path to Google Test",
     )
     parser.add_argument(

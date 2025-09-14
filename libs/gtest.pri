@@ -2,9 +2,9 @@ isEmpty(GOOGLETEST_PATH):GOOGLETEST_PATH=$$(GOOGLETEST_PATH)
 
 isEmpty(GOOGLETEST_PATH) {
     win32* {
-        GOOGLETEST_PATH = "E:/Qt/googletest-1.16.0"
+        GOOGLETEST_PATH = "E:/Qt/googletest"
     } else {
-        GOOGLETEST_PATH = "/home/gris/Qt/googletest-1.16.0"
+        GOOGLETEST_PATH = "/home/gris/Qt/googletest"
     }
 
     !isEmpty(GOOGLETEST_PATH) {

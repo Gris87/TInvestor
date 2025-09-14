@@ -2,9 +2,9 @@ isEmpty(QUAZIP_PATH):QUAZIP_PATH=$$(QUAZIP_PATH)
 
 isEmpty(QUAZIP_PATH) {
     win32* {
-        QUAZIP_PATH = E:/Qt/quazip-1.5
+        QUAZIP_PATH = E:/Qt/quazip
     } else {
-        QUAZIP_PATH = /home/gris/Qt/quazip-1.5
+        QUAZIP_PATH = /home/gris/Qt/quazip
     }
 }
 
