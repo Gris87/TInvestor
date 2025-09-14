@@ -30,11 +30,11 @@ public:
     RESP_T repeatRequest(
         QThread*     parentThread,
         grpc::Status action(
-            IRawGrpcClient*                        rawGrpcClient,
-            const SERVICE_T&                       service,
-            std::shared_ptr<grpc::CallCredentials> creds,
-            const REQ_T&                           req,
-            const RESP_T&                          resp
+            IRawGrpcClient*                               rawGrpcClient,
+            const SERVICE_T&                              service,
+            const std::shared_ptr<grpc::CallCredentials>& creds,
+            const REQ_T&                                  req,
+            const RESP_T&                                 resp
         ),
         const SERVICE_T& service,
         const REQ_T&     req,

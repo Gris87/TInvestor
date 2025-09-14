@@ -1,4 +1,3 @@
-Fix issue with many requests over GRPC
 Update dependencies
 Improve coverage
 Create release

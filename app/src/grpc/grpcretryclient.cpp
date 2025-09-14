@@ -45,6 +45,7 @@ std::shared_ptr<tinkoff::GetOperationsByCursorResponse> GrpcRetryClient::getVali
     {
         for (int i = 0; i < tinkoffOperations->items_size(); ++i)
         {
+            // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
             tinkoff::OperationItem&       tinkoffOperation = const_cast<tinkoff::OperationItem&>(tinkoffOperations->items(i));
             const tinkoff::OperationType  operationType    = tinkoffOperation.type();
             const tinkoff::InstrumentType instrumentKind   = tinkoffOperation.instrument_kind();

@@ -76,7 +76,7 @@ GrpcClient::~GrpcClient()
 static grpc::Status getUserInfoAction(
     IRawGrpcClient*                                     rawGrpcClient,
     const std::unique_ptr<tinkoff::UsersService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>              creds,
+    const std::shared_ptr<grpc::CallCredentials>&       creds,
     const tinkoff::GetInfoRequest&                      req,
     const std::shared_ptr<tinkoff::GetInfoResponse>&    resp
 )
@@ -98,7 +98,7 @@ std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo(QThread* paren
 static grpc::Status getAccountsAction(
     IRawGrpcClient*                                      rawGrpcClient,
     const std::unique_ptr<tinkoff::UsersService::Stub>&  service,
-    std::shared_ptr<grpc::CallCredentials>               creds,
+    const std::shared_ptr<grpc::CallCredentials>&        creds,
     const tinkoff::GetAccountsRequest&                   req,
     const std::shared_ptr<tinkoff::GetAccountsResponse>& resp
 )
@@ -122,7 +122,7 @@ std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts(QThread* p
 static grpc::Status findStocksAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>                    creds,
+    const std::shared_ptr<grpc::CallCredentials>&             creds,
     const tinkoff::InstrumentsRequest&                        req,
     const std::shared_ptr<tinkoff::SharesResponse>&           resp
 )
@@ -146,7 +146,7 @@ std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentT
 static grpc::Status findBondsAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>                    creds,
+    const std::shared_ptr<grpc::CallCredentials>&             creds,
     const tinkoff::InstrumentsRequest&                        req,
     const std::shared_ptr<tinkoff::BondsResponse>&            resp
 )
@@ -170,7 +170,7 @@ std::shared_ptr<tinkoff::BondsResponse> GrpcClient::findBonds(QThread* parentThr
 static grpc::Status findCurrenciesAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>                    creds,
+    const std::shared_ptr<grpc::CallCredentials>&             creds,
     const tinkoff::InstrumentsRequest&                        req,
     const std::shared_ptr<tinkoff::CurrenciesResponse>&       resp
 )
@@ -194,7 +194,7 @@ std::shared_ptr<tinkoff::CurrenciesResponse> GrpcClient::findCurrencies(QThread*
 static grpc::Status findEtfsAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>                    creds,
+    const std::shared_ptr<grpc::CallCredentials>&             creds,
     const tinkoff::InstrumentsRequest&                        req,
     const std::shared_ptr<tinkoff::EtfsResponse>&             resp
 )
@@ -218,7 +218,7 @@ std::shared_ptr<tinkoff::EtfsResponse> GrpcClient::findEtfs(QThread* parentThrea
 static grpc::Status findFuturesAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>                    creds,
+    const std::shared_ptr<grpc::CallCredentials>&             creds,
     const tinkoff::InstrumentsRequest&                        req,
     const std::shared_ptr<tinkoff::FuturesResponse>&          resp
 )
@@ -242,7 +242,7 @@ std::shared_ptr<tinkoff::FuturesResponse> GrpcClient::findFutures(QThread* paren
 static grpc::Status getCandlesAction(
     IRawGrpcClient*                                          rawGrpcClient,
     const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>                   creds,
+    const std::shared_ptr<grpc::CallCredentials>&            creds,
     const tinkoff::GetCandlesRequest&                        req,
     const std::shared_ptr<tinkoff::GetCandlesResponse>&      resp
 )
@@ -279,7 +279,7 @@ GrpcClient::getCandles(QThread* parentThread, const QString& instrumentId, qint6
 static grpc::Status getOrderBookAction(
     IRawGrpcClient*                                          rawGrpcClient,
     const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>                   creds,
+    const std::shared_ptr<grpc::CallCredentials>&            creds,
     const tinkoff::GetOrderBookRequest&                      req,
     const std::shared_ptr<tinkoff::GetOrderBookResponse>&    resp
 )
@@ -305,7 +305,7 @@ GrpcClient::getOrderBook(QThread* parentThread, const QString& instrumentId, int
 static grpc::Status getPortfolioAction(
     IRawGrpcClient*                                          rawGrpcClient,
     const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>                   creds,
+    const std::shared_ptr<grpc::CallCredentials>&            creds,
     const tinkoff::PortfolioRequest&                         req,
     const std::shared_ptr<tinkoff::PortfolioResponse>&       resp
 )
@@ -329,7 +329,7 @@ std::shared_ptr<tinkoff::PortfolioResponse> GrpcClient::getPortfolio(QThread* pa
 static grpc::Status getOperationsAction(
     IRawGrpcClient*                                                rawGrpcClient,
     const std::unique_ptr<tinkoff::OperationsService::Stub>&       service,
-    std::shared_ptr<grpc::CallCredentials>                         creds,
+    const std::shared_ptr<grpc::CallCredentials>&                  creds,
     const tinkoff::GetOperationsByCursorRequest&                   req,
     const std::shared_ptr<tinkoff::GetOperationsByCursorResponse>& resp
 )
@@ -369,7 +369,7 @@ GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint6
 static grpc::Status getMaxLotsAction(
     IRawGrpcClient*                                      rawGrpcClient,
     const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>               creds,
+    const std::shared_ptr<grpc::CallCredentials>&        creds,
     const tinkoff::GetMaxLotsRequest&                    req,
     const std::shared_ptr<tinkoff::GetMaxLotsResponse>&  resp
 )
@@ -401,7 +401,7 @@ GrpcClient::getMaxLots(QThread* parentThread, const QString& accountId, const QS
 static grpc::Status postOrderAction(
     IRawGrpcClient*                                      rawGrpcClient,
     const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>               creds,
+    const std::shared_ptr<grpc::CallCredentials>&        creds,
     const tinkoff::PostOrderRequest&                     req,
     const std::shared_ptr<tinkoff::PostOrderResponse>&   resp
 )
@@ -444,7 +444,7 @@ std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
 static grpc::Status getOrderStateAction(
     IRawGrpcClient*                                      rawGrpcClient,
     const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>               creds,
+    const std::shared_ptr<grpc::CallCredentials>&        creds,
     const tinkoff::GetOrderStateRequest&                 req,
     const std::shared_ptr<tinkoff::OrderState>&          resp
 )
@@ -472,7 +472,7 @@ GrpcClient::getOrderState(QThread* parentThread, const QString& accountId, const
 static grpc::Status cancelOrderAction(
     IRawGrpcClient*                                      rawGrpcClient,
     const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
-    std::shared_ptr<grpc::CallCredentials>               creds,
+    const std::shared_ptr<grpc::CallCredentials>&        creds,
     const tinkoff::CancelOrderRequest&                   req,
     const std::shared_ptr<tinkoff::CancelOrderResponse>& resp
 )
