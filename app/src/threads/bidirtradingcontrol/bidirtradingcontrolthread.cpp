@@ -33,7 +33,6 @@ BiDirTradingControlThread::BiDirTradingControlThread(
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mMoscowTimezone("Europe/Moscow"),
-    mAccountId(),
     mLastDetectionTimestamp()
 {
     qDebug() << "Create BiDirTradingControlThread";
@@ -163,11 +162,6 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
     {
         emit tradeInstruments(instrumentsForTrading);
     }
-}
-
-void BiDirTradingControlThread::setAccountId(const QString& accountId)
-{
-    mAccountId = accountId;
 }
 
 void BiDirTradingControlThread::terminateThread()

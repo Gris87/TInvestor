@@ -36,7 +36,7 @@ protected:
         grpcRetryClientMock    = new StrictMock<GrpcRetryClientMock>();
         logsThreadMock         = new StrictMock<LogsThreadMock>();
 
-        EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaaaa"), QString("But why")));
+        EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaa-aaa"), QString("But why")));
 
         thread = new BiDirTradingThread(
             instrumentsStorageMock,
@@ -48,7 +48,7 @@ protected:
             grpcRetryClientMock,
             logsThreadMock,
             "account-id",
-            "aaaaa",
+            "aaa-aaa",
             1000000,
             "But why"
         );
@@ -86,9 +86,69 @@ TEST_F(Test_BiDirTradingThread, Test_constructor_and_destructor)
 
 TEST_F(Test_BiDirTradingThread, Test_run)
 {
+    const InSequence seq;
+
+    Instruments instruments;
+    Instrument  instrument;
+
+    instrument.ticker                  = "ABBA";
+    instrument.name                    = "Abstract Basics";
+    instrument.lot                     = 10;
+    instrument.pricePrecision          = 3;
+    instrument.minPriceIncrement.units = 0;
+    instrument.minPriceIncrement.nano  = 1000000;
+
+    instruments["aaa-aaa"] = instrument;
+
+    thread->terminateTrading();
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaa-aaa"), QString("Reselling completed successfully")));
+
+    thread->run();
+}
+
+TEST_F(Test_BiDirTradingThread, Test_setTurnover_and_turnover)
+{
+    ASSERT_EQ(thread->turnover(), 1000000);
+
+    thread->setTurnover(5000);
+    ASSERT_EQ(thread->turnover(), 5000);
 }
 
 TEST_F(Test_BiDirTradingThread, Test_terminateThread)
 {
     thread->terminateThread();
+}
+
+TEST_F(Test_BiDirTradingThread, Test_trade)
+{
+    const InSequence seq;
+
+    Instruments instruments;
+    Instrument  instrument;
+
+    instrument.ticker                  = "ABBA";
+    instrument.name                    = "Abstract Basics";
+    instrument.lot                     = 10;
+    instrument.pricePrecision          = 3;
+    instrument.minPriceIncrement.units = 0;
+    instrument.minPriceIncrement.nano  = 1000000;
+
+    instruments["aaa-aaa"] = instrument;
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3)).WillOnce(Return(nullptr));
+
+    ASSERT_EQ(thread->trade(), false);
 }

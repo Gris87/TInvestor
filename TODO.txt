@@ -1,7 +1,9 @@
-Update dependencies
 Improve coverage
 Create release
 
+Highlight operation row if yield <> +-1%
+Something wrong with portfolio stream
+Maybe sell huge spread if lose 1%
 Double check for QObject usage
 Refresh daily operations at the first operation at day start
 Change best config search algorithm
@@ -12,7 +14,7 @@ Improve coverage
 Create release
 
 Participate in auction
-Trade with USD/EUR
+Trade with USD/EUR/CNY
 
 =======================================
 For the best times

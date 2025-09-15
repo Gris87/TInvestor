@@ -121,7 +121,9 @@ void HighLiquidityThread::sellEtf()
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
-        for (int i = 0; i < tinkoffPortfolio->positions_size(); ++i)
+        bool found = false;
+
+        for (int i = 0; i < tinkoffPortfolio->positions_size() && !found; ++i)
         {
             const tinkoff::PortfolioPosition& position = tinkoffPortfolio->positions(i);
 
@@ -136,7 +138,7 @@ void HighLiquidityThread::sellEtf()
                 );
                 emit tradeInstruments(instrumentsForTrading);
 
-                break;
+                found = true;
             }
         }
     }

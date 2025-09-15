@@ -10,8 +10,10 @@
 
 
 
+using ::testing::Ge;
 using ::testing::InSequence;
 using ::testing::Return;
+using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
@@ -57,6 +59,60 @@ TEST_F(Test_BiDirTradingControlThread, Test_constructor_and_destructor)
 
 TEST_F(Test_BiDirTradingControlThread, Test_run)
 {
+    const InSequence seq;
+
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, isWorkingHours(Ge(1704056400000))).WillOnce(Return(false));
+
+    thread->run();
+}
+
+TEST_F(Test_BiDirTradingControlThread, Test_detectHugeSpreadStocks)
+{
+    const InSequence seq;
+
+    QList<Stock*> stocks;
+
+    Stock stock;
+    stock.meta.instrumentId = "aaa-aaa";
+
+    stocks << &stock;
+
+    const std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBookResponse(new tinkoff::GetOrderBookResponse());
+
+    tinkoff::Order* bid = getOrderBookResponse->add_bids(); // getOrderBookResponse will take ownership
+
+    tinkoff::Quotation* bidPrice = new tinkoff::Quotation(); // bid will take ownership
+
+    bidPrice->set_units(10);
+    bidPrice->set_nano(400000000);
+
+    bid->set_quantity(10);
+    bid->set_allocated_price(bidPrice);
+
+    tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
+
+    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
+
+    askPrice->set_units(20);
+    askPrice->set_nano(500000000);
+
+    ask->set_quantity(10);
+    ask->set_allocated_price(askPrice);
+
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(true));
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.3f));
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 1))
+        .WillOnce(Return(getOrderBookResponse));
+
+    thread->detectHugeSpreadStocks(1704092400000);
 }
 
 TEST_F(Test_BiDirTradingControlThread, Test_terminateThread)

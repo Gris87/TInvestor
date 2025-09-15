@@ -1710,7 +1710,6 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*logsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
     EXPECT_CALL(*portfolioThreadMock, setAccountId(QString("aaaaaa")));
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setAccountId(QString("aaaaaa")));
-    EXPECT_CALL(*biDirTradingControlThreadMock, setAccountId(QString("aaaaaa")));
     EXPECT_CALL(*highLiquidityThreadMock, setAccountId(QString("aaaaaa")));
 
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));

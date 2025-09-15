@@ -706,7 +706,6 @@ void MainWindow::startAutoPilot()
         if (mode == AUTO_PILOT_MODE_INTERNAL)
         {
             mAutoPilotDecisionMakerThread->setAccountId(mAutoPilotAccountId);
-            mBiDirTradingControlThread->setAccountId(mAutoPilotAccountId);
             mHighLiquidityThread->setAccountId(mAutoPilotAccountId);
         }
         else if (mode == AUTO_PILOT_MODE_FOLLOW)

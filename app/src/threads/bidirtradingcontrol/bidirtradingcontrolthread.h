@@ -36,8 +36,6 @@ public:
 
     void detectHugeSpreadStocks(qint64 timestamp);
 
-    void setAccountId(const QString& accountId) override;
-
     void terminateThread() override;
 
 private:
@@ -47,6 +45,5 @@ private:
     ITimeUtils*     mTimeUtils;
     IGrpcClient*    mGrpcClient;
     QTimeZone       mMoscowTimezone;
-    QString         mAccountId;
     qint64          mLastDetectionTimestamp;
 };

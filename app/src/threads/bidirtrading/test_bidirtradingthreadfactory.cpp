@@ -53,7 +53,7 @@ TEST_F(Test_BiDirTradingThreadFactory, Test_newInstance)
     StrictMock<GrpcRetryClientMock>    grpcRetryClientMock;
     StrictMock<LogsThreadMock>         logsThreadMock;
 
-    EXPECT_CALL(logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("bbbbb"), QString("But why")));
+    EXPECT_CALL(logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaa-aaa"), QString("But why")));
 
     const IBiDirTradingThread* thread = factory->newInstance(
         &instrumentsStorageMock,
@@ -64,8 +64,8 @@ TEST_F(Test_BiDirTradingThreadFactory, Test_newInstance)
         &grpcClientMock,
         &grpcRetryClientMock,
         &logsThreadMock,
-        "aaaaa",
-        "bbbbb",
+        "account-id",
+        "aaa-aaa",
         1000000,
         "But why",
         nullptr
