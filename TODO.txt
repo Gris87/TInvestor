@@ -3,6 +3,7 @@ Improve coverage
 Create release
 
 Double check for QObject usage
+Refresh daily operations at the first operation at day start
 Change best config search algorithm
 Find best configs for different commission
 Different defaults based on commission
