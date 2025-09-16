@@ -26,6 +26,10 @@ constexpr float LIMIT_STOCK_PURCHASE_PART_NON_WORKING_HOURS_DEFAULT = 1.0f;
 constexpr bool  LIMIT_BY_TURNOVER_NON_WORKING_HOURS_DEFAULT         = true;
 constexpr float LIMIT_BY_TURNOVER_PERCENT_NON_WORKING_HOURS_DEFAULT = 1.0f;
 constexpr int   STORAGE_MONTH_LIMIT_DEFAULT                         = 12;
+constexpr bool  HIGHLIGHT_GOOD_OPERATIONS_DEFAULT                   = true;
+constexpr float HIGHLIGHT_GOOD_OPERATIONS_YIELD_DEFAULT             = 1.0f;
+constexpr bool  HIGHLIGHT_BAD_OPERATIONS_DEFAULT                    = true;
+constexpr float HIGHLIGHT_BAD_OPERATIONS_LOSE_DEFAULT               = 2.0f;
 constexpr bool  SIMULATOR_CONFIG_COMMON_DEFAULT                     = true;
 constexpr bool  AUTOPILOT_CONFIG_COMMON_DEFAULT                     = false;
 
@@ -57,6 +61,10 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mLimitByTurnoverNonWorkingHours(),
     mLimitByTurnoverPercentNonWorkingHours(),
     mStorageMonthLimit(),
+    mHighlightGoodOperations(),
+    mHighlightGoodOperationsYield(),
+    mHighlightBadOperations(),
+    mHighlightBadOperationsLose(),
     mSimulatorConfigCommon(),
     mAutoPilotConfigCommon()
 {
@@ -122,6 +130,10 @@ void Config::assign(IConfig* another)
     mLimitByTurnoverNonWorkingHours        = config.mLimitByTurnoverNonWorkingHours;
     mLimitByTurnoverPercentNonWorkingHours = config.mLimitByTurnoverPercentNonWorkingHours;
     mStorageMonthLimit                     = config.mStorageMonthLimit;
+    mHighlightGoodOperations               = config.mHighlightGoodOperations;
+    mHighlightGoodOperationsYield          = config.mHighlightGoodOperationsYield;
+    mHighlightBadOperations                = config.mHighlightBadOperations;
+    mHighlightBadOperationsLose            = config.mHighlightBadOperationsLose;
     mSimulatorConfigCommon                 = config.mSimulatorConfigCommon;
     mAutoPilotConfigCommon                 = config.mAutoPilotConfigCommon;
 }
@@ -156,6 +168,10 @@ void Config::makeDefault()
     mLimitByTurnoverNonWorkingHours        = LIMIT_BY_TURNOVER_NON_WORKING_HOURS_DEFAULT;
     mLimitByTurnoverPercentNonWorkingHours = LIMIT_BY_TURNOVER_PERCENT_NON_WORKING_HOURS_DEFAULT;
     mStorageMonthLimit                     = STORAGE_MONTH_LIMIT_DEFAULT;
+    mHighlightGoodOperations               = HIGHLIGHT_GOOD_OPERATIONS_DEFAULT;
+    mHighlightGoodOperationsYield          = HIGHLIGHT_GOOD_OPERATIONS_YIELD_DEFAULT;
+    mHighlightBadOperations                = HIGHLIGHT_BAD_OPERATIONS_DEFAULT;
+    mHighlightBadOperationsLose            = HIGHLIGHT_BAD_OPERATIONS_LOSE_DEFAULT;
     mSimulatorConfigCommon                 = SIMULATOR_CONFIG_COMMON_DEFAULT;
     mAutoPilotConfigCommon                 = AUTOPILOT_CONFIG_COMMON_DEFAULT;
 }
@@ -191,6 +207,10 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/LimitByTurnoverNonWorkingHours",        mLimitByTurnoverNonWorkingHours);
     settingsEditor->setValue("Config/LimitByTurnoverPercentNonWorkingHours", mLimitByTurnoverPercentNonWorkingHours);
     settingsEditor->setValue("Config/StorageMonthLimit",                     mStorageMonthLimit);
+    settingsEditor->setValue("Config/HighlightGoodOperations",               mHighlightGoodOperations);
+    settingsEditor->setValue("Config/HighlightGoodOperationsYield",          mHighlightGoodOperationsYield);
+    settingsEditor->setValue("Config/HighlightBadOperations",                mHighlightBadOperations);
+    settingsEditor->setValue("Config/HighlightBadOperationsLose",            mHighlightBadOperationsLose);
     settingsEditor->setValue("Config/SimulatorConfigCommon",                 mSimulatorConfigCommon);
     settingsEditor->setValue("Config/AutoPilotConfigCommon",                 mAutoPilotConfigCommon);
     // clang-format on
@@ -227,6 +247,10 @@ void Config::load(ISettingsEditor* settingsEditor)
     mLimitByTurnoverNonWorkingHours        = settingsEditor->value("Config/LimitByTurnoverNonWorkingHours",        mLimitByTurnoverNonWorkingHours).toBool();
     mLimitByTurnoverPercentNonWorkingHours = settingsEditor->value("Config/LimitByTurnoverPercentNonWorkingHours", mLimitByTurnoverPercentNonWorkingHours).toFloat();
     mStorageMonthLimit                     = settingsEditor->value("Config/StorageMonthLimit",                     mStorageMonthLimit).toInt();
+    mHighlightGoodOperations               = settingsEditor->value("Config/HighlightGoodOperations",               mHighlightGoodOperations).toBool();
+    mHighlightGoodOperationsYield          = settingsEditor->value("Config/HighlightGoodOperationsYield",          mHighlightGoodOperationsYield).toFloat();
+    mHighlightBadOperations                = settingsEditor->value("Config/HighlightBadOperations",                mHighlightBadOperations).toBool();
+    mHighlightBadOperationsLose            = settingsEditor->value("Config/HighlightBadOperationsLose",            mHighlightBadOperationsLose).toFloat();
     mSimulatorConfigCommon                 = settingsEditor->value("Config/SimulatorConfigCommon",                 mSimulatorConfigCommon).toBool();
     mAutoPilotConfigCommon                 = settingsEditor->value("Config/AutoPilotConfigCommon",                 mAutoPilotConfigCommon).toBool();
     // clang-format on
@@ -534,6 +558,62 @@ int Config::getStorageMonthLimit()
     const QReadLocker lock(mRwMutex);
 
     return mStorageMonthLimit;
+}
+
+void Config::setHighlightGoodOperations(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHighlightGoodOperations = value;
+}
+
+bool Config::isHighlightGoodOperations()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHighlightGoodOperations;
+}
+
+void Config::setHighlightGoodOperationsYield(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHighlightGoodOperationsYield = value;
+}
+
+float Config::getHighlightGoodOperationsYield()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHighlightGoodOperationsYield;
+}
+
+void Config::setHighlightBadOperations(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHighlightBadOperations = value;
+}
+
+bool Config::isHighlightBadOperations()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHighlightBadOperations;
+}
+
+void Config::setHighlightBadOperationsLose(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHighlightBadOperationsLose = value;
+}
+
+float Config::getHighlightBadOperationsLose()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHighlightBadOperationsLose;
 }
 
 void Config::setSimulatorConfigCommon(bool value)

@@ -90,6 +90,18 @@ public:
     virtual void setStorageMonthLimit(int value) = 0;
     virtual int  getStorageMonthLimit()          = 0;
 
+    virtual void setHighlightGoodOperations(bool value) = 0;
+    virtual bool isHighlightGoodOperations()            = 0;
+
+    virtual void  setHighlightGoodOperationsYield(float value) = 0;
+    virtual float getHighlightGoodOperationsYield()            = 0;
+
+    virtual void setHighlightBadOperations(bool value) = 0;
+    virtual bool isHighlightBadOperations()            = 0;
+
+    virtual void  setHighlightBadOperationsLose(float value) = 0;
+    virtual float getHighlightBadOperationsLose()            = 0;
+
     virtual void setSimulatorConfigCommon(bool value) = 0;
     virtual bool isSimulatorConfigCommon()            = 0;
 

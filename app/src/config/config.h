@@ -91,6 +91,18 @@ public:
     void setStorageMonthLimit(int value) override;
     int  getStorageMonthLimit() override;
 
+    void setHighlightGoodOperations(bool value) override;
+    bool isHighlightGoodOperations() override;
+
+    void  setHighlightGoodOperationsYield(float value) override;
+    float getHighlightGoodOperationsYield() override;
+
+    void setHighlightBadOperations(bool value) override;
+    bool isHighlightBadOperations() override;
+
+    void  setHighlightBadOperationsLose(float value) override;
+    float getHighlightBadOperationsLose() override;
+
     void setSimulatorConfigCommon(bool value) override;
     bool isSimulatorConfigCommon() override;
 
@@ -124,6 +136,10 @@ private:
     bool    mLimitByTurnoverNonWorkingHours;
     float   mLimitByTurnoverPercentNonWorkingHours;
     int     mStorageMonthLimit;
+    bool    mHighlightGoodOperations;
+    float   mHighlightGoodOperationsYield;
+    bool    mHighlightBadOperations;
+    float   mHighlightBadOperationsLose;
     bool    mSimulatorConfigCommon;
     bool    mAutoPilotConfigCommon;
 };

@@ -94,6 +94,18 @@ public:
     MOCK_METHOD(void, setStorageMonthLimit, (int value), (override));
     MOCK_METHOD(int, getStorageMonthLimit, (), (override));
 
+    MOCK_METHOD(void, setHighlightGoodOperations, (bool value), (override));
+    MOCK_METHOD(bool, isHighlightGoodOperations, (), (override));
+
+    MOCK_METHOD(void, setHighlightGoodOperationsYield, (float value), (override));
+    MOCK_METHOD(float, getHighlightGoodOperationsYield, (), (override));
+
+    MOCK_METHOD(void, setHighlightBadOperations, (bool value), (override));
+    MOCK_METHOD(bool, isHighlightBadOperations, (), (override));
+
+    MOCK_METHOD(void, setHighlightBadOperationsLose, (float value), (override));
+    MOCK_METHOD(float, getHighlightBadOperationsLose, (), (override));
+
     MOCK_METHOD(void, setSimulatorConfigCommon, (bool value), (override));
     MOCK_METHOD(bool, isSimulatorConfigCommon, (), (override));
 

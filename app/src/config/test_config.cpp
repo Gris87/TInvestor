@@ -71,6 +71,10 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
+    config->setHighlightGoodOperations(false);
+    config->setHighlightGoodOperationsYield(2.0f);
+    config->setHighlightBadOperations(false);
+    config->setHighlightBadOperationsLose(3.0f);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
 
@@ -96,6 +100,10 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
+    ASSERT_EQ(config->isHighlightBadOperations(),                   false);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(),            3.0f, 0.0001f);
     ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
@@ -129,6 +137,10 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
+    ASSERT_EQ(config->isHighlightBadOperations(),                   false);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(),            3.0f, 0.0001f);
     ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
@@ -155,6 +167,10 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config2->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config2->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
     ASSERT_EQ(config2->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config2->isHighlightGoodOperations(),                  false);
+    ASSERT_NEAR(config2->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
+    ASSERT_EQ(config2->isHighlightBadOperations(),                   false);
+    ASSERT_NEAR(config2->getHighlightBadOperationsLose(),            3.0f, 0.0001f);
     ASSERT_EQ(config2->isSimulatorConfigCommon(),                    false);
     ASSERT_EQ(config2->isAutoPilotConfigCommon(),                    true);
     // clang-format on
@@ -195,6 +211,10 @@ TEST_F(Test_Config, Test_assign)
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
+    config->setHighlightGoodOperations(false);
+    config->setHighlightGoodOperationsYield(2.0f);
+    config->setHighlightBadOperations(false);
+    config->setHighlightBadOperationsLose(3.0f);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
 
@@ -220,6 +240,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
+    ASSERT_EQ(config->isHighlightBadOperations(),                   false);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(),            3.0f, 0.0001f);
     ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
@@ -245,6 +269,10 @@ TEST_F(Test_Config, Test_assign)
     config2.setLimitByTurnoverNonWorkingHours(true);
     config2.setLimitByTurnoverPercentNonWorkingHours(37.5f);
     config2.setStorageMonthLimit(12);
+    config2.setHighlightGoodOperations(true);
+    config2.setHighlightGoodOperationsYield(7.0f);
+    config2.setHighlightBadOperations(true);
+    config2.setHighlightBadOperationsLose(5.0f);
     config2.setSimulatorConfigCommon(true);
     config2.setAutoPilotConfigCommon(false);
 
@@ -270,6 +298,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config2.getLimitByTurnoverPercentNonWorkingHours(), 37.5f, 0.0001f);
     ASSERT_EQ(config2.getStorageMonthLimit(),                       12);
+    ASSERT_EQ(config2.isHighlightGoodOperations(),                  true);
+    ASSERT_NEAR(config2.getHighlightGoodOperationsYield(),          7.0f, 0.0001f);
+    ASSERT_EQ(config2.isHighlightBadOperations(),                   true);
+    ASSERT_NEAR(config2.getHighlightBadOperationsLose(),            5.0f, 0.0001f);
     ASSERT_EQ(config2.isSimulatorConfigCommon(),                    true);
     ASSERT_EQ(config2.isAutoPilotConfigCommon(),                    false);
     // clang-format on
@@ -301,6 +333,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 37.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       12);
+    ASSERT_EQ(config->isHighlightGoodOperations(),                  true);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          7.0f, 0.0001f);
+    ASSERT_EQ(config->isHighlightBadOperations(),                   true);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(),            5.0f, 0.0001f);
     ASSERT_EQ(config->isSimulatorConfigCommon(),                    true);
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    false);
     // clang-format on
@@ -327,6 +363,10 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config2.getLimitByTurnoverPercentNonWorkingHours(), 37.5f, 0.0001f);
     ASSERT_EQ(config2.getStorageMonthLimit(),                       12);
+    ASSERT_EQ(config2.isHighlightGoodOperations(),                  true);
+    ASSERT_NEAR(config2.getHighlightGoodOperationsYield(),          7.0f, 0.0001f);
+    ASSERT_EQ(config2.isHighlightBadOperations(),                   true);
+    ASSERT_NEAR(config2.getHighlightBadOperationsLose(),            5.0f, 0.0001f);
     ASSERT_EQ(config2.isSimulatorConfigCommon(),                    true);
     ASSERT_EQ(config2.isAutoPilotConfigCommon(),                    false);
     // clang-format on
@@ -357,6 +397,10 @@ TEST_F(Test_Config, Test_makeDefault)
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
+    config->setHighlightGoodOperations(false);
+    config->setHighlightGoodOperationsYield(2.0f);
+    config->setHighlightBadOperations(false);
+    config->setHighlightBadOperationsLose(3.0f);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
 
@@ -382,6 +426,10 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
+    ASSERT_EQ(config->isHighlightBadOperations(),                   false);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(),            3.0f, 0.0001f);
     ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
@@ -413,6 +461,10 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 1.0f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       12);
+    ASSERT_EQ(config->isHighlightGoodOperations(),                  true);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          1.0f, 0.0001f);
+    ASSERT_EQ(config->isHighlightBadOperations(),                   true);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(),            2.0f, 0.0001f);
     ASSERT_EQ(config->isSimulatorConfigCommon(),                    true);
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    false);
     // clang-format on
@@ -443,6 +495,10 @@ TEST_F(Test_Config, Test_save)
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
+    config->setHighlightGoodOperations(false);
+    config->setHighlightGoodOperationsYield(2.0f);
+    config->setHighlightBadOperations(false);
+    config->setHighlightBadOperationsLose(3.0f);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
 
@@ -468,6 +524,10 @@ TEST_F(Test_Config, Test_save)
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
+    ASSERT_EQ(config->isHighlightBadOperations(),                   false);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(),            3.0f, 0.0001f);
     ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
@@ -499,6 +559,10 @@ TEST_F(Test_Config, Test_save)
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverNonWorkingHours"),        QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverPercentNonWorkingHours"), QVariant(2.5f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/StorageMonthLimit"),                     QVariant(36)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HighlightGoodOperations"),               QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HighlightGoodOperationsYield"),          QVariant(2.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HighlightBadOperations"),                QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HighlightBadOperationsLose"),            QVariant(3.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/SimulatorConfigCommon"),                 QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AutoPilotConfigCommon"),                 QVariant(true)));
     // clang-format on
@@ -531,6 +595,10 @@ TEST_F(Test_Config, Test_load)
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
     config->setStorageMonthLimit(36);
+    config->setHighlightGoodOperations(false);
+    config->setHighlightGoodOperationsYield(2.0f);
+    config->setHighlightBadOperations(false);
+    config->setHighlightBadOperationsLose(3.0f);
     config->setSimulatorConfigCommon(false);
     config->setAutoPilotConfigCommon(true);
 
@@ -556,6 +624,10 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
+    ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
+    ASSERT_EQ(config->isHighlightBadOperations(),                   false);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(),            3.0f, 0.0001f);
     ASSERT_EQ(config->isSimulatorConfigCommon(),                    false);
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
@@ -587,6 +659,10 @@ TEST_F(Test_Config, Test_load)
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverNonWorkingHours"),        QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverPercentNonWorkingHours"), QVariant(2.5f))).WillOnce(Return(QVariant(17.5f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/StorageMonthLimit"),                     QVariant(36))).WillOnce(Return(QVariant(12)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/HighlightGoodOperations"),               QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/HighlightGoodOperationsYield"),          QVariant(2.0f))).WillOnce(Return(QVariant(7.0f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/HighlightBadOperations"),                QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/HighlightBadOperationsLose"),            QVariant(3.0f))).WillOnce(Return(QVariant(5.0f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/SimulatorConfigCommon"),                 QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/AutoPilotConfigCommon"),                 QVariant(true))).WillOnce(Return(QVariant(false)));
     // clang-format on
@@ -615,6 +691,10 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 17.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       12);
+    ASSERT_EQ(config->isHighlightGoodOperations(),                  true);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          7.0f, 0.0001f);
+    ASSERT_EQ(config->isHighlightBadOperations(),                   true);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(),            5.0f, 0.0001f);
     ASSERT_EQ(config->isSimulatorConfigCommon(),                    true);
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    false);
     // clang-format on
@@ -817,6 +897,42 @@ TEST_F(Test_Config, Test_setStorageMonthLimit_and_getStorageMonthLimit)
 
     config->setStorageMonthLimit(2);
     ASSERT_EQ(config->getStorageMonthLimit(), 2);
+}
+
+TEST_F(Test_Config, Test_setHighlightGoodOperations_and_isHighlightGoodOperations)
+{
+    config->setHighlightGoodOperations(false);
+    ASSERT_EQ(config->isHighlightGoodOperations(), false);
+
+    config->setHighlightGoodOperations(true);
+    ASSERT_EQ(config->isHighlightGoodOperations(), true);
+}
+
+TEST_F(Test_Config, Test_setHighlightGoodOperationsYield_and_getHighlightGoodOperationsYield)
+{
+    config->setHighlightGoodOperationsYield(10.0f);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(), 10.0f, 0.0001f);
+
+    config->setHighlightGoodOperationsYield(50.0f);
+    ASSERT_NEAR(config->getHighlightGoodOperationsYield(), 50.0f, 0.0001f);
+}
+
+TEST_F(Test_Config, Test_setHighlightBadOperations_and_isHighlightBadOperations)
+{
+    config->setHighlightBadOperations(false);
+    ASSERT_EQ(config->isHighlightBadOperations(), false);
+
+    config->setHighlightBadOperations(true);
+    ASSERT_EQ(config->isHighlightBadOperations(), true);
+}
+
+TEST_F(Test_Config, Test_setHighlightBadOperationsLose_and_getHighlightBadOperationsLose)
+{
+    config->setHighlightBadOperationsLose(10.0f);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(), 10.0f, 0.0001f);
+
+    config->setHighlightBadOperationsLose(50.0f);
+    ASSERT_NEAR(config->getHighlightBadOperationsLose(), 50.0f, 0.0001f);
 }
 
 TEST_F(Test_Config, Test_setSimulatorConfigCommon_and_isSimulatorConfigCommon)
