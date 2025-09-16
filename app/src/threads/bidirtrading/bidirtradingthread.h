@@ -55,16 +55,17 @@ public:
     bool trade();
     void getInstrumentData();
 
+    void checkIfNeedToCancelAndCreateOrder(
+        const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
+    );
+    void sellWithPrice(const Quotation& price);
+    void buyWithPrice(qint64 amountOfLots, const Quotation& price);
+
 private:
     void calculateTotalCostAndInstrumentLots(
         const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots, double& instrumentAvgPrice
     );
     IDecisionMakerConfig* chooseDecisionConfig();
-    void                  checkIfNeedToCancelAndCreateOrder(
-                         const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
-                     );
-    void sellWithPrice(const Quotation& price);
-    void buyWithPrice(qint64 amountOfLots, const Quotation& price);
 
     void cancelBuyOrder();
     void cancelSellOrder();

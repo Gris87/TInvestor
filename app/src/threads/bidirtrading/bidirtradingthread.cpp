@@ -269,49 +269,6 @@ void BiDirTradingThread::getInstrumentData()
     mInstrumentsStorage->readUnlock();
 }
 
-void BiDirTradingThread::calculateTotalCostAndInstrumentLots(
-    const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots, double& instrumentAvgPrice
-)
-{
-    totalCost          = 0.0;
-    instrumentLots     = 0;
-    instrumentAvgPrice = -1.0;
-
-    for (int i = 0; i < tinkoffPortfolio.positions_size() && !QThread::currentThread()->isInterruptionRequested(); ++i)
-    {
-        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
-
-        const QString instrumentId = QString::fromStdString(position.instrument_uid());
-
-        if (instrumentId == RUBLE_UID)
-        {
-            totalCost += quotationToDouble(position.quantity());
-        }
-        else
-        {
-            const double cost = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price_fifo());
-
-            if (instrumentId == mInstrumentId)
-            {
-                instrumentLots     = quotationToDouble(position.quantity()) / mInstrumentLot;
-                instrumentAvgPrice = quotationToDouble(position.average_position_price());
-            }
-
-            totalCost += cost;
-        }
-    }
-}
-
-IDecisionMakerConfig* BiDirTradingThread::chooseDecisionConfig()
-{
-    if (mConfig->isSimulatorConfigCommon())
-    {
-        return mConfig->getSimulatorConfig();
-    }
-
-    return mConfig->getAutoPilotConfig();
-}
-
 void BiDirTradingThread::checkIfNeedToCancelAndCreateOrder(
     const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
 )
@@ -440,6 +397,49 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
             return;
         }
     }
+}
+
+void BiDirTradingThread::calculateTotalCostAndInstrumentLots(
+    const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots, double& instrumentAvgPrice
+)
+{
+    totalCost          = 0.0;
+    instrumentLots     = 0;
+    instrumentAvgPrice = -1.0;
+
+    for (int i = 0; i < tinkoffPortfolio.positions_size() && !QThread::currentThread()->isInterruptionRequested(); ++i)
+    {
+        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
+
+        const QString instrumentId = QString::fromStdString(position.instrument_uid());
+
+        if (instrumentId == RUBLE_UID)
+        {
+            totalCost += quotationToDouble(position.quantity());
+        }
+        else
+        {
+            const double cost = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price_fifo());
+
+            if (instrumentId == mInstrumentId)
+            {
+                instrumentLots     = quotationToDouble(position.quantity()) / mInstrumentLot;
+                instrumentAvgPrice = quotationToDouble(position.average_position_price());
+            }
+
+            totalCost += cost;
+        }
+    }
+}
+
+IDecisionMakerConfig* BiDirTradingThread::chooseDecisionConfig()
+{
+    if (mConfig->isSimulatorConfigCommon())
+    {
+        return mConfig->getSimulatorConfig();
+    }
+
+    return mConfig->getAutoPilotConfig();
 }
 
 void BiDirTradingThread::cancelBuyOrder()

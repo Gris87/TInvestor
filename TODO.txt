@@ -1,6 +1,3 @@
-Improve coverage
-Create release
-
 Highlight operation row if yield <> +-1%
 Something wrong with portfolio stream
 Avg quantity for huge spread
