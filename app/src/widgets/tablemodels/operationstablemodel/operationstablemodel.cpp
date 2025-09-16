@@ -15,17 +15,20 @@
 constexpr float ZERO_LIMIT      = 0.0001f;
 constexpr float HUNDRED_PERCENT = 100.0f;
 
-const char* const DATETIME_FORMAT       = "yyyy-MM-dd hh:mm:ss";
-const QBrush      GREEN_COLOR           = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
-const QBrush      RED_COLOR             = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
-const QBrush      NORMAL_COLOR          = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
-const QColor      CELL_BACKGROUND_COLOR = QColor("#2C3C4B");         // clazy:exclude=non-pod-global-static
-const QColor      CELL_FONT_COLOR       = QColor("#97AEC4");         // clazy:exclude=non-pod-global-static
+const char* const DATETIME_FORMAT        = "yyyy-MM-dd hh:mm:ss";
+const QBrush      BACKGROUND_GREEN_COLOR = QBrush(QColor("#335648")); // clazy:exclude=non-pod-global-static
+const QBrush      BACKGROUND_RED_COLOR   = QBrush(QColor("#563337")); // clazy:exclude=non-pod-global-static
+const QBrush      GREEN_COLOR            = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
+const QBrush      RED_COLOR              = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
+const QBrush      NORMAL_COLOR           = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
+const QColor      CELL_BACKGROUND_COLOR  = QColor("#2C3C4B");         // clazy:exclude=non-pod-global-static
+const QColor      CELL_FONT_COLOR        = QColor("#97AEC4");         // clazy:exclude=non-pod-global-static
 
 
 
-OperationsTableModel::OperationsTableModel(QObject* parent) :
+OperationsTableModel::OperationsTableModel(IConfig* config, QObject* parent) :
     IOperationsTableModel(parent),
+    mConfig(config),
     mHeader(),
     mEntries(std::make_shared<QList<Operation>>()),
     mSortColumn(OPERATIONS_TIME_COLUMN),
@@ -333,6 +336,26 @@ QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
         return DISPLAY_ROLE_HANDLER[column](mEntries->at(row));
     }
 
+    if (role == Qt::BackgroundRole)
+    {
+        const int        row       = index.row();
+        const Operation& operation = mEntries->at(row);
+
+        if (mConfig->isHighlightGoodOperations() &&
+            operation.yieldWithCommissionPercent > mConfig->getHighlightGoodOperationsYield())
+        {
+            return BACKGROUND_GREEN_COLOR;
+        }
+
+        if (mConfig->isHighlightBadOperations() &&
+            operation.yieldWithCommissionPercent < -mConfig->getHighlightBadOperationsLose())
+        {
+            return BACKGROUND_RED_COLOR;
+        }
+
+        return QVariant();
+    }
+
     if (role == Qt::ForegroundRole)
     {
         const int row    = index.row();
@@ -446,6 +469,12 @@ void OperationsTableModel::operationsAdded(const QList<Operation>& operations)
             insertRow(mEntries.get(), indexOfSortedInsert(mEntries.get(), operation), operation);
         }
     }
+}
+
+void OperationsTableModel::refreshBackground()
+{
+    beginResetModel();
+    endResetModel();
 }
 
 void OperationsTableModel::exportToExcel(QXlsx::Document& doc) const

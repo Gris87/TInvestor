@@ -1387,6 +1387,9 @@ void MainWindow::applyConfig()
 
         autoPilotBiDirTradeInstruments(InstrumentsForBiDirTrading());
     }
+
+    mSimulatorDecisionMakerWidget->refreshOperationsBackground();
+    mAutoPilotDecisionMakerWidget->refreshOperationsBackground();
 }
 
 void MainWindow::saveWindowState()

@@ -4,6 +4,8 @@
 
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodel.h"
 
+#include "src/config/iconfig.h"
+
 
 
 class IOperationsTableModelFactory
@@ -15,5 +17,5 @@ public:
     IOperationsTableModelFactory(const IOperationsTableModelFactory& another)            = delete;
     IOperationsTableModelFactory& operator=(const IOperationsTableModelFactory& another) = delete;
 
-    virtual IOperationsTableModel* newInstance(QObject* parent) const = 0;
+    virtual IOperationsTableModel* newInstance(IConfig* config, QObject* parent) const = 0;
 };

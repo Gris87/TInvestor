@@ -28,5 +28,6 @@ public:
 
     MOCK_METHOD(void, operationsRead, (const QList<Operation>& operations), (override));
     MOCK_METHOD(void, operationsAdded, (const QList<Operation>& operations), (override));
+    MOCK_METHOD(void, refreshBackground, (), (override));
     MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc), (const, override));
 };

@@ -3,7 +3,17 @@
 #include <QBrush>
 #include <gtest/gtest.h>
 
+#include "src/config/iconfig_mock.h"
 #include "src/widgets/tablemodels/modelroles.h"
+
+
+
+using ::testing::Ge;
+using ::testing::InSequence;
+using ::testing::Ne;
+using ::testing::Return;
+using ::testing::ReturnRef;
+using ::testing::StrictMock;
 
 
 
@@ -12,15 +22,19 @@ class Test_OperationsTableModel : public ::testing::Test
 protected:
     void SetUp() override
     {
-        model = new OperationsTableModel();
+        configMock = new StrictMock<ConfigMock>();
+
+        model = new OperationsTableModel(configMock);
     }
 
     void TearDown() override
     {
         delete model;
+        delete configMock;
     }
 
-    OperationsTableModel* model;
+    OperationsTableModel*   model;
+    StrictMock<ConfigMock>* configMock;
 };
 
 

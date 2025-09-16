@@ -270,6 +270,8 @@ protected:
         EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
         EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(1));
         EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
+        EXPECT_CALL(*simulatorDecisionMakerWidgetMock, refreshOperationsBackground());
+        EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, refreshOperationsBackground());
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
@@ -1498,6 +1500,8 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(false));
     EXPECT_CALL(*biDirTradingControlThreadMock, terminateThread());
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, refreshOperationsBackground());
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, refreshOperationsBackground());
 
     mainWindow->ui->actionSettings->trigger();
 

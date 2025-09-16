@@ -25,6 +25,7 @@ public:
         newInstance,
         (IOperationsTableModelFactory * operationsTableModelFactory,
          IFileDialogFactory* fileDialogFactory,
+         IConfig*            config,
          ISettingsEditor*    settingsEditor,
          QWidget*            parent),
         (const, override)

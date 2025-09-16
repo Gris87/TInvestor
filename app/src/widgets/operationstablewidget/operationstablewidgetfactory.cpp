@@ -20,9 +20,10 @@ OperationsTableWidgetFactory::~OperationsTableWidgetFactory()
 IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
     IOperationsTableModelFactory* operationsTableModelFactory,
     IFileDialogFactory*           fileDialogFactory,
+    IConfig*                      config,
     ISettingsEditor*              settingsEditor,
     QWidget*                      parent
 ) const
 {
-    return new OperationsTableWidget(operationsTableModelFactory, fileDialogFactory, settingsEditor, parent);
+    return new OperationsTableWidget(operationsTableModelFactory, fileDialogFactory, config, settingsEditor, parent);
 }

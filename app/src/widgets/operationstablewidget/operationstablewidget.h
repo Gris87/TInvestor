@@ -4,6 +4,7 @@
 
 #include "src/widgets/operationstablewidget/ioperationstablewidget.h"
 
+#include "src/config/iconfig.h"
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
@@ -26,6 +27,7 @@ public:
     explicit OperationsTableWidget(
         IOperationsTableModelFactory* operationsTableModelFactory,
         IFileDialogFactory*           fileDialogFactory,
+        IConfig*                      config,
         ISettingsEditor*              settingsEditor,
         QWidget*                      parent = nullptr
     );
@@ -38,6 +40,7 @@ public:
 
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
+    void refreshBackground() override;
 
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;

@@ -27,6 +27,7 @@ constexpr double COLUMN_GAP = 0.71;
 OperationsTableWidget::OperationsTableWidget(
     IOperationsTableModelFactory* operationsTableModelFactory,
     IFileDialogFactory*           fileDialogFactory,
+    IConfig*                      config,
     ISettingsEditor*              settingsEditor,
     QWidget*                      parent
 ) :
@@ -39,7 +40,7 @@ OperationsTableWidget::OperationsTableWidget(
 
     ui->setupUi(this);
 
-    mOperationsTableModel = operationsTableModelFactory->newInstance(this);
+    mOperationsTableModel = operationsTableModelFactory->newInstance(config, this);
 
     ui->tableView->setModel(mOperationsTableModel);
     ui->tableView->setItemDelegateForColumn(OPERATIONS_NAME_COLUMN, new InstrumentItemDelegate(ui->tableView));
@@ -62,6 +63,11 @@ void OperationsTableWidget::operationsRead(const QList<Operation>& operations)
 void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
 {
     mOperationsTableModel->operationsAdded(operations);
+}
+
+void OperationsTableWidget::refreshBackground()
+{
+    mOperationsTableModel->refreshBackground();
 }
 
 void OperationsTableWidget::on_tableView_customContextMenuRequested(const QPoint& pos)

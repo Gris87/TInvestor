@@ -20,5 +20,5 @@ public:
     OperationsTableModelFactoryMock(const OperationsTableModelFactoryMock& another)            = delete;
     OperationsTableModelFactoryMock& operator=(const OperationsTableModelFactoryMock& another) = delete;
 
-    MOCK_METHOD(IOperationsTableModel*, newInstance, (QObject * parent), (const, override));
+    MOCK_METHOD(IOperationsTableModel*, newInstance, (IConfig * config, QObject* parent), (const, override));
 };

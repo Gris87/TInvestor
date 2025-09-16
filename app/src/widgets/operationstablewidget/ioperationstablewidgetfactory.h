@@ -4,6 +4,7 @@
 
 #include "src/widgets/operationstablewidget/ioperationstablewidget.h"
 
+#include "src/config/iconfig.h"
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
@@ -23,6 +24,7 @@ public:
     virtual IOperationsTableWidget* newInstance(
         IOperationsTableModelFactory* operationsTableModelFactory,
         IFileDialogFactory*           fileDialogFactory,
+        IConfig*                      config,
         ISettingsEditor*              settingsEditor,
         QWidget*                      parent
     ) const = 0;

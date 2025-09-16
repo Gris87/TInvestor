@@ -86,7 +86,7 @@ protected:
 
         EXPECT_CALL(
             *operationsTableWidgetFactoryMock,
-            newInstance(operationsTableModelFactoryMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
+            newInstance(operationsTableModelFactoryMock, fileDialogFactoryMock, configMock, settingsEditorMock, NotNull())
         )
             .WillOnce(Return(operationsTableWidgetMock));
         EXPECT_CALL(*accountChartWidgetFactoryMock, newInstance(fileDialogFactoryMock, settingsEditorMock, NotNull()))

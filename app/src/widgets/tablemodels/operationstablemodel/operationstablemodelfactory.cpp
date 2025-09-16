@@ -17,7 +17,7 @@ OperationsTableModelFactory::~OperationsTableModelFactory()
     qDebug() << "Destroy OperationsTableModelFactory";
 }
 
-IOperationsTableModel* OperationsTableModelFactory::newInstance(QObject* parent) const
+IOperationsTableModel* OperationsTableModelFactory::newInstance(IConfig* config, QObject* parent) const
 {
-    return new OperationsTableModel(parent);
+    return new OperationsTableModel(config, parent);
 }

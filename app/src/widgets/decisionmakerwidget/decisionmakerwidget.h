@@ -70,6 +70,7 @@ public:
     void portfolioChanged(const Portfolio& portfolio) override;
     void lastPriceChanged(const QString& instrumentId, float price) override;
     void updateLastPrices() override;
+    void refreshOperationsBackground() override;
 
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;

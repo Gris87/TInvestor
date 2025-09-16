@@ -5,6 +5,7 @@
 #include <QDir>
 #include <gtest/gtest.h>
 
+#include "src/config/iconfig_mock.h"
 #include "src/utils/filedialog/ifiledialog_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -31,6 +32,7 @@ protected:
 
         operationsTableModelFactoryMock = new StrictMock<OperationsTableModelFactoryMock>();
         fileDialogFactoryMock           = new StrictMock<FileDialogFactoryMock>();
+        configMock                      = new StrictMock<ConfigMock>();
         settingsEditorMock              = new StrictMock<SettingsEditorMock>();
 
         operationsTableModelMock = new StrictMock<OperationsTableModelMock>();
@@ -39,12 +41,13 @@ protected:
         QDir(appDir + "/test/dir_for_operations_table").removeRecursively();
         QDir().mkpath(appDir + "/test/dir_for_operations_table");
 
-        EXPECT_CALL(*operationsTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(operationsTableModelMock));
+        EXPECT_CALL(*operationsTableModelFactoryMock, newInstance(configMock, NotNull()))
+            .WillOnce(Return(operationsTableModelMock));
         EXPECT_CALL(*operationsTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
         EXPECT_CALL(*operationsTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(OPERATIONS_COLUMN_COUNT));
 
         operationsTableWidget =
-            new OperationsTableWidget(operationsTableModelFactoryMock, fileDialogFactoryMock, settingsEditorMock);
+            new OperationsTableWidget(operationsTableModelFactoryMock, fileDialogFactoryMock, configMock, settingsEditorMock);
     }
 
     void TearDown() override
@@ -52,6 +55,7 @@ protected:
         delete operationsTableWidget;
         delete operationsTableModelFactoryMock;
         delete fileDialogFactoryMock;
+        delete configMock;
         delete settingsEditorMock;
         delete operationsTableModelMock;
 
@@ -61,6 +65,7 @@ protected:
     OperationsTableWidget*                       operationsTableWidget;
     StrictMock<OperationsTableModelFactoryMock>* operationsTableModelFactoryMock;
     StrictMock<FileDialogFactoryMock>*           fileDialogFactoryMock;
+    StrictMock<ConfigMock>*                      configMock;
     StrictMock<SettingsEditorMock>*              settingsEditorMock;
     StrictMock<OperationsTableModelMock>*        operationsTableModelMock;
     QString                                      appDir;

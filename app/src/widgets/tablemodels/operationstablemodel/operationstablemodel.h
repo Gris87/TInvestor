@@ -4,6 +4,8 @@
 
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodel.h"
 
+#include "src/config/iconfig.h"
+
 
 
 class OperationsTableModel : public IOperationsTableModel
@@ -11,7 +13,7 @@ class OperationsTableModel : public IOperationsTableModel
     Q_OBJECT
 
 public:
-    explicit OperationsTableModel(QObject* parent = nullptr);
+    explicit OperationsTableModel(IConfig* config, QObject* parent = nullptr);
     ~OperationsTableModel() override;
 
     OperationsTableModel(const OperationsTableModel& another)            = delete;
@@ -33,6 +35,7 @@ public:
 
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
+    void refreshBackground() override;
     void exportToExcel(QXlsx::Document& doc) const override;
 
 private:
@@ -47,6 +50,7 @@ private:
     int  indexOfSortedInsert(QList<Operation>* entries, const Operation& entry);
     void insertRow(QList<Operation>* entries, int row, const Operation& entry);
 
+    IConfig*                          mConfig;
     QStringList                       mHeader;
     std::shared_ptr<QList<Operation>> mEntries;
     int                               mSortColumn;

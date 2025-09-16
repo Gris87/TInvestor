@@ -66,7 +66,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     ui->copiedLabel->setGraphicsEffect(&mCopiedOpacityEffect);
 
     mOperationsTableWidget =
-        operationsTableWidgetFactory->newInstance(operationsTableModelFactory, fileDialogFactory, mSettingsEditor, this);
+        operationsTableWidgetFactory->newInstance(operationsTableModelFactory, fileDialogFactory, config, mSettingsEditor, this);
     mAccountChartWidget = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
     mLogsFilterWidget   = logsFilterWidgetFactory->newInstance(this);
     mLogsTableWidget    = logsTableWidgetFactory->newInstance(logsTableModelFactory, fileDialogFactory, mSettingsEditor, this);
@@ -178,6 +178,11 @@ void DecisionMakerWidget::lastPriceChanged(const QString& instrumentId, float pr
 void DecisionMakerWidget::updateLastPrices()
 {
     mPortfolioTreeWidget->updateLastPrices();
+}
+
+void DecisionMakerWidget::refreshOperationsBackground()
+{
+    mOperationsTableWidget->refreshBackground();
 }
 
 void DecisionMakerWidget::logFilterChanged(const LogFilter& filter)

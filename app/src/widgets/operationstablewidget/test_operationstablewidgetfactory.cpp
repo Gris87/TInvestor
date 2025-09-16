@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/config/iconfig_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
@@ -47,16 +48,17 @@ TEST_F(Test_OperationsTableWidgetFactory, Test_newInstance)
 
     StrictMock<OperationsTableModelFactoryMock> operationsTableModelFactoryMock;
     StrictMock<FileDialogFactoryMock>           fileDialogFactoryMock;
+    StrictMock<ConfigMock>                      configMock;
     StrictMock<SettingsEditorMock>              settingsEditorMock;
 
     StrictMock<OperationsTableModelMock> operationsTableModelMock;
 
-    EXPECT_CALL(operationsTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(&operationsTableModelMock));
+    EXPECT_CALL(operationsTableModelFactoryMock, newInstance(&configMock, NotNull())).WillOnce(Return(&operationsTableModelMock));
     EXPECT_CALL(operationsTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
     EXPECT_CALL(operationsTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
     const IOperationsTableWidget* widget =
-        factory->newInstance(&operationsTableModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
+        factory->newInstance(&operationsTableModelFactoryMock, &fileDialogFactoryMock, &configMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

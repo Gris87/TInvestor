@@ -15,5 +15,5 @@ public:
     OperationsTableModelFactory(const OperationsTableModelFactory& another)            = delete;
     OperationsTableModelFactory& operator=(const OperationsTableModelFactory& another) = delete;
 
-    IOperationsTableModel* newInstance(QObject* parent) const override;
+    IOperationsTableModel* newInstance(IConfig* config, QObject* parent) const override;
 };
