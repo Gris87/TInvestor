@@ -295,6 +295,42 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     position2->set_allocated_average_position_price(tinkoffAvgPriceWavg2);
     position2->set_allocated_daily_yield(tinkoffDailyYield2);
 
+    const std::shared_ptr<tinkoff::GetMaxLotsResponse> getMaxLotsResponse(new tinkoff::GetMaxLotsResponse());
+
+    tinkoff::GetMaxLotsResponse_BuyLimitsView* buyLimits =
+        new tinkoff::GetMaxLotsResponse_BuyLimitsView(); // getMaxLotsResponse will take ownership
+
+    buyLimits->set_buy_max_lots(5);
+
+    getMaxLotsResponse->set_allocated_buy_limits(buyLimits);
+
+    tinkoff::GetMaxLotsResponse_SellLimitsView* sellLimits =
+        new tinkoff::GetMaxLotsResponse_SellLimitsView(); // getMaxLotsResponse will take ownership
+
+    sellLimits->set_sell_max_lots(5);
+
+    getMaxLotsResponse->set_allocated_sell_limits(sellLimits);
+
+    const std::shared_ptr<tinkoff::PostOrderResponse> postOrderResponse(new tinkoff::PostOrderResponse());
+
+    postOrderResponse->set_order_id("order-id");
+    postOrderResponse->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_NEW);
+
+    const std::shared_ptr<tinkoff::OrderState> orderState(new tinkoff::OrderState());
+
+    tinkoff::MoneyValue* orderPrice = new tinkoff::MoneyValue(); // orderState will take ownership
+
+    orderPrice->set_units(9999);
+    orderPrice->set_nano(0);
+
+    orderState->set_direction(tinkoff::ORDER_DIRECTION_BUY);
+    orderState->set_lots_executed(0);
+    orderState->set_lots_requested(5);
+    orderState->set_allocated_initial_security_price(orderPrice);
+    orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_NEW);
+
+    const std::shared_ptr<tinkoff::CancelOrderResponse> cancelOrderResponse(new tinkoff::CancelOrderResponse());
+
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
@@ -308,6 +344,101 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
     EXPECT_CALL(*simulatorConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
+    EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitByTurnover()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitByTurnoverPercent()).WillOnce(Return(1.0f));
+    EXPECT_CALL(
+        *tradeUtilsMock,
+        calculateAmountOfLotsToBuy(
+            true,
+            DoubleEq(2.0f),
+            true,
+            DoubleEq(1.0f),
+            DoubleEq(103600.0),
+            DoubleEq(103600.0),
+            1000000,
+            DoubleEq(880),
+            DoubleEq(880)
+        )
+    )
+        .WillOnce(Return(20));
+    EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), priceForBuy))
+        .WillOnce(Return(getMaxLotsResponse));
+    EXPECT_CALL(
+        *grpcClientMock,
+        postOrder(
+            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_BUY, 5, priceForBuy
+        )
+    )
+        .WillOnce(Return(postOrderResponse));
+    EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), priceForSell))
+        .WillOnce(Return(getMaxLotsResponse));
+    EXPECT_CALL(
+        *grpcClientMock,
+        postOrder(
+            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_SELL, 5, priceForSell
+        )
+    )
+        .WillOnce(Return(postOrderResponse));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(30000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3))
+        .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+    EXPECT_CALL(*simulatorConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
+    EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitByTurnover()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitByTurnoverPercent()).WillOnce(Return(1.0f));
+    EXPECT_CALL(
+        *tradeUtilsMock,
+        calculateAmountOfLotsToBuy(
+            true,
+            DoubleEq(2.0f),
+            true,
+            DoubleEq(1.0f),
+            DoubleEq(103600.0),
+            DoubleEq(103600.0),
+            1000000,
+            DoubleEq(880),
+            DoubleEq(880)
+        )
+    )
+        .WillOnce(Return(20));
+    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(orderState));
+    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(orderState));
+    EXPECT_CALL(*grpcClientMock, cancelOrder(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(cancelOrderResponse));
+    EXPECT_CALL(*grpcClientMock, cancelOrder(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(cancelOrderResponse));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(3000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(thread->trade(), false);
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3))
+        .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
+    EXPECT_CALL(*autoPilotConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
     EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
