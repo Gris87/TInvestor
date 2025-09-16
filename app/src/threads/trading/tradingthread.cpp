@@ -15,7 +15,6 @@ constexpr qint64 MS_IN_SECOND                = 1000LL;
 constexpr qint64 SLEEP_DELAY                 = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY          = 3LL * MS_IN_SECOND;  // 3 seconds
 constexpr qint64 ORDER_RETRY_DELAY           = 1LL * MS_IN_SECOND;  // 1 second
-constexpr qint64 SLEEP_BEFORE_REQUEST        = 1LL * MS_IN_SECOND;  // 1 second
 constexpr double DOUBLE_EPSILON              = 0.0001;
 
 

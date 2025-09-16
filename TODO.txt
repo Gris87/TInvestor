@@ -3,9 +3,12 @@ Create release
 
 Highlight operation row if yield <> +-1%
 Something wrong with portfolio stream
+Avg quantity for huge spread
 Maybe sell huge spread if lose 1%
+But do not sell huge spread with lose if part > 3%
 Double check for QObject usage
 Refresh daily operations at the first operation at day start
+Take decisions from other robots
 Change best config search algorithm
 Find best configs for different commission
 Different defaults based on commission

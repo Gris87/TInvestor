@@ -22,7 +22,7 @@ public:
     IBiDirTradingControlThread(const IBiDirTradingControlThread& another)            = delete;
     IBiDirTradingControlThread& operator=(const IBiDirTradingControlThread& another) = delete;
 
-    virtual void terminateThread()                      = 0;
+    virtual void terminateThread() = 0;
 
 signals:
     void tradeInstruments(const InstrumentsForBiDirTrading& instruments); // Instrument UID => BiDirTradingInfo

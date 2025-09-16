@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include "src/config/decisions/idecisionmakerconfig_mock.h"
+#include "src/config/decisions/sell/selldecision4config/iselldecision4config_mock.h"
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/grpc/igrpcretryclient_mock.h"
@@ -13,6 +15,12 @@
 
 
 
+const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+
+
+
+using ::testing::DoubleEq;
+using ::testing::FloatEq;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -27,14 +35,17 @@ protected:
     {
         const InSequence seq;
 
-        instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
-        userStorageMock        = new StrictMock<UserStorageMock>();
-        configMock             = new StrictMock<ConfigMock>();
-        timeUtilsMock          = new StrictMock<TimeUtilsMock>();
-        tradeUtilsMock         = new StrictMock<TradeUtilsMock>();
-        grpcClientMock         = new StrictMock<GrpcClientMock>();
-        grpcRetryClientMock    = new StrictMock<GrpcRetryClientMock>();
-        logsThreadMock         = new StrictMock<LogsThreadMock>();
+        instrumentsStorageMock  = new StrictMock<InstrumentsStorageMock>();
+        userStorageMock         = new StrictMock<UserStorageMock>();
+        configMock              = new StrictMock<ConfigMock>();
+        timeUtilsMock           = new StrictMock<TimeUtilsMock>();
+        tradeUtilsMock          = new StrictMock<TradeUtilsMock>();
+        grpcClientMock          = new StrictMock<GrpcClientMock>();
+        grpcRetryClientMock     = new StrictMock<GrpcRetryClientMock>();
+        logsThreadMock          = new StrictMock<LogsThreadMock>();
+        simulatorConfigMock     = new StrictMock<DecisionMakerConfigMock>();
+        autoPilotConfigMock     = new StrictMock<DecisionMakerConfigMock>();
+        sellDecision4ConfigMock = new StrictMock<SellDecision4ConfigMock>();
 
         EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaa-aaa"), QString("But why")));
 
@@ -65,17 +76,23 @@ protected:
         delete grpcClientMock;
         delete grpcRetryClientMock;
         delete logsThreadMock;
+        delete simulatorConfigMock;
+        delete autoPilotConfigMock;
+        delete sellDecision4ConfigMock;
     }
 
-    BiDirTradingThread*                 thread;
-    StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
-    StrictMock<UserStorageMock>*        userStorageMock;
-    StrictMock<ConfigMock>*             configMock;
-    StrictMock<TimeUtilsMock>*          timeUtilsMock;
-    StrictMock<TradeUtilsMock>*         tradeUtilsMock;
-    StrictMock<GrpcClientMock>*         grpcClientMock;
-    StrictMock<GrpcRetryClientMock>*    grpcRetryClientMock;
-    StrictMock<LogsThreadMock>*         logsThreadMock;
+    BiDirTradingThread*                  thread;
+    StrictMock<InstrumentsStorageMock>*  instrumentsStorageMock;
+    StrictMock<UserStorageMock>*         userStorageMock;
+    StrictMock<ConfigMock>*              configMock;
+    StrictMock<TimeUtilsMock>*           timeUtilsMock;
+    StrictMock<TradeUtilsMock>*          tradeUtilsMock;
+    StrictMock<GrpcClientMock>*          grpcClientMock;
+    StrictMock<GrpcRetryClientMock>*     grpcRetryClientMock;
+    StrictMock<LogsThreadMock>*          logsThreadMock;
+    StrictMock<DecisionMakerConfigMock>* simulatorConfigMock;
+    StrictMock<DecisionMakerConfigMock>* autoPilotConfigMock;
+    StrictMock<SellDecision4ConfigMock>* sellDecision4ConfigMock;
 };
 
 
@@ -93,10 +110,10 @@ TEST_F(Test_BiDirTradingThread, Test_run)
 
     instrument.ticker                  = "ABBA";
     instrument.name                    = "Abstract Basics";
-    instrument.lot                     = 10;
-    instrument.pricePrecision          = 3;
-    instrument.minPriceIncrement.units = 0;
-    instrument.minPriceIncrement.nano  = 1000000;
+    instrument.lot                     = 1;
+    instrument.pricePrecision          = 2;
+    instrument.minPriceIncrement.units = 5;
+    instrument.minPriceIncrement.nano  = 0;
 
     instruments["aaa-aaa"] = instrument;
 
@@ -135,10 +152,10 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
 
     instrument.ticker                  = "ABBA";
     instrument.name                    = "Abstract Basics";
-    instrument.lot                     = 10;
-    instrument.pricePrecision          = 3;
-    instrument.minPriceIncrement.units = 0;
-    instrument.minPriceIncrement.nano  = 1000000;
+    instrument.lot                     = 1;
+    instrument.pricePrecision          = 2;
+    instrument.minPriceIncrement.units = 5;
+    instrument.minPriceIncrement.nano  = 0;
 
     instruments["aaa-aaa"] = instrument;
 
@@ -149,6 +166,175 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3)).WillOnce(Return(nullptr));
+
+    ASSERT_EQ(thread->trade(), false);
+
+    const std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBookResponse(new tinkoff::GetOrderBookResponse());
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3))
+        .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaa-aaa"), QString("Impossible to continue reselling")));
+
+    ASSERT_EQ(thread->trade(), true);
+
+    tinkoff::Order* bid = getOrderBookResponse->add_bids(); // getOrderBookResponse will take ownership
+
+    tinkoff::Quotation* bidPrice = new tinkoff::Quotation(); // bid will take ownership
+
+    bidPrice->set_units(880);
+    bidPrice->set_nano(0);
+
+    bid->set_quantity(100);
+    bid->set_allocated_price(bidPrice);
+
+    tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
+
+    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
+
+    askPrice->set_units(885);
+    askPrice->set_nano(0);
+
+    ask->set_quantity(100);
+    ask->set_allocated_price(askPrice);
+
+    Quotation priceForBuy;
+    priceForBuy.units = 880;
+    priceForBuy.nano  = 0;
+
+    Quotation priceForSell;
+    priceForSell.units = 905;
+    priceForSell.nano  = 0;
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3))
+        .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(nullptr));
+
+    ASSERT_EQ(thread->trade(), false);
+
+    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
+
+    tinkoff::PortfolioPosition* position1 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+    tinkoff::PortfolioPosition* position2 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+
+    tinkoff::Quotation*  tinkoffQuantity1     = new tinkoff::Quotation();  // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffCurrentPrice1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceWavg1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffDailyYield1   = new tinkoff::MoneyValue(); // position1 will take ownership
+
+    tinkoffQuantity1->set_units(100000);
+    tinkoffQuantity1->set_nano(0);
+
+    tinkoffCurrentPrice1->set_currency("rub");
+    tinkoffCurrentPrice1->set_units(1);
+    tinkoffCurrentPrice1->set_nano(0);
+
+    tinkoffAvgPriceFifo1->set_currency("rub");
+    tinkoffAvgPriceFifo1->set_units(1);
+    tinkoffAvgPriceFifo1->set_nano(0);
+
+    tinkoffAvgPriceWavg1->set_currency("rub");
+    tinkoffAvgPriceWavg1->set_units(1);
+    tinkoffAvgPriceWavg1->set_nano(0);
+
+    tinkoffDailyYield1->set_currency("rub");
+    tinkoffDailyYield1->set_units(0);
+    tinkoffDailyYield1->set_nano(0);
+
+    position1->set_instrument_uid(RUBLE_UID);
+    position1->set_instrument_type("currency");
+    position1->set_allocated_quantity(tinkoffQuantity1);
+    position1->set_allocated_current_price(tinkoffCurrentPrice1);
+    position1->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo1);
+    position1->set_allocated_average_position_price(tinkoffAvgPriceWavg1);
+    position1->set_allocated_daily_yield(tinkoffDailyYield1);
+
+    tinkoff::Quotation*  tinkoffQuantity2     = new tinkoff::Quotation();  // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffCurrentPrice2 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo2 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceWavg2 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffDailyYield2   = new tinkoff::MoneyValue(); // position2 will take ownership
+
+    tinkoffQuantity2->set_units(4);
+    tinkoffQuantity2->set_nano(0);
+
+    tinkoffCurrentPrice2->set_currency("rub");
+    tinkoffCurrentPrice2->set_units(880);
+    tinkoffCurrentPrice2->set_nano(0);
+
+    tinkoffAvgPriceFifo2->set_currency("rub");
+    tinkoffAvgPriceFifo2->set_units(900);
+    tinkoffAvgPriceFifo2->set_nano(0);
+
+    tinkoffAvgPriceWavg2->set_currency("rub");
+    tinkoffAvgPriceWavg2->set_units(900);
+    tinkoffAvgPriceWavg2->set_nano(0);
+
+    tinkoffDailyYield2->set_currency("rub");
+    tinkoffDailyYield2->set_units(0);
+    tinkoffDailyYield2->set_nano(0);
+
+    position2->set_instrument_uid("aaa-aaa");
+    position2->set_instrument_type("etf");
+    position2->set_allocated_quantity(tinkoffQuantity2);
+    position2->set_allocated_current_price(tinkoffCurrentPrice2);
+    position2->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo2);
+    position2->set_allocated_average_position_price(tinkoffAvgPriceWavg2);
+    position2->set_allocated_daily_yield(tinkoffDailyYield2);
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3))
+        .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+    EXPECT_CALL(*simulatorConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
+    EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitByTurnover()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitByTurnoverPercent()).WillOnce(Return(1.0f));
+    EXPECT_CALL(
+        *tradeUtilsMock,
+        calculateAmountOfLotsToBuy(
+            true,
+            DoubleEq(2.0f),
+            true,
+            DoubleEq(1.0f),
+            DoubleEq(103600.0),
+            DoubleEq(103600.0),
+            1000000,
+            DoubleEq(880),
+            DoubleEq(880)
+        )
+    )
+        .WillOnce(Return(20));
+    EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), priceForBuy))
+        .WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), priceForSell))
+        .WillOnce(Return(nullptr));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(30000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(thread->trade(), false);
 }

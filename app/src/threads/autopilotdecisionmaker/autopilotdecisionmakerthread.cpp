@@ -8,12 +8,11 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr qint64 MS_IN_SECOND         = 1000LL;
-constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
-constexpr qint64 ONE_DAY              = 24LL * ONE_HOUR;
-constexpr qint64 DATE_RANGE           = 90LL * ONE_DAY;
-constexpr qint64 SLEEP_BEFORE_REQUEST = 1LL * MS_IN_SECOND; // 1 second
+constexpr qint64 MS_IN_SECOND = 1000LL;
+constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR     = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY      = 24LL * ONE_HOUR;
+constexpr qint64 DATE_RANGE   = 90LL * ONE_DAY;
 
 
 

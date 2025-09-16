@@ -14,7 +14,6 @@ constexpr qint64 MS_IN_SECOND          = 1000LL;
 constexpr qint64 SLEEP_DELAY           = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY    = 3LL * MS_IN_SECOND;  // 3 seconds
 constexpr qint64 ORDER_RETRY_DELAY     = 1LL * MS_IN_SECOND;  // 1 second
-constexpr qint64 SLEEP_BEFORE_REQUEST  = 1LL * MS_IN_SECOND;  // 1 second
 
 
 
@@ -154,11 +153,12 @@ bool BiDirTradingThread::trade()
 
         const double bidPrice = quotationToDouble(tinkoffOrderBook->bids(0).price());
         double       askPrice = quotationToDouble(tinkoffOrderBook->asks(0).price());
+        const float  spread   = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
         if (instrumentAvgPrice > 0)
         {
             ISellDecision4Config* sellDecision4Config = chooseDecisionConfig()->getSellDecision4Config();
-            const float           yield               = ((askPrice / instrumentAvgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+            const float           yield               = ((bidPrice / instrumentAvgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
             if (!sellDecision4Config->isEnabled() || yield > -sellDecision4Config->getLoseYield() + (2 * commission))
             {
@@ -174,8 +174,7 @@ bool BiDirTradingThread::trade()
         const Quotation buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
         const Quotation sellPrice = quotationMultiply(mMinPriceIncrement, coefSell);
 
-        qint64      lotsToBuy = 0;
-        const float spread    = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+        qint64 lotsToBuy = 0;
 
         if (spread > mConfig->getHugeSpread())
         {
