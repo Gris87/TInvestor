@@ -74,6 +74,10 @@ private slots:
     void on_limitByTurnoverNonWorkingHoursCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_limitByTurnoverPercentNonWorkingHoursDoubleSpinBox_valueChanged(double value);
     void on_storageMonthLimitSpinBox_valueChanged(int value);
+    void on_highlightGoodOperationsCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_highlightGoodOperationsYieldDoubleSpinBox_valueChanged(double value);
+    void on_highlightBadOperationsCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_highlightBadOperationsLoseDoubleSpinBox_valueChanged(double value);
     void on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_okButton_clicked();

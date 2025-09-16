@@ -177,6 +177,10 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->limitByTurnoverNonWorkingHoursCheckBox->blockSignals(true);
     dialog->ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->blockSignals(true);
     dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
+    dialog->ui->highlightGoodOperationsCheckBox->blockSignals(true);
+    dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->blockSignals(true);
+    dialog->ui->highlightBadOperationsCheckBox->blockSignals(true);
+    dialog->ui->highlightBadOperationsLoseDoubleSpinBox->blockSignals(true);
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
 
@@ -204,6 +208,10 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isLimitByTurnoverNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLimitByTurnoverPercentNonWorkingHours()).WillOnce(Return(8.0f));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
+    EXPECT_CALL(*configMock, isHighlightGoodOperations()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHighlightGoodOperationsYield()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHighlightBadOperations()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHighlightBadOperationsLose()).WillOnce(Return(3.0f));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(false));
 
@@ -231,6 +239,10 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->limitByTurnoverNonWorkingHoursCheckBox->isChecked(),           true);
     ASSERT_NEAR(dialog->ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->value(), 8.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),                             36);
+    ASSERT_EQ(dialog->ui->highlightGoodOperationsCheckBox->isChecked(),                  true);
+    ASSERT_NEAR(dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->value(),          2.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->highlightBadOperationsCheckBox->isChecked(),                   true);
+    ASSERT_NEAR(dialog->ui->highlightBadOperationsLoseDoubleSpinBox->value(),            3.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(),                    true);
     ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(),                    false);
     // clang-format on
@@ -259,6 +271,10 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isLimitByTurnoverNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getLimitByTurnoverPercentNonWorkingHours()).WillOnce(Return(2.5f));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
+    EXPECT_CALL(*configMock, isHighlightGoodOperations()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getHighlightGoodOperationsYield()).WillOnce(Return(7.0f));
+    EXPECT_CALL(*configMock, isHighlightBadOperations()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getHighlightBadOperationsLose()).WillOnce(Return(5.0f));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(true));
 
@@ -286,6 +302,10 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->limitByTurnoverNonWorkingHoursCheckBox->isChecked(),           false);
     ASSERT_NEAR(dialog->ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->value(), 2.5f, 0.0001f);
     ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),                             12);
+    ASSERT_EQ(dialog->ui->highlightGoodOperationsCheckBox->isChecked(),                  false);
+    ASSERT_NEAR(dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->value(),          7.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->highlightBadOperationsCheckBox->isChecked(),                   false);
+    ASSERT_NEAR(dialog->ui->highlightBadOperationsLoseDoubleSpinBox->value(),            5.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(),                    false);
     ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(),                    true);
     // clang-format on
@@ -624,6 +644,70 @@ TEST_F(Test_SettingsDialog, Test_on_storageMonthLimitSpinBox_valueChanged)
     dialog->ui->storageMonthLimitSpinBox->setValue(3);
 }
 
+TEST_F(Test_SettingsDialog, Test_on_highlightGoodOperationsCheckBox_checkStateChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->highlightGoodOperationsCheckBox->blockSignals(true);
+    dialog->ui->highlightGoodOperationsCheckBox->setChecked(false);
+    dialog->ui->highlightGoodOperationsCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHighlightGoodOperations(true));
+    dialog->ui->highlightGoodOperationsCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setHighlightGoodOperations(false));
+    dialog->ui->highlightGoodOperationsCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_highlightGoodOperationsYieldDoubleSpinBox_valueChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->blockSignals(true);
+    dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->setValue(1);
+    dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHighlightGoodOperationsYield(2.0f));
+    dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->setValue(2.0f);
+
+    EXPECT_CALL(*configMock, setHighlightGoodOperationsYield(3.0f));
+    dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->setValue(3.0f);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_highlightBadOperationsCheckBox_checkStateChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->highlightBadOperationsCheckBox->blockSignals(true);
+    dialog->ui->highlightBadOperationsCheckBox->setChecked(false);
+    dialog->ui->highlightBadOperationsCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHighlightBadOperations(true));
+    dialog->ui->highlightBadOperationsCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->highlightBadOperationsLoseDoubleSpinBox->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setHighlightBadOperations(false));
+    dialog->ui->highlightBadOperationsCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->highlightBadOperationsLoseDoubleSpinBox->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_highlightBadOperationsLoseDoubleSpinBox_valueChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->highlightBadOperationsLoseDoubleSpinBox->blockSignals(true);
+    dialog->ui->highlightBadOperationsLoseDoubleSpinBox->setValue(1);
+    dialog->ui->highlightBadOperationsLoseDoubleSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHighlightBadOperationsLose(2.0f));
+    dialog->ui->highlightBadOperationsLoseDoubleSpinBox->setValue(2.0f);
+
+    EXPECT_CALL(*configMock, setHighlightBadOperationsLose(3.0f));
+    dialog->ui->highlightBadOperationsLoseDoubleSpinBox->setValue(3.0f);
+}
+
 TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChanged)
 {
     const InSequence seq;
@@ -635,25 +719,28 @@ TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChan
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
 
-    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 4);
     ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "View");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(3), "Auto-pilot");
 
     EXPECT_CALL(*configMock, setSimulatorConfigCommon(true));
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(true);
 
-    ASSERT_EQ(dialog->ui->tabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
     ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Decision maker");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "View");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Decision maker");
 
     EXPECT_CALL(*configMock, setSimulatorConfigCommon(false));
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
 
-    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 4);
     ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "View");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(3), "Auto-pilot");
 }
 
 TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChanged_unexpected_behaviour)
@@ -667,18 +754,20 @@ TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChan
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
 
-    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 4);
     ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "View");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(3), "Auto-pilot");
 
     EXPECT_CALL(*configMock, setAutoPilotConfigCommon(true));
     dialog->ui->autoPilotConfigCommonCheckBox->setChecked(true);
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(true);
 
-    ASSERT_EQ(dialog->ui->tabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
     ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Decision maker");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "View");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Decision maker");
 }
 
 TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChanged)
@@ -692,25 +781,28 @@ TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChan
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
 
-    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 4);
     ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "View");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(3), "Auto-pilot");
 
     EXPECT_CALL(*configMock, setAutoPilotConfigCommon(true));
     dialog->ui->autoPilotConfigCommonCheckBox->setChecked(true);
 
-    ASSERT_EQ(dialog->ui->tabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
     ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Decision maker");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "View");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Decision maker");
 
     EXPECT_CALL(*configMock, setAutoPilotConfigCommon(false));
     dialog->ui->autoPilotConfigCommonCheckBox->setChecked(false);
 
-    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 4);
     ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "View");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(3), "Auto-pilot");
 }
 
 TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChanged_unexpected_behaviour)
@@ -724,18 +816,20 @@ TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChan
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
 
-    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 4);
     ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "View");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(3), "Auto-pilot");
 
     EXPECT_CALL(*configMock, setSimulatorConfigCommon(true));
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(true);
     dialog->ui->autoPilotConfigCommonCheckBox->setChecked(true);
 
-    ASSERT_EQ(dialog->ui->tabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
     ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Decision maker");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "View");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Decision maker");
 }
 
 TEST_F(Test_SettingsDialog, Test_on_okButton_clicked)
@@ -777,6 +871,10 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->limitByTurnoverNonWorkingHoursCheckBox->blockSignals(true);
     dialog->ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->blockSignals(true);
     dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
+    dialog->ui->highlightGoodOperationsCheckBox->blockSignals(true);
+    dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->blockSignals(true);
+    dialog->ui->highlightBadOperationsCheckBox->blockSignals(true);
+    dialog->ui->highlightBadOperationsLoseDoubleSpinBox->blockSignals(true);
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
 
@@ -806,6 +904,10 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*configMock, isLimitByTurnoverNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLimitByTurnoverPercentNonWorkingHours()).WillOnce(Return(3.0f));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
+    EXPECT_CALL(*configMock, isHighlightGoodOperations()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHighlightGoodOperationsYield()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHighlightBadOperations()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHighlightBadOperationsLose()).WillOnce(Return(3.0f));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(false));
 
@@ -833,6 +935,10 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     ASSERT_EQ(dialog->ui->limitByTurnoverNonWorkingHoursCheckBox->isChecked(),           true);
     ASSERT_NEAR(dialog->ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->value(), 3.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),                             36);
+    ASSERT_EQ(dialog->ui->highlightGoodOperationsCheckBox->isChecked(),                  true);
+    ASSERT_NEAR(dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->value(),          2.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->highlightBadOperationsCheckBox->isChecked(),                   true);
+    ASSERT_NEAR(dialog->ui->highlightBadOperationsLoseDoubleSpinBox->value(),            3.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(),                    true);
     ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(),                    false);
     // clang-format on

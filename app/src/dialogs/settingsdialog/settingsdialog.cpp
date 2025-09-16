@@ -8,8 +8,8 @@
 
 constexpr float LIMIT_COMMISSION = 0.06f;
 
-constexpr int SIMULATION_TAB_ID = 1;
-constexpr int AUTO_PILOT_TAB_ID = 2;
+constexpr int SIMULATION_TAB_ID = 2;
+constexpr int AUTO_PILOT_TAB_ID = 3;
 
 
 
@@ -127,6 +127,10 @@ void SettingsDialog::updateUiFromConfig()
     ui->limitByTurnoverNonWorkingHoursCheckBox->setChecked(mConfig->isLimitByTurnoverNonWorkingHours());
     ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->setValue(mConfig->getLimitByTurnoverPercentNonWorkingHours());
     ui->storageMonthLimitSpinBox->setValue(mConfig->getStorageMonthLimit());
+    ui->highlightGoodOperationsCheckBox->setChecked(mConfig->isHighlightGoodOperations());
+    ui->highlightGoodOperationsYieldDoubleSpinBox->setValue(mConfig->getHighlightGoodOperationsYield());
+    ui->highlightBadOperationsCheckBox->setChecked(mConfig->isHighlightBadOperations());
+    ui->highlightBadOperationsLoseDoubleSpinBox->setValue(mConfig->getHighlightBadOperationsLose());
     ui->simulatorConfigCommonCheckBox->setChecked(mConfig->isSimulatorConfigCommon());
     ui->autoPilotConfigCommonCheckBox->setChecked(mConfig->isAutoPilotConfigCommon());
 }
@@ -272,6 +276,34 @@ void SettingsDialog::on_limitByTurnoverPercentNonWorkingHoursDoubleSpinBox_value
 void SettingsDialog::on_storageMonthLimitSpinBox_valueChanged(int value)
 {
     mConfig->setStorageMonthLimit(value);
+}
+
+void SettingsDialog::on_highlightGoodOperationsCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setHighlightGoodOperations(checked);
+
+    ui->highlightGoodOperationsYieldDoubleSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_highlightGoodOperationsYieldDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setHighlightGoodOperationsYield(value);
+}
+
+void SettingsDialog::on_highlightBadOperationsCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setHighlightBadOperations(checked);
+
+    ui->highlightBadOperationsLoseDoubleSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_highlightBadOperationsLoseDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setHighlightBadOperationsLose(value);
 }
 
 void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value)
