@@ -38,6 +38,13 @@ InstrumentItemDelegate::~InstrumentItemDelegate()
 
 void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+    QVariant background = index.data(Qt::BackgroundRole);
+
+    if (background.canConvert<QBrush>())
+    {
+        painter->fillRect(option.rect, background.value<QBrush>());
+    }
+
     Logo* logo = reinterpret_cast<Logo*>(index.data(ROLE_INSTRUMENT_LOGO).toLongLong()); // NOLINT(performance-no-int-to-ptr)
 
     if (logo != nullptr)

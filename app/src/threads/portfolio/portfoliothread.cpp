@@ -90,6 +90,9 @@ void PortfolioThread::run()
         mPortfolioStream = nullptr;
     }
 
+    // TODO: Remove it
+    qWarning() << "Finish PortfolioThread";
+
     qDebug() << "Finish PortfolioThread";
 }
 
