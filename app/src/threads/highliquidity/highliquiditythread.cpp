@@ -57,15 +57,8 @@ void HighLiquidityThread::makeDecisionBaseOnTimestamp(qint64 timestamp)
     }
 
     const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
-    const int       dayOfWeek = dateTime.date().dayOfWeek();
-
-    if (dayOfWeek == Qt::Saturday || dayOfWeek == Qt::Sunday)
-    {
-        return;
-    }
-
-    const QTime time      = dateTime.time();
-    const QTime startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
+    const QTime     time      = dateTime.time();
+    const QTime     startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
 
     if (time < startTime)
     {
@@ -77,7 +70,12 @@ void HighLiquidityThread::makeDecisionBaseOnTimestamp(qint64 timestamp)
 
     if (time < endTime)
     {
-        sellEtf();
+        const int dayOfWeek = dateTime.date().dayOfWeek();
+
+        if (dayOfWeek != Qt::Saturday && dayOfWeek != Qt::Sunday)
+        {
+            sellEtf();
+        }
 
         return;
     }

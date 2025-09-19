@@ -146,15 +146,17 @@ TEST_F(Test_HighLiquidityThread, Test_makeDecisionBaseOnTimestamp)
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
 
+    thread->makeDecisionBaseOnTimestamp(1704092340000); // 09:59 MSK
+
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+
     thread->makeDecisionBaseOnTimestamp(1704542400000); // 15:00 MSK Sat
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
-
-    thread->makeDecisionBaseOnTimestamp(1704628800000); // 15:00 MSK Sun
-
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
 
-    thread->makeDecisionBaseOnTimestamp(1704092340000); // 09:59 MSK
+    thread->makeDecisionBaseOnTimestamp(1704628800000); // 15:00 MSK Sun
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));

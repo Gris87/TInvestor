@@ -12,7 +12,7 @@ constexpr float  HUNDRED_PERCENT            = 100.0f;
 constexpr float  LIMIT_COMMISSION           = 0.06f;
 constexpr int    EXTRA_SESSION_END_HOUR     = 23;
 constexpr int    EXTRA_SESSION_END_MINUTE   = 30;
-constexpr int    AMOUNT_OF_LAST_INSTRUMENTS = 3;
+constexpr int    AMOUNT_OF_LAST_INSTRUMENTS = 5;
 constexpr qint64 MS_IN_SECOND               = 1000LL;
 constexpr qint64 ONE_MINUTE                 = 60LL * MS_IN_SECOND;
 constexpr qint64 DETECTION_INTERVAL         = 15LL * ONE_MINUTE; // 15 minutes
@@ -161,35 +161,41 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
         }
     }
 
-    if (time < endTime)
+    if (!instrumentsForTrading.isEmpty())
     {
-        mLastInstrumentsForBiDirTrading[mLastInstrumentsId] = instrumentsForTrading;
+        QStringList instrumentsToRemove;
 
-        int i = mLastInstrumentsId - 1;
+        mLastInstrumentsForBiDirTrading[mLastInstrumentsId] = instrumentsForTrading;
+        int i = mLastInstrumentsId == 0 ? AMOUNT_OF_LAST_INSTRUMENTS - 1 : mLastInstrumentsId - 1;
 
         while (i != mLastInstrumentsId)
         {
-            if (i < 0)
-            {
-                i += AMOUNT_OF_LAST_INSTRUMENTS;
-            }
-
             const InstrumentsForBiDirTrading& lastInstruments = mLastInstrumentsForBiDirTrading.at(i);
 
-            for (auto it = lastInstruments.constBegin(), end = lastInstruments.constEnd(); it != end; ++it)
+            for (auto it = instrumentsForTrading.constBegin(), end = instrumentsForTrading.constEnd(); it != end; ++it)
             {
                 const QString& instrumentId = it.key();
 
-                if (!instrumentsForTrading.contains(instrumentId))
+                if (!lastInstruments.contains(instrumentId))
                 {
-                    instrumentsForTrading[instrumentId] = it.value();
+                    instrumentsToRemove.append(instrumentId);
                 }
             }
 
             --i;
+
+            if (i < 0)
+            {
+                i += AMOUNT_OF_LAST_INSTRUMENTS;
+            }
         }
 
-        ++mLastInstrumentsId;
+        for (const QString& instrumentToRemove : instrumentsToRemove)
+        {
+            instrumentsForTrading.remove(instrumentToRemove);
+        }
+
+        mLastInstrumentsId = (mLastInstrumentsId + 1) % AMOUNT_OF_LAST_INSTRUMENTS;
     }
 
     if (!instrumentsForTrading.isEmpty())
