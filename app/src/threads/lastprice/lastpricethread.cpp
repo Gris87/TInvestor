@@ -44,7 +44,7 @@ void LastPriceThread::run()
         {
             if (createMarketDataStream(stocks))
             {
-                QMap<QString, Stock*> stocksMap = buildStocksMap();
+                const QMap<QString, Stock*> stocksMap = buildStocksMap();
 
                 while (true)
                 {
@@ -53,52 +53,17 @@ void LastPriceThread::run()
 
                     if (QThread::currentThread()->isInterruptionRequested() || marketDataResponse == nullptr)
                     {
+                        mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread());
+
                         break;
                     }
 
                     if (marketDataResponse->has_last_price())
                     {
                         const tinkoff::LastPrice& lastPriceResp = marketDataResponse->last_price();
+                        const QString             instrumentId  = QString::fromStdString(lastPriceResp.instrument_uid());
 
-                        StockOperationalData stockData; // NOLINT(cppcoreguidelines-pro-type-member-init)
-
-                        stockData.timestamp = timeToTimestamp(lastPriceResp.time());
-                        stockData.price     = quotationToFloat(lastPriceResp.price());
-
-                        const QString instrumentId = QString::fromStdString(lastPriceResp.instrument_uid());
-
-                        Stock* stock = stocksMap[instrumentId];
-
-                        stock->writeLock();
-                        stock->operational.detailedData.insert(
-                            std::distance(
-                                stock->operational.detailedData.constBegin(),
-                                std::lower_bound(
-                                    stock->operational.detailedData.constBegin(),
-                                    stock->operational.detailedData.constEnd(),
-                                    stockData.timestamp,
-                                    [](const StockOperationalData& stockData, qint64 value) {
-                                        return stockData.timestamp < value;
-                                    }
-                                )
-                            ),
-                            stockData
-                        );
-
-                        Q_ASSERT_X(
-                            std::is_sorted(
-                                stock->operational.detailedData.constBegin(),
-                                stock->operational.detailedData.constEnd(),
-                                [](const StockOperationalData& l, const StockOperationalData& r) {
-                                    return l.timestamp < r.timestamp;
-                                }
-                            ),
-                            __FUNCTION__,
-                            "Stock data is unsorted"
-                        );
-                        stock->writeUnlock();
-
-                        emit lastPriceChanged(instrumentId);
+                        handleLastPrice(stocksMap.value(instrumentId), lastPriceResp);
                     }
                 }
 
@@ -106,6 +71,13 @@ void LastPriceThread::run()
 
                 mGrpcClient->finishMarketDataStream(mMarketDataStream);
                 mMarketDataStream = nullptr;
+            }
+            else
+            {
+                if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
+                {
+                    break;
+                }
             }
         }
         else
@@ -199,4 +171,39 @@ bool LastPriceThread::createMarketDataStream(const QStringList& stocks)
     }
 
     return res;
+}
+
+void LastPriceThread::handleLastPrice(Stock* stock, const tinkoff::LastPrice& lastPriceResp)
+{
+    StockOperationalData stockData; // NOLINT(cppcoreguidelines-pro-type-member-init)
+
+    stockData.timestamp = timeToTimestamp(lastPriceResp.time());
+    stockData.price     = quotationToFloat(lastPriceResp.price());
+
+    stock->writeLock();
+    stock->operational.detailedData.insert(
+        std::distance(
+            stock->operational.detailedData.constBegin(),
+            std::lower_bound(
+                stock->operational.detailedData.constBegin(),
+                stock->operational.detailedData.constEnd(),
+                stockData.timestamp,
+                [](const StockOperationalData& stockData, qint64 value) { return stockData.timestamp < value; }
+            )
+        ),
+        stockData
+    );
+
+    Q_ASSERT_X(
+        std::is_sorted(
+            stock->operational.detailedData.constBegin(),
+            stock->operational.detailedData.constEnd(),
+            [](const StockOperationalData& l, const StockOperationalData& r) { return l.timestamp < r.timestamp; }
+        ),
+        __FUNCTION__,
+        "Stock data is unsorted"
+    );
+
+    emit lastPriceChanged(stock->meta.instrumentId);
+    stock->writeUnlock();
 }

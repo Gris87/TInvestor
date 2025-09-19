@@ -10,11 +10,9 @@
 
 class GrpcRetryClientMock : public IGrpcRetryClient
 {
-    Q_OBJECT
-
 public:
-    explicit GrpcRetryClientMock(QObject* parent = nullptr) :
-        IGrpcRetryClient(parent)
+    explicit GrpcRetryClientMock() :
+        IGrpcRetryClient()
     {
     }
     ~GrpcRetryClientMock() override = default;

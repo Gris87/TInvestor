@@ -9,6 +9,7 @@
 const char* const RUBLE_UID            = "a92e2e25-a698-45cc-a781-167cf465257c";
 constexpr float   HUNDRED_PERCENT      = 100.0f;
 constexpr qint64  MS_IN_SECOND         = 1000LL;
+constexpr qint64  SLEEP_DELAY          = 5LL * MS_IN_SECOND;  // 5 seconds
 constexpr qint64  SLEEP_BEFORE_REQUEST = 10LL * MS_IN_SECOND; // 10 seconds
 
 
@@ -58,40 +59,61 @@ void PortfolioThread::run()
 
     blockSignals(false);
 
-    if (createPortfolioStream())
+    while (!QThread::currentThread()->isInterruptionRequested())
     {
-        if (requestPortfolio())
+        if (createPortfolioStream())
         {
-            while (true)
+            if (requestPortfolio())
             {
-                const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
-                    mGrpcClient->readPortfolioStream(mPortfolioStream);
-
-                if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
+                while (true)
                 {
-                    break;
-                }
+                    const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
+                        mGrpcClient->readPortfolioStream(mPortfolioStream);
 
-                if (portfolioStreamResponse->has_portfolio())
-                {
-                    if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                    if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
                     {
+                        mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread());
+
                         break;
                     }
 
-                    requestPortfolio();
+                    if (portfolioStreamResponse->has_portfolio())
+                    {
+                        if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                        {
+                            break;
+                        }
+
+                        requestPortfolio();
+                    }
                 }
             }
+            else
+            {
+                if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
+                {
+                    const QWriteLocker lock(mRwMutex);
+
+                    mGrpcClient->finishPortfolioStream(mPortfolioStream);
+                    mPortfolioStream = nullptr;
+
+                    break;
+                }
+            }
+
+            const QWriteLocker lock(mRwMutex);
+
+            mGrpcClient->finishPortfolioStream(mPortfolioStream);
+            mPortfolioStream = nullptr;
         }
-
-        const QWriteLocker lock(mRwMutex);
-
-        mGrpcClient->finishPortfolioStream(mPortfolioStream);
-        mPortfolioStream = nullptr;
+        else
+        {
+            if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
+            {
+                break;
+            }
+        }
     }
-
-    // TODO: Remove it
-    qWarning() << "Finish PortfolioThread";
 
     qDebug() << "Finish PortfolioThread";
 }

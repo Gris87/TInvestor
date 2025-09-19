@@ -7,6 +7,7 @@
 #include <QReadWriteLock>
 
 #include "src/grpc/igrpcclient.h"
+#include "src/utils/timeutils/itimeutils.h"
 
 
 
@@ -15,7 +16,7 @@ class OrderBookThread : public IOrderBookThread
     Q_OBJECT
 
 public:
-    explicit OrderBookThread(IGrpcClient* grpcClient, QObject* parent = nullptr);
+    explicit OrderBookThread(ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent = nullptr);
     ~OrderBookThread() override;
 
     OrderBookThread(const OrderBookThread& another)            = delete;
@@ -33,6 +34,7 @@ private:
     void handleOrderBook(const tinkoff::OrderBook& tinkoffOrderBook);
 
     QReadWriteLock*                   mRwMutex;
+    ITimeUtils*                       mTimeUtils;
     IGrpcClient*                      mGrpcClient;
     Stock*                            mStock;
     std::shared_ptr<MarketDataStream> mMarketDataStream;

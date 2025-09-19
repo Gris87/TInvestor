@@ -16,8 +16,8 @@ constexpr qint64 SLEEP_BETWEEN_REQUEST   = 1LL * MS_IN_SECOND; // 1 second
 
 
 
-GrpcRetryClient::GrpcRetryClient(IUserStorage* userStorage, IGrpcClient* grpcClient, ITimeUtils* timeUtils, QObject* parent) :
-    IGrpcRetryClient(parent),
+GrpcRetryClient::GrpcRetryClient(IUserStorage* userStorage, IGrpcClient* grpcClient, ITimeUtils* timeUtils) :
+    IGrpcRetryClient(),
     mUserStorage(userStorage),
     mGrpcClient(grpcClient),
     mTimeUtils(timeUtils)

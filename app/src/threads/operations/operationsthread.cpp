@@ -16,6 +16,7 @@ constexpr qint64 MS_IN_SECOND         = 1000LL;
 constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
 constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
 constexpr qint64 ONE_DAY              = 24LL * ONE_HOUR;
+constexpr qint64 SLEEP_DELAY          = 5LL * MS_IN_SECOND;  // 5 seconds
 constexpr qint64 SLEEP_BEFORE_REQUEST = 10LL * MS_IN_SECOND; // 10 seconds
 
 
@@ -73,38 +74,62 @@ void OperationsThread::run()
     blockSignals(false);
     readOperations();
 
-    if (createPortfolioStream())
+    while (!QThread::currentThread()->isInterruptionRequested())
     {
-        if (requestOperations())
+        if (createPortfolioStream())
         {
-            while (true)
+            if (requestOperations())
             {
-                optimize();
-
-                const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
-                    mGrpcClient->readPortfolioStream(mPortfolioStream);
-
-                if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
+                while (true)
                 {
-                    break;
-                }
+                    optimize();
 
-                if (portfolioStreamResponse->has_portfolio())
-                {
-                    if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                    const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
+                        mGrpcClient->readPortfolioStream(mPortfolioStream);
+
+                    if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
                     {
+                        mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread());
+
                         break;
                     }
 
-                    requestOperations();
+                    if (portfolioStreamResponse->has_portfolio())
+                    {
+                        if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
+                        {
+                            break;
+                        }
+
+                        requestOperations();
+                    }
                 }
             }
+            else
+            {
+                if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
+                {
+                    const QWriteLocker lock(mRwMutex);
+
+                    mGrpcClient->finishPortfolioStream(mPortfolioStream);
+                    mPortfolioStream = nullptr;
+
+                    break;
+                }
+            }
+
+            const QWriteLocker lock(mRwMutex);
+
+            mGrpcClient->finishPortfolioStream(mPortfolioStream);
+            mPortfolioStream = nullptr;
         }
-
-        const QWriteLocker lock(mRwMutex);
-
-        mGrpcClient->finishPortfolioStream(mPortfolioStream);
-        mPortfolioStream = nullptr;
+        else
+        {
+            if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
+            {
+                break;
+            }
+        }
     }
 
     qDebug() << "Finish OperationsThread";

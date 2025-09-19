@@ -184,22 +184,18 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     ASSERT_EQ(thread->trade(), true);
 
     tinkoff::Order* bid = getOrderBookResponse->add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
 
     tinkoff::Quotation* bidPrice = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
 
     bidPrice->set_units(880);
     bidPrice->set_nano(0);
-
-    bid->set_quantity(100);
-    bid->set_allocated_price(bidPrice);
-
-    tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
-
-    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
-
     askPrice->set_units(885);
     askPrice->set_nano(0);
 
+    bid->set_quantity(100);
+    bid->set_allocated_price(bidPrice);
     ask->set_quantity(100);
     ask->set_allocated_price(askPrice);
 

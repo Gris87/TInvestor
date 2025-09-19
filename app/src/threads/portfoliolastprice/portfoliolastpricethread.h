@@ -30,6 +30,8 @@ public:
     bool createMarketDataStream();
 
 private:
+    void handleLastPrice(const tinkoff::LastPrice& lastPriceResp);
+
     QReadWriteLock*                   mRwMutex;
     ITimeUtils*                       mTimeUtils;
     IGrpcClient*                      mGrpcClient;

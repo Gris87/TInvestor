@@ -6,13 +6,16 @@
 
 
 
-constexpr int ORDER_BOOK_DEPTH = 50;
+constexpr int    ORDER_BOOK_DEPTH = 50;
+constexpr qint64 MS_IN_SECOND     = 1000LL;
+constexpr qint64 SLEEP_DELAY      = 5LL * MS_IN_SECOND; // 5 seconds
 
 
 
-OrderBookThread::OrderBookThread(IGrpcClient* grpcClient, QObject* parent) :
+OrderBookThread::OrderBookThread(ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent) :
     IOrderBookThread(parent),
     mRwMutex(new QReadWriteLock()),
+    mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mStock(),
     mMarketDataStream()
@@ -37,28 +40,45 @@ void OrderBookThread::run()
     const QString instrumentId = mStock->meta.instrumentId;
     mStock->readUnlock();
 
-    const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-        mGrpcClient->getOrderBook(QThread::currentThread(), instrumentId, ORDER_BOOK_DEPTH);
-
-    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrderBook != nullptr)
+    while (!QThread::currentThread()->isInterruptionRequested())
     {
-        handleGetOrderBookResponse(tinkoffOrderBook);
-
         if (createMarketDataStream(instrumentId))
         {
-            while (true)
+            const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
+                mGrpcClient->getOrderBook(QThread::currentThread(), instrumentId, ORDER_BOOK_DEPTH);
+
+            if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrderBook != nullptr)
             {
-                const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse =
-                    mGrpcClient->readMarketDataStream(mMarketDataStream);
+                handleGetOrderBookResponse(tinkoffOrderBook);
 
-                if (QThread::currentThread()->isInterruptionRequested() || marketDataResponse == nullptr)
+                while (true)
                 {
-                    break;
+                    const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse =
+                        mGrpcClient->readMarketDataStream(mMarketDataStream);
+
+                    if (QThread::currentThread()->isInterruptionRequested() || marketDataResponse == nullptr)
+                    {
+                        mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread());
+
+                        break;
+                    }
+
+                    if (marketDataResponse->has_orderbook())
+                    {
+                        handleOrderBook(marketDataResponse->orderbook());
+                    }
                 }
-
-                if (marketDataResponse->has_orderbook())
+            }
+            else
+            {
+                if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
                 {
-                    handleOrderBook(marketDataResponse->orderbook());
+                    const QWriteLocker lock(mRwMutex);
+
+                    mGrpcClient->finishMarketDataStream(mMarketDataStream);
+                    mMarketDataStream = nullptr;
+
+                    break;
                 }
             }
 
@@ -66,6 +86,13 @@ void OrderBookThread::run()
 
             mGrpcClient->finishMarketDataStream(mMarketDataStream);
             mMarketDataStream = nullptr;
+        }
+        else
+        {
+            if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
+            {
+                break;
+            }
         }
     }
 

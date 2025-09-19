@@ -12,12 +12,8 @@
 
 class GrpcRetryClient : public IGrpcRetryClient
 {
-    Q_OBJECT
-
 public:
-    explicit GrpcRetryClient(
-        IUserStorage* userStorage, IGrpcClient* grpcClient, ITimeUtils* timeUtils, QObject* parent = nullptr
-    );
+    explicit GrpcRetryClient(IUserStorage* userStorage, IGrpcClient* grpcClient, ITimeUtils* timeUtils);
     ~GrpcRetryClient() override;
 
     GrpcRetryClient(const GrpcRetryClient& another)            = delete;

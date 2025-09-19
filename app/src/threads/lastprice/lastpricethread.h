@@ -33,6 +33,8 @@ public:
     bool createMarketDataStream(const QStringList& stocks);
 
 private:
+    void handleLastPrice(Stock* stock, const tinkoff::LastPrice& lastPriceResp);
+
     QStringList           getStockUIDs();
     QMap<QString, Stock*> buildStocksMap();
 

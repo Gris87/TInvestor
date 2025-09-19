@@ -1,8 +1,7 @@
-Something wrong with portfolio stream
 Avg quantity for huge spread
 Maybe sell huge spread if lose 1%
 But do not sell huge spread with lose if part > 3%
-Double check for QObject usage
+Merge 3 last huge spread insruments
 Refresh daily operations at the first operation at day start
 Take decisions from other robots
 Change best config search algorithm

@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
 
 
 
@@ -18,18 +19,21 @@ class Test_OrderBookThread : public ::testing::Test
 protected:
     void SetUp() override
     {
+        timeUtilsMock  = new StrictMock<TimeUtilsMock>();
         grpcClientMock = new StrictMock<GrpcClientMock>();
 
-        thread = new OrderBookThread(grpcClientMock);
+        thread = new OrderBookThread(timeUtilsMock, grpcClientMock);
     }
 
     void TearDown() override
     {
         delete thread;
+        delete timeUtilsMock;
         delete grpcClientMock;
     }
 
     OrderBookThread*            thread;
+    StrictMock<TimeUtilsMock>*  timeUtilsMock;
     StrictMock<GrpcClientMock>* grpcClientMock;
 };
 
@@ -56,22 +60,21 @@ TEST_F(Test_OrderBookThread, Test_run)
 
     const std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBookResponse(new tinkoff::GetOrderBookResponse());
 
-    tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
     tinkoff::Order* bid = getOrderBookResponse->add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
 
-    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
     tinkoff::Quotation* bidPrice = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
 
-    askPrice->set_units(100);
-    askPrice->set_nano(500000000);
-    bidPrice->set_units(200);
+    bidPrice->set_units(100);
     bidPrice->set_nano(500000000);
-
-    ask->set_quantity(10);
-    ask->set_allocated_price(askPrice);
+    askPrice->set_units(200);
+    askPrice->set_nano(500000000);
 
     bid->set_quantity(10);
     bid->set_allocated_price(bidPrice);
+    ask->set_quantity(10);
+    ask->set_allocated_price(askPrice);
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
 
@@ -86,31 +89,40 @@ TEST_F(Test_OrderBookThread, Test_run)
 
     orderBook->set_allocated_time(time);
 
-    tinkoff::Order* lastAsk = orderBook->add_asks(); // orderBook will take ownership
     tinkoff::Order* lastBid = orderBook->add_bids(); // orderBook will take ownership
+    tinkoff::Order* lastAsk = orderBook->add_asks(); // orderBook will take ownership
 
-    tinkoff::Quotation* lastAskPrice = new tinkoff::Quotation(); // lastAsk will take ownership
     tinkoff::Quotation* lastBidPrice = new tinkoff::Quotation(); // lastBid will take ownership
+    tinkoff::Quotation* lastAskPrice = new tinkoff::Quotation(); // lastAsk will take ownership
 
-    lastAskPrice->set_units(100);
-    lastAskPrice->set_nano(500000000);
-    lastBidPrice->set_units(200);
+    lastBidPrice->set_units(100);
     lastBidPrice->set_nano(500000000);
-
-    lastAsk->set_quantity(10);
-    lastAsk->set_allocated_price(lastAskPrice);
+    lastAskPrice->set_units(200);
+    lastAskPrice->set_nano(500000000);
 
     lastBid->set_quantity(10);
     lastBid->set_allocated_price(lastBidPrice);
+    lastAsk->set_quantity(10);
+    lastAsk->set_allocated_price(lastAskPrice);
 
     marketDataResponse->set_allocated_orderbook(orderBook);
 
+    EXPECT_CALL(*grpcClientMock, createMarketDataStreamForOrderBook(QString("aaaaa"), 50)).WillOnce(Return(marketDataStream));
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 50))
         .WillOnce(Return(getOrderBookResponse));
-    EXPECT_CALL(*grpcClientMock, createMarketDataStreamForOrderBook(QString("aaaaa"), 50)).WillOnce(Return(marketDataStream));
     EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(marketDataResponse));
     EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, createMarketDataStreamForOrderBook(QString("aaaaa"), 50)).WillOnce(Return(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 50)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
+
+    thread->run();
+
+    EXPECT_CALL(*grpcClientMock, createMarketDataStreamForOrderBook(QString("aaaaa"), 50)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
 
     thread->run();
 }

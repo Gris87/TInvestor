@@ -81,22 +81,18 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectHugeSpreadStocks)
     const std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBookResponse(new tinkoff::GetOrderBookResponse());
 
     tinkoff::Order* bid = getOrderBookResponse->add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
 
     tinkoff::Quotation* bidPrice = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
 
     bidPrice->set_units(10);
     bidPrice->set_nano(400000000);
-
-    bid->set_quantity(10);
-    bid->set_allocated_price(bidPrice);
-
-    tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
-
-    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
-
     askPrice->set_units(20);
     askPrice->set_nano(500000000);
 
+    bid->set_quantity(10);
+    bid->set_allocated_price(bidPrice);
     ask->set_quantity(10);
     ask->set_allocated_price(askPrice);
 

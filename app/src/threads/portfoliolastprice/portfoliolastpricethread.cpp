@@ -49,17 +49,14 @@ void PortfolioLastPriceThread::run()
 
                     if (QThread::currentThread()->isInterruptionRequested() || marketDataResponse == nullptr)
                     {
+                        mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread());
+
                         break;
                     }
 
                     if (marketDataResponse->has_last_price())
                     {
-                        const tinkoff::LastPrice& lastPriceResp = marketDataResponse->last_price();
-
-                        const QString instrumentId = QString::fromStdString(lastPriceResp.instrument_uid());
-                        const float   price        = quotationToFloat(lastPriceResp.price());
-
-                        emit lastPriceChanged(instrumentId, price);
+                        handleLastPrice(marketDataResponse->last_price());
                     }
                 }
 
@@ -70,7 +67,10 @@ void PortfolioLastPriceThread::run()
             }
             else
             {
-                break;
+                if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
+                {
+                    break;
+                }
             }
         }
         else
@@ -142,4 +142,12 @@ bool PortfolioLastPriceThread::createMarketDataStream()
     }
 
     return res;
+}
+
+void PortfolioLastPriceThread::handleLastPrice(const tinkoff::LastPrice& lastPriceResp)
+{
+    const QString instrumentId = QString::fromStdString(lastPriceResp.instrument_uid());
+    const float   price        = quotationToFloat(lastPriceResp.price());
+
+    emit lastPriceChanged(instrumentId, price);
 }

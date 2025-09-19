@@ -10,16 +10,13 @@
 
 
 
-class IGrpcRetryClient : public QObject
+class IGrpcRetryClient
 {
-    Q_OBJECT
-
 public:
-    explicit IGrpcRetryClient(QObject* parent = nullptr) :
-        QObject(parent)
+    explicit IGrpcRetryClient()
     {
     }
-    ~IGrpcRetryClient() override = default;
+    virtual ~IGrpcRetryClient() = default;
 
     IGrpcRetryClient(const IGrpcRetryClient& another)            = delete;
     IGrpcRetryClient& operator=(const IGrpcRetryClient& another) = delete;

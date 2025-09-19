@@ -59,6 +59,7 @@ TEST_F(Test_InstrumentItemDelegate, Test_paint)
 
     option.state |= QStyle::State_MouseOver;
 
+    EXPECT_CALL(*logsTableModelMock, data(index, Qt::BackgroundRole)).WillOnce(Return(QVariant(QBrush(Qt::black))));
     EXPECT_CALL(*logsTableModelMock, data(index, ROLE_INSTRUMENT_LOGO))
         .WillOnce(Return(QVariant(reinterpret_cast<qint64>(&logo))));
     EXPECT_CALL(*logsTableModelMock, data(index, ROLE_INSTRUMENT_LOCKED)).WillOnce(Return(QVariant(true)));
@@ -66,6 +67,7 @@ TEST_F(Test_InstrumentItemDelegate, Test_paint)
 
     item->paint(&painter, option, index);
 
+    EXPECT_CALL(*logsTableModelMock, data(index, Qt::BackgroundRole)).WillOnce(Return(QVariant(QBrush(Qt::black))));
     EXPECT_CALL(*logsTableModelMock, data(index, ROLE_INSTRUMENT_LOGO))
         .WillOnce(Return(QVariant(reinterpret_cast<qint64>(&logo))));
     EXPECT_CALL(*logsTableModelMock, data(index, ROLE_INSTRUMENT_LOCKED)).WillOnce(Return(QVariant(true)));
@@ -75,6 +77,7 @@ TEST_F(Test_InstrumentItemDelegate, Test_paint)
 
     option.state &= ~QStyle::State_MouseOver;
 
+    EXPECT_CALL(*logsTableModelMock, data(index, Qt::BackgroundRole)).WillOnce(Return(QVariant(QBrush(Qt::black))));
     EXPECT_CALL(*logsTableModelMock, data(index, ROLE_INSTRUMENT_LOGO))
         .WillOnce(Return(QVariant(reinterpret_cast<qint64>(&logo))));
     EXPECT_CALL(*logsTableModelMock, data(index, ROLE_INSTRUMENT_LOCKED)).WillOnce(Return(QVariant(true)));
