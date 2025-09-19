@@ -61,6 +61,8 @@ public:
     void sellWithPrice(const Quotation& price);
     void buyWithPrice(qint64 amountOfLots, const Quotation& price);
 
+    bool isNeedToSellAsap(float part, float yield, float commission);
+
 private:
     void calculateTotalCostAndInstrumentCost(
         const tinkoff::PortfolioResponse& tinkoffPortfolio,

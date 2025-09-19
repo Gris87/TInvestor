@@ -342,6 +342,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*simulatorConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
     EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
@@ -390,6 +392,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*simulatorConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
     EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
@@ -437,6 +441,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*autoPilotConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
     EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));

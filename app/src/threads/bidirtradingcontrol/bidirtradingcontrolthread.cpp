@@ -8,13 +8,14 @@
 
 
 
-constexpr float  HUNDRED_PERCENT          = 100.0f;
-constexpr float  LIMIT_COMMISSION         = 0.06f;
-constexpr int    EXTRA_SESSION_END_HOUR   = 23;
-constexpr int    EXTRA_SESSION_END_MINUTE = 30;
-constexpr qint64 MS_IN_SECOND             = 1000LL;
-constexpr qint64 ONE_MINUTE               = 60LL * MS_IN_SECOND;
-constexpr qint64 DETECTION_INTERVAL       = 15LL * ONE_MINUTE; // 15 minutes
+constexpr float  HUNDRED_PERCENT            = 100.0f;
+constexpr float  LIMIT_COMMISSION           = 0.06f;
+constexpr int    EXTRA_SESSION_END_HOUR     = 23;
+constexpr int    EXTRA_SESSION_END_MINUTE   = 30;
+constexpr int    AMOUNT_OF_LAST_INSTRUMENTS = 3;
+constexpr qint64 MS_IN_SECOND               = 1000LL;
+constexpr qint64 ONE_MINUTE                 = 60LL * MS_IN_SECOND;
+constexpr qint64 DETECTION_INTERVAL         = 15LL * ONE_MINUTE; // 15 minutes
 
 
 
@@ -33,7 +34,9 @@ BiDirTradingControlThread::BiDirTradingControlThread(
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mMoscowTimezone("Europe/Moscow"),
-    mLastDetectionTimestamp()
+    mLastDetectionTimestamp(),
+    mLastInstrumentsForBiDirTrading(AMOUNT_OF_LAST_INSTRUMENTS),
+    mLastInstrumentsId()
 {
     qDebug() << "Create BiDirTradingControlThread";
 }
@@ -156,6 +159,37 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
                 instrumentsForTrading.insert(result);
             }
         }
+    }
+
+    if (time < endTime)
+    {
+        mLastInstrumentsForBiDirTrading[mLastInstrumentsId] = instrumentsForTrading;
+
+        int i = mLastInstrumentsId - 1;
+
+        while (i != mLastInstrumentsId)
+        {
+            if (i < 0)
+            {
+                i += AMOUNT_OF_LAST_INSTRUMENTS;
+            }
+
+            const InstrumentsForBiDirTrading& lastInstruments = mLastInstrumentsForBiDirTrading.at(i);
+
+            for (auto it = lastInstruments.constBegin(), end = lastInstruments.constEnd(); it != end; ++it)
+            {
+                const QString& instrumentId = it.key();
+
+                if (!instrumentsForTrading.contains(instrumentId))
+                {
+                    instrumentsForTrading[instrumentId] = it.value();
+                }
+            }
+
+            --i;
+        }
+
+        ++mLastInstrumentsId;
     }
 
     if (!instrumentsForTrading.isEmpty())

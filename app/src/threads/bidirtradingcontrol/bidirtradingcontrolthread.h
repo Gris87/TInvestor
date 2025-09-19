@@ -39,11 +39,13 @@ public:
     void terminateThread() override;
 
 private:
-    IStocksStorage* mStocksStorage;
-    IUserStorage*   mUserStorage;
-    IConfig*        mConfig;
-    ITimeUtils*     mTimeUtils;
-    IGrpcClient*    mGrpcClient;
-    QTimeZone       mMoscowTimezone;
-    qint64          mLastDetectionTimestamp;
+    IStocksStorage*                   mStocksStorage;
+    IUserStorage*                     mUserStorage;
+    IConfig*                          mConfig;
+    ITimeUtils*                       mTimeUtils;
+    IGrpcClient*                      mGrpcClient;
+    QTimeZone                         mMoscowTimezone;
+    qint64                            mLastDetectionTimestamp;
+    QList<InstrumentsForBiDirTrading> mLastInstrumentsForBiDirTrading;
+    int                               mLastInstrumentsId;
 };
