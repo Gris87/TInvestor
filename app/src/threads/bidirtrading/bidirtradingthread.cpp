@@ -10,6 +10,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 constexpr float  HUNDRED_PERCENT       = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT = 0.10f;
+constexpr float  MAXIMUM_LOSE_PERCENT  = 0.70f;
 constexpr qint64 MS_IN_SECOND          = 1000LL;
 constexpr qint64 SLEEP_DELAY           = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY    = 3LL * MS_IN_SECOND;  // 3 seconds
@@ -146,10 +147,11 @@ bool BiDirTradingThread::trade()
         }
 
         double totalCost          = 0.0;
+        double instrumentCost     = 0.0;
         qint64 instrumentLots     = 0;
         double instrumentAvgPrice = -1.0;
 
-        calculateTotalCostAndInstrumentLots(*tinkoffPortfolio, totalCost, instrumentLots, instrumentAvgPrice);
+        calculateTotalCostAndInstrumentCost(*tinkoffPortfolio, totalCost, instrumentCost, instrumentLots, instrumentAvgPrice);
 
         const double bidPrice = quotationToDouble(tinkoffOrderBook->bids(0).price());
         double       askPrice = quotationToDouble(tinkoffOrderBook->asks(0).price());
@@ -159,8 +161,11 @@ bool BiDirTradingThread::trade()
         {
             ISellDecision4Config* sellDecision4Config = chooseDecisionConfig()->getSellDecision4Config();
             const float           yield               = ((bidPrice / instrumentAvgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+            const float           part                = (instrumentCost / totalCost) * HUNDRED_PERCENT;
 
-            if (!sellDecision4Config->isEnabled() || yield > -sellDecision4Config->getLoseYield() + (2 * commission))
+            if ((!sellDecision4Config->isEnabled() || yield > -sellDecision4Config->getLoseYield() + (2 * commission)) &&
+                (!mConfig->isHugeSpreadLimitStockPurchase() || part > mConfig->getHugeSpreadLimitStockPurchasePart() * 2 ||
+                 yield > -MAXIMUM_LOSE_PERCENT))
             {
                 askPrice = qMax(
                     askPrice, instrumentAvgPrice * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT
@@ -399,11 +404,16 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
     }
 }
 
-void BiDirTradingThread::calculateTotalCostAndInstrumentLots(
-    const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots, double& instrumentAvgPrice
+void BiDirTradingThread::calculateTotalCostAndInstrumentCost(
+    const tinkoff::PortfolioResponse& tinkoffPortfolio,
+    double&                           totalCost,
+    double&                           instrumentCost,
+    qint64&                           instrumentLots,
+    double&                           instrumentAvgPrice
 )
 {
     totalCost          = 0.0;
+    instrumentCost     = 0.0;
     instrumentLots     = 0;
     instrumentAvgPrice = -1.0;
 
@@ -423,6 +433,7 @@ void BiDirTradingThread::calculateTotalCostAndInstrumentLots(
 
             if (instrumentId == mInstrumentId)
             {
+                instrumentCost     = cost;
                 instrumentLots     = quotationToDouble(position.quantity()) / mInstrumentLot;
                 instrumentAvgPrice = quotationToDouble(position.average_position_price());
             }

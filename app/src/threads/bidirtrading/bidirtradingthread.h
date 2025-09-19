@@ -62,8 +62,12 @@ public:
     void buyWithPrice(qint64 amountOfLots, const Quotation& price);
 
 private:
-    void calculateTotalCostAndInstrumentLots(
-        const tinkoff::PortfolioResponse& tinkoffPortfolio, double& totalCost, qint64& instrumentLots, double& instrumentAvgPrice
+    void calculateTotalCostAndInstrumentCost(
+        const tinkoff::PortfolioResponse& tinkoffPortfolio,
+        double&                           totalCost,
+        double&                           instrumentCost,
+        qint64&                           instrumentLots,
+        double&                           instrumentAvgPrice
     );
     IDecisionMakerConfig* chooseDecisionConfig();
 
