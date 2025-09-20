@@ -160,6 +160,11 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
             }
         }
     }
+    else
+    {
+        mLastInstrumentsForBiDirTrading.clear();
+        mLastInstrumentsId = 0;
+    }
 
     if (!instrumentsForTrading.isEmpty())
     {
