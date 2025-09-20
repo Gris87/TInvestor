@@ -10,7 +10,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 constexpr float  HUNDRED_PERCENT       = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT = 0.10f;
-constexpr float  MAXIMUM_LOSE_PERCENT  = 1.50f;
+constexpr float  MAXIMUM_LOSE_PERCENT  = 0.70f;
 constexpr qint64 MS_IN_SECOND          = 1000LL;
 constexpr qint64 SLEEP_DELAY           = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY    = 3LL * MS_IN_SECOND;  // 3 seconds
@@ -420,7 +420,7 @@ bool BiDirTradingThread::isNeedToSellAsap(float part, float yield, float commiss
 
     return (sellDecision4Config->isEnabled() && yield < -sellDecision4Config->getLoseYield() + (2 * commission)) ||
            (mConfig->isHugeSpreadLimitStockPurchase() && part < mConfig->getHugeSpreadLimitStockPurchasePart() * 2 &&
-            yield > -MAXIMUM_LOSE_PERCENT);
+            yield < -MAXIMUM_LOSE_PERCENT);
 }
 
 void BiDirTradingThread::calculateTotalCostAndInstrumentCost(
