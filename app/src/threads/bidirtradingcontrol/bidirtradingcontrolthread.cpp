@@ -129,6 +129,7 @@ static void detectHugeSpreadStocksForParallel(
     }
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
 {
     InstrumentsForBiDirTrading instrumentsForTrading;
@@ -216,6 +217,7 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
         emit tradeInstruments(instrumentsForTrading);
     }
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void BiDirTradingControlThread::terminateThread()
 {

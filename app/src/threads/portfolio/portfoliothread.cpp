@@ -53,6 +53,7 @@ PortfolioThread::~PortfolioThread()
     delete mRwMutex;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void PortfolioThread::run()
 {
     qDebug() << "Running PortfolioThread";
@@ -117,6 +118,7 @@ void PortfolioThread::run()
 
     qDebug() << "Finish PortfolioThread";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void PortfolioThread::setAccountId(const QString& accountId)
 {

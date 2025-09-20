@@ -38,7 +38,7 @@ InstrumentItemDelegate::~InstrumentItemDelegate()
 
 void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    QVariant background = index.data(Qt::BackgroundRole);
+    const QVariant background = index.data(Qt::BackgroundRole);
 
     if (background.canConvert<QBrush>())
     {

@@ -1,9 +1,8 @@
 name: Nightly
 
-on: [push]
-#on:
-#  schedule:
-#    - cron: "0 21 * * *"
+on:
+  schedule:
+    - cron: "0 21 * * *"
 
 # Setup environment variables
 env:

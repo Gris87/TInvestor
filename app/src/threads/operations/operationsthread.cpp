@@ -67,6 +67,7 @@ OperationsThread::~OperationsThread()
     delete mRwMutex;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void OperationsThread::run()
 {
     qDebug() << "Running OperationsThread";
@@ -134,6 +135,7 @@ void OperationsThread::run()
 
     qDebug() << "Finish OperationsThread";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void OperationsThread::setAccountId(const QString& account, const QString& accountId)
 {

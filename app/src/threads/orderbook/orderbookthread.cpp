@@ -30,6 +30,7 @@ OrderBookThread::~OrderBookThread()
     delete mRwMutex;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void OrderBookThread::run()
 {
     qDebug() << "Running OrderBookThread";
@@ -98,6 +99,7 @@ void OrderBookThread::run()
 
     qDebug() << "Finish OrderBookThread";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void OrderBookThread::setStock(Stock* stock)
 {

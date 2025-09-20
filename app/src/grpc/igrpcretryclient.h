@@ -13,9 +13,7 @@
 class IGrpcRetryClient
 {
 public:
-    explicit IGrpcRetryClient()
-    {
-    }
+    IGrpcRetryClient()          = default;
     virtual ~IGrpcRetryClient() = default;
 
     IGrpcRetryClient(const IGrpcRetryClient& another)            = delete;
