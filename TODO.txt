@@ -1,5 +1,5 @@
-Avg quantity for huge spread
-Buy huge spread if there is a big support on bids
+Fix nightly
+Create script for calculating yield base on decision
 Refresh daily operations at the first operation at day start
 Take decisions from other robots
 Change best config search algorithm

@@ -164,6 +164,19 @@ bool BiDirTradingThread::trade()
 
             if (!isNeedToSellAsap(part, yield, commission))
             {
+                int maxQuantity = 0;
+
+                for (int i = 0; i < tinkoffOrderBook->asks_size(); ++i)
+                {
+                    const tinkoff::Order& ask = tinkoffOrderBook->asks(i);
+
+                    if (ask.quantity() > maxQuantity)
+                    {
+                        maxQuantity = ask.quantity();
+                        askPrice    = quotationToDouble(ask.price());
+                    }
+                }
+
                 askPrice = qMax(
                     askPrice, instrumentAvgPrice * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT
                 );
