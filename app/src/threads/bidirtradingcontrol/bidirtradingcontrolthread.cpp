@@ -35,7 +35,7 @@ BiDirTradingControlThread::BiDirTradingControlThread(
     mGrpcClient(grpcClient),
     mMoscowTimezone("Europe/Moscow"),
     mLastDetectionTimestamp(),
-    mLastInstrumentsForBiDirTrading(AMOUNT_OF_LAST_INSTRUMENTS),
+    mLastInstrumentsForBiDirTrading(),
     mLastInstrumentsId()
 {
     qDebug() << "Create BiDirTradingControlThread";
@@ -165,8 +165,16 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
     {
         QStringList instrumentsToRemove;
 
-        mLastInstrumentsForBiDirTrading[mLastInstrumentsId] = instrumentsForTrading;
-        int i = mLastInstrumentsId == 0 ? AMOUNT_OF_LAST_INSTRUMENTS - 1 : mLastInstrumentsId - 1;
+        if (mLastInstrumentsForBiDirTrading.size() < AMOUNT_OF_LAST_INSTRUMENTS)
+        {
+            mLastInstrumentsForBiDirTrading.append(instrumentsForTrading);
+        }
+        else
+        {
+            mLastInstrumentsForBiDirTrading[mLastInstrumentsId] = instrumentsForTrading;
+        }
+
+        int i = mLastInstrumentsId == 0 ? mLastInstrumentsForBiDirTrading.size() - 1 : mLastInstrumentsId - 1;
 
         while (i != mLastInstrumentsId)
         {
@@ -186,7 +194,7 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
 
             if (i < 0)
             {
-                i += AMOUNT_OF_LAST_INSTRUMENTS;
+                i = mLastInstrumentsForBiDirTrading.size() - 1;
             }
         }
 
