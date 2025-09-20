@@ -10,7 +10,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 constexpr float  HUNDRED_PERCENT       = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT = 0.10f;
-constexpr float  MAXIMUM_LOSE_PERCENT  = 0.70f;
+constexpr float  MAXIMUM_LOSE_PERCENT  = 1.50f;
 constexpr qint64 MS_IN_SECOND          = 1000LL;
 constexpr qint64 SLEEP_DELAY           = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY    = 3LL * MS_IN_SECOND;  // 3 seconds
@@ -153,9 +153,9 @@ bool BiDirTradingThread::trade()
 
         calculateTotalCostAndInstrumentCost(*tinkoffPortfolio, totalCost, instrumentCost, instrumentLots, instrumentAvgPrice);
 
-        const double bidPrice = quotationToDouble(tinkoffOrderBook->bids(0).price());
-        double       askPrice = quotationToDouble(tinkoffOrderBook->asks(0).price());
-        const float  spread   = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+        double      bidPrice = quotationToDouble(tinkoffOrderBook->bids(0).price());
+        double      askPrice = quotationToDouble(tinkoffOrderBook->asks(0).price());
+        const float spread   = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
         if (instrumentAvgPrice > 0)
         {
@@ -170,6 +170,19 @@ bool BiDirTradingThread::trade()
             }
         }
 
+        int maxQuantity = 0;
+
+        for (int i = 0; i < tinkoffOrderBook->bids_size(); ++i)
+        {
+            const tinkoff::Order& bid = tinkoffOrderBook->bids(i);
+
+            if (bid.quantity() > maxQuantity)
+            {
+                maxQuantity = bid.quantity();
+                bidPrice    = quotationToDouble(bid.price());
+            }
+        }
+
         const qint64 coefBuy  = qRound64(bidPrice / quotationToDouble(mMinPriceIncrement));
         const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
 
@@ -180,6 +193,16 @@ bool BiDirTradingThread::trade()
 
         if (spread > mConfig->getHugeSpread())
         {
+            for (int i = 0; i < tinkoffOrderBook->bids_size(); ++i)
+            {
+                lotsToBuy = qMax(lotsToBuy, tinkoffOrderBook->bids(i).quantity());
+            }
+
+            for (int i = 0; i < tinkoffOrderBook->asks_size(); ++i)
+            {
+                lotsToBuy = qMax(lotsToBuy, tinkoffOrderBook->asks(i).quantity());
+            }
+
             const bool   limitStockPurchase     = mConfig->isHugeSpreadLimitStockPurchase();
             const double limitStockPurchasePart = mConfig->getHugeSpreadLimitStockPurchasePart();
             const bool   limitByTurnover        = mConfig->isHugeSpreadLimitByTurnover();
@@ -198,17 +221,7 @@ bool BiDirTradingThread::trade()
                 lotPrice,
                 lotPrice
             );
-            lotsToBuy = qMax(lotsToKeep - instrumentLots, 0);
-
-            for (int i = 0; i < tinkoffOrderBook->bids_size(); ++i)
-            {
-                lotsToBuy = qMin(lotsToBuy, tinkoffOrderBook->bids(i).quantity());
-            }
-
-            for (int i = 0; i < tinkoffOrderBook->asks_size(); ++i)
-            {
-                lotsToBuy = qMin(lotsToBuy, tinkoffOrderBook->asks(i).quantity());
-            }
+            lotsToBuy = qMax(qMin(lotsToKeep - instrumentLots, lotsToBuy), 0);
         }
 
         bool needToCancelBuy  = false;
