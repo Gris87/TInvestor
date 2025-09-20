@@ -155,7 +155,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append("-fcxx-exceptions")  # error: unknown argument ignored in clang-cl: '-fcxx-exceptions' [clang-diagnostic-unknown-argument,-warnings-as-errors]
         res.append("-fexceptions")      # error: unknown argument ignored in clang-cl: '-fexceptions' [clang-diagnostic-unknown-argument,-warnings-as-errors]
 
-    res.append("-fms-compatibility-version=19.42")
+    res.append("-fms-compatibility-version=19.44")
     res.append("-DUNICODE")
     res.append("-D_UNICODE")
     res.append("-DWIN32")
@@ -335,7 +335,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
 
     res.append(f"-I{args.qt_path}\\mkspecs\\win32-msvc")
     res.append("/clang:-isystem")
-    res.append(f"/clang:{args.qt_creator_path}\\bin\\clang\\lib\\clang\\19\\include")
+    res.append(f"/clang:{args.qt_creator_path}\\bin\\clang\\lib\\clang\\20\\include")
     res.append("/clang:-isystem")
     res.append(f"/clang:{args.msvc_tools_path}\\include")
     res.append("/clang:-isystem")
@@ -603,7 +603,7 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
     res.append("-isystem")
     res.append("/usr/local/include")
     res.append("-isystem")
-    res.append(f"{args.qt_creator_path}/libexec/qtcreator/clang/lib/clang/19/include")
+    res.append(f"{args.qt_creator_path}/libexec/qtcreator/clang/lib/clang/20/include")
     res.append("-isystem")
     res.append("/usr/include/x86_64-linux-gnu")
     res.append("-isystem")
@@ -705,7 +705,7 @@ def main():
         "--qt-creator-path",
         dest="qt_creator_path",
         type=str,
-        default="E:\\Qt\\qtcreator-windows-x64-msvc-16.0.2",
+        default="E:\\Qt\\qtcreator",
         help="Path to Qt Creator",
     )
     parser.add_argument(
@@ -733,7 +733,7 @@ def main():
         "--msvc-tools-path",
         dest="msvc_tools_path",
         type=str,
-        default="E:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433",
+        default="E:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207",
         help="Path to MSVC Tools",
     )
     parser.add_argument(
@@ -747,7 +747,7 @@ def main():
         "--windows-kits-path",
         dest="windows_kits_path",
         type=str,
-        default="C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0",
+        default="C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.26100.0",
         help="Path to Windows Kits",
     )
     parser.add_argument(
