@@ -28,8 +28,7 @@ BiDirTradingThread::BiDirTradingThread(
     IGrpcRetryClient*    grpcRetryClient,
     ILogsThread*         logsThread,
     const QString&       accountId,
-    const QString&       instrumentId,
-    qint64               turnover,
+    Stock*               stock,
     const QString&       cause,
     QObject*             parent
 ) :
@@ -44,15 +43,19 @@ BiDirTradingThread::BiDirTradingThread(
     mGrpcRetryClient(grpcRetryClient),
     mLogsThread(logsThread),
     mAccountId(accountId),
-    mInstrumentId(instrumentId),
-    mTurnover(turnover),
+    mStock(stock),
     mTerminateTrading(),
+    mInstrumentId(),
     mInstrumentLot(),
     mMinPriceIncrement(),
     mBuyOrderId(),
     mSellOrderId()
 {
     qDebug() << "Create BiDirTradingThread";
+
+    mStock->readLock();
+    mInstrumentId = mStock->meta.instrumentId;
+    mStock->readUnlock();
 
     mLogsThread->addLog(LOG_LEVEL_DEBUG, mInstrumentId, cause);
 }
@@ -84,20 +87,6 @@ void BiDirTradingThread::run()
     }
 
     qDebug() << "Finish BiDirTradingThread";
-}
-
-void BiDirTradingThread::setTurnover(qint64 turnover)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mTurnover = turnover;
-}
-
-qint64 BiDirTradingThread::turnover() const
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mTurnover;
 }
 
 void BiDirTradingThread::terminateTrading()
@@ -210,6 +199,10 @@ bool BiDirTradingThread::trade()
 
             const double lotPrice = mInstrumentLot * bidPrice;
 
+            mStock->readLock();
+            const qint64 turnover = mStock->meta.turnover;
+            mStock->readUnlock();
+
             const qint64 lotsToKeep = mTradeUtils->calculateAmountOfLotsToBuy(
                 limitStockPurchase,
                 limitStockPurchasePart,
@@ -217,7 +210,7 @@ bool BiDirTradingThread::trade()
                 limitByTurnoverPercent,
                 totalCost,
                 totalCost,
-                turnover(),
+                turnover,
                 lotPrice,
                 lotPrice
             );

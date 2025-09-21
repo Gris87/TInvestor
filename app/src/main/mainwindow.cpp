@@ -1040,8 +1040,7 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
                 mGrpcRetryClient,
                 mLogsThread,
                 mAutoPilotAccountId,
-                instrumentId,
-                biDirTradingInfo.turnover,
+                biDirTradingInfo.stock,
                 biDirTradingInfo.cause,
                 this
             );
@@ -1055,10 +1054,6 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
 
             biDirTradingThreads[instrumentId] = biDirTradingThread;
             biDirTradingThread->start();
-        }
-        else
-        {
-            biDirTradingThread->setTurnover(biDirTradingInfo.turnover);
         }
     }
 }

@@ -32,8 +32,7 @@ public:
          IGrpcRetryClient* grpcRetryClient,
          ILogsThread*      logsThread,
          const QString&    accountId,
-         const QString&    instrumentId,
-         qint64            turnover,
+         Stock*            stock,
          const QString&    cause,
          QObject*          parent),
         (const, override)

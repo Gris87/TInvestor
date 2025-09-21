@@ -1237,15 +1237,16 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     BiDirTradingInfo tradingInfo1;
     BiDirTradingInfo tradingInfo2;
     BiDirTradingInfo tradingInfo3;
+    Stock            stock;
 
-    tradingInfo1.turnover = 1000;
-    tradingInfo1.cause    = "Need to buy";
+    tradingInfo1.stock = &stock;
+    tradingInfo1.cause = "Need to buy";
 
-    tradingInfo2.turnover = 3000;
-    tradingInfo2.cause    = "Need to buy more";
+    tradingInfo2.stock = &stock;
+    tradingInfo2.cause = "Need to buy more";
 
-    tradingInfo3.turnover = 5000;
-    tradingInfo3.cause    = "Sell ASAP";
+    tradingInfo3.stock = &stock;
+    tradingInfo3.cause = "Sell ASAP";
 
     InstrumentsForBiDirTrading instruments2;
     InstrumentsForBiDirTrading instruments3;
@@ -1268,8 +1269,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
             grpcRetryClientMock,
             logsThreadMock,
             QString(""),
-            QString("aaaaa"),
-            1000,
+            &stock,
             QString("Need to buy"),
             mainWindow
         )
@@ -1288,8 +1288,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
             grpcRetryClientMock,
             logsThreadMock,
             QString(""),
-            QString("bbbbb"),
-            3000,
+            &stock,
             QString("Need to buy more"),
             mainWindow
         )
@@ -1310,7 +1309,6 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     // clang-format on
 
     EXPECT_CALL(*biDirTradingThreadMock2, terminateTrading());
-    EXPECT_CALL(*biDirTradingThreadMock1, setTurnover(5000));
 
     mainWindow->autoPilotBiDirTradeInstruments(instruments3);
 
@@ -1793,9 +1791,10 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
 
     InstrumentsForBiDirTrading biDirInstruments;
     BiDirTradingInfo           biDirTradingInfo;
+    Stock                      stock;
 
-    biDirTradingInfo.turnover = 1000000;
-    biDirTradingInfo.cause    = "Need to buy";
+    biDirTradingInfo.stock = &stock;
+    biDirTradingInfo.cause = "Need to buy";
 
     biDirInstruments["bbb-bbb"] = biDirTradingInfo;
 
@@ -1811,8 +1810,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             grpcRetryClientMock,
             logsThreadMock,
             QString("aaaaaa"),
-            QString("bbb-bbb"),
-            1000000,
+            &stock,
             QString("Need to buy"),
             mainWindow
         )
@@ -1968,8 +1966,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             grpcRetryClientMock,
             logsThreadMock,
             QString("aaaaaa"),
-            QString("bbb-bbb"),
-            1000000,
+            &stock,
             QString("Need to buy"),
             mainWindow
         )

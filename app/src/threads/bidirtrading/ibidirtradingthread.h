@@ -20,9 +20,8 @@ public:
     IBiDirTradingThread(const IBiDirTradingThread& another)            = delete;
     IBiDirTradingThread& operator=(const IBiDirTradingThread& another) = delete;
 
-    virtual void setTurnover(qint64 turnover) = 0;
-    virtual void terminateTrading()           = 0;
-    virtual void terminateThread()            = 0;
+    virtual void terminateTrading() = 0;
+    virtual void terminateThread()  = 0;
 
 signals:
     void tradingCompleted(const QString& instrumentId);

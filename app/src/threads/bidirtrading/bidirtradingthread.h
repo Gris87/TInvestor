@@ -7,6 +7,7 @@
 #include <QReadWriteLock>
 
 #include "src/config/iconfig.h"
+#include "src/domain/stock/stock.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
@@ -32,8 +33,7 @@ public:
         IGrpcRetryClient*    grpcRetryClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
-        const QString&       instrumentId,
-        qint64               turnover,
+        Stock*               stock,
         const QString&       cause,
         QObject*             parent = nullptr
     );
@@ -43,11 +43,6 @@ public:
     BiDirTradingThread& operator=(const BiDirTradingThread& another) = delete;
 
     void run() override;
-
-    void setTurnover(qint64 turnover) override;
-
-    [[nodiscard]]
-    qint64 turnover() const;
 
     void terminateTrading() override;
     void terminateThread() override;
@@ -86,9 +81,9 @@ private:
     IGrpcRetryClient*    mGrpcRetryClient;
     ILogsThread*         mLogsThread;
     QString              mAccountId;
-    QString              mInstrumentId;
-    qint64               mTurnover;
+    Stock*               mStock;
     bool                 mTerminateTrading;
+    QString              mInstrumentId;
     qint32               mInstrumentLot;
     Quotation            mMinPriceIncrement;
     QString              mBuyOrderId;

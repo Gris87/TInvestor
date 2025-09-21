@@ -48,6 +48,11 @@ protected:
         autoPilotConfigMock     = new StrictMock<DecisionMakerConfigMock>();
         sellDecision4ConfigMock = new StrictMock<SellDecision4ConfigMock>();
 
+        stock = new Stock();
+
+        stock->meta.instrumentId = "aaa-aaa";
+        stock->meta.turnover     = 1000000;
+
         EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaa-aaa"), QString("But why")));
 
         thread = new BiDirTradingThread(
@@ -60,8 +65,7 @@ protected:
             grpcRetryClientMock,
             logsThreadMock,
             "account-id",
-            "aaa-aaa",
-            1000000,
+            stock,
             "But why"
         );
     }
@@ -80,6 +84,7 @@ protected:
         delete simulatorConfigMock;
         delete autoPilotConfigMock;
         delete sellDecision4ConfigMock;
+        delete stock;
     }
 
     BiDirTradingThread*                  thread;
@@ -94,6 +99,7 @@ protected:
     StrictMock<DecisionMakerConfigMock>* simulatorConfigMock;
     StrictMock<DecisionMakerConfigMock>* autoPilotConfigMock;
     StrictMock<SellDecision4ConfigMock>* sellDecision4ConfigMock;
+    Stock*                               stock;
 };
 
 
@@ -129,14 +135,6 @@ TEST_F(Test_BiDirTradingThread, Test_run)
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaa-aaa"), QString("Reselling completed successfully")));
 
     thread->run();
-}
-
-TEST_F(Test_BiDirTradingThread, Test_setTurnover_and_turnover)
-{
-    ASSERT_EQ(thread->turnover(), 1000000);
-
-    thread->setTurnover(5000);
-    ASSERT_EQ(thread->turnover(), 5000);
 }
 
 TEST_F(Test_BiDirTradingThread, Test_terminateThread)

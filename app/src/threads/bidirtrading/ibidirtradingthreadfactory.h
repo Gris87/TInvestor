@@ -3,6 +3,7 @@
 
 
 #include "src/config/iconfig.h"
+#include "src/domain/stock/stock.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
@@ -33,8 +34,7 @@ public:
         IGrpcRetryClient*    grpcRetryClient,
         ILogsThread*         logsThread,
         const QString&       accountId,
-        const QString&       instrumentId,
-        qint64               turnover,
+        Stock*               stock,
         const QString&       cause,
         QObject*             parent
     ) const = 0;

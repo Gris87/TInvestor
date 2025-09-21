@@ -27,8 +27,7 @@ IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(
     IGrpcRetryClient*    grpcRetryClient,
     ILogsThread*         logsThread,
     const QString&       accountId,
-    const QString&       instrumentId,
-    qint64               turnover,
+    Stock*               stock,
     const QString&       cause,
     QObject*             parent
 ) const
@@ -43,8 +42,7 @@ IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(
         grpcRetryClient,
         logsThread,
         accountId,
-        instrumentId,
-        turnover,
+        stock,
         cause,
         parent
     );

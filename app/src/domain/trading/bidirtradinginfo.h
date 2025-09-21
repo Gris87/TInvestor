@@ -4,18 +4,20 @@
 
 #include <QMap>
 
+#include "src/domain/stock/stock.h"
+
 
 
 struct BiDirTradingInfo
 {
     explicit BiDirTradingInfo();
-    explicit BiDirTradingInfo(qint64 _turnover, const QString& _cause);
+    explicit BiDirTradingInfo(Stock* _stock, const QString& _cause);
     BiDirTradingInfo(const BiDirTradingInfo& another) = default;
     ~BiDirTradingInfo()                               = default;
 
     BiDirTradingInfo& operator=(const BiDirTradingInfo& another) = default;
 
-    qint64  turnover;
+    Stock*  stock;
     QString cause;
 };
 
