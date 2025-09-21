@@ -206,6 +206,11 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     priceForSell.units = 885;
     priceForSell.nano  = 0;
 
+    StockOperationalData stockOperationalData;
+    stockOperationalData.price = 1000;
+
+    stock->operational.detailedData << stockOperationalData;
+
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
