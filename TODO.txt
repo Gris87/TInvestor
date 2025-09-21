@@ -1,6 +1,6 @@
 Chart for last day/week/month/all time
 Create script for calculating yield base on decision
-Refresh daily operations at the first operation at day start
+Buy if price raise anomally
 Take decisions from other robots
 Change best config search algorithm
 Find best configs for different commission

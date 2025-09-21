@@ -42,6 +42,7 @@ OperationsThread::OperationsThread(
     mOptimizer(optimizer),
     mAccountId(),
     mPortfolioStream(),
+    mLastCleanRefreshTimestamp(),
     mLastRequestTimestamp(),
     mLastOperationTimestamp(),
     mAmountOfOperationsWithSameTimestamp(),
@@ -73,7 +74,7 @@ void OperationsThread::run()
     qDebug() << "Running OperationsThread";
 
     blockSignals(false);
-    readOperations();
+    mLastCleanRefreshTimestamp = 0;
 
     while (!QThread::currentThread()->isInterruptionRequested())
     {
@@ -174,10 +175,28 @@ bool OperationsThread::createPortfolioStream()
     return res;
 }
 
-void OperationsThread::readOperations()
+void OperationsThread::cleanRefreshOperations()
 {
-    const QList<Operation> operations = mOperationsDatabase->readOperations();
-    mAmountOfEntries                  = operations.size();
+    QList<Operation> operations = mOperationsDatabase->readOperations();
+
+    if (!operations.isEmpty())
+    {
+        const Operation& lastOperation     = operations.constFirst(); // Since it reversed
+        const qint64     obsoleteTimestamp = lastOperation.timestamp - ONE_DAY;
+
+        const int operationsToRemove = std::distance(
+            operations.constBegin(),
+            std::lower_bound(
+                operations.constBegin(), operations.constEnd(), obsoleteTimestamp, [](const Operation& operation, qint64 value) {
+                    return operation.timestamp >= value;
+                }
+            )
+        );
+
+        operations.remove(0, operationsToRemove);
+    }
+
+    mAmountOfEntries = operations.size();
 
     if (mAmountOfEntries > 0)
     {
@@ -232,13 +251,23 @@ void OperationsThread::readOperations()
     }
 
     emit operationsRead(operations);
+    mOperationsDatabase->writeOperations(operations);
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 bool OperationsThread::requestOperations()
 {
+    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+
+    if (timestamp - mLastCleanRefreshTimestamp > ONE_DAY)
+    {
+        mLastCleanRefreshTimestamp = timestamp;
+
+        cleanRefreshOperations();
+    }
+
     const qint64 startTimestamp = qMax(mLastRequestTimestamp - ONE_DAY, 0);
-    const qint64 endTimestamp   = QDateTime::currentMSecsSinceEpoch() + ONE_DAY;
+    const qint64 endTimestamp   = timestamp + ONE_DAY;
     QString      cursor;
 
     QSet<QString>                                                  operationsLastDay;

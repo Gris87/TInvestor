@@ -62,7 +62,7 @@ public:
 #endif
 
 private:
-    void readOperations();
+    void cleanRefreshOperations();
     void optimize();
 
     [[nodiscard]]
@@ -78,6 +78,7 @@ private:
     IOptimizer*                      mOptimizer;
     QString                          mAccountId;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
+    qint64                           mLastCleanRefreshTimestamp;
     qint64                           mLastRequestTimestamp;
     qint64                           mLastOperationTimestamp;
     qint8                            mAmountOfOperationsWithSameTimestamp;

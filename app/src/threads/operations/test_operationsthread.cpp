@@ -14,6 +14,11 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
+constexpr qint64 MS_IN_SECOND = 1000LL;
+constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR     = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY      = 24LL * ONE_HOUR;
+
 
 
 using ::testing::Ge;
@@ -107,8 +112,9 @@ TEST_F(Test_OperationsThread, Test_run)
     portfolioStreamResponse1->set_allocated_portfolio(portfolioResponse1);
     portfolioStreamResponse2->set_allocated_portfolio(portfolioResponse2);
 
-    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(operations, -1));
     EXPECT_CALL(
         *grpcRetryClientMock,
         getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
@@ -135,8 +141,9 @@ TEST_F(Test_OperationsThread, Test_run)
 
     thread->run();
 
-    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(operations, -1));
     EXPECT_CALL(
         *grpcRetryClientMock,
         getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
@@ -256,6 +263,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     Instruments instruments;
     Logo        logo;
 
+    QList<Operation> emptyOperations;
     QList<Operation> operations;
 
     Operation operation1;
@@ -343,6 +351,8 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
 
     operations << operation1 << operation2;
 
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(emptyOperations));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(emptyOperations, -1));
     EXPECT_CALL(
         *grpcRetryClientMock,
         getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
@@ -1370,13 +1380,13 @@ TEST_F(Test_OperationsThread, Test_optimize)
     QList<Operation> operations;
     QList<Operation> optimizedOperations;
 
-    operations.resizeForOverwrite(11);
+    operations.resizeForOverwrite(12);
     optimizedOperations.resizeForOverwrite(5);
 
-    thread->testSetLimitOperations(operations.size() - 1);
+    thread->testSetLimitOperations(operations.size() - 2);
     thread->testSetOptimizeSize(optimizedOperations.size() - 2);
 
-    for (int i = 0; i < operations.size() - 1; i += 2)
+    for (int i = 1; i < operations.size() - 1; i += 2)
     {
         Operation& operation1 = operations[i];
         Operation& operation2 = operations[i + 1];
@@ -1532,6 +1542,10 @@ TEST_F(Test_OperationsThread, Test_optimize)
         operation2.commissionPrecision             = 4;
     }
 
+    Operation& firstOperation = operations[0];
+
+    firstOperation.timestamp = ONE_DAY + 1000;
+
     Operation& lastOperation1 = operations[operations.size() - 1];
     Operation& lastOperation2 = operations[operations.size() - 2];
 
@@ -1610,14 +1624,17 @@ TEST_F(Test_OperationsThread, Test_optimize)
     optimizedOperations[optimizedOperations.size() - 1] = lastOperation1;
     optimizedOperations[optimizedOperations.size() - 2] = lastOperation2;
 
+    QList<Operation> operationsForFirstWrite = operations.mid(1);
+
     std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
 
     const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> getOperationsByCursorResponse(
         new tinkoff::GetOperationsByCursorResponse()
     );
 
-    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(operationsForFirstWrite, -1));
     EXPECT_CALL(
         *grpcRetryClientMock,
         getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
