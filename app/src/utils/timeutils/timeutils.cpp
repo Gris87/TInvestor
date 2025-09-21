@@ -58,3 +58,12 @@ bool TimeUtils::isWorkingHours(qint64 timestamp)
 
     return time >= startTime && time < endTime;
 }
+
+bool TimeUtils::isMorningSession(qint64 timestamp)
+{
+    const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
+    const QTime     time      = dateTime.time();
+    const QTime     startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
+
+    return time < startTime;
+}

@@ -19,6 +19,7 @@ public:
 
     bool interruptibleSleep(int ms, QThread* parentThread) override;
     bool isWorkingHours(qint64 timestamp) override;
+    bool isMorningSession(qint64 timestamp) override;
 
 private:
     QTimeZone mMoscowTimezone;

@@ -1,4 +1,3 @@
-Fix nightly
 Chart for last day/week/month/all time
 Create script for calculating yield base on decision
 Refresh daily operations at the first operation at day start

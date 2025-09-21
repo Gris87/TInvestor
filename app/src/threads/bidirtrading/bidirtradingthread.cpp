@@ -162,7 +162,7 @@ bool BiDirTradingThread::trade()
             const float part  = (instrumentCost / totalCost) * HUNDRED_PERCENT;
             const float yield = ((bidPrice / instrumentAvgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
-            if (!isNeedToSellAsap(part, yield, commission))
+            if (!isNeedToSellAsap(QDateTime::currentMSecsSinceEpoch(), part, yield, commission))
             {
                 askPrice = qMax(
                     askPrice, instrumentAvgPrice * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT
@@ -414,13 +414,22 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
     }
 }
 
-bool BiDirTradingThread::isNeedToSellAsap(float part, float yield, float commission)
+bool BiDirTradingThread::isNeedToSellAsap(qint64 timestamp, float part, float yield, float commission)
 {
+    if (mTimeUtils->isMorningSession(timestamp))
+    {
+        return false;
+    }
+
     ISellDecision4Config* sellDecision4Config = chooseDecisionConfig()->getSellDecision4Config();
 
-    return (sellDecision4Config->isEnabled() && yield < -sellDecision4Config->getLoseYield() + (2 * commission)) ||
-           (mConfig->isHugeSpreadLimitStockPurchase() && part < mConfig->getHugeSpreadLimitStockPurchasePart() * 2 &&
-            yield < -MAXIMUM_LOSE_PERCENT);
+    if (sellDecision4Config->isEnabled() && yield < -sellDecision4Config->getLoseYield() + (2 * commission))
+    {
+        return true;
+    }
+
+    return mConfig->isHugeSpreadLimitStockPurchase() && part < mConfig->getHugeSpreadLimitStockPurchasePart() * 2 &&
+           yield < -MAXIMUM_LOSE_PERCENT;
 }
 
 void BiDirTradingThread::calculateTotalCostAndInstrumentCost(

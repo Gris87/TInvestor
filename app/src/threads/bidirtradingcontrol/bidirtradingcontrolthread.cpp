@@ -212,10 +212,7 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
         mLastInstrumentsId = (mLastInstrumentsId + 1) % AMOUNT_OF_LAST_INSTRUMENTS;
     }
 
-    if (!instrumentsForTrading.isEmpty())
-    {
-        emit tradeInstruments(instrumentsForTrading);
-    }
+    emit tradeInstruments(instrumentsForTrading);
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 

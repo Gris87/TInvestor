@@ -19,6 +19,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 
+using ::testing::_;
 using ::testing::DoubleEq;
 using ::testing::FloatEq;
 using ::testing::InSequence;
@@ -204,7 +205,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     priceForBuy.nano  = 0;
 
     Quotation priceForSell;
-    priceForSell.units = 905;
+    priceForSell.units = 885;
     priceForSell.nano  = 0;
 
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -337,6 +338,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
     EXPECT_CALL(*simulatorConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
@@ -387,6 +389,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
     EXPECT_CALL(*simulatorConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
@@ -436,6 +439,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
     EXPECT_CALL(*autoPilotConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
