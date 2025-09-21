@@ -23,6 +23,7 @@ public:
     AccountChartWidgetMock& operator=(const AccountChartWidgetMock& another) = delete;
 
     MOCK_METHOD(void, switchChart, (ChartType chartType), (override));
+    MOCK_METHOD(void, setTimeRange, (TimeRange range), (override));
 
     MOCK_METHOD(void, operationsRead, (const QList<Operation>& operations), (override));
     MOCK_METHOD(void, operationsAdded, (const QList<Operation>& operations), (override));

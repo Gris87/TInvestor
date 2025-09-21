@@ -218,6 +218,35 @@
                 </property>
                </spacer>
               </item>
+              <item>
+               <widget class="QComboBox" name="timeRangeComboBox">
+                <item>
+                 <property name="text">
+                  <string>for all time</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>over the last day</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>over the last week</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>over the last month</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>over the last 3 months</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
              </layout>
             </item>
            </layout>

@@ -40,6 +40,7 @@ public:
     bool eventFilter(QObject* object, QEvent* event) override;
 
     void switchChart(ChartType chartType) override;
+    void setTimeRange(TimeRange range) override;
 
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;

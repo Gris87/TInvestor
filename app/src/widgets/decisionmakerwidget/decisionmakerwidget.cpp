@@ -199,6 +199,8 @@ void DecisionMakerWidget::on_yieldButton_clicked()
     ui->dailyYieldButton->setChecked(false);
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(false);
+
+    ui->timeRangeComboBox->setEnabled(true);
 }
 
 void DecisionMakerWidget::on_monthlyYieldButton_clicked()
@@ -210,6 +212,8 @@ void DecisionMakerWidget::on_monthlyYieldButton_clicked()
     ui->dailyYieldButton->setChecked(false);
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(false);
+
+    ui->timeRangeComboBox->setEnabled(false);
 }
 
 void DecisionMakerWidget::on_dailyYieldButton_clicked()
@@ -221,6 +225,8 @@ void DecisionMakerWidget::on_dailyYieldButton_clicked()
     ui->dailyYieldButton->setChecked(true);
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(false);
+
+    ui->timeRangeComboBox->setEnabled(true);
 }
 
 void DecisionMakerWidget::on_remainedMoneyButton_clicked()
@@ -232,6 +238,8 @@ void DecisionMakerWidget::on_remainedMoneyButton_clicked()
     ui->dailyYieldButton->setChecked(false);
     ui->remainedMoneyButton->setChecked(true);
     ui->totalMoneyButton->setChecked(false);
+
+    ui->timeRangeComboBox->setEnabled(true);
 }
 
 void DecisionMakerWidget::on_totalMoneyButton_clicked()
@@ -243,6 +251,13 @@ void DecisionMakerWidget::on_totalMoneyButton_clicked()
     ui->dailyYieldButton->setChecked(false);
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(true);
+
+    ui->timeRangeComboBox->setEnabled(true);
+}
+
+void DecisionMakerWidget::on_timeRangeComboBox_currentIndexChanged(int index)
+{
+    mAccountChartWidget->setTimeRange(static_cast<TimeRange>(index));
 }
 
 void DecisionMakerWidget::on_copyToSimulatorConfigButton_clicked()

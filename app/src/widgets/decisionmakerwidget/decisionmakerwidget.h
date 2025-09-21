@@ -102,4 +102,5 @@ private slots:
     void on_copyToSimulatorConfigButton_clicked();
     void on_copyToAutoPilotConfigButton_clicked();
     void on_copyToBothConfigsButton_clicked();
+    void on_timeRangeComboBox_currentIndexChanged(int index);
 };

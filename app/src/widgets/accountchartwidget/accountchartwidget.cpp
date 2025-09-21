@@ -359,6 +359,11 @@ void AccountChartWidget::switchChart(ChartType chartType)
     }
 }
 
+void AccountChartWidget::setTimeRange(TimeRange range)
+{
+    qInfo() << range;
+}
+
 void AccountChartWidget::operationsRead(const QList<Operation>& operations)
 {
     mYieldSeries.clear();
