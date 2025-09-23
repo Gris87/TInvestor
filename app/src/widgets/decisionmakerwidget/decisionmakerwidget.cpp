@@ -226,7 +226,7 @@ void DecisionMakerWidget::on_dailyYieldButton_clicked()
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(false);
 
-    ui->timeRangeComboBox->setEnabled(true);
+    ui->timeRangeComboBox->setEnabled(false);
 }
 
 void DecisionMakerWidget::on_remainedMoneyButton_clicked()

@@ -1,4 +1,3 @@
-Chart for last day/week/month/all time
 Create script for calculating yield base on decision
 Buy if price raise anomally
 Take decisions from other robots
@@ -9,7 +8,6 @@ Show warning if decisions config is not default
 Improve coverage
 Create release
 
-Participate in auction
 Trade with USD/EUR/CNY
 
 =======================================

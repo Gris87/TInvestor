@@ -257,7 +257,7 @@ void OperationsThread::cleanRefreshOperations()
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 bool OperationsThread::requestOperations()
 {
-    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+    const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
 
     if (timestamp - mLastCleanRefreshTimestamp > ONE_DAY)
     {

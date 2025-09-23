@@ -455,7 +455,7 @@ TEST_F(Test_DecisionMakerWidget, Test_on_dailyYieldButton_clicked)
     ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    true);
     ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
     ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   true);
+    ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   false);
     // clang-format on
 }
 

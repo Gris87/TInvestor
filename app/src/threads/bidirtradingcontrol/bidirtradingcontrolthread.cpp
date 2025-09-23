@@ -12,7 +12,7 @@ constexpr float  HUNDRED_PERCENT            = 100.0f;
 constexpr float  LIMIT_COMMISSION           = 0.06f;
 constexpr int    EXTRA_SESSION_END_HOUR     = 23;
 constexpr int    EXTRA_SESSION_END_MINUTE   = 30;
-constexpr int    AMOUNT_OF_LAST_INSTRUMENTS = 5;
+constexpr int    AMOUNT_OF_LAST_INSTRUMENTS = 3;
 constexpr qint64 MS_IN_SECOND               = 1000LL;
 constexpr qint64 ONE_MINUTE                 = 60LL * MS_IN_SECOND;
 constexpr qint64 DETECTION_INTERVAL         = 15LL * ONE_MINUTE; // 15 minutes
@@ -169,8 +169,6 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
 
     if (!instrumentsForTrading.isEmpty())
     {
-        QStringList instrumentsToRemove;
-
         if (mLastInstrumentsForBiDirTrading.size() < AMOUNT_OF_LAST_INSTRUMENTS)
         {
             mLastInstrumentsForBiDirTrading.append(instrumentsForTrading);
@@ -186,13 +184,13 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
         {
             const InstrumentsForBiDirTrading& lastInstruments = mLastInstrumentsForBiDirTrading.at(i);
 
-            for (auto it = instrumentsForTrading.constBegin(), end = instrumentsForTrading.constEnd(); it != end; ++it)
+            for (auto it = lastInstruments.constBegin(), end = lastInstruments.constEnd(); it != end; ++it)
             {
                 const QString& instrumentId = it.key();
 
-                if (!lastInstruments.contains(instrumentId))
+                if (!instrumentsForTrading.contains(instrumentId))
                 {
-                    instrumentsToRemove.append(instrumentId);
+                    instrumentsForTrading[instrumentId] = it.value();
                 }
             }
 
@@ -202,11 +200,6 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
             {
                 i = mLastInstrumentsForBiDirTrading.size() - 1;
             }
-        }
-
-        for (const QString& instrumentToRemove : instrumentsToRemove)
-        {
-            instrumentsForTrading.remove(instrumentToRemove);
         }
 
         mLastInstrumentsId = (mLastInstrumentsId + 1) % AMOUNT_OF_LAST_INSTRUMENTS;

@@ -10,7 +10,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 constexpr float  HUNDRED_PERCENT             = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT       = 0.10f;
-constexpr float  MAXIMUM_LOSE_PERCENT        = 0.70f;
+constexpr float  MAXIMUM_LOSE_PERCENT        = 1.50f;
 constexpr float  REQUIRED_PRICE_FALL_PERCENT = 0.50f;
 constexpr int    MINUTES_TO_DOUBLE_CHECK     = 5;
 constexpr qint64 MS_IN_SECOND                = 1000LL;

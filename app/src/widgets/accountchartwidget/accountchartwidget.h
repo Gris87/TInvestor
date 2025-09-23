@@ -45,6 +45,11 @@ public:
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
 
+    void syncTimeRangeSeries();
+    void syncYieldTimeRangeSeries(TimeRange timeRange);
+    void syncRemainedMoneyTimeRangeSeries(TimeRange timeRange);
+    void syncTotalMoneyTimeRangeSeries(TimeRange timeRange);
+
 public slots:
     void contextMenuRequested(const QPoint& pos);
     void actionExportToExcelTriggered();
@@ -72,6 +77,7 @@ private:
     IFileDialogFactory* mFileDialogFactory;
     ISettingsEditor*    mSettingsEditor;
     ChartType           mChartType;
+    TimeRange           mTimeRange;
     QChart              mYieldChart;
     QLineSeries         mYieldSeries;
     QDateTimeAxis       mYieldAxisX;
@@ -107,18 +113,18 @@ private:
     qint64              mLastDayLimitsStart;
     qint64              mLastDayLimitsEnd;
     float               mLastDailyYield;
-    qint64              mAxisXMin;
+    qint64              mAxisXMin[TIME_RANGE_COUNT];
     qint64              mAxisXMax;
-    float               mYieldAxisYMin;
-    float               mYieldAxisYMax;
+    float               mYieldAxisYMin[TIME_RANGE_COUNT];
+    float               mYieldAxisYMax[TIME_RANGE_COUNT];
     float               mMonthlyYieldAxisYMin;
     float               mMonthlyYieldAxisYMax;
     float               mDailyYieldAxisYMin;
     float               mDailyYieldAxisYMax;
-    float               mRemainedMoneyAxisYMin;
-    float               mRemainedMoneyAxisYMax;
-    float               mTotalMoneyAxisYMin;
-    float               mTotalMoneyAxisYMax;
+    float               mRemainedMoneyAxisYMin[TIME_RANGE_COUNT];
+    float               mRemainedMoneyAxisYMax[TIME_RANGE_COUNT];
+    float               mTotalMoneyAxisYMin[TIME_RANGE_COUNT];
+    float               mTotalMoneyAxisYMax[TIME_RANGE_COUNT];
     QPointF             mTargetScenePos;
     QPointF             mTargetViewportPos;
 };

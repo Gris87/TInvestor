@@ -8,6 +8,7 @@
 #include "src/qxlsx/xlsxchart.h"
 #include "src/qxlsx/xlsxchartsheet.h"
 #include "src/qxlsx/xlsxdocument.h"
+#include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
 
@@ -41,6 +42,9 @@ constexpr int    TITLE_FONT_SIZE       = 16;
 constexpr qreal  TOOLTIP_Z_VALUE       = 11;
 constexpr double COLUMN_GAP            = 0.71;
 
+QList<TimeRange> TIME_RANGES = {TIME_RANGE_LAST_DAY, TIME_RANGE_LAST_WEEK, TIME_RANGE_LAST_MONTH, TIME_RANGE_LAST_3_MONTH};
+const qint64     TIME_RANGES_DELTAS[TIME_RANGE_COUNT] = {0, ONE_DAY, 7 * ONE_DAY, 31 * ONE_DAY, 90 * ONE_DAY};
+
 
 
 AccountChartWidget::AccountChartWidget(IFileDialogFactory* fileDialogFactory, ISettingsEditor* settingsEditor, QWidget* parent) :
@@ -50,6 +54,7 @@ AccountChartWidget::AccountChartWidget(IFileDialogFactory* fileDialogFactory, IS
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
     mChartType(),
+    mTimeRange(),
     mYieldChart(),
     mYieldSeries(),
     mYieldAxisX(),
@@ -361,7 +366,30 @@ void AccountChartWidget::switchChart(ChartType chartType)
 
 void AccountChartWidget::setTimeRange(TimeRange range)
 {
-    qInfo() << range;
+    mTimeRange = range;
+
+    if (mYieldSeries.count() > 0)
+    {
+        mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin[mTimeRange]), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
+        mYieldAxisY.setRange(mYieldAxisYMin[mTimeRange], mYieldAxisYMax[mTimeRange]);
+        mRemainedMoneyAxisX.setRange(
+            QDateTime::fromMSecsSinceEpoch(mAxisXMin[mTimeRange]), QDateTime::fromMSecsSinceEpoch(mAxisXMax)
+        );
+        mRemainedMoneyAxisY.setRange(mRemainedMoneyAxisYMin[mTimeRange], mRemainedMoneyAxisYMax[mTimeRange]);
+        mTotalMoneyAxisX.setRange(
+            QDateTime::fromMSecsSinceEpoch(mAxisXMin[mTimeRange]), QDateTime::fromMSecsSinceEpoch(mAxisXMax)
+        );
+        mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin[mTimeRange], mTotalMoneyAxisYMax[mTimeRange]);
+    }
+    else
+    {
+        mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(0), QDateTime::fromMSecsSinceEpoch(0));
+        mYieldAxisY.setRange(0, 0);
+        mRemainedMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(0), QDateTime::fromMSecsSinceEpoch(0));
+        mRemainedMoneyAxisY.setRange(0, 0);
+        mTotalMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(0), QDateTime::fromMSecsSinceEpoch(0));
+        mTotalMoneyAxisY.setRange(0, 0);
+    }
 }
 
 void AccountChartWidget::operationsRead(const QList<Operation>& operations)
@@ -388,32 +416,32 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
     mLastDayLimitsEnd     = 0;
     mLastDailyYield       = 0.0f;
 
-    mAxisXMin              = std::numeric_limits<qint64>::max();
-    mAxisXMax              = std::numeric_limits<qint64>::min();
-    mYieldAxisYMin         = std::numeric_limits<float>::max();
-    mYieldAxisYMax         = std::numeric_limits<float>::min();
-    mMonthlyYieldAxisYMin  = std::numeric_limits<float>::max();
-    mMonthlyYieldAxisYMax  = std::numeric_limits<float>::min();
-    mDailyYieldAxisYMin    = std::numeric_limits<float>::max();
-    mDailyYieldAxisYMax    = std::numeric_limits<float>::min();
-    mRemainedMoneyAxisYMin = 0.0f;
-    mRemainedMoneyAxisYMax = std::numeric_limits<float>::min();
-    mTotalMoneyAxisYMin    = 0.0f;
-    mTotalMoneyAxisYMax    = std::numeric_limits<float>::min();
+    mAxisXMin[0]              = std::numeric_limits<qint64>::max();
+    mAxisXMax                 = std::numeric_limits<qint64>::min();
+    mYieldAxisYMin[0]         = std::numeric_limits<float>::max();
+    mYieldAxisYMax[0]         = std::numeric_limits<float>::min();
+    mMonthlyYieldAxisYMin     = std::numeric_limits<float>::max();
+    mMonthlyYieldAxisYMax     = std::numeric_limits<float>::min();
+    mDailyYieldAxisYMin       = std::numeric_limits<float>::max();
+    mDailyYieldAxisYMax       = std::numeric_limits<float>::min();
+    mRemainedMoneyAxisYMin[0] = 0.0f;
+    mRemainedMoneyAxisYMax[0] = std::numeric_limits<float>::min();
+    mTotalMoneyAxisYMin[0]    = 0.0f;
+    mTotalMoneyAxisYMax[0]    = std::numeric_limits<float>::min();
 
     if (!operations.isEmpty())
     {
         QList<QPointF> yieldPoints;
         QList<QPointF> remainedMoneyPoints;
-        QList<QPointF> totalMoneySeriesPoints;
+        QList<QPointF> totalMoneyPoints;
 
         yieldPoints.reserve(operations.size());
         remainedMoneyPoints.reserve(operations.size());
-        totalMoneySeriesPoints.reserve(operations.size());
+        totalMoneyPoints.reserve(operations.size());
 
         for (int i = operations.size() - 1; i >= 0; --i)
         {
-            handleOperation(operations.at(i), yieldPoints, remainedMoneyPoints, totalMoneySeriesPoints);
+            handleOperation(operations.at(i), yieldPoints, remainedMoneyPoints, totalMoneyPoints);
         }
 
         mYieldSeries.replace(yieldPoints);
@@ -422,16 +450,22 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
         syncBarSetFromPoints(&mDailyYieldPositiveBarSet, mDailyYieldPositivePoints);
         syncBarSetFromPoints(&mDailyYieldNegativeBarSet, mDailyYieldNegativePoints);
         mRemainedMoneySeries.replace(remainedMoneyPoints);
-        mTotalMoneySeries.replace(totalMoneySeriesPoints);
+        mTotalMoneySeries.replace(totalMoneyPoints);
 
-        mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
-        mYieldAxisY.setRange(mYieldAxisYMin, mYieldAxisYMax);
+        syncTimeRangeSeries();
+
+        mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin[mTimeRange]), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
+        mYieldAxisY.setRange(mYieldAxisYMin[mTimeRange], mYieldAxisYMax[mTimeRange]);
         mMonthlyYieldAxisY.setRange(mMonthlyYieldAxisYMin, mMonthlyYieldAxisYMax);
         mDailyYieldAxisY.setRange(mDailyYieldAxisYMin, mDailyYieldAxisYMax);
-        mRemainedMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
-        mRemainedMoneyAxisY.setRange(mRemainedMoneyAxisYMin, mRemainedMoneyAxisYMax);
-        mTotalMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
-        mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin, mTotalMoneyAxisYMax);
+        mRemainedMoneyAxisX.setRange(
+            QDateTime::fromMSecsSinceEpoch(mAxisXMin[mTimeRange]), QDateTime::fromMSecsSinceEpoch(mAxisXMax)
+        );
+        mRemainedMoneyAxisY.setRange(mRemainedMoneyAxisYMin[mTimeRange], mRemainedMoneyAxisYMax[mTimeRange]);
+        mTotalMoneyAxisX.setRange(
+            QDateTime::fromMSecsSinceEpoch(mAxisXMin[mTimeRange]), QDateTime::fromMSecsSinceEpoch(mAxisXMax)
+        );
+        mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin[mTimeRange], mTotalMoneyAxisYMax[mTimeRange]);
 
         QPen pen(SERIES_COLOR);
         pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), CHART_PEN_MAX_SIZE));
@@ -458,15 +492,15 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
 {
     QList<QPointF> yieldPoints;
     QList<QPointF> remainedMoneyPoints;
-    QList<QPointF> totalMoneySeriesPoints;
+    QList<QPointF> totalMoneyPoints;
 
     yieldPoints.reserve(operations.size());
     remainedMoneyPoints.reserve(operations.size());
-    totalMoneySeriesPoints.reserve(operations.size());
+    totalMoneyPoints.reserve(operations.size());
 
     for (int i = operations.size() - 1; i >= 0; --i)
     {
-        handleOperation(operations.at(i), yieldPoints, remainedMoneyPoints, totalMoneySeriesPoints);
+        handleOperation(operations.at(i), yieldPoints, remainedMoneyPoints, totalMoneyPoints);
     }
 
     mYieldSeries.append(yieldPoints);
@@ -475,16 +509,20 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
     syncBarSetFromPoints(&mDailyYieldPositiveBarSet, mDailyYieldPositivePoints);
     syncBarSetFromPoints(&mDailyYieldNegativeBarSet, mDailyYieldNegativePoints);
     mRemainedMoneySeries.append(remainedMoneyPoints);
-    mTotalMoneySeries.append(totalMoneySeriesPoints);
+    mTotalMoneySeries.append(totalMoneyPoints);
 
-    mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
-    mYieldAxisY.setRange(mYieldAxisYMin, mYieldAxisYMax);
+    syncTimeRangeSeries();
+
+    mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin[mTimeRange]), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
+    mYieldAxisY.setRange(mYieldAxisYMin[mTimeRange], mYieldAxisYMax[mTimeRange]);
     mMonthlyYieldAxisY.setRange(mMonthlyYieldAxisYMin, mMonthlyYieldAxisYMax);
     mDailyYieldAxisY.setRange(mDailyYieldAxisYMin, mDailyYieldAxisYMax);
-    mRemainedMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
-    mRemainedMoneyAxisY.setRange(mRemainedMoneyAxisYMin, mRemainedMoneyAxisYMax);
-    mTotalMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
-    mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin, mTotalMoneyAxisYMax);
+    mRemainedMoneyAxisX.setRange(
+        QDateTime::fromMSecsSinceEpoch(mAxisXMin[mTimeRange]), QDateTime::fromMSecsSinceEpoch(mAxisXMax)
+    );
+    mRemainedMoneyAxisY.setRange(mRemainedMoneyAxisYMin[mTimeRange], mRemainedMoneyAxisYMax[mTimeRange]);
+    mTotalMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin[mTimeRange]), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
+    mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin[mTimeRange], mTotalMoneyAxisYMax[mTimeRange]);
 
     QPen pen(SERIES_COLOR);
     pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), CHART_PEN_MAX_SIZE));
@@ -496,10 +534,7 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
 }
 
 void AccountChartWidget::handleOperation(
-    const Operation& operation,
-    QList<QPointF>&  yieldPoints,
-    QList<QPointF>&  remainedMoneyPoints,
-    QList<QPointF>&  totalMoneySeriesPoints
+    const Operation& operation, QList<QPointF>& yieldPoints, QList<QPointF>& remainedMoneyPoints, QList<QPointF>& totalMoneyPoints
 )
 {
     const float yieldPercent  = operation.totalYieldWithCommissionPercent;
@@ -556,19 +591,19 @@ void AccountChartWidget::handleOperation(
     const float monthlyYield = yieldPercent - mLastMonthlyYield;
     const float dailyYield   = yield - mLastDailyYield;
 
-    mAxisXMin = qMin(mAxisXMin, operation.timestamp);
-    mAxisXMax = qMax(mAxisXMax, operation.timestamp);
+    mAxisXMin[0] = qMin(mAxisXMin[0], operation.timestamp);
+    mAxisXMax    = qMax(mAxisXMax, operation.timestamp);
 
-    mYieldAxisYMin         = qMin(mYieldAxisYMin, yieldPercent);
-    mYieldAxisYMax         = qMax(mYieldAxisYMax, yieldPercent);
-    mMonthlyYieldAxisYMin  = qMin(mMonthlyYieldAxisYMin, monthlyYield);
-    mMonthlyYieldAxisYMax  = qMax(mMonthlyYieldAxisYMax, monthlyYield);
-    mDailyYieldAxisYMin    = qMin(mDailyYieldAxisYMin, dailyYield);
-    mDailyYieldAxisYMax    = qMax(mDailyYieldAxisYMax, dailyYield);
-    mRemainedMoneyAxisYMin = qMin(mRemainedMoneyAxisYMin, remainedMoney);
-    mRemainedMoneyAxisYMax = qMax(mRemainedMoneyAxisYMax, remainedMoney);
-    mTotalMoneyAxisYMin    = qMin(mTotalMoneyAxisYMin, totalMoney);
-    mTotalMoneyAxisYMax    = qMax(mTotalMoneyAxisYMax, totalMoney);
+    mYieldAxisYMin[0]         = qMin(mYieldAxisYMin[0], yieldPercent);
+    mYieldAxisYMax[0]         = qMax(mYieldAxisYMax[0], yieldPercent);
+    mMonthlyYieldAxisYMin     = qMin(mMonthlyYieldAxisYMin, monthlyYield);
+    mMonthlyYieldAxisYMax     = qMax(mMonthlyYieldAxisYMax, monthlyYield);
+    mDailyYieldAxisYMin       = qMin(mDailyYieldAxisYMin, dailyYield);
+    mDailyYieldAxisYMax       = qMax(mDailyYieldAxisYMax, dailyYield);
+    mRemainedMoneyAxisYMin[0] = qMin(mRemainedMoneyAxisYMin[0], remainedMoney);
+    mRemainedMoneyAxisYMax[0] = qMax(mRemainedMoneyAxisYMax[0], remainedMoney);
+    mTotalMoneyAxisYMin[0]    = qMin(mTotalMoneyAxisYMin[0], totalMoney);
+    mTotalMoneyAxisYMax[0]    = qMax(mTotalMoneyAxisYMax[0], totalMoney);
 
     yieldPoints.append(QPointF(operation.timestamp, yieldPercent));
     mMonthlyYieldPositivePoints.replace(mMonthlyYieldPositivePoints.count() - 1, qMax(monthlyYield, 0.0f));
@@ -576,7 +611,131 @@ void AccountChartWidget::handleOperation(
     mDailyYieldPositivePoints.replace(mDailyYieldPositivePoints.count() - 1, qMax(dailyYield, 0.0f));
     mDailyYieldNegativePoints.replace(mDailyYieldNegativePoints.count() - 1, qMin(dailyYield, 0.0f));
     remainedMoneyPoints.append(QPointF(operation.timestamp, remainedMoney));
-    totalMoneySeriesPoints.append(QPointF(operation.timestamp, totalMoney));
+    totalMoneyPoints.append(QPointF(operation.timestamp, totalMoney));
+}
+
+struct SyncTimeRangeSeriesInfo
+{
+    explicit SyncTimeRangeSeriesInfo(AccountChartWidget* _thread) :
+        thread(_thread)
+    {
+    }
+
+    AccountChartWidget* thread;
+};
+
+static void syncTimeRangeSeriesForParallel(
+    QThread* parentThread, int /*threadId*/, TimeRange* timeRanges, int /*size*/, int start, int end, void* additionalArgs
+)
+{
+    SyncTimeRangeSeriesInfo* syncTimeRangeSeriesInfo = reinterpret_cast<SyncTimeRangeSeriesInfo*>(additionalArgs);
+
+    AccountChartWidget* thread = syncTimeRangeSeriesInfo->thread;
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        TimeRange timeRange = timeRanges[i];
+
+        thread->syncYieldTimeRangeSeries(timeRange);
+        thread->syncRemainedMoneyTimeRangeSeries(timeRange);
+        thread->syncTotalMoneyTimeRangeSeries(timeRange);
+    }
+}
+
+void AccountChartWidget::syncTimeRangeSeries()
+{
+    SyncTimeRangeSeriesInfo syncTimeRangeSeriesInfo(this);
+    processInParallel(QThread::currentThread(), TIME_RANGES, syncTimeRangeSeriesForParallel, &syncTimeRangeSeriesInfo);
+}
+
+void AccountChartWidget::syncYieldTimeRangeSeries(TimeRange timeRange)
+{
+    const QList<QPointF>& yieldSeriesPoints = mYieldSeries.points();
+
+    const int index = std::distance(
+        yieldSeriesPoints.constBegin(),
+        std::lower_bound(
+            yieldSeriesPoints.constBegin(),
+            yieldSeriesPoints.constEnd(),
+            yieldSeriesPoints.constLast().x() - TIME_RANGES_DELTAS[timeRange],
+            [](const QPointF& point, qint64 value) { return point.x() < value; }
+        )
+    );
+
+    float minY = std::numeric_limits<float>::max();
+    float maxY = std::numeric_limits<float>::min();
+
+    for (int i = index; i < yieldSeriesPoints.size(); ++i)
+    {
+        const qreal y = yieldSeriesPoints.at(i).y();
+
+        minY = qMin(y, minY);
+        maxY = qMax(y, maxY);
+    }
+
+    mAxisXMin[timeRange]      = yieldSeriesPoints.at(index).x();
+    mYieldAxisYMin[timeRange] = minY;
+    mYieldAxisYMax[timeRange] = maxY;
+}
+
+void AccountChartWidget::syncRemainedMoneyTimeRangeSeries(TimeRange timeRange)
+{
+    const QList<QPointF>& remainedMoneySeriesPoints = mRemainedMoneySeries.points();
+
+    const int index = std::distance(
+        remainedMoneySeriesPoints.constBegin(),
+        std::lower_bound(
+            remainedMoneySeriesPoints.constBegin(),
+            remainedMoneySeriesPoints.constEnd(),
+            remainedMoneySeriesPoints.constLast().x() - TIME_RANGES_DELTAS[timeRange],
+            [](const QPointF& point, qint64 value) { return point.x() < value; }
+        )
+    );
+
+    float minY = 0.0f;
+    float maxY = std::numeric_limits<float>::min();
+
+    for (int i = index; i < remainedMoneySeriesPoints.size(); ++i)
+    {
+        const qreal y = remainedMoneySeriesPoints.at(i).y();
+
+        minY = qMin(y, minY);
+        maxY = qMax(y, maxY);
+    }
+
+    mAxisXMin[timeRange]              = remainedMoneySeriesPoints.at(index).x();
+    mRemainedMoneyAxisYMin[timeRange] = minY;
+    mRemainedMoneyAxisYMax[timeRange] = maxY;
+}
+
+void AccountChartWidget::syncTotalMoneyTimeRangeSeries(TimeRange timeRange)
+{
+    const QList<QPointF>& totalMoneySeriesPoints = mTotalMoneySeries.points();
+
+    const int index = std::distance(
+        totalMoneySeriesPoints.constBegin(),
+        std::lower_bound(
+            totalMoneySeriesPoints.constBegin(),
+            totalMoneySeriesPoints.constEnd(),
+            totalMoneySeriesPoints.constLast().x() - TIME_RANGES_DELTAS[timeRange],
+            [](const QPointF& point, qint64 value) { return point.x() < value; }
+        )
+    );
+
+    float minY = 0.0f;
+    float maxY = std::numeric_limits<float>::min();
+
+    for (int i = index; i < totalMoneySeriesPoints.size(); ++i)
+    {
+        const qreal y = totalMoneySeriesPoints.at(i).y();
+
+        minY = qMin(y, minY);
+        maxY = qMax(y, maxY);
+    }
+
+    mAxisXMin[timeRange]           = totalMoneySeriesPoints.at(index).x();
+    mTotalMoneyAxisYMin[timeRange] = minY;
+    mTotalMoneyAxisYMax[timeRange] = maxY;
 }
 
 void AccountChartWidget::syncBarSetFromPoints(QBarSet* barSet, const QList<qreal>& points)
@@ -737,11 +896,11 @@ void AccountChartWidget::exportToExcel(const QString& path) const
     doc.write(1, 1, mTotalMoneyAxisX.titleText(), headerStyle);
     doc.write(1, 2, mTotalMoneyAxisY.titleText(), headerStyle);
 
-    const QList<QPointF>& totalMoneySeriesPoints = mTotalMoneySeries.points();
+    const QList<QPointF>& totalMoneyPoints = mTotalMoneySeries.points();
 
-    for (int i = 0; i < totalMoneySeriesPoints.size(); ++i)
+    for (int i = 0; i < totalMoneyPoints.size(); ++i)
     {
-        const QPointF& point = totalMoneySeriesPoints.at(i);
+        const QPointF& point = totalMoneyPoints.at(i);
 
         doc.write(i + 2, 1, QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(point.x())), dateFormat);
         doc.write(i + 2, 2, point.y(), cellStyle);
@@ -762,7 +921,7 @@ void AccountChartWidget::exportToExcel(const QString& path) const
     totalMoneyChart->setAxisTitle(QXlsx::Chart::Bottom, mTotalMoneyAxisX.titleText());
     totalMoneyChart->setAxisTitle(QXlsx::Chart::Left, mTotalMoneyAxisY.titleText());
     totalMoneyChart->addSeries(
-        QXlsx::CellRange(2, 1, totalMoneySeriesPoints.size() + 1, 2), doc.sheet(mTotalMoneyChart.title() + " (Data)"), true
+        QXlsx::CellRange(2, 1, totalMoneyPoints.size() + 1, 2), doc.sheet(mTotalMoneyChart.title() + " (Data)"), true
     );
 
     doc.insertSheet(0, mRemainedMoneyChart.title(), QXlsx::AbstractSheet::ST_ChartSheet);
