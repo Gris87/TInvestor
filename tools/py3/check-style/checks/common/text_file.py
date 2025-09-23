@@ -155,7 +155,7 @@ def _check_for_non_ascii(file_path, lines):
 
     skip_files = (
         "/app/assets/translations/language_ru.ts" in file_path_simplified or
-        "/tools/py3/tinvestor-telegram-bot/localization.py" in file_path_simplified
+        "/localization.py" in file_path_simplified
     )
 
     if skip_files:
