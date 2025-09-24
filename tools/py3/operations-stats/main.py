@@ -7,13 +7,20 @@ from localization import *
 
 LOG_LEVEL_DEBUG = 1
 
+DECISION_1 = "Decision 1"
+DECISION_2 = "Decision 2"
+DECISION_3 = "Decision 3"
+DECISION_4 = "Decision 4"
+DECISION_HUGE_SPREAD = "Huge spread"
+DECISION_HIGH_LIQUIDITY = "High liquidity"
+DECISION_OTHER = "Other"
+
 
 def operations_stats(args):
     operations = _read_operations(args)
     logs = _read_logs(args)
 
     stats = _collect_statistics(operations, logs)
-    print(stats)
 
     return True
 
@@ -43,9 +50,8 @@ def _collect_statistics(operations, logs):
         if operation_description.startswith(text_sale):
             operation_timestamp = operation["timestamp"]
             operation_instrumentId = operation["instrumentId"]
-            operation_yield = operation["yield"]
 
-            last_log = None
+            last_log_message = None
 
             for log in logs:
                 log_timestamp = log["timestamp"]
@@ -57,12 +63,59 @@ def _collect_statistics(operations, logs):
                 log_message = log["message"]
                 log_level = log["level"]
 
-                if operation_instrumentId == log_instrumentId and log_level == LOG_LEVEL_DEBUG and not log_message.startswith(text_want_to_sell):
-                    last_log = log
+                if operation_instrumentId == log_instrumentId and log_level == LOG_LEVEL_DEBUG and not log_message.startswith(text_trade_interrupted) and not log_message.startswith(text_want_to_sell):
+                    last_log_message = log_message
 
-            print(last_log)
+            entry = {
+                "timestamp": operation_timestamp,
+                "instrumentId": operation_instrumentId,
+                "instrumentTicker": operation["instrumentTicker"],
+                "instrumentName": operation["instrumentName"],
+                "description": operation_description,
+                "decision": _get_buy_decision_from_log_message(last_log_message),
+                "yieldWithCommission": operation["yieldWithCommission"],
+            }
+
+            stats.append(entry)
 
     return stats
+
+
+def _get_buy_decision_from_log_message(log_message):
+    if log_message is None:
+        return DECISION_OTHER
+
+    match = decision_1_regexp.match(log_message)
+
+    if match is not None:
+        return DECISION_1
+
+    match = decision_2_regexp.match(log_message)
+
+    if match is not None:
+        return DECISION_2
+
+    match = decision_3_regexp.match(log_message)
+
+    if match is not None:
+        return DECISION_3
+
+    match = decision_4_regexp.match(log_message)
+
+    if match is not None:
+        return DECISION_4
+
+    match = huge_spread_regexp.match(log_message)
+
+    if match is not None:
+        return DECISION_HUGE_SPREAD
+
+    match = high_liquidity_regexp.match(log_message)
+
+    if match is not None:
+        return DECISION_HIGH_LIQUIDITY
+
+    return DECISION_OTHER
 
 
 def main():
