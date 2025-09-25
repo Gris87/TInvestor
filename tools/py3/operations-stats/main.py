@@ -133,6 +133,8 @@ def _collect_statistics(operations, logs):
 def _generate_excel(args, stats):
     workbook = xlsxwriter.Workbook(args.output)
 
+    _create_daily_decision_yield_chartsheet(workbook, stats)
+    _create_combined_yield_chartsheet(workbook, stats)
     _create_stats_sheets(workbook, stats)
     _create_daily_decision_yield_sheets(workbook, stats)
     _create_combined_yield_sheets(workbook, stats)
@@ -236,6 +238,74 @@ def _create_daily_decision_yield_sheets(workbook, stats):
     )
 
 
+def _create_daily_decision_yield_chartsheet(workbook, stats):
+    chartsheet = workbook.add_chartsheet("Daily yield")
+    chart = workbook.add_chart({"type": "column"})
+
+    chart.set_title({"name": "Daily yield"})
+
+    last_row = len(stats["daily"]) + 1
+
+    chart.add_series(
+        {
+            "name": f"='Daily yield (Data)'!$B$1",
+            "categories": f"='Daily yield (Data)'!$A$2:$A${last_row}",
+            "values": f"='Daily yield (Data)'!$B$2:$B${last_row}",
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Daily yield (Data)'!$C$1",
+            "categories": f"='Daily yield (Data)'!$A$2:$A${last_row}",
+            "values": f"='Daily yield (Data)'!$C$2:$C${last_row}",
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Daily yield (Data)'!$D$1",
+            "categories": f"='Daily yield (Data)'!$A$2:$A${last_row}",
+            "values": f"='Daily yield (Data)'!$D$2:$D${last_row}",
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Daily yield (Data)'!$E$1",
+            "categories": f"='Daily yield (Data)'!$A$2:$A${last_row}",
+            "values": f"='Daily yield (Data)'!$E$2:$E${last_row}",
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Daily yield (Data)'!$F$1",
+            "categories": f"='Daily yield (Data)'!$A$2:$A${last_row}",
+            "values": f"='Daily yield (Data)'!$F$2:$F${last_row}",
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Daily yield (Data)'!$G$1",
+            "categories": f"='Daily yield (Data)'!$A$2:$A${last_row}",
+            "values": f"='Daily yield (Data)'!$G$2:$G${last_row}",
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Daily yield (Data)'!$H$1",
+            "categories": f"='Daily yield (Data)'!$A$2:$A${last_row}",
+            "values": f"='Daily yield (Data)'!$H$2:$H${last_row}",
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Daily yield (Data)'!$I$1",
+            "categories": f"='Daily yield (Data)'!$A$2:$A${last_row}",
+            "values": f"='Daily yield (Data)'!$I$2:$I${last_row}",
+        }
+    )
+
+    chartsheet.set_chart(chart)
+
+
 def _create_combined_yield_sheets(workbook, stats):
     worksheet = workbook.add_worksheet("Combined yield (Data)")
 
@@ -277,6 +347,82 @@ def _create_combined_yield_sheets(workbook, stats):
             ],
         },
     )
+
+
+def _create_combined_yield_chartsheet(workbook, stats):
+    chartsheet = workbook.add_chartsheet("Combined yield")
+    chart = workbook.add_chart({"type": "column"})
+
+    chart.set_title({"name": "Combined yield"})
+
+    chart.set_x_axis({"visible": False})
+    chart.set_y_axis({"visible": False})
+
+    chart.add_series(
+        {
+            "name": f"='Combined yield (Data)'!$A$1",
+            "values": f"='Combined yield (Data)'!$A$2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Combined yield (Data)'!$B$1",
+            "values": f"='Combined yield (Data)'!$B$2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Combined yield (Data)'!$C$1",
+            "values": f"='Combined yield (Data)'!$C$2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Combined yield (Data)'!$D$1",
+            "values": f"='Combined yield (Data)'!$D$2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Combined yield (Data)'!$E$1",
+            "values": f"='Combined yield (Data)'!$E$2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Combined yield (Data)'!$F$1",
+            "values": f"='Combined yield (Data)'!$F$2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
+    chart.add_series(
+        {
+            "name": f"='Combined yield (Data)'!$G$1",
+            "values": f"='Combined yield (Data)'!$G$2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
+
+    chartsheet.set_chart(chart)
 
 
 def _get_buy_decision_from_log_message(log_message):
