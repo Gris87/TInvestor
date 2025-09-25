@@ -2,6 +2,9 @@ import argparse
 import json
 import sys
 
+import xlsxwriter
+from datetime import datetime
+
 from localization import *
 
 
@@ -21,6 +24,7 @@ def operations_stats(args):
     logs = _read_logs(args)
 
     stats = _collect_statistics(operations, logs)
+    _generate_excel(args, stats)
 
     return True
 
@@ -42,7 +46,7 @@ def _read_logs(args):
 
 
 def _collect_statistics(operations, logs):
-    stats = []
+    entries = []
 
     for operation in operations:
         operation_description = operation["description"]
@@ -76,9 +80,203 @@ def _collect_statistics(operations, logs):
                 "yieldWithCommission": operation["yieldWithCommission"],
             }
 
-            stats.append(entry)
+            entries.append(entry)
+
+    daily = {}
+
+    for entry in entries:
+        date = datetime.fromtimestamp(entry["timestamp"] / 1000.0).strftime('%Y-%m-%d')
+
+        if date in daily:
+            date_info = daily[date]
+        else:
+            date_info = {
+                DECISION_1: 0,
+                DECISION_2: 0,
+                DECISION_3: 0,
+                DECISION_4: 0,
+                DECISION_HUGE_SPREAD: 0,
+                DECISION_HIGH_LIQUIDITY: 0,
+                DECISION_OTHER: 0,
+                "Total": 0
+            }
+
+        yield_with_commission = entry["yieldWithCommission"]
+
+        date_info[entry["decision"]] += yield_with_commission
+        date_info["Total"] += yield_with_commission
+
+        daily[date] = date_info
+
+    combined = {
+        DECISION_1: 0,
+        DECISION_2: 0,
+        DECISION_3: 0,
+        DECISION_4: 0,
+        DECISION_HUGE_SPREAD: 0,
+        DECISION_HIGH_LIQUIDITY: 0,
+        DECISION_OTHER: 0,
+    }
+
+    for entry in entries:
+        combined[entry["decision"]] += entry["yieldWithCommission"]
+
+    stats = {
+        "entries": entries,
+        "daily": daily,
+        "combined": combined,
+    }
 
     return stats
+
+
+def _generate_excel(args, stats):
+    workbook = xlsxwriter.Workbook(args.output)
+
+    _create_stats_sheets(workbook, stats)
+    _create_daily_decision_yield_sheets(workbook, stats)
+    _create_combined_yield_sheets(workbook, stats)
+
+    workbook.close()
+
+
+def _create_stats_sheets(workbook, stats):
+    worksheet = workbook.add_worksheet("Stats (Data)")
+
+    worksheet.set_column("A:A", 17.57)
+    worksheet.set_column("B:B", 37.43)
+    worksheet.set_column("C:C", 7.86)
+    worksheet.set_column("D:D", 62.14)
+    worksheet.set_column("E:E", 81.57)
+    worksheet.set_column("F:F", 12.14)
+    worksheet.set_column("G:G", 23.0)
+
+    data = []
+
+    for entry in stats["entries"]:
+        data.append(
+            [
+                datetime.fromtimestamp(entry["timestamp"] / 1000.0).strftime('%Y-%m-%d %H:%M:%S'),
+                entry["instrumentId"],
+                entry["instrumentTicker"],
+                entry["instrumentName"],
+                entry["description"],
+                entry["decision"],
+                entry["yieldWithCommission"],
+            ]
+        )
+
+    worksheet.add_table(
+        f"A1:G{len(data) + 1}",
+        {
+            "name": "AllStatsData",
+            "style": "Table Style Medium 13",
+            "data": data,
+            "columns": [
+                {"header": "Time"},
+                {"header": "Instrument ID"},
+                {"header": "Ticker"},
+                {"header": "Name"},
+                {"header": "Description"},
+                {"header": "Decision"},
+                {"header": "Yield with commission"},
+            ],
+        },
+    )
+
+
+def _create_daily_decision_yield_sheets(workbook, stats):
+    worksheet = workbook.add_worksheet("Daily yield (Data)")
+
+    worksheet.set_column("A:A", 17.57)
+    worksheet.set_column("B:B", 17.57)
+    worksheet.set_column("C:C", 17.57)
+    worksheet.set_column("D:D", 17.57)
+    worksheet.set_column("E:E", 17.57)
+    worksheet.set_column("F:F", 17.57)
+    worksheet.set_column("G:G", 17.57)
+    worksheet.set_column("H:H", 17.57)
+    worksheet.set_column("I:I", 17.57)
+
+    data = []
+
+    for date, entry in stats["daily"].items():
+        data.append(
+            [
+                date,
+                entry[DECISION_1],
+                entry[DECISION_2],
+                entry[DECISION_3],
+                entry[DECISION_4],
+                entry[DECISION_HUGE_SPREAD],
+                entry[DECISION_HIGH_LIQUIDITY],
+                entry[DECISION_OTHER],
+                entry["Total"],
+            ]
+        )
+
+    worksheet.add_table(
+        f"A1:I{len(data) + 1}",
+        {
+            "name": "DailyDecisionYieldData",
+            "style": "Table Style Medium 13",
+            "data": data,
+            "columns": [
+                {"header": "Date"},
+                {"header": DECISION_1},
+                {"header": DECISION_2},
+                {"header": DECISION_3},
+                {"header": DECISION_4},
+                {"header": DECISION_HUGE_SPREAD},
+                {"header": DECISION_HIGH_LIQUIDITY},
+                {"header": DECISION_OTHER},
+                {"header": "Total"},
+            ],
+        },
+    )
+
+
+def _create_combined_yield_sheets(workbook, stats):
+    worksheet = workbook.add_worksheet("Combined yield (Data)")
+
+    worksheet.set_column("A:A", 17.57)
+    worksheet.set_column("B:B", 17.57)
+    worksheet.set_column("C:C", 17.57)
+    worksheet.set_column("D:D", 17.57)
+    worksheet.set_column("E:E", 17.57)
+    worksheet.set_column("F:F", 17.57)
+    worksheet.set_column("G:G", 17.57)
+
+    combined = stats["combined"]
+    data = [
+        [
+            combined[DECISION_1],
+            combined[DECISION_2],
+            combined[DECISION_3],
+            combined[DECISION_4],
+            combined[DECISION_HUGE_SPREAD],
+            combined[DECISION_HIGH_LIQUIDITY],
+            combined[DECISION_OTHER],
+        ]
+    ]
+
+    worksheet.add_table(
+        f"A1:G{len(data) + 1}",
+        {
+            "name": "CombinedYieldData",
+            "style": "Table Style Medium 13",
+            "data": data,
+            "columns": [
+                {"header": DECISION_1},
+                {"header": DECISION_2},
+                {"header": DECISION_3},
+                {"header": DECISION_4},
+                {"header": DECISION_HUGE_SPREAD},
+                {"header": DECISION_HIGH_LIQUIDITY},
+                {"header": DECISION_OTHER},
+            ],
+        },
+    )
 
 
 def _get_buy_decision_from_log_message(log_message):
@@ -133,6 +331,13 @@ def main():
         type=str,
         default="build/Desktop-Debug/app/build/data/autopilot/4fa4713d40ede79c630b609d3a95c5ed/logs.json",
         help="Path to logs.json file"
+    )
+    parser.add_argument(
+        "--output",
+        dest="output",
+        type=str,
+        default="build/Desktop-Debug/operations_stats.xlsx",
+        help="Output file"
     )
     args = parser.parse_args()
 
