@@ -117,14 +117,41 @@ def _collect_statistics(operations, logs):
         DECISION_HIGH_LIQUIDITY: 0,
         DECISION_OTHER: 0,
     }
+    combined_positive = {
+        DECISION_1: 0,
+        DECISION_2: 0,
+        DECISION_3: 0,
+        DECISION_4: 0,
+        DECISION_HUGE_SPREAD: 0,
+        DECISION_HIGH_LIQUIDITY: 0,
+        DECISION_OTHER: 0,
+    }
+    combined_negative = {
+        DECISION_1: 0,
+        DECISION_2: 0,
+        DECISION_3: 0,
+        DECISION_4: 0,
+        DECISION_HUGE_SPREAD: 0,
+        DECISION_HIGH_LIQUIDITY: 0,
+        DECISION_OTHER: 0,
+    }
 
     for entry in entries:
-        combined[entry["decision"]] += entry["yieldWithCommission"]
+        yield_with_commission = entry["yieldWithCommission"]
+
+        if yield_with_commission > 0:
+            combined_positive[entry["decision"]] += yield_with_commission
+        else:
+            combined_negative[entry["decision"]] -= yield_with_commission
+
+        combined[entry["decision"]] += yield_with_commission
 
     stats = {
         "entries": entries,
         "daily": daily,
         "combined": combined,
+        "combined_positive": combined_positive,
+        "combined_negative": combined_negative,
     }
 
     return stats
@@ -135,9 +162,13 @@ def _generate_excel(args, stats):
 
     _create_daily_decision_yield_chartsheet(workbook, stats)
     _create_combined_yield_chartsheet(workbook, stats)
+    _create_combined_positive_yield_chartsheet(workbook, stats)
+    _create_combined_negative_yield_chartsheet(workbook, stats)
     _create_stats_sheets(workbook, stats)
     _create_daily_decision_yield_sheets(workbook, stats)
     _create_combined_yield_sheets(workbook, stats)
+    _create_combined_positive_yield_sheets(workbook, stats)
+    _create_combined_negative_yield_sheets(workbook, stats)
 
     workbook.close()
 
@@ -190,15 +221,15 @@ def _create_stats_sheets(workbook, stats):
 def _create_daily_decision_yield_sheets(workbook, stats):
     worksheet = workbook.add_worksheet("Daily yield (Data)")
 
-    worksheet.set_column("A:A", 17.57)
-    worksheet.set_column("B:B", 17.57)
-    worksheet.set_column("C:C", 17.57)
-    worksheet.set_column("D:D", 17.57)
-    worksheet.set_column("E:E", 17.57)
-    worksheet.set_column("F:F", 17.57)
-    worksheet.set_column("G:G", 17.57)
-    worksheet.set_column("H:H", 17.57)
-    worksheet.set_column("I:I", 17.57)
+    worksheet.set_column("A:A", 9.71)
+    worksheet.set_column("B:B", 12.0)
+    worksheet.set_column("C:C", 11.57)
+    worksheet.set_column("D:D", 11.57)
+    worksheet.set_column("E:E", 12.0)
+    worksheet.set_column("F:F", 13.57)
+    worksheet.set_column("G:G", 14.43)
+    worksheet.set_column("H:H", 11.29)
+    worksheet.set_column("I:I", 12.0)
 
     data = []
 
@@ -309,13 +340,13 @@ def _create_daily_decision_yield_chartsheet(workbook, stats):
 def _create_combined_yield_sheets(workbook, stats):
     worksheet = workbook.add_worksheet("Combined yield (Data)")
 
-    worksheet.set_column("A:A", 17.57)
-    worksheet.set_column("B:B", 17.57)
-    worksheet.set_column("C:C", 17.57)
-    worksheet.set_column("D:D", 17.57)
-    worksheet.set_column("E:E", 17.57)
-    worksheet.set_column("F:F", 17.57)
-    worksheet.set_column("G:G", 17.57)
+    worksheet.set_column("A:A", 11.57)
+    worksheet.set_column("B:B", 11.57)
+    worksheet.set_column("C:C", 11.57)
+    worksheet.set_column("D:D", 11.57)
+    worksheet.set_column("E:E", 13.57)
+    worksheet.set_column("F:F", 14.43)
+    worksheet.set_column("G:G", 11.29)
 
     combined = stats["combined"]
     data = [
@@ -416,6 +447,130 @@ def _create_combined_yield_chartsheet(workbook, stats):
         {
             "name": f"='Combined yield (Data)'!$G$1",
             "values": f"='Combined yield (Data)'!$G$2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
+
+    chartsheet.set_chart(chart)
+
+
+def _create_combined_positive_yield_sheets(workbook, stats):
+    worksheet = workbook.add_worksheet("Combined positive yield (Data)")
+
+    worksheet.set_column("A:A", 11.57)
+    worksheet.set_column("B:B", 11.57)
+    worksheet.set_column("C:C", 11.57)
+    worksheet.set_column("D:D", 11.57)
+    worksheet.set_column("E:E", 13.57)
+    worksheet.set_column("F:F", 14.43)
+    worksheet.set_column("G:G", 11.29)
+
+    combined = stats["combined_positive"]
+    data = [
+        [
+            combined[DECISION_1],
+            combined[DECISION_2],
+            combined[DECISION_3],
+            combined[DECISION_4],
+            combined[DECISION_HUGE_SPREAD],
+            combined[DECISION_HIGH_LIQUIDITY],
+            combined[DECISION_OTHER],
+        ]
+    ]
+
+    worksheet.add_table(
+        f"A1:G{len(data) + 1}",
+        {
+            "name": "CombinedPositiveYieldData",
+            "style": "Table Style Medium 13",
+            "data": data,
+            "columns": [
+                {"header": DECISION_1},
+                {"header": DECISION_2},
+                {"header": DECISION_3},
+                {"header": DECISION_4},
+                {"header": DECISION_HUGE_SPREAD},
+                {"header": DECISION_HIGH_LIQUIDITY},
+                {"header": DECISION_OTHER},
+            ],
+        },
+    )
+
+
+def _create_combined_positive_yield_chartsheet(workbook, stats):
+    chartsheet = workbook.add_chartsheet("Combined positive yield")
+    chart = workbook.add_chart({"type": "pie"})
+
+    chart.set_title({"name": "Combined positive yield"})
+
+    chart.add_series(
+        {
+            "categories": f"='Combined positive yield (Data)'!$A$1:$G$1",
+            "values": f"='Combined positive yield (Data)'!$A$2:$G$2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
+
+    chartsheet.set_chart(chart)
+
+
+def _create_combined_negative_yield_sheets(workbook, stats):
+    worksheet = workbook.add_worksheet("Combined negative yield (Data)")
+
+    worksheet.set_column("A:A", 11.57)
+    worksheet.set_column("B:B", 11.57)
+    worksheet.set_column("C:C", 11.57)
+    worksheet.set_column("D:D", 11.57)
+    worksheet.set_column("E:E", 13.57)
+    worksheet.set_column("F:F", 14.43)
+    worksheet.set_column("G:G", 11.29)
+
+    combined = stats["combined_negative"]
+    data = [
+        [
+            combined[DECISION_1],
+            combined[DECISION_2],
+            combined[DECISION_3],
+            combined[DECISION_4],
+            combined[DECISION_HUGE_SPREAD],
+            combined[DECISION_HIGH_LIQUIDITY],
+            combined[DECISION_OTHER],
+        ]
+    ]
+
+    worksheet.add_table(
+        f"A1:G{len(data) + 1}",
+        {
+            "name": "CombinedNegativeYieldData",
+            "style": "Table Style Medium 13",
+            "data": data,
+            "columns": [
+                {"header": DECISION_1},
+                {"header": DECISION_2},
+                {"header": DECISION_3},
+                {"header": DECISION_4},
+                {"header": DECISION_HUGE_SPREAD},
+                {"header": DECISION_HIGH_LIQUIDITY},
+                {"header": DECISION_OTHER},
+            ],
+        },
+    )
+
+
+def _create_combined_negative_yield_chartsheet(workbook, stats):
+    chartsheet = workbook.add_chartsheet("Combined negative yield")
+    chart = workbook.add_chart({"type": "pie"})
+
+    chart.set_title({"name": "Combined negative yield"})
+
+    chart.add_series(
+        {
+            "categories": f"='Combined negative yield (Data)'!$A$1:$G$1",
+            "values": f"='Combined negative yield (Data)'!$A$2:$G$2",
             "data_labels": {
                 "value": True,
             },
