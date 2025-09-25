@@ -68,7 +68,7 @@ private:
         const Operation& operation,
         QList<QPointF>&  yieldPoints,
         QList<QPointF>&  remainedMoneyPoints,
-        QList<QPointF>&  totalMoneySeriesPoints
+        QList<QPointF>&  totalMoneyPoints
     );
     void    syncBarSetFromPoints(QBarSet* barSet, const QList<qreal>& points);
     void    exportToExcel(const QString& path) const;

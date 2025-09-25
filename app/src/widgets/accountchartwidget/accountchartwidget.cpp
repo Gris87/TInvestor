@@ -42,8 +42,9 @@ constexpr int    TITLE_FONT_SIZE       = 16;
 constexpr qreal  TOOLTIP_Z_VALUE       = 11;
 constexpr double COLUMN_GAP            = 0.71;
 
-QList<TimeRange> TIME_RANGES = {TIME_RANGE_LAST_DAY, TIME_RANGE_LAST_WEEK, TIME_RANGE_LAST_MONTH, TIME_RANGE_LAST_3_MONTH};
-const qint64     TIME_RANGES_DELTAS[TIME_RANGE_COUNT] = {0, ONE_DAY, 7 * ONE_DAY, 31 * ONE_DAY, 90 * ONE_DAY};
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
+static QList<TimeRange> TIME_RANGES = {TIME_RANGE_LAST_DAY, TIME_RANGE_LAST_WEEK, TIME_RANGE_LAST_MONTH, TIME_RANGE_LAST_3_MONTH};
+const qint64            TIME_RANGES_DELTAS[TIME_RANGE_COUNT] = {0, ONE_DAY, 7 * ONE_DAY, 31 * ONE_DAY, 90 * ONE_DAY};
 
 
 
@@ -625,7 +626,13 @@ struct SyncTimeRangeSeriesInfo
 };
 
 static void syncTimeRangeSeriesForParallel(
-    QThread* parentThread, int /*threadId*/, TimeRange* timeRanges, int /*size*/, int start, int end, void* additionalArgs
+    QThread* parentThread,
+    int /*threadId*/,
+    TimeRange* timeRanges, // NOLINT(readability-non-const-parameter)
+    int /*size*/,
+    int   start,
+    int   end,
+    void* additionalArgs
 )
 {
     SyncTimeRangeSeriesInfo* syncTimeRangeSeriesInfo = reinterpret_cast<SyncTimeRangeSeriesInfo*>(additionalArgs);
@@ -634,7 +641,7 @@ static void syncTimeRangeSeriesForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        TimeRange timeRange = timeRanges[i];
+        const TimeRange timeRange = timeRanges[i];
 
         thread->syncYieldTimeRangeSeries(timeRange);
         thread->syncRemainedMoneyTimeRangeSeries(timeRange);

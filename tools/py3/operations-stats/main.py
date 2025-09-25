@@ -55,6 +55,9 @@ def _collect_statistics(operations, logs):
             operation_timestamp = operation["timestamp"]
             operation_instrumentId = operation["instrumentId"]
 
+            # if operation["instrumentTicker"] != "JETL":
+            #     continue
+
             last_log_message = None
 
             for log in logs:
