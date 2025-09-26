@@ -55,7 +55,10 @@ def _collect_statistics(operations, logs):
             operation_timestamp = operation["timestamp"]
             operation_instrumentId = operation["instrumentId"]
 
-            # if operation["instrumentTicker"] != "JETL":
+            # if operation_timestamp < datetime(2025, 9, 25, 0, 0, 0).timestamp() * 1000:
+            #     continue
+
+            # if operation["instrumentTicker"] != "AAAA":
             #     continue
 
             last_log_message = None

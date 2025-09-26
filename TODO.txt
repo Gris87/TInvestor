@@ -1,4 +1,3 @@
-Create script for calculating yield base on decision
 Buy if price raise anomally
 Take decisions from other robots
 Change best config search algorithm

@@ -418,17 +418,17 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
     mLastDailyYield       = 0.0f;
 
     mAxisXMin[0]              = std::numeric_limits<qint64>::max();
-    mAxisXMax                 = std::numeric_limits<qint64>::min();
+    mAxisXMax                 = std::numeric_limits<qint64>::lowest();
     mYieldAxisYMin[0]         = std::numeric_limits<float>::max();
-    mYieldAxisYMax[0]         = std::numeric_limits<float>::min();
+    mYieldAxisYMax[0]         = std::numeric_limits<float>::lowest();
     mMonthlyYieldAxisYMin     = std::numeric_limits<float>::max();
-    mMonthlyYieldAxisYMax     = std::numeric_limits<float>::min();
+    mMonthlyYieldAxisYMax     = std::numeric_limits<float>::lowest();
     mDailyYieldAxisYMin       = std::numeric_limits<float>::max();
-    mDailyYieldAxisYMax       = std::numeric_limits<float>::min();
+    mDailyYieldAxisYMax       = std::numeric_limits<float>::lowest();
     mRemainedMoneyAxisYMin[0] = 0.0f;
-    mRemainedMoneyAxisYMax[0] = std::numeric_limits<float>::min();
+    mRemainedMoneyAxisYMax[0] = std::numeric_limits<float>::lowest();
     mTotalMoneyAxisYMin[0]    = 0.0f;
-    mTotalMoneyAxisYMax[0]    = std::numeric_limits<float>::min();
+    mTotalMoneyAxisYMax[0]    = std::numeric_limits<float>::lowest();
 
     if (!operations.isEmpty())
     {
@@ -670,7 +670,7 @@ void AccountChartWidget::syncYieldTimeRangeSeries(TimeRange timeRange)
     );
 
     float minY = std::numeric_limits<float>::max();
-    float maxY = std::numeric_limits<float>::min();
+    float maxY = std::numeric_limits<float>::lowest();
 
     for (int i = index; i < yieldSeriesPoints.size(); ++i)
     {
@@ -700,7 +700,7 @@ void AccountChartWidget::syncRemainedMoneyTimeRangeSeries(TimeRange timeRange)
     );
 
     float minY = 0.0f;
-    float maxY = std::numeric_limits<float>::min();
+    float maxY = std::numeric_limits<float>::lowest();
 
     for (int i = index; i < remainedMoneySeriesPoints.size(); ++i)
     {
@@ -730,7 +730,7 @@ void AccountChartWidget::syncTotalMoneyTimeRangeSeries(TimeRange timeRange)
     );
 
     float minY = 0.0f;
-    float maxY = std::numeric_limits<float>::min();
+    float maxY = std::numeric_limits<float>::lowest();
 
     for (int i = index; i < totalMoneySeriesPoints.size(); ++i)
     {
