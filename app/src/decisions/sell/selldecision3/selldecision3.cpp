@@ -99,7 +99,7 @@ QString SellDecision3::makeDecision(
                     {
                         const float tripleMinimumPrice = prevPrice / (1 - (loseYield / HUNDRED_PERCENT));
 
-                        int j           = dataIndex - 1;
+                        int j           = dataIndex;
                         int minutesLeft = MINUTES_TO_TRIPLE_CHECK;
 
                         while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
@@ -180,7 +180,7 @@ QString SellDecision3::makeDecision(
                         {
                             const float tripleMinimumPrice = prevPrice / (1 - (loseYield / HUNDRED_PERCENT));
 
-                            int j           = stock->operational.detailedData.size() - 2;
+                            int j           = stock->operational.detailedData.size() - 1;
                             int minutesLeft = MINUTES_TO_TRIPLE_CHECK;
 
                             while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())

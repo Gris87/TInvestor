@@ -14,6 +14,7 @@ DECISION_1 = "Decision 1"
 DECISION_2 = "Decision 2"
 DECISION_3 = "Decision 3"
 DECISION_4 = "Decision 4"
+DECISION_5 = "Decision 5"
 DECISION_HUGE_SPREAD = "Huge spread"
 DECISION_HIGH_LIQUIDITY = "High liquidity"
 DECISION_OTHER = "Other"
@@ -101,6 +102,7 @@ def _collect_statistics(operations, logs):
                 DECISION_2: 0,
                 DECISION_3: 0,
                 DECISION_4: 0,
+                DECISION_5: 0,
                 DECISION_HUGE_SPREAD: 0,
                 DECISION_HIGH_LIQUIDITY: 0,
                 DECISION_OTHER: 0,
@@ -119,6 +121,7 @@ def _collect_statistics(operations, logs):
         DECISION_2: 0,
         DECISION_3: 0,
         DECISION_4: 0,
+        DECISION_5: 0,
         DECISION_HUGE_SPREAD: 0,
         DECISION_HIGH_LIQUIDITY: 0,
         DECISION_OTHER: 0,
@@ -128,6 +131,7 @@ def _collect_statistics(operations, logs):
         DECISION_2: 0,
         DECISION_3: 0,
         DECISION_4: 0,
+        DECISION_5: 0,
         DECISION_HUGE_SPREAD: 0,
         DECISION_HIGH_LIQUIDITY: 0,
         DECISION_OTHER: 0,
@@ -137,6 +141,7 @@ def _collect_statistics(operations, logs):
         DECISION_2: 0,
         DECISION_3: 0,
         DECISION_4: 0,
+        DECISION_5: 0,
         DECISION_HUGE_SPREAD: 0,
         DECISION_HIGH_LIQUIDITY: 0,
         DECISION_OTHER: 0,
@@ -236,6 +241,7 @@ def _create_daily_decision_yield_sheets(workbook, stats):
     worksheet.set_column("G:G", 14.43)
     worksheet.set_column("H:H", 11.29)
     worksheet.set_column("I:I", 12.0)
+    worksheet.set_column("J:J", 12.0)
 
     data = []
 
@@ -247,6 +253,7 @@ def _create_daily_decision_yield_sheets(workbook, stats):
                 entry[DECISION_2],
                 entry[DECISION_3],
                 entry[DECISION_4],
+                entry[DECISION_5],
                 entry[DECISION_HUGE_SPREAD],
                 entry[DECISION_HIGH_LIQUIDITY],
                 entry[DECISION_OTHER],
@@ -255,7 +262,7 @@ def _create_daily_decision_yield_sheets(workbook, stats):
         )
 
     worksheet.add_table(
-        f"A1:I{len(data) + 1}",
+        f"A1:J{len(data) + 1}",
         {
             "name": "DailyDecisionYieldData",
             "style": "Table Style Medium 13",
@@ -266,6 +273,7 @@ def _create_daily_decision_yield_sheets(workbook, stats):
                 {"header": DECISION_2},
                 {"header": DECISION_3},
                 {"header": DECISION_4},
+                {"header": DECISION_5},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -339,6 +347,13 @@ def _create_daily_decision_yield_chartsheet(workbook, stats):
             "values": f"='Daily yield (Data)'!$I$2:$I${last_row}",
         }
     )
+    chart.add_series(
+        {
+            "name": f"='Daily yield (Data)'!$J$1",
+            "categories": f"='Daily yield (Data)'!$A$2:$A${last_row}",
+            "values": f"='Daily yield (Data)'!$J$2:$J${last_row}",
+        }
+    )
 
     chartsheet.set_chart(chart)
 
@@ -353,6 +368,7 @@ def _create_combined_yield_sheets(workbook, stats):
     worksheet.set_column("E:E", 13.57)
     worksheet.set_column("F:F", 14.43)
     worksheet.set_column("G:G", 11.29)
+    worksheet.set_column("H:H", 11.29)
 
     combined = stats["combined"]
     data = [
@@ -361,6 +377,7 @@ def _create_combined_yield_sheets(workbook, stats):
             combined[DECISION_2],
             combined[DECISION_3],
             combined[DECISION_4],
+            combined[DECISION_5],
             combined[DECISION_HUGE_SPREAD],
             combined[DECISION_HIGH_LIQUIDITY],
             combined[DECISION_OTHER],
@@ -368,7 +385,7 @@ def _create_combined_yield_sheets(workbook, stats):
     ]
 
     worksheet.add_table(
-        f"A1:G{len(data) + 1}",
+        f"A1:H{len(data) + 1}",
         {
             "name": "CombinedYieldData",
             "style": "Table Style Medium 13",
@@ -378,6 +395,7 @@ def _create_combined_yield_sheets(workbook, stats):
                 {"header": DECISION_2},
                 {"header": DECISION_3},
                 {"header": DECISION_4},
+                {"header": DECISION_5},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -458,6 +476,15 @@ def _create_combined_yield_chartsheet(workbook, stats):
             },
         }
     )
+    chart.add_series(
+        {
+            "name": f"='Combined yield (Data)'!$H$1",
+            "values": f"='Combined yield (Data)'!$H$2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
 
     chartsheet.set_chart(chart)
 
@@ -472,6 +499,7 @@ def _create_combined_positive_yield_sheets(workbook, stats):
     worksheet.set_column("E:E", 13.57)
     worksheet.set_column("F:F", 14.43)
     worksheet.set_column("G:G", 11.29)
+    worksheet.set_column("H:H", 11.29)
 
     combined = stats["combined_positive"]
     data = [
@@ -480,6 +508,7 @@ def _create_combined_positive_yield_sheets(workbook, stats):
             combined[DECISION_2],
             combined[DECISION_3],
             combined[DECISION_4],
+            combined[DECISION_5],
             combined[DECISION_HUGE_SPREAD],
             combined[DECISION_HIGH_LIQUIDITY],
             combined[DECISION_OTHER],
@@ -487,7 +516,7 @@ def _create_combined_positive_yield_sheets(workbook, stats):
     ]
 
     worksheet.add_table(
-        f"A1:G{len(data) + 1}",
+        f"A1:H{len(data) + 1}",
         {
             "name": "CombinedPositiveYieldData",
             "style": "Table Style Medium 13",
@@ -497,6 +526,7 @@ def _create_combined_positive_yield_sheets(workbook, stats):
                 {"header": DECISION_2},
                 {"header": DECISION_3},
                 {"header": DECISION_4},
+                {"header": DECISION_5},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -513,8 +543,8 @@ def _create_combined_positive_yield_chartsheet(workbook, stats):
 
     chart.add_series(
         {
-            "categories": f"='Combined positive yield (Data)'!$A$1:$G$1",
-            "values": f"='Combined positive yield (Data)'!$A$2:$G$2",
+            "categories": f"='Combined positive yield (Data)'!$A$1:$H$1",
+            "values": f"='Combined positive yield (Data)'!$A$2:$H$2",
             "data_labels": {
                 "value": True,
             },
@@ -534,6 +564,7 @@ def _create_combined_negative_yield_sheets(workbook, stats):
     worksheet.set_column("E:E", 13.57)
     worksheet.set_column("F:F", 14.43)
     worksheet.set_column("G:G", 11.29)
+    worksheet.set_column("H:H", 11.29)
 
     combined = stats["combined_negative"]
     data = [
@@ -542,6 +573,7 @@ def _create_combined_negative_yield_sheets(workbook, stats):
             combined[DECISION_2],
             combined[DECISION_3],
             combined[DECISION_4],
+            combined[DECISION_5],
             combined[DECISION_HUGE_SPREAD],
             combined[DECISION_HIGH_LIQUIDITY],
             combined[DECISION_OTHER],
@@ -549,7 +581,7 @@ def _create_combined_negative_yield_sheets(workbook, stats):
     ]
 
     worksheet.add_table(
-        f"A1:G{len(data) + 1}",
+        f"A1:H{len(data) + 1}",
         {
             "name": "CombinedNegativeYieldData",
             "style": "Table Style Medium 13",
@@ -559,6 +591,7 @@ def _create_combined_negative_yield_sheets(workbook, stats):
                 {"header": DECISION_2},
                 {"header": DECISION_3},
                 {"header": DECISION_4},
+                {"header": DECISION_5},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -575,8 +608,8 @@ def _create_combined_negative_yield_chartsheet(workbook, stats):
 
     chart.add_series(
         {
-            "categories": f"='Combined negative yield (Data)'!$A$1:$G$1",
-            "values": f"='Combined negative yield (Data)'!$A$2:$G$2",
+            "categories": f"='Combined negative yield (Data)'!$A$1:$H$1",
+            "values": f"='Combined negative yield (Data)'!$A$2:$H$2",
             "data_labels": {
                 "value": True,
             },
@@ -609,6 +642,11 @@ def _get_buy_decision_from_log_message(log_message):
 
     if match is not None:
         return DECISION_4
+
+    match = decision_5_regexp.match(log_message)
+
+    if match is not None:
+        return DECISION_5
 
     match = huge_spread_regexp.match(log_message)
 

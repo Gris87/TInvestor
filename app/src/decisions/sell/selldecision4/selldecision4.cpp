@@ -60,7 +60,7 @@ QString SellDecision4::makeDecision(
 
                 bool good = true;
 
-                int j           = dataIndex - 1;
+                int j           = dataIndex;
                 int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
 
                 while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
@@ -97,7 +97,7 @@ QString SellDecision4::makeDecision(
 
                     bool good = true;
 
-                    int j           = stock->operational.detailedData.size() - 2;
+                    int j           = stock->operational.detailedData.size() - 1;
                     int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
 
                     while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())

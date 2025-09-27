@@ -166,9 +166,9 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
             80.0f,
             80.0f,
             80.0f,
-            120.0f,
-            120.0f,
             80.0f,
+            120.0f,
+            120.0f,
             80.0f,
         },
         true
@@ -258,7 +258,7 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
             120.0f,
             120.0f,
             120.0f,
-            80.0f,
+            120.0f,
             80.0f,
             80.0f,
             80.0f,
@@ -276,7 +276,7 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
     ASSERT_EQ(
         cause,
         "Decided to sell because the price reached 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD and lost yield "
-        "-33.33% from the price 120.00 \u20BD at 2024-01-01 00:10:00 within last 10 minutes"
+        "-33.33% from the price 120.00 \u20BD at 2024-01-01 00:11:00 within last 10 minutes"
     );
 
     // ====================================================================
@@ -308,7 +308,7 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
             140.0f,
             140.0f,
             140.0f,
-            120.0f,
+            140.0f,
             120.0f,
             120.0f,
             120.0f,
@@ -326,7 +326,7 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
     ASSERT_EQ(
         cause,
         "Decided to sell because the price reached 120.00 \u20BD with yield +20.00% from the price 100.00 \u20BD and lost yield "
-        "-14.29% from the price 140.00 \u20BD at 2024-01-01 00:10:00 within last 10 minutes"
+        "-14.29% from the price 140.00 \u20BD at 2024-01-01 00:11:00 within last 10 minutes"
     );
 
     // ====================================================================
@@ -393,9 +393,9 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
             80.0f,
             80.0f,
             80.0f,
-            120.0f,
-            120.0f,
             80.0f,
+            120.0f,
+            120.0f,
             80.0f,
         }
     );
@@ -485,7 +485,7 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
             120.0f,
             120.0f,
             120.0f,
-            80.0f,
+            120.0f,
             80.0f,
             80.0f,
             80.0f,
@@ -505,7 +505,7 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
             "Decided to sell because the price reached 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD and lost "
             "yield -33.33% from the price 120.00 \u20BD at %1 within last 10 minutes"
         )
-            .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(10).timestamp).toString(DATETIME_FORMAT))
+            .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(11).timestamp).toString(DATETIME_FORMAT))
     );
 
     // ====================================================================
@@ -538,7 +538,7 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
             140.0f,
             140.0f,
             140.0f,
-            120.0f,
+            140.0f,
             120.0f,
             120.0f,
             120.0f,
@@ -558,7 +558,7 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
             "Decided to sell because the price reached 120.00 \u20BD with yield +20.00% from the price 100.00 \u20BD and lost "
             "yield -14.29% from the price 140.00 \u20BD at %1 within last 10 minutes"
         )
-            .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(10).timestamp).toString(DATETIME_FORMAT))
+            .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(11).timestamp).toString(DATETIME_FORMAT))
     );
 }
 

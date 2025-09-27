@@ -1055,6 +1055,11 @@
         <source>Decided to start reselling because spread is %1</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="125"/>
+        <source>Decided to buy because the price raise to %1 from %2 at %3 within last %4 minutes and pass %5 positions of order book and the raise is %6</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>SellDecision1ConfigWidget</name>
