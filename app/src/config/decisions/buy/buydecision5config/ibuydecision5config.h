@@ -37,11 +37,11 @@ public:
     virtual void setEnabled(bool value) = 0;
     virtual bool isEnabled()            = 0;
 
-    virtual void  setPriceFall(float value) = 0;
-    virtual float getPriceFall()            = 0;
+    virtual void  setPriceRaise(float value) = 0;
+    virtual float getPriceRaise()            = 0;
 
-    virtual void  setLoseYield(float value) = 0;
-    virtual float getLoseYield()            = 0;
+    virtual void setOrderBookPositions(int value) = 0;
+    virtual int  getOrderBookPositions()          = 0;
 
     virtual void setDuration(int value) = 0;
     virtual int  getDuration()          = 0;

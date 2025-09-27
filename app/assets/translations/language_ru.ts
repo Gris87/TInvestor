@@ -4,118 +4,118 @@
 <context>
     <name>AccountChartWidget</name>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="256"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="262"/>
         <source>Remained money on account</source>
         <translation>Остаток денег на счёте</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="182"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="199"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="229"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="260"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="278"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="188"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="205"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="235"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="266"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="284"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
         <source>Jan</source>
         <translation>Янв</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
         <source>Feb</source>
         <translation>Фев</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
         <source>Mar</source>
         <translation>Мар</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
         <source>Apr</source>
         <translation>Апр</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
         <source>May</source>
         <translation>Май</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
         <source>Jun</source>
         <translation>Июн</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
         <source>Jul</source>
         <translation>Июл</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="105"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
         <source>Aug</source>
         <translation>Авг</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="106"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="112"/>
         <source>Sep</source>
         <translation>Сен</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="106"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="112"/>
         <source>Oct</source>
         <translation>Окт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="106"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="112"/>
         <source>Nov</source>
         <translation>Ноя</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="106"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="112"/>
         <source>Dec</source>
         <translation>Дек</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="178"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="184"/>
         <source>Yield</source>
         <translation>Доход</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="196"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="202"/>
         <source>Yield per month</source>
         <translation>Доход по месяцам</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="226"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="232"/>
         <source>Yield per day</source>
         <translation>Доход по дням</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="231"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="262"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="280"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="237"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="268"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="286"/>
         <source>Money</source>
         <translation>Денег</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="274"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="280"/>
         <source>Total money on account</source>
         <translation>Всего денег на счёте</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="603"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="774"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="613"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="784"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="613"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="784"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
@@ -267,6 +267,34 @@
     </message>
 </context>
 <context>
+    <name>BuyDecision5ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="37"/>
+        <source>Buy stocks if the price raise more than</source>
+        <translation>Покупать акции, если цена выросла больше, чем на</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="60"/>
+        <source>and pass more than</source>
+        <translation>и прошла больше</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="77"/>
+        <source>positions of order book</source>
+        <translation>позиций биржевого стакана</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="104"/>
+        <source>within the last</source>
+        <translation>в течение</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="111"/>
+        <source> minutes</source>
+        <translation> минут</translation>
+    </message>
+</context>
+<context>
     <name>DecisionMakerConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.ui" line="32"/>
@@ -348,7 +376,7 @@
     </message>
     <message>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="292"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="134"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="136"/>
         <source>Best config</source>
         <translation>Лучшая конфигурация</translation>
     </message>
@@ -373,8 +401,8 @@
         <translation>Скопировано</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="55"/>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="56"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="57"/>
         <source>Loading</source>
         <translation>Загрузка</translation>
     </message>
@@ -460,13 +488,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="393"/>
+        <location filename="../../src/main/mainwindow.cpp" line="397"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="656"/>
+        <location filename="../../src/main/mainwindow.cpp" line="660"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -492,7 +520,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="520"/>
-        <location filename="../../src/main/mainwindow.cpp" line="757"/>
+        <location filename="../../src/main/mainwindow.cpp" line="761"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -548,65 +576,65 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="394"/>
+        <location filename="../../src/main/mainwindow.cpp" line="398"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="437"/>
+        <location filename="../../src/main/mainwindow.cpp" line="441"/>
         <source>GRPC error happened with code %1</source>
         <translation>Возникла ошибка GRPC с кодом %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="457"/>
+        <location filename="../../src/main/mainwindow.cpp" line="461"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="594"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1335"/>
+        <location filename="../../src/main/mainwindow.cpp" line="598"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1340"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="611"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1183"/>
+        <location filename="../../src/main/mainwindow.cpp" line="615"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1188"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="745"/>
+        <location filename="../../src/main/mainwindow.cpp" line="749"/>
         <source>Auto-pilot started</source>
         <translation>Авто-пилот запущен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="751"/>
+        <location filename="../../src/main/mainwindow.cpp" line="755"/>
         <source>Auto-pilot stopped</source>
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1183"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1188"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="700"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1214"/>
+        <location filename="../../src/main/mainwindow.cpp" line="704"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1219"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="250"/>
+        <location filename="../../src/main/mainwindow.cpp" line="254"/>
         <source>Simulator</source>
         <translation>Симулятор</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="251"/>
+        <location filename="../../src/main/mainwindow.cpp" line="255"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1214"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1219"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -887,22 +915,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="172"/>
+        <location filename="../../src/main.cpp" line="175"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="172"/>
+        <location filename="../../src/main.cpp" line="175"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="198"/>
+        <location filename="../../src/main.cpp" line="201"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="198"/>
+        <location filename="../../src/main.cpp" line="201"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -1185,8 +1213,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="863"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="327"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="351"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="330"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="354"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
@@ -1246,8 +1274,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="827"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="328"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="350"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="331"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="353"/>
         <source>Simulation</source>
         <translation>Симуляция</translation>
     </message>
@@ -1262,13 +1290,13 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="89"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="92"/>
         <source>Autorun on %1 startup</source>
         <translation>Автозапускать при запуске %1</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="322"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="345"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="325"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="348"/>
         <source>Decision maker</source>
         <translation>Принятие решений</translation>
     </message>

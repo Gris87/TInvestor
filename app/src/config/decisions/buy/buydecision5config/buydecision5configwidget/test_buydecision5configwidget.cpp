@@ -45,36 +45,36 @@ TEST_F(Test_BuyDecision5ConfigWidget, Test_updateUiFromConfig)
     const InSequence seq;
 
     configWidget->ui->enabledCheckBox->blockSignals(true);
-    configWidget->ui->priceFallDoubleSpinBox->blockSignals(true);
-    configWidget->ui->loseYieldDoubleSpinBox->blockSignals(true);
+    configWidget->ui->priceRaiseDoubleSpinBox->blockSignals(true);
+    configWidget->ui->orderBookPositionsSpinBox->blockSignals(true);
     configWidget->ui->durationSpinBox->blockSignals(true);
 
     EXPECT_CALL(*buyDecision5ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*buyDecision5ConfigMock, getPriceFall()).WillOnce(Return(2.1f));
-    EXPECT_CALL(*buyDecision5ConfigMock, getLoseYield()).WillOnce(Return(3.1f));
+    EXPECT_CALL(*buyDecision5ConfigMock, getPriceRaise()).WillOnce(Return(2.1f));
+    EXPECT_CALL(*buyDecision5ConfigMock, getOrderBookPositions()).WillOnce(Return(3));
     EXPECT_CALL(*buyDecision5ConfigMock, getDuration()).WillOnce(Return(3));
 
     configWidget->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),      true);
-    ASSERT_NEAR(configWidget->ui->priceFallDoubleSpinBox->value(), 2.1f, 0.0001f);
-    ASSERT_NEAR(configWidget->ui->loseYieldDoubleSpinBox->value(), 3.1f, 0.0001f);
-    ASSERT_EQ(configWidget->ui->durationSpinBox->value(),          3);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),       true);
+    ASSERT_NEAR(configWidget->ui->priceRaiseDoubleSpinBox->value(), 2.1f, 0.0001f);
+    ASSERT_EQ(configWidget->ui->orderBookPositionsSpinBox->value(), 3);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->value(),           3);
     // clang-format on
 
     EXPECT_CALL(*buyDecision5ConfigMock, isEnabled()).WillOnce(Return(false));
-    EXPECT_CALL(*buyDecision5ConfigMock, getPriceFall()).WillOnce(Return(5.3f));
-    EXPECT_CALL(*buyDecision5ConfigMock, getLoseYield()).WillOnce(Return(6.3f));
+    EXPECT_CALL(*buyDecision5ConfigMock, getPriceRaise()).WillOnce(Return(5.3f));
+    EXPECT_CALL(*buyDecision5ConfigMock, getOrderBookPositions()).WillOnce(Return(6));
     EXPECT_CALL(*buyDecision5ConfigMock, getDuration()).WillOnce(Return(2));
 
     configWidget->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),      false);
-    ASSERT_NEAR(configWidget->ui->priceFallDoubleSpinBox->value(), 5.3f, 0.0001f);
-    ASSERT_NEAR(configWidget->ui->loseYieldDoubleSpinBox->value(), 6.3f, 0.0001f);
-    ASSERT_EQ(configWidget->ui->durationSpinBox->value(),          2);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),       false);
+    ASSERT_NEAR(configWidget->ui->priceRaiseDoubleSpinBox->value(), 5.3f, 0.0001f);
+    ASSERT_EQ(configWidget->ui->orderBookPositionsSpinBox->value(), 6);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->value(),           2);
     // clang-format on
 }
 
@@ -83,8 +83,8 @@ TEST_F(Test_BuyDecision5ConfigWidget, Test_makeReadOnly)
     // clang-format off
     ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
     ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
-    ASSERT_EQ(configWidget->ui->priceFallDoubleSpinBox->isReadOnly(),                             false);
-    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isReadOnly(),                             false);
+    ASSERT_EQ(configWidget->ui->priceRaiseDoubleSpinBox->isReadOnly(),                            false);
+    ASSERT_EQ(configWidget->ui->orderBookPositionsSpinBox->isReadOnly(),                          false);
     ASSERT_EQ(configWidget->ui->durationSpinBox->isReadOnly(),                                    false);
     // clang-format on
 
@@ -93,8 +93,8 @@ TEST_F(Test_BuyDecision5ConfigWidget, Test_makeReadOnly)
     // clang-format off
     ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
     ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
-    ASSERT_EQ(configWidget->ui->priceFallDoubleSpinBox->isReadOnly(),                             true);
-    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isReadOnly(),                             true);
+    ASSERT_EQ(configWidget->ui->priceRaiseDoubleSpinBox->isReadOnly(),                            true);
+    ASSERT_EQ(configWidget->ui->orderBookPositionsSpinBox->isReadOnly(),                          true);
     ASSERT_EQ(configWidget->ui->durationSpinBox->isReadOnly(),                                    true);
     // clang-format on
 }
@@ -111,49 +111,49 @@ TEST_F(Test_BuyDecision5ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
     configWidget->ui->enabledCheckBox->setChecked(true);
 
     // clang-format off
-    ASSERT_EQ(configWidget->ui->priceFallDoubleSpinBox->isEnabled(), true);
-    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isEnabled(), true);
-    ASSERT_EQ(configWidget->ui->durationSpinBox->isEnabled(),        true);
+    ASSERT_EQ(configWidget->ui->priceRaiseDoubleSpinBox->isEnabled(),   true);
+    ASSERT_EQ(configWidget->ui->orderBookPositionsSpinBox->isEnabled(), true);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isEnabled(),           true);
     // clang-format on
 
     EXPECT_CALL(*buyDecision5ConfigMock, setEnabled(false));
     configWidget->ui->enabledCheckBox->setChecked(false);
 
     // clang-format off
-    ASSERT_EQ(configWidget->ui->priceFallDoubleSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget->ui->durationSpinBox->isEnabled(),        false);
+    ASSERT_EQ(configWidget->ui->priceRaiseDoubleSpinBox->isEnabled(),   false);
+    ASSERT_EQ(configWidget->ui->orderBookPositionsSpinBox->isEnabled(), false);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isEnabled(),           false);
     // clang-format on
 }
 
-TEST_F(Test_BuyDecision5ConfigWidget, Test_on_priceFallDoubleSpinBox_valueChanged)
+TEST_F(Test_BuyDecision5ConfigWidget, Test_on_priceRaiseDoubleSpinBox_valueChanged)
 {
     const InSequence seq;
 
-    configWidget->ui->priceFallDoubleSpinBox->blockSignals(true);
-    configWidget->ui->priceFallDoubleSpinBox->setValue(1.0f);
-    configWidget->ui->priceFallDoubleSpinBox->blockSignals(false);
+    configWidget->ui->priceRaiseDoubleSpinBox->blockSignals(true);
+    configWidget->ui->priceRaiseDoubleSpinBox->setValue(1.0f);
+    configWidget->ui->priceRaiseDoubleSpinBox->blockSignals(false);
 
-    EXPECT_CALL(*buyDecision5ConfigMock, setPriceFall(2.0f));
-    configWidget->ui->priceFallDoubleSpinBox->setValue(2.0f);
+    EXPECT_CALL(*buyDecision5ConfigMock, setPriceRaise(2.0f));
+    configWidget->ui->priceRaiseDoubleSpinBox->setValue(2.0f);
 
-    EXPECT_CALL(*buyDecision5ConfigMock, setPriceFall(3.0f));
-    configWidget->ui->priceFallDoubleSpinBox->setValue(3.0f);
+    EXPECT_CALL(*buyDecision5ConfigMock, setPriceRaise(3.0f));
+    configWidget->ui->priceRaiseDoubleSpinBox->setValue(3.0f);
 }
 
-TEST_F(Test_BuyDecision5ConfigWidget, Test_on_loseYieldDoubleSpinBox_valueChanged)
+TEST_F(Test_BuyDecision5ConfigWidget, Test_on_orderBookPositionsSpinBox_valueChanged)
 {
     const InSequence seq;
 
-    configWidget->ui->loseYieldDoubleSpinBox->blockSignals(true);
-    configWidget->ui->loseYieldDoubleSpinBox->setValue(1.0f);
-    configWidget->ui->loseYieldDoubleSpinBox->blockSignals(false);
+    configWidget->ui->orderBookPositionsSpinBox->blockSignals(true);
+    configWidget->ui->orderBookPositionsSpinBox->setValue(1);
+    configWidget->ui->orderBookPositionsSpinBox->blockSignals(false);
 
-    EXPECT_CALL(*buyDecision5ConfigMock, setLoseYield(2.0f));
-    configWidget->ui->loseYieldDoubleSpinBox->setValue(2.0f);
+    EXPECT_CALL(*buyDecision5ConfigMock, setOrderBookPositions(2));
+    configWidget->ui->orderBookPositionsSpinBox->setValue(2);
 
-    EXPECT_CALL(*buyDecision5ConfigMock, setLoseYield(3.0f));
-    configWidget->ui->loseYieldDoubleSpinBox->setValue(3.0f);
+    EXPECT_CALL(*buyDecision5ConfigMock, setOrderBookPositions(3));
+    configWidget->ui->orderBookPositionsSpinBox->setValue(3);
 }
 
 TEST_F(Test_BuyDecision5ConfigWidget, Test_on_durationSpinBox_valueChanged)

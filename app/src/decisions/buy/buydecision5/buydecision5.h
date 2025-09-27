@@ -29,14 +29,4 @@ public:
 
     [[nodiscard]]
     AsapMode asapMode() const override;
-
-#ifdef TESTING_MODE
-    void testSetStep(int step)
-    {
-        mStep = step;
-    }
-#endif
-
-private:
-    int mStep;
 };

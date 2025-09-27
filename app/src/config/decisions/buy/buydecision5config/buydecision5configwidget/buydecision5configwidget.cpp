@@ -25,8 +25,8 @@ BuyDecision5ConfigWidget::~BuyDecision5ConfigWidget()
 void BuyDecision5ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
-    ui->priceFallDoubleSpinBox->setValue(mConfig->getPriceFall());
-    ui->loseYieldDoubleSpinBox->setValue(mConfig->getLoseYield());
+    ui->priceRaiseDoubleSpinBox->setValue(mConfig->getPriceRaise());
+    ui->orderBookPositionsSpinBox->setValue(mConfig->getOrderBookPositions());
     ui->durationSpinBox->setValue(mConfig->getDuration());
 }
 
@@ -34,8 +34,8 @@ void BuyDecision5ConfigWidget::makeReadOnly() const
 {
     ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
-    ui->priceFallDoubleSpinBox->setReadOnly(true);
-    ui->loseYieldDoubleSpinBox->setReadOnly(true);
+    ui->priceRaiseDoubleSpinBox->setReadOnly(true);
+    ui->orderBookPositionsSpinBox->setReadOnly(true);
     ui->durationSpinBox->setReadOnly(true);
 }
 
@@ -45,19 +45,19 @@ void BuyDecision5ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::Ch
 
     mConfig->setEnabled(checked);
 
-    ui->priceFallDoubleSpinBox->setEnabled(checked);
-    ui->loseYieldDoubleSpinBox->setEnabled(checked);
+    ui->priceRaiseDoubleSpinBox->setEnabled(checked);
+    ui->orderBookPositionsSpinBox->setEnabled(checked);
     ui->durationSpinBox->setEnabled(checked);
 }
 
-void BuyDecision5ConfigWidget::on_priceFallDoubleSpinBox_valueChanged(double value)
+void BuyDecision5ConfigWidget::on_priceRaiseDoubleSpinBox_valueChanged(double value)
 {
-    mConfig->setPriceFall(value);
+    mConfig->setPriceRaise(value);
 }
 
-void BuyDecision5ConfigWidget::on_loseYieldDoubleSpinBox_valueChanged(double value)
+void BuyDecision5ConfigWidget::on_orderBookPositionsSpinBox_valueChanged(int value)
 {
-    mConfig->setLoseYield(value);
+    mConfig->setOrderBookPositions(value);
 }
 
 void BuyDecision5ConfigWidget::on_durationSpinBox_valueChanged(int value)

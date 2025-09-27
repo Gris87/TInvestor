@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>505</width>
+    <width>590</width>
     <height>58</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Buy stocks if the price fall more than</string>
+        <string>Buy stocks if the price raise more than</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -42,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="priceFallDoubleSpinBox">
+      <widget class="QDoubleSpinBox" name="priceRaiseDoubleSpinBox">
        <property name="suffix">
         <string notr="true"> %</string>
        </property>
@@ -50,27 +50,31 @@
         <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <double>10.000000000000000</double>
+        <double>2.000000000000000</double>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>and price raise more than</string>
+        <string>and pass more than</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="loseYieldDoubleSpinBox">
-       <property name="suffix">
-        <string notr="true"> %</string>
-       </property>
-       <property name="singleStep">
-        <double>0.100000000000000</double>
+      <widget class="QSpinBox" name="orderBookPositionsSpinBox">
+       <property name="maximum">
+        <number>1000</number>
        </property>
        <property name="value">
-        <double>1.000000000000000</double>
+        <number>10</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>positions of order book</string>
        </property>
       </widget>
      </item>
@@ -97,20 +101,20 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>from latest minimum within the last</string>
+        <string>within the last</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QSpinBox" name="durationSpinBox">
        <property name="suffix">
-        <string> days</string>
+        <string> minutes</string>
        </property>
        <property name="maximum">
         <number>365</number>
        </property>
        <property name="value">
-        <number>7</number>
+        <number>5</number>
        </property>
       </widget>
      </item>
