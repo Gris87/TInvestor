@@ -1,4 +1,5 @@
 Buy if price raise anomally
+Buy if price didn't change for 15 minutes and bid quantity is huge
 Take decisions from other robots
 Change best config search algorithm
 Find best configs for different commission

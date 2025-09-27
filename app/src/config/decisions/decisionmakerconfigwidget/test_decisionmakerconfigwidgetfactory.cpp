@@ -14,6 +14,9 @@
 #include "src/config/decisions/buy/buydecision4config/buydecision4configwidget/ibuydecision4configwidget_mock.h"
 #include "src/config/decisions/buy/buydecision4config/buydecision4configwidget/ibuydecision4configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision4config/ibuydecision4config_mock.h"
+#include "src/config/decisions/buy/buydecision5config/buydecision5configwidget/ibuydecision5configwidget_mock.h"
+#include "src/config/decisions/buy/buydecision5config/buydecision5configwidget/ibuydecision5configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision5config/ibuydecision5config_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
 #include "src/config/decisions/sell/selldecision1config/iselldecision1config_mock.h"
 #include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidget_mock.h"
@@ -68,6 +71,7 @@ TEST_F(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
     StrictMock<BuyDecision2ConfigMock>               buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>               buyDecision3ConfigMock;
     StrictMock<BuyDecision4ConfigMock>               buyDecision4ConfigMock;
+    StrictMock<BuyDecision5ConfigMock>               buyDecision5ConfigMock;
     StrictMock<SellDecision1ConfigMock>              sellDecision1ConfigMock;
     StrictMock<SellDecision2ConfigMock>              sellDecision2ConfigMock;
     StrictMock<SellDecision3ConfigMock>              sellDecision3ConfigMock;
@@ -76,6 +80,7 @@ TEST_F(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
     StrictMock<BuyDecision2ConfigWidgetFactoryMock>  buyDecision2ConfigWidgetFactoryMock;
     StrictMock<BuyDecision3ConfigWidgetFactoryMock>  buyDecision3ConfigWidgetFactoryMock;
     StrictMock<BuyDecision4ConfigWidgetFactoryMock>  buyDecision4ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision5ConfigWidgetFactoryMock>  buyDecision5ConfigWidgetFactoryMock;
     StrictMock<SellDecision1ConfigWidgetFactoryMock> sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock> sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock> sellDecision3ConfigWidgetFactoryMock;
@@ -86,6 +91,7 @@ TEST_F(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
     StrictMock<BuyDecision2ConfigWidgetMock>*  buyDecision2ConfigWidgetMock  = new StrictMock<BuyDecision2ConfigWidgetMock>();
     StrictMock<BuyDecision3ConfigWidgetMock>*  buyDecision3ConfigWidgetMock  = new StrictMock<BuyDecision3ConfigWidgetMock>();
     StrictMock<BuyDecision4ConfigWidgetMock>*  buyDecision4ConfigWidgetMock  = new StrictMock<BuyDecision4ConfigWidgetMock>();
+    StrictMock<BuyDecision5ConfigWidgetMock>*  buyDecision5ConfigWidgetMock  = new StrictMock<BuyDecision5ConfigWidgetMock>();
     StrictMock<SellDecision1ConfigWidgetMock>* sellDecision1ConfigWidgetMock = new StrictMock<SellDecision1ConfigWidgetMock>();
     StrictMock<SellDecision2ConfigWidgetMock>* sellDecision2ConfigWidgetMock = new StrictMock<SellDecision2ConfigWidgetMock>();
     StrictMock<SellDecision3ConfigWidgetMock>* sellDecision3ConfigWidgetMock = new StrictMock<SellDecision3ConfigWidgetMock>();
@@ -106,6 +112,10 @@ TEST_F(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
     EXPECT_CALL(decisionMakerConfigMock, getBuyDecision4Config()).WillOnce(Return(&buyDecision4ConfigMock));
     EXPECT_CALL(buyDecision4ConfigWidgetFactoryMock, newInstance(&buyDecision4ConfigMock, NotNull()))
         .WillOnce(Return(buyDecision4ConfigWidgetMock));
+
+    EXPECT_CALL(decisionMakerConfigMock, getBuyDecision5Config()).WillOnce(Return(&buyDecision5ConfigMock));
+    EXPECT_CALL(buyDecision5ConfigWidgetFactoryMock, newInstance(&buyDecision5ConfigMock, NotNull()))
+        .WillOnce(Return(buyDecision5ConfigWidgetMock));
 
     EXPECT_CALL(decisionMakerConfigMock, getSellDecision1Config()).WillOnce(Return(&sellDecision1ConfigMock));
     EXPECT_CALL(sellDecision1ConfigWidgetFactoryMock, newInstance(&sellDecision1ConfigMock, NotNull()))
@@ -129,6 +139,7 @@ TEST_F(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
         &buyDecision2ConfigWidgetFactoryMock,
         &buyDecision3ConfigWidgetFactoryMock,
         &buyDecision4ConfigWidgetFactoryMock,
+        &buyDecision5ConfigWidgetFactoryMock,
         &sellDecision1ConfigWidgetFactoryMock,
         &sellDecision2ConfigWidgetFactoryMock,
         &sellDecision3ConfigWidgetFactoryMock,

@@ -6,6 +6,7 @@
 #include "src/config/decisions/buy/buydecision2config/buydecision2configwidget/ibuydecision2configwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision4config/buydecision4configwidget/ibuydecision4configwidgetfactory.h"
+#include "src/config/decisions/buy/buydecision5config/buydecision5configwidget/ibuydecision5configwidgetfactory.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget.h"
 #include "src/config/decisions/idecisionmakerconfig.h"
 #include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory.h"
@@ -30,6 +31,7 @@ public:
         IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
         IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory,
         IBuyDecision4ConfigWidgetFactory*  buyDecision4ConfigWidgetFactory,
+        IBuyDecision5ConfigWidgetFactory*  buyDecision5ConfigWidgetFactory,
         ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,

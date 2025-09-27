@@ -6,6 +6,7 @@
 #include "src/config/decisions/buy/buydecision2config/ibuydecision2config_mock.h"
 #include "src/config/decisions/buy/buydecision3config/ibuydecision3config_mock.h"
 #include "src/config/decisions/buy/buydecision4config/ibuydecision4config_mock.h"
+#include "src/config/decisions/buy/buydecision5config/ibuydecision5config_mock.h"
 #include "src/config/decisions/sell/selldecision1config/iselldecision1config_mock.h"
 #include "src/config/decisions/sell/selldecision2config/iselldecision2config_mock.h"
 #include "src/config/decisions/sell/selldecision3config/iselldecision3config_mock.h"
@@ -31,6 +32,7 @@ protected:
         buyDecision2ConfigMock  = new StrictMock<BuyDecision2ConfigMock>();
         buyDecision3ConfigMock  = new StrictMock<BuyDecision3ConfigMock>();
         buyDecision4ConfigMock  = new StrictMock<BuyDecision4ConfigMock>();
+        buyDecision5ConfigMock  = new StrictMock<BuyDecision5ConfigMock>();
         sellDecision1ConfigMock = new StrictMock<SellDecision1ConfigMock>();
         sellDecision2ConfigMock = new StrictMock<SellDecision2ConfigMock>();
         sellDecision3ConfigMock = new StrictMock<SellDecision3ConfigMock>();
@@ -41,6 +43,7 @@ protected:
             buyDecision2ConfigMock,
             buyDecision3ConfigMock,
             buyDecision4ConfigMock,
+            buyDecision5ConfigMock,
             sellDecision1ConfigMock,
             sellDecision2ConfigMock,
             sellDecision3ConfigMock,
@@ -55,6 +58,7 @@ protected:
         delete buyDecision2ConfigMock;
         delete buyDecision3ConfigMock;
         delete buyDecision4ConfigMock;
+        delete buyDecision5ConfigMock;
         delete sellDecision1ConfigMock;
         delete sellDecision2ConfigMock;
         delete sellDecision3ConfigMock;
@@ -66,6 +70,7 @@ protected:
     StrictMock<BuyDecision2ConfigMock>*  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>*  buyDecision3ConfigMock;
     StrictMock<BuyDecision4ConfigMock>*  buyDecision4ConfigMock;
+    StrictMock<BuyDecision5ConfigMock>*  buyDecision5ConfigMock;
     StrictMock<SellDecision1ConfigMock>* sellDecision1ConfigMock;
     StrictMock<SellDecision2ConfigMock>* sellDecision2ConfigMock;
     StrictMock<SellDecision3ConfigMock>* sellDecision3ConfigMock;
@@ -86,6 +91,7 @@ TEST_F(Test_DecisionMakerConfig, Test_clone_and_deleteRecursively)
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock2;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock2;
     StrictMock<BuyDecision4ConfigMock>  buyDecision4ConfigMock2;
+    StrictMock<BuyDecision5ConfigMock>  buyDecision5ConfigMock2;
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock2;
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock2;
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock2;
@@ -95,6 +101,7 @@ TEST_F(Test_DecisionMakerConfig, Test_clone_and_deleteRecursively)
     EXPECT_CALL(*buyDecision2ConfigMock, clone()).WillOnce(Return(&buyDecision2ConfigMock2));
     EXPECT_CALL(*buyDecision3ConfigMock, clone()).WillOnce(Return(&buyDecision3ConfigMock2));
     EXPECT_CALL(*buyDecision4ConfigMock, clone()).WillOnce(Return(&buyDecision4ConfigMock2));
+    EXPECT_CALL(*buyDecision5ConfigMock, clone()).WillOnce(Return(&buyDecision5ConfigMock2));
     EXPECT_CALL(*sellDecision1ConfigMock, clone()).WillOnce(Return(&sellDecision1ConfigMock2));
     EXPECT_CALL(*sellDecision2ConfigMock, clone()).WillOnce(Return(&sellDecision2ConfigMock2));
     EXPECT_CALL(*sellDecision3ConfigMock, clone()).WillOnce(Return(&sellDecision3ConfigMock2));
@@ -103,6 +110,7 @@ TEST_F(Test_DecisionMakerConfig, Test_clone_and_deleteRecursively)
     EXPECT_CALL(buyDecision2ConfigMock2, assign(buyDecision2ConfigMock));
     EXPECT_CALL(buyDecision3ConfigMock2, assign(buyDecision3ConfigMock));
     EXPECT_CALL(buyDecision4ConfigMock2, assign(buyDecision4ConfigMock));
+    EXPECT_CALL(buyDecision5ConfigMock2, assign(buyDecision5ConfigMock));
     EXPECT_CALL(sellDecision1ConfigMock2, assign(sellDecision1ConfigMock));
     EXPECT_CALL(sellDecision2ConfigMock2, assign(sellDecision2ConfigMock));
     EXPECT_CALL(sellDecision3ConfigMock2, assign(sellDecision3ConfigMock));
@@ -114,6 +122,7 @@ TEST_F(Test_DecisionMakerConfig, Test_clone_and_deleteRecursively)
     EXPECT_CALL(buyDecision2ConfigMock2, deleteRecursively());
     EXPECT_CALL(buyDecision3ConfigMock2, deleteRecursively());
     EXPECT_CALL(buyDecision4ConfigMock2, deleteRecursively());
+    EXPECT_CALL(buyDecision5ConfigMock2, deleteRecursively());
     EXPECT_CALL(sellDecision1ConfigMock2, deleteRecursively());
     EXPECT_CALL(sellDecision2ConfigMock2, deleteRecursively());
     EXPECT_CALL(sellDecision3ConfigMock2, deleteRecursively());
@@ -130,6 +139,7 @@ TEST_F(Test_DecisionMakerConfig, Test_assign)
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock2;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock2;
     StrictMock<BuyDecision4ConfigMock>  buyDecision4ConfigMock2;
+    StrictMock<BuyDecision5ConfigMock>  buyDecision5ConfigMock2;
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock2;
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock2;
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock2;
@@ -140,6 +150,7 @@ TEST_F(Test_DecisionMakerConfig, Test_assign)
         &buyDecision2ConfigMock2,
         &buyDecision3ConfigMock2,
         &buyDecision4ConfigMock2,
+        &buyDecision5ConfigMock2,
         &sellDecision1ConfigMock2,
         &sellDecision2ConfigMock2,
         &sellDecision3ConfigMock2,
@@ -150,6 +161,7 @@ TEST_F(Test_DecisionMakerConfig, Test_assign)
     EXPECT_CALL(*buyDecision2ConfigMock, assign(&buyDecision2ConfigMock2));
     EXPECT_CALL(*buyDecision3ConfigMock, assign(&buyDecision3ConfigMock2));
     EXPECT_CALL(*buyDecision4ConfigMock, assign(&buyDecision4ConfigMock2));
+    EXPECT_CALL(*buyDecision5ConfigMock, assign(&buyDecision5ConfigMock2));
     EXPECT_CALL(*sellDecision1ConfigMock, assign(&sellDecision1ConfigMock2));
     EXPECT_CALL(*sellDecision2ConfigMock, assign(&sellDecision2ConfigMock2));
     EXPECT_CALL(*sellDecision3ConfigMock, assign(&sellDecision3ConfigMock2));
@@ -166,6 +178,7 @@ TEST_F(Test_DecisionMakerConfig, Test_makeDefault)
     EXPECT_CALL(*buyDecision2ConfigMock, makeDefault());
     EXPECT_CALL(*buyDecision3ConfigMock, makeDefault());
     EXPECT_CALL(*buyDecision4ConfigMock, makeDefault());
+    EXPECT_CALL(*buyDecision5ConfigMock, makeDefault());
     EXPECT_CALL(*sellDecision1ConfigMock, makeDefault());
     EXPECT_CALL(*sellDecision2ConfigMock, makeDefault());
     EXPECT_CALL(*sellDecision3ConfigMock, makeDefault());
@@ -185,6 +198,7 @@ TEST_F(Test_DecisionMakerConfig, Test_save)
     EXPECT_CALL(*buyDecision2ConfigMock, save(&settingsEditorMock,  QString("BLAH/BuyDecision2Config")));
     EXPECT_CALL(*buyDecision3ConfigMock, save(&settingsEditorMock,  QString("BLAH/BuyDecision3Config")));
     EXPECT_CALL(*buyDecision4ConfigMock, save(&settingsEditorMock,  QString("BLAH/BuyDecision4Config")));
+    EXPECT_CALL(*buyDecision5ConfigMock, save(&settingsEditorMock,  QString("BLAH/BuyDecision5Config")));
     EXPECT_CALL(*sellDecision1ConfigMock, save(&settingsEditorMock, QString("BLAH/SellDecision1Config")));
     EXPECT_CALL(*sellDecision2ConfigMock, save(&settingsEditorMock, QString("BLAH/SellDecision2Config")));
     EXPECT_CALL(*sellDecision3ConfigMock, save(&settingsEditorMock, QString("BLAH/SellDecision3Config")));
@@ -205,6 +219,7 @@ TEST_F(Test_DecisionMakerConfig, Test_load)
     EXPECT_CALL(*buyDecision2ConfigMock, load(&settingsEditorMock,  QString("BLAH/BuyDecision2Config")));
     EXPECT_CALL(*buyDecision3ConfigMock, load(&settingsEditorMock,  QString("BLAH/BuyDecision3Config")));
     EXPECT_CALL(*buyDecision4ConfigMock, load(&settingsEditorMock,  QString("BLAH/BuyDecision4Config")));
+    EXPECT_CALL(*buyDecision5ConfigMock, load(&settingsEditorMock,  QString("BLAH/BuyDecision5Config")));
     EXPECT_CALL(*sellDecision1ConfigMock, load(&settingsEditorMock, QString("BLAH/SellDecision1Config")));
     EXPECT_CALL(*sellDecision2ConfigMock, load(&settingsEditorMock, QString("BLAH/SellDecision2Config")));
     EXPECT_CALL(*sellDecision3ConfigMock, load(&settingsEditorMock, QString("BLAH/SellDecision3Config")));
@@ -223,6 +238,7 @@ TEST_F(Test_DecisionMakerConfig, Test_fromJsonObject)
     EXPECT_CALL(*buyDecision2ConfigMock,  fromJsonObject(_));
     EXPECT_CALL(*buyDecision3ConfigMock,  fromJsonObject(_));
     EXPECT_CALL(*buyDecision4ConfigMock,  fromJsonObject(_));
+    EXPECT_CALL(*buyDecision5ConfigMock,  fromJsonObject(_));
     EXPECT_CALL(*sellDecision1ConfigMock, fromJsonObject(_));
     EXPECT_CALL(*sellDecision2ConfigMock, fromJsonObject(_));
     EXPECT_CALL(*sellDecision3ConfigMock, fromJsonObject(_));
@@ -230,7 +246,7 @@ TEST_F(Test_DecisionMakerConfig, Test_fromJsonObject)
     // clang-format on
 
     const QString content =
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})";
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -256,6 +272,7 @@ TEST_F(Test_DecisionMakerConfig, Test_toJsonString)
     EXPECT_CALL(*buyDecision2ConfigMock,  toJsonString()).WillOnce(Return(R"({"enabled":false})"));
     EXPECT_CALL(*buyDecision3ConfigMock,  toJsonString()).WillOnce(Return(R"({"enabled":false})"));
     EXPECT_CALL(*buyDecision4ConfigMock,  toJsonString()).WillOnce(Return(R"({"enabled":false})"));
+    EXPECT_CALL(*buyDecision5ConfigMock,  toJsonString()).WillOnce(Return(R"({"enabled":false})"));
     EXPECT_CALL(*sellDecision1ConfigMock, toJsonString()).WillOnce(Return(R"({"enabled":false})"));
     EXPECT_CALL(*sellDecision2ConfigMock, toJsonString()).WillOnce(Return(R"({"enabled":false})"));
     EXPECT_CALL(*sellDecision3ConfigMock, toJsonString()).WillOnce(Return(R"({"enabled":false})"));
@@ -264,7 +281,7 @@ TEST_F(Test_DecisionMakerConfig, Test_toJsonString)
 
     const QString content = config->toJsonString();
     const QString expectedContent =
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})";
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -278,6 +295,7 @@ TEST_F(Test_DecisionMakerConfig, Test_variantsToJsonStringList)
     EXPECT_CALL(*buyDecision2ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     EXPECT_CALL(*buyDecision3ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     EXPECT_CALL(*buyDecision4ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    EXPECT_CALL(*buyDecision5ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     EXPECT_CALL(*sellDecision1ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     EXPECT_CALL(*sellDecision2ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     //EXPECT_CALL(*sellDecision3ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
@@ -286,22 +304,31 @@ TEST_F(Test_DecisionMakerConfig, Test_variantsToJsonStringList)
 
     const QStringList variants         = config->variantsToJsonStringList();
     const QStringList expectedVariants = {
-        "[\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{"
-        "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"
-        "\"enabled\":true},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{\"enabled\":"
-        "false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
-        "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{"
-        "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"
-        "\"enabled\":false},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{\"enabled\":"
-        "false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
-        "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":false},\"s1\":{"
-        "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"
-        "\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":false},\"s1\":{\"enabled\":"
-        "false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
-        "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":true},\"s1\":{"
-        "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"
-        "\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":"
-        "false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]"
+        "[\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{"
+        "\"enabled\":false},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":"
+        "false}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},"
+        "\"b5\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{"
+        "\"enabled\":false}}\n]",
+        "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{"
+        "\"enabled\":false},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":"
+        "false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},"
+        "\"b5\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{"
+        "\"enabled\":false}}\n]",
+        "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":false},\"b5\":{"
+        "\"enabled\":false},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":"
+        "false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":false},"
+        "\"b5\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{"
+        "\"enabled\":false}}\n]",
+        "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":true},\"b5\":{"
+        "\"enabled\":false},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":"
+        "false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":true},"
+        "\"b5\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{"
+        "\"enabled\":false}}\n]",
+        "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{"
+        "\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":"
+        "false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},"
+        "\"b5\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{"
+        "\"enabled\":false}}\n]"
     };
 
     ASSERT_EQ(variants, expectedVariants);
@@ -316,6 +343,7 @@ TEST_F(Test_DecisionMakerConfig, Test_variantsToJsonStringListExtendedBySellDeci
     //EXPECT_CALL(*buyDecision2ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     //EXPECT_CALL(*buyDecision3ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     //EXPECT_CALL(*buyDecision4ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    //EXPECT_CALL(*buyDecision5ConfigMock,  variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     //EXPECT_CALL(*sellDecision1ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     //EXPECT_CALL(*sellDecision2ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     EXPECT_CALL(*sellDecision3ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
@@ -323,30 +351,32 @@ TEST_F(Test_DecisionMakerConfig, Test_variantsToJsonStringListExtendedBySellDeci
     // clang-format on
 
     QStringList bestConfigs = {
-        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})"
+        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"b5":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})"
     };
 
     const QString variants = config->variantsToJsonStringListExtendedBySellDecisions(bestConfigs);
     const QString expectedVariants =
-        "[\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{"
-        "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"
-        "\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":"
-        "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":true}},\n{\"b1\":{\"enabled\":true},"
-        "\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{"
-        "\"enabled\":false},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":true},\"b2\":{"
-        "\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":"
-        "false},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":true}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},"
-        "\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{"
-        "\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{"
-        "\"enabled\":true},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":"
-        "false},\"s4\":{\"enabled\":true}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},"
-        "\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":true},\"s4\":{"
+        "[\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"b5\":{"
+        "\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":"
+        "false}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},"
+        "\"b5\":{\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{"
+        "\"enabled\":true}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":"
+        "true},\"b5\":{\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":true},\"s4\":{"
         "\"enabled\":false}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{"
-        "\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":"
-        "true}}\n]";
+        "\"enabled\":true},\"b5\":{\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":"
+        "true},\"s4\":{\"enabled\":true}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},"
+        "\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{"
+        "\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{"
+        "\"enabled\":true},\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":"
+        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":true}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},"
+        "\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{"
+        "\"enabled\":true},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":true},\"b2\":{"
+        "\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":true},\"s1\":{\"enabled\":"
+        "false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":true}}\n]";
 
     ASSERT_EQ(variants, expectedVariants);
 }
@@ -369,6 +399,11 @@ TEST_F(Test_DecisionMakerConfig, Test_getBuyDecision3Config)
 TEST_F(Test_DecisionMakerConfig, Test_getBuyDecision4Config)
 {
     ASSERT_EQ(config->getBuyDecision4Config(), buyDecision4ConfigMock);
+}
+
+TEST_F(Test_DecisionMakerConfig, Test_getBuyDecision5Config)
+{
+    ASSERT_EQ(config->getBuyDecision5Config(), buyDecision5ConfigMock);
 }
 
 TEST_F(Test_DecisionMakerConfig, Test_getSellDecision1Config)

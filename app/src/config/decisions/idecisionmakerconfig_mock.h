@@ -37,6 +37,7 @@ public:
     MOCK_METHOD(IBuyDecision2Config*, getBuyDecision2Config, (), (override));
     MOCK_METHOD(IBuyDecision3Config*, getBuyDecision3Config, (), (override));
     MOCK_METHOD(IBuyDecision4Config*, getBuyDecision4Config, (), (override));
+    MOCK_METHOD(IBuyDecision5Config*, getBuyDecision5Config, (), (override));
 
     MOCK_METHOD(ISellDecision1Config*, getSellDecision1Config, (), (override));
     MOCK_METHOD(ISellDecision2Config*, getSellDecision2Config, (), (override));
