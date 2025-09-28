@@ -115,7 +115,7 @@ QString BuyDecision5::makeDecision(
 
                         if (good)
                         {
-                            int passPositions = (price - prevPrice) / stock->meta.minPriceIncrement;
+                            const int passPositions = (price - prevPrice) / stock->meta.minPriceIncrement;
 
                             if (passPositions > buyConfig->getOrderBookPositions())
                             {
