@@ -12,6 +12,7 @@ DecisionMakerConfig::DecisionMakerConfig(
     IBuyDecision3Config*  buyDecision3Config,
     IBuyDecision4Config*  buyDecision4Config,
     IBuyDecision5Config*  buyDecision5Config,
+    IBuyDecision6Config*  buyDecision6Config,
     ISellDecision1Config* sellDecision1Config,
     ISellDecision2Config* sellDecision2Config,
     ISellDecision3Config* sellDecision3Config,
@@ -23,6 +24,7 @@ DecisionMakerConfig::DecisionMakerConfig(
     mBuyDecision3Config(buyDecision3Config),
     mBuyDecision4Config(buyDecision4Config),
     mBuyDecision5Config(buyDecision5Config),
+    mBuyDecision6Config(buyDecision6Config),
     mSellDecision1Config(sellDecision1Config),
     mSellDecision2Config(sellDecision2Config),
     mSellDecision3Config(sellDecision3Config),
@@ -43,6 +45,7 @@ IDecisionMakerConfig* DecisionMakerConfig::clone()
     IBuyDecision3Config*  buyDecision3Config  = mBuyDecision3Config->clone();
     IBuyDecision4Config*  buyDecision4Config  = mBuyDecision4Config->clone();
     IBuyDecision5Config*  buyDecision5Config  = mBuyDecision5Config->clone();
+    IBuyDecision6Config*  buyDecision6Config  = mBuyDecision6Config->clone();
     ISellDecision1Config* sellDecision1Config = mSellDecision1Config->clone();
     ISellDecision2Config* sellDecision2Config = mSellDecision2Config->clone();
     ISellDecision3Config* sellDecision3Config = mSellDecision3Config->clone();
@@ -54,6 +57,7 @@ IDecisionMakerConfig* DecisionMakerConfig::clone()
         buyDecision3Config,
         buyDecision4Config,
         buyDecision5Config,
+        buyDecision6Config,
         sellDecision1Config,
         sellDecision2Config,
         sellDecision3Config,
@@ -71,6 +75,7 @@ void DecisionMakerConfig::deleteRecursively()
     mBuyDecision3Config->deleteRecursively();
     mBuyDecision4Config->deleteRecursively();
     mBuyDecision5Config->deleteRecursively();
+    mBuyDecision6Config->deleteRecursively();
     mSellDecision1Config->deleteRecursively();
     mSellDecision2Config->deleteRecursively();
     mSellDecision3Config->deleteRecursively();
@@ -90,6 +95,7 @@ void DecisionMakerConfig::assign(IDecisionMakerConfig* another)
     mBuyDecision3Config->assign(config.mBuyDecision3Config);
     mBuyDecision4Config->assign(config.mBuyDecision4Config);
     mBuyDecision5Config->assign(config.mBuyDecision5Config);
+    mBuyDecision6Config->assign(config.mBuyDecision6Config);
     mSellDecision1Config->assign(config.mSellDecision1Config);
     mSellDecision2Config->assign(config.mSellDecision2Config);
     mSellDecision3Config->assign(config.mSellDecision3Config);
@@ -105,6 +111,7 @@ void DecisionMakerConfig::makeDefault()
     mBuyDecision3Config->makeDefault();
     mBuyDecision4Config->makeDefault();
     mBuyDecision5Config->makeDefault();
+    mBuyDecision6Config->makeDefault();
     mSellDecision1Config->makeDefault();
     mSellDecision2Config->makeDefault();
     mSellDecision3Config->makeDefault();
@@ -120,6 +127,7 @@ void DecisionMakerConfig::save(ISettingsEditor* settingsEditor, const QString& t
     mBuyDecision3Config->save(settingsEditor, type + "/BuyDecision3Config");
     mBuyDecision4Config->save(settingsEditor, type + "/BuyDecision4Config");
     mBuyDecision5Config->save(settingsEditor, type + "/BuyDecision5Config");
+    mBuyDecision6Config->save(settingsEditor, type + "/BuyDecision6Config");
     mSellDecision1Config->save(settingsEditor, type + "/SellDecision1Config");
     mSellDecision2Config->save(settingsEditor, type + "/SellDecision2Config");
     mSellDecision3Config->save(settingsEditor, type + "/SellDecision3Config");
@@ -135,6 +143,7 @@ void DecisionMakerConfig::load(ISettingsEditor* settingsEditor, const QString& t
     mBuyDecision3Config->load(settingsEditor, type + "/BuyDecision3Config");
     mBuyDecision4Config->load(settingsEditor, type + "/BuyDecision4Config");
     mBuyDecision5Config->load(settingsEditor, type + "/BuyDecision5Config");
+    mBuyDecision6Config->load(settingsEditor, type + "/BuyDecision6Config");
     mSellDecision1Config->load(settingsEditor, type + "/SellDecision1Config");
     mSellDecision2Config->load(settingsEditor, type + "/SellDecision2Config");
     mSellDecision3Config->load(settingsEditor, type + "/SellDecision3Config");
@@ -164,6 +173,11 @@ static void configBuy4Parse(DecisionMakerConfig* config, simdjson::ondemand::val
 static void configBuy5Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
 {
     config->getBuyDecision5Config()->fromJsonObject(value.get_object());
+}
+
+static void configBuy6Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
+{
+    config->getBuyDecision6Config()->fromJsonObject(value.get_object());
 }
 
 static void configSell1Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
@@ -202,6 +216,7 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
     {"b3", configBuy3Parse },
     {"b4", configBuy4Parse },
     {"b5", configBuy5Parse },
+    {"b6", configBuy6Parse },
     {"s1", configSell1Parse},
     {"s2", configSell2Parse},
     {"s3", configSell3Parse},
@@ -227,14 +242,15 @@ QString DecisionMakerConfig::toJsonString() const
     const QString b3 = mBuyDecision3Config->toJsonString();
     const QString b4 = mBuyDecision4Config->toJsonString();
     const QString b5 = mBuyDecision5Config->toJsonString();
+    const QString b6 = mBuyDecision6Config->toJsonString();
 
     const QString s1 = mSellDecision1Config->toJsonString();
     const QString s2 = mSellDecision2Config->toJsonString();
     const QString s3 = mSellDecision3Config->toJsonString();
     const QString s4 = mSellDecision4Config->toJsonString();
 
-    return QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"s1":%6,"s2":%7,"s3":%8,"s4":%9})")
-        .arg(b1, b2, b3, b4, b5, s1, s2, s3, s4);
+    return QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"b6":%6,"s1":%7,"s2":%8,"s3":%9,"s4":%10})")
+        .arg(b1, b2, b3, b4, b5, b6, s1, s2, s3, s4);
 }
 
 QStringList DecisionMakerConfig::variantsToJsonStringList() const
@@ -247,6 +263,7 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
         mBuyDecision3Config->variantsAsJson(),
         mBuyDecision4Config->variantsAsJson(),
         mBuyDecision5Config->variantsAsJson(),
+        mBuyDecision6Config->variantsAsJson(),
     };
     const QList<QStringList> sellVariants = {
         mSellDecision1Config->variantsAsJson(),
@@ -281,18 +298,21 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
                 {
                     sellConfigs[k] = sellVariant.at(g);
 
-                    results.append(QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"s1":%6,"s2":%7,"s3":%8,"s4":%9})")
-                                       .arg(
-                                           buyConfigs[0],
-                                           buyConfigs[1],
-                                           buyConfigs[2],
-                                           buyConfigs[3],
-                                           buyConfigs[4],
-                                           sellConfigs[0],
-                                           sellConfigs[1],
-                                           s3,
-                                           s4
-                                       ));
+                    results.append(
+                        QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"b6":%6,"s1":%7,"s2":%8,"s3":%9,"s4":%10})")
+                            .arg(
+                                buyConfigs[0],
+                                buyConfigs[1],
+                                buyConfigs[2],
+                                buyConfigs[3],
+                                buyConfigs[4],
+                                buyConfigs[5],
+                                sellConfigs[0],
+                                sellConfigs[1],
+                                s3,
+                                s4
+                            )
+                    );
                 }
             }
         }
@@ -309,12 +329,13 @@ QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(con
 
     QStringList unitedBestConfigs;
 
-    Q_ASSERT_X(bestConfigs.size() == 5, __FUNCTION__, "Unexpected behavior");
+    Q_ASSERT_X(bestConfigs.size() == 6, __FUNCTION__, "Unexpected behavior");
     const QString& config0 = bestConfigs.at(0);
     const QString& config1 = bestConfigs.at(1);
     const QString& config2 = bestConfigs.at(2);
     const QString& config3 = bestConfigs.at(3);
     const QString& config4 = bestConfigs.at(4);
+    const QString& config5 = bestConfigs.at(5);
 
     const QString b1 =
         config0.mid(config0.indexOf(R"("b1":)") + 5, config0.indexOf(R"("b2":)") - config0.indexOf(R"("b1":)") - 6);
@@ -325,12 +346,14 @@ QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(con
     const QString b4 =
         config3.mid(config3.indexOf(R"("b4":)") + 5, config3.indexOf(R"("b5":)") - config3.indexOf(R"("b4":)") - 6);
     const QString b5 =
-        config4.mid(config4.indexOf(R"("b5":)") + 5, config4.indexOf(R"("s1":)") - config4.indexOf(R"("b5":)") - 6);
+        config4.mid(config4.indexOf(R"("b5":)") + 5, config4.indexOf(R"("b6":)") - config4.indexOf(R"("b5":)") - 6);
+    const QString b6 =
+        config5.mid(config5.indexOf(R"("b6":)") + 5, config5.indexOf(R"("s1":)") - config5.indexOf(R"("b6":)") - 6);
 
     for (const QString& bestConfig : bestConfigs)
     {
-        unitedBestConfigs.append(QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,%6)")
-                                     .arg(b1, b2, b3, b4, b5, bestConfig.mid(bestConfig.indexOf(R"("s1":)"))));
+        unitedBestConfigs.append(QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"b6":%6,%7)")
+                                     .arg(b1, b2, b3, b4, b5, b6, bestConfig.mid(bestConfig.indexOf(R"("s1":)"))));
     }
 
     unitedBestConfigs.removeDuplicates();
@@ -378,6 +401,11 @@ IBuyDecision4Config* DecisionMakerConfig::getBuyDecision4Config()
 IBuyDecision5Config* DecisionMakerConfig::getBuyDecision5Config()
 {
     return mBuyDecision5Config;
+}
+
+IBuyDecision6Config* DecisionMakerConfig::getBuyDecision6Config()
+{
+    return mBuyDecision6Config;
 }
 
 ISellDecision1Config* DecisionMakerConfig::getSellDecision1Config()

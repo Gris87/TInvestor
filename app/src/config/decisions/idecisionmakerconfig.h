@@ -9,6 +9,7 @@
 #include "src/config/decisions/buy/buydecision3config/ibuydecision3config.h"
 #include "src/config/decisions/buy/buydecision4config/ibuydecision4config.h"
 #include "src/config/decisions/buy/buydecision5config/ibuydecision5config.h"
+#include "src/config/decisions/buy/buydecision6config/ibuydecision6config.h"
 #include "src/config/decisions/sell/selldecision1config/iselldecision1config.h"
 #include "src/config/decisions/sell/selldecision2config/iselldecision2config.h"
 #include "src/config/decisions/sell/selldecision3config/iselldecision3config.h"
@@ -50,6 +51,7 @@ public:
     virtual IBuyDecision3Config* getBuyDecision3Config() = 0;
     virtual IBuyDecision4Config* getBuyDecision4Config() = 0;
     virtual IBuyDecision5Config* getBuyDecision5Config() = 0;
+    virtual IBuyDecision6Config* getBuyDecision6Config() = 0;
 
     virtual ISellDecision1Config* getSellDecision1Config() = 0;
     virtual ISellDecision2Config* getSellDecision2Config() = 0;

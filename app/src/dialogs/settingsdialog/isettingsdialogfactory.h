@@ -26,6 +26,7 @@ public:
         IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory,
         IBuyDecision4ConfigWidgetFactory*  buyDecision4ConfigWidgetFactory,
         IBuyDecision5ConfigWidgetFactory*  buyDecision5ConfigWidgetFactory,
+        IBuyDecision6ConfigWidgetFactory*  buyDecision6ConfigWidgetFactory,
         ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,

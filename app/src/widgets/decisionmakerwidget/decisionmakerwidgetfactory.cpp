@@ -31,6 +31,7 @@ DecisionMakerWidgetFactory::newInstance(const DecisionMakerWidgetFactoryNewInsta
         args.buyDecision3ConfigWidgetFactory,
         args.buyDecision4ConfigWidgetFactory,
         args.buyDecision5ConfigWidgetFactory,
+        args.buyDecision6ConfigWidgetFactory,
         args.sellDecision1ConfigWidgetFactory,
         args.sellDecision2ConfigWidgetFactory,
         args.sellDecision3ConfigWidgetFactory,

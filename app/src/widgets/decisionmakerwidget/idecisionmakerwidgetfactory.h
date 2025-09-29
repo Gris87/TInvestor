@@ -28,6 +28,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         IBuyDecision3ConfigWidgetFactory*  _buyDecision3ConfigWidgetFactory,
         IBuyDecision4ConfigWidgetFactory*  _buyDecision4ConfigWidgetFactory,
         IBuyDecision5ConfigWidgetFactory*  _buyDecision5ConfigWidgetFactory,
+        IBuyDecision6ConfigWidgetFactory*  _buyDecision6ConfigWidgetFactory,
         ISellDecision1ConfigWidgetFactory* _sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* _sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* _sellDecision3ConfigWidgetFactory,
@@ -51,6 +52,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         buyDecision3ConfigWidgetFactory(_buyDecision3ConfigWidgetFactory),
         buyDecision4ConfigWidgetFactory(_buyDecision4ConfigWidgetFactory),
         buyDecision5ConfigWidgetFactory(_buyDecision5ConfigWidgetFactory),
+        buyDecision6ConfigWidgetFactory(_buyDecision6ConfigWidgetFactory),
         sellDecision1ConfigWidgetFactory(_sellDecision1ConfigWidgetFactory),
         sellDecision2ConfigWidgetFactory(_sellDecision2ConfigWidgetFactory),
         sellDecision3ConfigWidgetFactory(_sellDecision3ConfigWidgetFactory),
@@ -78,6 +80,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
     IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory;
     IBuyDecision4ConfigWidgetFactory*  buyDecision4ConfigWidgetFactory;
     IBuyDecision5ConfigWidgetFactory*  buyDecision5ConfigWidgetFactory;
+    IBuyDecision6ConfigWidgetFactory*  buyDecision6ConfigWidgetFactory;
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory;
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory;

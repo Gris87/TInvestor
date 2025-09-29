@@ -9,6 +9,7 @@
 #include "src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision4config/buydecision4configwidget/ibuydecision4configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision5config/buydecision5configwidget/ibuydecision5configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision6config/buydecision6configwidget/ibuydecision6configwidgetfactory_mock.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h"
@@ -119,6 +120,7 @@ protected:
         buyDecision3ConfigWidgetFactoryMock       = new StrictMock<BuyDecision3ConfigWidgetFactoryMock>();
         buyDecision4ConfigWidgetFactoryMock       = new StrictMock<BuyDecision4ConfigWidgetFactoryMock>();
         buyDecision5ConfigWidgetFactoryMock       = new StrictMock<BuyDecision5ConfigWidgetFactoryMock>();
+        buyDecision6ConfigWidgetFactoryMock       = new StrictMock<BuyDecision6ConfigWidgetFactoryMock>();
         sellDecision1ConfigWidgetFactoryMock      = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
         sellDecision2ConfigWidgetFactoryMock      = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock      = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
@@ -211,6 +213,7 @@ protected:
                     buyDecision3ConfigWidgetFactoryMock,
                     buyDecision4ConfigWidgetFactoryMock,
                     buyDecision5ConfigWidgetFactoryMock,
+                    buyDecision6ConfigWidgetFactoryMock,
                     sellDecision1ConfigWidgetFactoryMock,
                     sellDecision2ConfigWidgetFactoryMock,
                     sellDecision3ConfigWidgetFactoryMock,
@@ -242,6 +245,7 @@ protected:
                     buyDecision3ConfigWidgetFactoryMock,
                     buyDecision4ConfigWidgetFactoryMock,
                     buyDecision5ConfigWidgetFactoryMock,
+                    buyDecision6ConfigWidgetFactoryMock,
                     sellDecision1ConfigWidgetFactoryMock,
                     sellDecision2ConfigWidgetFactoryMock,
                     sellDecision3ConfigWidgetFactoryMock,
@@ -303,6 +307,7 @@ protected:
             buyDecision3ConfigWidgetFactoryMock,
             buyDecision4ConfigWidgetFactoryMock,
             buyDecision5ConfigWidgetFactoryMock,
+            buyDecision6ConfigWidgetFactoryMock,
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
@@ -404,6 +409,7 @@ protected:
         delete buyDecision3ConfigWidgetFactoryMock;
         delete buyDecision4ConfigWidgetFactoryMock;
         delete buyDecision5ConfigWidgetFactoryMock;
+        delete buyDecision6ConfigWidgetFactoryMock;
         delete sellDecision1ConfigWidgetFactoryMock;
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
@@ -481,6 +487,7 @@ protected:
     StrictMock<BuyDecision3ConfigWidgetFactoryMock>*       buyDecision3ConfigWidgetFactoryMock;
     StrictMock<BuyDecision4ConfigWidgetFactoryMock>*       buyDecision4ConfigWidgetFactoryMock;
     StrictMock<BuyDecision5ConfigWidgetFactoryMock>*       buyDecision5ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision6ConfigWidgetFactoryMock>*       buyDecision6ConfigWidgetFactoryMock;
     StrictMock<SellDecision1ConfigWidgetFactoryMock>*      sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock>*      sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>*      sellDecision3ConfigWidgetFactoryMock;
@@ -1485,6 +1492,7 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
             buyDecision3ConfigWidgetFactoryMock,
             buyDecision4ConfigWidgetFactoryMock,
             buyDecision5ConfigWidgetFactoryMock,
+            buyDecision6ConfigWidgetFactoryMock,
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,

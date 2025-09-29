@@ -24,7 +24,7 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr int AMOUNT_OF_BUY_DECISIONS = 5;
+constexpr int AMOUNT_OF_BUY_DECISIONS = 6;
 
 
 
@@ -129,10 +129,16 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     StrictMock<FileMock>* configFileWriteMock3   = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
     StrictMock<FileMock>* configFileWriteMock4   = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
     StrictMock<FileMock>* configFileWriteMock5   = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
+    StrictMock<FileMock>* configFileWriteMock6   = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
     StrictMock<FileMock>* configFileWriteMock    = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
 
     QList<StrictMock<FileMock>*> configFileMocksForWriting = {
-        configFileWriteMock1, configFileWriteMock2, configFileWriteMock3, configFileWriteMock4, configFileWriteMock5
+        configFileWriteMock1,
+        configFileWriteMock2,
+        configFileWriteMock3,
+        configFileWriteMock4,
+        configFileWriteMock5,
+        configFileWriteMock6
     };
 
     StrictMock<ConfigMock>              clonedConfigMock;
@@ -150,9 +156,15 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     StrictMock<FileMock>* configFileReadMock3 = new StrictMock<FileMock>(); // Will be deleted in loadConfigs function
     StrictMock<FileMock>* configFileReadMock4 = new StrictMock<FileMock>(); // Will be deleted in loadConfigs function
     StrictMock<FileMock>* configFileReadMock5 = new StrictMock<FileMock>(); // Will be deleted in loadConfigs function
+    StrictMock<FileMock>* configFileReadMock6 = new StrictMock<FileMock>(); // Will be deleted in loadConfigs function
 
     QList<StrictMock<FileMock>*> configFileMocksForReading = {
-        configFileReadMock1, configFileReadMock2, configFileReadMock3, configFileReadMock4, configFileReadMock5
+        configFileReadMock1,
+        configFileReadMock2,
+        configFileReadMock3,
+        configFileReadMock4,
+        configFileReadMock5,
+        configFileReadMock6
     };
 
     thread->reset();
@@ -190,15 +202,16 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     Logo logo;
 
     QStringList configVariants = {
-        R"([{"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"b5":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])"
+        R"([{"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"b5":{"enabled":false},"b6":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":true},"b6":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])"
     };
 
     QString configVariant = {
-        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})"
+        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})"
     };
 
     QList<Stock*> stocks;
@@ -1011,11 +1024,12 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     InstrumentsForTrading emptyInstrumentsForTrading;
 
     QStringList bestConfigs = {
-        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"b5":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})"
+        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"b5":{"enabled":false},"b6":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":true},"b6":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})"
     };
 
     QString bestConfigsExtended = "[{}]";
@@ -1735,7 +1749,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
     Instruments instruments;
 
     QString configVariant = {
-        R"([{"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}}])"
+        R"([{"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}}])"
     };
 
     QList<Stock*> stocks;

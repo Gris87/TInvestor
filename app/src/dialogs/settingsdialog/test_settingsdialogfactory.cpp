@@ -7,6 +7,7 @@
 #include "src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision4config/buydecision4configwidget/ibuydecision4configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision5config/buydecision5configwidget/ibuydecision5configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision6config/buydecision6configwidget/ibuydecision6configwidgetfactory_mock.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget_mock.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
@@ -61,6 +62,7 @@ TEST_F(Test_SettingsDialogFactory, Test_newInstance)
     StrictMock<BuyDecision3ConfigWidgetFactoryMock>  buyDecision3ConfigWidgetFactoryMock;
     StrictMock<BuyDecision4ConfigWidgetFactoryMock>  buyDecision4ConfigWidgetFactoryMock;
     StrictMock<BuyDecision5ConfigWidgetFactoryMock>  buyDecision5ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision6ConfigWidgetFactoryMock>  buyDecision6ConfigWidgetFactoryMock;
     StrictMock<SellDecision1ConfigWidgetFactoryMock> sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock> sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock> sellDecision3ConfigWidgetFactoryMock;
@@ -81,6 +83,7 @@ TEST_F(Test_SettingsDialogFactory, Test_newInstance)
             &buyDecision3ConfigWidgetFactoryMock,
             &buyDecision4ConfigWidgetFactoryMock,
             &buyDecision5ConfigWidgetFactoryMock,
+            &buyDecision6ConfigWidgetFactoryMock,
             &sellDecision1ConfigWidgetFactoryMock,
             &sellDecision2ConfigWidgetFactoryMock,
             &sellDecision3ConfigWidgetFactoryMock,
@@ -100,6 +103,7 @@ TEST_F(Test_SettingsDialogFactory, Test_newInstance)
             &buyDecision3ConfigWidgetFactoryMock,
             &buyDecision4ConfigWidgetFactoryMock,
             &buyDecision5ConfigWidgetFactoryMock,
+            &buyDecision6ConfigWidgetFactoryMock,
             &sellDecision1ConfigWidgetFactoryMock,
             &sellDecision2ConfigWidgetFactoryMock,
             &sellDecision3ConfigWidgetFactoryMock,
@@ -121,6 +125,7 @@ TEST_F(Test_SettingsDialogFactory, Test_newInstance)
         &buyDecision3ConfigWidgetFactoryMock,
         &buyDecision4ConfigWidgetFactoryMock,
         &buyDecision5ConfigWidgetFactoryMock,
+        &buyDecision6ConfigWidgetFactoryMock,
         &sellDecision1ConfigWidgetFactoryMock,
         &sellDecision2ConfigWidgetFactoryMock,
         &sellDecision3ConfigWidgetFactoryMock,
