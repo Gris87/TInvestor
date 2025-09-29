@@ -295,6 +295,19 @@
     </message>
 </context>
 <context>
+    <name>BuyDecision6ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision6config/buydecision6configwidget/buydecision6configwidget.ui" line="37"/>
+        <source>Buy stocks if the price reaches market limit and hold the price for</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision6config/buydecision6configwidget/buydecision6configwidget.ui" line="47"/>
+        <source> minutes</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>DecisionMakerConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.ui" line="32"/>
@@ -376,7 +389,7 @@
     </message>
     <message>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="292"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="136"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="138"/>
         <source>Best config</source>
         <translation></translation>
     </message>
@@ -401,8 +414,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="56"/>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="57"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="58"/>
         <source>Loading</source>
         <translation></translation>
     </message>
@@ -488,13 +501,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="397"/>
+        <location filename="../../src/main/mainwindow.cpp" line="401"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="660"/>
+        <location filename="../../src/main/mainwindow.cpp" line="664"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -520,7 +533,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="520"/>
-        <location filename="../../src/main/mainwindow.cpp" line="761"/>
+        <location filename="../../src/main/mainwindow.cpp" line="765"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -576,65 +589,65 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="398"/>
+        <location filename="../../src/main/mainwindow.cpp" line="402"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="441"/>
+        <location filename="../../src/main/mainwindow.cpp" line="445"/>
         <source>GRPC error happened with code %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="461"/>
+        <location filename="../../src/main/mainwindow.cpp" line="465"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="598"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1340"/>
+        <location filename="../../src/main/mainwindow.cpp" line="602"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1345"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="615"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1188"/>
+        <location filename="../../src/main/mainwindow.cpp" line="619"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1193"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="749"/>
+        <location filename="../../src/main/mainwindow.cpp" line="753"/>
         <source>Auto-pilot started</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="755"/>
+        <location filename="../../src/main/mainwindow.cpp" line="759"/>
         <source>Auto-pilot stopped</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1188"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1193"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="704"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1219"/>
+        <location filename="../../src/main/mainwindow.cpp" line="708"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1224"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="254"/>
+        <location filename="../../src/main/mainwindow.cpp" line="258"/>
         <source>Simulator</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="255"/>
+        <location filename="../../src/main/mainwindow.cpp" line="259"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1219"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1224"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -915,22 +928,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="175"/>
+        <location filename="../../src/main.cpp" line="178"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="175"/>
+        <location filename="../../src/main.cpp" line="178"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="201"/>
+        <location filename="../../src/main.cpp" line="204"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="201"/>
+        <location filename="../../src/main.cpp" line="204"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
@@ -1261,8 +1274,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="827"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="331"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="353"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="334"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="356"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
@@ -1274,8 +1287,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="863"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="330"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="354"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="333"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="357"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
@@ -1295,13 +1308,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="92"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="95"/>
         <source>Autorun on %1 startup</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="325"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="348"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="328"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="351"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>

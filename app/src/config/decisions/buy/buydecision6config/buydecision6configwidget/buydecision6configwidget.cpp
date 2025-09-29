@@ -25,8 +25,6 @@ BuyDecision6ConfigWidget::~BuyDecision6ConfigWidget()
 void BuyDecision6ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
-    ui->priceRaiseDoubleSpinBox->setValue(mConfig->getPriceRaise());
-    ui->orderBookPositionsSpinBox->setValue(mConfig->getOrderBookPositions());
     ui->durationSpinBox->setValue(mConfig->getDuration());
 }
 
@@ -34,8 +32,6 @@ void BuyDecision6ConfigWidget::makeReadOnly() const
 {
     ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
-    ui->priceRaiseDoubleSpinBox->setReadOnly(true);
-    ui->orderBookPositionsSpinBox->setReadOnly(true);
     ui->durationSpinBox->setReadOnly(true);
 }
 
@@ -45,19 +41,7 @@ void BuyDecision6ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::Ch
 
     mConfig->setEnabled(checked);
 
-    ui->priceRaiseDoubleSpinBox->setEnabled(checked);
-    ui->orderBookPositionsSpinBox->setEnabled(checked);
     ui->durationSpinBox->setEnabled(checked);
-}
-
-void BuyDecision6ConfigWidget::on_priceRaiseDoubleSpinBox_valueChanged(double value)
-{
-    mConfig->setPriceRaise(value);
-}
-
-void BuyDecision6ConfigWidget::on_orderBookPositionsSpinBox_valueChanged(int value)
-{
-    mConfig->setOrderBookPositions(value);
 }
 
 void BuyDecision6ConfigWidget::on_durationSpinBox_valueChanged(int value)
