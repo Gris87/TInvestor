@@ -7,7 +7,7 @@
 
 
 constexpr bool ENABLED_DEFAULT  = true;
-constexpr int  DURATION_DEFAULT = 15;
+constexpr int  DURATION_DEFAULT = 30;
 
 
 
@@ -135,7 +135,7 @@ QStringList BuyDecision6Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList durationVariants = {"5", "10", "15", "30", "60"};
+    const QStringList durationVariants = {"15", "30", "60", "120", "180"};
 
     for (const QString& duration : durationVariants)
     {

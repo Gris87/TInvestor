@@ -298,6 +298,7 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
                 {
                     sellConfigs[k] = sellVariant.at(g);
 
+                    // NOLINTBEGIN(readability-magic-numbers)
                     results.append(
                         QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"b6":%6,"s1":%7,"s2":%8,"s3":%9,"s4":%10})")
                             .arg(
@@ -313,6 +314,7 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
                                 s4
                             )
                     );
+                    // NOLINTEND(readability-magic-numbers)
                 }
             }
         }
@@ -329,6 +331,7 @@ QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(con
 
     QStringList unitedBestConfigs;
 
+    // NOLINTBEGIN(readability-magic-numbers)
     Q_ASSERT_X(bestConfigs.size() == 6, __FUNCTION__, "Unexpected behavior");
     const QString& config0 = bestConfigs.at(0);
     const QString& config1 = bestConfigs.at(1);
@@ -336,6 +339,7 @@ QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(con
     const QString& config3 = bestConfigs.at(3);
     const QString& config4 = bestConfigs.at(4);
     const QString& config5 = bestConfigs.at(5);
+    // NOLINTEND(readability-magic-numbers)
 
     const QString b1 =
         config0.mid(config0.indexOf(R"("b1":)") + 5, config0.indexOf(R"("b2":)") - config0.indexOf(R"("b1":)") - 6);
