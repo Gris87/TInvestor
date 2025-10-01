@@ -1,6 +1,6 @@
 Buy if price raise anomally
 Buy if price didn't change for 15 minutes and bid quantity is huge
-Make high liquidity to trade immediately
+Buy if several days price raise at midnight
 Take decisions from other robots
 Change best config search algorithm
 Find best configs for different commission

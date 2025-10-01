@@ -230,16 +230,19 @@ bool TradingThread::sell(double expected, double delta)
     }
 
     const AsapMode mode  = asapMode();
+    Quotation      limitPrice;
     double         price = -1;
 
     if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->bids_size() > 0)
     {
-        price = quotationToDouble(tinkoffOrderBook->bids(0).price());
+        limitPrice = quotationConvert(tinkoffOrderBook->bids(0).price());
+        price      = quotationToDouble(limitPrice);
     }
 
     if (tinkoffOrderBook->asks_size() > 0 && price < 0)
     {
-        price = quotationToDouble(tinkoffOrderBook->asks(0).price());
+        limitPrice = quotationConvert(tinkoffOrderBook->asks(0).price());
+        price      = quotationToDouble(limitPrice);
 
         if (mode == ASAP_MODE_NONE)
         {
@@ -254,10 +257,20 @@ bool TradingThread::sell(double expected, double delta)
     if (price > 0)
     {
         const qint64 coef = static_cast<qint64>(std::ceil(price / quotationToDouble(mMinPriceIncrement)));
+        Quotation    priceQuotation = quotationMultiply(mMinPriceIncrement, coef);
+
+        if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->bids_size() > 0)
+        {
+            priceQuotation = qMin(priceQuotation, limitPrice);
+        }
+        else
+        {
+            priceQuotation = qMax(priceQuotation, limitPrice);
+        }
 
         const float marketPrice = tinkoffOrderBook->bids_size() > 0 ? quotationToDouble(tinkoffOrderBook->bids(0).price()) : 0;
 
-        return sellWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef), marketPrice);
+        return sellWithPrice(expected, delta, priceQuotation, marketPrice);
     }
 
     return false;
@@ -415,16 +428,19 @@ bool TradingThread::buy(double expected, double delta)
     }
 
     const AsapMode mode  = asapMode();
+    Quotation      limitPrice;
     double         price = -1;
 
     if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->asks_size() > 0)
     {
-        price = quotationToDouble(tinkoffOrderBook->asks(0).price());
+        limitPrice = quotationConvert(tinkoffOrderBook->asks(0).price());
+        price      = quotationToDouble(limitPrice);
     }
 
     if (tinkoffOrderBook->bids_size() > 0 && price < 0)
     {
-        price = quotationToDouble(tinkoffOrderBook->bids(0).price());
+        limitPrice = quotationConvert(tinkoffOrderBook->bids(0).price());
+        price      = quotationToDouble(limitPrice);
 
         if (mode == ASAP_MODE_NONE)
         {
@@ -452,11 +468,21 @@ bool TradingThread::buy(double expected, double delta)
 
     if (price > 0)
     {
-        const qint64 coef = static_cast<qint64>(std::floor(price / quotationToDouble(mMinPriceIncrement)));
+        const qint64 coef           = static_cast<qint64>(std::floor(price / quotationToDouble(mMinPriceIncrement)));
+        Quotation    priceQuotation = quotationMultiply(mMinPriceIncrement, coef);
+
+        if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->asks_size() > 0)
+        {
+            priceQuotation = qMax(priceQuotation, limitPrice);
+        }
+        else
+        {
+            priceQuotation = qMin(priceQuotation, limitPrice);
+        }
 
         const float marketPrice = tinkoffOrderBook->asks_size() > 0 ? quotationToDouble(tinkoffOrderBook->asks(0).price()) : 0;
 
-        return buyWithPrice(expected, delta, quotationMultiply(mMinPriceIncrement, coef), marketPrice);
+        return buyWithPrice(expected, delta, priceQuotation, marketPrice);
     }
 
     return false;
