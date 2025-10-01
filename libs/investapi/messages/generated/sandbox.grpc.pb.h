@@ -172,6 +172,30 @@ class SandboxService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>> PrepareAsyncGetSandboxMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>>(PrepareAsyncGetSandboxMaxLotsRaw(context, request, cq));
     }
+    // PostSandboxStopOrder — выставить стоп-заявку
+    virtual ::grpc::Status PostSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>> AsyncPostSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>>(AsyncPostSandboxStopOrderRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>> PrepareAsyncPostSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>>(PrepareAsyncPostSandboxStopOrderRaw(context, request, cq));
+    }
+    // GetSandboxStopOrders — получить список активных стоп-заявок по счету
+    virtual ::grpc::Status GetSandboxStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>> AsyncGetSandboxStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>>(AsyncGetSandboxStopOrdersRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>> PrepareAsyncGetSandboxStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>>(PrepareAsyncGetSandboxStopOrdersRaw(context, request, cq));
+    }
+    // CancelSandboxStopOrder — отменить стоп-заявку
+    virtual ::grpc::Status CancelSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>> AsyncCancelSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>>(AsyncCancelSandboxStopOrderRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>> PrepareAsyncCancelSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>>(PrepareAsyncCancelSandboxStopOrderRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -226,6 +250,15 @@ class SandboxService final {
       // GetSandboxMaxLots — расчет количества доступных для покупки/продажи лотов
       virtual void GetSandboxMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetSandboxMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // PostSandboxStopOrder — выставить стоп-заявку
+      virtual void PostSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void PostSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // GetSandboxStopOrders — получить список активных стоп-заявок по счету
+      virtual void GetSandboxStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetSandboxStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // CancelSandboxStopOrder — отменить стоп-заявку
+      virtual void CancelSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void CancelSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -263,6 +296,12 @@ class SandboxService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse>* PrepareAsyncGetSandboxWithdrawLimitsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* AsyncGetSandboxMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* PrepareAsyncGetSandboxMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>* AsyncPostSandboxStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>* PrepareAsyncPostSandboxStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>* AsyncGetSandboxStopOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>* PrepareAsyncGetSandboxStopOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>* AsyncCancelSandboxStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>* PrepareAsyncCancelSandboxStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -379,6 +418,27 @@ class SandboxService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>> PrepareAsyncGetSandboxMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>>(PrepareAsyncGetSandboxMaxLotsRaw(context, request, cq));
     }
+    ::grpc::Status PostSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>> AsyncPostSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>>(AsyncPostSandboxStopOrderRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>> PrepareAsyncPostSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>>(PrepareAsyncPostSandboxStopOrderRaw(context, request, cq));
+    }
+    ::grpc::Status GetSandboxStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>> AsyncGetSandboxStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>>(AsyncGetSandboxStopOrdersRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>> PrepareAsyncGetSandboxStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>>(PrepareAsyncGetSandboxStopOrdersRaw(context, request, cq));
+    }
+    ::grpc::Status CancelSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>> AsyncCancelSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>>(AsyncCancelSandboxStopOrderRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>> PrepareAsyncCancelSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>>(PrepareAsyncCancelSandboxStopOrderRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -414,6 +474,12 @@ class SandboxService final {
       void GetSandboxWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetSandboxMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response, std::function<void(::grpc::Status)>) override;
       void GetSandboxMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void PostSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response, std::function<void(::grpc::Status)>) override;
+      void PostSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetSandboxStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetSandboxStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void CancelSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response, std::function<void(::grpc::Status)>) override;
+      void CancelSandboxStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -457,6 +523,12 @@ class SandboxService final {
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse>* PrepareAsyncGetSandboxWithdrawLimitsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* AsyncGetSandboxMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* PrepareAsyncGetSandboxMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>* AsyncPostSandboxStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>* PrepareAsyncPostSandboxStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>* AsyncGetSandboxStopOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>* PrepareAsyncGetSandboxStopOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>* AsyncCancelSandboxStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>* PrepareAsyncCancelSandboxStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_OpenSandboxAccount_;
     const ::grpc::internal::RpcMethod rpcmethod_GetSandboxAccounts_;
     const ::grpc::internal::RpcMethod rpcmethod_CloseSandboxAccount_;
@@ -473,6 +545,9 @@ class SandboxService final {
     const ::grpc::internal::RpcMethod rpcmethod_SandboxPayIn_;
     const ::grpc::internal::RpcMethod rpcmethod_GetSandboxWithdrawLimits_;
     const ::grpc::internal::RpcMethod rpcmethod_GetSandboxMaxLots_;
+    const ::grpc::internal::RpcMethod rpcmethod_PostSandboxStopOrder_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetSandboxStopOrders_;
+    const ::grpc::internal::RpcMethod rpcmethod_CancelSandboxStopOrder_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -515,6 +590,12 @@ class SandboxService final {
     virtual ::grpc::Status GetSandboxWithdrawLimits(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* response);
     // GetSandboxMaxLots — расчет количества доступных для покупки/продажи лотов
     virtual ::grpc::Status GetSandboxMaxLots(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response);
+    // PostSandboxStopOrder — выставить стоп-заявку
+    virtual ::grpc::Status PostSandboxStopOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response);
+    // GetSandboxStopOrders — получить список активных стоп-заявок по счету
+    virtual ::grpc::Status GetSandboxStopOrders(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response);
+    // CancelSandboxStopOrder — отменить стоп-заявку
+    virtual ::grpc::Status CancelSandboxStopOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_OpenSandboxAccount : public BaseClass {
@@ -836,7 +917,67 @@ class SandboxService final {
       ::grpc::Service::RequestAsyncUnary(15, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_OpenSandboxAccount<WithAsyncMethod_GetSandboxAccounts<WithAsyncMethod_CloseSandboxAccount<WithAsyncMethod_PostSandboxOrder<WithAsyncMethod_PostSandboxOrderAsync<WithAsyncMethod_ReplaceSandboxOrder<WithAsyncMethod_GetSandboxOrders<WithAsyncMethod_CancelSandboxOrder<WithAsyncMethod_GetSandboxOrderState<WithAsyncMethod_GetSandboxPositions<WithAsyncMethod_GetSandboxOperations<WithAsyncMethod_GetSandboxOperationsByCursor<WithAsyncMethod_GetSandboxPortfolio<WithAsyncMethod_SandboxPayIn<WithAsyncMethod_GetSandboxWithdrawLimits<WithAsyncMethod_GetSandboxMaxLots<Service > > > > > > > > > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_PostSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_PostSandboxStopOrder() {
+      ::grpc::Service::MarkMethodAsync(16);
+    }
+    ~WithAsyncMethod_PostSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PostSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestPostSandboxStopOrder(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(16, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetSandboxStopOrders : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetSandboxStopOrders() {
+      ::grpc::Service::MarkMethodAsync(17);
+    }
+    ~WithAsyncMethod_GetSandboxStopOrders() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSandboxStopOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetSandboxStopOrders(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(17, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_CancelSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_CancelSandboxStopOrder() {
+      ::grpc::Service::MarkMethodAsync(18);
+    }
+    ~WithAsyncMethod_CancelSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestCancelSandboxStopOrder(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(18, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_OpenSandboxAccount<WithAsyncMethod_GetSandboxAccounts<WithAsyncMethod_CloseSandboxAccount<WithAsyncMethod_PostSandboxOrder<WithAsyncMethod_PostSandboxOrderAsync<WithAsyncMethod_ReplaceSandboxOrder<WithAsyncMethod_GetSandboxOrders<WithAsyncMethod_CancelSandboxOrder<WithAsyncMethod_GetSandboxOrderState<WithAsyncMethod_GetSandboxPositions<WithAsyncMethod_GetSandboxOperations<WithAsyncMethod_GetSandboxOperationsByCursor<WithAsyncMethod_GetSandboxPortfolio<WithAsyncMethod_SandboxPayIn<WithAsyncMethod_GetSandboxWithdrawLimits<WithAsyncMethod_GetSandboxMaxLots<WithAsyncMethod_PostSandboxStopOrder<WithAsyncMethod_GetSandboxStopOrders<WithAsyncMethod_CancelSandboxStopOrder<Service > > > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_OpenSandboxAccount : public BaseClass {
    private:
@@ -1269,7 +1410,88 @@ class SandboxService final {
     virtual ::grpc::ServerUnaryReactor* GetSandboxMaxLots(
       ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_OpenSandboxAccount<WithCallbackMethod_GetSandboxAccounts<WithCallbackMethod_CloseSandboxAccount<WithCallbackMethod_PostSandboxOrder<WithCallbackMethod_PostSandboxOrderAsync<WithCallbackMethod_ReplaceSandboxOrder<WithCallbackMethod_GetSandboxOrders<WithCallbackMethod_CancelSandboxOrder<WithCallbackMethod_GetSandboxOrderState<WithCallbackMethod_GetSandboxPositions<WithCallbackMethod_GetSandboxOperations<WithCallbackMethod_GetSandboxOperationsByCursor<WithCallbackMethod_GetSandboxPortfolio<WithCallbackMethod_SandboxPayIn<WithCallbackMethod_GetSandboxWithdrawLimits<WithCallbackMethod_GetSandboxMaxLots<Service > > > > > > > > > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_PostSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_PostSandboxStopOrder() {
+      ::grpc::Service::MarkMethodCallback(16,
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response) { return this->PostSandboxStopOrder(context, request, response); }));}
+    void SetMessageAllocatorFor_PostSandboxStopOrder(
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(16);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_PostSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PostSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* PostSandboxStopOrder(
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_GetSandboxStopOrders : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetSandboxStopOrders() {
+      ::grpc::Service::MarkMethodCallback(17,
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response) { return this->GetSandboxStopOrders(context, request, response); }));}
+    void SetMessageAllocatorFor_GetSandboxStopOrders(
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(17);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetSandboxStopOrders() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSandboxStopOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetSandboxStopOrders(
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_CancelSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_CancelSandboxStopOrder() {
+      ::grpc::Service::MarkMethodCallback(18,
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response) { return this->CancelSandboxStopOrder(context, request, response); }));}
+    void SetMessageAllocatorFor_CancelSandboxStopOrder(
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(18);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_CancelSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* CancelSandboxStopOrder(
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_OpenSandboxAccount<WithCallbackMethod_GetSandboxAccounts<WithCallbackMethod_CloseSandboxAccount<WithCallbackMethod_PostSandboxOrder<WithCallbackMethod_PostSandboxOrderAsync<WithCallbackMethod_ReplaceSandboxOrder<WithCallbackMethod_GetSandboxOrders<WithCallbackMethod_CancelSandboxOrder<WithCallbackMethod_GetSandboxOrderState<WithCallbackMethod_GetSandboxPositions<WithCallbackMethod_GetSandboxOperations<WithCallbackMethod_GetSandboxOperationsByCursor<WithCallbackMethod_GetSandboxPortfolio<WithCallbackMethod_SandboxPayIn<WithCallbackMethod_GetSandboxWithdrawLimits<WithCallbackMethod_GetSandboxMaxLots<WithCallbackMethod_PostSandboxStopOrder<WithCallbackMethod_GetSandboxStopOrders<WithCallbackMethod_CancelSandboxStopOrder<Service > > > > > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_OpenSandboxAccount : public BaseClass {
@@ -1539,6 +1761,57 @@ class SandboxService final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetSandboxMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_PostSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_PostSandboxStopOrder() {
+      ::grpc::Service::MarkMethodGeneric(16);
+    }
+    ~WithGenericMethod_PostSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PostSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetSandboxStopOrders : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetSandboxStopOrders() {
+      ::grpc::Service::MarkMethodGeneric(17);
+    }
+    ~WithGenericMethod_GetSandboxStopOrders() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSandboxStopOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_CancelSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_CancelSandboxStopOrder() {
+      ::grpc::Service::MarkMethodGeneric(18);
+    }
+    ~WithGenericMethod_CancelSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1861,6 +2134,66 @@ class SandboxService final {
     }
     void RequestGetSandboxMaxLots(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(15, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_PostSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_PostSandboxStopOrder() {
+      ::grpc::Service::MarkMethodRaw(16);
+    }
+    ~WithRawMethod_PostSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PostSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestPostSandboxStopOrder(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(16, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetSandboxStopOrders : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetSandboxStopOrders() {
+      ::grpc::Service::MarkMethodRaw(17);
+    }
+    ~WithRawMethod_GetSandboxStopOrders() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSandboxStopOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetSandboxStopOrders(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(17, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_CancelSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_CancelSandboxStopOrder() {
+      ::grpc::Service::MarkMethodRaw(18);
+    }
+    ~WithRawMethod_CancelSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestCancelSandboxStopOrder(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(18, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -2213,6 +2546,72 @@ class SandboxService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetSandboxMaxLots(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_PostSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_PostSandboxStopOrder() {
+      ::grpc::Service::MarkMethodRawCallback(16,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->PostSandboxStopOrder(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_PostSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PostSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* PostSandboxStopOrder(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetSandboxStopOrders : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetSandboxStopOrders() {
+      ::grpc::Service::MarkMethodRawCallback(17,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetSandboxStopOrders(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetSandboxStopOrders() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSandboxStopOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetSandboxStopOrders(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_CancelSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_CancelSandboxStopOrder() {
+      ::grpc::Service::MarkMethodRawCallback(18,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->CancelSandboxStopOrder(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_CancelSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* CancelSandboxStopOrder(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -2647,9 +3046,90 @@ class SandboxService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetSandboxMaxLots(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest,::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_OpenSandboxAccount<WithStreamedUnaryMethod_GetSandboxAccounts<WithStreamedUnaryMethod_CloseSandboxAccount<WithStreamedUnaryMethod_PostSandboxOrder<WithStreamedUnaryMethod_PostSandboxOrderAsync<WithStreamedUnaryMethod_ReplaceSandboxOrder<WithStreamedUnaryMethod_GetSandboxOrders<WithStreamedUnaryMethod_CancelSandboxOrder<WithStreamedUnaryMethod_GetSandboxOrderState<WithStreamedUnaryMethod_GetSandboxPositions<WithStreamedUnaryMethod_GetSandboxOperations<WithStreamedUnaryMethod_GetSandboxOperationsByCursor<WithStreamedUnaryMethod_GetSandboxPortfolio<WithStreamedUnaryMethod_SandboxPayIn<WithStreamedUnaryMethod_GetSandboxWithdrawLimits<WithStreamedUnaryMethod_GetSandboxMaxLots<Service > > > > > > > > > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_PostSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_PostSandboxStopOrder() {
+      ::grpc::Service::MarkMethodStreamed(16,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>* streamer) {
+                       return this->StreamedPostSandboxStopOrder(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_PostSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status PostSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedPostSandboxStopOrder(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest,::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetSandboxStopOrders : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetSandboxStopOrders() {
+      ::grpc::Service::MarkMethodStreamed(17,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>* streamer) {
+                       return this->StreamedGetSandboxStopOrders(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetSandboxStopOrders() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetSandboxStopOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetSandboxStopOrders(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest,::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_CancelSandboxStopOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_CancelSandboxStopOrder() {
+      ::grpc::Service::MarkMethodStreamed(18,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>* streamer) {
+                       return this->StreamedCancelSandboxStopOrder(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_CancelSandboxStopOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status CancelSandboxStopOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedCancelSandboxStopOrder(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest,::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_OpenSandboxAccount<WithStreamedUnaryMethod_GetSandboxAccounts<WithStreamedUnaryMethod_CloseSandboxAccount<WithStreamedUnaryMethod_PostSandboxOrder<WithStreamedUnaryMethod_PostSandboxOrderAsync<WithStreamedUnaryMethod_ReplaceSandboxOrder<WithStreamedUnaryMethod_GetSandboxOrders<WithStreamedUnaryMethod_CancelSandboxOrder<WithStreamedUnaryMethod_GetSandboxOrderState<WithStreamedUnaryMethod_GetSandboxPositions<WithStreamedUnaryMethod_GetSandboxOperations<WithStreamedUnaryMethod_GetSandboxOperationsByCursor<WithStreamedUnaryMethod_GetSandboxPortfolio<WithStreamedUnaryMethod_SandboxPayIn<WithStreamedUnaryMethod_GetSandboxWithdrawLimits<WithStreamedUnaryMethod_GetSandboxMaxLots<WithStreamedUnaryMethod_PostSandboxStopOrder<WithStreamedUnaryMethod_GetSandboxStopOrders<WithStreamedUnaryMethod_CancelSandboxStopOrder<Service > > > > > > > > > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_OpenSandboxAccount<WithStreamedUnaryMethod_GetSandboxAccounts<WithStreamedUnaryMethod_CloseSandboxAccount<WithStreamedUnaryMethod_PostSandboxOrder<WithStreamedUnaryMethod_PostSandboxOrderAsync<WithStreamedUnaryMethod_ReplaceSandboxOrder<WithStreamedUnaryMethod_GetSandboxOrders<WithStreamedUnaryMethod_CancelSandboxOrder<WithStreamedUnaryMethod_GetSandboxOrderState<WithStreamedUnaryMethod_GetSandboxPositions<WithStreamedUnaryMethod_GetSandboxOperations<WithStreamedUnaryMethod_GetSandboxOperationsByCursor<WithStreamedUnaryMethod_GetSandboxPortfolio<WithStreamedUnaryMethod_SandboxPayIn<WithStreamedUnaryMethod_GetSandboxWithdrawLimits<WithStreamedUnaryMethod_GetSandboxMaxLots<Service > > > > > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_OpenSandboxAccount<WithStreamedUnaryMethod_GetSandboxAccounts<WithStreamedUnaryMethod_CloseSandboxAccount<WithStreamedUnaryMethod_PostSandboxOrder<WithStreamedUnaryMethod_PostSandboxOrderAsync<WithStreamedUnaryMethod_ReplaceSandboxOrder<WithStreamedUnaryMethod_GetSandboxOrders<WithStreamedUnaryMethod_CancelSandboxOrder<WithStreamedUnaryMethod_GetSandboxOrderState<WithStreamedUnaryMethod_GetSandboxPositions<WithStreamedUnaryMethod_GetSandboxOperations<WithStreamedUnaryMethod_GetSandboxOperationsByCursor<WithStreamedUnaryMethod_GetSandboxPortfolio<WithStreamedUnaryMethod_SandboxPayIn<WithStreamedUnaryMethod_GetSandboxWithdrawLimits<WithStreamedUnaryMethod_GetSandboxMaxLots<WithStreamedUnaryMethod_PostSandboxStopOrder<WithStreamedUnaryMethod_GetSandboxStopOrders<WithStreamedUnaryMethod_CancelSandboxStopOrder<Service > > > > > > > > > > > > > > > > > > > StreamedService;
 };
 // Методы для работы с песочницей T-Invest API
 

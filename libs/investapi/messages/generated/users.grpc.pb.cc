@@ -31,6 +31,8 @@ static const char* UsersService_method_names[] = {
   "/tinkoff.public.invest.api.contract.v1.UsersService/GetMarginAttributes",
   "/tinkoff.public.invest.api.contract.v1.UsersService/GetUserTariff",
   "/tinkoff.public.invest.api.contract.v1.UsersService/GetInfo",
+  "/tinkoff.public.invest.api.contract.v1.UsersService/GetBankAccounts",
+  "/tinkoff.public.invest.api.contract.v1.UsersService/CurrencyTransfer",
 };
 
 std::unique_ptr< UsersService::Stub> UsersService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -44,6 +46,8 @@ UsersService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chann
   , rpcmethod_GetMarginAttributes_(UsersService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetUserTariff_(UsersService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetInfo_(UsersService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBankAccounts_(UsersService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CurrencyTransfer_(UsersService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status UsersService::Stub::GetAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* response) {
@@ -138,6 +142,52 @@ void UsersService::Stub::async::GetInfo(::grpc::ClientContext* context, const ::
   return result;
 }
 
+::grpc::Status UsersService::Stub::GetBankAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest, ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetBankAccounts_, context, request, response);
+}
+
+void UsersService::Stub::async::GetBankAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest, ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBankAccounts_, context, request, response, std::move(f));
+}
+
+void UsersService::Stub::async::GetBankAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBankAccounts_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse>* UsersService::Stub::PrepareAsyncGetBankAccountsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse, ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetBankAccounts_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse>* UsersService::Stub::AsyncGetBankAccountsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetBankAccountsRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status UsersService::Stub::CurrencyTransfer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest& request, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_CurrencyTransfer_, context, request, response);
+}
+
+void UsersService::Stub::async::CurrencyTransfer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CurrencyTransfer_, context, request, response, std::move(f));
+}
+
+void UsersService::Stub::async::CurrencyTransfer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CurrencyTransfer_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>* UsersService::Stub::PrepareAsyncCurrencyTransferRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_CurrencyTransfer_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>* UsersService::Stub::AsyncCurrencyTransferRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncCurrencyTransferRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 UsersService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UsersService_method_names[0],
@@ -179,6 +229,26 @@ UsersService::Service::Service() {
              ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* resp) {
                return service->GetInfo(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UsersService_method_names[4],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest, ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UsersService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse* resp) {
+               return service->GetBankAccounts(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UsersService_method_names[5],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UsersService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* resp) {
+               return service->CurrencyTransfer(ctx, req, resp);
+             }, this)));
 }
 
 UsersService::Service::~Service() {
@@ -206,6 +276,20 @@ UsersService::Service::~Service() {
 }
 
 ::grpc::Status UsersService::Service::GetInfo(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UsersService::Service::GetBankAccounts(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UsersService::Service::CurrencyTransfer(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* response) {
   (void) context;
   (void) request;
   (void) response;

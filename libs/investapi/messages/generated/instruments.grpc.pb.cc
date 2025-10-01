@@ -65,6 +65,8 @@ static const char* InstrumentsService_method_names[] = {
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetForecastBy",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetRiskRates",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetInsiderDeals",
+  "/tinkoff.public.invest.api.contract.v1.InstrumentsService/StructuredNoteBy",
+  "/tinkoff.public.invest.api.contract.v1.InstrumentsService/StructuredNotes",
 };
 
 std::unique_ptr< InstrumentsService::Stub> InstrumentsService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -112,6 +114,8 @@ InstrumentsService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>&
   , rpcmethod_GetForecastBy_(InstrumentsService_method_names[35], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetRiskRates_(InstrumentsService_method_names[36], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetInsiderDeals_(InstrumentsService_method_names[37], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_StructuredNoteBy_(InstrumentsService_method_names[38], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_StructuredNotes_(InstrumentsService_method_names[39], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status InstrumentsService::Stub::TradingSchedules(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesRequest& request, ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse* response) {
@@ -988,6 +992,52 @@ void InstrumentsService::Stub::async::GetInsiderDeals(::grpc::ClientContext* con
   return result;
 }
 
+::grpc::Status InstrumentsService::Stub::StructuredNoteBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest, ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_StructuredNoteBy_, context, request, response);
+}
+
+void InstrumentsService::Stub::async::StructuredNoteBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest, ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_StructuredNoteBy_, context, request, response, std::move(f));
+}
+
+void InstrumentsService::Stub::async::StructuredNoteBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_StructuredNoteBy_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse>* InstrumentsService::Stub::PrepareAsyncStructuredNoteByRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse, ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_StructuredNoteBy_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse>* InstrumentsService::Stub::AsyncStructuredNoteByRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncStructuredNoteByRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status InstrumentsService::Stub::StructuredNotes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest, ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_StructuredNotes_, context, request, response);
+}
+
+void InstrumentsService::Stub::async::StructuredNotes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest, ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_StructuredNotes_, context, request, response, std::move(f));
+}
+
+void InstrumentsService::Stub::async::StructuredNotes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_StructuredNotes_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse>* InstrumentsService::Stub::PrepareAsyncStructuredNotesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse, ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_StructuredNotes_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse>* InstrumentsService::Stub::AsyncStructuredNotesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncStructuredNotesRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 InstrumentsService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InstrumentsService_method_names[0],
@@ -1369,6 +1419,26 @@ InstrumentsService::Service::Service() {
              ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* resp) {
                return service->GetInsiderDeals(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InstrumentsService_method_names[38],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest, ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InstrumentsService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse* resp) {
+               return service->StructuredNoteBy(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InstrumentsService_method_names[39],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest, ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InstrumentsService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse* resp) {
+               return service->StructuredNotes(ctx, req, resp);
+             }, this)));
 }
 
 InstrumentsService::Service::~Service() {
@@ -1634,6 +1704,20 @@ InstrumentsService::Service::~Service() {
 }
 
 ::grpc::Status InstrumentsService::Service::GetInsiderDeals(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InstrumentsService::Service::StructuredNoteBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InstrumentsService::Service::StructuredNotes(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse* response) {
   (void) context;
   (void) request;
   (void) response;

@@ -8,6 +8,7 @@
 #include "src/config/decisions/buy/buydecision4config/buydecision4configwidget/ibuydecision4configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision5config/buydecision5configwidget/ibuydecision5configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision6config/buydecision6configwidget/ibuydecision6configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision7config/buydecision7configwidget/ibuydecision7configwidgetfactory_mock.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget_mock.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
@@ -79,6 +80,7 @@ TEST_F(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<BuyDecision4ConfigWidgetFactoryMock>  buyDecision4ConfigWidgetFactoryMock;
     StrictMock<BuyDecision5ConfigWidgetFactoryMock>  buyDecision5ConfigWidgetFactoryMock;
     StrictMock<BuyDecision6ConfigWidgetFactoryMock>  buyDecision6ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision7ConfigWidgetFactoryMock>  buyDecision7ConfigWidgetFactoryMock;
     StrictMock<SellDecision1ConfigWidgetFactoryMock> sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock> sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock> sellDecision3ConfigWidgetFactoryMock;
@@ -127,6 +129,7 @@ TEST_F(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &buyDecision4ConfigWidgetFactoryMock,
             &buyDecision5ConfigWidgetFactoryMock,
             &buyDecision6ConfigWidgetFactoryMock,
+            &buyDecision7ConfigWidgetFactoryMock,
             &sellDecision1ConfigWidgetFactoryMock,
             &sellDecision2ConfigWidgetFactoryMock,
             &sellDecision3ConfigWidgetFactoryMock,
@@ -158,6 +161,7 @@ TEST_F(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &buyDecision4ConfigWidgetFactoryMock,
             &buyDecision5ConfigWidgetFactoryMock,
             &buyDecision6ConfigWidgetFactoryMock,
+            &buyDecision7ConfigWidgetFactoryMock,
             &sellDecision1ConfigWidgetFactoryMock,
             &sellDecision2ConfigWidgetFactoryMock,
             &sellDecision3ConfigWidgetFactoryMock,

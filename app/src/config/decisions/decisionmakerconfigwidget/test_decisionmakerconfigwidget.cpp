@@ -20,6 +20,9 @@
 #include "src/config/decisions/buy/buydecision6config/buydecision6configwidget/ibuydecision6configwidget_mock.h"
 #include "src/config/decisions/buy/buydecision6config/buydecision6configwidget/ibuydecision6configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision6config/ibuydecision6config_mock.h"
+#include "src/config/decisions/buy/buydecision7config/buydecision7configwidget/ibuydecision7configwidget_mock.h"
+#include "src/config/decisions/buy/buydecision7config/buydecision7configwidget/ibuydecision7configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision7config/ibuydecision7config_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
 #include "src/config/decisions/sell/selldecision1config/iselldecision1config_mock.h"
 #include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidget_mock.h"
@@ -58,6 +61,7 @@ protected:
         buyDecision4ConfigMock               = new StrictMock<BuyDecision4ConfigMock>();
         buyDecision5ConfigMock               = new StrictMock<BuyDecision5ConfigMock>();
         buyDecision6ConfigMock               = new StrictMock<BuyDecision6ConfigMock>();
+        buyDecision7ConfigMock               = new StrictMock<BuyDecision7ConfigMock>();
         sellDecision1ConfigMock              = new StrictMock<SellDecision1ConfigMock>();
         sellDecision2ConfigMock              = new StrictMock<SellDecision2ConfigMock>();
         sellDecision3ConfigMock              = new StrictMock<SellDecision3ConfigMock>();
@@ -68,6 +72,7 @@ protected:
         buyDecision4ConfigWidgetMock         = new StrictMock<BuyDecision4ConfigWidgetMock>();
         buyDecision5ConfigWidgetMock         = new StrictMock<BuyDecision5ConfigWidgetMock>();
         buyDecision6ConfigWidgetMock         = new StrictMock<BuyDecision6ConfigWidgetMock>();
+        buyDecision7ConfigWidgetMock         = new StrictMock<BuyDecision7ConfigWidgetMock>();
         sellDecision1ConfigWidgetMock        = new StrictMock<SellDecision1ConfigWidgetMock>();
         sellDecision2ConfigWidgetMock        = new StrictMock<SellDecision2ConfigWidgetMock>();
         sellDecision3ConfigWidgetMock        = new StrictMock<SellDecision3ConfigWidgetMock>();
@@ -78,6 +83,7 @@ protected:
         buyDecision4ConfigWidgetFactoryMock  = new StrictMock<BuyDecision4ConfigWidgetFactoryMock>();
         buyDecision5ConfigWidgetFactoryMock  = new StrictMock<BuyDecision5ConfigWidgetFactoryMock>();
         buyDecision6ConfigWidgetFactoryMock  = new StrictMock<BuyDecision6ConfigWidgetFactoryMock>();
+        buyDecision7ConfigWidgetFactoryMock  = new StrictMock<BuyDecision7ConfigWidgetFactoryMock>();
         sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
         sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
@@ -107,6 +113,10 @@ protected:
         EXPECT_CALL(*buyDecision6ConfigWidgetFactoryMock, newInstance(buyDecision6ConfigMock, NotNull()))
             .WillOnce(Return(buyDecision6ConfigWidgetMock));
 
+        EXPECT_CALL(*decisionMakerConfigMock, getBuyDecision7Config()).WillOnce(Return(buyDecision7ConfigMock));
+        EXPECT_CALL(*buyDecision7ConfigWidgetFactoryMock, newInstance(buyDecision7ConfigMock, NotNull()))
+            .WillOnce(Return(buyDecision7ConfigWidgetMock));
+
         EXPECT_CALL(*decisionMakerConfigMock, getSellDecision1Config()).WillOnce(Return(sellDecision1ConfigMock));
         EXPECT_CALL(*sellDecision1ConfigWidgetFactoryMock, newInstance(sellDecision1ConfigMock, NotNull()))
             .WillOnce(Return(sellDecision1ConfigWidgetMock));
@@ -131,6 +141,7 @@ protected:
             buyDecision4ConfigWidgetFactoryMock,
             buyDecision5ConfigWidgetFactoryMock,
             buyDecision6ConfigWidgetFactoryMock,
+            buyDecision7ConfigWidgetFactoryMock,
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
@@ -148,6 +159,7 @@ protected:
         delete buyDecision4ConfigMock;
         delete buyDecision5ConfigMock;
         delete buyDecision6ConfigMock;
+        delete buyDecision7ConfigMock;
         delete sellDecision1ConfigMock;
         delete sellDecision2ConfigMock;
         delete sellDecision3ConfigMock;
@@ -160,6 +172,7 @@ protected:
         delete buyDecision4ConfigWidgetMock;
         delete buyDecision5ConfigWidgetMock;
         delete buyDecision6ConfigWidgetMock;
+        delete buyDecision7ConfigWidgetMock;
         delete sellDecision1ConfigWidgetMock;
         delete sellDecision2ConfigWidgetMock;
         delete sellDecision3ConfigWidgetMock;
@@ -171,6 +184,7 @@ protected:
         delete buyDecision4ConfigWidgetFactoryMock;
         delete buyDecision5ConfigWidgetFactoryMock;
         delete buyDecision6ConfigWidgetFactoryMock;
+        delete buyDecision7ConfigWidgetFactoryMock;
         delete sellDecision1ConfigWidgetFactoryMock;
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
@@ -185,6 +199,7 @@ protected:
     StrictMock<BuyDecision4ConfigMock>*               buyDecision4ConfigMock;
     StrictMock<BuyDecision5ConfigMock>*               buyDecision5ConfigMock;
     StrictMock<BuyDecision6ConfigMock>*               buyDecision6ConfigMock;
+    StrictMock<BuyDecision7ConfigMock>*               buyDecision7ConfigMock;
     StrictMock<SellDecision1ConfigMock>*              sellDecision1ConfigMock;
     StrictMock<SellDecision2ConfigMock>*              sellDecision2ConfigMock;
     StrictMock<SellDecision3ConfigMock>*              sellDecision3ConfigMock;
@@ -195,6 +210,7 @@ protected:
     StrictMock<BuyDecision4ConfigWidgetMock>*         buyDecision4ConfigWidgetMock;
     StrictMock<BuyDecision5ConfigWidgetMock>*         buyDecision5ConfigWidgetMock;
     StrictMock<BuyDecision6ConfigWidgetMock>*         buyDecision6ConfigWidgetMock;
+    StrictMock<BuyDecision7ConfigWidgetMock>*         buyDecision7ConfigWidgetMock;
     StrictMock<SellDecision1ConfigWidgetMock>*        sellDecision1ConfigWidgetMock;
     StrictMock<SellDecision2ConfigWidgetMock>*        sellDecision2ConfigWidgetMock;
     StrictMock<SellDecision3ConfigWidgetMock>*        sellDecision3ConfigWidgetMock;
@@ -205,6 +221,7 @@ protected:
     StrictMock<BuyDecision4ConfigWidgetFactoryMock>*  buyDecision4ConfigWidgetFactoryMock;
     StrictMock<BuyDecision5ConfigWidgetFactoryMock>*  buyDecision5ConfigWidgetFactoryMock;
     StrictMock<BuyDecision6ConfigWidgetFactoryMock>*  buyDecision6ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision7ConfigWidgetFactoryMock>*  buyDecision7ConfigWidgetFactoryMock;
     StrictMock<SellDecision1ConfigWidgetFactoryMock>* sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
@@ -227,6 +244,7 @@ TEST_F(Test_DecisionMakerConfigWidget, Test_updateUiFromConfig)
     EXPECT_CALL(*buyDecision4ConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*buyDecision5ConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*buyDecision6ConfigWidgetMock, updateUiFromConfig());
+    EXPECT_CALL(*buyDecision7ConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*sellDecision1ConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*sellDecision2ConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*sellDecision3ConfigWidgetMock, updateUiFromConfig());
@@ -245,6 +263,7 @@ TEST_F(Test_DecisionMakerConfigWidget, Test_makeReadOnly)
     EXPECT_CALL(*buyDecision4ConfigWidgetMock, makeReadOnly());
     EXPECT_CALL(*buyDecision5ConfigWidgetMock, makeReadOnly());
     EXPECT_CALL(*buyDecision6ConfigWidgetMock, makeReadOnly());
+    EXPECT_CALL(*buyDecision7ConfigWidgetMock, makeReadOnly());
     EXPECT_CALL(*sellDecision1ConfigWidgetMock, makeReadOnly());
     EXPECT_CALL(*sellDecision2ConfigWidgetMock, makeReadOnly());
     EXPECT_CALL(*sellDecision3ConfigWidgetMock, makeReadOnly());
