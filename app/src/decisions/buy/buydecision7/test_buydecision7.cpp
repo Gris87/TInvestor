@@ -4,6 +4,7 @@
 
 #include "src/config/decisions/buy/buydecision7config/ibuydecision7config_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
 
 
 
@@ -24,12 +25,15 @@ class Test_BuyDecision7 : public ::testing::Test
 protected:
     void SetUp() override
     {
-        buyDecision7 = new BuyDecision7();
+        timeUtilsMock = new StrictMock<TimeUtilsMock>();
+
+        buyDecision7 = new BuyDecision7(timeUtilsMock);
     }
 
     void TearDown() override
     {
         delete buyDecision7;
+        delete timeUtilsMock;
     }
 
     void fillWithData(Stock* stock, QList<float> data, bool dateRange)
@@ -70,7 +74,8 @@ protected:
         }
     }
 
-    BuyDecision7* buyDecision7;
+    BuyDecision7*              buyDecision7;
+    StrictMock<TimeUtilsMock>* timeUtilsMock;
 };
 
 

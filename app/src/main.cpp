@@ -443,7 +443,7 @@ static int runApplication(QApplication* app)
     BuyDecision4  buyDecision4;
     BuyDecision5  buyDecision5;
     BuyDecision6  buyDecision6;
-    BuyDecision7  buyDecision7;
+    BuyDecision7  buyDecision7(&timeUtils);
     SellDecision1 sellDecision1;
     SellDecision2 sellDecision2;
     SellDecision3 sellDecision3;

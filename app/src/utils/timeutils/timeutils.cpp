@@ -67,3 +67,13 @@ bool TimeUtils::isMorningSession(qint64 timestamp)
 
     return time < startTime;
 }
+
+bool TimeUtils::isTimeBetween(QTime time, QTime startTime, QTime endTime)
+{
+    if (startTime < endTime)
+    {
+        return time >= startTime && time < endTime;
+    }
+
+    return time >= startTime || time < endTime;
+}

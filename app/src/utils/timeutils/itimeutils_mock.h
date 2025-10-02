@@ -23,4 +23,5 @@ public:
     MOCK_METHOD(bool, interruptibleSleep, (int ms, QThread* parentThread), (override));
     MOCK_METHOD(bool, isWorkingHours, (qint64 timestamp), (override));
     MOCK_METHOD(bool, isMorningSession, (qint64 timestamp), (override));
+    MOCK_METHOD(bool, isTimeBetween, (QTime time, QTime startTime, QTime endTime), (override));
 };

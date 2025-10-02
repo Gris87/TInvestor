@@ -1096,6 +1096,11 @@
         <source>Decided to buy because the price reach market limit at %1 and hold it for %2 minutes</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="../../src/decisions/buy/buydecision7/buydecision7.cpp" line="153"/>
+        <source>Decided to buy because the price raises more than %1 during last %2 nights</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>SellDecision1ConfigWidget</name>
