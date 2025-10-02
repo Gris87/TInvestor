@@ -19,7 +19,7 @@ public:
 
     IBuyDecision7Config* clone() override;
     void                 deleteRecursively() override;
-    void assign(IBuyDecision7Config* another) override;
+    void                 assign(IBuyDecision7Config* another) override;
     void                 makeDefault() override;
 
     void save(ISettingsEditor* settingsEditor, const QString& type) override;
@@ -39,9 +39,6 @@ public:
     void  setPriceRaise(float value) override;
     float getPriceRaise() override;
 
-    void setOrderBookPositions(int value) override;
-    int  getOrderBookPositions() override;
-
     void setDuration(int value) override;
     int  getDuration() override;
 
@@ -49,6 +46,5 @@ private:
     QReadWriteLock* mRwMutex;
     bool            mEnabled;
     float           mPriceRaise;
-    int             mOrderBookPositions;
     int             mDuration;
 };

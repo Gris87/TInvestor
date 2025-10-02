@@ -229,7 +229,7 @@ bool TradingThread::sell(double expected, double delta)
         return false;
     }
 
-    const AsapMode mode  = asapMode();
+    const AsapMode mode = asapMode();
     Quotation      limitPrice;
     double         price = -1;
 
@@ -256,7 +256,7 @@ bool TradingThread::sell(double expected, double delta)
 
     if (price > 0)
     {
-        const qint64 coef = static_cast<qint64>(std::ceil(price / quotationToDouble(mMinPriceIncrement)));
+        const qint64 coef           = static_cast<qint64>(std::ceil(price / quotationToDouble(mMinPriceIncrement)));
         Quotation    priceQuotation = quotationMultiply(mMinPriceIncrement, coef);
 
         if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->bids_size() > 0)
@@ -427,7 +427,7 @@ bool TradingThread::buy(double expected, double delta)
         return false;
     }
 
-    const AsapMode mode  = asapMode();
+    const AsapMode mode = asapMode();
     Quotation      limitPrice;
     double         price = -1;
 

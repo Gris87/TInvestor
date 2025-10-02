@@ -6,10 +6,9 @@
 
 
 
-constexpr bool  ENABLED_DEFAULT              = true;
-constexpr float PRICE_RAISE_DEFAULT          = 2.0f;
-constexpr float ORDER_BOOK_POSITIONS_DEFAULT = 10;
-constexpr int   DURATION_DEFAULT             = 5;
+constexpr bool  ENABLED_DEFAULT     = true;
+constexpr float PRICE_RAISE_DEFAULT = 2.0f;
+constexpr int   DURATION_DEFAULT    = 3;
 
 
 
@@ -18,7 +17,6 @@ BuyDecision7Config::BuyDecision7Config() :
     mRwMutex(new QReadWriteLock()),
     mEnabled(),
     mPriceRaise(),
-    mOrderBookPositions(),
     mDuration()
 {
     qDebug() << "Create BuyDecision7Config";
@@ -53,10 +51,9 @@ void BuyDecision7Config::assign(IBuyDecision7Config* another)
     const BuyDecision7Config& config = *dynamic_cast<BuyDecision7Config*>(another);
     const QReadLocker         lock2(config.mRwMutex);
 
-    mEnabled            = config.mEnabled;
-    mPriceRaise         = config.mPriceRaise;
-    mOrderBookPositions = config.mOrderBookPositions;
-    mDuration           = config.mDuration;
+    mEnabled    = config.mEnabled;
+    mPriceRaise = config.mPriceRaise;
+    mDuration   = config.mDuration;
 }
 
 void BuyDecision7Config::makeDefault()
@@ -65,10 +62,9 @@ void BuyDecision7Config::makeDefault()
 
     qDebug() << "Set BuyDecision7Config to default";
 
-    mEnabled            = ENABLED_DEFAULT;
-    mPriceRaise         = PRICE_RAISE_DEFAULT;
-    mOrderBookPositions = ORDER_BOOK_POSITIONS_DEFAULT;
-    mDuration           = DURATION_DEFAULT;
+    mEnabled    = ENABLED_DEFAULT;
+    mPriceRaise = PRICE_RAISE_DEFAULT;
+    mDuration   = DURATION_DEFAULT;
 }
 
 void BuyDecision7Config::save(ISettingsEditor* settingsEditor, const QString& type)
@@ -78,10 +74,9 @@ void BuyDecision7Config::save(ISettingsEditor* settingsEditor, const QString& ty
     qDebug() << "Save BuyDecision7Config";
 
     // clang-format off
-    settingsEditor->setValue(type + "/Enabled",            mEnabled);
-    settingsEditor->setValue(type + "/PriceRaise",         mPriceRaise);
-    settingsEditor->setValue(type + "/OrderBookPositions", mOrderBookPositions);
-    settingsEditor->setValue(type + "/Duration",           mDuration);
+    settingsEditor->setValue(type + "/Enabled",    mEnabled);
+    settingsEditor->setValue(type + "/PriceRaise", mPriceRaise);
+    settingsEditor->setValue(type + "/Duration",   mDuration);
     // clang-format on
 }
 
@@ -92,10 +87,9 @@ void BuyDecision7Config::load(ISettingsEditor* settingsEditor, const QString& ty
     qDebug() << "Load BuyDecision7Config";
 
     // clang-format off
-    mEnabled            = settingsEditor->value(type + "/Enabled",            mEnabled).toBool();
-    mPriceRaise         = settingsEditor->value(type + "/PriceRaise",         mPriceRaise).toFloat();
-    mOrderBookPositions = settingsEditor->value(type + "/OrderBookPositions", mOrderBookPositions).toInt();
-    mDuration           = settingsEditor->value(type + "/Duration",           mDuration).toInt();
+    mEnabled    = settingsEditor->value(type + "/Enabled",    mEnabled).toBool();
+    mPriceRaise = settingsEditor->value(type + "/PriceRaise", mPriceRaise).toFloat();
+    mDuration   = settingsEditor->value(type + "/Duration",   mDuration).toInt();
     // clang-format on
 }
 
@@ -107,11 +101,6 @@ static void configEnabledParse(BuyDecision7Config* config, simdjson::ondemand::v
 static void configPriceRaiseParse(BuyDecision7Config* config, simdjson::ondemand::value value)
 {
     config->setPriceRaise(value.get_double_in_string());
-}
-
-static void configOrderBookPositionsParse(BuyDecision7Config* config, simdjson::ondemand::value value)
-{
-    config->setOrderBookPositions(value.get_int64());
 }
 
 static void configDurationParse(BuyDecision7Config* config, simdjson::ondemand::value value)
@@ -130,10 +119,9 @@ using ParseHandler = void (*)(BuyDecision7Config* config, simdjson::ondemand::va
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"enabled",            configEnabledParse           },
-    {"priceRaise",         configPriceRaiseParse        },
-    {"orderBookPositions", configOrderBookPositionsParse},
-    {"duration",           configDurationParse          }
+    {"enabled",    configEnabledParse   },
+    {"priceRaise", configPriceRaiseParse},
+    {"duration",   configDurationParse  }
 };
 // clang-format on
 
@@ -150,13 +138,8 @@ void BuyDecision7Config::fromJsonObject(simdjson::ondemand::object jsonObject) /
 
 QString BuyDecision7Config::toJsonString() const
 {
-    return QString(R"({"enabled":%1,"priceRaise":"%2","orderBookPositions":%3,"duration":%4})")
-        .arg(
-            mEnabled ? "true" : "false",
-            QString::number(mPriceRaise, 'f', 2),
-            QString::number(mOrderBookPositions),
-            QString::number(mDuration)
-        );
+    return QString(R"({"enabled":%1,"priceRaise":"%2","duration":%3})")
+        .arg(mEnabled ? "true" : "false", QString::number(mPriceRaise, 'f', 2), QString::number(mDuration));
 }
 
 QStringList BuyDecision7Config::variantsAsJson() const
@@ -165,19 +148,14 @@ QStringList BuyDecision7Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList priceRaiseVariants         = {"1.00", "2.00", "3.00", "4.00", "5.00"};
-    const QStringList orderBookPositionsVariants = {"5", "10", "15", "20"};
-    const QStringList durationVariants           = {"5", "10", "15"};
+    const QStringList priceRaiseVariants = {"2.00", "3.00", "4.00"};
+    const QStringList durationVariants   = {"2", "3", "4"};
 
     for (const QString& priceRaise : priceRaiseVariants)
     {
-        for (const QString& orderBookPositions : orderBookPositionsVariants)
+        for (const QString& duration : durationVariants)
         {
-            for (const QString& duration : durationVariants)
-            {
-                res.append(QString(R"({"enabled":true,"priceRaise":"%1","orderBookPositions":%2,"duration":%3})")
-                               .arg(priceRaise, orderBookPositions, duration));
-            }
+            res.append(QString(R"({"enabled":true,"priceRaise":"%1","duration":%2})").arg(priceRaise, duration));
         }
     }
 
@@ -210,20 +188,6 @@ float BuyDecision7Config::getPriceRaise()
     const QReadLocker lock(mRwMutex);
 
     return mPriceRaise;
-}
-
-void BuyDecision7Config::setOrderBookPositions(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mOrderBookPositions = value;
-}
-
-int BuyDecision7Config::getOrderBookPositions()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mOrderBookPositions;
 }
 
 void BuyDecision7Config::setDuration(int value)

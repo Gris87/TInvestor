@@ -20,7 +20,7 @@ public:
 
     virtual IBuyDecision7Config* clone()                              = 0;
     virtual void                 deleteRecursively()                  = 0;
-    virtual void assign(IBuyDecision7Config* another)                 = 0;
+    virtual void                 assign(IBuyDecision7Config* another) = 0;
     virtual void                 makeDefault()                        = 0;
 
     virtual void save(ISettingsEditor* settingsEditor, const QString& type) = 0;
@@ -39,9 +39,6 @@ public:
 
     virtual void  setPriceRaise(float value) = 0;
     virtual float getPriceRaise()            = 0;
-
-    virtual void setOrderBookPositions(int value) = 0;
-    virtual int  getOrderBookPositions()          = 0;
 
     virtual void setDuration(int value) = 0;
     virtual int  getDuration()          = 0;

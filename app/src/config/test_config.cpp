@@ -445,9 +445,9 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->getMakeDecisionTimeout(),                     1);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config->isTradeHugeSpread(),                          true);
-    ASSERT_NEAR(config->getHugeSpread(),                            0.8f, 0.0001f);
+    ASSERT_NEAR(config->getHugeSpread(),                            0.7f, 0.0001f);
     ASSERT_EQ(config->isHugeSpreadLimitStockPurchase(),             true);
-    ASSERT_NEAR(config->getHugeSpreadLimitStockPurchasePart(),      2.0f, 0.0001f);
+    ASSERT_NEAR(config->getHugeSpreadLimitStockPurchasePart(),      3.0f, 0.0001f);
     ASSERT_EQ(config->isHugeSpreadLimitByTurnover(),                true);
     ASSERT_NEAR(config->getHugeSpreadLimitByTurnoverPercent(),      1.0f, 0.0001f);
     ASSERT_EQ(config->isTradeLiquidityEtfNightly(),                 true);
