@@ -38,6 +38,7 @@ DecisionMakerWidgetFactory::newInstance(const DecisionMakerWidgetFactoryNewInsta
         args.sellDecision2ConfigWidgetFactory,
         args.sellDecision3ConfigWidgetFactory,
         args.sellDecision4ConfigWidgetFactory,
+        args.sellDecision5ConfigWidgetFactory,
         args.portfolioTreeWidgetFactory,
         args.operationsTableModelFactory,
         args.logsTableModelFactory,

@@ -48,6 +48,7 @@ public:
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
+        ISellDecision5ConfigWidgetFactory* sellDecision5ConfigWidgetFactory,
         IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
         IOperationsTableModelFactory*      operationsTableModelFactory,
         ILogsTableModelFactory*            logsTableModelFactory,

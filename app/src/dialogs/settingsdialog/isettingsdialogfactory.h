@@ -26,6 +26,7 @@ struct SettingsDialogFactoryNewInstanceArgsMore15
         ISellDecision2ConfigWidgetFactory* _sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* _sellDecision3ConfigWidgetFactory,
         ISellDecision4ConfigWidgetFactory* _sellDecision4ConfigWidgetFactory,
+        ISellDecision5ConfigWidgetFactory* _sellDecision5ConfigWidgetFactory,
         IUserStorage*                      _userStorage
     ) :
         config(_config),
@@ -42,6 +43,7 @@ struct SettingsDialogFactoryNewInstanceArgsMore15
         sellDecision2ConfigWidgetFactory(_sellDecision2ConfigWidgetFactory),
         sellDecision3ConfigWidgetFactory(_sellDecision3ConfigWidgetFactory),
         sellDecision4ConfigWidgetFactory(_sellDecision4ConfigWidgetFactory),
+        sellDecision5ConfigWidgetFactory(_sellDecision5ConfigWidgetFactory),
         userStorage(_userStorage)
     {
     }
@@ -62,6 +64,7 @@ struct SettingsDialogFactoryNewInstanceArgsMore15
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory;
     ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory;
+    ISellDecision5ConfigWidgetFactory* sellDecision5ConfigWidgetFactory;
     IUserStorage*                      userStorage;
 };
 

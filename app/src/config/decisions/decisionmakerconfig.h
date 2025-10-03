@@ -21,7 +21,8 @@ public:
         ISellDecision1Config* sellDecision1Config,
         ISellDecision2Config* sellDecision2Config,
         ISellDecision3Config* sellDecision3Config,
-        ISellDecision4Config* sellDecision4Config
+        ISellDecision4Config* sellDecision4Config,
+        ISellDecision5Config* sellDecision5Config
     );
     ~DecisionMakerConfig() override;
 
@@ -59,6 +60,7 @@ public:
     ISellDecision2Config* getSellDecision2Config() override;
     ISellDecision3Config* getSellDecision3Config() override;
     ISellDecision4Config* getSellDecision4Config() override;
+    ISellDecision5Config* getSellDecision5Config() override;
 
 private:
     IBuyDecision1Config*  mBuyDecision1Config;
@@ -73,4 +75,5 @@ private:
     ISellDecision2Config* mSellDecision2Config;
     ISellDecision3Config* mSellDecision3Config;
     ISellDecision4Config* mSellDecision4Config;
+    ISellDecision5Config* mSellDecision5Config;
 };

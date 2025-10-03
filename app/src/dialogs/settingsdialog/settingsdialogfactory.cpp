@@ -35,6 +35,7 @@ SettingsDialogFactory::newInstance(const SettingsDialogFactoryNewInstanceArgsMor
         args.sellDecision2ConfigWidgetFactory,
         args.sellDecision3ConfigWidgetFactory,
         args.sellDecision4ConfigWidgetFactory,
+        args.sellDecision5ConfigWidgetFactory,
         args.userStorage,
         parent
     ));

@@ -16,6 +16,7 @@
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory.h"
+#include "src/config/decisions/sell/selldecision5config/selldecision5configwidget/iselldecision5configwidgetfactory.h"
 
 
 
@@ -42,6 +43,7 @@ public:
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
+        ISellDecision5ConfigWidgetFactory* sellDecision5ConfigWidgetFactory,
         QWidget*                           parent
     ) const = 0;
 };
