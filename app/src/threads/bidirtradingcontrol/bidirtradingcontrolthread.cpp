@@ -11,7 +11,7 @@
 constexpr float  HUNDRED_PERCENT            = 100.0f;
 constexpr float  LIMIT_COMMISSION           = 0.06f;
 constexpr int    EXTRA_SESSION_END_HOUR     = 23;
-constexpr int    EXTRA_SESSION_END_MINUTE   = 0;
+constexpr int    EXTRA_SESSION_END_MINUTE   = 20;
 constexpr int    AMOUNT_OF_LAST_INSTRUMENTS = 5;
 constexpr qint64 MS_IN_SECOND               = 1000LL;
 constexpr qint64 ONE_MINUTE                 = 60LL * MS_IN_SECOND;

@@ -170,7 +170,7 @@ TEST_F(Test_HighLiquidityThread, Test_makeDecisionBaseOnTimestamp)
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
 
-    thread->makeDecisionBaseOnTimestamp(1704141540000); // 23:39 MSK
+    thread->makeDecisionBaseOnTimestamp(1704141840000); // 23:44 MSK
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
@@ -178,24 +178,24 @@ TEST_F(Test_HighLiquidityThread, Test_makeDecisionBaseOnTimestamp)
         .WillOnce(Return(portfolioResponse));
     EXPECT_CALL(*configMock, getLiquidityEtfRemainedPartNightly()).WillOnce(Return(1.0f));
 
-    thread->makeDecisionBaseOnTimestamp(1704141600000); // 23:40 MSK
+    thread->makeDecisionBaseOnTimestamp(1704141900000); // 23:45 MSK
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
-    EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704122940000)).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704123240000)).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
 
-    thread->makeDecisionBaseOnTimestamp(1704122940000); // 18:29 MSK
+    thread->makeDecisionBaseOnTimestamp(1704123240000); // 18:34 MSK
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
-    EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704123000000)).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704123300000)).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
     EXPECT_CALL(*configMock, getLiquidityEtfRemainedPartNightly()).WillOnce(Return(1.0f));
 
-    thread->makeDecisionBaseOnTimestamp(1704123000000); // 18:30 MSK
+    thread->makeDecisionBaseOnTimestamp(1704123300000); // 18:35 MSK
 }
 
 TEST_F(Test_HighLiquidityThread, Test_terminateThread)

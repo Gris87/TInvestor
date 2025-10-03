@@ -15,21 +15,6 @@ public:
     SettingsDialogFactory(const SettingsDialogFactory& another)            = delete;
     SettingsDialogFactory& operator=(const SettingsDialogFactory& another) = delete;
 
-    std::shared_ptr<ISettingsDialog> newInstance(
-        IConfig*                           config,
-        IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
-        IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
-        IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
-        IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory,
-        IBuyDecision4ConfigWidgetFactory*  buyDecision4ConfigWidgetFactory,
-        IBuyDecision5ConfigWidgetFactory*  buyDecision5ConfigWidgetFactory,
-        IBuyDecision6ConfigWidgetFactory*  buyDecision6ConfigWidgetFactory,
-        IBuyDecision7ConfigWidgetFactory*  buyDecision7ConfigWidgetFactory,
-        ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
-        ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
-        ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
-        ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
-        IUserStorage*                      userStorage,
-        QWidget*                           parent
-    ) const override;
+    std::shared_ptr<ISettingsDialog>
+    newInstance(const SettingsDialogFactoryNewInstanceArgsMore15& args, QWidget* parent) const override;
 };

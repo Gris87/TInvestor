@@ -14,9 +14,9 @@ constexpr float HUNDRED_PERCENT             = 100.0f;
 constexpr int   NORMAL_SESSION_START_HOUR   = 10;
 constexpr int   NORMAL_SESSION_START_MINUTE = 0;
 constexpr int   NORMAL_SESSION_END_HOUR     = 18;
-constexpr int   NORMAL_SESSION_END_MINUTE   = 30;
+constexpr int   NORMAL_SESSION_END_MINUTE   = 35;
 constexpr int   EXTRA_SESSION_END_HOUR      = 23;
-constexpr int   EXTRA_SESSION_END_MINUTE    = 40;
+constexpr int   EXTRA_SESSION_END_MINUTE    = 45;
 
 
 

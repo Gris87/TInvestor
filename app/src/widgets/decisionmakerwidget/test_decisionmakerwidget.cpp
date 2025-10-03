@@ -10,6 +10,7 @@
 #include "src/config/decisions/buy/buydecision5config/buydecision5configwidget/ibuydecision5configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision6config/buydecision6configwidget/ibuydecision6configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision7config/buydecision7configwidget/ibuydecision7configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision8config/buydecision8configwidget/ibuydecision8configwidgetfactory_mock.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget_mock.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
@@ -66,6 +67,7 @@ protected:
         buyDecision5ConfigWidgetFactoryMock  = new StrictMock<BuyDecision5ConfigWidgetFactoryMock>();
         buyDecision6ConfigWidgetFactoryMock  = new StrictMock<BuyDecision6ConfigWidgetFactoryMock>();
         buyDecision7ConfigWidgetFactoryMock  = new StrictMock<BuyDecision7ConfigWidgetFactoryMock>();
+        buyDecision8ConfigWidgetFactoryMock  = new StrictMock<BuyDecision8ConfigWidgetFactoryMock>();
         sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
         sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
@@ -115,6 +117,7 @@ protected:
                 buyDecision5ConfigWidgetFactoryMock,
                 buyDecision6ConfigWidgetFactoryMock,
                 buyDecision7ConfigWidgetFactoryMock,
+                buyDecision8ConfigWidgetFactoryMock,
                 sellDecision1ConfigWidgetFactoryMock,
                 sellDecision2ConfigWidgetFactoryMock,
                 sellDecision3ConfigWidgetFactoryMock,
@@ -146,6 +149,7 @@ protected:
             buyDecision5ConfigWidgetFactoryMock,
             buyDecision6ConfigWidgetFactoryMock,
             buyDecision7ConfigWidgetFactoryMock,
+            buyDecision8ConfigWidgetFactoryMock,
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
@@ -176,6 +180,7 @@ protected:
         delete buyDecision5ConfigWidgetFactoryMock;
         delete buyDecision6ConfigWidgetFactoryMock;
         delete buyDecision7ConfigWidgetFactoryMock;
+        delete buyDecision8ConfigWidgetFactoryMock;
         delete sellDecision1ConfigWidgetFactoryMock;
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
@@ -215,6 +220,7 @@ protected:
     StrictMock<BuyDecision5ConfigWidgetFactoryMock>*  buyDecision5ConfigWidgetFactoryMock;
     StrictMock<BuyDecision6ConfigWidgetFactoryMock>*  buyDecision6ConfigWidgetFactoryMock;
     StrictMock<BuyDecision7ConfigWidgetFactoryMock>*  buyDecision7ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision8ConfigWidgetFactoryMock>*  buyDecision8ConfigWidgetFactoryMock;
     StrictMock<SellDecision1ConfigWidgetFactoryMock>* sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;

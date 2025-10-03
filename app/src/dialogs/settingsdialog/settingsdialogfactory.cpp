@@ -17,39 +17,25 @@ SettingsDialogFactory::~SettingsDialogFactory()
     qDebug() << "Destroy SettingsDialogFactory";
 }
 
-std::shared_ptr<ISettingsDialog> SettingsDialogFactory::newInstance(
-    IConfig*                           config,
-    IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
-    IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
-    IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
-    IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory,
-    IBuyDecision4ConfigWidgetFactory*  buyDecision4ConfigWidgetFactory,
-    IBuyDecision5ConfigWidgetFactory*  buyDecision5ConfigWidgetFactory,
-    IBuyDecision6ConfigWidgetFactory*  buyDecision6ConfigWidgetFactory,
-    IBuyDecision7ConfigWidgetFactory*  buyDecision7ConfigWidgetFactory,
-    ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
-    ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
-    ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
-    ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
-    IUserStorage*                      userStorage,
-    QWidget*                           parent
-) const
+std::shared_ptr<ISettingsDialog>
+SettingsDialogFactory::newInstance(const SettingsDialogFactoryNewInstanceArgsMore15& args, QWidget* parent) const
 {
     return std::shared_ptr<ISettingsDialog>(new SettingsDialog(
-        config,
-        decisionMakerConfigWidgetFactory,
-        buyDecision1ConfigWidgetFactory,
-        buyDecision2ConfigWidgetFactory,
-        buyDecision3ConfigWidgetFactory,
-        buyDecision4ConfigWidgetFactory,
-        buyDecision5ConfigWidgetFactory,
-        buyDecision6ConfigWidgetFactory,
-        buyDecision7ConfigWidgetFactory,
-        sellDecision1ConfigWidgetFactory,
-        sellDecision2ConfigWidgetFactory,
-        sellDecision3ConfigWidgetFactory,
-        sellDecision4ConfigWidgetFactory,
-        userStorage,
+        args.config,
+        args.decisionMakerConfigWidgetFactory,
+        args.buyDecision1ConfigWidgetFactory,
+        args.buyDecision2ConfigWidgetFactory,
+        args.buyDecision3ConfigWidgetFactory,
+        args.buyDecision4ConfigWidgetFactory,
+        args.buyDecision5ConfigWidgetFactory,
+        args.buyDecision6ConfigWidgetFactory,
+        args.buyDecision7ConfigWidgetFactory,
+        args.buyDecision8ConfigWidgetFactory,
+        args.sellDecision1ConfigWidgetFactory,
+        args.sellDecision2ConfigWidgetFactory,
+        args.sellDecision3ConfigWidgetFactory,
+        args.sellDecision4ConfigWidgetFactory,
+        args.userStorage,
         parent
     ));
 }

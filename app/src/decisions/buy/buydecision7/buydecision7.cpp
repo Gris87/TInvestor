@@ -12,7 +12,7 @@ constexpr qint64 ONE_DAY                 = 24LL * ONE_HOUR;
 constexpr qint64 NIGHT_DELAY             = 2LL * ONE_HOUR; // 2 hours
 constexpr int    MINUTES_TO_CHECK        = 15;
 constexpr int    MINUTES_TO_DOUBLE_CHECK = 5;
-constexpr int    MINUTES_BEFORE_DAY_END  = 30;
+constexpr int    MINUTES_BEFORE_DAY_END  = 10;
 
 
 
@@ -79,7 +79,7 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
     const StockData* stockData = stock->data.constData();
 
     const qint64 currentTimestamp = stockData[dataIndex].timestamp;
-    limitTimestamp                = currentTimestamp - (duration * ONE_DAY);
+    limitTimestamp                = currentTimestamp - (duration * ONE_DAY) - ONE_HOUR;
 
     for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
     {
@@ -125,9 +125,10 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
             {
                 if (firstNight)
                 {
-                    QTime startTime   = QDateTime::fromMSecsSinceEpoch(timestamp - (MINUTES_BEFORE_DAY_END * ONE_MINUTE)).time();
-                    QTime endTime     = QDateTime::fromMSecsSinceEpoch(timestamp).time();
-                    QTime currentTime = QDateTime::fromMSecsSinceEpoch(currentTimestamp).time();
+                    const QTime startTime =
+                        QDateTime::fromMSecsSinceEpoch(timestamp - (MINUTES_BEFORE_DAY_END * ONE_MINUTE)).time();
+                    const QTime endTime     = QDateTime::fromMSecsSinceEpoch(timestamp).time();
+                    const QTime currentTime = QDateTime::fromMSecsSinceEpoch(currentTimestamp).time();
 
                     if (!mTimeUtils->isTimeBetween(currentTime, startTime, endTime))
                     {

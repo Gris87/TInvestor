@@ -1,13 +1,16 @@
-Buy if price raise anomally
-Buy if price didn't change for 15 minutes and bid quantity is huge
-Buy if several days price raise at midnight
-Refactor buy/sell decisions
-Inform about manual buy on huge fall
 Take decisions from other robots
+Buy with Bollinger Bands (buy decision 8)
+Buy if price raise anomally (buy decision 5)
+Buy if price didn't change for 15 minutes and bid quantity is huge (buy decision 6)
+Buy if several days price raise at midnight (buy decision 7)
+Store last time of stock trading (to optimize buy decision 7)
+Refactor buy/sell decisions
+Reorder decisions
 Change best config search algorithm
 Find best configs for different commission
 Different defaults based on commission
 Show warning if decisions config is not default
+Inform about manual buy on huge fall
 Improve coverage
 Create release
 

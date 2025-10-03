@@ -17,6 +17,7 @@ public:
         IBuyDecision5Config*  buyDecision5Config,
         IBuyDecision6Config*  buyDecision6Config,
         IBuyDecision7Config*  buyDecision7Config,
+        IBuyDecision8Config*  buyDecision8Config,
         ISellDecision1Config* sellDecision1Config,
         ISellDecision2Config* sellDecision2Config,
         ISellDecision3Config* sellDecision3Config,
@@ -53,6 +54,7 @@ public:
     IBuyDecision5Config*  getBuyDecision5Config() override;
     IBuyDecision6Config*  getBuyDecision6Config() override;
     IBuyDecision7Config*  getBuyDecision7Config() override;
+    IBuyDecision8Config*  getBuyDecision8Config() override;
     ISellDecision1Config* getSellDecision1Config() override;
     ISellDecision2Config* getSellDecision2Config() override;
     ISellDecision3Config* getSellDecision3Config() override;
@@ -66,6 +68,7 @@ private:
     IBuyDecision5Config*  mBuyDecision5Config;
     IBuyDecision6Config*  mBuyDecision6Config;
     IBuyDecision7Config*  mBuyDecision7Config;
+    IBuyDecision8Config*  mBuyDecision8Config;
     ISellDecision1Config* mSellDecision1Config;
     ISellDecision2Config* mSellDecision2Config;
     ISellDecision3Config* mSellDecision3Config;
