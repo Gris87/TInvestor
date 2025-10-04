@@ -135,7 +135,7 @@ QStringList BuyDecision8Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList durationVariants = {"15", "30", "60", "120", "180"};
+    const QStringList durationVariants = {"15", "30", "60"};
 
     for (const QString& duration : durationVariants)
     {

@@ -49,8 +49,8 @@ TEST_F(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
     configWidget->ui->durationSpinBox->blockSignals(true);
 
     EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision3ConfigMock, getDuration()).WillOnce(Return(4));
     EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(2.1f));
+    EXPECT_CALL(*sellDecision3ConfigMock, getDuration()).WillOnce(Return(4));
 
     configWidget->updateUiFromConfig();
 
@@ -61,8 +61,8 @@ TEST_F(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
     // clang-format on
 
     EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(false));
-    EXPECT_CALL(*sellDecision3ConfigMock, getDuration()).WillOnce(Return(7));
     EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.3f));
+    EXPECT_CALL(*sellDecision3ConfigMock, getDuration()).WillOnce(Return(7));
 
     configWidget->updateUiFromConfig();
 
@@ -78,8 +78,8 @@ TEST_F(Test_SellDecision3ConfigWidget, Test_makeReadOnly)
     // clang-format off
     ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
     ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
-    ASSERT_EQ(configWidget->ui->durationSpinBox->isReadOnly(),                                    false);
     ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isReadOnly(),                             false);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isReadOnly(),                                    false);
     // clang-format on
 
     configWidget->makeReadOnly();
@@ -87,8 +87,8 @@ TEST_F(Test_SellDecision3ConfigWidget, Test_makeReadOnly)
     // clang-format off
     ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
     ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
-    ASSERT_EQ(configWidget->ui->durationSpinBox->isReadOnly(),                                    true);
     ASSERT_EQ(configWidget->ui->loseYieldDoubleSpinBox->isReadOnly(),                             true);
+    ASSERT_EQ(configWidget->ui->durationSpinBox->isReadOnly(),                                    true);
     // clang-format on
 }
 

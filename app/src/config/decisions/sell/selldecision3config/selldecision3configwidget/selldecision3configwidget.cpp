@@ -25,16 +25,16 @@ SellDecision3ConfigWidget::~SellDecision3ConfigWidget()
 void SellDecision3ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
-    ui->durationSpinBox->setValue(mConfig->getDuration());
     ui->loseYieldDoubleSpinBox->setValue(mConfig->getLoseYield());
+    ui->durationSpinBox->setValue(mConfig->getDuration());
 }
 
 void SellDecision3ConfigWidget::makeReadOnly() const
 {
     ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
-    ui->durationSpinBox->setReadOnly(true);
     ui->loseYieldDoubleSpinBox->setReadOnly(true);
+    ui->durationSpinBox->setReadOnly(true);
 }
 
 void SellDecision3ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -43,16 +43,16 @@ void SellDecision3ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::C
 
     mConfig->setEnabled(checked);
 
-    ui->durationSpinBox->setEnabled(checked);
     ui->loseYieldDoubleSpinBox->setEnabled(checked);
-}
-
-void SellDecision3ConfigWidget::on_durationSpinBox_valueChanged(int value)
-{
-    mConfig->setDuration(value);
+    ui->durationSpinBox->setEnabled(checked);
 }
 
 void SellDecision3ConfigWidget::on_loseYieldDoubleSpinBox_valueChanged(double value)
 {
     mConfig->setLoseYield(value);
+}
+
+void SellDecision3ConfigWidget::on_durationSpinBox_valueChanged(int value)
+{
+    mConfig->setDuration(value);
 }

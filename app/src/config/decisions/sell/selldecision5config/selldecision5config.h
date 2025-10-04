@@ -36,15 +36,15 @@ public:
     void setEnabled(bool value) override;
     bool isEnabled() override;
 
-    void  setLoseYield(float value) override;
-    float getLoseYield() override;
-
     void setDuration(int value) override;
     int  getDuration() override;
+
+    void  setYieldAbove(float value) override;
+    float getYieldAbove() override;
 
 private:
     QReadWriteLock* mRwMutex;
     bool            mEnabled;
-    float           mLoseYield;
     int             mDuration;
+    float           mYieldAbove;
 };
