@@ -7,6 +7,7 @@ Buy if several days price raise at midnight (buy decision 7)
 Store last time of stock trading (to optimize buy decision 7)
 Refactor buy/sell decisions
 Reorder decisions
+Huge bid order buy
 Change best config search algorithm
 Find best configs for different commission
 Different defaults based on commission

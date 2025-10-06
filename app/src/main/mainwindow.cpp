@@ -998,10 +998,12 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
 void MainWindow::autoPilotTradingCompleted(const QString& instrumentId)
 {
     ITradingThread* tradingThread = tradingThreads.take(instrumentId);
-    Q_ASSERT_X(tradingThread != nullptr, __FUNCTION__, "Unexpected behavior");
 
-    tradingThread->wait();
-    delete tradingThread;
+    if (tradingThread != nullptr)
+    {
+        tradingThread->wait();
+        delete tradingThread;
+    }
 }
 
 void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading& instruments)
@@ -1081,10 +1083,12 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
 void MainWindow::autoPilotBiDirTradingCompleted(const QString& instrumentId)
 {
     IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.take(instrumentId);
-    Q_ASSERT_X(biDirTradingThread != nullptr, __FUNCTION__, "Unexpected behavior");
 
-    biDirTradingThread->wait();
-    delete biDirTradingThread;
+    if (biDirTradingThread != nullptr)
+    {
+        biDirTradingThread->wait();
+        delete biDirTradingThread;
+    }
 }
 
 void MainWindow::on_actionAuth_triggered()

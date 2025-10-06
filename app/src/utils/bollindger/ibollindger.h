@@ -2,6 +2,10 @@
 
 
 
+#include "src/domain/stock/stock.h"
+
+
+
 class IBollindger
 {
 public:
@@ -12,8 +16,8 @@ public:
     IBollindger& operator=(const IBollindger& another) = delete;
 
     [[nodiscard]]
-    virtual float getTopEdge() const = 0;
+    virtual float getTopEdge(Stock* stock, int startIndex, int endIndex) const = 0;
 
     [[nodiscard]]
-    virtual float getBottomEdge() const = 0;
+    virtual float getBottomEdge(Stock* stock, int startIndex, int endIndex) const = 0;
 };

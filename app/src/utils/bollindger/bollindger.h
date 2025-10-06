@@ -16,8 +16,14 @@ public:
     Bollindger& operator=(const Bollindger& another) = delete;
 
     [[nodiscard]]
-    float getTopEdge() const override;
+    float getTopEdge(Stock* stock, int startIndex, int endIndex) const override;
 
     [[nodiscard]]
-    float getBottomEdge() const override;
+    float getBottomEdge(Stock* stock, int startIndex, int endIndex) const override;
+
+    [[nodiscard]]
+    double getMovingAverage(Stock* stock, int startIndex, int endIndex) const;
+
+    [[nodiscard]]
+    double getStandartDeviation(Stock* stock, int startIndex, int endIndex, double mean) const;
 };

@@ -20,6 +20,6 @@ public:
     BollindgerMock(const BollindgerMock& another)            = delete;
     BollindgerMock& operator=(const BollindgerMock& another) = delete;
 
-    MOCK_METHOD(float, getTopEdge, (), (const, override));
-    MOCK_METHOD(float, getBottomEdge, (), (const, override));
+    MOCK_METHOD(float, getTopEdge, (Stock * stock, int startIndex, int endIndex), (const, override));
+    MOCK_METHOD(float, getBottomEdge, (Stock * stock, int startIndex, int endIndex), (const, override));
 };
