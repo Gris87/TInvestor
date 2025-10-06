@@ -61,7 +61,6 @@ TEST_F(Test_BiDirTradingControlThread, Test_run)
 {
     const InSequence seq;
 
-    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*timeUtilsMock, isWorkingHours(Ge(1704056400000))).WillOnce(Return(false));
 
     thread->run();
@@ -96,7 +95,7 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectHugeSpreadStocks)
     ask->set_quantity(10);
     ask->set_allocated_price(askPrice);
 
-    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isWorkingHours(Ge(1704092400000))).WillOnce(Return(true));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(true));
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));

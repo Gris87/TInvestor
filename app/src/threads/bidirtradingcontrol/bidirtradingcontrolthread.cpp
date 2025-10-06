@@ -10,8 +10,6 @@
 
 constexpr float  HUNDRED_PERCENT            = 100.0f;
 constexpr float  LIMIT_COMMISSION           = 0.06f;
-constexpr int    EXTRA_SESSION_END_HOUR     = 23;
-constexpr int    EXTRA_SESSION_END_MINUTE   = 20;
 constexpr int    AMOUNT_OF_LAST_INSTRUMENTS = 5;
 constexpr qint64 MS_IN_SECOND               = 1000LL;
 constexpr qint64 ONE_MINUTE                 = 60LL * MS_IN_SECOND;
@@ -134,12 +132,7 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
 {
     InstrumentsForBiDirTrading instrumentsForTrading;
 
-    const QDateTime dateTime = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
-    const QTime     time     = dateTime.time();
-
-    const QTime endTime = QTime(EXTRA_SESSION_END_HOUR, EXTRA_SESSION_END_MINUTE);
-
-    if ((mConfig->isTradeInNonWorkingHours() || mTimeUtils->isWorkingHours(timestamp)) && time < endTime)
+    if (mTimeUtils->isWorkingHours(timestamp))
     {
         mUserStorage->readLock();
         const bool  qualifiedUser = mUserStorage->isQualified();
