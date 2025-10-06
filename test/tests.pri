@@ -127,6 +127,7 @@ SOURCES += \
     src/threads/trading/test_tradingthreadfactory.cpp \
     src/threads/userupdate/test_userupdatethread.cpp \
     src/utils/autorunenabler/test_autorunenabler.cpp \
+    src/utils/bollindger/test_bollindger.cpp \
     src/utils/exception/test_exception.cpp \
     src/utils/filedialog/test_filedialog.cpp \
     src/utils/filedialog/test_filedialogfactory.cpp \
@@ -273,6 +274,7 @@ HEADERS += \
     src/threads/trading/itradingthreadfactory_mock.h \
     src/threads/userupdate/iuserupdatethread_mock.h \
     src/utils/autorunenabler/iautorunenabler_mock.h \
+    src/utils/bollindger/ibollindger_mock.h \
     src/utils/filedialog/ifiledialog_mock.h \
     src/utils/filedialog/ifiledialogfactory_mock.h \
     src/utils/fs/dir/idir_mock.h \

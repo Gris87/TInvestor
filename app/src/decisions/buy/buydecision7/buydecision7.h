@@ -11,7 +11,7 @@
 class BuyDecision7 : public IActionDecision
 {
 public:
-    BuyDecision7(ITimeUtils* timeUtils);
+    explicit BuyDecision7(ITimeUtils* timeUtils);
     ~BuyDecision7() override;
 
     BuyDecision7(const BuyDecision7& another)            = delete;
