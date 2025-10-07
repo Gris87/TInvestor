@@ -111,7 +111,7 @@ TEST_F(Test_SellDecision3Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),    false);
-    ASSERT_EQ(config->getLoseYield(), 10.0f);
+    ASSERT_EQ(config->getLoseYield(), 3.0f);
     ASSERT_EQ(config->getDuration(),  5);
     // clang-format on
 }

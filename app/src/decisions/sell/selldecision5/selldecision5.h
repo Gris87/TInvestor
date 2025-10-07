@@ -4,12 +4,14 @@
 
 #include "src/decisions/iactiondecision.h"
 
+#include "src/utils/bollindger/ibollindger.h"
+
 
 
 class SellDecision5 : public IActionDecision
 {
 public:
-    SellDecision5();
+    explicit SellDecision5(IBollindger* bollindger);
     ~SellDecision5() override;
 
     SellDecision5(const SellDecision5& another)            = delete;
@@ -29,4 +31,11 @@ public:
 
     [[nodiscard]]
     AsapMode asapMode() const override;
+
+private:
+    QString makeDecisionBasedOnStockData(
+        QThread* parentThread, ISellDecision5Config* sellConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
+    );
+
+    IBollindger* mBollindger;
 };

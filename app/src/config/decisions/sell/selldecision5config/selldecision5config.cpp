@@ -7,7 +7,7 @@
 
 
 // For 2020-2024 years
-constexpr bool  ENABLED_DEFAULT     = false;
+constexpr bool  ENABLED_DEFAULT     = true;
 constexpr int   DURATION_DEFAULT    = 15;
 constexpr float YIELD_ABOVE_DEFAULT = 0.5f;
 

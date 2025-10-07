@@ -4,6 +4,7 @@
 
 #include "src/config/decisions/buy/buydecision8config/ibuydecision8config_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
+#include "src/utils/bollindger/ibollindger_mock.h"
 
 
 
@@ -26,12 +27,15 @@ class Test_BuyDecision8 : public ::testing::Test
 protected:
     void SetUp() override
     {
-        buyDecision8 = new BuyDecision8();
+        bollindgerMock = new StrictMock<BollindgerMock>();
+
+        buyDecision8 = new BuyDecision8(bollindgerMock);
     }
 
     void TearDown() override
     {
         delete buyDecision8;
+        delete bollindgerMock;
     }
 
     void fillWithData(Stock* stock, QList<float> data, bool dateRange)
@@ -72,7 +76,8 @@ protected:
         }
     }
 
-    BuyDecision8* buyDecision8;
+    BuyDecision8*               buyDecision8;
+    StrictMock<BollindgerMock>* bollindgerMock;
 };
 
 

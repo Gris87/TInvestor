@@ -86,7 +86,7 @@ TEST_F(Test_Bollindger, Test_getTopEdge)
         }
     );
 
-    ASSERT_NEAR(bollindger->getTopEdge(&stock, 0, stock.data.size()), 199.8075, 0.0001);
+    ASSERT_NEAR(bollindger->getTopEdge(&stock, 0, stock.data.size()), 199.7285, 0.0001);
 
     fillWithData(
         &stock,
@@ -109,7 +109,7 @@ TEST_F(Test_Bollindger, Test_getTopEdge)
         }
     );
 
-    ASSERT_NEAR(bollindger->getTopEdge(&stock, 0, stock.data.size()), 199.7964, 0.0001);
+    ASSERT_NEAR(bollindger->getTopEdge(&stock, 0, stock.data.size()), 199.7109, 0.0001);
 
     fillWithData(
         &stock,
@@ -132,7 +132,7 @@ TEST_F(Test_Bollindger, Test_getTopEdge)
         }
     );
 
-    ASSERT_NEAR(bollindger->getTopEdge(&stock, 0, stock.data.size()), 199.6768, 0.0001);
+    ASSERT_NEAR(bollindger->getTopEdge(&stock, 0, stock.data.size()), 199.5890, 0.0001);
 
     fillWithData(
         &stock,
@@ -155,7 +155,7 @@ TEST_F(Test_Bollindger, Test_getTopEdge)
         }
     );
 
-    ASSERT_NEAR(bollindger->getTopEdge(&stock, 0, stock.data.size()), 199.4779, 0.0001);
+    ASSERT_NEAR(bollindger->getTopEdge(&stock, 0, stock.data.size()), 199.3913, 0.0001);
 
     ASSERT_NEAR(bollindger->getTopEdge(&stock, 0, 0), -1.0, 0.0001);
 }
@@ -185,7 +185,7 @@ TEST_F(Test_Bollindger, Test_getBottomEdge)
         }
     );
 
-    ASSERT_NEAR(bollindger->getBottomEdge(&stock, 0, stock.data.size()), 194.8325, 0.0001);
+    ASSERT_NEAR(bollindger->getBottomEdge(&stock, 0, stock.data.size()), 194.91146, 0.0001);
 
     fillWithData(
         &stock,
@@ -208,7 +208,7 @@ TEST_F(Test_Bollindger, Test_getBottomEdge)
         }
     );
 
-    ASSERT_NEAR(bollindger->getBottomEdge(&stock, 0, stock.data.size()), 194.4170, 0.0001);
+    ASSERT_NEAR(bollindger->getBottomEdge(&stock, 0, stock.data.size()), 194.50238, 0.0001);
 
     fillWithData(
         &stock,
@@ -231,7 +231,7 @@ TEST_F(Test_Bollindger, Test_getBottomEdge)
         }
     );
 
-    ASSERT_NEAR(bollindger->getBottomEdge(&stock, 0, stock.data.size()), 194.1499, 0.0001);
+    ASSERT_NEAR(bollindger->getBottomEdge(&stock, 0, stock.data.size()), 194.23764, 0.0001);
 
     fillWithData(
         &stock,
@@ -254,7 +254,7 @@ TEST_F(Test_Bollindger, Test_getBottomEdge)
         }
     );
 
-    ASSERT_NEAR(bollindger->getBottomEdge(&stock, 0, stock.data.size()), 194.0288, 0.0001);
+    ASSERT_NEAR(bollindger->getBottomEdge(&stock, 0, stock.data.size()), 194.11528, 0.0001);
 
     ASSERT_NEAR(bollindger->getBottomEdge(&stock, 0, 0), -1.0, 0.0001);
 }
@@ -381,7 +381,7 @@ TEST_F(Test_Bollindger, Test_getStandartDeviation)
         }
     );
 
-    ASSERT_NEAR(bollindger->getStandartDeviation(&stock, 0, stock.data.size(), 197.32), 1.2438, 0.0001);
+    ASSERT_NEAR(bollindger->getStandartDeviation(&stock, 0, stock.data.size(), 197.32), 1.20426, 0.0001);
 
     fillWithData(
         &stock,
@@ -404,7 +404,7 @@ TEST_F(Test_Bollindger, Test_getStandartDeviation)
         }
     );
 
-    ASSERT_NEAR(bollindger->getStandartDeviation(&stock, 0, stock.data.size(), 197.1067), 1.3449, 0.0001);
+    ASSERT_NEAR(bollindger->getStandartDeviation(&stock, 0, stock.data.size(), 197.1067), 1.30214, 0.0001);
 
     fillWithData(
         &stock,
@@ -427,7 +427,7 @@ TEST_F(Test_Bollindger, Test_getStandartDeviation)
         }
     );
 
-    ASSERT_NEAR(bollindger->getStandartDeviation(&stock, 0, stock.data.size(), 196.9133), 1.3817, 0.0001);
+    ASSERT_NEAR(bollindger->getStandartDeviation(&stock, 0, stock.data.size(), 196.9133), 1.33784, 0.0001);
 
     fillWithData(
         &stock,
@@ -450,5 +450,5 @@ TEST_F(Test_Bollindger, Test_getStandartDeviation)
         }
     );
 
-    ASSERT_NEAR(bollindger->getStandartDeviation(&stock, 0, stock.data.size(), 196.7533), 1.3623, 0.0001);
+    ASSERT_NEAR(bollindger->getStandartDeviation(&stock, 0, stock.data.size(), 196.7533), 1.31902, 0.0001);
 }

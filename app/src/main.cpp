@@ -88,6 +88,7 @@
 #include "src/threads/trading/tradingthreadfactory.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
+#include "src/utils/bollindger/bollindger.h"
 #include "src/utils/filedialog/filedialogfactory.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
@@ -468,6 +469,7 @@ static int runApplication(QApplication* app)
     GrpcClient        grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
     GrpcRetryClient   grpcRetryClient(&userStorage, &grpcClient, &timeUtils);
     Optimizer         optimizer;
+    Bollindger        bollindger;
 
     BuyDecision1  buyDecision1;
     BuyDecision2  buyDecision2;
@@ -476,12 +478,12 @@ static int runApplication(QApplication* app)
     BuyDecision5  buyDecision5;
     BuyDecision6  buyDecision6;
     BuyDecision7  buyDecision7(&timeUtils);
-    BuyDecision8  buyDecision8;
+    BuyDecision8  buyDecision8(&bollindger);
     SellDecision1 sellDecision1;
     SellDecision2 sellDecision2;
     SellDecision3 sellDecision3;
     SellDecision4 sellDecision4;
-    SellDecision5 sellDecision5;
+    SellDecision5 sellDecision5(&bollindger);
 
     const QList<IActionDecision*> buyDecisions = {
         &buyDecision1, &buyDecision2, &buyDecision3, &buyDecision4, &buyDecision5, &buyDecision6, &buyDecision7, &buyDecision8

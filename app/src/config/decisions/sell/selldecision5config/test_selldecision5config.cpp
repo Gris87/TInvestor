@@ -97,12 +97,12 @@ TEST_F(Test_SellDecision5Config, Test_assign)
 
 TEST_F(Test_SellDecision5Config, Test_makeDefault)
 {
-    config->setEnabled(true);
+    config->setEnabled(false);
     config->setDuration(2);
     config->setYieldAbove(4.2f);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),     true);
+    ASSERT_EQ(config->isEnabled(),     false);
     ASSERT_EQ(config->getDuration(),   2);
     ASSERT_EQ(config->getYieldAbove(), 4.2f);
     // clang-format on
@@ -110,7 +110,7 @@ TEST_F(Test_SellDecision5Config, Test_makeDefault)
     config->makeDefault();
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),     false);
+    ASSERT_EQ(config->isEnabled(),     true);
     ASSERT_EQ(config->getDuration(),   15);
     ASSERT_EQ(config->getYieldAbove(), 0.5f);
     // clang-format on

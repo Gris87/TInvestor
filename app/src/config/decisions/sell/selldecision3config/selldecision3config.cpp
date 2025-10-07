@@ -8,7 +8,7 @@
 
 // For 2020-2024 years
 constexpr bool  ENABLED_DEFAULT    = false;
-constexpr float LOSE_YIELD_DEFAULT = 10.0f;
+constexpr float LOSE_YIELD_DEFAULT = 3.0f;
 constexpr int   DURATION_DEFAULT   = 5;
 
 // For 2024 year

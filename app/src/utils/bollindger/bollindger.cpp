@@ -64,5 +64,5 @@ double Bollindger::getStandartDeviation(Stock* stock, int startIndex, int endInd
         total += (price - mean) * (price - mean);
     }
 
-    return qSqrt(total / (endIndex - startIndex));
+    return qSqrt(total / (endIndex - startIndex + 1));
 }

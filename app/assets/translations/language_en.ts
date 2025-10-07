@@ -636,13 +636,13 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="614"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1362"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1366"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="631"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1210"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1214"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
@@ -657,13 +657,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1210"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1214"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="720"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1241"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1245"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
@@ -678,7 +678,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1241"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1245"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -959,22 +959,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="187"/>
+        <location filename="../../src/main.cpp" line="188"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="187"/>
+        <location filename="../../src/main.cpp" line="188"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="213"/>
+        <location filename="../../src/main.cpp" line="214"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="213"/>
+        <location filename="../../src/main.cpp" line="214"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
@@ -1095,7 +1095,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="120"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="118"/>
         <source>Decided to start reselling because spread is %1</source>
         <translation></translation>
     </message>
@@ -1112,6 +1112,16 @@
     <message>
         <location filename="../../src/decisions/buy/buydecision7/buydecision7.cpp" line="154"/>
         <source>Decided to buy because the price raises more than %1 during last %2 nights</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/buy/buydecision8/buydecision8.cpp" line="89"/>
+        <source>Decided to buy because the price %1 exceeds bottom Bollindger edge price %2 at %3</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision5/selldecision5.cpp" line="91"/>
+        <source>Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3</source>
         <translation></translation>
     </message>
 </context>
@@ -1200,12 +1210,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.ui" line="63"/>
+        <location filename="../../src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.ui" line="80"/>
         <source>and yield is above</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.ui" line="83"/>
+        <location filename="../../src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.ui" line="100"/>
         <source>with commission</source>
         <translation></translation>
     </message>

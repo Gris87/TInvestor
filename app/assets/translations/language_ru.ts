@@ -271,7 +271,7 @@
     <message>
         <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="37"/>
         <source>Buy stocks if the price raise more than</source>
-        <translation>Покупать акции, если цена выросла больше, чем на</translation>
+        <translation>Покупать акции, если цена росла больше, чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="60"/>
@@ -312,7 +312,7 @@
     <message>
         <location filename="../../src/config/decisions/buy/buydecision7config/buydecision7configwidget/buydecision7configwidget.ui" line="37"/>
         <source>Buy stocks if the price raise more than</source>
-        <translation>Покупать акции, если цена выросла больше, чем на</translation>
+        <translation>Покупать акции, если цена росла больше, чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision7config/buydecision7configwidget/buydecision7configwidget.ui" line="60"/>
@@ -636,13 +636,13 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="614"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1362"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1366"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="631"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1210"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1214"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
@@ -657,13 +657,13 @@
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1210"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1214"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="720"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1241"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1245"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
@@ -678,7 +678,7 @@
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1241"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1245"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -959,22 +959,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="187"/>
+        <location filename="../../src/main.cpp" line="188"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="187"/>
+        <location filename="../../src/main.cpp" line="188"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="213"/>
+        <location filename="../../src/main.cpp" line="214"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="213"/>
+        <location filename="../../src/main.cpp" line="214"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -1095,7 +1095,7 @@
         <translation>Заявка выполнена. %1/%1 куплено по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="120"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="118"/>
         <source>Decided to start reselling because spread is %1</source>
         <translation>Решено начать перепродажу, потому что спред %1</translation>
     </message>
@@ -1113,6 +1113,16 @@
         <location filename="../../src/decisions/buy/buydecision7/buydecision7.cpp" line="154"/>
         <source>Decided to buy because the price raises more than %1 during last %2 nights</source>
         <translation>Решено покупать, потому что цена росла на %1 в течение последних %2 ночей</translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/buy/buydecision8/buydecision8.cpp" line="89"/>
+        <source>Decided to buy because the price %1 exceeds bottom Bollindger edge price %2 at %3</source>
+        <translation>Решено покупать, потому что цена %1 перескочила нижнюю границу Боллинджера %2 в %3</translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision5/selldecision5.cpp" line="91"/>
+        <source>Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3</source>
+        <translation>Решено продать, потому что цена %1 перескочила верхнюю границу Боллинджера %2 в %3</translation>
     </message>
 </context>
 <context>
@@ -1143,7 +1153,7 @@
     <message>
         <location filename="../../src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui" line="87"/>
         <source>price fall more than</source>
-        <translation>цена упала более чем на</translation>
+        <translation>цена упала больше чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui" line="107"/>
@@ -1156,7 +1166,7 @@
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="37"/>
         <source>Sell stocks if price fall more than</source>
-        <translation>Продавать акции, если цена упала более чем на</translation>
+        <translation>Продавать акции, если цена упала больше чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="60"/>
@@ -1179,7 +1189,7 @@
     <message>
         <location filename="../../src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.ui" line="37"/>
         <source>Sell stocks if loss is more than</source>
-        <translation>Продавать акции, если убыток более чем</translation>
+        <translation>Продавать акции, если убыток больше чем</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.ui" line="60"/>
@@ -1200,12 +1210,12 @@
         <translation> минут</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.ui" line="63"/>
+        <location filename="../../src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.ui" line="80"/>
         <source>and yield is above</source>
-        <translation>и доход выше</translation>
+        <translation>и доходом выше</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.ui" line="83"/>
+        <location filename="../../src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.ui" line="100"/>
         <source>with commission</source>
         <translation>с учётом комиссии</translation>
     </message>
