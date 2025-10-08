@@ -63,31 +63,43 @@ protected:
         const QString stocksStr =
             "["
             "    {"
-            "        \"forQualInvestorFlag\":true,"
             "        \"instrumentId\":\"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa0\","
-            "        \"instrumentName\":\"abc\","
             "        \"instrumentTicker\":\"TEST\","
+            "        \"instrumentName\":\"abc\","
+            "        \"forQualInvestorFlag\":true,"
             "        \"minPriceIncrement\":\"0.1\","
             "        \"pricePrecision\":1,"
-            "        \"turnover\":2000"
+            "        \"lastTradeTime\":\"18:39:00\","
+            "        \"turnover\":2000,"
+            "        \"rsiMonth\":\"70.0\","
+            "        \"rsiWeek\":\"80.0\","
+            "        \"rsiDay\":\"90.0\""
             "    },"
             "    {"
-            "        \"forQualInvestorFlag\":false,"
             "        \"instrumentId\":\"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1\","
-            "        \"instrumentName\":\"def\","
             "        \"instrumentTicker\":\"MAGA\","
+            "        \"instrumentName\":\"def\","
+            "        \"forQualInvestorFlag\":false,"
             "        \"minPriceIncrement\":\"0.01\","
             "        \"pricePrecision\":2,"
-            "        \"turnover\":5000000"
+            "        \"lastTradeTime\":\"23:49:00\","
+            "        \"turnover\":5000000,"
+            "        \"rsiMonth\":\"80.0\","
+            "        \"rsiWeek\":\"90.0\","
+            "        \"rsiDay\":\"70.0\""
             "    },"
             "    {"
-            "        \"forQualInvestorFlag\":true,"
             "        \"instrumentId\":\"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa2\","
-            "        \"instrumentName\":\"aaaa\","
             "        \"instrumentTicker\":\"HNYA\","
+            "        \"instrumentName\":\"aaaa\","
+            "        \"forQualInvestorFlag\":true,"
             "        \"minPriceIncrement\":\"0.001\","
             "        \"pricePrecision\":3,"
-            "        \"turnover\":9000000000"
+            "        \"lastTradeTime\":\"09:59:00\","
+            "        \"turnover\":9000000000,"
+            "        \"rsiMonth\":\"90.0\","
+            "        \"rsiWeek\":\"80.0\","
+            "        \"rsiDay\":\"70.0\""
             "    }"
             "]";
 
@@ -182,8 +194,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
-    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
+    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiMonth,                  70.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiDay,                    90.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -200,8 +216,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
-    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
+    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiMonth,                  80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiWeek,                   90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -218,8 +238,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
-    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
+    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiMonth,                  90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -253,8 +277,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
-    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
+    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiMonth,                  70.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiDay,                    90.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -271,8 +299,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
-    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
+    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiMonth,                  80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiWeek,                   90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -289,8 +321,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
-    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
+    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiMonth,                  90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -330,8 +366,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
-    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
+    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiMonth,                  70.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiDay,                    90.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  300);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -357,8 +397,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
-    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
+    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiMonth,                  80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiWeek,                   90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  650);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -393,8 +437,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
-    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
+    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiMonth,                  90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  520);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -456,8 +504,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
-    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
+    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiMonth,                  70.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiDay,                    90.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  300);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -483,8 +535,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
-    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
+    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiMonth,                  80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiWeek,                   90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -501,8 +557,12 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
-    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
+    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiMonth,                  90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  520);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -551,8 +611,12 @@ TEST_F(Test_StocksDatabase, Test_assignLogos)
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
-    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
+    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiMonth,                  70.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiDay,                    90.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -569,8 +633,12 @@ TEST_F(Test_StocksDatabase, Test_assignLogos)
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
-    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
+    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiMonth,                  80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiWeek,                   90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -587,8 +655,12 @@ TEST_F(Test_StocksDatabase, Test_assignLogos)
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
-    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
+    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiMonth,                  90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -618,8 +690,12 @@ TEST_F(Test_StocksDatabase, Test_assignLogos)
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
-    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
+    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiMonth,                  70.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->meta.rsiDay,                    90.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -636,8 +712,12 @@ TEST_F(Test_StocksDatabase, Test_assignLogos)
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
-    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
+    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiMonth,                  80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiWeek,                   90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -654,8 +734,12 @@ TEST_F(Test_StocksDatabase, Test_assignLogos)
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
-    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
+    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiMonth,                  90.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiWeek,                   80.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->meta.rsiDay,                    70.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -681,32 +765,49 @@ TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
     stock1.meta.instrumentName      = "abc";
     stock1.meta.forQualInvestorFlag = true;
     stock1.meta.minPriceIncrement   = 0.1f;
-    stock1.meta.turnover            = 2000;
     stock1.meta.pricePrecision      = 1;
+    stock1.meta.lastTradeTime       = QTime(18, 39);
+    stock1.meta.turnover            = 2000;
+    stock1.meta.rsiMonth            = 70;
+    stock1.meta.rsiWeek             = 80;
+    stock1.meta.rsiDay              = 90;
+
     stock2.meta.instrumentId        = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb";
     stock2.meta.instrumentTicker    = "MAGA";
     stock2.meta.instrumentName      = "def";
     stock2.meta.forQualInvestorFlag = false;
     stock2.meta.minPriceIncrement   = 0.01f;
-    stock2.meta.turnover            = 5000000;
     stock2.meta.pricePrecision      = 2;
+    stock2.meta.lastTradeTime       = QTime(23, 49);
+    stock2.meta.turnover            = 5000000;
+    stock2.meta.rsiMonth            = 80;
+    stock2.meta.rsiWeek             = 90;
+    stock2.meta.rsiDay              = 70;
+
     stock3.meta.instrumentId        = "cccccccc-cccc-cccc-cccc-cccccccccccc";
     stock3.meta.instrumentTicker    = "HNYA";
     stock3.meta.instrumentName      = "aaaa";
     stock3.meta.forQualInvestorFlag = true;
     stock3.meta.minPriceIncrement   = 0.001f;
-    stock3.meta.turnover            = 9000000000;
     stock3.meta.pricePrecision      = 3;
+    stock3.meta.lastTradeTime       = QTime(9, 59);
+    stock3.meta.turnover            = 9000000000;
+    stock3.meta.rsiMonth            = 90;
+    stock3.meta.rsiWeek             = 80;
+    stock3.meta.rsiDay              = 70;
 
     stocks << &stock1 << &stock2 << &stock3;
 
     const QString stocksStr =
         "[{\"forQualInvestorFlag\":true,\"instrumentId\":\"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa\",\"instrumentName\":\"abc\","
-        "\"instrumentTicker\":\"TEST\",\"minPriceIncrement\":\"0.1\",\"pricePrecision\":1,\"turnover\":2000},{"
-        "\"forQualInvestorFlag\":false,\"instrumentId\":\"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb\",\"instrumentName\":\"def\","
-        "\"instrumentTicker\":\"MAGA\",\"minPriceIncrement\":\"0.01\",\"pricePrecision\":2,\"turnover\":5000000},{"
-        "\"forQualInvestorFlag\":true,\"instrumentId\":\"cccccccc-cccc-cccc-cccc-cccccccccccc\",\"instrumentName\":\"aaaa\","
-        "\"instrumentTicker\":\"HNYA\",\"minPriceIncrement\":\"0.001\",\"pricePrecision\":3,\"turnover\":9000000000}]";
+        "\"instrumentTicker\":\"TEST\",\"lastTradeTime\":\"18:39:00\",\"minPriceIncrement\":\"0.1\",\"pricePrecision\":1,"
+        "\"rsiDay\":\"90.00\",\"rsiMonth\":\"70.00\",\"rsiWeek\":\"80.00\",\"turnover\":2000},{\"forQualInvestorFlag\":false,"
+        "\"instrumentId\":\"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb\",\"instrumentName\":\"def\",\"instrumentTicker\":\"MAGA\","
+        "\"lastTradeTime\":\"23:49:00\",\"minPriceIncrement\":\"0.01\",\"pricePrecision\":2,\"rsiDay\":\"70.00\",\"rsiMonth\":"
+        "\"80.00\",\"rsiWeek\":\"90.00\",\"turnover\":5000000},{\"forQualInvestorFlag\":true,\"instrumentId\":\"cccccccc-cccc-"
+        "cccc-cccc-cccccccccccc\",\"instrumentName\":\"aaaa\",\"instrumentTicker\":\"HNYA\",\"lastTradeTime\":\"09:59:00\","
+        "\"minPriceIncrement\":\"0.001\",\"pricePrecision\":3,\"rsiDay\":\"70.00\",\"rsiMonth\":\"90.00\",\"rsiWeek\":\"80.00\","
+        "\"turnover\":9000000000}]";
     const QByteArray stocksBytes = stocksStr.toUtf8();
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeStocksMeta

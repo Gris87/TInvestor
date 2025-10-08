@@ -28,8 +28,12 @@ struct StockMeta
     QString instrumentName;
     bool    forQualInvestorFlag;
     float   minPriceIncrement;
-    qint64  turnover;
     qint8   pricePrecision;
+    QTime   lastTradeTime;
+    qint64  turnover;
+    float   rsiMonth;
+    float   rsiWeek;
+    float   rsiDay;
 };
 
 

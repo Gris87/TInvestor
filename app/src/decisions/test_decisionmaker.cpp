@@ -206,26 +206,40 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock1.meta.instrumentName      = "Abstract Basics";
     stock1.meta.forQualInvestorFlag = false;
     stock1.meta.minPriceIncrement   = 0.1f;
-    stock1.meta.turnover            = 2000000;
     stock1.meta.pricePrecision      = 1;
+    stock1.meta.lastTradeTime       = QTime(23, 50);
+    stock1.meta.turnover            = 2000000;
+    stock1.meta.rsiMonth            = 90;
+    stock1.meta.rsiWeek             = 80;
+    stock1.meta.rsiDay              = 70;
     stock1.data << stockData1;
     stock1.operational.detailedData << stockOperationalData1;
+
     stock2.meta.instrumentId        = "bbbbb";
     stock2.meta.instrumentTicker    = "BASE";
     stock2.meta.instrumentName      = "Basketball enhancement";
     stock2.meta.forQualInvestorFlag = false;
     stock2.meta.minPriceIncrement   = 0.01f;
-    stock2.meta.turnover            = 5000000;
     stock2.meta.pricePrecision      = 2;
+    stock2.meta.lastTradeTime       = QTime(23, 50);
+    stock2.meta.turnover            = 5000000;
+    stock2.meta.rsiMonth            = 80;
+    stock2.meta.rsiWeek             = 70;
+    stock2.meta.rsiDay              = 90;
     stock2.data << stockData2;
     stock2.operational.detailedData << stockOperationalData2;
+
     stock3.meta.instrumentId        = "ccccc";
     stock3.meta.instrumentTicker    = "HNYA";
     stock3.meta.instrumentName      = "The best of the best";
     stock3.meta.forQualInvestorFlag = false;
     stock3.meta.minPriceIncrement   = 0.001f;
-    stock3.meta.turnover            = 9000000000;
     stock3.meta.pricePrecision      = 3;
+    stock3.meta.lastTradeTime       = QTime(23, 50);
+    stock3.meta.turnover            = 9000000000;
+    stock3.meta.rsiMonth            = 70;
+    stock3.meta.rsiWeek             = 80;
+    stock3.meta.rsiDay              = 90;
     stock3.data << stockData3;
     stock3.operational.detailedData << stockOperationalData3;
 
