@@ -28,6 +28,7 @@ public:
     virtual void                 cleanupOperationalData(qint64 timestamp)                                     = 0;
     virtual void                 obtainStocksDayStartPrice(qint64 timestamp)                                  = 0;
     virtual void                 obtainStocksDatePrice(qint64 timestamp)                                      = 0;
+    virtual void                 obtainLastTradeTime(qint64 timestamp)                                        = 0;
     virtual void                 obtainTurnover(qint64 timestamp)                                             = 0;
     virtual void                 obtainPayback(qint64 timestamp)                                              = 0;
 };

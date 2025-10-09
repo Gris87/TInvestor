@@ -17,6 +17,7 @@ DECISION_4 = "Decision 4"
 DECISION_5 = "Decision 5"
 DECISION_6 = "Decision 6"
 DECISION_7 = "Decision 7"
+DECISION_8 = "Decision 8"
 DECISION_HUGE_SPREAD = "Huge spread"
 DECISION_HIGH_LIQUIDITY = "High liquidity"
 DECISION_OTHER = "Other"
@@ -107,6 +108,7 @@ def _collect_statistics(operations, logs):
                 DECISION_5: 0,
                 DECISION_6: 0,
                 DECISION_7: 0,
+                DECISION_8: 0,
                 DECISION_HUGE_SPREAD: 0,
                 DECISION_HIGH_LIQUIDITY: 0,
                 DECISION_OTHER: 0,
@@ -128,6 +130,7 @@ def _collect_statistics(operations, logs):
         DECISION_5: 0,
         DECISION_6: 0,
         DECISION_7: 0,
+        DECISION_8: 0,
         DECISION_HUGE_SPREAD: 0,
         DECISION_HIGH_LIQUIDITY: 0,
         DECISION_OTHER: 0,
@@ -140,6 +143,7 @@ def _collect_statistics(operations, logs):
         DECISION_5: 0,
         DECISION_6: 0,
         DECISION_7: 0,
+        DECISION_8: 0,
         DECISION_HUGE_SPREAD: 0,
         DECISION_HIGH_LIQUIDITY: 0,
         DECISION_OTHER: 0,
@@ -152,20 +156,37 @@ def _collect_statistics(operations, logs):
         DECISION_5: 0,
         DECISION_6: 0,
         DECISION_7: 0,
+        DECISION_8: 0,
         DECISION_HUGE_SPREAD: 0,
         DECISION_HIGH_LIQUIDITY: 0,
         DECISION_OTHER: 0,
     }
 
+    yield_per_decision = {}
+
     for entry in entries:
+        instrument_name = entry["instrumentName"]
+        decision = entry["decision"]
         yield_with_commission = entry["yieldWithCommission"]
 
         if yield_with_commission > 0:
-            combined_positive[entry["decision"]] += yield_with_commission
+            combined_positive[decision] += yield_with_commission
         else:
-            combined_negative[entry["decision"]] -= yield_with_commission
+            combined_negative[decision] -= yield_with_commission
 
-        combined[entry["decision"]] += yield_with_commission
+        combined[decision] += yield_with_commission
+
+        if decision in yield_per_decision:
+            decision_info = yield_per_decision[decision]
+        else:
+            decision_info = {}
+
+        if instrument_name in decision_info:
+            decision_info[instrument_name] += yield_with_commission
+        else:
+            decision_info[instrument_name] = yield_with_commission
+
+        yield_per_decision[decision] = decision_info
 
     stats = {
         "entries": entries,
@@ -173,6 +194,7 @@ def _collect_statistics(operations, logs):
         "combined": combined,
         "combined_positive": combined_positive,
         "combined_negative": combined_negative,
+        "yield_per_decision": yield_per_decision,
     }
 
     return stats
@@ -185,16 +207,18 @@ def _generate_excel(args, stats):
     _create_combined_yield_chartsheet(workbook, stats)
     _create_combined_positive_yield_chartsheet(workbook, stats)
     _create_combined_negative_yield_chartsheet(workbook, stats)
-    _create_stats_sheets(workbook, stats)
-    _create_daily_decision_yield_sheets(workbook, stats)
-    _create_combined_yield_sheets(workbook, stats)
-    _create_combined_positive_yield_sheets(workbook, stats)
-    _create_combined_negative_yield_sheets(workbook, stats)
+    _create_yield_per_decision_chartsheet(workbook, stats)
+    _create_stats_sheet(workbook, stats)
+    _create_daily_decision_yield_sheet(workbook, stats)
+    _create_combined_yield_sheet(workbook, stats)
+    _create_combined_positive_yield_sheet(workbook, stats)
+    _create_combined_negative_yield_sheet(workbook, stats)
+    _create_yield_per_decision_sheets(workbook, stats)
 
     workbook.close()
 
 
-def _create_stats_sheets(workbook, stats):
+def _create_stats_sheet(workbook, stats):
     worksheet = workbook.add_worksheet("Stats (Data)")
 
     worksheet.set_column("A:A", 17.57)
@@ -239,21 +263,22 @@ def _create_stats_sheets(workbook, stats):
     )
 
 
-def _create_daily_decision_yield_sheets(workbook, stats):
+def _create_daily_decision_yield_sheet(workbook, stats):
     worksheet = workbook.add_worksheet("Daily yield (Data)")
 
     worksheet.set_column("A:A", 9.71)
     worksheet.set_column("B:B", 12.0)
     worksheet.set_column("C:C", 11.57)
-    worksheet.set_column("D:D", 11.57)
-    worksheet.set_column("E:E", 12.0)
-    worksheet.set_column("F:F", 13.57)
-    worksheet.set_column("G:G", 14.43)
-    worksheet.set_column("H:H", 11.29)
-    worksheet.set_column("I:I", 12.0)
-    worksheet.set_column("J:J", 12.0)
-    worksheet.set_column("K:K", 12.0)
-    worksheet.set_column("L:L", 12.0)
+    worksheet.set_column("D:D", 12.0)
+    worksheet.set_column("E:E", 11.57)
+    worksheet.set_column("F:F", 11.57)
+    worksheet.set_column("G:G", 11.57)
+    worksheet.set_column("H:H", 11.57)
+    worksheet.set_column("I:I", 11.57)
+    worksheet.set_column("J:J", 13.57)
+    worksheet.set_column("K:K", 14.43)
+    worksheet.set_column("L:L", 11.29)
+    worksheet.set_column("M:M", 12.0)
 
     data = []
 
@@ -268,6 +293,7 @@ def _create_daily_decision_yield_sheets(workbook, stats):
                 entry[DECISION_5],
                 entry[DECISION_6],
                 entry[DECISION_7],
+                entry[DECISION_8],
                 entry[DECISION_HUGE_SPREAD],
                 entry[DECISION_HIGH_LIQUIDITY],
                 entry[DECISION_OTHER],
@@ -276,7 +302,7 @@ def _create_daily_decision_yield_sheets(workbook, stats):
         )
 
     worksheet.add_table(
-        f"A1:L{len(data) + 1}",
+        f"A1:M{len(data) + 1}",
         {
             "name": "DailyDecisionYieldData",
             "style": "Table Style Medium 13",
@@ -290,6 +316,7 @@ def _create_daily_decision_yield_sheets(workbook, stats):
                 {"header": DECISION_5},
                 {"header": DECISION_6},
                 {"header": DECISION_7},
+                {"header": DECISION_8},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -384,23 +411,31 @@ def _create_daily_decision_yield_chartsheet(workbook, stats):
             "values": f"='Daily yield (Data)'!L2:L{last_row}",
         }
     )
+    chart.add_series(
+        {
+            "name": f"='Daily yield (Data)'!M1",
+            "categories": f"='Daily yield (Data)'!A2:A{last_row}",
+            "values": f"='Daily yield (Data)'!M2:M{last_row}",
+        }
+    )
 
     chartsheet.set_chart(chart)
 
 
-def _create_combined_yield_sheets(workbook, stats):
+def _create_combined_yield_sheet(workbook, stats):
     worksheet = workbook.add_worksheet("Combined yield (Data)")
 
-    worksheet.set_column("A:A", 11.57)
+    worksheet.set_column("A:A", 12.0)
     worksheet.set_column("B:B", 11.57)
     worksheet.set_column("C:C", 11.57)
     worksheet.set_column("D:D", 11.57)
-    worksheet.set_column("E:E", 13.57)
-    worksheet.set_column("F:F", 14.43)
-    worksheet.set_column("G:G", 11.29)
-    worksheet.set_column("H:H", 11.29)
-    worksheet.set_column("I:I", 11.29)
-    worksheet.set_column("J:J", 11.29)
+    worksheet.set_column("E:E", 11.57)
+    worksheet.set_column("F:F", 11.57)
+    worksheet.set_column("G:G", 11.57)
+    worksheet.set_column("H:H", 11.57)
+    worksheet.set_column("I:I", 13.57)
+    worksheet.set_column("J:J", 14.43)
+    worksheet.set_column("K:K", 11.29)
 
     combined = stats["combined"]
     data = [
@@ -412,6 +447,7 @@ def _create_combined_yield_sheets(workbook, stats):
             combined[DECISION_5],
             combined[DECISION_6],
             combined[DECISION_7],
+            combined[DECISION_8],
             combined[DECISION_HUGE_SPREAD],
             combined[DECISION_HIGH_LIQUIDITY],
             combined[DECISION_OTHER],
@@ -419,7 +455,7 @@ def _create_combined_yield_sheets(workbook, stats):
     ]
 
     worksheet.add_table(
-        f"A1:J{len(data) + 1}",
+        f"A1:K{len(data) + 1}",
         {
             "name": "CombinedYieldData",
             "style": "Table Style Medium 13",
@@ -432,6 +468,7 @@ def _create_combined_yield_sheets(workbook, stats):
                 {"header": DECISION_5},
                 {"header": DECISION_6},
                 {"header": DECISION_7},
+                {"header": DECISION_8},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -539,23 +576,33 @@ def _create_combined_yield_chartsheet(workbook, stats):
             },
         }
     )
+    chart.add_series(
+        {
+            "name": f"='Combined yield (Data)'!K1",
+            "values": f"='Combined yield (Data)'!K2",
+            "data_labels": {
+                "value": True,
+            },
+        }
+    )
 
     chartsheet.set_chart(chart)
 
 
-def _create_combined_positive_yield_sheets(workbook, stats):
+def _create_combined_positive_yield_sheet(workbook, stats):
     worksheet = workbook.add_worksheet("Combined positive yield (Data)")
 
-    worksheet.set_column("A:A", 11.57)
+    worksheet.set_column("A:A", 12.0)
     worksheet.set_column("B:B", 11.57)
     worksheet.set_column("C:C", 11.57)
     worksheet.set_column("D:D", 11.57)
-    worksheet.set_column("E:E", 13.57)
-    worksheet.set_column("F:F", 14.43)
-    worksheet.set_column("G:G", 11.29)
-    worksheet.set_column("H:H", 11.29)
-    worksheet.set_column("I:I", 11.29)
-    worksheet.set_column("J:J", 11.29)
+    worksheet.set_column("E:E", 11.57)
+    worksheet.set_column("F:F", 11.57)
+    worksheet.set_column("G:G", 11.57)
+    worksheet.set_column("H:H", 11.57)
+    worksheet.set_column("I:I", 13.57)
+    worksheet.set_column("J:J", 14.43)
+    worksheet.set_column("K:K", 11.29)
 
     combined = stats["combined_positive"]
     data = [
@@ -567,6 +614,7 @@ def _create_combined_positive_yield_sheets(workbook, stats):
             combined[DECISION_5],
             combined[DECISION_6],
             combined[DECISION_7],
+            combined[DECISION_8],
             combined[DECISION_HUGE_SPREAD],
             combined[DECISION_HIGH_LIQUIDITY],
             combined[DECISION_OTHER],
@@ -574,7 +622,7 @@ def _create_combined_positive_yield_sheets(workbook, stats):
     ]
 
     worksheet.add_table(
-        f"A1:J{len(data) + 1}",
+        f"A1:K{len(data) + 1}",
         {
             "name": "CombinedPositiveYieldData",
             "style": "Table Style Medium 13",
@@ -587,6 +635,7 @@ def _create_combined_positive_yield_sheets(workbook, stats):
                 {"header": DECISION_5},
                 {"header": DECISION_6},
                 {"header": DECISION_7},
+                {"header": DECISION_8},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -603,8 +652,8 @@ def _create_combined_positive_yield_chartsheet(workbook, stats):
 
     chart.add_series(
         {
-            "categories": f"='Combined positive yield (Data)'!A1:J1",
-            "values": f"='Combined positive yield (Data)'!A2:J2",
+            "categories": f"='Combined positive yield (Data)'!A1:K1",
+            "values": f"='Combined positive yield (Data)'!A2:K2",
             "data_labels": {
                 "value": True,
             },
@@ -614,19 +663,20 @@ def _create_combined_positive_yield_chartsheet(workbook, stats):
     chartsheet.set_chart(chart)
 
 
-def _create_combined_negative_yield_sheets(workbook, stats):
+def _create_combined_negative_yield_sheet(workbook, stats):
     worksheet = workbook.add_worksheet("Combined negative yield (Data)")
 
-    worksheet.set_column("A:A", 11.57)
+    worksheet.set_column("A:A", 12.0)
     worksheet.set_column("B:B", 11.57)
     worksheet.set_column("C:C", 11.57)
     worksheet.set_column("D:D", 11.57)
-    worksheet.set_column("E:E", 13.57)
-    worksheet.set_column("F:F", 14.43)
-    worksheet.set_column("G:G", 11.29)
-    worksheet.set_column("H:H", 11.29)
-    worksheet.set_column("I:I", 11.29)
-    worksheet.set_column("J:J", 11.29)
+    worksheet.set_column("E:E", 11.57)
+    worksheet.set_column("F:F", 11.57)
+    worksheet.set_column("G:G", 11.57)
+    worksheet.set_column("H:H", 11.57)
+    worksheet.set_column("I:I", 13.57)
+    worksheet.set_column("J:J", 14.43)
+    worksheet.set_column("K:K", 11.29)
 
     combined = stats["combined_negative"]
     data = [
@@ -638,6 +688,7 @@ def _create_combined_negative_yield_sheets(workbook, stats):
             combined[DECISION_5],
             combined[DECISION_6],
             combined[DECISION_7],
+            combined[DECISION_8],
             combined[DECISION_HUGE_SPREAD],
             combined[DECISION_HIGH_LIQUIDITY],
             combined[DECISION_OTHER],
@@ -645,7 +696,7 @@ def _create_combined_negative_yield_sheets(workbook, stats):
     ]
 
     worksheet.add_table(
-        f"A1:J{len(data) + 1}",
+        f"A1:K{len(data) + 1}",
         {
             "name": "CombinedNegativeYieldData",
             "style": "Table Style Medium 13",
@@ -658,6 +709,7 @@ def _create_combined_negative_yield_sheets(workbook, stats):
                 {"header": DECISION_5},
                 {"header": DECISION_6},
                 {"header": DECISION_7},
+                {"header": DECISION_8},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -674,8 +726,8 @@ def _create_combined_negative_yield_chartsheet(workbook, stats):
 
     chart.add_series(
         {
-            "categories": f"='Combined negative yield (Data)'!A1:J1",
-            "values": f"='Combined negative yield (Data)'!A2:J2",
+            "categories": f"='Combined negative yield (Data)'!A1:K1",
+            "values": f"='Combined negative yield (Data)'!A2:K2",
             "data_labels": {
                 "value": True,
             },
@@ -683,6 +735,73 @@ def _create_combined_negative_yield_chartsheet(workbook, stats):
     )
 
     chartsheet.set_chart(chart)
+
+
+def _create_yield_per_decision_sheets(workbook, stats):
+    i = 0
+
+    for decision, decision_info in stats["yield_per_decision"].items():
+        worksheet = workbook.add_worksheet(f"{decision} (Data)")
+
+        worksheet.set_column("A:A", 62.14)
+        worksheet.set_column("B:B", 23.0)
+
+        instruments = [
+            {
+                "instrumentName": instrument_name,
+                "yieldWithCommission": yield_with_commission,
+            } for instrument_name, yield_with_commission in decision_info.items()
+        ]
+        instruments.sort(key=lambda x: x["yieldWithCommission"], reverse=True)
+
+        data = []
+
+        for entry in instruments:
+            data.append(
+                [
+                    entry["instrumentName"],
+                    entry["yieldWithCommission"],
+                ]
+            )
+
+        worksheet.add_table(
+            f"A1:B{len(data) + 1}",
+            {
+                "name": f"DecisionData{i}",
+                "style": "Table Style Medium 13",
+                "data": data,
+                "columns": [
+                    {"header": "Name"},
+                    {"header": "Yield with commission"},
+                ],
+            },
+        )
+
+        i += 1
+
+
+def _create_yield_per_decision_chartsheet(workbook, stats):
+    for decision, decision_info in stats["yield_per_decision"].items():
+        chartsheet = workbook.add_chartsheet(decision)
+        chart = workbook.add_chart({"type": "bar"})
+
+        chart.set_title({"name": decision})
+
+        chart.set_x_axis({"visible": False})
+        chart.set_y_axis({"visible": False})
+
+        for i in reversed(range(len(decision_info))):
+            chart.add_series(
+                {
+                    "name": f"='{decision} (Data)'!A{i + 2}",
+                    "values": f"='{decision} (Data)'!B{i + 2}",
+                    "data_labels": {
+                        "value": True,
+                    },
+                }
+            )
+
+        chartsheet.set_chart(chart)
 
 
 def _get_buy_decision_from_log_message(log_message):
@@ -723,6 +842,11 @@ def _get_buy_decision_from_log_message(log_message):
 
     if match is not None:
         return DECISION_7
+
+    match = decision_8_regexp.match(log_message)
+
+    if match is not None:
+        return DECISION_8
 
     match = huge_spread_regexp.match(log_message)
 

@@ -458,6 +458,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Ge(1704056400000)));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, obtainLastTradeTime(Ge(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, obtainTurnover(Ge(1704056400000)));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*stocksStorageMock, readLock());

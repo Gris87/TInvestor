@@ -8,6 +8,10 @@
 
 constexpr double ONE_DAY_DOUBLE             = 86400000.0; // 24 * 60 * 60 * 1000 // 1 day
 constexpr float  TWO_COMMISSIONS_IN_PERCENT = 2 / 100.0f;
+constexpr qint64 MS_IN_SECOND               = 1000LL;
+constexpr qint64 ONE_MINUTE                 = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR                   = 60LL * ONE_MINUTE;
+constexpr qint64 NIGHT_DELAY                = 2LL * ONE_HOUR; // 2 hours
 
 
 
@@ -331,6 +335,63 @@ void StocksStorage::obtainStocksDatePrice(qint64 timestamp)
 {
     GetDatePriceInfo getDatePriceInfo(timestamp, false);
     processInParallel(QThread::currentThread(), mStocks, getDatePriceForParallel, &getDatePriceInfo);
+}
+
+struct GetLastTradeTimeInfo
+{
+    explicit GetLastTradeTimeInfo(qint64 _startTimestamp) :
+        startTimestamp(_startTimestamp)
+    {
+    }
+
+    qint64 startTimestamp;
+};
+
+static void getLastTradeTimeForParallel(
+    QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
+)
+{
+    GetLastTradeTimeInfo* getLastTradeTimeInfo = reinterpret_cast<GetLastTradeTimeInfo*>(additionalArgs);
+    const qint64          startTimestamp       = getLastTradeTimeInfo->startTimestamp;
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock* stock = stocks[i];
+
+        stock->writeLock();
+
+        const StockData* stockData = stock->data.constData();
+
+        QTime lastTradeTime(0, 0);
+
+        for (int j = stock->data.size() - 2; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+        {
+            const qint64 timestamp = stockData[j].timestamp;
+
+            if (timestamp < startTimestamp)
+            {
+                break;
+            }
+
+            const qint64 nextTimestamp = stockData[j + 1].timestamp;
+
+            if (nextTimestamp - timestamp >= NIGHT_DELAY)
+            {
+                lastTradeTime = qMax(lastTradeTime, QDateTime::fromMSecsSinceEpoch(timestamp).time());
+            }
+        }
+
+        stock->meta.lastTradeTime = lastTradeTime;
+        stock->writeUnlock();
+    }
+}
+
+void StocksStorage::obtainLastTradeTime(qint64 timestamp)
+{
+    GetLastTradeTimeInfo getLastTradeTimeInfo(timestamp);
+    processInParallel(QThread::currentThread(), mStocks, getLastTradeTimeForParallel, &getLastTradeTimeInfo);
+
+    mStocksDatabase->writeStocksMeta(mStocks);
 }
 
 struct GetTurnoverInfo

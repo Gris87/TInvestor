@@ -15,6 +15,7 @@ constexpr qint64  MS_IN_SECOND                       = 1000LL;
 constexpr qint64  ONE_MINUTE                         = 60LL * MS_IN_SECOND;
 constexpr qint64  ONE_HOUR                           = 60LL * ONE_MINUTE;
 constexpr qint64  ONE_DAY                            = 24LL * ONE_HOUR;
+constexpr qint64  ONE_WEEK                           = 7LL * ONE_DAY;
 constexpr qint64  ONE_MONTH                          = 31LL * ONE_DAY;
 constexpr qint64  SLEEP_DELAY                        = 5LL * MS_IN_SECOND; // 5 seconds
 constexpr qint64  MOSCOW_TIME                        = 3 * ONE_HOUR;       // 3 hours
@@ -93,6 +94,7 @@ void PriceCollectThread::run()
         obtainStocksData();
         cleanupOperationalData();
         const bool needPricesUpdate = obtainStocksDayStartPrice();
+        obtainLastTradeTime();
         obtainTurnover();
         obtainPayback();
 
@@ -856,6 +858,13 @@ bool PriceCollectThread::obtainStocksDayStartPrice()
     }
 
     return false;
+}
+
+void PriceCollectThread::obtainLastTradeTime()
+{
+    mStocksStorage->readLock();
+    mStocksStorage->obtainLastTradeTime(QDateTime::currentMSecsSinceEpoch() - ONE_WEEK);
+    mStocksStorage->readUnlock();
 }
 
 void PriceCollectThread::obtainTurnover()

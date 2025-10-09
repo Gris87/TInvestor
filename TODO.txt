@@ -15,6 +15,7 @@ Find best configs for different commission
 Different defaults based on commission
 Show warning if decisions config is not default
 Rename PriceCollect => StockCollect
+Write stocks meta once
 Inform about manual buy on huge fall
 Improve coverage
 Create release

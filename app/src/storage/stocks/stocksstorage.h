@@ -33,6 +33,7 @@ public:
     void                 cleanupOperationalData(qint64 timestamp) override;
     void                 obtainStocksDayStartPrice(qint64 timestamp) override;
     void                 obtainStocksDatePrice(qint64 timestamp) override;
+    void                 obtainLastTradeTime(qint64 timestamp) override;
     void                 obtainTurnover(qint64 timestamp) override;
     void                 obtainPayback(qint64 timestamp) override;
 
