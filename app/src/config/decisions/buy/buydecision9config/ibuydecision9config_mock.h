@@ -35,12 +35,12 @@ public:
     MOCK_METHOD(void, setEnabled, (bool value), (override));
     MOCK_METHOD(bool, isEnabled, (), (override));
 
-    MOCK_METHOD(void, setPriceRaise, (float value), (override));
-    MOCK_METHOD(float, getPriceRaise, (), (override));
+    MOCK_METHOD(void, setRsiMonth, (float value), (override));
+    MOCK_METHOD(float, getRsiMonth, (), (override));
 
-    MOCK_METHOD(void, setOrderBookPositions, (int value), (override));
-    MOCK_METHOD(int, getOrderBookPositions, (), (override));
+    MOCK_METHOD(void, setRsiWeek, (float value), (override));
+    MOCK_METHOD(float, getRsiWeek, (), (override));
 
-    MOCK_METHOD(void, setDuration, (int value), (override));
-    MOCK_METHOD(int, getDuration, (), (override));
+    MOCK_METHOD(void, setRsiDay, (float value), (override));
+    MOCK_METHOD(float, getRsiDay, (), (override));
 };

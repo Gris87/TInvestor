@@ -36,19 +36,19 @@ public:
     void setEnabled(bool value) override;
     bool isEnabled() override;
 
-    void  setPriceRaise(float value) override;
-    float getPriceRaise() override;
+    void  setRsiMonth(float value) override;
+    float getRsiMonth() override;
 
-    void setOrderBookPositions(int value) override;
-    int  getOrderBookPositions() override;
+    void  setRsiWeek(float value) override;
+    float getRsiWeek() override;
 
-    void setDuration(int value) override;
-    int  getDuration() override;
+    void  setRsiDay(float value) override;
+    float getRsiDay() override;
 
 private:
     QReadWriteLock* mRwMutex;
     bool            mEnabled;
-    float           mPriceRaise;
-    int             mOrderBookPositions;
-    int             mDuration;
+    float           mRsiMonth;
+    float           mRsiWeek;
+    float           mRsiDay;
 };

@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Buy stocks if the price raise more than</string>
+        <string>Buy stocks if RSI for month more than</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -42,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="priceRaiseDoubleSpinBox">
+      <widget class="QDoubleSpinBox" name="rsiMonthDoubleSpinBox">
        <property name="suffix">
         <string notr="true"> %</string>
        </property>
@@ -50,31 +50,27 @@
         <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <double>2.000000000000000</double>
+        <double>70.000000000000000</double>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>and pass more than</string>
+        <string>and for week more than</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="orderBookPositionsSpinBox">
-       <property name="maximum">
-        <number>1000</number>
+      <widget class="QDoubleSpinBox" name="rsiWeekDoubleSpinBox">
+       <property name="suffix">
+        <string notr="true"> %</string>
+       </property>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <number>10</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>positions of order book</string>
+        <double>60.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -101,20 +97,20 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>within the last</string>
+        <string>and for day more than</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="durationSpinBox">
+      <widget class="QDoubleSpinBox" name="rsiDayDoubleSpinBox">
        <property name="suffix">
-        <string> minutes</string>
+        <string notr="true"> %</string>
        </property>
-       <property name="maximum">
-        <number>100000</number>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <number>5</number>
+        <double>60.000000000000000</double>
        </property>
       </widget>
      </item>

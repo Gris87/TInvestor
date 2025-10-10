@@ -339,6 +339,24 @@
     </message>
 </context>
 <context>
+    <name>BuyDecision9ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="37"/>
+        <source>Buy stocks if RSI for month more than</source>
+        <translation>Покупать акции если RSI за месяц больше, чем</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="60"/>
+        <source>and for week more than</source>
+        <translation>и за неделю больше, чем</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="100"/>
+        <source>and for day more than</source>
+        <translation>и за день больше, чем</translation>
+    </message>
+</context>
+<context>
     <name>DecisionMakerConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.ui" line="32"/>
@@ -420,7 +438,7 @@
     </message>
     <message>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="292"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="144"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="148"/>
         <source>Best config</source>
         <translation>Лучшая конфигурация</translation>
     </message>
@@ -445,8 +463,8 @@
         <translation>Скопировано</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="60"/>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="61"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="62"/>
         <source>Loading</source>
         <translation>Загрузка</translation>
     </message>
@@ -532,13 +550,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="413"/>
+        <location filename="../../src/main/mainwindow.cpp" line="417"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="676"/>
+        <location filename="../../src/main/mainwindow.cpp" line="680"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -564,7 +582,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="520"/>
-        <location filename="../../src/main/mainwindow.cpp" line="777"/>
+        <location filename="../../src/main/mainwindow.cpp" line="781"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -620,65 +638,65 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="414"/>
+        <location filename="../../src/main/mainwindow.cpp" line="418"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="457"/>
+        <location filename="../../src/main/mainwindow.cpp" line="461"/>
         <source>GRPC error happened with code %1</source>
         <translation>Возникла ошибка GRPC с кодом %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="477"/>
+        <location filename="../../src/main/mainwindow.cpp" line="481"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="614"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1366"/>
+        <location filename="../../src/main/mainwindow.cpp" line="618"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1371"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="631"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1214"/>
+        <location filename="../../src/main/mainwindow.cpp" line="635"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1219"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="765"/>
+        <location filename="../../src/main/mainwindow.cpp" line="769"/>
         <source>Auto-pilot started</source>
         <translation>Авто-пилот запущен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="771"/>
+        <location filename="../../src/main/mainwindow.cpp" line="775"/>
         <source>Auto-pilot stopped</source>
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1214"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1219"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="720"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1245"/>
+        <location filename="../../src/main/mainwindow.cpp" line="724"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1250"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="270"/>
+        <location filename="../../src/main/mainwindow.cpp" line="274"/>
         <source>Simulator</source>
         <translation>Симулятор</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="271"/>
+        <location filename="../../src/main/mainwindow.cpp" line="275"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1245"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1250"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -939,19 +957,19 @@
 <context>
     <name>PriceCollectThread</name>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="84"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="85"/>
         <source>Downloading metadata</source>
         <translation>Скачивание метаданных</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="435"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="463"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="437"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="465"/>
         <source>Downloading logos</source>
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="794"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="802"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="796"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="804"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>
@@ -959,22 +977,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="188"/>
+        <location filename="../../src/main.cpp" line="191"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="188"/>
+        <location filename="../../src/main.cpp" line="191"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="214"/>
+        <location filename="../../src/main.cpp" line="217"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="214"/>
+        <location filename="../../src/main.cpp" line="217"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -1110,7 +1128,7 @@
         <translation>Решено покупать, потому что цена достигла планки на %1 и удерживалась %2 минут</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision7/buydecision7.cpp" line="154"/>
+        <location filename="../../src/decisions/buy/buydecision7/buydecision7.cpp" line="148"/>
         <source>Decided to buy because the price raises more than %1 during last %2 nights</source>
         <translation>Решено покупать, потому что цена росла на %1 в течение последних %2 ночей</translation>
     </message>
@@ -1120,7 +1138,7 @@
         <translation>Решено покупать, потому что цена %1 перескочила нижнюю границу Боллинджера %2 в %3</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision5/selldecision5.cpp" line="91"/>
+        <location filename="../../src/decisions/sell/selldecision5/selldecision5.cpp" line="104"/>
         <source>Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3</source>
         <translation>Решено продать, потому что цена %1 перескочила верхнюю границу Боллинджера %2 в %3</translation>
     </message>
@@ -1305,8 +1323,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="863"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="342"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="366"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="349"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="373"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
@@ -1366,8 +1384,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="827"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="343"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="365"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="350"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="372"/>
         <source>Simulation</source>
         <translation>Симуляция</translation>
     </message>
@@ -1382,13 +1400,13 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="104"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="111"/>
         <source>Autorun on %1 startup</source>
         <translation>Автозапускать при запуске %1</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="337"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="360"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="344"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="367"/>
         <source>Decision maker</source>
         <translation>Принятие решений</translation>
     </message>

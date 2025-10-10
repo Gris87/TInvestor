@@ -25,18 +25,18 @@ BuyDecision9ConfigWidget::~BuyDecision9ConfigWidget()
 void BuyDecision9ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
-    ui->priceRaiseDoubleSpinBox->setValue(mConfig->getPriceRaise());
-    ui->orderBookPositionsSpinBox->setValue(mConfig->getOrderBookPositions());
-    ui->durationSpinBox->setValue(mConfig->getDuration());
+    ui->rsiMonthDoubleSpinBox->setValue(mConfig->getRsiMonth());
+    ui->rsiWeekDoubleSpinBox->setValue(mConfig->getRsiWeek());
+    ui->rsiDayDoubleSpinBox->setValue(mConfig->getRsiDay());
 }
 
 void BuyDecision9ConfigWidget::makeReadOnly() const
 {
     ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
-    ui->priceRaiseDoubleSpinBox->setReadOnly(true);
-    ui->orderBookPositionsSpinBox->setReadOnly(true);
-    ui->durationSpinBox->setReadOnly(true);
+    ui->rsiMonthDoubleSpinBox->setReadOnly(true);
+    ui->rsiWeekDoubleSpinBox->setReadOnly(true);
+    ui->rsiDayDoubleSpinBox->setReadOnly(true);
 }
 
 void BuyDecision9ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -45,22 +45,22 @@ void BuyDecision9ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::Ch
 
     mConfig->setEnabled(checked);
 
-    ui->priceRaiseDoubleSpinBox->setEnabled(checked);
-    ui->orderBookPositionsSpinBox->setEnabled(checked);
-    ui->durationSpinBox->setEnabled(checked);
+    ui->rsiMonthDoubleSpinBox->setEnabled(checked);
+    ui->rsiWeekDoubleSpinBox->setEnabled(checked);
+    ui->rsiDayDoubleSpinBox->setEnabled(checked);
 }
 
-void BuyDecision9ConfigWidget::on_priceRaiseDoubleSpinBox_valueChanged(double value)
+void BuyDecision9ConfigWidget::on_rsiMonthDoubleSpinBox_valueChanged(double value)
 {
-    mConfig->setPriceRaise(value);
+    mConfig->setRsiMonth(value);
 }
 
-void BuyDecision9ConfigWidget::on_orderBookPositionsSpinBox_valueChanged(int value)
+void BuyDecision9ConfigWidget::on_rsiWeekDoubleSpinBox_valueChanged(double value)
 {
-    mConfig->setOrderBookPositions(value);
+    mConfig->setRsiWeek(value);
 }
 
-void BuyDecision9ConfigWidget::on_durationSpinBox_valueChanged(int value)
+void BuyDecision9ConfigWidget::on_rsiDayDoubleSpinBox_valueChanged(double value)
 {
-    mConfig->setDuration(value);
+    mConfig->setRsiDay(value);
 }

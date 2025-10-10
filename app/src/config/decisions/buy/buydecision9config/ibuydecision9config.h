@@ -37,12 +37,12 @@ public:
     virtual void setEnabled(bool value) = 0;
     virtual bool isEnabled()            = 0;
 
-    virtual void  setPriceRaise(float value) = 0;
-    virtual float getPriceRaise()            = 0;
+    virtual void  setRsiMonth(float value) = 0;
+    virtual float getRsiMonth()            = 0;
 
-    virtual void setOrderBookPositions(int value) = 0;
-    virtual int  getOrderBookPositions()          = 0;
+    virtual void  setRsiWeek(float value) = 0;
+    virtual float getRsiWeek()            = 0;
 
-    virtual void setDuration(int value) = 0;
-    virtual int  getDuration()          = 0;
+    virtual void  setRsiDay(float value) = 0;
+    virtual float getRsiDay()            = 0;
 };

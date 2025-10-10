@@ -6,10 +6,10 @@
 
 
 
-constexpr bool  ENABLED_DEFAULT              = true;
-constexpr float PRICE_RAISE_DEFAULT          = 2.0f;
-constexpr float ORDER_BOOK_POSITIONS_DEFAULT = 10;
-constexpr int   DURATION_DEFAULT             = 5;
+constexpr bool  ENABLED_DEFAULT   = true;
+constexpr float RSI_MONTH_DEFAULT = 70.0f;
+constexpr float RSI_WEEK_DEFAULT  = 60.0f;
+constexpr float RSI_DAY_DEFAULT   = 60.0f;
 
 
 
@@ -17,9 +17,9 @@ BuyDecision9Config::BuyDecision9Config() :
     IBuyDecision9Config(),
     mRwMutex(new QReadWriteLock()),
     mEnabled(),
-    mPriceRaise(),
-    mOrderBookPositions(),
-    mDuration()
+    mRsiMonth(),
+    mRsiWeek(),
+    mRsiDay()
 {
     qDebug() << "Create BuyDecision9Config";
 }
@@ -53,10 +53,10 @@ void BuyDecision9Config::assign(IBuyDecision9Config* another)
     const BuyDecision9Config& config = *dynamic_cast<BuyDecision9Config*>(another);
     const QReadLocker         lock2(config.mRwMutex);
 
-    mEnabled            = config.mEnabled;
-    mPriceRaise         = config.mPriceRaise;
-    mOrderBookPositions = config.mOrderBookPositions;
-    mDuration           = config.mDuration;
+    mEnabled  = config.mEnabled;
+    mRsiMonth = config.mRsiMonth;
+    mRsiWeek  = config.mRsiWeek;
+    mRsiDay   = config.mRsiDay;
 }
 
 void BuyDecision9Config::makeDefault()
@@ -65,10 +65,10 @@ void BuyDecision9Config::makeDefault()
 
     qDebug() << "Set BuyDecision9Config to default";
 
-    mEnabled            = ENABLED_DEFAULT;
-    mPriceRaise         = PRICE_RAISE_DEFAULT;
-    mOrderBookPositions = ORDER_BOOK_POSITIONS_DEFAULT;
-    mDuration           = DURATION_DEFAULT;
+    mEnabled  = ENABLED_DEFAULT;
+    mRsiMonth = RSI_MONTH_DEFAULT;
+    mRsiWeek  = RSI_WEEK_DEFAULT;
+    mRsiDay   = RSI_DAY_DEFAULT;
 }
 
 void BuyDecision9Config::save(ISettingsEditor* settingsEditor, const QString& type)
@@ -78,10 +78,10 @@ void BuyDecision9Config::save(ISettingsEditor* settingsEditor, const QString& ty
     qDebug() << "Save BuyDecision9Config";
 
     // clang-format off
-    settingsEditor->setValue(type + "/Enabled",            mEnabled);
-    settingsEditor->setValue(type + "/PriceRaise",         mPriceRaise);
-    settingsEditor->setValue(type + "/OrderBookPositions", mOrderBookPositions);
-    settingsEditor->setValue(type + "/Duration",           mDuration);
+    settingsEditor->setValue(type + "/Enabled",  mEnabled);
+    settingsEditor->setValue(type + "/RsiMonth", mRsiMonth);
+    settingsEditor->setValue(type + "/RsiWeek",  mRsiWeek);
+    settingsEditor->setValue(type + "/RsiDay",   mRsiDay);
     // clang-format on
 }
 
@@ -92,10 +92,10 @@ void BuyDecision9Config::load(ISettingsEditor* settingsEditor, const QString& ty
     qDebug() << "Load BuyDecision9Config";
 
     // clang-format off
-    mEnabled            = settingsEditor->value(type + "/Enabled",            mEnabled).toBool();
-    mPriceRaise         = settingsEditor->value(type + "/PriceRaise",         mPriceRaise).toFloat();
-    mOrderBookPositions = settingsEditor->value(type + "/OrderBookPositions", mOrderBookPositions).toInt();
-    mDuration           = settingsEditor->value(type + "/Duration",           mDuration).toInt();
+    mEnabled  = settingsEditor->value(type + "/Enabled",  mEnabled).toBool();
+    mRsiMonth = settingsEditor->value(type + "/RsiMonth", mRsiMonth).toFloat();
+    mRsiWeek  = settingsEditor->value(type + "/RsiWeek",  mRsiWeek).toFloat();
+    mRsiDay   = settingsEditor->value(type + "/RsiDay",   mRsiDay).toFloat();
     // clang-format on
 }
 
@@ -104,19 +104,19 @@ static void configEnabledParse(BuyDecision9Config* config, simdjson::ondemand::v
     config->setEnabled(value.get_bool());
 }
 
-static void configPriceRaiseParse(BuyDecision9Config* config, simdjson::ondemand::value value)
+static void configRsiMonthParse(BuyDecision9Config* config, simdjson::ondemand::value value)
 {
-    config->setPriceRaise(value.get_double_in_string());
+    config->setRsiMonth(value.get_double_in_string());
 }
 
-static void configOrderBookPositionsParse(BuyDecision9Config* config, simdjson::ondemand::value value)
+static void configRsiWeekParse(BuyDecision9Config* config, simdjson::ondemand::value value)
 {
-    config->setOrderBookPositions(value.get_int64());
+    config->setRsiWeek(value.get_double_in_string());
 }
 
-static void configDurationParse(BuyDecision9Config* config, simdjson::ondemand::value value)
+static void configRsiDayParse(BuyDecision9Config* config, simdjson::ondemand::value value)
 {
-    config->setDuration(value.get_int64());
+    config->setRsiDay(value.get_double_in_string());
 }
 
 static void configThrowParseException(
@@ -130,10 +130,10 @@ using ParseHandler = void (*)(BuyDecision9Config* config, simdjson::ondemand::va
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"enabled",            configEnabledParse           },
-    {"priceRaise",         configPriceRaiseParse        },
-    {"orderBookPositions", configOrderBookPositionsParse},
-    {"duration",           configDurationParse          }
+    {"enabled",  configEnabledParse },
+    {"rsiMonth", configRsiMonthParse},
+    {"rsiWeek",  configRsiWeekParse },
+    {"rsiDay",   configRsiDayParse  }
 };
 // clang-format on
 
@@ -150,12 +150,12 @@ void BuyDecision9Config::fromJsonObject(simdjson::ondemand::object jsonObject) /
 
 QString BuyDecision9Config::toJsonString() const
 {
-    return QString(R"({"enabled":%1,"priceRaise":"%2","orderBookPositions":%3,"duration":%4})")
+    return QString(R"({"enabled":%1,"rsiMonth":"%2","rsiWeek":"%3","rsiDay":"%4"})")
         .arg(
             mEnabled ? "true" : "false",
-            QString::number(mPriceRaise, 'f', 2),
-            QString::number(mOrderBookPositions),
-            QString::number(mDuration)
+            QString::number(mRsiMonth, 'f', 2),
+            QString::number(mRsiWeek, 'f', 2),
+            QString::number(mRsiDay, 'f', 2)
         );
 }
 
@@ -165,18 +165,19 @@ QStringList BuyDecision9Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList priceRaiseVariants         = {"1.00", "2.00", "3.00", "4.00", "5.00"};
-    const QStringList orderBookPositionsVariants = {"5", "10", "15", "20"};
-    const QStringList durationVariants           = {"5", "10", "15"};
+    const QStringList rsiMonthVariants = {"60.00", "70.00", "80.00"};
+    const QStringList rsiWeekVariants  = {"60.00", "70.00", "80.00"};
+    const QStringList rsiDayVariants   = {"60.00", "70.00", "80.00"};
 
-    for (const QString& priceRaise : priceRaiseVariants)
+    for (const QString& rsiMonth : rsiMonthVariants)
     {
-        for (const QString& orderBookPositions : orderBookPositionsVariants)
+        for (const QString& rsiWeek : rsiWeekVariants)
         {
-            for (const QString& duration : durationVariants)
+            for (const QString& rsiDay : rsiDayVariants)
             {
-                res.append(QString(R"({"enabled":true,"priceRaise":"%1","orderBookPositions":%2,"duration":%3})")
-                               .arg(priceRaise, orderBookPositions, duration));
+                res.append(
+                    QString(R"({"enabled":true,"rsiMonth":"%1","rsiWeek":"%2","rsiDay":"%3"})").arg(rsiMonth, rsiWeek, rsiDay)
+                );
             }
         }
     }
@@ -198,44 +199,44 @@ bool BuyDecision9Config::isEnabled()
     return mEnabled;
 }
 
-void BuyDecision9Config::setPriceRaise(float value)
+void BuyDecision9Config::setRsiMonth(float value)
 {
     const QWriteLocker lock(mRwMutex);
 
-    mPriceRaise = value;
+    mRsiMonth = value;
 }
 
-float BuyDecision9Config::getPriceRaise()
+float BuyDecision9Config::getRsiMonth()
 {
     const QReadLocker lock(mRwMutex);
 
-    return mPriceRaise;
+    return mRsiMonth;
 }
 
-void BuyDecision9Config::setOrderBookPositions(int value)
+void BuyDecision9Config::setRsiWeek(float value)
 {
     const QWriteLocker lock(mRwMutex);
 
-    mOrderBookPositions = value;
+    mRsiWeek = value;
 }
 
-int BuyDecision9Config::getOrderBookPositions()
+float BuyDecision9Config::getRsiWeek()
 {
     const QReadLocker lock(mRwMutex);
 
-    return mOrderBookPositions;
+    return mRsiWeek;
 }
 
-void BuyDecision9Config::setDuration(int value)
+void BuyDecision9Config::setRsiDay(float value)
 {
     const QWriteLocker lock(mRwMutex);
 
-    mDuration = value;
+    mRsiDay = value;
 }
 
-int BuyDecision9Config::getDuration()
+float BuyDecision9Config::getRsiDay()
 {
     const QReadLocker lock(mRwMutex);
 
-    return mDuration;
+    return mRsiDay;
 }
