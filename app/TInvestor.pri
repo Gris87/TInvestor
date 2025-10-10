@@ -31,6 +31,9 @@ SOURCES += \
     src/config/decisions/buy/buydecision8config/buydecision8config.cpp \
     src/config/decisions/buy/buydecision8config/buydecision8configwidget/buydecision8configwidget.cpp \
     src/config/decisions/buy/buydecision8config/buydecision8configwidget/buydecision8configwidgetfactory.cpp \
+    src/config/decisions/buy/buydecision9config/buydecision9config.cpp \
+    src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.cpp \
+    src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidgetfactory.cpp \
     src/config/decisions/decisionmakerconfig.cpp \
     src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.cpp \
     src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidgetfactory.cpp \
@@ -64,6 +67,7 @@ SOURCES += \
     src/decisions/buy/buydecision6/buydecision6.cpp \
     src/decisions/buy/buydecision7/buydecision7.cpp \
     src/decisions/buy/buydecision8/buydecision8.cpp \
+    src/decisions/buy/buydecision9/buydecision9.cpp \
     src/decisions/decisionmaker.cpp \
     src/decisions/sell/selldecision1/selldecision1.cpp \
     src/decisions/sell/selldecision2/selldecision2.cpp \
@@ -238,6 +242,12 @@ HEADERS += \
     src/config/decisions/buy/buydecision8config/buydecision8configwidget/ibuydecision8configwidget.h \
     src/config/decisions/buy/buydecision8config/buydecision8configwidget/ibuydecision8configwidgetfactory.h \
     src/config/decisions/buy/buydecision8config/ibuydecision8config.h \
+    src/config/decisions/buy/buydecision9config/buydecision9config.h \
+    src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.h \
+    src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidgetfactory.h \
+    src/config/decisions/buy/buydecision9config/buydecision9configwidget/ibuydecision9configwidget.h \
+    src/config/decisions/buy/buydecision9config/buydecision9configwidget/ibuydecision9configwidgetfactory.h \
+    src/config/decisions/buy/buydecision9config/ibuydecision9config.h \
     src/config/decisions/decisionmakerconfig.h \
     src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.h \
     src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidgetfactory.h \
@@ -297,6 +307,7 @@ HEADERS += \
     src/decisions/buy/buydecision6/buydecision6.h \
     src/decisions/buy/buydecision7/buydecision7.h \
     src/decisions/buy/buydecision8/buydecision8.h \
+    src/decisions/buy/buydecision9/buydecision9.h \
     src/decisions/decisionmaker.h \
     src/decisions/iactiondecision.h \
     src/decisions/idecisionmaker.h \
@@ -525,6 +536,7 @@ FORMS += \
     src/config/decisions/buy/buydecision6config/buydecision6configwidget/buydecision6configwidget.ui \
     src/config/decisions/buy/buydecision7config/buydecision7configwidget/buydecision7configwidget.ui \
     src/config/decisions/buy/buydecision8config/buydecision8configwidget/buydecision8configwidget.ui \
+    src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui \
     src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.ui \
     src/config/decisions/sell/selldecision1config/selldecision1configwidget/selldecision1configwidget.ui \
     src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui \

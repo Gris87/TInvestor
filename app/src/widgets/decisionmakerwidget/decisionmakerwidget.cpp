@@ -28,6 +28,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     IBuyDecision6ConfigWidgetFactory*  buyDecision6ConfigWidgetFactory,
     IBuyDecision7ConfigWidgetFactory*  buyDecision7ConfigWidgetFactory,
     IBuyDecision8ConfigWidgetFactory*  buyDecision8ConfigWidgetFactory,
+    IBuyDecision9ConfigWidgetFactory*  buyDecision9ConfigWidgetFactory,
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
@@ -76,20 +77,23 @@ DecisionMakerWidget::DecisionMakerWidget(
     mLogsFilterWidget   = logsFilterWidgetFactory->newInstance(this);
     mLogsTableWidget    = logsTableWidgetFactory->newInstance(logsTableModelFactory, fileDialogFactory, mSettingsEditor, this);
     mBestConfigWidget   = decisionMakerConfigWidgetFactory->newInstance(
-        mConfigForSimulation->getSimulatorConfig(),
-        buyDecision1ConfigWidgetFactory,
-        buyDecision2ConfigWidgetFactory,
-        buyDecision3ConfigWidgetFactory,
-        buyDecision4ConfigWidgetFactory,
-        buyDecision5ConfigWidgetFactory,
-        buyDecision6ConfigWidgetFactory,
-        buyDecision7ConfigWidgetFactory,
-        buyDecision8ConfigWidgetFactory,
-        sellDecision1ConfigWidgetFactory,
-        sellDecision2ConfigWidgetFactory,
-        sellDecision3ConfigWidgetFactory,
-        sellDecision4ConfigWidgetFactory,
-        sellDecision5ConfigWidgetFactory,
+        DecisionMakerConfigWidgetFactoryNewInstanceArgsMore15(
+            mConfigForSimulation->getSimulatorConfig(),
+            buyDecision1ConfigWidgetFactory,
+            buyDecision2ConfigWidgetFactory,
+            buyDecision3ConfigWidgetFactory,
+            buyDecision4ConfigWidgetFactory,
+            buyDecision5ConfigWidgetFactory,
+            buyDecision6ConfigWidgetFactory,
+            buyDecision7ConfigWidgetFactory,
+            buyDecision8ConfigWidgetFactory,
+            buyDecision9ConfigWidgetFactory,
+            sellDecision1ConfigWidgetFactory,
+            sellDecision2ConfigWidgetFactory,
+            sellDecision3ConfigWidgetFactory,
+            sellDecision4ConfigWidgetFactory,
+            sellDecision5ConfigWidgetFactory
+        ),
         ui->bestConfigTab
     );
     mPortfolioTreeWidget =

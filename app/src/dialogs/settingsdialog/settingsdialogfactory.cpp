@@ -31,6 +31,7 @@ SettingsDialogFactory::newInstance(const SettingsDialogFactoryNewInstanceArgsMor
         args.buyDecision6ConfigWidgetFactory,
         args.buyDecision7ConfigWidgetFactory,
         args.buyDecision8ConfigWidgetFactory,
+        args.buyDecision9ConfigWidgetFactory,
         args.sellDecision1ConfigWidgetFactory,
         args.sellDecision2ConfigWidgetFactory,
         args.sellDecision3ConfigWidgetFactory,

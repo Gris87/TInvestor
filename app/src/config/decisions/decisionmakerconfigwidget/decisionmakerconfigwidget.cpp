@@ -15,6 +15,7 @@ DecisionMakerConfigWidget::DecisionMakerConfigWidget(
     IBuyDecision6ConfigWidgetFactory*  buyDecision6ConfigWidgetFactory,
     IBuyDecision7ConfigWidgetFactory*  buyDecision7ConfigWidgetFactory,
     IBuyDecision8ConfigWidgetFactory*  buyDecision8ConfigWidgetFactory,
+    IBuyDecision9ConfigWidgetFactory*  buyDecision9ConfigWidgetFactory,
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
@@ -38,6 +39,7 @@ DecisionMakerConfigWidget::DecisionMakerConfigWidget(
     mBuyDecision6ConfigWidget  = buyDecision6ConfigWidgetFactory->newInstance(config->getBuyDecision6Config(),   ui->buyGroupBox);
     mBuyDecision7ConfigWidget  = buyDecision7ConfigWidgetFactory->newInstance(config->getBuyDecision7Config(),   ui->buyGroupBox);
     mBuyDecision8ConfigWidget  = buyDecision8ConfigWidgetFactory->newInstance(config->getBuyDecision8Config(),   ui->buyGroupBox);
+    mBuyDecision9ConfigWidget  = buyDecision9ConfigWidgetFactory->newInstance(config->getBuyDecision9Config(),   ui->buyGroupBox);
     mSellDecision1ConfigWidget = sellDecision1ConfigWidgetFactory->newInstance(config->getSellDecision1Config(), ui->sellGroupBox);
     mSellDecision2ConfigWidget = sellDecision2ConfigWidgetFactory->newInstance(config->getSellDecision2Config(), ui->sellGroupBox);
     mSellDecision3ConfigWidget = sellDecision3ConfigWidgetFactory->newInstance(config->getSellDecision3Config(), ui->sellGroupBox);
@@ -53,6 +55,7 @@ DecisionMakerConfigWidget::DecisionMakerConfigWidget(
     ui->layoutForBuyDecisionWidgets->addWidget(mBuyDecision6ConfigWidget);
     ui->layoutForBuyDecisionWidgets->addWidget(mBuyDecision7ConfigWidget);
     ui->layoutForBuyDecisionWidgets->addWidget(mBuyDecision8ConfigWidget);
+    ui->layoutForBuyDecisionWidgets->addWidget(mBuyDecision9ConfigWidget);
     ui->layoutForSellDecisionWidgets->addWidget(mSellDecision1ConfigWidget);
     ui->layoutForSellDecisionWidgets->addWidget(mSellDecision2ConfigWidget);
     ui->layoutForSellDecisionWidgets->addWidget(mSellDecision3ConfigWidget);
@@ -77,6 +80,7 @@ void DecisionMakerConfigWidget::updateUiFromConfig() const
     mBuyDecision6ConfigWidget->updateUiFromConfig();
     mBuyDecision7ConfigWidget->updateUiFromConfig();
     mBuyDecision8ConfigWidget->updateUiFromConfig();
+    mBuyDecision9ConfigWidget->updateUiFromConfig();
     mSellDecision1ConfigWidget->updateUiFromConfig();
     mSellDecision2ConfigWidget->updateUiFromConfig();
     mSellDecision3ConfigWidget->updateUiFromConfig();
@@ -94,6 +98,7 @@ void DecisionMakerConfigWidget::makeReadOnly() const
     mBuyDecision6ConfigWidget->makeReadOnly();
     mBuyDecision7ConfigWidget->makeReadOnly();
     mBuyDecision8ConfigWidget->makeReadOnly();
+    mBuyDecision9ConfigWidget->makeReadOnly();
     mSellDecision1ConfigWidget->makeReadOnly();
     mSellDecision2ConfigWidget->makeReadOnly();
     mSellDecision3ConfigWidget->makeReadOnly();

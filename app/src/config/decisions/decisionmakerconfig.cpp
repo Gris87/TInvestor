@@ -15,6 +15,7 @@ DecisionMakerConfig::DecisionMakerConfig(
     IBuyDecision6Config*  buyDecision6Config,
     IBuyDecision7Config*  buyDecision7Config,
     IBuyDecision8Config*  buyDecision8Config,
+    IBuyDecision9Config*  buyDecision9Config,
     ISellDecision1Config* sellDecision1Config,
     ISellDecision2Config* sellDecision2Config,
     ISellDecision3Config* sellDecision3Config,
@@ -30,6 +31,7 @@ DecisionMakerConfig::DecisionMakerConfig(
     mBuyDecision6Config(buyDecision6Config),
     mBuyDecision7Config(buyDecision7Config),
     mBuyDecision8Config(buyDecision8Config),
+    mBuyDecision9Config(buyDecision9Config),
     mSellDecision1Config(sellDecision1Config),
     mSellDecision2Config(sellDecision2Config),
     mSellDecision3Config(sellDecision3Config),
@@ -54,6 +56,7 @@ IDecisionMakerConfig* DecisionMakerConfig::clone()
     IBuyDecision6Config*  buyDecision6Config  = mBuyDecision6Config->clone();
     IBuyDecision7Config*  buyDecision7Config  = mBuyDecision7Config->clone();
     IBuyDecision8Config*  buyDecision8Config  = mBuyDecision8Config->clone();
+    IBuyDecision9Config*  buyDecision9Config  = mBuyDecision9Config->clone();
     ISellDecision1Config* sellDecision1Config = mSellDecision1Config->clone();
     ISellDecision2Config* sellDecision2Config = mSellDecision2Config->clone();
     ISellDecision3Config* sellDecision3Config = mSellDecision3Config->clone();
@@ -69,6 +72,7 @@ IDecisionMakerConfig* DecisionMakerConfig::clone()
         buyDecision6Config,
         buyDecision7Config,
         buyDecision8Config,
+        buyDecision9Config,
         sellDecision1Config,
         sellDecision2Config,
         sellDecision3Config,
@@ -90,6 +94,7 @@ void DecisionMakerConfig::deleteRecursively()
     mBuyDecision6Config->deleteRecursively();
     mBuyDecision7Config->deleteRecursively();
     mBuyDecision8Config->deleteRecursively();
+    mBuyDecision9Config->deleteRecursively();
     mSellDecision1Config->deleteRecursively();
     mSellDecision2Config->deleteRecursively();
     mSellDecision3Config->deleteRecursively();
@@ -113,6 +118,7 @@ void DecisionMakerConfig::assign(IDecisionMakerConfig* another)
     mBuyDecision6Config->assign(config.mBuyDecision6Config);
     mBuyDecision7Config->assign(config.mBuyDecision7Config);
     mBuyDecision8Config->assign(config.mBuyDecision8Config);
+    mBuyDecision9Config->assign(config.mBuyDecision9Config);
     mSellDecision1Config->assign(config.mSellDecision1Config);
     mSellDecision2Config->assign(config.mSellDecision2Config);
     mSellDecision3Config->assign(config.mSellDecision3Config);
@@ -132,6 +138,7 @@ void DecisionMakerConfig::makeDefault()
     mBuyDecision6Config->makeDefault();
     mBuyDecision7Config->makeDefault();
     mBuyDecision8Config->makeDefault();
+    mBuyDecision9Config->makeDefault();
     mSellDecision1Config->makeDefault();
     mSellDecision2Config->makeDefault();
     mSellDecision3Config->makeDefault();
@@ -151,6 +158,7 @@ void DecisionMakerConfig::save(ISettingsEditor* settingsEditor, const QString& t
     mBuyDecision6Config->save(settingsEditor, type + "/BuyDecision6Config");
     mBuyDecision7Config->save(settingsEditor, type + "/BuyDecision7Config");
     mBuyDecision8Config->save(settingsEditor, type + "/BuyDecision8Config");
+    mBuyDecision9Config->save(settingsEditor, type + "/BuyDecision9Config");
     mSellDecision1Config->save(settingsEditor, type + "/SellDecision1Config");
     mSellDecision2Config->save(settingsEditor, type + "/SellDecision2Config");
     mSellDecision3Config->save(settingsEditor, type + "/SellDecision3Config");
@@ -170,6 +178,7 @@ void DecisionMakerConfig::load(ISettingsEditor* settingsEditor, const QString& t
     mBuyDecision6Config->load(settingsEditor, type + "/BuyDecision6Config");
     mBuyDecision7Config->load(settingsEditor, type + "/BuyDecision7Config");
     mBuyDecision8Config->load(settingsEditor, type + "/BuyDecision8Config");
+    mBuyDecision9Config->load(settingsEditor, type + "/BuyDecision9Config");
     mSellDecision1Config->load(settingsEditor, type + "/SellDecision1Config");
     mSellDecision2Config->load(settingsEditor, type + "/SellDecision2Config");
     mSellDecision3Config->load(settingsEditor, type + "/SellDecision3Config");
@@ -217,6 +226,11 @@ static void configBuyDecision8Parse(DecisionMakerConfig* config, simdjson::ondem
     config->getBuyDecision8Config()->fromJsonObject(value.get_object());
 }
 
+static void configBuyDecision9Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
+{
+    config->getBuyDecision9Config()->fromJsonObject(value.get_object());
+}
+
 static void configSellDecision1Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
 {
     config->getSellDecision1Config()->fromJsonObject(value.get_object());
@@ -261,6 +275,7 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
     {"b6", configBuyDecision6Parse },
     {"b7", configBuyDecision7Parse },
     {"b8", configBuyDecision8Parse },
+    {"b9", configBuyDecision9Parse },
     {"s1", configSellDecision1Parse},
     {"s2", configSellDecision2Parse},
     {"s3", configSellDecision3Parse},
@@ -290,6 +305,7 @@ QString DecisionMakerConfig::toJsonString() const
     const QString b6 = mBuyDecision6Config->toJsonString();
     const QString b7 = mBuyDecision7Config->toJsonString();
     const QString b8 = mBuyDecision8Config->toJsonString();
+    const QString b9 = mBuyDecision9Config->toJsonString();
 
     const QString s1 = mSellDecision1Config->toJsonString();
     const QString s2 = mSellDecision2Config->toJsonString();
@@ -298,7 +314,8 @@ QString DecisionMakerConfig::toJsonString() const
     const QString s5 = mSellDecision5Config->toJsonString();
 
     return QString("{%1,%2}").arg(
-        QString(R"("b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"b6":%6,"b7":%7,"b8":%8)").arg(b1, b2, b3, b4, b5, b6, b7, b8),
+        QString(R"("b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"b6":%6,"b7":%7,"b8":%8,"b9":%9)")
+            .arg(b1, b2, b3, b4, b5, b6, b7, b8, b9),
         QString(R"("s1":%1,"s2":%2,"s3":%3,"s4":%4,"s5":%5)").arg(s1, s2, s3, s4, s5)
     );
 }
@@ -316,6 +333,7 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
         mBuyDecision6Config->variantsAsJson(),
         mBuyDecision7Config->variantsAsJson(),
         mBuyDecision8Config->variantsAsJson(),
+        mBuyDecision9Config->variantsAsJson(),
     };
     const QList<QStringList> sellVariants = {
         mSellDecision1Config->variantsAsJson(),
@@ -354,7 +372,7 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
 
                     // NOLINTBEGIN(readability-magic-numbers)
                     results.append(QString("{%1,%2}").arg(
-                        QString(R"("b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"b6":%6,"b7":%7,"b8":%8)")
+                        QString(R"("b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"b6":%6,"b7":%7,"b8":%8,"b9":%9)")
                             .arg(
                                 buyConfigs[0],
                                 buyConfigs[1],
@@ -363,7 +381,8 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
                                 buyConfigs[4],
                                 buyConfigs[5],
                                 buyConfigs[6],
-                                buyConfigs[7]
+                                buyConfigs[7],
+                                buyConfigs[8]
                             ),
                         QString(R"("s1":%1,"s2":%2,"s3":%3,"s4":%4,"s5":%5)").arg(sellConfigs[0], sellConfigs[1], s3, s4, s5)
                     ));
@@ -385,7 +404,7 @@ QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(con
     QStringList unitedBestConfigs;
 
     // NOLINTBEGIN(readability-magic-numbers)
-    Q_ASSERT_X(bestConfigs.size() == 8, __FUNCTION__, "Unexpected behavior");
+    Q_ASSERT_X(bestConfigs.size() == 9, __FUNCTION__, "Unexpected behavior");
     const QString& config0 = bestConfigs.at(0);
     const QString& config1 = bestConfigs.at(1);
     const QString& config2 = bestConfigs.at(2);
@@ -394,6 +413,7 @@ QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(con
     const QString& config5 = bestConfigs.at(5);
     const QString& config6 = bestConfigs.at(6);
     const QString& config7 = bestConfigs.at(7);
+    const QString& config8 = bestConfigs.at(8);
     // NOLINTEND(readability-magic-numbers)
 
     const QString b1 =
@@ -411,12 +431,15 @@ QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(con
     const QString b7 =
         config6.mid(config6.indexOf(R"("b7":)") + 5, config6.indexOf(R"("b8":)") - config6.indexOf(R"("b7":)") - 6);
     const QString b8 =
-        config7.mid(config7.indexOf(R"("b8":)") + 5, config7.indexOf(R"("s1":)") - config7.indexOf(R"("b8":)") - 6);
+        config7.mid(config7.indexOf(R"("b8":)") + 5, config7.indexOf(R"("b9":)") - config7.indexOf(R"("b8":)") - 6);
+    const QString b9 =
+        config8.mid(config8.indexOf(R"("b9":)") + 5, config8.indexOf(R"("s1":)") - config8.indexOf(R"("b9":)") - 6);
 
     for (const QString& bestConfig : bestConfigs)
     {
         unitedBestConfigs.append(QString("{%1,%2}").arg(
-            QString(R"("b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"b6":%6,"b7":%7,"b8":%8)").arg(b1, b2, b3, b4, b5, b6, b7, b8),
+            QString(R"("b1":%1,"b2":%2,"b3":%3,"b4":%4,"b5":%5,"b6":%6,"b7":%7,"b8":%8,"b9":%9)")
+                .arg(b1, b2, b3, b4, b5, b6, b7, b8, b9),
             bestConfig.mid(bestConfig.indexOf(R"("s1":)"))
         ));
     }
@@ -486,6 +509,11 @@ IBuyDecision7Config* DecisionMakerConfig::getBuyDecision7Config()
 IBuyDecision8Config* DecisionMakerConfig::getBuyDecision8Config()
 {
     return mBuyDecision8Config;
+}
+
+IBuyDecision9Config* DecisionMakerConfig::getBuyDecision9Config()
+{
+    return mBuyDecision9Config;
 }
 
 ISellDecision1Config* DecisionMakerConfig::getSellDecision1Config()
