@@ -69,9 +69,8 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision7Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
 )
 {
-    bool firstNight    = true;
-    int  successNights = 0;
-    int  failedNights  = 0;
+    int successNights = 0;
+    int failedNights  = 0;
 
     const float priceRaise = buyConfig->getPriceRaise();
     const int   duration   = buyConfig->getDuration();
@@ -79,7 +78,17 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
     const StockData* stockData = stock->data.constData();
 
     const qint64 currentTimestamp = stockData[dataIndex].timestamp;
-    limitTimestamp                = currentTimestamp - (duration * ONE_DAY) - ONE_HOUR;
+
+    const QTime startTime   = stock->meta.lastTradeTime.addMSecs(-(MINUTES_BEFORE_DAY_END * ONE_MINUTE));
+    const QTime endTime     = stock->meta.lastTradeTime;
+    const QTime currentTime = QDateTime::fromMSecsSinceEpoch(currentTimestamp).time();
+
+    if (!mTimeUtils->isTimeBetween(currentTime, startTime, endTime))
+    {
+        return "";
+    }
+
+    limitTimestamp = currentTimestamp - (duration * ONE_DAY) - ONE_HOUR;
 
     for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
     {
@@ -123,21 +132,6 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
 
             if (minutesLeft <= 0)
             {
-                if (firstNight)
-                {
-                    const QTime startTime =
-                        QDateTime::fromMSecsSinceEpoch(timestamp - (MINUTES_BEFORE_DAY_END * ONE_MINUTE)).time();
-                    const QTime endTime     = QDateTime::fromMSecsSinceEpoch(timestamp).time();
-                    const QTime currentTime = QDateTime::fromMSecsSinceEpoch(currentTimestamp).time();
-
-                    if (!mTimeUtils->isTimeBetween(currentTime, startTime, endTime))
-                    {
-                        return "";
-                    }
-
-                    firstNight = false;
-                }
-
                 ++successNights;
             }
             else
