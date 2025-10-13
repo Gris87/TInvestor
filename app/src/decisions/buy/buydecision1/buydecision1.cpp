@@ -7,7 +7,7 @@
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
 constexpr int    MINUTES_TO_DOUBLE_CHECK = 5;
-constexpr int    HOURS_TO_TRIPLE_CHECK   = 3;
+constexpr int    HOURS_TO_TRIPLE_CHECK   = 5;
 constexpr int    STEP_FOR_TRIPLE_CHECK   = 60;
 constexpr float  TRIPLE_MINIMUM_COEF     = 3.0f;
 constexpr float  HUNDRED_PERCENT         = 100.0f;

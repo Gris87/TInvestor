@@ -29,4 +29,14 @@ public:
 
     [[nodiscard]]
     AsapMode asapMode() const override;
+
+private:
+    QString makeDecisionBasedOnStockData(
+        QThread* parentThread, IBuyDecision9Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
+    );
+
+    QList<float> getDayPrices(QThread* parentThread, Stock* stock, int dataIndex);
+    float        calculateSma(const QList<float>& prices);
+    float        calculateEma(const QList<float>& prices);
+    float        calculateRsi(const QList<float>& prices);
 };
