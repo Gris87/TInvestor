@@ -6,10 +6,8 @@
 
 
 
-constexpr bool  ENABLED_DEFAULT   = true;
-constexpr float RSI_MONTH_DEFAULT = 70.0f;
-constexpr float RSI_WEEK_DEFAULT  = 60.0f;
-constexpr float RSI_DAY_DEFAULT   = 60.0f;
+constexpr bool  ENABLED_DEFAULT = true;
+constexpr float RSI_DEFAULT     = 25.0f;
 
 
 
@@ -17,9 +15,7 @@ BuyDecision9Config::BuyDecision9Config() :
     IBuyDecision9Config(),
     mRwMutex(new QReadWriteLock()),
     mEnabled(),
-    mRsiMonth(),
-    mRsiWeek(),
-    mRsiDay()
+    mRsi()
 {
     qDebug() << "Create BuyDecision9Config";
 }
@@ -53,10 +49,8 @@ void BuyDecision9Config::assign(IBuyDecision9Config* another)
     const BuyDecision9Config& config = *dynamic_cast<BuyDecision9Config*>(another);
     const QReadLocker         lock2(config.mRwMutex);
 
-    mEnabled  = config.mEnabled;
-    mRsiMonth = config.mRsiMonth;
-    mRsiWeek  = config.mRsiWeek;
-    mRsiDay   = config.mRsiDay;
+    mEnabled = config.mEnabled;
+    mRsi     = config.mRsi;
 }
 
 void BuyDecision9Config::makeDefault()
@@ -65,10 +59,8 @@ void BuyDecision9Config::makeDefault()
 
     qDebug() << "Set BuyDecision9Config to default";
 
-    mEnabled  = ENABLED_DEFAULT;
-    mRsiMonth = RSI_MONTH_DEFAULT;
-    mRsiWeek  = RSI_WEEK_DEFAULT;
-    mRsiDay   = RSI_DAY_DEFAULT;
+    mEnabled = ENABLED_DEFAULT;
+    mRsi     = RSI_DEFAULT;
 }
 
 void BuyDecision9Config::save(ISettingsEditor* settingsEditor, const QString& type)
@@ -78,10 +70,8 @@ void BuyDecision9Config::save(ISettingsEditor* settingsEditor, const QString& ty
     qDebug() << "Save BuyDecision9Config";
 
     // clang-format off
-    settingsEditor->setValue(type + "/Enabled",  mEnabled);
-    settingsEditor->setValue(type + "/RsiMonth", mRsiMonth);
-    settingsEditor->setValue(type + "/RsiWeek",  mRsiWeek);
-    settingsEditor->setValue(type + "/RsiDay",   mRsiDay);
+    settingsEditor->setValue(type + "/Enabled", mEnabled);
+    settingsEditor->setValue(type + "/Rsi",     mRsi);
     // clang-format on
 }
 
@@ -92,10 +82,8 @@ void BuyDecision9Config::load(ISettingsEditor* settingsEditor, const QString& ty
     qDebug() << "Load BuyDecision9Config";
 
     // clang-format off
-    mEnabled  = settingsEditor->value(type + "/Enabled",  mEnabled).toBool();
-    mRsiMonth = settingsEditor->value(type + "/RsiMonth", mRsiMonth).toFloat();
-    mRsiWeek  = settingsEditor->value(type + "/RsiWeek",  mRsiWeek).toFloat();
-    mRsiDay   = settingsEditor->value(type + "/RsiDay",   mRsiDay).toFloat();
+    mEnabled = settingsEditor->value(type + "/Enabled", mEnabled).toBool();
+    mRsi     = settingsEditor->value(type + "/Rsi",     mRsi).toFloat();
     // clang-format on
 }
 
@@ -104,19 +92,9 @@ static void configEnabledParse(BuyDecision9Config* config, simdjson::ondemand::v
     config->setEnabled(value.get_bool());
 }
 
-static void configRsiMonthParse(BuyDecision9Config* config, simdjson::ondemand::value value)
+static void configRsiParse(BuyDecision9Config* config, simdjson::ondemand::value value)
 {
-    config->setRsiMonth(value.get_double_in_string());
-}
-
-static void configRsiWeekParse(BuyDecision9Config* config, simdjson::ondemand::value value)
-{
-    config->setRsiWeek(value.get_double_in_string());
-}
-
-static void configRsiDayParse(BuyDecision9Config* config, simdjson::ondemand::value value)
-{
-    config->setRsiDay(value.get_double_in_string());
+    config->setRsi(value.get_double_in_string());
 }
 
 static void configThrowParseException(
@@ -130,10 +108,8 @@ using ParseHandler = void (*)(BuyDecision9Config* config, simdjson::ondemand::va
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"enabled",  configEnabledParse },
-    {"rsiMonth", configRsiMonthParse},
-    {"rsiWeek",  configRsiWeekParse },
-    {"rsiDay",   configRsiDayParse  }
+    {"enabled", configEnabledParse},
+    {"rsi",     configRsiParse    }
 };
 // clang-format on
 
@@ -150,13 +126,7 @@ void BuyDecision9Config::fromJsonObject(simdjson::ondemand::object jsonObject) /
 
 QString BuyDecision9Config::toJsonString() const
 {
-    return QString(R"({"enabled":%1,"rsiMonth":"%2","rsiWeek":"%3","rsiDay":"%4"})")
-        .arg(
-            mEnabled ? "true" : "false",
-            QString::number(mRsiMonth, 'f', 2),
-            QString::number(mRsiWeek, 'f', 2),
-            QString::number(mRsiDay, 'f', 2)
-        );
+    return QString(R"({"enabled":%1,"rsi":"%2"})").arg(mEnabled ? "true" : "false", QString::number(mRsi, 'f', 2));
 }
 
 QStringList BuyDecision9Config::variantsAsJson() const
@@ -165,21 +135,11 @@ QStringList BuyDecision9Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList rsiMonthVariants = {"60.00", "70.00", "80.00"};
-    const QStringList rsiWeekVariants  = {"60.00", "70.00", "80.00"};
-    const QStringList rsiDayVariants   = {"60.00", "70.00", "80.00"};
+    const QStringList rsiVariants = {"20.00", "25.00", "30.00", "35.00"};
 
-    for (const QString& rsiMonth : rsiMonthVariants)
+    for (const QString& rsi : rsiVariants)
     {
-        for (const QString& rsiWeek : rsiWeekVariants)
-        {
-            for (const QString& rsiDay : rsiDayVariants)
-            {
-                res.append(
-                    QString(R"({"enabled":true,"rsiMonth":"%1","rsiWeek":"%2","rsiDay":"%3"})").arg(rsiMonth, rsiWeek, rsiDay)
-                );
-            }
-        }
+        res.append(QString(R"({"enabled":true,"rsi":"%1"})").arg(rsi));
     }
 
     return res;
@@ -199,44 +159,16 @@ bool BuyDecision9Config::isEnabled()
     return mEnabled;
 }
 
-void BuyDecision9Config::setRsiMonth(float value)
+void BuyDecision9Config::setRsi(float value)
 {
     const QWriteLocker lock(mRwMutex);
 
-    mRsiMonth = value;
+    mRsi = value;
 }
 
-float BuyDecision9Config::getRsiMonth()
+float BuyDecision9Config::getRsi()
 {
     const QReadLocker lock(mRwMutex);
 
-    return mRsiMonth;
-}
-
-void BuyDecision9Config::setRsiWeek(float value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mRsiWeek = value;
-}
-
-float BuyDecision9Config::getRsiWeek()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mRsiWeek;
-}
-
-void BuyDecision9Config::setRsiDay(float value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mRsiDay = value;
-}
-
-float BuyDecision9Config::getRsiDay()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mRsiDay;
+    return mRsi;
 }

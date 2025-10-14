@@ -82,7 +82,7 @@ QString BuyDecision9::makeDecisionBasedOnStockData(
     const float ema = calculateEma(prices);
     const float rsi = calculateRsi(prices);
 
-    if (price >= ema && price >= sma && rsi <= buyConfig->getRsiDay())
+    if (price >= ema && price >= sma && rsi <= buyConfig->getRsi())
     {
         return QObject::tr("Decided to buy because the RSI for day %1").arg(QString::number(rsi, 'f', 2) + "%");
     }

@@ -37,12 +37,6 @@ public:
     virtual void setEnabled(bool value) = 0;
     virtual bool isEnabled()            = 0;
 
-    virtual void  setRsiMonth(float value) = 0;
-    virtual float getRsiMonth()            = 0;
-
-    virtual void  setRsiWeek(float value) = 0;
-    virtual float getRsiWeek()            = 0;
-
-    virtual void  setRsiDay(float value) = 0;
-    virtual float getRsiDay()            = 0;
+    virtual void  setRsi(float value) = 0;
+    virtual float getRsi()            = 0;
 };

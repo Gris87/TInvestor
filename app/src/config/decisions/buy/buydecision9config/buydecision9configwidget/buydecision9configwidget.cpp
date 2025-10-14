@@ -25,18 +25,14 @@ BuyDecision9ConfigWidget::~BuyDecision9ConfigWidget()
 void BuyDecision9ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
-    ui->rsiMonthDoubleSpinBox->setValue(mConfig->getRsiMonth());
-    ui->rsiWeekDoubleSpinBox->setValue(mConfig->getRsiWeek());
-    ui->rsiDayDoubleSpinBox->setValue(mConfig->getRsiDay());
+    ui->rsiDoubleSpinBox->setValue(mConfig->getRsi());
 }
 
 void BuyDecision9ConfigWidget::makeReadOnly() const
 {
     ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
-    ui->rsiMonthDoubleSpinBox->setReadOnly(true);
-    ui->rsiWeekDoubleSpinBox->setReadOnly(true);
-    ui->rsiDayDoubleSpinBox->setReadOnly(true);
+    ui->rsiDoubleSpinBox->setReadOnly(true);
 }
 
 void BuyDecision9ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -45,22 +41,10 @@ void BuyDecision9ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::Ch
 
     mConfig->setEnabled(checked);
 
-    ui->rsiMonthDoubleSpinBox->setEnabled(checked);
-    ui->rsiWeekDoubleSpinBox->setEnabled(checked);
-    ui->rsiDayDoubleSpinBox->setEnabled(checked);
+    ui->rsiDoubleSpinBox->setEnabled(checked);
 }
 
-void BuyDecision9ConfigWidget::on_rsiMonthDoubleSpinBox_valueChanged(double value)
+void BuyDecision9ConfigWidget::on_rsiDoubleSpinBox_valueChanged(double value)
 {
-    mConfig->setRsiMonth(value);
-}
-
-void BuyDecision9ConfigWidget::on_rsiWeekDoubleSpinBox_valueChanged(double value)
-{
-    mConfig->setRsiWeek(value);
-}
-
-void BuyDecision9ConfigWidget::on_rsiDayDoubleSpinBox_valueChanged(double value)
-{
-    mConfig->setRsiDay(value);
+    mConfig->setRsi(value);
 }

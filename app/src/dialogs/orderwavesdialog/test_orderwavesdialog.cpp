@@ -38,9 +38,6 @@ protected:
         stock->meta.pricePrecision      = 2;
         stock->meta.lastTradeTime       = QTime(18, 39);
         stock->meta.turnover            = 9310000;
-        stock->meta.rsiMonth            = 70.0f;
-        stock->meta.rsiWeek             = 80.0f;
-        stock->meta.rsiDay              = 90.0f;
 
         EXPECT_CALL(*orderWavesWidgetFactoryMock, newInstance(2, FloatEq(1.5f), NotNull()))
             .WillOnce(Return(orderWavesWidgetMock));

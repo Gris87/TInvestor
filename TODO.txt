@@ -1,11 +1,10 @@
-Remove rsiMonth, rsiWeek, rsiDay
 Real time for buy decision 5
 Real time for buy decision 6
 Real time for buy decision 7
 Real time for buy decision 8
 Real time for buy decision 9
 Fill operational data from stock data
-Buy if price raise anomally (buy decision 5)
+Extreme price raise during last week (buy decision 5)
 Buy more if lose 5%
 Huge bid order buy
 Refactor buy/sell decisions

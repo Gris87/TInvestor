@@ -234,9 +234,6 @@ TEST_F(Test_PriceCollectThread, Test_run)
     stock.meta.pricePrecision      = 3;
     stock.meta.lastTradeTime       = QTime(18, 39);
     stock.meta.turnover            = 5000;
-    stock.meta.rsiMonth            = 70;
-    stock.meta.rsiWeek             = 80;
-    stock.meta.rsiDay              = 90;
 
     stocks << &stock;
 

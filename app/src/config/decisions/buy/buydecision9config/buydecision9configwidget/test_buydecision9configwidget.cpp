@@ -45,36 +45,26 @@ TEST_F(Test_BuyDecision9ConfigWidget, Test_updateUiFromConfig)
     const InSequence seq;
 
     configWidget->ui->enabledCheckBox->blockSignals(true);
-    configWidget->ui->rsiMonthDoubleSpinBox->blockSignals(true);
-    configWidget->ui->rsiWeekDoubleSpinBox->blockSignals(true);
-    configWidget->ui->rsiDayDoubleSpinBox->blockSignals(true);
+    configWidget->ui->rsiDoubleSpinBox->blockSignals(true);
 
     EXPECT_CALL(*buyDecision9ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*buyDecision9ConfigMock, getRsiMonth()).WillOnce(Return(2.1f));
-    EXPECT_CALL(*buyDecision9ConfigMock, getRsiWeek()).WillOnce(Return(3.1f));
-    EXPECT_CALL(*buyDecision9ConfigMock, getRsiDay()).WillOnce(Return(4.1f));
+    EXPECT_CALL(*buyDecision9ConfigMock, getRsi()).WillOnce(Return(4.1f));
 
     configWidget->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),     true);
-    ASSERT_NEAR(configWidget->ui->rsiMonthDoubleSpinBox->value(), 2.1f, 0.0001f);
-    ASSERT_NEAR(configWidget->ui->rsiWeekDoubleSpinBox->value(),  3.1f, 0.0001f);
-    ASSERT_NEAR(configWidget->ui->rsiDayDoubleSpinBox->value(),   4.1f, 0.0001f);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(), true);
+    ASSERT_NEAR(configWidget->ui->rsiDoubleSpinBox->value(),  4.1f, 0.0001f);
     // clang-format on
 
     EXPECT_CALL(*buyDecision9ConfigMock, isEnabled()).WillOnce(Return(false));
-    EXPECT_CALL(*buyDecision9ConfigMock, getRsiMonth()).WillOnce(Return(5.3f));
-    EXPECT_CALL(*buyDecision9ConfigMock, getRsiWeek()).WillOnce(Return(6.3f));
-    EXPECT_CALL(*buyDecision9ConfigMock, getRsiDay()).WillOnce(Return(7.3f));
+    EXPECT_CALL(*buyDecision9ConfigMock, getRsi()).WillOnce(Return(7.3f));
 
     configWidget->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(),     false);
-    ASSERT_NEAR(configWidget->ui->rsiMonthDoubleSpinBox->value(), 5.3f, 0.0001f);
-    ASSERT_NEAR(configWidget->ui->rsiWeekDoubleSpinBox->value(),  6.3f, 0.0001f);
-    ASSERT_NEAR(configWidget->ui->rsiDayDoubleSpinBox->value(),   7.3f, 0.0001f);
+    ASSERT_EQ(configWidget->ui->enabledCheckBox->isChecked(), false);
+    ASSERT_NEAR(configWidget->ui->rsiDoubleSpinBox->value(),  7.3f, 0.0001f);
     // clang-format on
 }
 
@@ -83,9 +73,7 @@ TEST_F(Test_BuyDecision9ConfigWidget, Test_makeReadOnly)
     // clang-format off
     ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
     ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
-    ASSERT_EQ(configWidget->ui->rsiMonthDoubleSpinBox->isReadOnly(),                              false);
-    ASSERT_EQ(configWidget->ui->rsiWeekDoubleSpinBox->isReadOnly(),                               false);
-    ASSERT_EQ(configWidget->ui->rsiDayDoubleSpinBox->isReadOnly(),                                false);
+    ASSERT_EQ(configWidget->ui->rsiDoubleSpinBox->isReadOnly(),                                   false);
     // clang-format on
 
     configWidget->makeReadOnly();
@@ -93,9 +81,7 @@ TEST_F(Test_BuyDecision9ConfigWidget, Test_makeReadOnly)
     // clang-format off
     ASSERT_EQ(configWidget->ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
     ASSERT_EQ(configWidget->ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
-    ASSERT_EQ(configWidget->ui->rsiMonthDoubleSpinBox->isReadOnly(),                              true);
-    ASSERT_EQ(configWidget->ui->rsiWeekDoubleSpinBox->isReadOnly(),                               true);
-    ASSERT_EQ(configWidget->ui->rsiDayDoubleSpinBox->isReadOnly(),                                true);
+    ASSERT_EQ(configWidget->ui->rsiDoubleSpinBox->isReadOnly(),                                   true);
     // clang-format on
 }
 
@@ -111,63 +97,29 @@ TEST_F(Test_BuyDecision9ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
     configWidget->ui->enabledCheckBox->setChecked(true);
 
     // clang-format off
-    ASSERT_EQ(configWidget->ui->rsiMonthDoubleSpinBox->isEnabled(), true);
-    ASSERT_EQ(configWidget->ui->rsiWeekDoubleSpinBox->isEnabled(),  true);
-    ASSERT_EQ(configWidget->ui->rsiDayDoubleSpinBox->isEnabled(),   true);
+    ASSERT_EQ(configWidget->ui->rsiDoubleSpinBox->isEnabled(), true);
     // clang-format on
 
     EXPECT_CALL(*buyDecision9ConfigMock, setEnabled(false));
     configWidget->ui->enabledCheckBox->setChecked(false);
 
     // clang-format off
-    ASSERT_EQ(configWidget->ui->rsiMonthDoubleSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget->ui->rsiWeekDoubleSpinBox->isEnabled(),  false);
-    ASSERT_EQ(configWidget->ui->rsiDayDoubleSpinBox->isEnabled(),   false);
+    ASSERT_EQ(configWidget->ui->rsiDoubleSpinBox->isEnabled(), false);
     // clang-format on
 }
 
-TEST_F(Test_BuyDecision9ConfigWidget, Test_on_rsiMonthDoubleSpinBox_valueChanged)
+TEST_F(Test_BuyDecision9ConfigWidget, Test_on_rsiDoubleSpinBox_valueChanged)
 {
     const InSequence seq;
 
-    configWidget->ui->rsiMonthDoubleSpinBox->blockSignals(true);
-    configWidget->ui->rsiMonthDoubleSpinBox->setValue(1.0f);
-    configWidget->ui->rsiMonthDoubleSpinBox->blockSignals(false);
+    configWidget->ui->rsiDoubleSpinBox->blockSignals(true);
+    configWidget->ui->rsiDoubleSpinBox->setValue(1.0f);
+    configWidget->ui->rsiDoubleSpinBox->blockSignals(false);
 
-    EXPECT_CALL(*buyDecision9ConfigMock, setRsiMonth(2.0f));
-    configWidget->ui->rsiMonthDoubleSpinBox->setValue(2.0f);
+    EXPECT_CALL(*buyDecision9ConfigMock, setRsi(2.0f));
+    configWidget->ui->rsiDoubleSpinBox->setValue(2.0f);
 
-    EXPECT_CALL(*buyDecision9ConfigMock, setRsiMonth(3.0f));
-    configWidget->ui->rsiMonthDoubleSpinBox->setValue(3.0f);
-}
-
-TEST_F(Test_BuyDecision9ConfigWidget, Test_on_rsiWeekDoubleSpinBox_valueChanged)
-{
-    const InSequence seq;
-
-    configWidget->ui->rsiWeekDoubleSpinBox->blockSignals(true);
-    configWidget->ui->rsiWeekDoubleSpinBox->setValue(1.0f);
-    configWidget->ui->rsiWeekDoubleSpinBox->blockSignals(false);
-
-    EXPECT_CALL(*buyDecision9ConfigMock, setRsiWeek(2.0f));
-    configWidget->ui->rsiWeekDoubleSpinBox->setValue(2.0f);
-
-    EXPECT_CALL(*buyDecision9ConfigMock, setRsiWeek(3.0f));
-    configWidget->ui->rsiWeekDoubleSpinBox->setValue(3.0f);
-}
-
-TEST_F(Test_BuyDecision9ConfigWidget, Test_on_rsiDayDoubleSpinBox_valueChanged)
-{
-    const InSequence seq;
-
-    configWidget->ui->rsiDayDoubleSpinBox->blockSignals(true);
-    configWidget->ui->rsiDayDoubleSpinBox->setValue(1.0f);
-    configWidget->ui->rsiDayDoubleSpinBox->blockSignals(false);
-
-    EXPECT_CALL(*buyDecision9ConfigMock, setRsiDay(2.0f));
-    configWidget->ui->rsiDayDoubleSpinBox->setValue(2.0f);
-
-    EXPECT_CALL(*buyDecision9ConfigMock, setRsiDay(3.0f));
-    configWidget->ui->rsiDayDoubleSpinBox->setValue(3.0f);
+    EXPECT_CALL(*buyDecision9ConfigMock, setRsi(3.0f));
+    configWidget->ui->rsiDoubleSpinBox->setValue(3.0f);
 }
 // NOLINTEND(readability-magic-numbers)

@@ -31,9 +31,6 @@ struct StockMeta
     qint8   pricePrecision;
     QTime   lastTradeTime;
     qint64  turnover;
-    float   rsiMonth;
-    float   rsiWeek;
-    float   rsiDay;
 };
 
 

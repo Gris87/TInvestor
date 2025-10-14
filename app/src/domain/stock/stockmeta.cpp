@@ -19,10 +19,7 @@ StockMeta::StockMeta() :
     minPriceIncrement(),
     pricePrecision(),
     lastTradeTime(0, 0),
-    turnover(),
-    rsiMonth(),
-    rsiWeek(),
-    rsiDay()
+    turnover()
 {
 }
 
@@ -70,21 +67,6 @@ static void metaTurnoverParse(StockMeta* meta, simdjson::ondemand::value value)
     meta->turnover = value.get_int64();
 }
 
-static void metaRsiMonthParse(StockMeta* meta, simdjson::ondemand::value value)
-{
-    meta->rsiMonth = value.get_double_in_string().value();
-}
-
-static void metaRsiWeekParse(StockMeta* meta, simdjson::ondemand::value value)
-{
-    meta->rsiWeek = value.get_double_in_string().value();
-}
-
-static void metaRsiDayParse(StockMeta* meta, simdjson::ondemand::value value)
-{
-    meta->rsiDay = value.get_double_in_string().value();
-}
-
 static void metaThrowParseException(
     StockMeta* /*meta*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
@@ -103,10 +85,7 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
     {"minPriceIncrement",   metaMinPriceIncrementParse  },
     {"pricePrecision",      metaPricePrecisionParse     },
     {"lastTradeTime",       metaLastTradeTimeParse      },
-    {"turnover",            metaTurnoverParse           },
-    {"rsiMonth",            metaRsiMonthParse           },
-    {"rsiWeek",             metaRsiWeekParse            },
-    {"rsiDay",              metaRsiDayParse             }
+    {"turnover",            metaTurnoverParse           }
 };
 // clang-format on
 
@@ -134,9 +113,6 @@ QJsonObject StockMeta::toJsonObject() const
     res.insert("pricePrecision",      pricePrecision);
     res.insert("lastTradeTime",       lastTradeTime.toString(TIME_FORMAT));
     res.insert("turnover",            turnover);
-    res.insert("rsiMonth",            QString::number(rsiMonth, 'f', 2));
-    res.insert("rsiWeek",             QString::number(rsiWeek, 'f', 2));
-    res.insert("rsiDay",              QString::number(rsiDay, 'f', 2));
     // clang-format on
 
     return res;
@@ -147,7 +123,5 @@ bool operator==(const StockMeta& lhs, const StockMeta& rhs)
     return lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
            lhs.instrumentName == rhs.instrumentName && lhs.forQualInvestorFlag == rhs.forQualInvestorFlag &&
            qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < FLOAT_EPSILON && lhs.pricePrecision == rhs.pricePrecision &&
-           lhs.lastTradeTime == rhs.lastTradeTime && lhs.turnover == rhs.turnover &&
-           qAbs(lhs.rsiMonth - rhs.rsiMonth) < FLOAT_EPSILON && qAbs(lhs.rsiWeek - rhs.rsiWeek) < FLOAT_EPSILON &&
-           qAbs(lhs.rsiDay - rhs.rsiDay) < FLOAT_EPSILON;
+           lhs.lastTradeTime == rhs.lastTradeTime && lhs.turnover == rhs.turnover;
 }

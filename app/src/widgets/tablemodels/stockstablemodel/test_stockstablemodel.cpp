@@ -139,9 +139,6 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock1->meta.pricePrecision            = 2;
     stock1->meta.lastTradeTime             = QTime(18, 39);
     stock1->meta.turnover                  = 1120;
-    stock1->meta.rsiMonth                  = 70.0f;
-    stock1->meta.rsiWeek                   = 80.0f;
-    stock1->meta.rsiDay                    = 90.0f;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
     stock1->operational.payback            = 13.0f;
@@ -159,9 +156,6 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock2->meta.pricePrecision            = 3;
     stock2->meta.lastTradeTime             = QTime(23, 49);
     stock2->meta.turnover                  = 2340000;
-    stock2->meta.rsiMonth                  = 80.0f;
-    stock2->meta.rsiWeek                   = 90.0f;
-    stock2->meta.rsiDay                    = 70.0f;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
     stock2->operational.payback            = 33.0f;
@@ -179,9 +173,6 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock3->meta.pricePrecision            = 4;
     stock3->meta.lastTradeTime             = QTime(9, 59);
     stock3->meta.turnover                  = 5560000000;
-    stock3->meta.rsiMonth                  = 90.0f;
-    stock3->meta.rsiWeek                   = 80.0f;
-    stock3->meta.rsiDay                    = 70.0f;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
     stock3->operational.payback            = 83.0f;
@@ -300,9 +291,6 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock1->meta.pricePrecision            = 2;
     stock1->meta.lastTradeTime             = QTime(18, 39);
     stock1->meta.turnover                  = 1120;
-    stock1->meta.rsiMonth                  = 70.0f;
-    stock1->meta.rsiWeek                   = 80.0f;
-    stock1->meta.rsiDay                    = 90.0f;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
     stock1->operational.payback            = 13.0f;
@@ -320,9 +308,6 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock2->meta.pricePrecision            = 3;
     stock2->meta.lastTradeTime             = QTime(23, 49);
     stock2->meta.turnover                  = 2340000;
-    stock2->meta.rsiMonth                  = 80.0f;
-    stock2->meta.rsiWeek                   = 90.0f;
-    stock2->meta.rsiDay                    = 70.0f;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
     stock2->operational.payback            = 33.0f;
@@ -340,9 +325,6 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock3->meta.pricePrecision            = 4;
     stock3->meta.lastTradeTime             = QTime(9, 59);
     stock3->meta.turnover                  = 5560000000;
-    stock3->meta.rsiMonth                  = 90.0f;
-    stock3->meta.rsiWeek                   = 80.0f;
-    stock3->meta.rsiDay                    = 70.0f;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
     stock3->operational.payback            = 83.0f;
@@ -526,9 +508,6 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock1->meta.pricePrecision            = 2;
     stock1->meta.lastTradeTime             = QTime(18, 39);
     stock1->meta.turnover                  = 1120;
-    stock1->meta.rsiMonth                  = 70.0f;
-    stock1->meta.rsiWeek                   = 80.0f;
-    stock1->meta.rsiDay                    = 90.0f;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
     stock1->operational.payback            = 13.0f;
@@ -546,9 +525,6 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock2->meta.pricePrecision            = 3;
     stock2->meta.lastTradeTime             = QTime(23, 49);
     stock2->meta.turnover                  = 2340000;
-    stock2->meta.rsiMonth                  = 80.0f;
-    stock2->meta.rsiWeek                   = 90.0f;
-    stock2->meta.rsiDay                    = 70.0f;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
     stock2->operational.payback            = 33.0f;
@@ -566,9 +542,6 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock3->meta.pricePrecision            = 4;
     stock3->meta.lastTradeTime             = QTime(9, 59);
     stock3->meta.turnover                  = 5560000000;
-    stock3->meta.rsiMonth                  = 90.0f;
-    stock3->meta.rsiWeek                   = 80.0f;
-    stock3->meta.rsiDay                    = 70.0f;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
     stock3->operational.payback            = 83.0f;
@@ -649,9 +622,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.pricePrecision            = 2;
     stock1->meta.lastTradeTime             = QTime(18, 39);
     stock1->meta.turnover                  = 1120;
-    stock1->meta.rsiMonth                  = 70.0f;
-    stock1->meta.rsiWeek                   = 80.0f;
-    stock1->meta.rsiDay                    = 90.0f;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
     stock1->operational.payback            = 13.0f;
@@ -669,9 +639,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.pricePrecision            = 3;
     stock2->meta.lastTradeTime             = QTime(23, 49);
     stock2->meta.turnover                  = 2340000;
-    stock2->meta.rsiMonth                  = 80.0f;
-    stock2->meta.rsiWeek                   = 90.0f;
-    stock2->meta.rsiDay                    = 70.0f;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
     stock2->operational.payback            = 33.0f;
@@ -689,9 +656,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.pricePrecision            = 4;
     stock3->meta.lastTradeTime             = QTime(9, 59);
     stock3->meta.turnover                  = 5560000000;
-    stock3->meta.rsiMonth                  = 90.0f;
-    stock3->meta.rsiWeek                   = 80.0f;
-    stock3->meta.rsiDay                    = 70.0f;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
     stock3->operational.payback            = 83.0f;
@@ -767,9 +731,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.pricePrecision               = 4;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 2120;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 300.0f;
     stock1->operational.dayStartPrice         = 150.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
@@ -782,9 +743,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.pricePrecision               = 2;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 4340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 800.0f;
     stock2->operational.dayStartPrice         = 51.0f;
     stock2->operational.specifiedDatePrice    = 22.0f;
@@ -797,9 +755,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.pricePrecision               = 3;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 6560000000;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 700.0f;
     stock3->operational.dayStartPrice         = 231.0f;
     stock3->operational.specifiedDatePrice    = 192.0f;
@@ -870,9 +825,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.pricePrecision               = 3;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 3120;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 290.0f;
     stock1->operational.dayStartPrice         = 640.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
@@ -885,9 +837,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.pricePrecision               = 4;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 5340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 100.0f;
     stock2->operational.dayStartPrice         = 131.0f;
     stock2->operational.specifiedDatePrice    = 922.0f;
@@ -900,9 +849,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.pricePrecision               = 2;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 7560000000;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 537.0f;
     stock3->operational.dayStartPrice         = 197.0f;
     stock3->operational.specifiedDatePrice    = 325.0f;
@@ -970,9 +916,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.pricePrecision               = 2;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 9310000;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 1111.0f;
     stock1->operational.dayStartPrice         = 888.0f;
     stock1->operational.specifiedDatePrice    = 999.0f;
@@ -985,9 +928,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.pricePrecision               = 4;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 7340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 2222.0f;
     stock2->operational.dayStartPrice         = 444.0f;
     stock2->operational.specifiedDatePrice    = 555.0f;
@@ -1000,9 +940,6 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.pricePrecision               = 3;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 9560;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 3333.0f;
     stock3->operational.dayStartPrice         = 666.0f;
     stock3->operational.specifiedDatePrice    = 777.0f;
@@ -1054,9 +991,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.pricePrecision            = 2;
     stock1->meta.lastTradeTime             = QTime(18, 39);
     stock1->meta.turnover                  = 1120;
-    stock1->meta.rsiMonth                  = 70.0f;
-    stock1->meta.rsiWeek                   = 80.0f;
-    stock1->meta.rsiDay                    = 90.0f;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
     stock1->operational.payback            = 13.0f;
@@ -1074,9 +1008,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.pricePrecision            = 3;
     stock2->meta.lastTradeTime             = QTime(23, 49);
     stock2->meta.turnover                  = 2340000;
-    stock2->meta.rsiMonth                  = 80.0f;
-    stock2->meta.rsiWeek                   = 90.0f;
-    stock2->meta.rsiDay                    = 70.0f;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
     stock2->operational.payback            = 33.0f;
@@ -1094,9 +1025,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.pricePrecision            = 4;
     stock3->meta.lastTradeTime             = QTime(9, 59);
     stock3->meta.turnover                  = 5560000000;
-    stock3->meta.rsiMonth                  = 90.0f;
-    stock3->meta.rsiWeek                   = 80.0f;
-    stock3->meta.rsiDay                    = 70.0f;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
     stock3->operational.payback            = 83.0f;
@@ -1172,9 +1100,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.pricePrecision               = 4;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 2120;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 300.0f;
     stock1->operational.dayStartPrice         = 150.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
@@ -1187,9 +1112,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.pricePrecision               = 2;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 4340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 800.0f;
     stock2->operational.dayStartPrice         = 51.0f;
     stock2->operational.specifiedDatePrice    = 22.0f;
@@ -1202,9 +1124,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.pricePrecision               = 3;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 6560000000;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 700.0f;
     stock3->operational.dayStartPrice         = 231.0f;
     stock3->operational.specifiedDatePrice    = 192.0f;
@@ -1279,9 +1198,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.pricePrecision               = 3;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 3120;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 290.0f;
     stock1->operational.dayStartPrice         = 640.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
@@ -1294,9 +1210,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.pricePrecision               = 4;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 5340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 100.0f;
     stock2->operational.dayStartPrice         = 131.0f;
     stock2->operational.specifiedDatePrice    = 922.0f;
@@ -1309,9 +1222,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.pricePrecision               = 2;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 7560000000;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 537.0f;
     stock3->operational.dayStartPrice         = 197.0f;
     stock3->operational.specifiedDatePrice    = 325.0f;
@@ -1381,9 +1291,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.pricePrecision               = 2;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 9310000;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 1111.0f;
     stock1->operational.dayStartPrice         = 888.0f;
     stock1->operational.specifiedDatePrice    = 999.0f;
@@ -1396,9 +1303,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.pricePrecision               = 4;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 7340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 2222.0f;
     stock2->operational.dayStartPrice         = 444.0f;
     stock2->operational.specifiedDatePrice    = 555.0f;
@@ -1411,9 +1315,6 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.pricePrecision               = 3;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 9560;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 3333.0f;
     stock3->operational.dayStartPrice         = 666.0f;
     stock3->operational.specifiedDatePrice    = 777.0f;
@@ -1469,9 +1370,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.pricePrecision            = 2;
     stock1->meta.lastTradeTime             = QTime(18, 39);
     stock1->meta.turnover                  = 1120;
-    stock1->meta.rsiMonth                  = 70.0f;
-    stock1->meta.rsiWeek                   = 80.0f;
-    stock1->meta.rsiDay                    = 90.0f;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
     stock1->operational.payback            = 13.0f;
@@ -1489,9 +1387,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.pricePrecision            = 3;
     stock2->meta.lastTradeTime             = QTime(23, 49);
     stock2->meta.turnover                  = 2340000;
-    stock2->meta.rsiMonth                  = 80.0f;
-    stock2->meta.rsiWeek                   = 90.0f;
-    stock2->meta.rsiDay                    = 70.0f;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
     stock2->operational.payback            = 33.0f;
@@ -1509,9 +1404,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.pricePrecision            = 4;
     stock3->meta.lastTradeTime             = QTime(9, 59);
     stock3->meta.turnover                  = 5560000000;
-    stock3->meta.rsiMonth                  = 90.0f;
-    stock3->meta.rsiWeek                   = 80.0f;
-    stock3->meta.rsiDay                    = 70.0f;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
     stock3->operational.payback            = 83.0f;
@@ -1587,9 +1479,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.pricePrecision               = 4;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 2120;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 300.0f;
     stock1->operational.dayStartPrice         = 150.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
@@ -1602,9 +1491,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.pricePrecision               = 2;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 4340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 800.0f;
     stock2->operational.dayStartPrice         = 51.0f;
     stock2->operational.specifiedDatePrice    = 22.0f;
@@ -1617,9 +1503,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.pricePrecision               = 3;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 6560000000;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 700.0f;
     stock3->operational.dayStartPrice         = 231.0f;
     stock3->operational.specifiedDatePrice    = 192.0f;
@@ -1686,9 +1569,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.pricePrecision               = 3;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 3120;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 290.0f;
     stock1->operational.dayStartPrice         = 640.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
@@ -1701,9 +1581,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.pricePrecision               = 4;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 5340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 100.0f;
     stock2->operational.dayStartPrice         = 131.0f;
     stock2->operational.specifiedDatePrice    = 922.0f;
@@ -1716,9 +1593,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.pricePrecision               = 2;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 7560000000;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 537.0f;
     stock3->operational.dayStartPrice         = 197.0f;
     stock3->operational.specifiedDatePrice    = 325.0f;
@@ -1782,9 +1656,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.pricePrecision               = 2;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 9310000;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 1111.0f;
     stock1->operational.dayStartPrice         = 888.0f;
     stock1->operational.specifiedDatePrice    = 999.0f;
@@ -1797,9 +1668,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.pricePrecision               = 4;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 7340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 2222.0f;
     stock2->operational.dayStartPrice         = 444.0f;
     stock2->operational.specifiedDatePrice    = 555.0f;
@@ -1812,9 +1680,6 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.pricePrecision               = 3;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 9560;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 3333.0f;
     stock3->operational.dayStartPrice         = 666.0f;
     stock3->operational.specifiedDatePrice    = 777.0f;
@@ -1862,9 +1727,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.pricePrecision            = 2;
     stock1->meta.lastTradeTime             = QTime(18, 39);
     stock1->meta.turnover                  = 1120;
-    stock1->meta.rsiMonth                  = 70.0f;
-    stock1->meta.rsiWeek                   = 80.0f;
-    stock1->meta.rsiDay                    = 90.0f;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
     stock1->operational.payback            = 13.0f;
@@ -1882,9 +1744,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.pricePrecision            = 3;
     stock2->meta.lastTradeTime             = QTime(23, 49);
     stock2->meta.turnover                  = 2340000;
-    stock2->meta.rsiMonth                  = 80.0f;
-    stock2->meta.rsiWeek                   = 90.0f;
-    stock2->meta.rsiDay                    = 70.0f;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
     stock2->operational.payback            = 33.0f;
@@ -1902,9 +1761,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.pricePrecision            = 4;
     stock3->meta.lastTradeTime             = QTime(9, 59);
     stock3->meta.turnover                  = 5560000000;
-    stock3->meta.rsiMonth                  = 90.0f;
-    stock3->meta.rsiWeek                   = 80.0f;
-    stock3->meta.rsiDay                    = 70.0f;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
     stock3->operational.payback            = 83.0f;
@@ -1980,9 +1836,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.pricePrecision               = 4;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 2120;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 300.0f;
     stock1->operational.dayStartPrice         = 150.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
@@ -1995,9 +1848,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.pricePrecision               = 2;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 4340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 800.0f;
     stock2->operational.dayStartPrice         = 51.0f;
     stock2->operational.specifiedDatePrice    = 22.0f;
@@ -2010,9 +1860,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.pricePrecision               = 3;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 6560000000;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 700.0f;
     stock3->operational.dayStartPrice         = 231.0f;
     stock3->operational.specifiedDatePrice    = 192.0f;
@@ -2079,9 +1926,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.pricePrecision               = 3;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 3120;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 290.0f;
     stock1->operational.dayStartPrice         = 640.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
@@ -2094,9 +1938,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.pricePrecision               = 4;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 5340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 100.0f;
     stock2->operational.dayStartPrice         = 131.0f;
     stock2->operational.specifiedDatePrice    = 922.0f;
@@ -2109,9 +1950,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.pricePrecision               = 2;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 7560000000;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 537.0f;
     stock3->operational.dayStartPrice         = 197.0f;
     stock3->operational.specifiedDatePrice    = 325.0f;
@@ -2175,9 +2013,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.pricePrecision               = 2;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 9310000;
-    stock1->meta.rsiMonth                     = 70.0f;
-    stock1->meta.rsiWeek                      = 80.0f;
-    stock1->meta.rsiDay                       = 90.0f;
     stock1->operational.detailedData[0].price = 1111.0f;
     stock1->operational.dayStartPrice         = 888.0f;
     stock1->operational.specifiedDatePrice    = 999.0f;
@@ -2190,9 +2025,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.pricePrecision               = 4;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 7340000;
-    stock2->meta.rsiMonth                     = 80.0f;
-    stock2->meta.rsiWeek                      = 90.0f;
-    stock2->meta.rsiDay                       = 70.0f;
     stock2->operational.detailedData[0].price = 2222.0f;
     stock2->operational.dayStartPrice         = 444.0f;
     stock2->operational.specifiedDatePrice    = 555.0f;
@@ -2205,9 +2037,6 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.pricePrecision               = 3;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 9560;
-    stock3->meta.rsiMonth                     = 90.0f;
-    stock3->meta.rsiWeek                      = 80.0f;
-    stock3->meta.rsiDay                       = 70.0f;
     stock3->operational.detailedData[0].price = 3333.0f;
     stock3->operational.dayStartPrice         = 666.0f;
     stock3->operational.specifiedDatePrice    = 777.0f;
@@ -2255,9 +2084,6 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock1->meta.pricePrecision            = 2;
     stock1->meta.lastTradeTime             = QTime(18, 39);
     stock1->meta.turnover                  = 1120;
-    stock1->meta.rsiMonth                  = 70.0f;
-    stock1->meta.rsiWeek                   = 80.0f;
-    stock1->meta.rsiDay                    = 90.0f;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
     stock1->operational.payback            = 13.0f;
@@ -2275,9 +2101,6 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock2->meta.pricePrecision            = 3;
     stock2->meta.lastTradeTime             = QTime(23, 49);
     stock2->meta.turnover                  = 2340000;
-    stock2->meta.rsiMonth                  = 80.0f;
-    stock2->meta.rsiWeek                   = 90.0f;
-    stock2->meta.rsiDay                    = 70.0f;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
     stock2->operational.payback            = 33.0f;
@@ -2295,9 +2118,6 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock3->meta.pricePrecision            = 4;
     stock3->meta.lastTradeTime             = QTime(9, 59);
     stock3->meta.turnover                  = 5560000000;
-    stock3->meta.rsiMonth                  = 90.0f;
-    stock3->meta.rsiWeek                   = 80.0f;
-    stock3->meta.rsiDay                    = 70.0f;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
     stock3->operational.payback            = 83.0f;

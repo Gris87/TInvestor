@@ -35,12 +35,6 @@ public:
     MOCK_METHOD(void, setEnabled, (bool value), (override));
     MOCK_METHOD(bool, isEnabled, (), (override));
 
-    MOCK_METHOD(void, setRsiMonth, (float value), (override));
-    MOCK_METHOD(float, getRsiMonth, (), (override));
-
-    MOCK_METHOD(void, setRsiWeek, (float value), (override));
-    MOCK_METHOD(float, getRsiWeek, (), (override));
-
-    MOCK_METHOD(void, setRsiDay, (float value), (override));
-    MOCK_METHOD(float, getRsiDay, (), (override));
+    MOCK_METHOD(void, setRsi, (float value), (override));
+    MOCK_METHOD(float, getRsi, (), (override));
 };

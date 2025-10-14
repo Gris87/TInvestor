@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Buy stocks if RSI for month more than</string>
+        <string>Buy stocks if price is above SMA and EMA and RSI less than</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -42,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="rsiMonthDoubleSpinBox">
+      <widget class="QDoubleSpinBox" name="rsiDoubleSpinBox">
        <property name="suffix">
         <string notr="true"> %</string>
        </property>
@@ -50,27 +50,7 @@
         <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <double>70.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>and for week more than</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="rsiWeekDoubleSpinBox">
-       <property name="suffix">
-        <string notr="true"> %</string>
-       </property>
-       <property name="singleStep">
-        <double>0.100000000000000</double>
-       </property>
-       <property name="value">
-        <double>60.000000000000000</double>
+        <double>30.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -97,20 +77,20 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>and for day more than</string>
+        <string>within the last</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="rsiDayDoubleSpinBox">
+      <widget class="QSpinBox" name="durationSpinBox">
        <property name="suffix">
-        <string notr="true"> %</string>
+        <string> minutes</string>
        </property>
-       <property name="singleStep">
-        <double>0.100000000000000</double>
+       <property name="maximum">
+        <number>100000</number>
        </property>
        <property name="value">
-        <double>60.000000000000000</double>
+        <number>15</number>
        </property>
       </widget>
      </item>

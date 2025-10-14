@@ -209,9 +209,6 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock1.meta.pricePrecision      = 1;
     stock1.meta.lastTradeTime       = QTime(23, 50);
     stock1.meta.turnover            = 2000000;
-    stock1.meta.rsiMonth            = 90;
-    stock1.meta.rsiWeek             = 80;
-    stock1.meta.rsiDay              = 70;
     stock1.data << stockData1;
     stock1.operational.detailedData << stockOperationalData1;
 
@@ -223,9 +220,6 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock2.meta.pricePrecision      = 2;
     stock2.meta.lastTradeTime       = QTime(23, 50);
     stock2.meta.turnover            = 5000000;
-    stock2.meta.rsiMonth            = 80;
-    stock2.meta.rsiWeek             = 70;
-    stock2.meta.rsiDay              = 90;
     stock2.data << stockData2;
     stock2.operational.detailedData << stockOperationalData2;
 
@@ -237,9 +231,6 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock3.meta.pricePrecision      = 3;
     stock3.meta.lastTradeTime       = QTime(23, 50);
     stock3.meta.turnover            = 9000000000;
-    stock3.meta.rsiMonth            = 70;
-    stock3.meta.rsiWeek             = 80;
-    stock3.meta.rsiDay              = 90;
     stock3.data << stockData3;
     stock3.operational.detailedData << stockOperationalData3;
 

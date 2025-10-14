@@ -276,9 +276,6 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     stock1.meta.pricePrecision      = 2;
     stock1.meta.lastTradeTime       = QTime(18, 39);
     stock1.meta.turnover            = 5000000;
-    stock1.meta.rsiMonth            = 70.0f;
-    stock1.meta.rsiWeek             = 80.0f;
-    stock1.meta.rsiDay              = 90.0f;
 
     stock2.meta.instrumentId        = "aaaaa";
     stock2.meta.instrumentTicker    = "ABBA";
@@ -288,9 +285,6 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     stock2.meta.pricePrecision      = 1;
     stock2.meta.lastTradeTime       = QTime(23, 49);
     stock2.meta.turnover            = 2000000;
-    stock2.meta.rsiMonth            = 80.0f;
-    stock2.meta.rsiWeek             = 90.0f;
-    stock2.meta.rsiDay              = 70.0f;
     stock2.data << stockData;
 
     stock3.meta.instrumentId        = "bbbbb";
@@ -301,9 +295,6 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     stock3.meta.pricePrecision      = 1;
     stock3.meta.lastTradeTime       = QTime(9, 59);
     stock3.meta.turnover            = 2000000;
-    stock3.meta.rsiMonth            = 90.0f;
-    stock3.meta.rsiWeek             = 80.0f;
-    stock3.meta.rsiDay              = 70.0f;
     stock3.data << stockData;
 
     stocks << &stock1 << &stock2 << &stock3;

@@ -37,9 +37,6 @@ TEST_F(Test_StockMeta, Test_constructor_and_destructor)
     ASSERT_EQ(stockMeta.pricePrecision,      0);
     ASSERT_EQ(stockMeta.lastTradeTime,       QTime(0, 0));
     ASSERT_EQ(stockMeta.turnover,            0);
-    ASSERT_NEAR(stockMeta.rsiMonth,          0.0f, 0.0001f);
-    ASSERT_NEAR(stockMeta.rsiWeek,           0.0f, 0.0001f);
-    ASSERT_NEAR(stockMeta.rsiDay,            0.0f, 0.0001f);
     // clang-format on
 }
 
@@ -55,9 +52,6 @@ TEST_F(Test_StockMeta, Test_copy_constructor)
     stockMeta.pricePrecision      = 2;
     stockMeta.lastTradeTime       = QTime(3, 4);
     stockMeta.turnover            = 5;
-    stockMeta.rsiMonth            = 6;
-    stockMeta.rsiWeek             = 7;
-    stockMeta.rsiDay              = 8;
 
     const StockMeta stockMeta2(stockMeta);
 
@@ -71,9 +65,6 @@ TEST_F(Test_StockMeta, Test_copy_constructor)
     ASSERT_EQ(stockMeta2.pricePrecision,      2);
     ASSERT_EQ(stockMeta2.lastTradeTime,       QTime(3, 4));
     ASSERT_EQ(stockMeta2.turnover,            5);
-    ASSERT_NEAR(stockMeta2.rsiMonth,          6.0f, 0.0001f);
-    ASSERT_NEAR(stockMeta2.rsiWeek,           7.0f, 0.0001f);
-    ASSERT_NEAR(stockMeta2.rsiDay,            8.0f, 0.0001f);
     // clang-format on
 }
 
@@ -90,9 +81,6 @@ TEST_F(Test_StockMeta, Test_assign)
     stockMeta.pricePrecision      = 2;
     stockMeta.lastTradeTime       = QTime(3, 4);
     stockMeta.turnover            = 5;
-    stockMeta.rsiMonth            = 6;
-    stockMeta.rsiWeek             = 7;
-    stockMeta.rsiDay              = 8;
 
     stockMeta2 = stockMeta;
 
@@ -106,9 +94,6 @@ TEST_F(Test_StockMeta, Test_assign)
     ASSERT_EQ(stockMeta2.pricePrecision,      2);
     ASSERT_EQ(stockMeta2.lastTradeTime,       QTime(3, 4));
     ASSERT_EQ(stockMeta2.turnover,            5);
-    ASSERT_NEAR(stockMeta2.rsiMonth,          6.0f, 0.0001f);
-    ASSERT_NEAR(stockMeta2.rsiWeek,           7.0f, 0.0001f);
-    ASSERT_NEAR(stockMeta2.rsiDay,            8.0f, 0.0001f);
     // clang-format on
 }
 
@@ -126,13 +111,10 @@ TEST_F(Test_StockMeta, Test_fromJsonObject)
     ASSERT_EQ(stockMeta.pricePrecision,      0);
     ASSERT_EQ(stockMeta.lastTradeTime,       QTime(0, 0));
     ASSERT_EQ(stockMeta.turnover,            0);
-    ASSERT_NEAR(stockMeta.rsiMonth,          0.0f, 0.0001f);
-    ASSERT_NEAR(stockMeta.rsiWeek,           0.0f, 0.0001f);
-    ASSERT_NEAR(stockMeta.rsiDay,            0.0f, 0.0001f);
     // clang-format on
 
     const QString content =
-        R"({"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"03:04:00","minPriceIncrement":"1.00","pricePrecision":2,"rsiDay":"8.00","rsiMonth":"6.00","rsiWeek":"7.00","turnover":5})";
+        R"({"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"03:04:00","minPriceIncrement":"1.00","pricePrecision":2,"turnover":5})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -151,9 +133,6 @@ TEST_F(Test_StockMeta, Test_fromJsonObject)
     ASSERT_EQ(stockMeta.pricePrecision,      2);
     ASSERT_EQ(stockMeta.lastTradeTime,       QTime(3, 4));
     ASSERT_EQ(stockMeta.turnover,            5);
-    ASSERT_NEAR(stockMeta.rsiMonth,          6.0f, 0.0001f);
-    ASSERT_NEAR(stockMeta.rsiWeek,           7.0f, 0.0001f);
-    ASSERT_NEAR(stockMeta.rsiDay,            8.0f, 0.0001f);
     // clang-format on
 
     const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
@@ -176,16 +155,13 @@ TEST_F(Test_StockMeta, Test_toJsonObject)
     stockMeta.pricePrecision      = 2;
     stockMeta.lastTradeTime       = QTime(3, 4);
     stockMeta.turnover            = 5;
-    stockMeta.rsiMonth            = 6;
-    stockMeta.rsiWeek             = 7;
-    stockMeta.rsiDay              = 8;
 
     const QJsonObject   jsonObject = stockMeta.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
 
     const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
-        R"({"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"03:04:00","minPriceIncrement":"1.00","pricePrecision":2,"rsiDay":"8.00","rsiMonth":"6.00","rsiWeek":"7.00","turnover":5})";
+        R"({"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"03:04:00","minPriceIncrement":"1.00","pricePrecision":2,"turnover":5})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -203,9 +179,6 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta.pricePrecision      = 2;
     stockMeta.lastTradeTime       = QTime(3, 4);
     stockMeta.turnover            = 5;
-    stockMeta.rsiMonth            = 6;
-    stockMeta.rsiWeek             = 7;
-    stockMeta.rsiDay              = 8;
 
     stockMeta2.instrumentId        = "a";
     stockMeta2.instrumentTicker    = "b";
@@ -215,9 +188,6 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta2.pricePrecision      = 2;
     stockMeta2.lastTradeTime       = QTime(3, 4);
     stockMeta2.turnover            = 5;
-    stockMeta2.rsiMonth            = 6;
-    stockMeta2.rsiWeek             = 7;
-    stockMeta2.rsiDay              = 8;
 
     ASSERT_EQ(stockMeta, stockMeta2);
 
@@ -259,21 +229,6 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta2.turnover = 1005;
     ASSERT_NE(stockMeta, stockMeta2);
     stockMeta2.turnover = 5;
-    ASSERT_EQ(stockMeta, stockMeta2);
-
-    stockMeta2.rsiMonth = 6000.0f;
-    ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.rsiMonth = 6.0f;
-    ASSERT_EQ(stockMeta, stockMeta2);
-
-    stockMeta2.rsiWeek = 7000.0f;
-    ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.rsiWeek = 7.0f;
-    ASSERT_EQ(stockMeta, stockMeta2);
-
-    stockMeta2.rsiDay = 8000.0f;
-    ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.rsiDay = 8.0f;
     ASSERT_EQ(stockMeta, stockMeta2);
 }
 // NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

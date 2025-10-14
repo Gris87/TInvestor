@@ -36,7 +36,5 @@ private:
 
 private slots:
     void on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_rsiMonthDoubleSpinBox_valueChanged(double value);
-    void on_rsiWeekDoubleSpinBox_valueChanged(double value);
-    void on_rsiDayDoubleSpinBox_valueChanged(double value);
+    void on_rsiDoubleSpinBox_valueChanged(double value);
 };
