@@ -39,8 +39,12 @@ public:
     void  setRsi(float value) override;
     float getRsi() override;
 
+    void setDuration(int value) override;
+    int  getDuration() override;
+
 private:
     QReadWriteLock* mRwMutex;
     bool            mEnabled;
     float           mRsi;
+    int             mDuration;
 };

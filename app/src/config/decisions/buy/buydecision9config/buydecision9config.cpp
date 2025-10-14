@@ -6,8 +6,9 @@
 
 
 
-constexpr bool  ENABLED_DEFAULT = true;
-constexpr float RSI_DEFAULT     = 25.0f;
+constexpr bool  ENABLED_DEFAULT  = true;
+constexpr float RSI_DEFAULT      = 25.0f;
+constexpr int   DURATION_DEFAULT = 15;
 
 
 
@@ -15,7 +16,8 @@ BuyDecision9Config::BuyDecision9Config() :
     IBuyDecision9Config(),
     mRwMutex(new QReadWriteLock()),
     mEnabled(),
-    mRsi()
+    mRsi(),
+    mDuration()
 {
     qDebug() << "Create BuyDecision9Config";
 }
@@ -49,8 +51,9 @@ void BuyDecision9Config::assign(IBuyDecision9Config* another)
     const BuyDecision9Config& config = *dynamic_cast<BuyDecision9Config*>(another);
     const QReadLocker         lock2(config.mRwMutex);
 
-    mEnabled = config.mEnabled;
-    mRsi     = config.mRsi;
+    mEnabled  = config.mEnabled;
+    mRsi      = config.mRsi;
+    mDuration = config.mDuration;
 }
 
 void BuyDecision9Config::makeDefault()
@@ -59,8 +62,9 @@ void BuyDecision9Config::makeDefault()
 
     qDebug() << "Set BuyDecision9Config to default";
 
-    mEnabled = ENABLED_DEFAULT;
-    mRsi     = RSI_DEFAULT;
+    mEnabled  = ENABLED_DEFAULT;
+    mRsi      = RSI_DEFAULT;
+    mDuration = DURATION_DEFAULT;
 }
 
 void BuyDecision9Config::save(ISettingsEditor* settingsEditor, const QString& type)
@@ -70,8 +74,9 @@ void BuyDecision9Config::save(ISettingsEditor* settingsEditor, const QString& ty
     qDebug() << "Save BuyDecision9Config";
 
     // clang-format off
-    settingsEditor->setValue(type + "/Enabled", mEnabled);
-    settingsEditor->setValue(type + "/Rsi",     mRsi);
+    settingsEditor->setValue(type + "/Enabled",  mEnabled);
+    settingsEditor->setValue(type + "/Rsi",      mRsi);
+    settingsEditor->setValue(type + "/Duration", mDuration);
     // clang-format on
 }
 
@@ -82,8 +87,9 @@ void BuyDecision9Config::load(ISettingsEditor* settingsEditor, const QString& ty
     qDebug() << "Load BuyDecision9Config";
 
     // clang-format off
-    mEnabled = settingsEditor->value(type + "/Enabled", mEnabled).toBool();
-    mRsi     = settingsEditor->value(type + "/Rsi",     mRsi).toFloat();
+    mEnabled  = settingsEditor->value(type + "/Enabled",  mEnabled).toBool();
+    mRsi      = settingsEditor->value(type + "/Rsi",      mRsi).toFloat();
+    mDuration = settingsEditor->value(type + "/Duration", mDuration).toInt();
     // clang-format on
 }
 
@@ -97,6 +103,11 @@ static void configRsiParse(BuyDecision9Config* config, simdjson::ondemand::value
     config->setRsi(value.get_double_in_string());
 }
 
+static void configDurationParse(BuyDecision9Config* config, simdjson::ondemand::value value)
+{
+    config->setDuration(value.get_int64());
+}
+
 static void configThrowParseException(
     BuyDecision9Config* /*config*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
@@ -108,8 +119,9 @@ using ParseHandler = void (*)(BuyDecision9Config* config, simdjson::ondemand::va
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"enabled", configEnabledParse},
-    {"rsi",     configRsiParse    }
+    {"enabled",  configEnabledParse },
+    {"rsi",      configRsiParse     },
+    {"duration", configDurationParse}
 };
 // clang-format on
 
@@ -126,7 +138,8 @@ void BuyDecision9Config::fromJsonObject(simdjson::ondemand::object jsonObject) /
 
 QString BuyDecision9Config::toJsonString() const
 {
-    return QString(R"({"enabled":%1,"rsi":"%2"})").arg(mEnabled ? "true" : "false", QString::number(mRsi, 'f', 2));
+    return QString(R"({"enabled":%1,"rsi":"%2","duration":%3})")
+        .arg(mEnabled ? "true" : "false", QString::number(mRsi, 'f', 2), QString::number(mDuration));
 }
 
 QStringList BuyDecision9Config::variantsAsJson() const
@@ -135,11 +148,15 @@ QStringList BuyDecision9Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList rsiVariants = {"20.00", "25.00", "30.00", "35.00"};
+    const QStringList rsiVariants      = {"20.00", "25.00", "30.00", "35.00"};
+    const QStringList durationVariants = {"15", "20", "30"};
 
     for (const QString& rsi : rsiVariants)
     {
-        res.append(QString(R"({"enabled":true,"rsi":"%1"})").arg(rsi));
+        for (const QString& duration : durationVariants)
+        {
+            res.append(QString(R"({"enabled":true,"rsi":"%1","duration":%2})").arg(rsi, duration));
+        }
     }
 
     return res;
@@ -171,4 +188,18 @@ float BuyDecision9Config::getRsi()
     const QReadLocker lock(mRwMutex);
 
     return mRsi;
+}
+
+void BuyDecision9Config::setDuration(int value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mDuration = value;
+}
+
+int BuyDecision9Config::getDuration()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mDuration;
 }

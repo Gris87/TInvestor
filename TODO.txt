@@ -1,20 +1,19 @@
+Rename PriceCollect => StockCollect
+Write stocks meta once
+Fill operational data from stock data
+Huge bid order buy
 Real time for buy decision 5
 Real time for buy decision 6
 Real time for buy decision 7
 Real time for buy decision 8
 Real time for buy decision 9
-Fill operational data from stock data
 Extreme price raise during last week (buy decision 5)
-Buy more if lose 5%
-Huge bid order buy
 Refactor buy/sell decisions
 Reorder decisions
 Change best config search algorithm
 Find best configs for different commission
 Different defaults based on commission
 Show warning if decisions config is not default
-Rename PriceCollect => StockCollect
-Write stocks meta once
 Inform about manual buy on huge fall
 Improve coverage
 Create release

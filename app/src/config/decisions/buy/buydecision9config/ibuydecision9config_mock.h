@@ -37,4 +37,7 @@ public:
 
     MOCK_METHOD(void, setRsi, (float value), (override));
     MOCK_METHOD(float, getRsi, (), (override));
+
+    MOCK_METHOD(void, setDuration, (int value), (override));
+    MOCK_METHOD(int, getDuration, (), (override));
 };

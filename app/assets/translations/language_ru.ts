@@ -342,18 +342,18 @@
     <name>BuyDecision9ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="37"/>
-        <source>Buy stocks if RSI for month more than</source>
-        <translation>Покупать акции если RSI за месяц больше, чем</translation>
+        <source>Buy stocks if price is above SMA and EMA and RSI less than</source>
+        <translation>Покупать акции, если цена выше SMA и EMA и RSI меньше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="60"/>
-        <source>and for week more than</source>
-        <translation>и за неделю больше, чем</translation>
+        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="80"/>
+        <source>within the last</source>
+        <translation>в течение</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="100"/>
-        <source>and for day more than</source>
-        <translation>и за день больше, чем</translation>
+        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="87"/>
+        <source> minutes</source>
+        <translation> минут</translation>
     </message>
 </context>
 <context>
@@ -1141,6 +1141,11 @@
         <location filename="../../src/decisions/sell/selldecision5/selldecision5.cpp" line="104"/>
         <source>Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3</source>
         <translation>Решено продать, потому что цена %1 перескочила верхнюю границу Боллинджера %2 в %3</translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/buy/buydecision9/buydecision9.cpp" line="91"/>
+        <source>Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes</source>
+        <translation>Решено покупать, потому что цена %1 выше SMA %2 и EMA %3 и RSI %4 меньше, чем %5 за последние %6 минут</translation>
     </message>
 </context>
 <context>

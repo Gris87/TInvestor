@@ -342,17 +342,17 @@
     <name>BuyDecision9ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="37"/>
-        <source>Buy stocks if RSI for month more than</source>
+        <source>Buy stocks if price is above SMA and EMA and RSI less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="60"/>
-        <source>and for week more than</source>
+        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="80"/>
+        <source>within the last</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="100"/>
-        <source>and for day more than</source>
+        <location filename="../../src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui" line="87"/>
+        <source> minutes</source>
         <translation></translation>
     </message>
 </context>
@@ -1140,6 +1140,11 @@
     <message>
         <location filename="../../src/decisions/sell/selldecision5/selldecision5.cpp" line="104"/>
         <source>Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/buy/buydecision9/buydecision9.cpp" line="91"/>
+        <source>Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes</source>
         <translation></translation>
     </message>
 </context>

@@ -71,7 +71,10 @@ QString BuyDecision9::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision9Config* buyConfig, qint64 /*limitTimestamp*/, Stock* stock, int dataIndex, float price
 )
 {
-    const QList<float> prices = getDayPrices(parentThread, stock, dataIndex);
+    const float rsiLimit = buyConfig->getRsi();
+    const int   duration = buyConfig->getDuration();
+
+    const QList<float> prices = getDayPrices(parentThread, stock, dataIndex, duration);
 
     if (prices.length() < 3)
     {
@@ -82,20 +85,30 @@ QString BuyDecision9::makeDecisionBasedOnStockData(
     const float ema = calculateEma(prices);
     const float rsi = calculateRsi(prices);
 
-    if (price >= ema && price >= sma && rsi <= buyConfig->getRsi())
+    if (price >= sma && price >= ema && rsi <= rsiLimit)
     {
-        return QObject::tr("Decided to buy because the RSI for day %1").arg(QString::number(rsi, 'f', 2) + "%");
+        return QObject::tr(
+                   "Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes"
+        )
+            .arg(
+                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                QString::number(sma, 'f', stock->meta.pricePrecision) + " \u20BD",
+                QString::number(ema, 'f', stock->meta.pricePrecision) + " \u20BD",
+                QString::number(rsi, 'f', 2) + "%",
+                QString::number(rsiLimit, 'f', 2) + "%",
+                QString::number(duration)
+            );
     }
 
     return "";
 }
 
-QList<float> BuyDecision9::getDayPrices(QThread* parentThread, Stock* stock, int dataIndex)
+QList<float> BuyDecision9::getDayPrices(QThread* parentThread, Stock* stock, int dataIndex, int duration)
 {
     const StockData* stockData = stock->data.constData();
 
     const qint64 currentTimestamp = stockData[dataIndex].timestamp;
-    const qint64 limitTimestamp   = currentTimestamp - 14 * ONE_DAY;
+    const qint64 limitTimestamp   = currentTimestamp - (duration * ONE_DAY);
 
     QList<float> prices;
 
