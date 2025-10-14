@@ -955,26 +955,6 @@
     </message>
 </context>
 <context>
-    <name>PriceCollectThread</name>
-    <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="85"/>
-        <source>Downloading metadata</source>
-        <translation>Скачивание метаданных</translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="437"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="465"/>
-        <source>Downloading logos</source>
-        <translation>Скачивание логотипов</translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="796"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="804"/>
-        <source>Obtain stocks data</source>
-        <translation>Получение данных по акциям</translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
     <message>
         <location filename="../../src/main.cpp" line="191"/>
@@ -1143,7 +1123,7 @@
         <translation>Решено продать, потому что цена %1 перескочила верхнюю границу Боллинджера %2 в %3</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision9/buydecision9.cpp" line="91"/>
+        <location filename="../../src/decisions/buy/buydecision9/buydecision9.cpp" line="90"/>
         <source>Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes</source>
         <translation>Решено покупать, потому что цена %1 выше SMA %2 и EMA %3 и RSI %4 меньше, чем %5 за последние %6 минут</translation>
     </message>
@@ -1496,6 +1476,26 @@
         <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="229"/>
         <source>Start</source>
         <translation>Запуск</translation>
+    </message>
+</context>
+<context>
+    <name>StockCollectThread</name>
+    <message>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="85"/>
+        <source>Downloading metadata</source>
+        <translation>Скачивание метаданных</translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="437"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="465"/>
+        <source>Downloading logos</source>
+        <translation>Скачивание логотипов</translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="796"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="804"/>
+        <source>Obtain stocks data</source>
+        <translation>Получение данных по акциям</translation>
     </message>
 </context>
 <context>

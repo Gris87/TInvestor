@@ -2,7 +2,7 @@
 
 
 
-#include "src/threads/pricecollect/ipricecollectthread.h"
+#include "src/threads/stockcollect/istockcollectthread.h"
 
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
@@ -34,12 +34,12 @@ struct InstrumentIdAndLogo
 
 
 
-class PriceCollectThread : public IPriceCollectThread
+class StockCollectThread : public IStockCollectThread
 {
     Q_OBJECT
 
 public:
-    explicit PriceCollectThread(
+    explicit StockCollectThread(
         IConfig*             config,
         IUserStorage*        userStorage,
         IStocksStorage*      stocksStorage,
@@ -54,10 +54,10 @@ public:
         IGrpcClient*         grpcClient,
         QObject*             parent = nullptr
     );
-    ~PriceCollectThread() override;
+    ~StockCollectThread() override;
 
-    PriceCollectThread(const PriceCollectThread& another)            = delete;
-    PriceCollectThread& operator=(const PriceCollectThread& another) = delete;
+    StockCollectThread(const StockCollectThread& another)            = delete;
+    StockCollectThread& operator=(const StockCollectThread& another) = delete;
 
     void run() override;
 

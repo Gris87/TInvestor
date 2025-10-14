@@ -85,9 +85,9 @@
 #include "src/threads/orderbook/orderbookthread.h"
 #include "src/threads/portfolio/portfoliothread.h"
 #include "src/threads/portfoliolastprice/portfoliolastpricethread.h"
-#include "src/threads/pricecollect/pricecollectthread.h"
 #include "src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.h"
 #include "src/threads/simulatordecisionmaker/simulatordecisionmakerthread.h"
+#include "src/threads/stockcollect/stockcollectthread.h"
 #include "src/threads/trading/tradingthreadfactory.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
@@ -529,7 +529,7 @@ static int runApplication(QApplication* app)
 
     CleanupThread      cleanupThread(&config, &stocksStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
-    PriceCollectThread priceCollectThread(
+    StockCollectThread stockCollectThread(
         &config,
         &userStorage,
         &stocksStorage,
@@ -637,7 +637,7 @@ static int runApplication(QApplication* app)
         &grpcRetryClient,
         &cleanupThread,
         &userUpdateThread,
-        &priceCollectThread,
+        &stockCollectThread,
         &lastPriceThread,
         &simulatorPortfolioLastPriceThread,
         &operationsThread,

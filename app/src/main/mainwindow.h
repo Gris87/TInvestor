@@ -30,9 +30,9 @@
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/threads/portfolio/iportfoliothread.h"
 #include "src/threads/portfoliolastprice/iportfoliolastpricethread.h"
-#include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/simulatordaterangedecisionmaker/isimulatordaterangedecisionmakerthread.h"
 #include "src/threads/simulatordecisionmaker/isimulatordecisionmakerthread.h"
+#include "src/threads/stockcollect/istockcollectthread.h"
 #include "src/threads/trading/itradingthreadfactory.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/autorunenabler/iautorunenabler.h"
@@ -109,7 +109,7 @@ public:
         IGrpcRetryClient*                       grpcRetryClient,
         ICleanupThread*                         cleanupThread,
         IUserUpdateThread*                      userUpdateThread,
-        IPriceCollectThread*                    priceCollectThread,
+        IStockCollectThread*                    stockCollectThread,
         ILastPriceThread*                       lastPriceThread,
         IPortfolioLastPriceThread*              simulatorPortfolioLastPriceThread,
         IOperationsThread*                      operationsThread,
@@ -149,7 +149,7 @@ public:
 
     QTimer                              cleanupTimer;
     QTimer                              userUpdateTimer;
-    QTimer                              priceCollectTimer;
+    QTimer                              stockCollectTimer;
     QTimer                              makeDecisionTimer;
     QTimer                              stocksTableUpdateAllTimer;
     QTimer                              stocksTableUpdateLastPricesTimer;
@@ -201,7 +201,7 @@ private:
     IGrpcRetryClient*                       mGrpcRetryClient;
     ICleanupThread*                         mCleanupThread;
     IUserUpdateThread*                      mUserUpdateThread;
-    IPriceCollectThread*                    mPriceCollectThread;
+    IStockCollectThread*                    mStockCollectThread;
     ILastPriceThread*                       mLastPriceThread;
     IPortfolioLastPriceThread*              mSimulatorPortfolioLastPriceThread;
     IOperationsThread*                      mOperationsThread;
@@ -235,7 +235,7 @@ public slots:
     void authFailed(const QString& errorCodeString);
     void cleanupTimerTicked();
     void userUpdateTimerTicked();
-    void priceCollectTimerTicked();
+    void stockCollectTimerTicked();
     void makeDecisionTimerTicked();
     void stocksTableUpdateAllTimerTicked();
     void stocksTableUpdateLastPricesTimerTicked();

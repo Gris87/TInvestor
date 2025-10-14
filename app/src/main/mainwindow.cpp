@@ -83,7 +83,7 @@ MainWindow::MainWindow(
     IGrpcRetryClient*                       grpcRetryClient,
     ICleanupThread*                         cleanupThread,
     IUserUpdateThread*                      userUpdateThread,
-    IPriceCollectThread*                    priceCollectThread,
+    IStockCollectThread*                    stockCollectThread,
     ILastPriceThread*                       lastPriceThread,
     IPortfolioLastPriceThread*              simulatorPortfolioLastPriceThread,
     IOperationsThread*                      operationsThread,
@@ -145,7 +145,7 @@ MainWindow::MainWindow(
     mGrpcRetryClient(grpcRetryClient),
     mCleanupThread(cleanupThread),
     mUserUpdateThread(userUpdateThread),
-    mPriceCollectThread(priceCollectThread),
+    mStockCollectThread(stockCollectThread),
     mLastPriceThread(lastPriceThread),
     mSimulatorPortfolioLastPriceThread(simulatorPortfolioLastPriceThread),
     mOperationsThread(operationsThread),
@@ -290,16 +290,16 @@ MainWindow::MainWindow(
     connect(mGrpcClient,                              SIGNAL(authFailed(const QString&)),                          this, SLOT(authFailed(const QString&)));
     connect(&cleanupTimer,                            SIGNAL(timeout()),                                           this, SLOT(cleanupTimerTicked()));
     connect(&userUpdateTimer,                         SIGNAL(timeout()),                                           this, SLOT(userUpdateTimerTicked()));
-    connect(&priceCollectTimer,                       SIGNAL(timeout()),                                           this, SLOT(priceCollectTimerTicked()));
+    connect(&stockCollectTimer,                       SIGNAL(timeout()),                                           this, SLOT(stockCollectTimerTicked()));
     connect(&makeDecisionTimer,                       SIGNAL(timeout()),                                           this, SLOT(makeDecisionTimerTicked()));
     connect(&stocksTableUpdateAllTimer,               SIGNAL(timeout()),                                           this, SLOT(stocksTableUpdateAllTimerTicked()));
     connect(&stocksTableUpdateLastPricesTimer,        SIGNAL(timeout()),                                           this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
     connect(&simulatorPortfolioUpdateLastPricesTimer, SIGNAL(timeout()),                                           this, SLOT(simulatorPortfolioUpdateLastPricesTimerTicked()));
     connect(&autoPilotPortfolioUpdateLastPricesTimer, SIGNAL(timeout()),                                           this, SLOT(autoPilotPortfolioUpdateLastPricesTimerTicked()));
-    connect(mPriceCollectThread,                      SIGNAL(notifyInstrumentsProgress(const QString&)),           this, SLOT(notifyInstrumentsProgress(const QString&)));
-    connect(mPriceCollectThread,                      SIGNAL(stocksChanged()),                                     this, SLOT(stocksChanged()));
-    connect(mPriceCollectThread,                      SIGNAL(pricesChanged()),                                     this, SLOT(pricesChanged()));
-    connect(mPriceCollectThread,                      SIGNAL(periodicDataChanged()),                               this, SLOT(periodicDataChanged()));
+    connect(mStockCollectThread,                      SIGNAL(notifyInstrumentsProgress(const QString&)),           this, SLOT(notifyInstrumentsProgress(const QString&)));
+    connect(mStockCollectThread,                      SIGNAL(stocksChanged()),                                     this, SLOT(stocksChanged()));
+    connect(mStockCollectThread,                      SIGNAL(pricesChanged()),                                     this, SLOT(pricesChanged()));
+    connect(mStockCollectThread,                      SIGNAL(periodicDataChanged()),                               this, SLOT(periodicDataChanged()));
     connect(mLastPriceThread,                         SIGNAL(lastPriceChanged(const QString&)),                    this, SLOT(lastPriceChanged(const QString&)));
     connect(mSimulatorPortfolioLastPriceThread,       SIGNAL(lastPriceChanged(const QString&, float)),             this, SLOT(simulatorPortfolioLastPriceChanged(const QString&, float)));
     connect(mOperationsThread,                        SIGNAL(operationsRead(const QList<Operation>&)),             this, SLOT(autoPilotOperationsRead(const QList<Operation>&)));
@@ -345,7 +345,7 @@ MainWindow::~MainWindow()
 
     mCleanupThread->terminateThread();
     mUserUpdateThread->terminateThread();
-    mPriceCollectThread->terminateThread();
+    mStockCollectThread->terminateThread();
     mLastPriceThread->terminateThread();
     mSimulatorPortfolioLastPriceThread->terminateThread();
     mOperationsThread->terminateThread();
@@ -371,7 +371,7 @@ MainWindow::~MainWindow()
 
     mCleanupThread->wait();
     mUserUpdateThread->wait();
-    mPriceCollectThread->wait();
+    mStockCollectThread->wait();
     mLastPriceThread->wait();
     mSimulatorPortfolioLastPriceThread->wait();
     mOperationsThread->wait();
@@ -461,11 +461,11 @@ void MainWindow::authFailed(const QString& errorCodeString)
     mLogsThread->addLog(LOG_LEVEL_ERROR, "", tr("GRPC error happened with code %1").arg(errorCodeString));
 
     mUserUpdateThread->terminateThread();
-    mPriceCollectThread->terminateThread();
+    mStockCollectThread->terminateThread();
     mLastPriceThread->terminateThread();
 
     userUpdateTimer.stop();
-    priceCollectTimer.stop();
+    stockCollectTimer.stop();
     makeDecisionTimer.stop();
     stocksTableUpdateAllTimer.stop();
     stocksTableUpdateLastPricesTimer.stop();
@@ -474,7 +474,7 @@ void MainWindow::authFailed(const QString& errorCodeString)
     stopAutoPilot();
 
     mUserUpdateThread->wait();
-    mPriceCollectThread->wait();
+    mStockCollectThread->wait();
     mLastPriceThread->wait();
 
     ui->actionAuth->setEnabled(true);
@@ -511,11 +511,11 @@ void MainWindow::userUpdateTimerTicked()
     mUserUpdateThread->start();
 }
 
-void MainWindow::priceCollectTimerTicked()
+void MainWindow::stockCollectTimerTicked()
 {
     qDebug() << "Price collect timer ticked";
 
-    mPriceCollectThread->start();
+    mStockCollectThread->start();
 }
 
 void MainWindow::makeDecisionTimerTicked()
@@ -1100,12 +1100,12 @@ void MainWindow::on_actionAuth_triggered()
     ui->actionAuth->setEnabled(false);
 
     userUpdateTimerTicked();
-    priceCollectTimerTicked();
+    stockCollectTimerTicked();
 
     mLastPriceThread->start();
 
     userUpdateTimer.start();
-    priceCollectTimer.start();
+    stockCollectTimer.start();
     makeDecisionTimer.start();
     stocksTableUpdateAllTimer.start();
     stocksTableUpdateLastPricesTimer.start();
@@ -1349,7 +1349,7 @@ void MainWindow::init()
     cleanupTimerTicked();
 
     userUpdateTimer.setInterval(USER_UPDATE_INTERVAL);
-    priceCollectTimer.setInterval(PRICE_COLLECT_INTERVAL);
+    stockCollectTimer.setInterval(PRICE_COLLECT_INTERVAL);
     stocksTableUpdateAllTimer.setInterval(STOCKS_TABLE_UPDATE_ALL_INTERVAL);
     stocksTableUpdateLastPricesTimer.setInterval(STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL);
     simulatorPortfolioUpdateLastPricesTimer.setInterval(PORTFOLIO_UPDATE_LAST_PRICES_INTERVAL);

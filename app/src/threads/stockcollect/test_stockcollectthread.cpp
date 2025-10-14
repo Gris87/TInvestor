@@ -1,4 +1,4 @@
-#include "src/threads/pricecollect/pricecollectthread.h"
+#include "src/threads/stockcollect/stockcollectthread.h"
 
 #include <QBuffer>
 #include <QCoreApplication>
@@ -37,7 +37,7 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
-class Test_PriceCollectThread : public ::testing::Test
+class Test_StockCollectThread : public ::testing::Test
 {
 protected:
     void SetUp() override
@@ -57,7 +57,7 @@ protected:
         httpClientMock         = new StrictMock<HttpClientMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
 
-        thread = new PriceCollectThread(
+        thread = new StockCollectThread(
             configMock,
             userStorageMock,
             stocksStorageMock,
@@ -90,7 +90,7 @@ protected:
         delete grpcClientMock;
     }
 
-    PriceCollectThread*                 thread;
+    StockCollectThread*                 thread;
     StrictMock<ConfigMock>*             configMock;
     StrictMock<UserStorageMock>*        userStorageMock;
     StrictMock<StocksStorageMock>*      stocksStorageMock;
@@ -108,11 +108,11 @@ protected:
 
 
 
-TEST_F(Test_PriceCollectThread, Test_constructor_and_destructor)
+TEST_F(Test_StockCollectThread, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_PriceCollectThread, Test_run)
+TEST_F(Test_StockCollectThread, Test_run)
 {
     const InSequence seq;
 
@@ -467,12 +467,12 @@ TEST_F(Test_PriceCollectThread, Test_run)
     thread->run();
 }
 
-TEST_F(Test_PriceCollectThread, Test_terminateThread)
+TEST_F(Test_StockCollectThread, Test_terminateThread)
 {
     thread->terminateThread();
 }
 
-TEST_F(Test_PriceCollectThread, Test_obtainStocksDayStartPrice)
+TEST_F(Test_StockCollectThread, Test_obtainStocksDayStartPrice)
 {
     const InSequence seq;
 
@@ -484,7 +484,7 @@ TEST_F(Test_PriceCollectThread, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(thread->obtainStocksDayStartPrice(), false);
 }
 
-TEST_F(Test_PriceCollectThread, Test_notifyAboutChanges)
+TEST_F(Test_StockCollectThread, Test_notifyAboutChanges)
 {
     thread->notifyAboutChanges(false, false);
     thread->notifyAboutChanges(false, true);

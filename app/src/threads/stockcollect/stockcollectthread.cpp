@@ -1,4 +1,4 @@
-#include "src/threads/pricecollect/pricecollectthread.h"
+#include "src/threads/stockcollect/stockcollectthread.h"
 
 #include <QAtomicInt>
 #include <QCoreApplication>
@@ -39,7 +39,7 @@ enum CsvField : qint8
 
 
 
-PriceCollectThread::PriceCollectThread(
+StockCollectThread::StockCollectThread(
     IConfig*             config,
     IUserStorage*        userStorage,
     IStocksStorage*      stocksStorage,
@@ -54,7 +54,7 @@ PriceCollectThread::PriceCollectThread(
     IGrpcClient*         grpcClient,
     QObject*             parent
 ) :
-    IPriceCollectThread(parent),
+    IStockCollectThread(parent),
     mConfig(config),
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
@@ -69,17 +69,17 @@ PriceCollectThread::PriceCollectThread(
     mGrpcClient(grpcClient),
     mDayStartTimestamp()
 {
-    qDebug() << "Create PriceCollectThread";
+    qDebug() << "Create StockCollectThread";
 }
 
-PriceCollectThread::~PriceCollectThread()
+StockCollectThread::~StockCollectThread()
 {
-    qDebug() << "Destroy PriceCollectThread";
+    qDebug() << "Destroy StockCollectThread";
 }
 
-void PriceCollectThread::run()
+void StockCollectThread::run()
 {
-    qDebug() << "Running PriceCollectThread";
+    qDebug() << "Running StockCollectThread";
 
     blockSignals(false);
     emit notifyInstrumentsProgress(tr("Downloading metadata"));
@@ -101,17 +101,17 @@ void PriceCollectThread::run()
         notifyAboutChanges(needStocksUpdate, needPricesUpdate);
     }
 
-    qDebug() << "Finish PriceCollectThread";
+    qDebug() << "Finish StockCollectThread";
 }
 
-void PriceCollectThread::terminateThread()
+void StockCollectThread::terminateThread()
 {
     blockSignals(true);
 
     requestInterruption();
 }
 
-bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
+bool StockCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
 {
     QList<StockMeta> stocksMeta;
 
@@ -354,7 +354,7 @@ static void obtainInstrumentsForParallel(
     }
 }
 
-void PriceCollectThread::downloadLogo(const QString& instrumentId, const QUrl& url)
+void StockCollectThread::downloadLogo(const QString& instrumentId, const QUrl& url)
 {
     const IHttpClient::Headers headers;
     const HttpResult           httpResult = mHttpClient->download(url, headers);
@@ -393,7 +393,7 @@ void PriceCollectThread::downloadLogo(const QString& instrumentId, const QUrl& u
 
 struct DownloadLogosInfo
 {
-    explicit DownloadLogosInfo(PriceCollectThread* _thread, IFileFactory* _fileFactory, bool _forceToDownload) :
+    explicit DownloadLogosInfo(StockCollectThread* _thread, IFileFactory* _fileFactory, bool _forceToDownload) :
         thread(_thread),
         fileFactory(_fileFactory),
         forceToDownload(_forceToDownload),
@@ -401,7 +401,7 @@ struct DownloadLogosInfo
     {
     }
 
-    PriceCollectThread* thread;
+    StockCollectThread* thread;
     IFileFactory*       fileFactory;
     bool                forceToDownload;
     QAtomicInt          finished;
@@ -412,7 +412,7 @@ static void downloadLogosForParallel(
 )
 {
     DownloadLogosInfo*  downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
-    PriceCollectThread* thread            = downloadLogosInfo->thread;
+    StockCollectThread* thread            = downloadLogosInfo->thread;
     IFileFactory*       fileFactory       = downloadLogosInfo->fileFactory;
     const bool          forceToDownload   = downloadLogosInfo->forceToDownload;
 
@@ -434,13 +434,13 @@ static void downloadLogosForParallel(
         downloadLogosInfo->finished++;
 
         emit thread->notifyInstrumentsProgress(
-            PriceCollectThread::tr("Downloading logos") +
+            StockCollectThread::tr("Downloading logos") +
             QString(" (%1 / %2)").arg(QString::number(downloadLogosInfo->finished), QString::number(size))
         );
     }
 }
 
-void PriceCollectThread::storeNewInstrumentsInfo()
+void StockCollectThread::storeNewInstrumentsInfo()
 {
     QList<tinkoff::InstrumentType> instrumentTypes{
         tinkoff::INSTRUMENT_TYPE_SHARE,
@@ -687,7 +687,7 @@ static void getCandlesWithHttp(
 struct GetCandlesInfo
 {
     explicit GetCandlesInfo(
-        PriceCollectThread* _thread,
+        StockCollectThread* _thread,
         IConfig*            _config,
         IUserStorage*       _userStorage,
         IStocksStorage*     _stocksStorage,
@@ -714,7 +714,7 @@ struct GetCandlesInfo
     {
     }
 
-    PriceCollectThread* thread;
+    StockCollectThread* thread;
     IConfig*            config;
     IUserStorage*       userStorage;
     IStocksStorage*     stocksStorage;
@@ -732,7 +732,7 @@ static void
 getCandlesForParallel(QThread* parentThread, int /*threadId*/, Stock** stocks, int size, int start, int end, void* additionalArgs)
 {
     GetCandlesInfo*     getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
-    PriceCollectThread* thread           = getCandlesInfo->thread;
+    StockCollectThread* thread           = getCandlesInfo->thread;
     IConfig*            config           = getCandlesInfo->config;
     IUserStorage*       userStorage      = getCandlesInfo->userStorage;
     IStocksStorage*     stocksStorage    = getCandlesInfo->stocksStorage;
@@ -793,13 +793,13 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, Stock** stocks, i
         getCandlesInfo->finished++;
 
         emit thread->notifyInstrumentsProgress(
-            PriceCollectThread::tr("Obtain stocks data") +
+            StockCollectThread::tr("Obtain stocks data") +
             QString(" (%1 / %2)").arg(QString::number(getCandlesInfo->finished), QString::number(size))
         );
     }
 }
 
-void PriceCollectThread::obtainStocksData()
+void StockCollectThread::obtainStocksData()
 {
     emit notifyInstrumentsProgress(tr("Obtain stocks data"));
 
@@ -834,14 +834,14 @@ void PriceCollectThread::obtainStocksData()
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to delete dir");
 }
 
-void PriceCollectThread::cleanupOperationalData()
+void StockCollectThread::cleanupOperationalData()
 {
     mStocksStorage->readLock();
     mStocksStorage->cleanupOperationalData(QDateTime::currentMSecsSinceEpoch() - ONE_HOUR);
     mStocksStorage->readUnlock();
 }
 
-bool PriceCollectThread::obtainStocksDayStartPrice()
+bool StockCollectThread::obtainStocksDayStartPrice()
 {
     // Round to 1 day
     const qint64 newDayStartTimestamp = ((QDateTime::currentMSecsSinceEpoch() / ONE_DAY) * ONE_DAY) - MOSCOW_TIME;
@@ -860,28 +860,28 @@ bool PriceCollectThread::obtainStocksDayStartPrice()
     return false;
 }
 
-void PriceCollectThread::obtainLastTradeTime()
+void StockCollectThread::obtainLastTradeTime()
 {
     mStocksStorage->readLock();
     mStocksStorage->obtainLastTradeTime(QDateTime::currentMSecsSinceEpoch() - ONE_WEEK);
     mStocksStorage->readUnlock();
 }
 
-void PriceCollectThread::obtainTurnover()
+void StockCollectThread::obtainTurnover()
 {
     mStocksStorage->readLock();
     mStocksStorage->obtainTurnover(QDateTime::currentMSecsSinceEpoch() - ONE_MONTH);
     mStocksStorage->readUnlock();
 }
 
-void PriceCollectThread::obtainPayback()
+void StockCollectThread::obtainPayback()
 {
     mStocksStorage->readLock();
     mStocksStorage->obtainPayback(QDateTime::currentMSecsSinceEpoch() - ONE_DAY);
     mStocksStorage->readUnlock();
 }
 
-void PriceCollectThread::notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate)
+void StockCollectThread::notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate)
 {
     if (needStocksUpdate)
     {

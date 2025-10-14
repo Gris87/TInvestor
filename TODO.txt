@@ -1,4 +1,3 @@
-Rename PriceCollect => StockCollect
 Write stocks meta once
 Fill operational data from stock data
 Huge bid order buy

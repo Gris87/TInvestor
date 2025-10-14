@@ -124,9 +124,9 @@ SOURCES += \
     src/threads/parallelhelper/test_parallelhelperthread.cpp \
     src/threads/portfolio/test_portfoliothread.cpp \
     src/threads/portfoliolastprice/test_portfoliolastpricethread.cpp \
-    src/threads/pricecollect/test_pricecollectthread.cpp \
     src/threads/simulatordaterangedecisionmaker/test_simulatordaterangedecisionmakerthread.cpp \
     src/threads/simulatordecisionmaker/test_simulatordecisionmakerthread.cpp \
+    src/threads/stockcollect/test_stockcollectthread.cpp \
     src/threads/trading/test_tradingthread.cpp \
     src/threads/trading/test_tradingthreadfactory.cpp \
     src/threads/userupdate/test_userupdatethread.cpp \
@@ -274,9 +274,9 @@ HEADERS += \
     src/threads/orderbook/iorderbookthread_mock.h \
     src/threads/portfolio/iportfoliothread_mock.h \
     src/threads/portfoliolastprice/iportfoliolastpricethread_mock.h \
-    src/threads/pricecollect/ipricecollectthread_mock.h \
     src/threads/simulatordaterangedecisionmaker/isimulatordaterangedecisionmakerthread_mock.h \
     src/threads/simulatordecisionmaker/isimulatordecisionmakerthread_mock.h \
+    src/threads/stockcollect/istockcollectthread_mock.h \
     src/threads/trading/itradingthread_mock.h \
     src/threads/trading/itradingthreadfactory_mock.h \
     src/threads/userupdate/iuserupdatethread_mock.h \
