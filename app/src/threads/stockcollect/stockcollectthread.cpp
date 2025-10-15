@@ -685,6 +685,48 @@ static void getCandlesWithHttp(
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
+static void copyDataToOperational(Stock* stock)
+{
+    const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() - ONE_HOUR;
+
+    for (int i = stock->data.size() - 1; i >= 0; --i)
+    {
+        const StockData& stockData = stock->data.at(i);
+
+        if (stockData.timestamp < limitTimestamp)
+        {
+            break;
+        }
+
+        const int index = std::distance(
+            stock->operational.detailedData.constBegin(),
+            std::lower_bound(
+                stock->operational.detailedData.constBegin(),
+                stock->operational.detailedData.constEnd(),
+                stockData.timestamp,
+                [](const StockOperationalData& stockData, qint64 value) { return stockData.timestamp < value; }
+            )
+        );
+
+        StockOperationalData stockOperationalData; // NOLINT(cppcoreguidelines-pro-type-member-init)
+
+        stockOperationalData.timestamp = stockData.timestamp;
+        stockOperationalData.price     = stockData.price;
+
+        stock->operational.detailedData.insert(index, stockOperationalData);
+    }
+
+    Q_ASSERT_X(
+        std::is_sorted(
+            stock->operational.detailedData.constBegin(),
+            stock->operational.detailedData.constEnd(),
+            [](const StockOperationalData& l, const StockOperationalData& r) { return l.timestamp < r.timestamp; }
+        ),
+        __FUNCTION__,
+        "Stock data is unsorted"
+    );
+}
+
 struct GetCandlesInfo
 {
     explicit GetCandlesInfo(
@@ -776,18 +818,7 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, Stock** stocks, i
         }
 
         getCandlesWithGrpc(parentThread, stocksStorage, grpcClient, stock, startTimestamp, currentTimestamp);
-
-        if (!stock->data.isEmpty() && (stock->operational.detailedData.isEmpty() ||
-                                       stock->data.constLast().timestamp > stock->operational.detailedData.constLast().timestamp))
-        {
-            const StockData&     stockData = stock->data.constLast();
-            StockOperationalData stockOperationalData; // NOLINT(cppcoreguidelines-pro-type-member-init)
-
-            stockOperationalData.timestamp = stockData.timestamp;
-            stockOperationalData.price     = stockData.price;
-
-            stock->operational.detailedData.append(stockOperationalData);
-        }
+        copyDataToOperational(stock);
 
         stock->writeUnlock();
 

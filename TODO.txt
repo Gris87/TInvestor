@@ -1,4 +1,3 @@
-Fill operational data from stock data
 Huge bid order buy
 Real time for buy decision 5
 Real time for buy decision 6
