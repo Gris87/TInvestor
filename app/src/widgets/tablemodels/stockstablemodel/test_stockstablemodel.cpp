@@ -749,7 +749,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->operational.payback               = 37.0f;
 
     stock3->meta.instrumentTicker             = "FUCK";
-    stock3->meta.instrumentName               = "Funсtional clock";
+    stock3->meta.instrumentName               = "Functional clock";
     stock3->meta.forQualInvestorFlag          = false;
     stock3->meta.minPriceIncrement            = 0.0001f;
     stock3->meta.pricePrecision               = 3;
@@ -1118,7 +1118,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->operational.payback               = 37.0f;
 
     stock3->meta.instrumentTicker             = "FUCK";
-    stock3->meta.instrumentName               = "Funсtional clock";
+    stock3->meta.instrumentName               = "Functional clock";
     stock3->meta.forQualInvestorFlag          = false;
     stock3->meta.minPriceIncrement            = 0.0001f;
     stock3->meta.pricePrecision               = 3;
@@ -1497,7 +1497,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->operational.payback               = 37.0f;
 
     stock3->meta.instrumentTicker             = "FUCK";
-    stock3->meta.instrumentName               = "Funсtional clock";
+    stock3->meta.instrumentName               = "Functional clock";
     stock3->meta.forQualInvestorFlag          = false;
     stock3->meta.minPriceIncrement            = 0.0001f;
     stock3->meta.pricePrecision               = 3;
@@ -1854,7 +1854,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->operational.payback               = 37.0f;
 
     stock3->meta.instrumentTicker             = "FUCK";
-    stock3->meta.instrumentName               = "Funсtional clock";
+    stock3->meta.instrumentName               = "Functional clock";
     stock3->meta.forQualInvestorFlag          = false;
     stock3->meta.minPriceIncrement            = 0.0001f;
     stock3->meta.pricePrecision               = 3;

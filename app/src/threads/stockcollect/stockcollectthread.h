@@ -72,6 +72,7 @@ public:
     void obtainLastTradeTime();
     void obtainTurnover();
     void obtainPayback();
+    void writeStocksMeta();
     void notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
 
 private:

@@ -463,6 +463,9 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, obtainPayback(Ge(1704056400000)));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, writeStocksMeta());
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
 
     thread->run();
 }

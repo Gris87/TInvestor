@@ -210,6 +210,15 @@ TEST_F(Test_StocksStorage, Test_lock_and_unlock)
     storage->readUnlock();
 }
 
+TEST_F(Test_StocksStorage, Test_writeStocksMeta)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*stocksDatabaseMock, writeStocksMeta(QList<Stock*>()));
+
+    storage->writeStocksMeta();
+}
+
 TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 {
     const InSequence seq;
@@ -386,8 +395,6 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stockMeta2.turnover            = 8888;
 
     stocksMeta << stockMeta1 << stockMeta2;
-
-    EXPECT_CALL(*stocksDatabaseMock, writeStocksMeta(Ne(QList<Stock*>())));
 
     ASSERT_EQ(storage->mergeStocksMeta(stocksMeta), true);
     ASSERT_EQ(storage->mergeStocksMeta(stocksMeta), false);
@@ -1865,8 +1872,6 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(2)->data.at(3).quantity,              5);
     ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
     // clang-format on
-
-    EXPECT_CALL(*stocksDatabaseMock, writeStocksMeta(Ne(QList<Stock*>())));
 
     storage->obtainTurnover(200);
 

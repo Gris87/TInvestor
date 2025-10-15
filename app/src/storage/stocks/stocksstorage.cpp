@@ -73,6 +73,11 @@ const QList<Stock*>& StocksStorage::getStocks()
     return mStocks;
 }
 
+void StocksStorage::writeStocksMeta()
+{
+    mStocksDatabase->writeStocksMeta(mStocks);
+}
+
 bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
 {
     bool changed = false;
@@ -119,11 +124,6 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
         stock->meta  = *newMeta;
 
         mStocks.append(stock);
-    }
-
-    if (changed)
-    {
-        mStocksDatabase->writeStocksMeta(mStocks);
     }
 
     return changed;
@@ -390,8 +390,6 @@ void StocksStorage::obtainLastTradeTime(qint64 timestamp)
 {
     GetLastTradeTimeInfo getLastTradeTimeInfo(timestamp);
     processInParallel(QThread::currentThread(), mStocks, getLastTradeTimeForParallel, &getLastTradeTimeInfo);
-
-    mStocksDatabase->writeStocksMeta(mStocks);
 }
 
 struct GetTurnoverInfo
@@ -463,8 +461,6 @@ void StocksStorage::obtainTurnover(qint64 timestamp)
 {
     GetTurnoverInfo getTurnoverInfo(timestamp);
     processInParallel(QThread::currentThread(), mStocks, getTurnoverForParallel, &getTurnoverInfo);
-
-    mStocksDatabase->writeStocksMeta(mStocks);
 }
 
 struct GetPaybackInfo

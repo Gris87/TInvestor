@@ -27,6 +27,7 @@ public:
     void                 writeLock() override;
     void                 writeUnlock() override;
     const QList<Stock*>& getStocks() override;
+    void                 writeStocksMeta() override;
     bool                 mergeStocksMeta(const QList<StockMeta>& stocksMeta) override;
     void                 appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
     void                 deleteObsoleteData(qint64 timestamp) override;

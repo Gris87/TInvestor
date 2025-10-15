@@ -97,6 +97,7 @@ void StockCollectThread::run()
         obtainLastTradeTime();
         obtainTurnover();
         obtainPayback();
+        writeStocksMeta();
 
         notifyAboutChanges(needStocksUpdate, needPricesUpdate);
     }
@@ -878,6 +879,13 @@ void StockCollectThread::obtainPayback()
 {
     mStocksStorage->readLock();
     mStocksStorage->obtainPayback(QDateTime::currentMSecsSinceEpoch() - ONE_DAY);
+    mStocksStorage->readUnlock();
+}
+
+void StockCollectThread::writeStocksMeta()
+{
+    mStocksStorage->readLock();
+    mStocksStorage->writeStocksMeta();
     mStocksStorage->readUnlock();
 }
 

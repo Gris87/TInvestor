@@ -22,6 +22,7 @@ public:
     virtual void                 writeLock()                                                                  = 0;
     virtual void                 writeUnlock()                                                                = 0;
     virtual const QList<Stock*>& getStocks()                                                                  = 0;
+    virtual void                 writeStocksMeta()                                                            = 0;
     virtual bool                 mergeStocksMeta(const QList<StockMeta>& stocksMeta)                          = 0;
     virtual void                 appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) = 0;
     virtual void                 deleteObsoleteData(qint64 timestamp)                                         = 0;
