@@ -164,7 +164,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 5)).WillOnce(Return(nullptr));
 
     ASSERT_EQ(thread->trade(), false);
 
@@ -176,7 +176,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 5))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaa-aaa"), QString("Impossible to continue reselling")));
 
@@ -217,7 +217,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 5))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(nullptr));
@@ -337,7 +337,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 5))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
@@ -388,7 +388,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     )
         .WillOnce(Return(postOrderResponse));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(30000, QThread::currentThread())).WillOnce(Return(false));
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 5))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
@@ -438,7 +438,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 3))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 5))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));

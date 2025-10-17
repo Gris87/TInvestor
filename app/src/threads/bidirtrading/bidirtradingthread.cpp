@@ -10,9 +10,10 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 constexpr float  HUNDRED_PERCENT             = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT       = 0.10f;
-constexpr float  MAXIMUM_LOSE_PERCENT        = 1.50f;
+constexpr float  MAXIMUM_LOSE_PERCENT        = 2.00f;
 constexpr float  REQUIRED_PRICE_FALL_PERCENT = 0.50f;
 constexpr int    MINUTES_TO_DOUBLE_CHECK     = 5;
+constexpr int    ORDERS_TO_CHECK             = 5;
 constexpr qint64 MS_IN_SECOND                = 1000LL;
 constexpr qint64 SLEEP_DELAY                 = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY          = 3LL * MS_IN_SECOND;  // 3 seconds
@@ -115,7 +116,7 @@ bool BiDirTradingThread::trade()
     while (!mTerminateTrading)
     {
         const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-            mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, 3);
+            mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, ORDERS_TO_CHECK);
 
         if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrderBook == nullptr)
         {

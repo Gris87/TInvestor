@@ -7,6 +7,7 @@
 
 
 constexpr qint64 MS_IN_SECOND = 1000LL;
+constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
 constexpr qint64 SLEEP_DELAY  = 5LL * MS_IN_SECOND; // 5 seconds
 
 
@@ -181,18 +182,17 @@ void LastPriceThread::handleLastPrice(Stock* stock, const tinkoff::LastPrice& la
     stockData.price     = quotationToFloat(lastPriceResp.price());
 
     stock->writeLock();
-    stock->operational.detailedData.insert(
-        std::distance(
+
+    const int index = std::distance(
+        stock->operational.detailedData.constBegin(),
+        std::lower_bound(
             stock->operational.detailedData.constBegin(),
-            std::lower_bound(
-                stock->operational.detailedData.constBegin(),
-                stock->operational.detailedData.constEnd(),
-                stockData.timestamp,
-                [](const StockOperationalData& stockData, qint64 value) { return stockData.timestamp < value; }
-            )
-        ),
-        stockData
+            stock->operational.detailedData.constEnd(),
+            stockData.timestamp,
+            [](const StockOperationalData& stockData, qint64 value) { return stockData.timestamp < value; }
+        )
     );
+    stock->operational.detailedData.insert(index, stockData);
 
     Q_ASSERT_X(
         std::is_sorted(
@@ -203,6 +203,18 @@ void LastPriceThread::handleLastPrice(Stock* stock, const tinkoff::LastPrice& la
         __FUNCTION__,
         "Stock data is unsorted"
     );
+
+    for (int i = qMax(index - 1, 0); i < qMin(index + 1, stock->operational.detailedData.size() - 1); ++i)
+    {
+        const qint64 prevMinute = stock->operational.detailedData.at(i).timestamp / ONE_MINUTE;
+        const qint64 nextMinute = stock->operational.detailedData.at(i + 1).timestamp / ONE_MINUTE;
+
+        if (nextMinute == prevMinute)
+        {
+            stock->operational.detailedData.removeAt(i);
+            --i;
+        }
+    }
 
     emit lastPriceChanged(stock->meta.instrumentId);
     stock->writeUnlock();

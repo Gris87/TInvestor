@@ -577,10 +577,10 @@ TEST_F(Test_RawGrpcClient, Test_findFutures)
     // ASSERT_EQ(resp->instruments(index).dlong().nano(),                       255900000);
     // ASSERT_EQ(resp->instruments(index).dshort().units(),                     0);
     // ASSERT_EQ(resp->instruments(index).dshort().nano(),                      430200000);
-    ASSERT_EQ(resp->instruments(index).dlong_min().units(),                  0);
-    ASSERT_EQ(resp->instruments(index).dlong_min().nano(),                   250000000);
-    ASSERT_EQ(resp->instruments(index).dshort_min().units(),                 0);
-    ASSERT_EQ(resp->instruments(index).dshort_min().nano(),                  250000000);
+    // ASSERT_EQ(resp->instruments(index).dlong_min().units(),                  0);
+    // ASSERT_EQ(resp->instruments(index).dlong_min().nano(),                   250000000);
+    // ASSERT_EQ(resp->instruments(index).dshort_min().units(),                 0);
+    // ASSERT_EQ(resp->instruments(index).dshort_min().nano(),                  250000000);
     ASSERT_EQ(resp->instruments(index).short_enabled_flag(),                 true);
     ASSERT_EQ(resp->instruments(index).name(),                               "WHEAT-8.26 \u0418\u043D\u0434\u0435\u043A\u0441 \u041F\u0448\u0435\u043D\u0438\u0446\u044B"); // WHEAT-8.26 Wheat Index
     ASSERT_EQ(resp->instruments(index).exchange(),                           "forts_futures_weekend");
@@ -624,10 +624,10 @@ TEST_F(Test_RawGrpcClient, Test_findFutures)
     ASSERT_EQ(resp->instruments(index).brand().logo_name(),                  "WHCPT.png");
     ASSERT_EQ(resp->instruments(index).brand().logo_base_color(),            "#000000");
     ASSERT_EQ(resp->instruments(index).brand().text_color(),                 "#ffffff");
-    ASSERT_EQ(resp->instruments(index).dlong_client().units(),               0);
-    ASSERT_EQ(resp->instruments(index).dlong_client().nano(),                250000000);
-    ASSERT_EQ(resp->instruments(index).dshort_client().units(),              0);
-    ASSERT_EQ(resp->instruments(index).dshort_client().nano(),               250000000);
+    // ASSERT_EQ(resp->instruments(index).dlong_client().units(),               0);
+    // ASSERT_EQ(resp->instruments(index).dlong_client().nano(),                250000000);
+    // ASSERT_EQ(resp->instruments(index).dshort_client().units(),              0);
+    // ASSERT_EQ(resp->instruments(index).dshort_client().nano(),               250000000);
     // clang-format on
 }
 

@@ -725,6 +725,18 @@ static void copyDataToOperational(Stock* stock)
         __FUNCTION__,
         "Stock data is unsorted"
     );
+
+    for (int i = 0; i < stock->operational.detailedData.size() - 1; ++i)
+    {
+        const qint64 prevMinute = stock->operational.detailedData.at(i).timestamp / ONE_MINUTE;
+        const qint64 nextMinute = stock->operational.detailedData.at(i + 1).timestamp / ONE_MINUTE;
+
+        if (nextMinute == prevMinute)
+        {
+            stock->operational.detailedData.removeAt(i);
+            --i;
+        }
+    }
 }
 
 struct GetCandlesInfo
