@@ -1,7 +1,6 @@
 Huge bid order buy
 Always trade bi-directional (Select optimal bid)
 Try to sell minimal price from asks for bi-directional trading
-Do not stop simulation on auth failed
 Real time for buy decision 5
 Real time for buy decision 6
 Real time for buy decision 7

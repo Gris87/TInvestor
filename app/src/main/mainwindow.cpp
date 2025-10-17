@@ -470,7 +470,11 @@ void MainWindow::authFailed(const QString& errorCodeString)
     stocksTableUpdateAllTimer.stop();
     stocksTableUpdateLastPricesTimer.stop();
 
-    stopSimulator();
+    if (mSimulatorSettingsEditor->value("Options/Mode", SIMULATOR_MODE_REALTIME).toString() == SIMULATOR_MODE_REALTIME)
+    {
+        stopSimulator();
+    }
+
     stopAutoPilot();
 
     mUserUpdateThread->wait();

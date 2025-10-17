@@ -640,6 +640,8 @@ TEST_F(Test_MainWindow, Test_authFailed)
     EXPECT_CALL(*userUpdateThreadMock, terminateThread());
     EXPECT_CALL(*stockCollectThreadMock, terminateThread());
     EXPECT_CALL(*lastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
+        .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
     EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, terminateThread());
     EXPECT_CALL(*simulatorDecisionMakerThreadMock, terminateThread());
     EXPECT_CALL(*simulatorDateRangeDecisionMakerThreadMock, terminateThread());
