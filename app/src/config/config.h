@@ -40,6 +40,24 @@ public:
     void setTradeInNonWorkingHours(bool value) override;
     bool isTradeInNonWorkingHours() override;
 
+    void setTradeHugeBid(bool value) override;
+    bool isTradeHugeBid() override;
+
+    void  setHugeBid(float value) override;
+    float getHugeBid() override;
+
+    void setHugeBidLimitStockPurchase(bool value) override;
+    bool isHugeBidLimitStockPurchase() override;
+
+    void  setHugeBidLimitStockPurchasePart(float value) override;
+    float getHugeBidLimitStockPurchasePart() override;
+
+    void setHugeBidLimitByTurnover(bool value) override;
+    bool isHugeBidLimitByTurnover() override;
+
+    void  setHugeBidLimitByTurnoverPercent(float value) override;
+    float getHugeBidLimitByTurnoverPercent() override;
+
     void setTradeHugeSpread(bool value) override;
     bool isTradeHugeSpread() override;
 
@@ -119,6 +137,12 @@ private:
     QString mCpuUsage;
     int     mMakeDecisionTimeout;
     bool    mTradeInNonWorkingHours;
+    bool    mTradeHugeBid;
+    float   mHugeBid;
+    bool    mHugeBidLimitStockPurchase;
+    float   mHugeBidLimitStockPurchasePart;
+    bool    mHugeBidLimitByTurnover;
+    float   mHugeBidLimitByTurnoverPercent;
     bool    mTradeHugeSpread;
     float   mHugeSpread;
     bool    mHugeSpreadLimitStockPurchase;

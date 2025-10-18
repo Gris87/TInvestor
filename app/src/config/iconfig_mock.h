@@ -43,6 +43,24 @@ public:
     MOCK_METHOD(void, setTradeInNonWorkingHours, (bool value), (override));
     MOCK_METHOD(bool, isTradeInNonWorkingHours, (), (override));
 
+    MOCK_METHOD(void, setTradeHugeBid, (bool value), (override));
+    MOCK_METHOD(bool, isTradeHugeBid, (), (override));
+
+    MOCK_METHOD(void, setHugeBid, (float value), (override));
+    MOCK_METHOD(float, getHugeBid, (), (override));
+
+    MOCK_METHOD(void, setHugeBidLimitStockPurchase, (bool value), (override));
+    MOCK_METHOD(bool, isHugeBidLimitStockPurchase, (), (override));
+
+    MOCK_METHOD(void, setHugeBidLimitStockPurchasePart, (float value), (override));
+    MOCK_METHOD(float, getHugeBidLimitStockPurchasePart, (), (override));
+
+    MOCK_METHOD(void, setHugeBidLimitByTurnover, (bool value), (override));
+    MOCK_METHOD(bool, isHugeBidLimitByTurnover, (), (override));
+
+    MOCK_METHOD(void, setHugeBidLimitByTurnoverPercent, (float value), (override));
+    MOCK_METHOD(float, getHugeBidLimitByTurnoverPercent, (), (override));
+
     MOCK_METHOD(void, setTradeHugeSpread, (bool value), (override));
     MOCK_METHOD(bool, isTradeHugeSpread, (), (override));
 

@@ -111,6 +111,9 @@ SettingsDialog::SettingsDialog(
         tr("Autorun on %1 startup").arg(QSysInfo::productType().at(0).toUpper() + QSysInfo::productType().mid(1))
     );
 
+    ui->tradeHugeBidCheckBox->setEnabled(commission < LIMIT_COMMISSION);
+    ui->hugeBidWidget->setEnabled(commission < LIMIT_COMMISSION);
+    ui->tradeHugeBidCommissionWidget->setVisible(commission >= LIMIT_COMMISSION);
     ui->tradeHugeSpreadCheckBox->setEnabled(commission < LIMIT_COMMISSION);
     ui->hugeSpreadWidget->setEnabled(commission < LIMIT_COMMISSION);
     ui->tradeHugeSpreadCommissionWidget->setVisible(commission >= LIMIT_COMMISSION);
@@ -132,6 +135,12 @@ void SettingsDialog::updateUiFromConfig()
     ui->cpuUsageComboBox->setCurrentIndex(CPU_USAGE_INDEX.value(mConfig->getCpuUsage(), CPU_USAGE_INDEX.value("MAXIMUM")));
     ui->makeDecisionTimeoutSpinBox->setValue(mConfig->getMakeDecisionTimeout());
     ui->tradeInNonWorkingHoursCheckBox->setChecked(mConfig->isTradeInNonWorkingHours());
+    ui->tradeHugeBidCheckBox->setChecked(mConfig->isTradeHugeBid());
+    ui->hugeBidDoubleSpinBox->setValue(mConfig->getHugeBid());
+    ui->hugeBidLimitStockPurchaseCheckBox->setChecked(mConfig->isHugeBidLimitStockPurchase());
+    ui->hugeBidLimitStockPurchasePartDoubleSpinBox->setValue(mConfig->getHugeBidLimitStockPurchasePart());
+    ui->hugeBidLimitByTurnoverCheckBox->setChecked(mConfig->isHugeBidLimitByTurnover());
+    ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->setValue(mConfig->getHugeBidLimitByTurnoverPercent());
     ui->tradeHugeSpreadCheckBox->setChecked(mConfig->isTradeHugeSpread());
     ui->hugeSpreadDoubleSpinBox->setValue(mConfig->getHugeSpread());
     ui->hugeSpreadLimitStockPurchaseCheckBox->setChecked(mConfig->isHugeSpreadLimitStockPurchase());
@@ -181,6 +190,48 @@ void SettingsDialog::on_tradeInNonWorkingHoursCheckBox_checkStateChanged(const Q
     mConfig->setTradeInNonWorkingHours(checked);
 
     ui->limitStockPurchaseNonWorkingHoursWidget->setEnabled(checked);
+}
+
+void SettingsDialog::on_tradeHugeBidCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setTradeHugeBid(checked);
+
+    ui->hugeBidWidget->setEnabled(checked);
+}
+
+void SettingsDialog::on_hugeBidDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setHugeBid(value);
+}
+
+void SettingsDialog::on_hugeBidLimitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setHugeBidLimitStockPurchase(checked);
+
+    ui->hugeBidLimitByTurnoverWidget->setEnabled(checked);
+}
+
+void SettingsDialog::on_hugeBidLimitStockPurchasePartDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setHugeBidLimitStockPurchasePart(value);
+}
+
+void SettingsDialog::on_hugeBidLimitByTurnoverCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setHugeBidLimitByTurnover(checked);
+
+    ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_hugeBidLimitByTurnoverPercentDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setHugeBidLimitByTurnoverPercent(value);
 }
 
 void SettingsDialog::on_tradeHugeSpreadCheckBox_checkStateChanged(const Qt::CheckState& value)

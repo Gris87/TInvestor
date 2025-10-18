@@ -9,6 +9,12 @@ const char* const CPU_USAGE_DEFAULT = "MAXIMUM";
 constexpr bool  AUTORUN_DEFAULT                                     = true;
 constexpr int   MAKE_DECISION_TIMEOUT_DEFAULT                       = 1;
 constexpr bool  TRADE_IN_NON_WORKING_HOURS_DEFAULT                  = true;
+constexpr bool  TRADE_HUGE_BID_DEFAULT                              = true;
+constexpr float HUGE_BID_DEFAULT                                    = 2.5f;
+constexpr bool  HUGE_BID_LIMIT_STOCK_PURCHASE_DEFAULT               = true;
+constexpr float HUGE_BID_LIMIT_STOCK_PURCHASE_PART_DEFAULT          = 3.0f;
+constexpr bool  HUGE_BID_LIMIT_BY_TURNOVER_DEFAULT                  = true;
+constexpr float HUGE_BID_LIMIT_BY_TURNOVER_PERCENT_DEFAULT          = 1.0f;
 constexpr bool  TRADE_HUGE_SPREAD_DEFAULT                           = true;
 constexpr float HUGE_SPREAD_DEFAULT                                 = 0.7f;
 constexpr bool  HUGE_SPREAD_LIMIT_STOCK_PURCHASE_DEFAULT            = true;
@@ -44,6 +50,12 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mCpuUsage(),
     mMakeDecisionTimeout(),
     mTradeInNonWorkingHours(),
+    mTradeHugeBid(),
+    mHugeBid(),
+    mHugeBidLimitStockPurchase(),
+    mHugeBidLimitStockPurchasePart(),
+    mHugeBidLimitByTurnover(),
+    mHugeBidLimitByTurnoverPercent(),
     mTradeHugeSpread(),
     mHugeSpread(),
     mHugeSpreadLimitStockPurchase(),
@@ -113,6 +125,12 @@ void Config::assign(IConfig* another)
     mCpuUsage                              = config.mCpuUsage;
     mMakeDecisionTimeout                   = config.mMakeDecisionTimeout;
     mTradeInNonWorkingHours                = config.mTradeInNonWorkingHours;
+    mTradeHugeBid                          = config.mTradeHugeBid;
+    mHugeBid                               = config.mHugeBid;
+    mHugeBidLimitStockPurchase             = config.mHugeBidLimitStockPurchase;
+    mHugeBidLimitStockPurchasePart         = config.mHugeBidLimitStockPurchasePart;
+    mHugeBidLimitByTurnover                = config.mHugeBidLimitByTurnover;
+    mHugeBidLimitByTurnoverPercent         = config.mHugeBidLimitByTurnoverPercent;
     mTradeHugeSpread                       = config.mTradeHugeSpread;
     mHugeSpread                            = config.mHugeSpread;
     mHugeSpreadLimitStockPurchase          = config.mHugeSpreadLimitStockPurchase;
@@ -151,6 +169,12 @@ void Config::makeDefault()
     mCpuUsage                              = CPU_USAGE_DEFAULT;
     mMakeDecisionTimeout                   = MAKE_DECISION_TIMEOUT_DEFAULT;
     mTradeInNonWorkingHours                = TRADE_IN_NON_WORKING_HOURS_DEFAULT;
+    mTradeHugeBid                          = TRADE_HUGE_BID_DEFAULT;
+    mHugeBid                               = HUGE_BID_DEFAULT;
+    mHugeBidLimitStockPurchase             = HUGE_BID_LIMIT_STOCK_PURCHASE_DEFAULT;
+    mHugeBidLimitStockPurchasePart         = HUGE_BID_LIMIT_STOCK_PURCHASE_PART_DEFAULT;
+    mHugeBidLimitByTurnover                = HUGE_BID_LIMIT_BY_TURNOVER_DEFAULT;
+    mHugeBidLimitByTurnoverPercent         = HUGE_BID_LIMIT_BY_TURNOVER_PERCENT_DEFAULT;
     mTradeHugeSpread                       = TRADE_HUGE_SPREAD_DEFAULT;
     mHugeSpread                            = HUGE_SPREAD_DEFAULT;
     mHugeSpreadLimitStockPurchase          = HUGE_SPREAD_LIMIT_STOCK_PURCHASE_DEFAULT;
@@ -190,6 +214,12 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/CpuUsage",                              mCpuUsage);
     settingsEditor->setValue("Config/MakeDecisionTimeout",                   mMakeDecisionTimeout);
     settingsEditor->setValue("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours);
+    settingsEditor->setValue("Config/TradeHugeBid",                          mTradeHugeBid);
+    settingsEditor->setValue("Config/HugeBid",                               mHugeBid);
+    settingsEditor->setValue("Config/HugeBidLimitStockPurchase",             mHugeBidLimitStockPurchase);
+    settingsEditor->setValue("Config/HugeBidLimitStockPurchasePart",         mHugeBidLimitStockPurchasePart);
+    settingsEditor->setValue("Config/HugeBidLimitByTurnover",                mHugeBidLimitByTurnover);
+    settingsEditor->setValue("Config/HugeBidLimitByTurnoverPercent",         mHugeBidLimitByTurnoverPercent);
     settingsEditor->setValue("Config/TradeHugeSpread",                       mTradeHugeSpread);
     settingsEditor->setValue("Config/HugeSpread",                            mHugeSpread);
     settingsEditor->setValue("Config/HugeSpreadLimitStockPurchase",          mHugeSpreadLimitStockPurchase);
@@ -230,6 +260,12 @@ void Config::load(ISettingsEditor* settingsEditor)
     mCpuUsage                              = settingsEditor->value("Config/CpuUsage",                              mCpuUsage).toString();
     mMakeDecisionTimeout                   = settingsEditor->value("Config/MakeDecisionTimeout",                   mMakeDecisionTimeout).toInt();
     mTradeInNonWorkingHours                = settingsEditor->value("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours).toBool();
+    mTradeHugeBid                          = settingsEditor->value("Config/TradeHugeBid",                          mTradeHugeBid).toBool();
+    mHugeBid                               = settingsEditor->value("Config/HugeBid",                               mHugeBid).toFloat();
+    mHugeBidLimitStockPurchase             = settingsEditor->value("Config/HugeBidLimitStockPurchase",             mHugeBidLimitStockPurchase).toBool();
+    mHugeBidLimitStockPurchasePart         = settingsEditor->value("Config/HugeBidLimitStockPurchasePart",         mHugeBidLimitStockPurchasePart).toFloat();
+    mHugeBidLimitByTurnover                = settingsEditor->value("Config/HugeBidLimitByTurnover",                mHugeBidLimitByTurnover).toBool();
+    mHugeBidLimitByTurnoverPercent         = settingsEditor->value("Config/HugeBidLimitByTurnoverPercent",         mHugeBidLimitByTurnoverPercent).toFloat();
     mTradeHugeSpread                       = settingsEditor->value("Config/TradeHugeSpread",                       mTradeHugeSpread).toBool();
     mHugeSpread                            = settingsEditor->value("Config/HugeSpread",                            mHugeSpread).toFloat();
     mHugeSpreadLimitStockPurchase          = settingsEditor->value("Config/HugeSpreadLimitStockPurchase",          mHugeSpreadLimitStockPurchase).toBool();
@@ -320,6 +356,90 @@ bool Config::isTradeInNonWorkingHours()
     const QReadLocker lock(mRwMutex);
 
     return mTradeInNonWorkingHours;
+}
+
+void Config::setTradeHugeBid(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mTradeHugeBid = value;
+}
+
+bool Config::isTradeHugeBid()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mTradeHugeBid;
+}
+
+void Config::setHugeBid(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHugeBid = value;
+}
+
+float Config::getHugeBid()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHugeBid;
+}
+
+void Config::setHugeBidLimitStockPurchase(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHugeBidLimitStockPurchase = value;
+}
+
+bool Config::isHugeBidLimitStockPurchase()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHugeBidLimitStockPurchase;
+}
+
+void Config::setHugeBidLimitStockPurchasePart(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHugeBidLimitStockPurchasePart = value;
+}
+
+float Config::getHugeBidLimitStockPurchasePart()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHugeBidLimitStockPurchasePart;
+}
+
+void Config::setHugeBidLimitByTurnover(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHugeBidLimitByTurnover = value;
+}
+
+bool Config::isHugeBidLimitByTurnover()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHugeBidLimitByTurnover;
+}
+
+void Config::setHugeBidLimitByTurnoverPercent(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mHugeBidLimitByTurnoverPercent = value;
+}
+
+float Config::getHugeBidLimitByTurnoverPercent()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mHugeBidLimitByTurnoverPercent;
 }
 
 void Config::setTradeHugeSpread(bool value)

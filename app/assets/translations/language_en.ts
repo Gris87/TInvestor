@@ -174,12 +174,12 @@
 <context>
     <name>BiDirTradingThread</name>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="83"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="85"/>
         <source>Reselling completed successfully</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="127"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="147"/>
         <source>Impossible to continue reselling</source>
         <translation></translation>
     </message>
@@ -556,7 +556,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="680"/>
+        <location filename="../../src/main/mainwindow.cpp" line="687"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -582,7 +582,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="520"/>
-        <location filename="../../src/main/mainwindow.cpp" line="781"/>
+        <location filename="../../src/main/mainwindow.cpp" line="788"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -648,40 +648,40 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="481"/>
+        <location filename="../../src/main/mainwindow.cpp" line="485"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="618"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1371"/>
+        <location filename="../../src/main/mainwindow.cpp" line="622"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1383"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="635"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1219"/>
+        <location filename="../../src/main/mainwindow.cpp" line="639"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1231"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="769"/>
+        <location filename="../../src/main/mainwindow.cpp" line="776"/>
         <source>Auto-pilot started</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="775"/>
+        <location filename="../../src/main/mainwindow.cpp" line="782"/>
         <source>Auto-pilot stopped</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1219"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1231"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="724"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1250"/>
+        <location filename="../../src/main/mainwindow.cpp" line="731"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1262"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
@@ -696,7 +696,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1250"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1262"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -1093,7 +1093,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="118"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="119"/>
         <source>Decided to start reselling because spread is %1</source>
         <translation></translation>
     </message>
@@ -1276,111 +1276,125 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="199"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="391"/>
         <source>Trade stocks with spread more than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="387"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="579"/>
         <source>Trade high liquidity ETF (e.g. TMON@) at night with keeping</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="413"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="605"/>
         <source>of money from total portfolio cost</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="440"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="550"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="632"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="742"/>
         <source>Limit stock purchase part less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="290"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="484"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="594"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="294"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="482"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="676"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="786"/>
         <source>and less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="246"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="199"/>
+        <source>Trade stocks when amount of bids more than amount of asks in</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="243"/>
+        <source>times</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="250"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="438"/>
         <source>and limit stock purchase part less than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="313"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="507"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="317"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="505"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="699"/>
         <source>of average daily turnover</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="357"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="361"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="549"/>
         <source>T-Bank Premium only</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="617"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="809"/>
         <source>of average daily turnover in non-wokring hours</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="648"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="840"/>
         <source>Store stocks data for</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="655"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="847"/>
         <source> months</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="700"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="892"/>
         <source>View</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="726"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="918"/>
         <source>Highlight operations in green color with yield more than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="772"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="964"/>
         <source>Highlight operations in red color with lose more than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="827"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="350"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="372"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1019"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="401"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="423"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="848"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="884"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1040"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1076"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="863"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="349"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="373"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1055"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="400"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="424"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="920"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1112"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="943"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1135"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="963"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1155"/>
         <source>Default</source>
         <translation></translation>
     </message>
@@ -1390,8 +1404,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="344"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="367"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="395"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="418"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>
@@ -1486,14 +1500,14 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="437"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="465"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="438"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="466"/>
         <source>Downloading logos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="796"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="804"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="840"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="848"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>

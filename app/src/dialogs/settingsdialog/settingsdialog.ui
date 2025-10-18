@@ -194,6 +194,198 @@
           <number>4</number>
          </property>
          <item>
+          <widget class="QCheckBox" name="tradeHugeBidCheckBox">
+           <property name="text">
+            <string>Trade stocks when amount of bids more than amount of asks in</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="hugeBidWidget" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <property name="spacing">
+             <number>4</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QDoubleSpinBox" name="hugeBidDoubleSpinBox">
+              <property name="minimum">
+               <double>0.500000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>5.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>2.500000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>times</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="hugeBidLimitStockPurchaseCheckBox">
+              <property name="text">
+               <string>and limit stock purchase part less than</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="hugeBidLimitByTurnoverWidget" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_14">
+               <property name="spacing">
+                <number>4</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QDoubleSpinBox" name="hugeBidLimitStockPurchasePartDoubleSpinBox">
+                 <property name="suffix">
+                  <string notr="true">%</string>
+                 </property>
+                 <property name="maximum">
+                  <double>100.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>3.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="hugeBidLimitByTurnoverCheckBox">
+                 <property name="text">
+                  <string>and less than</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="hugeBidLimitByTurnoverPercentDoubleSpinBox">
+                 <property name="suffix">
+                  <string notr="true">%</string>
+                 </property>
+                 <property name="maximum">
+                  <double>100.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_8">
+                 <property name="text">
+                  <string>of average daily turnover</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="tradeHugeBidCommissionWidget" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <property name="spacing">
+             <number>4</number>
+            </property>
+            <property name="leftMargin">
+             <number>20</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="pixmap">
+               <pixmap resource="../../../Resources.qrc">:/assets/images/warning.png</pixmap>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>T-Bank Premium only</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_11">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_17">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <item>
           <widget class="QCheckBox" name="tradeHugeSpreadCheckBox">
            <property name="text">
             <string>Trade stocks with spread more than</string>
@@ -236,7 +428,7 @@
                <double>0.100000000000000</double>
               </property>
               <property name="value">
-               <double>0.800000000000000</double>
+               <double>0.700000000000000</double>
               </property>
              </widget>
             </item>
@@ -280,7 +472,7 @@
                   <double>0.100000000000000</double>
                  </property>
                  <property name="value">
-                  <double>2.000000000000000</double>
+                  <double>3.000000000000000</double>
                  </property>
                 </widget>
                </item>

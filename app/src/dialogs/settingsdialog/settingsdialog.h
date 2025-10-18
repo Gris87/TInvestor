@@ -63,6 +63,12 @@ private slots:
     void on_cpuUsageComboBox_currentIndexChanged(int index);
     void on_makeDecisionTimeoutSpinBox_valueChanged(int value);
     void on_tradeInNonWorkingHoursCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_tradeHugeBidCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_hugeBidDoubleSpinBox_valueChanged(double value);
+    void on_hugeBidLimitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_hugeBidLimitStockPurchasePartDoubleSpinBox_valueChanged(double value);
+    void on_hugeBidLimitByTurnoverCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_hugeBidLimitByTurnoverPercentDoubleSpinBox_valueChanged(double value);
     void on_tradeHugeSpreadCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_hugeSpreadDoubleSpinBox_valueChanged(double value);
     void on_hugeSpreadLimitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value);

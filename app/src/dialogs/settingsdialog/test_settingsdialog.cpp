@@ -206,6 +206,12 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->cpuUsageComboBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
     dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
+    dialog->ui->tradeHugeBidCheckBox->blockSignals(true);
+    dialog->ui->hugeBidDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeBidLimitStockPurchaseCheckBox->blockSignals(true);
+    dialog->ui->hugeBidLimitStockPurchasePartDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeBidLimitByTurnoverCheckBox->blockSignals(true);
+    dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->blockSignals(true);
     dialog->ui->tradeHugeSpreadCheckBox->blockSignals(true);
     dialog->ui->hugeSpreadDoubleSpinBox->blockSignals(true);
     dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->blockSignals(true);
@@ -237,6 +243,12 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBid()).WillOnce(Return(3.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(1.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitByTurnoverPercent()).WillOnce(Return(3.0f));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(3.0f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
@@ -268,6 +280,12 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),                              2);
     ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),                           2);
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   true);
+    ASSERT_EQ(dialog->ui->tradeHugeBidCheckBox->isChecked(),                             true);
+    ASSERT_NEAR(dialog->ui->hugeBidDoubleSpinBox->value(),                               3.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeBidLimitStockPurchaseCheckBox->isChecked(),                true);
+    ASSERT_NEAR(dialog->ui->hugeBidLimitStockPurchasePartDoubleSpinBox->value(),         1.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeBidLimitByTurnoverCheckBox->isChecked(),                   true);
+    ASSERT_NEAR(dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->value(),         3.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->tradeHugeSpreadCheckBox->isChecked(),                          true);
     ASSERT_NEAR(dialog->ui->hugeSpreadDoubleSpinBox->value(),                            3.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->isChecked(),             true);
@@ -300,6 +318,12 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("MINIMUM"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(5));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getHugeBid()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(4.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getHugeBidLimitByTurnoverPercent()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(false));
@@ -331,6 +355,12 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),                              0);
     ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),                           5);
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   false);
+    ASSERT_EQ(dialog->ui->tradeHugeBidCheckBox->isChecked(),                             false);
+    ASSERT_NEAR(dialog->ui->hugeBidDoubleSpinBox->value(),                               2.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeBidLimitStockPurchaseCheckBox->isChecked(),                false);
+    ASSERT_NEAR(dialog->ui->hugeBidLimitStockPurchasePartDoubleSpinBox->value(),         4.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeBidLimitByTurnoverCheckBox->isChecked(),                   false);
+    ASSERT_NEAR(dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->value(),         2.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->tradeHugeSpreadCheckBox->isChecked(),                          false);
     ASSERT_NEAR(dialog->ui->hugeSpreadDoubleSpinBox->value(),                            2.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->isChecked(),             false);
@@ -417,6 +447,102 @@ TEST_F(Test_SettingsDialog, Test_on_tradeInNonWorkingHoursCheckBox_checkStateCha
     EXPECT_CALL(*configMock, setTradeInNonWorkingHours(false));
     dialog->ui->tradeInNonWorkingHoursCheckBox->setChecked(false);
     ASSERT_EQ(dialog->ui->limitStockPurchaseNonWorkingHoursWidget->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_tradeHugeBidCheckBox_checkStateChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->tradeHugeBidCheckBox->blockSignals(true);
+    dialog->ui->tradeHugeBidCheckBox->setChecked(false);
+    dialog->ui->tradeHugeBidCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setTradeHugeBid(true));
+    dialog->ui->tradeHugeBidCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->hugeBidWidget->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setTradeHugeBid(false));
+    dialog->ui->tradeHugeBidCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->hugeBidWidget->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_hugeBidDoubleSpinBox_valueChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->hugeBidDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeBidDoubleSpinBox->setValue(1.0f);
+    dialog->ui->hugeBidDoubleSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHugeBid(2.0f));
+    dialog->ui->hugeBidDoubleSpinBox->setValue(2.0f);
+
+    EXPECT_CALL(*configMock, setHugeBid(3.0f));
+    dialog->ui->hugeBidDoubleSpinBox->setValue(3.0f);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_hugeBidLimitStockPurchaseCheckBox_checkStateChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->hugeBidLimitStockPurchaseCheckBox->blockSignals(true);
+    dialog->ui->hugeBidLimitStockPurchaseCheckBox->setChecked(false);
+    dialog->ui->hugeBidLimitStockPurchaseCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHugeBidLimitStockPurchase(true));
+    dialog->ui->hugeBidLimitStockPurchaseCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->hugeBidLimitByTurnoverWidget->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setHugeBidLimitStockPurchase(false));
+    dialog->ui->hugeBidLimitStockPurchaseCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->hugeBidLimitByTurnoverWidget->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_hugeBidLimitStockPurchasePartDoubleSpinBox_valueChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->hugeBidLimitStockPurchasePartDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeBidLimitStockPurchasePartDoubleSpinBox->setValue(1.0f);
+    dialog->ui->hugeBidLimitStockPurchasePartDoubleSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHugeBidLimitStockPurchasePart(2.0f));
+    dialog->ui->hugeBidLimitStockPurchasePartDoubleSpinBox->setValue(2.0f);
+
+    EXPECT_CALL(*configMock, setHugeBidLimitStockPurchasePart(3.0f));
+    dialog->ui->hugeBidLimitStockPurchasePartDoubleSpinBox->setValue(3.0f);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_hugeBidLimitByTurnoverCheckBox_checkStateChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->hugeBidLimitByTurnoverCheckBox->blockSignals(true);
+    dialog->ui->hugeBidLimitByTurnoverCheckBox->setChecked(false);
+    dialog->ui->hugeBidLimitByTurnoverCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHugeBidLimitByTurnover(true));
+    dialog->ui->hugeBidLimitByTurnoverCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setHugeBidLimitByTurnover(false));
+    dialog->ui->hugeBidLimitByTurnoverCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_hugeBidLimitByTurnoverPercentDoubleSpinBox_valueChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->setValue(1);
+    dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setHugeBidLimitByTurnoverPercent(2.0f));
+    dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->setValue(2.0f);
+
+    EXPECT_CALL(*configMock, setHugeBidLimitByTurnoverPercent(3.0f));
+    dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->setValue(3.0f);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_tradeHugeSpreadCheckBox_checkStateChanged)
@@ -900,6 +1026,12 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->cpuUsageComboBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
     dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
+    dialog->ui->tradeHugeBidCheckBox->blockSignals(true);
+    dialog->ui->hugeBidDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeBidLimitStockPurchaseCheckBox->blockSignals(true);
+    dialog->ui->hugeBidLimitStockPurchasePartDoubleSpinBox->blockSignals(true);
+    dialog->ui->hugeBidLimitByTurnoverCheckBox->blockSignals(true);
+    dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->blockSignals(true);
     dialog->ui->tradeHugeSpreadCheckBox->blockSignals(true);
     dialog->ui->hugeSpreadDoubleSpinBox->blockSignals(true);
     dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->blockSignals(true);
@@ -933,6 +1065,12 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBid()).WillOnce(Return(1.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(3.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitByTurnoverPercent()).WillOnce(Return(1.0f));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(1.0f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
@@ -964,6 +1102,12 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),                              2);
     ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),                           2);
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   true);
+    ASSERT_EQ(dialog->ui->tradeHugeBidCheckBox->isChecked(),                             true);
+    ASSERT_NEAR(dialog->ui->hugeBidDoubleSpinBox->value(),                               1.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeBidLimitStockPurchaseCheckBox->isChecked(),                true);
+    ASSERT_NEAR(dialog->ui->hugeBidLimitStockPurchasePartDoubleSpinBox->value(),         3.0f, 0.0001f);
+    ASSERT_EQ(dialog->ui->hugeBidLimitByTurnoverCheckBox->isChecked(),                   true);
+    ASSERT_NEAR(dialog->ui->hugeBidLimitByTurnoverPercentDoubleSpinBox->value(),         1.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->tradeHugeSpreadCheckBox->isChecked(),                          true);
     ASSERT_NEAR(dialog->ui->hugeSpreadDoubleSpinBox->value(),                            1.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->hugeSpreadLimitStockPurchaseCheckBox->isChecked(),             true);

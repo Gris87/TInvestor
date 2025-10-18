@@ -39,6 +39,24 @@ public:
     virtual void setTradeInNonWorkingHours(bool value) = 0;
     virtual bool isTradeInNonWorkingHours()            = 0;
 
+    virtual void setTradeHugeBid(bool value) = 0;
+    virtual bool isTradeHugeBid()            = 0;
+
+    virtual void  setHugeBid(float value) = 0;
+    virtual float getHugeBid()            = 0;
+
+    virtual void setHugeBidLimitStockPurchase(bool value) = 0;
+    virtual bool isHugeBidLimitStockPurchase()            = 0;
+
+    virtual void  setHugeBidLimitStockPurchasePart(float value) = 0;
+    virtual float getHugeBidLimitStockPurchasePart()            = 0;
+
+    virtual void setHugeBidLimitByTurnover(bool value) = 0;
+    virtual bool isHugeBidLimitByTurnover()            = 0;
+
+    virtual void  setHugeBidLimitByTurnoverPercent(float value) = 0;
+    virtual float getHugeBidLimitByTurnoverPercent()            = 0;
+
     virtual void setTradeHugeSpread(bool value) = 0;
     virtual bool isTradeHugeSpread()            = 0;
 
