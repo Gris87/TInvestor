@@ -8,6 +8,7 @@
 
 #include "src/config/iconfig.h"
 #include "src/domain/stock/stock.h"
+#include "src/domain/trading/bidirtradinginfo.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
@@ -34,6 +35,7 @@ public:
         ILogsThread*         logsThread,
         const QString&       accountId,
         Stock*               stock,
+        BiDirMode            bidirMode,
         const QString&       cause,
         QObject*             parent = nullptr
     );
@@ -43,6 +45,11 @@ public:
     BiDirTradingThread& operator=(const BiDirTradingThread& another) = delete;
 
     void run() override;
+
+    void setMode(BiDirMode bidirMode, const QString& cause) override;
+
+    [[nodiscard]]
+    BiDirMode bidirMode() const;
 
     void terminateTrading() override;
     void terminateThread() override;
@@ -56,7 +63,6 @@ public:
     void sellWithPrice(const Quotation& price);
     void buyWithPrice(qint64 amountOfLots, const Quotation& price);
 
-    bool isGoodToBuy(float price);
     bool isNeedToSellAsap(qint64 timestamp, float part, float yield, float commission);
 
 private:
@@ -67,6 +73,24 @@ private:
         qint64&                           instrumentLots,
         double&                           instrumentAvgPrice
     );
+    void calculateBuySellPriceAndLots(
+        const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
+        const tinkoff::PortfolioResponse&    tinkoffPortfolio,
+        float                                commission,
+        qint64&                              lotsToBuy,
+        qint64&                              lotsToSell,
+        Quotation&                           buyPrice,
+        Quotation&                           sellPrice
+    );
+    double calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, qint64 maxQuantity);
+    double calculateAskPrice(
+        const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
+        double                               totalCost,
+        double                               instrumentCost,
+        double                               instrumentAvgPrice,
+        float                                commission
+    );
+    qint64                calculateLotsToKeep(double totalCost, double bidPrice);
     IDecisionMakerConfig* chooseDecisionConfig();
 
     void cancelBuyOrder();
@@ -83,6 +107,7 @@ private:
     ILogsThread*         mLogsThread;
     QString              mAccountId;
     Stock*               mStock;
+    BiDirMode            mBidirMode;
     bool                 mTerminateTrading;
     QString              mInstrumentId;
     qint32               mInstrumentLot;

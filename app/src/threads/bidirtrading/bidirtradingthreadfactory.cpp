@@ -28,6 +28,7 @@ IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(
     ILogsThread*         logsThread,
     const QString&       accountId,
     Stock*               stock,
+    BiDirMode            bidirMode,
     const QString&       cause,
     QObject*             parent
 ) const
@@ -43,6 +44,7 @@ IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(
         logsThread,
         accountId,
         stock,
+        bidirMode,
         cause,
         parent
     );

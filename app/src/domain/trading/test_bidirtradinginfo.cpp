@@ -27,13 +27,15 @@ TEST_F(Test_BiDirTradingInfo, Test_constructor_and_destructor)
 
     // clang-format off
     ASSERT_EQ(info.stock, nullptr);
+    ASSERT_EQ(info.mode,  BIDIR_MODE_NONE);
     ASSERT_EQ(info.cause, "");
     // clang-format on
 
-    const BiDirTradingInfo info2(&stock, "a");
+    const BiDirTradingInfo info2(&stock, BIDIR_MODE_HUGE_SPREAD, "a");
 
     // clang-format off
     ASSERT_EQ(info2.stock, &stock);
+    ASSERT_EQ(info2.mode,  BIDIR_MODE_HUGE_SPREAD);
     ASSERT_EQ(info2.cause, "a");
     // clang-format on
 }
@@ -45,12 +47,14 @@ TEST_F(Test_BiDirTradingInfo, Test_copy_constructor)
     BiDirTradingInfo info;
 
     info.stock = &stock;
+    info.mode  = BIDIR_MODE_HUGE_SPREAD;
     info.cause = "a";
 
     const BiDirTradingInfo info2(info);
 
     // clang-format off
     ASSERT_EQ(info2.stock, &stock);
+    ASSERT_EQ(info2.mode,  BIDIR_MODE_HUGE_SPREAD);
     ASSERT_EQ(info2.cause, "a");
     // clang-format on
 }
@@ -63,12 +67,14 @@ TEST_F(Test_BiDirTradingInfo, Test_assign)
     BiDirTradingInfo info2;
 
     info.stock = &stock;
+    info.mode  = BIDIR_MODE_HUGE_SPREAD;
     info.cause = "a";
 
     info2 = info;
 
     // clang-format off
     ASSERT_EQ(info2.stock, &stock);
+    ASSERT_EQ(info2.mode,  BIDIR_MODE_HUGE_SPREAD);
     ASSERT_EQ(info2.cause, "a");
     // clang-format on
 }

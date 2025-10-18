@@ -4,6 +4,7 @@
 
 #include "src/config/iconfig.h"
 #include "src/domain/stock/stock.h"
+#include "src/domain/trading/bidirtradinginfo.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
@@ -35,6 +36,7 @@ public:
         ILogsThread*         logsThread,
         const QString&       accountId,
         Stock*               stock,
+        BiDirMode            bidirMode,
         const QString&       cause,
         QObject*             parent
     ) const = 0;

@@ -653,23 +653,26 @@ void MainWindow::startSimulator()
     }
     else if (mode == SIMULATOR_MODE_DATERANGE)
     {
-        const QString fromDate   = mSimulatorSettingsEditor->value("Options/FromDate", "").toString();
-        const QString toDate     = mSimulatorSettingsEditor->value("Options/ToDate", "").toString();
-        const bool    bestConfig = mSimulatorSettingsEditor->value("Options/BestConfig", false).toBool();
+        if (!mSimulatorDateRangeDecisionMakerThread->isRunning())
+        {
+            const QString fromDate   = mSimulatorSettingsEditor->value("Options/FromDate", "").toString();
+            const QString toDate     = mSimulatorSettingsEditor->value("Options/ToDate", "").toString();
+            const bool    bestConfig = mSimulatorSettingsEditor->value("Options/BestConfig", false).toBool();
 
-        ui->simulatorWaitingStackedWidget->setCurrentWidget(ui->simulatorWaitingPage);
-        ui->simulatorStepProgressBar->setVisible(bestConfig);
-        ui->simulatorTotalProgressBar->setVisible(bestConfig);
-        ui->simulatorBestResultWidget->setVisible(bestConfig);
-        ui->simulatorDateRangeLabel->setText(fromDate + " - " + toDate);
-        ui->simulatorRemainingTimeLabel->setText("00:00:00");
-        ui->simulatorStepProgressBar->setValue(0);
-        ui->simulatorTotalProgressBar->setValue(0);
-        ui->simulatorProgressBar->setValue(0);
-        simulatorBestResultChanged("0.00%", NORMAL_COLOR);
+            ui->simulatorWaitingStackedWidget->setCurrentWidget(ui->simulatorWaitingPage);
+            ui->simulatorStepProgressBar->setVisible(bestConfig);
+            ui->simulatorTotalProgressBar->setVisible(bestConfig);
+            ui->simulatorBestResultWidget->setVisible(bestConfig);
+            ui->simulatorDateRangeLabel->setText(fromDate + " - " + toDate);
+            ui->simulatorRemainingTimeLabel->setText("00:00:00");
+            ui->simulatorStepProgressBar->setValue(0);
+            ui->simulatorTotalProgressBar->setValue(0);
+            ui->simulatorProgressBar->setValue(0);
+            simulatorBestResultChanged("0.00%", NORMAL_COLOR);
 
-        mConfigForSimulation->assign(mConfig);
-        mSimulatorDateRangeDecisionMakerThread->start();
+            mConfigForSimulation->assign(mConfig);
+            mSimulatorDateRangeDecisionMakerThread->start();
+        }
     }
 
     simulatorPortfolioUpdateLastPricesTimer.start();
@@ -1071,6 +1074,7 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
                 mLogsThread,
                 mAutoPilotAccountId,
                 biDirTradingInfo.stock,
+                biDirTradingInfo.mode,
                 biDirTradingInfo.cause,
                 this
             );
@@ -1084,6 +1088,10 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
 
             biDirTradingThreads[instrumentId] = biDirTradingThread;
             biDirTradingThread->start();
+        }
+        else
+        {
+            biDirTradingThread->setMode(biDirTradingInfo.mode, biDirTradingInfo.cause);
         }
     }
 }

@@ -8,16 +8,15 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr float  HUNDRED_PERCENT             = 100.0f;
-constexpr float  MINIMUM_YIELD_PERCENT       = 0.10f;
-constexpr float  MAXIMUM_LOSE_PERCENT        = 2.00f;
-constexpr float  REQUIRED_PRICE_FALL_PERCENT = 0.50f;
-constexpr int    MINUTES_TO_DOUBLE_CHECK     = 5;
-constexpr int    ORDERS_TO_CHECK             = 5;
-constexpr qint64 MS_IN_SECOND                = 1000LL;
-constexpr qint64 SLEEP_DELAY                 = 30LL * MS_IN_SECOND; // 30 seconds
-constexpr qint64 ORDER_CANCEL_DELAY          = 3LL * MS_IN_SECOND;  // 3 seconds
-constexpr qint64 ORDER_RETRY_DELAY           = 1LL * MS_IN_SECOND;  // 1 second
+constexpr float  HUNDRED_PERCENT          = 100.0f;
+constexpr float  MINIMUM_YIELD_PERCENT    = 0.10f;
+constexpr float  MAXIMUM_LOSE_PERCENT     = 2.00f;
+constexpr float  MINIMUM_HUGE_BID_PERCENT = 25.0f;
+constexpr int    ORDER_BOOK_DEPTH         = 20;
+constexpr qint64 MS_IN_SECOND             = 1000LL;
+constexpr qint64 SLEEP_DELAY              = 30LL * MS_IN_SECOND; // 30 seconds
+constexpr qint64 ORDER_CANCEL_DELAY       = 3LL * MS_IN_SECOND;  // 3 seconds
+constexpr qint64 ORDER_RETRY_DELAY        = 1LL * MS_IN_SECOND;  // 1 second
 
 
 
@@ -32,6 +31,7 @@ BiDirTradingThread::BiDirTradingThread(
     ILogsThread*         logsThread,
     const QString&       accountId,
     Stock*               stock,
+    BiDirMode            bidirMode,
     const QString&       cause,
     QObject*             parent
 ) :
@@ -47,6 +47,7 @@ BiDirTradingThread::BiDirTradingThread(
     mLogsThread(logsThread),
     mAccountId(accountId),
     mStock(stock),
+    mBidirMode(bidirMode),
     mTerminateTrading(),
     mInstrumentId(),
     mInstrumentLot(),
@@ -92,6 +93,25 @@ void BiDirTradingThread::run()
     qDebug() << "Finish BiDirTradingThread";
 }
 
+void BiDirTradingThread::setMode(BiDirMode bidirMode, const QString& cause)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    if (bidirMode > mBidirMode)
+    {
+        mBidirMode = bidirMode;
+
+        mLogsThread->addLog(LOG_LEVEL_DEBUG, mInstrumentId, cause);
+    }
+}
+
+BiDirMode BiDirTradingThread::bidirMode() const
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mBidirMode;
+}
+
 void BiDirTradingThread::terminateTrading()
 {
     mTerminateTrading = true;
@@ -104,7 +124,6 @@ void BiDirTradingThread::terminateThread()
     requestInterruption();
 }
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
 bool BiDirTradingThread::trade()
 {
     getInstrumentData();
@@ -116,7 +135,7 @@ bool BiDirTradingThread::trade()
     while (!mTerminateTrading)
     {
         const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-            mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, ORDERS_TO_CHECK);
+            mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, ORDER_BOOK_DEPTH);
 
         if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrderBook == nullptr)
         {
@@ -138,87 +157,14 @@ bool BiDirTradingThread::trade()
             return false;
         }
 
-        double totalCost          = 0.0;
-        double instrumentCost     = 0.0;
-        qint64 instrumentLots     = 0;
-        double instrumentAvgPrice = -1.0;
+        qint64    lotsToBuy  = -1;
+        qint64    lotsToSell = -1;
+        Quotation buyPrice;
+        Quotation sellPrice;
 
-        calculateTotalCostAndInstrumentCost(*tinkoffPortfolio, totalCost, instrumentCost, instrumentLots, instrumentAvgPrice);
-
-        double      bidPrice = quotationToDouble(tinkoffOrderBook->bids(0).price());
-        double      askPrice = quotationToDouble(tinkoffOrderBook->asks(0).price());
-        const float spread   = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-        if (instrumentAvgPrice > 0)
-        {
-            const float part  = (instrumentCost / totalCost) * HUNDRED_PERCENT;
-            const float yield = ((bidPrice / instrumentAvgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-            if (!isNeedToSellAsap(QDateTime::currentMSecsSinceEpoch(), part, yield, commission))
-            {
-                askPrice = qMax(
-                    askPrice, instrumentAvgPrice * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT
-                );
-            }
-        }
-
-        int maxQuantity = 0;
-
-        for (int i = 0; i < tinkoffOrderBook->bids_size(); ++i)
-        {
-            const tinkoff::Order& bid = tinkoffOrderBook->bids(i);
-
-            if (bid.quantity() > maxQuantity)
-            {
-                maxQuantity = bid.quantity();
-                bidPrice    = quotationToDouble(bid.price());
-            }
-        }
-
-        const qint64 coefBuy  = qRound64(bidPrice / quotationToDouble(mMinPriceIncrement));
-        const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
-
-        const Quotation buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
-        const Quotation sellPrice = quotationMultiply(mMinPriceIncrement, coefSell);
-
-        qint64 lotsToBuy = 0;
-
-        if (spread > mConfig->getHugeSpread() && isGoodToBuy(bidPrice))
-        {
-            for (int i = 0; i < tinkoffOrderBook->bids_size(); ++i)
-            {
-                lotsToBuy = qMax(lotsToBuy, tinkoffOrderBook->bids(i).quantity());
-            }
-
-            for (int i = 0; i < tinkoffOrderBook->asks_size(); ++i)
-            {
-                lotsToBuy = qMax(lotsToBuy, tinkoffOrderBook->asks(i).quantity());
-            }
-
-            const bool   limitStockPurchase     = mConfig->isHugeSpreadLimitStockPurchase();
-            const double limitStockPurchasePart = mConfig->getHugeSpreadLimitStockPurchasePart();
-            const bool   limitByTurnover        = mConfig->isHugeSpreadLimitByTurnover();
-            const double limitByTurnoverPercent = mConfig->getHugeSpreadLimitByTurnoverPercent();
-
-            const double lotPrice = mInstrumentLot * bidPrice;
-
-            mStock->readLock();
-            const qint64 turnover = mStock->meta.turnover;
-            mStock->readUnlock();
-
-            const qint64 lotsToKeep = mTradeUtils->calculateAmountOfLotsToBuy(
-                limitStockPurchase,
-                limitStockPurchasePart,
-                limitByTurnover,
-                limitByTurnoverPercent,
-                totalCost,
-                totalCost,
-                turnover,
-                lotPrice,
-                lotPrice
-            );
-            lotsToBuy = qMax(qMin(lotsToKeep - instrumentLots, lotsToBuy), 0);
-        }
+        calculateBuySellPriceAndLots(
+            *tinkoffOrderBook, *tinkoffPortfolio, commission, lotsToBuy, lotsToSell, buyPrice, sellPrice
+        );
 
         bool needToCancelBuy  = false;
         bool needToCancelSell = false;
@@ -226,7 +172,7 @@ bool BiDirTradingThread::trade()
         bool needToOrderSell  = false;
 
         checkIfNeedToCancelAndCreateOrder(mBuyOrderId, lotsToBuy, buyPrice, needToCancelBuy, needToOrderBuy);
-        checkIfNeedToCancelAndCreateOrder(mSellOrderId, instrumentLots, sellPrice, needToCancelSell, needToOrderSell);
+        checkIfNeedToCancelAndCreateOrder(mSellOrderId, lotsToSell, sellPrice, needToCancelSell, needToOrderSell);
 
         if (needToCancelBuy)
         {
@@ -264,7 +210,6 @@ bool BiDirTradingThread::trade()
 
     return true;
 }
-// NOLINTEND(readability-function-cognitive-complexity)
 
 void BiDirTradingThread::getInstrumentData()
 {
@@ -410,39 +355,6 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
     }
 }
 
-bool BiDirTradingThread::isGoodToBuy(float price)
-{
-    const float maximumPrice = price / (1 - (REQUIRED_PRICE_FALL_PERCENT / HUNDRED_PERCENT));
-
-    mStock->readLock();
-
-    for (int i = qMax(mStock->operational.detailedData.size() - MINUTES_TO_DOUBLE_CHECK, 0);
-         i < mStock->operational.detailedData.size();
-         ++i)
-    {
-        if (mStock->operational.detailedData.at(i).price > maximumPrice)
-        {
-            mStock->readUnlock();
-
-            return true;
-        }
-    }
-
-    for (int i = qMax(mStock->data.size() - MINUTES_TO_DOUBLE_CHECK, 0); i < mStock->data.size(); ++i)
-    {
-        if (mStock->data.at(i).price > maximumPrice)
-        {
-            mStock->readUnlock();
-
-            return true;
-        }
-    }
-
-    mStock->readUnlock();
-
-    return false;
-}
-
 bool BiDirTradingThread::isNeedToSellAsap(qint64 timestamp, float part, float yield, float commission)
 {
     if (mTimeUtils->isMorningSession(timestamp))
@@ -456,6 +368,8 @@ bool BiDirTradingThread::isNeedToSellAsap(qint64 timestamp, float part, float yi
     {
         return true;
     }
+
+    // TODO: Limits for huge bid mode
 
     return mConfig->isHugeSpreadLimitStockPurchase() && part < mConfig->getHugeSpreadLimitStockPurchasePart() * 2 &&
            yield < -MAXIMUM_LOSE_PERCENT;
@@ -498,6 +412,146 @@ void BiDirTradingThread::calculateTotalCostAndInstrumentCost(
             totalCost += cost;
         }
     }
+}
+
+void BiDirTradingThread::calculateBuySellPriceAndLots(
+    const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
+    const tinkoff::PortfolioResponse&    tinkoffPortfolio,
+    float                                commission,
+    qint64&                              lotsToBuy,
+    qint64&                              lotsToSell,
+    Quotation&                           buyPrice,
+    Quotation&                           sellPrice
+)
+{
+    double totalCost          = 0.0;
+    double instrumentCost     = 0.0;
+    qint64 instrumentLots     = 0;
+    double instrumentAvgPrice = -1.0;
+
+    calculateTotalCostAndInstrumentCost(tinkoffPortfolio, totalCost, instrumentCost, instrumentLots, instrumentAvgPrice);
+
+    qint64 maxQuantity = 0;
+
+    for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
+    {
+        maxQuantity = qMax(maxQuantity, tinkoffOrderBook.bids(i).quantity());
+    }
+
+    const double bidPrice   = calculateBidPrice(tinkoffOrderBook, maxQuantity);
+    const double askPrice   = calculateAskPrice(tinkoffOrderBook, totalCost, instrumentCost, instrumentAvgPrice, commission);
+    const qint64 lotsToKeep = calculateLotsToKeep(totalCost, bidPrice);
+
+    const qint64 coefBuy  = qRound64(bidPrice / quotationToDouble(mMinPriceIncrement));
+    const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
+
+    lotsToBuy  = qMax(qMin(lotsToKeep - instrumentLots, maxQuantity), 0);
+    lotsToSell = instrumentLots;
+
+    buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
+    sellPrice = quotationMultiply(mMinPriceIncrement, coefSell);
+}
+
+double BiDirTradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, qint64 maxQuantity)
+{
+    const double topBidPrice = quotationToDouble(tinkoffOrderBook.bids(0).price());
+    const double topAskPrice = quotationToDouble(tinkoffOrderBook.asks(0).price());
+
+    double res = topBidPrice;
+
+    // TODO: Buy for huge bid mode
+
+    const float hugeSpread = mConfig->getHugeSpread();
+
+    for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
+    {
+        if (tinkoffOrderBook.bids(i).quantity() > 0)
+        {
+            const double curPrice        = quotationToDouble(tinkoffOrderBook.bids(i).price());
+            const float  spread          = ((topAskPrice / curPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+            const float  quantityPercent = (tinkoffOrderBook.bids(i).quantity() * HUNDRED_PERCENT) / maxQuantity;
+
+            if (spread >= hugeSpread && quantityPercent >= MINIMUM_HUGE_BID_PERCENT)
+            {
+                res = curPrice;
+
+                break;
+            }
+        }
+    }
+
+    return res;
+}
+
+double BiDirTradingThread::calculateAskPrice(
+    const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
+    double                               totalCost,
+    double                               instrumentCost,
+    double                               instrumentAvgPrice,
+    float                                commission
+)
+{
+    const double topBidPrice = quotationToDouble(tinkoffOrderBook.bids(0).price());
+    const double topAskPrice = quotationToDouble(tinkoffOrderBook.asks(0).price());
+
+    double res = topAskPrice;
+
+    if (instrumentAvgPrice > 0)
+    {
+        const float part  = (instrumentCost / totalCost) * HUNDRED_PERCENT;
+        const float yield = ((topBidPrice / instrumentAvgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+        if (!isNeedToSellAsap(QDateTime::currentMSecsSinceEpoch(), part, yield, commission))
+        {
+            const double minimumSellPrice =
+                instrumentAvgPrice * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT;
+
+            for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)
+            {
+                if (tinkoffOrderBook.asks(i).quantity() > 0)
+                {
+                    const double curPrice = quotationToDouble(tinkoffOrderBook.asks(i).price());
+
+                    if (curPrice >= minimumSellPrice)
+                    {
+                        res = curPrice;
+
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    return res;
+}
+
+qint64 BiDirTradingThread::calculateLotsToKeep(double totalCost, double bidPrice)
+{
+    const double lotPrice = mInstrumentLot * bidPrice;
+
+    // TODO: Limits for huge bid mode
+
+    const bool   limitStockPurchase     = mConfig->isHugeSpreadLimitStockPurchase();
+    const double limitStockPurchasePart = mConfig->getHugeSpreadLimitStockPurchasePart();
+    const bool   limitByTurnover        = mConfig->isHugeSpreadLimitByTurnover();
+    const double limitByTurnoverPercent = mConfig->getHugeSpreadLimitByTurnoverPercent();
+
+    mStock->readLock();
+    const qint64 turnover = mStock->meta.turnover;
+    mStock->readUnlock();
+
+    return mTradeUtils->calculateAmountOfLotsToBuy(
+        limitStockPurchase,
+        limitStockPurchasePart,
+        limitByTurnover,
+        limitByTurnoverPercent,
+        totalCost,
+        totalCost,
+        turnover,
+        lotPrice,
+        lotPrice
+    );
 }
 
 IDecisionMakerConfig* BiDirTradingThread::chooseDecisionConfig()

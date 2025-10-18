@@ -1,21 +1,23 @@
 Huge bid order buy
-Always trade bi-directional (Select optimal bid)
-Try to sell minimal price from asks for bi-directional trading
+Remember amount of lots into orderbook for bi-directional trading
+Extreme price raise during last week (buy decision 5)
 Real time for buy decision 5
 Real time for buy decision 6
 Real time for buy decision 7
 Real time for buy decision 8
 Real time for buy decision 9
-Extreme price raise during last week (buy decision 5)
 Refactor buy/sell decisions
 Reorder decisions
-Change best config search algorithm
-Find best configs for different commission
 Different defaults based on commission
 Show warning if decisions config is not default
+Change best config search algorithm
+Find best configs for different commission
 Inform about manual buy on huge fall
 Improve coverage
 Create release
+
+Asap mode immediately but with possitive yield and small spread
+Sell into chunks
 
 =======================================
 For the best times

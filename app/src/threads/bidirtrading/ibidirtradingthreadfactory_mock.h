@@ -33,6 +33,7 @@ public:
          ILogsThread*      logsThread,
          const QString&    accountId,
          Stock*            stock,
+         BiDirMode         bidirMode,
          const QString&    cause,
          QObject*          parent),
         (const, override)

@@ -4,6 +4,8 @@
 
 #include <QThread>
 
+#include "src/domain/trading/bidirtradinginfo.h"
+
 
 
 class IBiDirTradingThread : public QThread
@@ -20,8 +22,9 @@ public:
     IBiDirTradingThread(const IBiDirTradingThread& another)            = delete;
     IBiDirTradingThread& operator=(const IBiDirTradingThread& another) = delete;
 
-    virtual void terminateTrading() = 0;
-    virtual void terminateThread()  = 0;
+    virtual void setMode(BiDirMode bidirMode, const QString& cause) = 0;
+    virtual void terminateTrading()                                 = 0;
+    virtual void terminateThread()                                  = 0;
 
 signals:
     void tradingCompleted(const QString& instrumentId);

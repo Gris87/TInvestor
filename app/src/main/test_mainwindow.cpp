@@ -1284,12 +1284,15 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     Stock            stock;
 
     tradingInfo1.stock = &stock;
+    tradingInfo1.mode  = BIDIR_MODE_HUGE_SPREAD;
     tradingInfo1.cause = "Need to buy";
 
     tradingInfo2.stock = &stock;
+    tradingInfo2.mode  = BIDIR_MODE_HUGE_SPREAD;
     tradingInfo2.cause = "Need to buy more";
 
     tradingInfo3.stock = &stock;
+    tradingInfo3.mode  = BIDIR_MODE_HUGE_SPREAD;
     tradingInfo3.cause = "Sell ASAP";
 
     InstrumentsForBiDirTrading instruments2;
@@ -1314,6 +1317,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
             logsThreadMock,
             QString(""),
             &stock,
+            BIDIR_MODE_HUGE_SPREAD,
             QString("Need to buy"),
             mainWindow
         )
@@ -1333,6 +1337,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
             logsThreadMock,
             QString(""),
             &stock,
+            BIDIR_MODE_HUGE_SPREAD,
             QString("Need to buy more"),
             mainWindow
         )
@@ -1353,6 +1358,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     // clang-format on
 
     EXPECT_CALL(*biDirTradingThreadMock2, terminateTrading());
+    EXPECT_CALL(*biDirTradingThreadMock1, setMode(BIDIR_MODE_HUGE_SPREAD, QString("Sell ASAP")));
 
     mainWindow->autoPilotBiDirTradeInstruments(instruments3);
 
@@ -1846,6 +1852,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     Stock                      stock;
 
     biDirTradingInfo.stock = &stock;
+    biDirTradingInfo.mode  = BIDIR_MODE_HUGE_SPREAD;
     biDirTradingInfo.cause = "Need to buy";
 
     biDirInstruments["bbb-bbb"] = biDirTradingInfo;
@@ -1863,6 +1870,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             logsThreadMock,
             QString("aaaaaa"),
             &stock,
+            BIDIR_MODE_HUGE_SPREAD,
             QString("Need to buy"),
             mainWindow
         )
@@ -2019,6 +2027,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
             logsThreadMock,
             QString("aaaaaa"),
             &stock,
+            BIDIR_MODE_HUGE_SPREAD,
             QString("Need to buy"),
             mainWindow
         )

@@ -71,6 +71,7 @@ TEST_F(Test_BiDirTradingThreadFactory, Test_newInstance)
         &logsThreadMock,
         "account-id",
         &stock,
+        BIDIR_MODE_HUGE_SPREAD,
         "But why",
         nullptr
     );
