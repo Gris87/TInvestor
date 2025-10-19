@@ -58,12 +58,16 @@ public:
     void getInstrumentData();
 
     void checkIfNeedToCancelAndCreateOrder(
-        const QString& orderId, qint64 amountOfLots, const Quotation& price, bool& needToCancel, bool& needToOrder
+        const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
+        qint64                                      amountOfLots,
+        const Quotation&                            price,
+        bool&                                       needToCancel,
+        bool&                                       needToOrder
     );
     void sellWithPrice(const Quotation& price);
     void buyWithPrice(qint64 amountOfLots, const Quotation& price);
 
-    bool isNeedToSellAsap(qint64 timestamp, float part, float yield, float commission);
+    bool isNeedToSellAsap(qint64 timestamp, BiDirMode mode, float part, float yield, float commission);
 
 private:
     void calculateTotalCostAndInstrumentCost(
@@ -72,6 +76,11 @@ private:
         double&                           instrumentCost,
         qint64&                           instrumentLots,
         double&                           instrumentAvgPrice
+    );
+    void removeOwnOrdersFromOrderBook(
+        tinkoff::GetOrderBookResponse*              tinkoffOrderBook,
+        const std::shared_ptr<tinkoff::OrderState>& tinkoffBuyOrder,
+        const std::shared_ptr<tinkoff::OrderState>& tinkoffSellOrder
     );
     void calculateBuySellPriceAndLots(
         const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
@@ -82,15 +91,16 @@ private:
         Quotation&                           buyPrice,
         Quotation&                           sellPrice
     );
-    double calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, qint64 maxQuantity);
+    double calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity);
     double calculateAskPrice(
         const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
+        BiDirMode                            mode,
         double                               totalCost,
         double                               instrumentCost,
         double                               instrumentAvgPrice,
         float                                commission
     );
-    qint64                calculateLotsToKeep(double totalCost, double bidPrice);
+    qint64                calculateLotsToKeep(BiDirMode mode, double totalCost, double bidPrice);
     IDecisionMakerConfig* chooseDecisionConfig();
 
     void cancelBuyOrder();

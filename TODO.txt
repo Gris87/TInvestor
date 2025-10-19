@@ -1,5 +1,4 @@
 Huge bid order buy
-Remember amount of lots into orderbook for bi-directional trading
 Extreme price raise during last week (buy decision 5)
 Real time for buy decision 5
 Real time for buy decision 6
@@ -16,7 +15,7 @@ Inform about manual buy on huge fall
 Improve coverage
 Create release
 
-Asap mode immediately but with possitive yield and small spread
+Asap mode immediately but with positive yield and small spread
 Sell into chunks
 
 =======================================

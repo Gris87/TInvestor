@@ -393,6 +393,10 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(orderState));
+    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(orderState));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
@@ -421,10 +425,6 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         )
     )
         .WillOnce(Return(20));
-    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
-        .WillOnce(Return(orderState));
-    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
-        .WillOnce(Return(orderState));
     EXPECT_CALL(*grpcClientMock, cancelOrder(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(cancelOrderResponse));
     EXPECT_CALL(*grpcClientMock, cancelOrder(QThread::currentThread(), QString("account-id"), QString("order-id")))
@@ -482,8 +482,6 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
 
 TEST_F(Test_BiDirTradingThread, Test_checkIfNeedToCancelAndCreateOrder)
 {
-    const InSequence seq;
-
     const std::shared_ptr<tinkoff::OrderState> orderState(new tinkoff::OrderState());
 
     tinkoff::MoneyValue* orderPrice = new tinkoff::MoneyValue(); // orderState will take ownership
@@ -504,30 +502,21 @@ TEST_F(Test_BiDirTradingThread, Test_checkIfNeedToCancelAndCreateOrder)
     bool needToCancel = false;
     bool needToOrder  = false;
 
-    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
-        .WillOnce(Return(orderState));
-
-    thread->checkIfNeedToCancelAndCreateOrder("order-id", 5, price, needToCancel, needToOrder);
+    thread->checkIfNeedToCancelAndCreateOrder(orderState, 5, price, needToCancel, needToOrder);
 
     // clang-format off
     ASSERT_EQ(needToCancel, false);
     ASSERT_EQ(needToOrder,  false);
     // clang-format on
 
-    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
-        .WillOnce(Return(orderState));
-
-    thread->checkIfNeedToCancelAndCreateOrder("order-id", 10, price, needToCancel, needToOrder);
+    thread->checkIfNeedToCancelAndCreateOrder(orderState, 10, price, needToCancel, needToOrder);
 
     // clang-format off
     ASSERT_EQ(needToCancel, true);
     ASSERT_EQ(needToOrder,  true);
     // clang-format on
 
-    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
-        .WillOnce(Return(nullptr));
-
-    thread->checkIfNeedToCancelAndCreateOrder("order-id", 5, price, needToCancel, needToOrder);
+    thread->checkIfNeedToCancelAndCreateOrder(nullptr, 5, price, needToCancel, needToOrder);
 
     // clang-format off
     ASSERT_EQ(needToCancel, false);
