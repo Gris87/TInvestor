@@ -1,12 +1,11 @@
 Huge bid order buy
-Extreme price raise during last week (buy decision 5)
-Real time for buy decision 5
 Real time for buy decision 6
 Real time for buy decision 7
 Real time for buy decision 8
 Real time for buy decision 9
 Refactor buy/sell decisions
 Reorder decisions
+Remove buy decision 5
 Different defaults based on commission
 Show warning if decisions config is not default
 Change best config search algorithm

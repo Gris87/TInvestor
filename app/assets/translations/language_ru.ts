@@ -174,12 +174,12 @@
 <context>
     <name>BiDirTradingThread</name>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="85"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="86"/>
         <source>Reselling completed successfully</source>
         <translation>Перепродажа успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="147"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="149"/>
         <source>Impossible to continue reselling</source>
         <translation>Невозможно продолжать перепродажу</translation>
     </message>
@@ -271,25 +271,15 @@
     <message>
         <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="37"/>
         <source>Buy stocks if the price raise more than</source>
-        <translation>Покупать акции, если цена росла больше, чем на</translation>
+        <translation>Покупать акции, если цена выросла больше, чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="60"/>
-        <source>and pass more than</source>
-        <translation>и прошла больше</translation>
-    </message>
-    <message>
-        <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="77"/>
-        <source>positions of order book</source>
-        <translation>позиций биржевого стакана</translation>
-    </message>
-    <message>
-        <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="104"/>
         <source>within the last</source>
         <translation>в течение</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="111"/>
+        <location filename="../../src/config/decisions/buy/buydecision5config/buydecision5configwidget/buydecision5configwidget.ui" line="67"/>
         <source> minutes</source>
         <translation> минут</translation>
     </message>
@@ -1098,11 +1088,6 @@
         <translation>Решено начать перепродажу, потому что спред %1</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="125"/>
-        <source>Decided to buy because the price raise to %1 from %2 at %3 within last %4 minutes and pass %5 positions of order book and the raise is %6</source>
-        <translation>Решено покупать, потому что цена выросла до %1 от %2 в %3 за последние %4 минут и прошла %5 позиций биржевого стакана и рост составил %6</translation>
-    </message>
-    <message>
         <location filename="../../src/decisions/buy/buydecision6/buydecision6.cpp" line="94"/>
         <source>Decided to buy because the price reach market limit at %1 and hold it for %2 minutes</source>
         <translation>Решено покупать, потому что цена достигла планки на %1 и удерживалась %2 минут</translation>
@@ -1126,6 +1111,11 @@
         <location filename="../../src/decisions/buy/buydecision9/buydecision9.cpp" line="90"/>
         <source>Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes</source>
         <translation>Решено покупать, потому что цена %1 выше SMA %2 и EMA %3 и RSI %4 меньше, чем %5 за последние %6 минут</translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="159"/>
+        <source>Decided to buy because the price raise to %1 from %2 at %3 within last %4 minutes and the raise is %5</source>
+        <translation>Решено покупать, потому что цена выросла до %1 от %2* в %3 за последние %4 минут и рост составил %5</translation>
     </message>
 </context>
 <context>

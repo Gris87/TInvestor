@@ -40,9 +40,6 @@ public:
     virtual void  setPriceRaise(float value) = 0;
     virtual float getPriceRaise()            = 0;
 
-    virtual void setOrderBookPositions(int value) = 0;
-    virtual int  getOrderBookPositions()          = 0;
-
     virtual void setDuration(int value) = 0;
     virtual int  getDuration()          = 0;
 };

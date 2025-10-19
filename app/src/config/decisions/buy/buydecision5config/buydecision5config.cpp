@@ -6,10 +6,9 @@
 
 
 
-constexpr bool  ENABLED_DEFAULT              = true;
-constexpr float PRICE_RAISE_DEFAULT          = 2.0f;
-constexpr float ORDER_BOOK_POSITIONS_DEFAULT = 10;
-constexpr int   DURATION_DEFAULT             = 5;
+constexpr bool  ENABLED_DEFAULT     = true;
+constexpr float PRICE_RAISE_DEFAULT = 6.5f;
+constexpr int   DURATION_DEFAULT    = 5;
 
 
 
@@ -18,7 +17,6 @@ BuyDecision5Config::BuyDecision5Config() :
     mRwMutex(new QReadWriteLock()),
     mEnabled(),
     mPriceRaise(),
-    mOrderBookPositions(),
     mDuration()
 {
     qDebug() << "Create BuyDecision5Config";
@@ -55,7 +53,6 @@ void BuyDecision5Config::assign(IBuyDecision5Config* another)
 
     mEnabled            = config.mEnabled;
     mPriceRaise         = config.mPriceRaise;
-    mOrderBookPositions = config.mOrderBookPositions;
     mDuration           = config.mDuration;
 }
 
@@ -65,10 +62,9 @@ void BuyDecision5Config::makeDefault()
 
     qDebug() << "Set BuyDecision5Config to default";
 
-    mEnabled            = ENABLED_DEFAULT;
-    mPriceRaise         = PRICE_RAISE_DEFAULT;
-    mOrderBookPositions = ORDER_BOOK_POSITIONS_DEFAULT;
-    mDuration           = DURATION_DEFAULT;
+    mEnabled    = ENABLED_DEFAULT;
+    mPriceRaise = PRICE_RAISE_DEFAULT;
+    mDuration   = DURATION_DEFAULT;
 }
 
 void BuyDecision5Config::save(ISettingsEditor* settingsEditor, const QString& type)
@@ -78,10 +74,9 @@ void BuyDecision5Config::save(ISettingsEditor* settingsEditor, const QString& ty
     qDebug() << "Save BuyDecision5Config";
 
     // clang-format off
-    settingsEditor->setValue(type + "/Enabled",            mEnabled);
-    settingsEditor->setValue(type + "/PriceRaise",         mPriceRaise);
-    settingsEditor->setValue(type + "/OrderBookPositions", mOrderBookPositions);
-    settingsEditor->setValue(type + "/Duration",           mDuration);
+    settingsEditor->setValue(type + "/Enabled",    mEnabled);
+    settingsEditor->setValue(type + "/PriceRaise", mPriceRaise);
+    settingsEditor->setValue(type + "/Duration",   mDuration);
     // clang-format on
 }
 
@@ -92,10 +87,9 @@ void BuyDecision5Config::load(ISettingsEditor* settingsEditor, const QString& ty
     qDebug() << "Load BuyDecision5Config";
 
     // clang-format off
-    mEnabled            = settingsEditor->value(type + "/Enabled",            mEnabled).toBool();
-    mPriceRaise         = settingsEditor->value(type + "/PriceRaise",         mPriceRaise).toFloat();
-    mOrderBookPositions = settingsEditor->value(type + "/OrderBookPositions", mOrderBookPositions).toInt();
-    mDuration           = settingsEditor->value(type + "/Duration",           mDuration).toInt();
+    mEnabled    = settingsEditor->value(type + "/Enabled",    mEnabled).toBool();
+    mPriceRaise = settingsEditor->value(type + "/PriceRaise", mPriceRaise).toFloat();
+    mDuration   = settingsEditor->value(type + "/Duration",   mDuration).toInt();
     // clang-format on
 }
 
@@ -107,11 +101,6 @@ static void configEnabledParse(BuyDecision5Config* config, simdjson::ondemand::v
 static void configPriceRaiseParse(BuyDecision5Config* config, simdjson::ondemand::value value)
 {
     config->setPriceRaise(value.get_double_in_string());
-}
-
-static void configOrderBookPositionsParse(BuyDecision5Config* config, simdjson::ondemand::value value)
-{
-    config->setOrderBookPositions(value.get_int64());
 }
 
 static void configDurationParse(BuyDecision5Config* config, simdjson::ondemand::value value)
@@ -130,10 +119,9 @@ using ParseHandler = void (*)(BuyDecision5Config* config, simdjson::ondemand::va
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"enabled",            configEnabledParse           },
-    {"priceRaise",         configPriceRaiseParse        },
-    {"orderBookPositions", configOrderBookPositionsParse},
-    {"duration",           configDurationParse          }
+    {"enabled",    configEnabledParse   },
+    {"priceRaise", configPriceRaiseParse},
+    {"duration",   configDurationParse  }
 };
 // clang-format on
 
@@ -150,13 +138,8 @@ void BuyDecision5Config::fromJsonObject(simdjson::ondemand::object jsonObject) /
 
 QString BuyDecision5Config::toJsonString() const
 {
-    return QString(R"({"enabled":%1,"priceRaise":"%2","orderBookPositions":%3,"duration":%4})")
-        .arg(
-            mEnabled ? "true" : "false",
-            QString::number(mPriceRaise, 'f', 2),
-            QString::number(mOrderBookPositions),
-            QString::number(mDuration)
-        );
+    return QString(R"({"enabled":%1,"priceRaise":"%2","duration":%3})")
+        .arg(mEnabled ? "true" : "false", QString::number(mPriceRaise, 'f', 2), QString::number(mDuration));
 }
 
 QStringList BuyDecision5Config::variantsAsJson() const
@@ -165,19 +148,14 @@ QStringList BuyDecision5Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList priceRaiseVariants         = {"1.00", "2.00", "3.00", "4.00", "5.00"};
-    const QStringList orderBookPositionsVariants = {"5", "10", "15", "20"};
-    const QStringList durationVariants           = {"5", "10", "15"};
+    const QStringList priceRaiseVariants = {"1.00", "2.00", "3.00", "4.00", "5.00", "6.00", "7.00"};
+    const QStringList durationVariants   = {"5", "10", "15"};
 
     for (const QString& priceRaise : priceRaiseVariants)
     {
-        for (const QString& orderBookPositions : orderBookPositionsVariants)
+        for (const QString& duration : durationVariants)
         {
-            for (const QString& duration : durationVariants)
-            {
-                res.append(QString(R"({"enabled":true,"priceRaise":"%1","orderBookPositions":%2,"duration":%3})")
-                               .arg(priceRaise, orderBookPositions, duration));
-            }
+            res.append(QString(R"({"enabled":true,"priceRaise":"%1","duration":%2})").arg(priceRaise, duration));
         }
     }
 
@@ -210,20 +188,6 @@ float BuyDecision5Config::getPriceRaise()
     const QReadLocker lock(mRwMutex);
 
     return mPriceRaise;
-}
-
-void BuyDecision5Config::setOrderBookPositions(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mOrderBookPositions = value;
-}
-
-int BuyDecision5Config::getOrderBookPositions()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mOrderBookPositions;
 }
 
 void BuyDecision5Config::setDuration(int value)
