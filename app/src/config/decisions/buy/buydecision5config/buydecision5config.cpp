@@ -51,9 +51,9 @@ void BuyDecision5Config::assign(IBuyDecision5Config* another)
     const BuyDecision5Config& config = *dynamic_cast<BuyDecision5Config*>(another);
     const QReadLocker         lock2(config.mRwMutex);
 
-    mEnabled            = config.mEnabled;
-    mPriceRaise         = config.mPriceRaise;
-    mDuration           = config.mDuration;
+    mEnabled    = config.mEnabled;
+    mPriceRaise = config.mPriceRaise;
+    mDuration   = config.mDuration;
 }
 
 void BuyDecision5Config::makeDefault()
