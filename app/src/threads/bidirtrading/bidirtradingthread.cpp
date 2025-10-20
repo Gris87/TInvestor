@@ -553,15 +553,19 @@ BiDirTradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& tinko
         {
             if (tinkoffOrderBook.bids(i).quantity() > 0)
             {
-                const double curPrice        = quotationToDouble(tinkoffOrderBook.bids(i).price());
-                const float  spread          = ((topAskPrice / curPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-                const float  quantityPercent = (tinkoffOrderBook.bids(i).quantity() * HUNDRED_PERCENT) / maxQuantity;
+                const float quantityPercent = (tinkoffOrderBook.bids(i).quantity() * HUNDRED_PERCENT) / maxQuantity;
 
-                if (spread >= hugeSpread && quantityPercent >= MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD)
+                if (quantityPercent >= MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD)
                 {
+                    const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
+                    const float  spread   = ((topAskPrice / curPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
                     res = curPrice;
 
-                    break;
+                    if (spread >= hugeSpread)
+                    {
+                        break;
+                    }
                 }
             }
         }

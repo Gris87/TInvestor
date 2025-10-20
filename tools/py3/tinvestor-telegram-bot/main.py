@@ -92,7 +92,7 @@ def main():
         "--inactivity-days",
         dest="inactivity_days",
         type=int,
-        default=1,
+        default=3,
         help="How many days we can stay idle"
     )
     args = parser.parse_args()
