@@ -454,7 +454,8 @@ void BiDirTradingThread::removeOwnOrdersFromOrderBook(
 
             if (quotationConvert(order.price()) == orderPrice)
             {
-                const_cast<tinkoff::Order*>(&order)->set_quantity(order.quantity() - lotsRemaining);
+                // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
+                const_cast<tinkoff::Order&>(order).set_quantity(order.quantity() - lotsRemaining);
 
                 break;
             }
@@ -472,7 +473,8 @@ void BiDirTradingThread::removeOwnOrdersFromOrderBook(
 
             if (quotationConvert(order.price()) == orderPrice)
             {
-                const_cast<tinkoff::Order*>(&order)->set_quantity(order.quantity() - lotsRemaining);
+                // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
+                const_cast<tinkoff::Order&>(order).set_quantity(order.quantity() - lotsRemaining);
 
                 break;
             }
@@ -490,7 +492,7 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
     Quotation&                           sellPrice
 )
 {
-    BiDirMode mode = bidirMode();
+    const BiDirMode mode = bidirMode();
 
     double totalCost          = 0.0;
     double instrumentCost     = 0.0;
