@@ -29,4 +29,18 @@ public:
 
     [[nodiscard]]
     AsapMode asapMode() const override;
+
+private:
+    QString makeDecisionBasedOnStockData(
+        QThread*              parentThread,
+        ISellDecision3Config* sellConfig,
+        Stock*                stock,
+        int                   dataIndex,
+        float                 price,
+        float                 avgPrice,
+        float                 commission
+    );
+    QString makeDecisionBasedOnStockOperationalData(
+        QThread* parentThread, ISellDecision3Config* sellConfig, Stock* stock, float price, float avgPrice, float commission
+    );
 };

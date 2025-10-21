@@ -38,5 +38,12 @@ public:
 #endif
 
 private:
+    QString makeDecisionBasedOnStockData(
+        QThread* parentThread, IBuyDecision1Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
+    );
+    QString makeDecisionBasedOnStockOperationalData(
+        QThread* parentThread, IBuyDecision1Config* buyConfig, qint64 limitTimestamp, Stock* stock, float price
+    );
+
     int mStepForTripleCheck;
 };

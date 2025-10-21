@@ -64,6 +64,11 @@ QString BuyDecision7::makeDecision(
     return "";
 }
 
+AsapMode BuyDecision7::asapMode() const
+{
+    return ASAP_MODE_IMMEDIATELY_TRADE;
+}
+
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 QString BuyDecision7::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision7Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
@@ -90,7 +95,7 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
 
     limitTimestamp = currentTimestamp - (duration * ONE_DAY) - ONE_HOUR;
 
-    for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+    for (int i = dataIndex; i >= 0 && !parentThread->isInterruptionRequested(); --i)
     {
         const qint64 timestamp = stockData[i].timestamp;
 
@@ -152,8 +157,3 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
     return "";
 }
 // NOLINTEND(readability-function-cognitive-complexity)
-
-AsapMode BuyDecision7::asapMode() const
-{
-    return ASAP_MODE_IMMEDIATELY_TRADE;
-}

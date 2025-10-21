@@ -51,64 +51,7 @@ QString BuyDecision8::makeDecision(
 
     if (buyConfig->isEnabled())
     {
-        const int duration = buyConfig->getDuration();
-
-        const StockData* stockData = stock->data.constData();
-
-        if (dateRange)
-        {
-            limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
-
-            for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
-            {
-                const qint64 timestamp = stockData[i].timestamp;
-                const float  prevPrice = stockData[i].price;
-
-                if (timestamp < limitTimestamp)
-                {
-                    if (dataIndex - i > MINUTES_TO_DOUBLE_CHECK)
-                    {
-                        limitTimestamp = stockData[dataIndex].timestamp - ONE_DAY;
-                        bool good      = true;
-
-                        for (int j = i - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
-                        {
-                            const qint64 anotherTimestamp = stockData[j].timestamp;
-                            const float  anotherPrevPrice = stockData[j].price;
-
-                            if (anotherTimestamp < limitTimestamp)
-                            {
-                                break;
-                            }
-
-                            if (anotherPrevPrice > price)
-                            {
-                                good = false;
-
-                                break;
-                            }
-                        }
-
-                        if (good)
-                        {
-                            return QObject::tr(
-                                       "Decided to buy because the price reach market limit at %1 and hold it for %2 minutes"
-                            )
-                                .arg(
-                                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD", QString::number(duration)
-                                );
-                        }
-                    }
-
-                    break;
-                }
-
-                if (prevPrice != price)
-                {
-                    break;
-                }
-            }
-        }
+        return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, dataIndex, price);
     }
 
     return "";
@@ -118,4 +61,63 @@ QString BuyDecision8::makeDecision(
 AsapMode BuyDecision8::asapMode() const
 {
     return ASAP_MODE_NONE;
+}
+
+QString BuyDecision8::makeDecisionBasedOnStockData(
+    QThread* parentThread, IBuyDecision8Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
+)
+{
+    const int duration = buyConfig->getDuration();
+
+    const StockData* stockData = stock->data.constData();
+
+    limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
+
+    for (int i = dataIndex; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+    {
+        const qint64 timestamp = stockData[i].timestamp;
+        const float  prevPrice = stockData[i].price;
+
+        if (timestamp < limitTimestamp)
+        {
+            if (dataIndex - i > MINUTES_TO_DOUBLE_CHECK)
+            {
+                limitTimestamp = stockData[dataIndex].timestamp - ONE_DAY;
+                bool good      = true;
+
+                for (int j = i - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+                {
+                    const qint64 anotherTimestamp = stockData[j].timestamp;
+                    const float  anotherPrevPrice = stockData[j].price;
+
+                    if (anotherTimestamp < limitTimestamp)
+                    {
+                        break;
+                    }
+
+                    if (anotherPrevPrice > price)
+                    {
+                        good = false;
+
+                        break;
+                    }
+                }
+
+                if (good)
+                {
+                    return QObject::tr("Decided to buy because the price reach market limit at %1 and hold it for %2 minutes")
+                        .arg(QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD", QString::number(duration));
+                }
+            }
+
+            break;
+        }
+
+        if (prevPrice != price)
+        {
+            break;
+        }
+    }
+
+    return "";
 }

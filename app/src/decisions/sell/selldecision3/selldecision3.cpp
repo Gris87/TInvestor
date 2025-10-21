@@ -49,85 +49,12 @@ QString SellDecision3::makeDecision(
 
     if (sellConfig->isEnabled())
     {
-        const float yield     = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-        const float loseYield = -sellConfig->getLoseYield() + (2 * commission);
-
-        if (yield <= loseYield)
+        if (dateRange)
         {
-            if (dateRange)
-            {
-                const StockData* stockData = stock->data.constData();
-
-                bool good = true;
-
-                int j           = dataIndex;
-                int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-                {
-                    const float prevPrice = stockData[j].price;
-                    const float prevYield = ((prevPrice / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                    if (prevYield > loseYield)
-                    {
-                        good = false;
-
-                        break;
-                    }
-
-                    --j;
-                    --minutesLeft;
-                }
-
-                if (good)
-                {
-                    return QObject::tr("Decided to sell because the price fall to %1 with yield %2 from the price %3")
-                        .arg(
-                            QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                            QString::number(yield, 'f', 2) + "%",
-                            QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
-                        );
-                }
-            }
-            else
-            {
-                if (stock->operational.detailedData.size() > MINUTES_TO_DOUBLE_CHECK)
-                {
-                    const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
-
-                    bool good = true;
-
-                    int j           = stock->operational.detailedData.size() - 1;
-                    int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-                    {
-                        const float prevPrice = stockOperationalData[j].price;
-                        const float prevYield = ((prevPrice / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                        if (prevYield > loseYield)
-                        {
-                            good = false;
-
-                            break;
-                        }
-
-                        --j;
-                        --minutesLeft;
-                    }
-
-                    if (good)
-                    {
-                        return QObject::tr("Decided to sell because the price fall to %1 with yield %2 from the price %3")
-                            .arg(
-                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QString::number(yield, 'f', 2) + "%",
-                                QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
-                            );
-                    }
-                }
-            }
+            return makeDecisionBasedOnStockData(parentThread, sellConfig, stock, dataIndex, price, avgPrice, commission);
         }
+
+        return makeDecisionBasedOnStockOperationalData(parentThread, sellConfig, stock, price, avgPrice, commission);
     }
 
     return "";
@@ -137,4 +64,105 @@ QString SellDecision3::makeDecision(
 AsapMode SellDecision3::asapMode() const
 {
     return ASAP_MODE_FOLLOW_PRICE;
+}
+
+QString SellDecision3::makeDecisionBasedOnStockData(
+    QThread*              parentThread,
+    ISellDecision3Config* sellConfig,
+    Stock*                stock,
+    int                   dataIndex,
+    float                 price,
+    float                 avgPrice,
+    float                 commission
+)
+{
+    const float yield     = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+    const float loseYield = -sellConfig->getLoseYield() + (2 * commission);
+
+    if (yield <= loseYield)
+    {
+        const StockData* stockData = stock->data.constData();
+
+        bool good = true;
+
+        int j           = dataIndex;
+        int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+        {
+            const float prevPrice = stockData[j].price;
+            const float prevYield = ((prevPrice / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+            if (prevYield > loseYield)
+            {
+                good = false;
+
+                break;
+            }
+
+            --j;
+            --minutesLeft;
+        }
+
+        if (good)
+        {
+            return QObject::tr("Decided to sell because the price fall to %1 with yield %2 from the price %3")
+                .arg(
+                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                    QString::number(yield, 'f', 2) + "%",
+                    QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
+                );
+        }
+    }
+
+    return "";
+}
+
+QString SellDecision3::makeDecisionBasedOnStockOperationalData(
+    QThread* parentThread, ISellDecision3Config* sellConfig, Stock* stock, float price, float avgPrice, float commission
+)
+{
+    const float yield     = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+    const float loseYield = -sellConfig->getLoseYield() + (2 * commission);
+
+    if (yield <= loseYield)
+    {
+        if (stock->operational.detailedData.size() > MINUTES_TO_DOUBLE_CHECK)
+        {
+            const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
+
+            bool good = true;
+
+            int j           = stock->operational.detailedData.size() - 1;
+            int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+            while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+            {
+                const float prevPrice = stockOperationalData[j].price;
+                const float prevYield = ((prevPrice / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                if (prevYield > loseYield)
+                {
+                    good = false;
+
+                    break;
+                }
+
+                --j;
+                --minutesLeft;
+            }
+
+            if (good)
+            {
+                return QObject::tr("Decided to sell because the price fall to %1 with yield %2 from the price %3")
+                    .arg(
+                        QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                        QString::number(yield, 'f', 2) + "%",
+                        QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
+                    );
+            }
+        }
+    }
+
+    return "";
 }

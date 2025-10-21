@@ -56,156 +56,13 @@ QString BuyDecision4::makeDecision(
 
     if (buyConfig->isEnabled())
     {
-        const float priceFall    = -buyConfig->getPriceFall();
-        const float loseYield    = buyConfig->getLoseYield();
-        const int   duration     = buyConfig->getDuration();
-        const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
-
-        const StockData* stockData = stock->data.constData();
-
         if (dateRange)
         {
-            limitTimestamp = qMax(limitTimestamp, stockData[dataIndex].timestamp - (duration * ONE_DAY));
-
-            for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); i -= mStep)
-            {
-                const qint64 timestamp = stockData[i].timestamp;
-                const float  prevPrice = stockData[i].price;
-
-                if (timestamp < limitTimestamp)
-                {
-                    break;
-                }
-
-                if (prevPrice >= maximumPrice)
-                {
-                    bool good = true;
-
-                    int j           = i - 1;
-                    int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-                    {
-                        if (stockData[j].price < maximumPrice)
-                        {
-                            good = false;
-
-                            break;
-                        }
-
-                        --j;
-                        --minutesLeft;
-                    }
-
-                    if (good)
-                    {
-                        const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
-
-                        for (j = dataIndex - 1; j >= 0 && !parentThread->isInterruptionRequested(); j -= mStep)
-                        {
-                            const float prevPrice2 = stockData[j].price;
-
-                            if (prevPrice2 >= maximumPrice)
-                            {
-                                break;
-                            }
-
-                            if (prevPrice2 <= minimumPrice)
-                            {
-                                const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-                                const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                                return QObject::tr(
-                                           "Decided to buy because the price fall to %1 from %2 at %3 and lost "
-                                           "yield %4 from the minimum price %5 at %6 within last %7 days and the fall is %8"
-                                )
-                                    .arg(
-                                        QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                        QString::number(lostYield, 'f', 2) + "%",
-                                        QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(stockData[j].timestamp).toString(DATETIME_FORMAT),
-                                        QString::number(duration),
-                                        QString::number(fall, 'f', 2) + "%"
-                                    );
-                            }
-                        }
-                    }
-                }
-            }
+            return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, dataIndex, price);
         }
         else
         {
-            limitTimestamp = qMax(limitTimestamp, QDateTime::currentMSecsSinceEpoch() - (duration * ONE_DAY));
-
-            for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); i -= mStep)
-            {
-                const qint64 timestamp = stockData[i].timestamp;
-                const float  prevPrice = stockData[i].price;
-
-                if (timestamp < limitTimestamp)
-                {
-                    break;
-                }
-
-                if (prevPrice >= maximumPrice)
-                {
-                    bool good = true;
-
-                    int j           = i - 1;
-                    int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-                    {
-                        if (stockData[j].price < maximumPrice)
-                        {
-                            good = false;
-
-                            break;
-                        }
-
-                        --j;
-                        --minutesLeft;
-                    }
-
-                    if (good)
-                    {
-                        const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
-
-                        for (j = stock->data.size() - 1; j >= 0 && !parentThread->isInterruptionRequested(); j -= mStep)
-                        {
-                            const float prevPrice2 = stockData[j].price;
-
-                            if (prevPrice2 >= maximumPrice)
-                            {
-                                break;
-                            }
-
-                            if (prevPrice2 <= minimumPrice)
-                            {
-                                const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-                                const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                                return QObject::tr(
-                                           "Decided to buy because the price fall to %1 from %2 at %3 and lost "
-                                           "yield %4 from the minimum price %5 at %6 within last %7 days and the fall is %8"
-                                )
-                                    .arg(
-                                        QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                        QString::number(lostYield, 'f', 2) + "%",
-                                        QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(stockData[j].timestamp).toString(DATETIME_FORMAT),
-                                        QString::number(duration),
-                                        QString::number(fall, 'f', 2) + "%"
-                                    );
-                            }
-                        }
-                    }
-                }
-            }
+            return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, stock->data.size() - 1, price);
         }
     }
 
@@ -216,4 +73,88 @@ QString BuyDecision4::makeDecision(
 AsapMode BuyDecision4::asapMode() const
 {
     return ASAP_MODE_NONE;
+}
+
+QString BuyDecision4::makeDecisionBasedOnStockData(
+    QThread* parentThread, IBuyDecision4Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
+)
+{
+    const float priceFall    = -buyConfig->getPriceFall();
+    const float loseYield    = buyConfig->getLoseYield();
+    const int   duration     = buyConfig->getDuration();
+    const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
+
+    const StockData* stockData = stock->data.constData();
+
+    limitTimestamp = qMax(limitTimestamp, stockData[dataIndex].timestamp - (duration * ONE_DAY));
+
+    for (int i = dataIndex; i >= 0 && !parentThread->isInterruptionRequested(); i -= mStep)
+    {
+        const qint64 timestamp = stockData[i].timestamp;
+        const float  prevPrice = stockData[i].price;
+
+        if (timestamp < limitTimestamp)
+        {
+            break;
+        }
+
+        if (prevPrice >= maximumPrice)
+        {
+            bool good = true;
+
+            int j           = i - 1;
+            int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+            while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+            {
+                if (stockData[j].price < maximumPrice)
+                {
+                    good = false;
+
+                    break;
+                }
+
+                --j;
+                --minutesLeft;
+            }
+
+            if (good)
+            {
+                const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
+
+                for (j = dataIndex; j >= 0 && !parentThread->isInterruptionRequested(); j -= mStep)
+                {
+                    const float prevPrice2 = stockData[j].price;
+
+                    if (prevPrice2 >= maximumPrice)
+                    {
+                        break;
+                    }
+
+                    if (prevPrice2 <= minimumPrice)
+                    {
+                        const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                        const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                        return QObject::tr(
+                                   "Decided to buy because the price fall to %1 from %2 at %3 and lost "
+                                   "yield %4 from the minimum price %5 at %6 within last %7 days and the fall is %8"
+                        )
+                            .arg(
+                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                                QString::number(lostYield, 'f', 2) + "%",
+                                QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                QDateTime::fromMSecsSinceEpoch(stockData[j].timestamp).toString(DATETIME_FORMAT),
+                                QString::number(duration),
+                                QString::number(fall, 'f', 2) + "%"
+                            );
+                    }
+                }
+            }
+        }
+    }
+
+    return "";
 }

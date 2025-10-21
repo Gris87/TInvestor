@@ -112,7 +112,7 @@ QList<float> BuyDecision6::getDayPrices(QThread* parentThread, Stock* stock, int
 
     QList<float> prices;
 
-    for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+    for (int i = dataIndex; i >= 0 && !parentThread->isInterruptionRequested(); --i)
     {
         const qint64 timestamp = stockData[i].timestamp;
 

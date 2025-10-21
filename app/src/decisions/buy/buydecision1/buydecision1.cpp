@@ -56,235 +56,19 @@ QString BuyDecision1::makeDecision(
 
     if (buyConfig->isEnabled())
     {
-        const float priceFall    = -buyConfig->getPriceFall();
-        const int   duration     = buyConfig->getDuration();
-        const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
-
-        const StockData* stockData = stock->data.constData();
-
         if (dateRange)
         {
-            limitTimestamp = qMax(limitTimestamp, stockData[dataIndex].timestamp - (duration * ONE_MINUTE));
-
-            for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
-            {
-                const qint64 timestamp = stockData[i].timestamp;
-                const float  prevPrice = stockData[i].price;
-
-                if (timestamp < limitTimestamp)
-                {
-                    break;
-                }
-
-                if (prevPrice >= maximumPrice)
-                {
-                    bool good = true;
-
-                    int j           = i - 1;
-                    int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-                    {
-                        if (stockData[j].price < maximumPrice)
-                        {
-                            good = false;
-
-                            break;
-                        }
-
-                        --j;
-                        --minutesLeft;
-                    }
-
-                    if (good)
-                    {
-                        const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
-
-                        int j         = i - mStepForTripleCheck;
-                        int hoursLeft = HOURS_TO_TRIPLE_CHECK;
-
-                        while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
-                        {
-                            if (stockData[j].price < tripleMinimumPrice)
-                            {
-                                good = false;
-
-                                break;
-                            }
-
-                            j -= mStepForTripleCheck;
-                            --hoursLeft;
-                        }
-
-                        if (good)
-                        {
-                            const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                            return QObject::tr(
-                                       "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
-                                       "fall is %5"
-                            )
-                                .arg(
-                                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                    QString::number(duration),
-                                    QString::number(fall, 'f', 2) + "%"
-                                );
-                        }
-                    }
-                }
-            }
+            return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, dataIndex, price);
         }
-        else
+
+        QString cause = makeDecisionBasedOnStockOperationalData(parentThread, buyConfig, limitTimestamp, stock, price);
+
+        if (cause != "")
         {
-            const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
-
-            limitTimestamp = qMax(limitTimestamp, QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE));
-
-            for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
-            {
-                const qint64 timestamp = stockOperationalData[i].timestamp;
-                const float  prevPrice = stockOperationalData[i].price;
-
-                if (timestamp < limitTimestamp)
-                {
-                    break;
-                }
-
-                if (prevPrice >= maximumPrice)
-                {
-                    if (i >= MINUTES_TO_DOUBLE_CHECK)
-                    {
-                        bool good = true;
-
-                        int j           = i - 1;
-                        int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-                        {
-                            if (stockOperationalData[j].price < maximumPrice)
-                            {
-                                good = false;
-
-                                break;
-                            }
-
-                            --j;
-                            --minutesLeft;
-                        }
-
-                        if (good)
-                        {
-                            const float tripleMinimumPrice =
-                                prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
-
-                            int j         = stock->data.size() - 1;
-                            int hoursLeft = HOURS_TO_TRIPLE_CHECK;
-
-                            while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
-                            {
-                                if (stockData[j].price < tripleMinimumPrice)
-                                {
-                                    good = false;
-
-                                    break;
-                                }
-
-                                j -= mStepForTripleCheck;
-                                --hoursLeft;
-                            }
-
-                            if (good)
-                            {
-                                const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                                return QObject::
-                                    tr("Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
-                                       "fall is %5")
-                                        .arg(
-                                            QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                            QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                            QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                            QString::number(duration),
-                                            QString::number(fall, 'f', 2) + "%"
-                                        );
-                            }
-                        }
-                    }
-                }
-            }
-
-            for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
-            {
-                const qint64 timestamp = stockData[i].timestamp;
-                const float  prevPrice = stockData[i].price;
-
-                if (timestamp < limitTimestamp)
-                {
-                    break;
-                }
-
-                if (prevPrice >= maximumPrice)
-                {
-                    bool good = true;
-
-                    int j           = i - 1;
-                    int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-                    {
-                        if (stockData[j].price < maximumPrice)
-                        {
-                            good = false;
-
-                            break;
-                        }
-
-                        --j;
-                        --minutesLeft;
-                    }
-
-                    if (good)
-                    {
-                        const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
-
-                        int j         = i - mStepForTripleCheck;
-                        int hoursLeft = HOURS_TO_TRIPLE_CHECK;
-
-                        while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
-                        {
-                            if (stockData[j].price < tripleMinimumPrice)
-                            {
-                                good = false;
-
-                                break;
-                            }
-
-                            j -= mStepForTripleCheck;
-                            --hoursLeft;
-                        }
-
-                        if (good)
-                        {
-                            const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                            return QObject::tr(
-                                       "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
-                                       "fall is %5"
-                            )
-                                .arg(
-                                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                    QString::number(duration),
-                                    QString::number(fall, 'f', 2) + "%"
-                                );
-                        }
-                    }
-                }
-            }
+            return cause;
         }
+
+        return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, stock->data.size() - 1, price);
     }
 
     return "";
@@ -294,4 +78,178 @@ QString BuyDecision1::makeDecision(
 AsapMode BuyDecision1::asapMode() const
 {
     return ASAP_MODE_NONE;
+}
+
+QString BuyDecision1::makeDecisionBasedOnStockData(
+    QThread* parentThread, IBuyDecision1Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
+)
+{
+    const float priceFall    = -buyConfig->getPriceFall();
+    const int   duration     = buyConfig->getDuration();
+    const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
+
+    const StockData* stockData = stock->data.constData();
+
+    limitTimestamp = qMax(limitTimestamp, stockData[dataIndex].timestamp - (duration * ONE_MINUTE));
+
+    for (int i = dataIndex; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+    {
+        const qint64 timestamp = stockData[i].timestamp;
+        const float  prevPrice = stockData[i].price;
+
+        if (timestamp < limitTimestamp)
+        {
+            break;
+        }
+
+        if (prevPrice >= maximumPrice)
+        {
+            bool good = true;
+
+            int j           = i - 1;
+            int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+            while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+            {
+                if (stockData[j].price < maximumPrice)
+                {
+                    good = false;
+
+                    break;
+                }
+
+                --j;
+                --minutesLeft;
+            }
+
+            if (good)
+            {
+                const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
+
+                int j         = i - mStepForTripleCheck;
+                int hoursLeft = HOURS_TO_TRIPLE_CHECK;
+
+                while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
+                {
+                    if (stockData[j].price < tripleMinimumPrice)
+                    {
+                        good = false;
+
+                        break;
+                    }
+
+                    j -= mStepForTripleCheck;
+                    --hoursLeft;
+                }
+
+                if (good)
+                {
+                    const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                    return QObject::tr(
+                               "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
+                               "fall is %5"
+                    )
+                        .arg(
+                            QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                            QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                            QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                            QString::number(duration),
+                            QString::number(fall, 'f', 2) + "%"
+                        );
+                }
+            }
+        }
+    }
+
+    return "";
+}
+
+QString BuyDecision1::makeDecisionBasedOnStockOperationalData(
+    QThread* parentThread, IBuyDecision1Config* buyConfig, qint64 limitTimestamp, Stock* stock, float price
+)
+{
+    const float priceFall    = -buyConfig->getPriceFall();
+    const int   duration     = buyConfig->getDuration();
+    const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
+
+    const StockData*            stockData            = stock->data.constData();
+    const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
+
+    limitTimestamp = qMax(limitTimestamp, QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE));
+
+    for (int i = stock->operational.detailedData.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+    {
+        const qint64 timestamp = stockOperationalData[i].timestamp;
+        const float  prevPrice = stockOperationalData[i].price;
+
+        if (timestamp < limitTimestamp)
+        {
+            break;
+        }
+
+        if (prevPrice >= maximumPrice)
+        {
+            if (i >= MINUTES_TO_DOUBLE_CHECK)
+            {
+                bool good = true;
+
+                int j           = i - 1;
+                int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+                while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+                {
+                    if (stockOperationalData[j].price < maximumPrice)
+                    {
+                        good = false;
+
+                        break;
+                    }
+
+                    --j;
+                    --minutesLeft;
+                }
+
+                if (good)
+                {
+                    const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
+
+                    int j         = stock->data.size() - 1;
+                    int hoursLeft = HOURS_TO_TRIPLE_CHECK;
+
+                    while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
+                    {
+                        if (stockData[j].price < tripleMinimumPrice)
+                        {
+                            good = false;
+
+                            break;
+                        }
+
+                        j -= mStepForTripleCheck;
+                        --hoursLeft;
+                    }
+
+                    if (good)
+                    {
+                        const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                        return QObject::tr(
+                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
+                                   "fall is %5"
+                        )
+                            .arg(
+                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                                QString::number(duration),
+                                QString::number(fall, 'f', 2) + "%"
+                            );
+                    }
+                }
+            }
+        }
+    }
+
+    return "";
 }

@@ -51,114 +51,19 @@ QString SellDecision2::makeDecision(
 
     if (sellConfig->isEnabled())
     {
-        const float coef = price / avgPrice;
-
-        if (coef < INCREDIBLE_SELL_COEF)
+        if (dateRange)
         {
-            const float yield      = (coef * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-            const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
-
-            if (yield >= yieldAbove)
-            {
-                const float loseYield    = -sellConfig->getLoseYield();
-                const float minimumPrice = avgPrice * (1 + (yieldAbove / HUNDRED_PERCENT));
-                const float maximumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
-
-                const StockData* stockData = stock->data.constData();
-
-                if (dateRange)
-                {
-                    for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
-                    {
-                        const float prevPrice = stockData[i].price;
-
-                        if (prevPrice < minimumPrice)
-                        {
-                            break;
-                        }
-
-                        if (prevPrice >= maximumPrice)
-                        {
-                            const float lostYield = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                            return QObject::tr(
-                                       "Decided to sell because the price reached %1 with yield %2 from the price %3 and lost "
-                                       "yield %4 from the maximum price %5 at %6"
-                            )
-                                .arg(
-                                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    "+" + QString::number(yield, 'f', 2) + "%",
-                                    QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    QString::number(lostYield, 'f', 2) + "%",
-                                    QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    QDateTime::fromMSecsSinceEpoch(stockData[i].timestamp).toString(DATETIME_FORMAT)
-                                );
-                        }
-                    }
-                }
-                else
-                {
-                    const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
-
-                    for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested();
-                         --i)
-                    {
-                        const float prevPrice = stockOperationalData[i].price;
-
-                        if (prevPrice < minimumPrice)
-                        {
-                            break;
-                        }
-
-                        if (prevPrice >= maximumPrice)
-                        {
-                            const float lostYield = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                            return QObject::tr(
-                                       "Decided to sell because the price reached %1 with yield %2 from the price %3 and lost "
-                                       "yield %4 from the maximum price %5 at %6"
-                            )
-                                .arg(
-                                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    "+" + QString::number(yield, 'f', 2) + "%",
-                                    QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    QString::number(lostYield, 'f', 2) + "%",
-                                    QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    QDateTime::fromMSecsSinceEpoch(stockOperationalData[i].timestamp).toString(DATETIME_FORMAT)
-                                );
-                        }
-                    }
-
-                    for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
-                    {
-                        const float prevPrice = stockData[i].price;
-
-                        if (prevPrice < minimumPrice)
-                        {
-                            break;
-                        }
-
-                        if (prevPrice >= maximumPrice)
-                        {
-                            const float lostYield = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                            return QObject::tr(
-                                       "Decided to sell because the price reached %1 with yield %2 from the price %3 and lost "
-                                       "yield %4 from the maximum price %5 at %6"
-                            )
-                                .arg(
-                                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    "+" + QString::number(yield, 'f', 2) + "%",
-                                    QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    QString::number(lostYield, 'f', 2) + "%",
-                                    QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                    QDateTime::fromMSecsSinceEpoch(stockData[i].timestamp).toString(DATETIME_FORMAT)
-                                );
-                        }
-                    }
-                }
-            }
+            return makeDecisionBasedOnStockData(parentThread, sellConfig, stock, dataIndex, price, avgPrice, commission);
         }
+
+        QString cause = makeDecisionBasedOnStockOperationalData(parentThread, sellConfig, stock, price, avgPrice, commission);
+
+        if (cause != "")
+        {
+            return cause;
+        }
+
+        return makeDecisionBasedOnStockData(parentThread, sellConfig, stock, stock->data.size() - 1, price, avgPrice, commission);
     }
 
     return "";
@@ -168,4 +73,114 @@ QString SellDecision2::makeDecision(
 AsapMode SellDecision2::asapMode() const
 {
     return ASAP_MODE_NONE;
+}
+
+QString SellDecision2::makeDecisionBasedOnStockData(
+    QThread*              parentThread,
+    ISellDecision2Config* sellConfig,
+    Stock*                stock,
+    int                   dataIndex,
+    float                 price,
+    float                 avgPrice,
+    float                 commission
+)
+{
+    const float coef = price / avgPrice;
+
+    if (coef < INCREDIBLE_SELL_COEF)
+    {
+        const float yield      = (coef * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+        const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
+
+        if (yield >= yieldAbove)
+        {
+            const float loseYield    = -sellConfig->getLoseYield();
+            const float minimumPrice = avgPrice * (1 + (yieldAbove / HUNDRED_PERCENT));
+            const float maximumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
+
+            const StockData* stockData = stock->data.constData();
+
+            for (int i = dataIndex; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+            {
+                const float prevPrice = stockData[i].price;
+
+                if (prevPrice < minimumPrice)
+                {
+                    break;
+                }
+
+                if (prevPrice >= maximumPrice)
+                {
+                    const float lostYield = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                    return QObject::tr(
+                               "Decided to sell because the price reached %1 with yield %2 from the price %3 and lost "
+                               "yield %4 from the maximum price %5 at %6"
+                    )
+                        .arg(
+                            QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                            "+" + QString::number(yield, 'f', 2) + "%",
+                            QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                            QString::number(lostYield, 'f', 2) + "%",
+                            QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                            QDateTime::fromMSecsSinceEpoch(stockData[i].timestamp).toString(DATETIME_FORMAT)
+                        );
+                }
+            }
+        }
+    }
+
+    return "";
+}
+
+QString SellDecision2::makeDecisionBasedOnStockOperationalData(
+    QThread* parentThread, ISellDecision2Config* sellConfig, Stock* stock, float price, float avgPrice, float commission
+)
+{
+    const float coef = price / avgPrice;
+
+    if (coef < INCREDIBLE_SELL_COEF)
+    {
+        const float yield      = (coef * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+        const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
+
+        if (yield >= yieldAbove)
+        {
+            const float loseYield    = -sellConfig->getLoseYield();
+            const float minimumPrice = avgPrice * (1 + (yieldAbove / HUNDRED_PERCENT));
+            const float maximumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
+
+            const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
+
+            for (int i = stock->operational.detailedData.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+            {
+                const float prevPrice = stockOperationalData[i].price;
+
+                if (prevPrice < minimumPrice)
+                {
+                    break;
+                }
+
+                if (prevPrice >= maximumPrice)
+                {
+                    const float lostYield = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+                    return QObject::tr(
+                               "Decided to sell because the price reached %1 with yield %2 from the price %3 and lost "
+                               "yield %4 from the maximum price %5 at %6"
+                    )
+                        .arg(
+                            QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                            "+" + QString::number(yield, 'f', 2) + "%",
+                            QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                            QString::number(lostYield, 'f', 2) + "%",
+                            QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                            QDateTime::fromMSecsSinceEpoch(stockOperationalData[i].timestamp).toString(DATETIME_FORMAT)
+                        );
+                }
+            }
+        }
+    }
+
+    return "";
 }

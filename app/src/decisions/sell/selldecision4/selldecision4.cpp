@@ -54,20 +54,11 @@ QString SellDecision4::makeDecision(
 
     if (sellConfig->isEnabled())
     {
-        const float coef = price / avgPrice;
-
-        if (coef < INCREDIBLE_SELL_COEF)
+        if (dateRange)
         {
-            const float yield      = (coef * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-            const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
-
-            if (yield >= yieldAbove)
-            {
-                if (dateRange)
-                {
-                    return makeDecisionBasedOnStockData(parentThread, sellConfig, limitTimestamp, stock, dataIndex);
-                }
-            }
+            return makeDecisionBasedOnStockData(
+                parentThread, sellConfig, limitTimestamp, stock, dataIndex, price, avgPrice, commission
+            );
         }
     }
 
@@ -76,40 +67,58 @@ QString SellDecision4::makeDecision(
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 QString SellDecision4::makeDecisionBasedOnStockData(
-    QThread* parentThread, ISellDecision4Config* sellConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
+    QThread*              parentThread,
+    ISellDecision4Config* sellConfig,
+    qint64                limitTimestamp,
+    Stock*                stock,
+    int                   dataIndex,
+    float                 price,
+    float                 avgPrice,
+    float                 commission
 )
 {
-    const int duration = sellConfig->getDuration();
+    const float coef = price / avgPrice;
 
-    const StockData* stockData = stock->data.constData();
-
-    const qint64 currentTimestamp = stockData[dataIndex].timestamp;
-    limitTimestamp                = currentTimestamp - (duration * ONE_MINUTE);
-
-    for (int i = dataIndex - 1; i >= 2 && !parentThread->isInterruptionRequested(); --i)
+    if (coef < INCREDIBLE_SELL_COEF)
     {
-        const qint64 timestamp = stockData[i].timestamp;
+        const float yield      = (coef * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+        const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
 
-        if (timestamp < limitTimestamp)
+        if (yield >= yieldAbove)
         {
-            const int startIndex = i - 2;
+            const int duration = sellConfig->getDuration();
 
-            const double currentTopEdge        = mBollindger->getTopEdge(stock, startIndex + 2, dataIndex + 1);
-            const double previousTopEdge       = mBollindger->getTopEdge(stock, startIndex + 1, dataIndex);
-            const double beforePreviousTopEdge = mBollindger->getTopEdge(stock, startIndex, dataIndex - 1);
+            const StockData* stockData = stock->data.constData();
 
-            if (stockData[dataIndex].price < currentTopEdge && stockData[dataIndex - 1].price < previousTopEdge &&
-                stockData[dataIndex - 2].price > beforePreviousTopEdge)
+            const qint64 currentTimestamp = stockData[dataIndex].timestamp;
+            limitTimestamp                = currentTimestamp - (duration * ONE_MINUTE);
+
+            for (int i = dataIndex; i >= 2 && !parentThread->isInterruptionRequested(); --i)
             {
-                return QObject::tr("Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3")
-                    .arg(
-                        QString::number(stockData[dataIndex - 2].price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                        QString::number(beforePreviousTopEdge, 'f', stock->meta.pricePrecision) + " \u20BD",
-                        QDateTime::fromMSecsSinceEpoch(stockData[dataIndex - 2].timestamp).toString(DATETIME_FORMAT)
-                    );
-            }
+                const qint64 timestamp = stockData[i].timestamp;
 
-            break;
+                if (timestamp < limitTimestamp)
+                {
+                    const int startIndex = i - 2;
+
+                    const double currentTopEdge        = mBollindger->getTopEdge(stock, startIndex + 2, dataIndex + 1);
+                    const double previousTopEdge       = mBollindger->getTopEdge(stock, startIndex + 1, dataIndex);
+                    const double beforePreviousTopEdge = mBollindger->getTopEdge(stock, startIndex, dataIndex - 1);
+
+                    if (stockData[dataIndex].price < currentTopEdge && stockData[dataIndex - 1].price < previousTopEdge &&
+                        stockData[dataIndex - 2].price > beforePreviousTopEdge)
+                    {
+                        return QObject::tr("Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3")
+                            .arg(
+                                QString::number(stockData[dataIndex - 2].price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                QString::number(beforePreviousTopEdge, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                QDateTime::fromMSecsSinceEpoch(stockData[dataIndex - 2].timestamp).toString(DATETIME_FORMAT)
+                            );
+                    }
+
+                    break;
+                }
+            }
         }
     }
 
