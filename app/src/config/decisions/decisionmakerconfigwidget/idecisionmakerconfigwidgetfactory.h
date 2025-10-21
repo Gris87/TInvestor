@@ -10,14 +10,12 @@
 #include "src/config/decisions/buy/buydecision6config/buydecision6configwidget/ibuydecision6configwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision7config/buydecision7configwidget/ibuydecision7configwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision8config/buydecision8configwidget/ibuydecision8configwidgetfactory.h"
-#include "src/config/decisions/buy/buydecision9config/buydecision9configwidget/ibuydecision9configwidgetfactory.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget.h"
 #include "src/config/decisions/idecisionmakerconfig.h"
 #include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory.h"
-#include "src/config/decisions/sell/selldecision5config/selldecision5configwidget/iselldecision5configwidgetfactory.h"
 
 
 
@@ -33,12 +31,10 @@ struct DecisionMakerConfigWidgetFactoryNewInstanceArgsMore15
         IBuyDecision6ConfigWidgetFactory*  _buyDecision6ConfigWidgetFactory,
         IBuyDecision7ConfigWidgetFactory*  _buyDecision7ConfigWidgetFactory,
         IBuyDecision8ConfigWidgetFactory*  _buyDecision8ConfigWidgetFactory,
-        IBuyDecision9ConfigWidgetFactory*  _buyDecision9ConfigWidgetFactory,
         ISellDecision1ConfigWidgetFactory* _sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* _sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* _sellDecision3ConfigWidgetFactory,
-        ISellDecision4ConfigWidgetFactory* _sellDecision4ConfigWidgetFactory,
-        ISellDecision5ConfigWidgetFactory* _sellDecision5ConfigWidgetFactory
+        ISellDecision4ConfigWidgetFactory* _sellDecision4ConfigWidgetFactory
     ) :
         config(_config),
         buyDecision1ConfigWidgetFactory(_buyDecision1ConfigWidgetFactory),
@@ -49,12 +45,10 @@ struct DecisionMakerConfigWidgetFactoryNewInstanceArgsMore15
         buyDecision6ConfigWidgetFactory(_buyDecision6ConfigWidgetFactory),
         buyDecision7ConfigWidgetFactory(_buyDecision7ConfigWidgetFactory),
         buyDecision8ConfigWidgetFactory(_buyDecision8ConfigWidgetFactory),
-        buyDecision9ConfigWidgetFactory(_buyDecision9ConfigWidgetFactory),
         sellDecision1ConfigWidgetFactory(_sellDecision1ConfigWidgetFactory),
         sellDecision2ConfigWidgetFactory(_sellDecision2ConfigWidgetFactory),
         sellDecision3ConfigWidgetFactory(_sellDecision3ConfigWidgetFactory),
-        sellDecision4ConfigWidgetFactory(_sellDecision4ConfigWidgetFactory),
-        sellDecision5ConfigWidgetFactory(_sellDecision5ConfigWidgetFactory)
+        sellDecision4ConfigWidgetFactory(_sellDecision4ConfigWidgetFactory)
     {
     }
 
@@ -69,12 +63,10 @@ struct DecisionMakerConfigWidgetFactoryNewInstanceArgsMore15
     IBuyDecision6ConfigWidgetFactory*  buyDecision6ConfigWidgetFactory;
     IBuyDecision7ConfigWidgetFactory*  buyDecision7ConfigWidgetFactory;
     IBuyDecision8ConfigWidgetFactory*  buyDecision8ConfigWidgetFactory;
-    IBuyDecision9ConfigWidgetFactory*  buyDecision9ConfigWidgetFactory;
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory;
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory;
     ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory;
-    ISellDecision5ConfigWidgetFactory* sellDecision5ConfigWidgetFactory;
 };
 
 

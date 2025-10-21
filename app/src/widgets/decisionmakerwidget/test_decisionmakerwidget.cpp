@@ -11,7 +11,6 @@
 #include "src/config/decisions/buy/buydecision6config/buydecision6configwidget/ibuydecision6configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision7config/buydecision7configwidget/ibuydecision7configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision8config/buydecision8configwidget/ibuydecision8configwidgetfactory_mock.h"
-#include "src/config/decisions/buy/buydecision9config/buydecision9configwidget/ibuydecision9configwidgetfactory_mock.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget_mock.h"
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
@@ -19,7 +18,6 @@
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h"
-#include "src/config/decisions/sell/selldecision5config/selldecision5configwidget/iselldecision5configwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -70,12 +68,10 @@ protected:
         buyDecision6ConfigWidgetFactoryMock  = new StrictMock<BuyDecision6ConfigWidgetFactoryMock>();
         buyDecision7ConfigWidgetFactoryMock  = new StrictMock<BuyDecision7ConfigWidgetFactoryMock>();
         buyDecision8ConfigWidgetFactoryMock  = new StrictMock<BuyDecision8ConfigWidgetFactoryMock>();
-        buyDecision9ConfigWidgetFactoryMock  = new StrictMock<BuyDecision9ConfigWidgetFactoryMock>();
         sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
         sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
         sellDecision4ConfigWidgetFactoryMock = new StrictMock<SellDecision4ConfigWidgetFactoryMock>();
-        sellDecision5ConfigWidgetFactoryMock = new StrictMock<SellDecision5ConfigWidgetFactoryMock>();
         portfolioTreeWidgetFactoryMock       = new StrictMock<PortfolioTreeWidgetFactoryMock>();
         operationsTableWidgetMock            = new StrictMock<OperationsTableWidgetMock>();
         accountChartWidgetMock               = new StrictMock<AccountChartWidgetMock>();
@@ -123,12 +119,10 @@ protected:
                     buyDecision6ConfigWidgetFactoryMock,
                     buyDecision7ConfigWidgetFactoryMock,
                     buyDecision8ConfigWidgetFactoryMock,
-                    buyDecision9ConfigWidgetFactoryMock,
                     sellDecision1ConfigWidgetFactoryMock,
                     sellDecision2ConfigWidgetFactoryMock,
                     sellDecision3ConfigWidgetFactoryMock,
-                    sellDecision4ConfigWidgetFactoryMock,
-                    sellDecision5ConfigWidgetFactoryMock
+                    sellDecision4ConfigWidgetFactoryMock
                 ),
                 NotNull()
             )
@@ -158,12 +152,10 @@ protected:
             buyDecision6ConfigWidgetFactoryMock,
             buyDecision7ConfigWidgetFactoryMock,
             buyDecision8ConfigWidgetFactoryMock,
-            buyDecision9ConfigWidgetFactoryMock,
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
             sellDecision4ConfigWidgetFactoryMock,
-            sellDecision5ConfigWidgetFactoryMock,
             portfolioTreeWidgetFactoryMock,
             operationsTableModelFactoryMock,
             logsTableModelFactoryMock,
@@ -191,12 +183,10 @@ protected:
         delete buyDecision6ConfigWidgetFactoryMock;
         delete buyDecision7ConfigWidgetFactoryMock;
         delete buyDecision8ConfigWidgetFactoryMock;
-        delete buyDecision9ConfigWidgetFactoryMock;
         delete sellDecision1ConfigWidgetFactoryMock;
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
         delete sellDecision4ConfigWidgetFactoryMock;
-        delete sellDecision5ConfigWidgetFactoryMock;
         delete portfolioTreeWidgetFactoryMock;
         // It will be deleted by `delete ui;`
         /*
@@ -233,12 +223,10 @@ protected:
     StrictMock<BuyDecision6ConfigWidgetFactoryMock>*  buyDecision6ConfigWidgetFactoryMock;
     StrictMock<BuyDecision7ConfigWidgetFactoryMock>*  buyDecision7ConfigWidgetFactoryMock;
     StrictMock<BuyDecision8ConfigWidgetFactoryMock>*  buyDecision8ConfigWidgetFactoryMock;
-    StrictMock<BuyDecision9ConfigWidgetFactoryMock>*  buyDecision9ConfigWidgetFactoryMock;
     StrictMock<SellDecision1ConfigWidgetFactoryMock>* sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
     StrictMock<SellDecision4ConfigWidgetFactoryMock>* sellDecision4ConfigWidgetFactoryMock;
-    StrictMock<SellDecision5ConfigWidgetFactoryMock>* sellDecision5ConfigWidgetFactoryMock;
     StrictMock<PortfolioTreeWidgetFactoryMock>*       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableWidgetMock>*            operationsTableWidgetMock;
     StrictMock<AccountChartWidgetMock>*               accountChartWidgetMock;

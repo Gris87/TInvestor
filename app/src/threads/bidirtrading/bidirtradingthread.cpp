@@ -381,9 +381,9 @@ bool BiDirTradingThread::isNeedToSellAsap(qint64 timestamp, BiDirMode mode, floa
         return false;
     }
 
-    ISellDecision4Config* sellDecision4Config = chooseDecisionConfig()->getSellDecision4Config();
+    ISellDecision3Config* sellDecision3Config = chooseDecisionConfig()->getSellDecision3Config();
 
-    if (sellDecision4Config->isEnabled() && yield < -sellDecision4Config->getLoseYield() + (2 * commission))
+    if (sellDecision3Config->isEnabled() && yield < -sellDecision3Config->getLoseYield() + (2 * commission))
     {
         return true;
     }

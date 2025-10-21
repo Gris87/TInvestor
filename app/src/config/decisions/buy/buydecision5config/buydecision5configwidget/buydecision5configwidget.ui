@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>592</width>
+    <width>508</width>
     <height>27</height>
    </rect>
   </property>
@@ -34,30 +34,10 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Buy stocks if the price raise more than</string>
+        <string>Buy stocks with Bollinger bands and interval is</string>
        </property>
        <property name="checked">
         <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="priceRaiseDoubleSpinBox">
-       <property name="suffix">
-        <string notr="true"> %</string>
-       </property>
-       <property name="singleStep">
-        <double>0.100000000000000</double>
-       </property>
-       <property name="value">
-        <double>2.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>within the last</string>
        </property>
       </widget>
      </item>
@@ -70,7 +50,7 @@
         <number>100000</number>
        </property>
        <property name="value">
-        <number>5</number>
+        <number>15</number>
        </property>
       </widget>
      </item>

@@ -8,9 +8,7 @@
 
 namespace Ui
 {
-
 class BuyDecision5ConfigWidget;
-
 }
 
 
@@ -36,6 +34,5 @@ private:
 
 private slots:
     void on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_priceRaiseDoubleSpinBox_valueChanged(double value);
     void on_durationSpinBox_valueChanged(int value);
 };

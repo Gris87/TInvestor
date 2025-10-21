@@ -25,6 +25,7 @@ BuyDecision6ConfigWidget::~BuyDecision6ConfigWidget()
 void BuyDecision6ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
+    ui->rsiDoubleSpinBox->setValue(mConfig->getRsi());
     ui->durationSpinBox->setValue(mConfig->getDuration());
 }
 
@@ -32,6 +33,7 @@ void BuyDecision6ConfigWidget::makeReadOnly() const
 {
     ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
+    ui->rsiDoubleSpinBox->setReadOnly(true);
     ui->durationSpinBox->setReadOnly(true);
 }
 
@@ -41,7 +43,13 @@ void BuyDecision6ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::Ch
 
     mConfig->setEnabled(checked);
 
+    ui->rsiDoubleSpinBox->setEnabled(checked);
     ui->durationSpinBox->setEnabled(checked);
+}
+
+void BuyDecision6ConfigWidget::on_rsiDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setRsi(value);
 }
 
 void BuyDecision6ConfigWidget::on_durationSpinBox_valueChanged(int value)

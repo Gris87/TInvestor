@@ -4,6 +4,7 @@
 
 #include "src/config/decisions/buy/buydecision5config/ibuydecision5config_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
+#include "src/utils/bollindger/ibollindger_mock.h"
 
 
 
@@ -26,12 +27,15 @@ class Test_BuyDecision5 : public ::testing::Test
 protected:
     void SetUp() override
     {
-        buyDecision5 = new BuyDecision5();
+        bollindgerMock = new StrictMock<BollindgerMock>();
+
+        buyDecision5 = new BuyDecision5(bollindgerMock);
     }
 
     void TearDown() override
     {
         delete buyDecision5;
+        delete bollindgerMock;
     }
 
     void fillWithData(Stock* stock, QList<float> data, bool dateRange)
@@ -72,7 +76,8 @@ protected:
         }
     }
 
-    BuyDecision5* buyDecision5;
+    BuyDecision5*               buyDecision5;
+    StrictMock<BollindgerMock>* bollindgerMock;
 };
 
 
@@ -87,5 +92,5 @@ TEST_F(Test_BuyDecision5, Test_makeDecision)
 
 TEST_F(Test_BuyDecision5, Test_asapMode)
 {
-    ASSERT_EQ(buyDecision5->asapMode(), ASAP_MODE_IMMEDIATELY_TRADE);
+    ASSERT_EQ(buyDecision5->asapMode(), ASAP_MODE_NONE);
 }

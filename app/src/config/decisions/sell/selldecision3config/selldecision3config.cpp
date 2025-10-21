@@ -7,19 +7,16 @@
 
 
 // For 2020-2024 years
-constexpr bool  ENABLED_DEFAULT    = false;
+constexpr bool  ENABLED_DEFAULT    = true;
 constexpr float LOSE_YIELD_DEFAULT = 3.0f;
-constexpr int   DURATION_DEFAULT   = 5;
 
 // For 2024 year
-// constexpr bool  ENABLED_DEFAULT    = false;
-// constexpr float LOSE_YIELD_DEFAULT = 10.0f;
-// constexpr int   DURATION_DEFAULT   = 5;
+// constexpr bool  ENABLED_DEFAULT    = true;
+// constexpr float LOSE_YIELD_DEFAULT = 5.0f;
 
 // For 2019 year
-// constexpr bool  ENABLED_DEFAULT    = false;
-// constexpr float LOSE_YIELD_DEFAULT = 15.0f;
-// constexpr int   DURATION_DEFAULT   = 30;
+// constexpr bool  ENABLED_DEFAULT    = true;
+// constexpr float LOSE_YIELD_DEFAULT = 7.0f;
 
 
 
@@ -27,8 +24,7 @@ SellDecision3Config::SellDecision3Config() :
     ISellDecision3Config(),
     mRwMutex(new QReadWriteLock()),
     mEnabled(),
-    mLoseYield(),
-    mDuration()
+    mLoseYield()
 {
     qDebug() << "Create SellDecision3Config";
 }
@@ -64,7 +60,6 @@ void SellDecision3Config::assign(ISellDecision3Config* another)
 
     mEnabled   = config.mEnabled;
     mLoseYield = config.mLoseYield;
-    mDuration  = config.mDuration;
 }
 
 void SellDecision3Config::makeDefault()
@@ -75,7 +70,6 @@ void SellDecision3Config::makeDefault()
 
     mEnabled   = ENABLED_DEFAULT;
     mLoseYield = LOSE_YIELD_DEFAULT;
-    mDuration  = DURATION_DEFAULT;
 }
 
 void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)
@@ -85,9 +79,8 @@ void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& t
     qDebug() << "Save SellDecision3Config";
 
     // clang-format off
-    settingsEditor->setValue(type + "/Enabled",   mEnabled);
-    settingsEditor->setValue(type + "/LoseYield", mLoseYield);
-    settingsEditor->setValue(type + "/Duration",  mDuration);
+    settingsEditor->setValue(type + "/Enabled",    mEnabled);
+    settingsEditor->setValue(type + "/LoseYield",  mLoseYield);
     // clang-format on
 }
 
@@ -98,9 +91,8 @@ void SellDecision3Config::load(ISettingsEditor* settingsEditor, const QString& t
     qDebug() << "Load SellDecision3Config";
 
     // clang-format off
-    mEnabled   = settingsEditor->value(type + "/Enabled",   mEnabled).toBool();
-    mLoseYield = settingsEditor->value(type + "/LoseYield", mLoseYield).toFloat();
-    mDuration  = settingsEditor->value(type + "/Duration",  mDuration).toInt();
+    mEnabled    = settingsEditor->value(type + "/Enabled",    mEnabled).toBool();
+    mLoseYield  = settingsEditor->value(type + "/LoseYield",  mLoseYield).toFloat();
     // clang-format on
 }
 
@@ -112,11 +104,6 @@ static void configEnabledParse(SellDecision3Config* config, simdjson::ondemand::
 static void configLoseYieldParse(SellDecision3Config* config, simdjson::ondemand::value value)
 {
     config->setLoseYield(value.get_double_in_string());
-}
-
-static void configDurationParse(SellDecision3Config* config, simdjson::ondemand::value value)
-{
-    config->setDuration(value.get_int64());
 }
 
 static void configThrowParseException(
@@ -131,8 +118,7 @@ using ParseHandler = void (*)(SellDecision3Config* config, simdjson::ondemand::v
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"enabled",   configEnabledParse  },
-    {"loseYield", configLoseYieldParse},
-    {"duration",  configDurationParse }
+    {"loseYield", configLoseYieldParse}
 };
 // clang-format on
 
@@ -149,8 +135,7 @@ void SellDecision3Config::fromJsonObject(simdjson::ondemand::object jsonObject) 
 
 QString SellDecision3Config::toJsonString() const
 {
-    return QString(R"({"enabled":%1,"loseYield":"%2","duration":%3})")
-        .arg(mEnabled ? "true" : "false", QString::number(mLoseYield, 'f', 2), QString::number(mDuration));
+    return QString(R"({"enabled":%1,"loseYield":"%2"})").arg(mEnabled ? "true" : "false", QString::number(mLoseYield, 'f', 2));
 }
 
 QStringList SellDecision3Config::variantsAsJson() const
@@ -160,14 +145,10 @@ QStringList SellDecision3Config::variantsAsJson() const
     res.append(R"({"enabled":false})");
 
     const QStringList loseYieldVariants = {"5.00", "7.00", "10.00"};
-    const QStringList durationVariants  = {"5", "15", "30"};
 
     for (const QString& loseYield : loseYieldVariants)
     {
-        for (const QString& duration : durationVariants)
-        {
-            res.append(QString(R"({"enabled":true,"loseYield":"%1","duration":%2})").arg(loseYield, duration));
-        }
+        res.append(QString(R"({"enabled":true,"loseYield":"%1"})").arg(loseYield));
     }
 
     return res;
@@ -199,18 +180,4 @@ float SellDecision3Config::getLoseYield()
     const QReadLocker lock(mRwMutex);
 
     return mLoseYield;
-}
-
-void SellDecision3Config::setDuration(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mDuration = value;
-}
-
-int SellDecision3Config::getDuration()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mDuration;
 }

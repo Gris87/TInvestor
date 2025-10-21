@@ -31,9 +31,6 @@ SOURCES += \
     src/config/decisions/buy/buydecision8config/buydecision8config.cpp \
     src/config/decisions/buy/buydecision8config/buydecision8configwidget/buydecision8configwidget.cpp \
     src/config/decisions/buy/buydecision8config/buydecision8configwidget/buydecision8configwidgetfactory.cpp \
-    src/config/decisions/buy/buydecision9config/buydecision9config.cpp \
-    src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.cpp \
-    src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidgetfactory.cpp \
     src/config/decisions/decisionmakerconfig.cpp \
     src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.cpp \
     src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidgetfactory.cpp \
@@ -49,9 +46,6 @@ SOURCES += \
     src/config/decisions/sell/selldecision4config/selldecision4config.cpp \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.cpp \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidgetfactory.cpp \
-    src/config/decisions/sell/selldecision5config/selldecision5config.cpp \
-    src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.cpp \
-    src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidgetfactory.cpp \
     src/db/instruments/instrumentsdatabase.cpp \
     src/db/logos/logosdatabase.cpp \
     src/db/logs/logsdatabase.cpp \
@@ -67,13 +61,11 @@ SOURCES += \
     src/decisions/buy/buydecision6/buydecision6.cpp \
     src/decisions/buy/buydecision7/buydecision7.cpp \
     src/decisions/buy/buydecision8/buydecision8.cpp \
-    src/decisions/buy/buydecision9/buydecision9.cpp \
     src/decisions/decisionmaker.cpp \
     src/decisions/sell/selldecision1/selldecision1.cpp \
     src/decisions/sell/selldecision2/selldecision2.cpp \
     src/decisions/sell/selldecision3/selldecision3.cpp \
     src/decisions/sell/selldecision4/selldecision4.cpp \
-    src/decisions/sell/selldecision5/selldecision5.cpp \
     src/dialogs/authdialog/authdialog.cpp \
     src/dialogs/authdialog/authdialogfactory.cpp \
     src/dialogs/orderwavesdialog/orderwavesdialog.cpp \
@@ -242,12 +234,6 @@ HEADERS += \
     src/config/decisions/buy/buydecision8config/buydecision8configwidget/ibuydecision8configwidget.h \
     src/config/decisions/buy/buydecision8config/buydecision8configwidget/ibuydecision8configwidgetfactory.h \
     src/config/decisions/buy/buydecision8config/ibuydecision8config.h \
-    src/config/decisions/buy/buydecision9config/buydecision9config.h \
-    src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.h \
-    src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidgetfactory.h \
-    src/config/decisions/buy/buydecision9config/buydecision9configwidget/ibuydecision9configwidget.h \
-    src/config/decisions/buy/buydecision9config/buydecision9configwidget/ibuydecision9configwidgetfactory.h \
-    src/config/decisions/buy/buydecision9config/ibuydecision9config.h \
     src/config/decisions/decisionmakerconfig.h \
     src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.h \
     src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidgetfactory.h \
@@ -278,12 +264,6 @@ HEADERS += \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory.h \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.h \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidgetfactory.h \
-    src/config/decisions/sell/selldecision5config/iselldecision5config.h \
-    src/config/decisions/sell/selldecision5config/selldecision5config.h \
-    src/config/decisions/sell/selldecision5config/selldecision5configwidget/iselldecision5configwidget.h \
-    src/config/decisions/sell/selldecision5config/selldecision5configwidget/iselldecision5configwidgetfactory.h \
-    src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.h \
-    src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidgetfactory.h \
     src/config/iconfig.h \
     src/db/instruments/iinstrumentsdatabase.h \
     src/db/instruments/instrumentsdatabase.h \
@@ -307,7 +287,6 @@ HEADERS += \
     src/decisions/buy/buydecision6/buydecision6.h \
     src/decisions/buy/buydecision7/buydecision7.h \
     src/decisions/buy/buydecision8/buydecision8.h \
-    src/decisions/buy/buydecision9/buydecision9.h \
     src/decisions/decisionmaker.h \
     src/decisions/iactiondecision.h \
     src/decisions/idecisionmaker.h \
@@ -315,7 +294,6 @@ HEADERS += \
     src/decisions/sell/selldecision2/selldecision2.h \
     src/decisions/sell/selldecision3/selldecision3.h \
     src/decisions/sell/selldecision4/selldecision4.h \
-    src/decisions/sell/selldecision5/selldecision5.h \
     src/dialogs/authdialog/authdialog.h \
     src/dialogs/authdialog/authdialogfactory.h \
     src/dialogs/authdialog/iauthdialog.h \
@@ -536,13 +514,11 @@ FORMS += \
     src/config/decisions/buy/buydecision6config/buydecision6configwidget/buydecision6configwidget.ui \
     src/config/decisions/buy/buydecision7config/buydecision7configwidget/buydecision7configwidget.ui \
     src/config/decisions/buy/buydecision8config/buydecision8configwidget/buydecision8configwidget.ui \
-    src/config/decisions/buy/buydecision9config/buydecision9configwidget/buydecision9configwidget.ui \
     src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.ui \
     src/config/decisions/sell/selldecision1config/selldecision1configwidget/selldecision1configwidget.ui \
     src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.ui \
-    src/config/decisions/sell/selldecision5config/selldecision5configwidget/selldecision5configwidget.ui \
     src/dialogs/authdialog/authdialog.ui \
     src/dialogs/orderwavesdialog/orderwavesdialog.ui \
     src/dialogs/settingsdialog/settingsdialog.ui \

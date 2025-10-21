@@ -7,8 +7,6 @@
 
 
 
-const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
-
 constexpr qint64 MS_IN_SECOND = 1000LL;
 constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
 
@@ -134,86 +132,43 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
 
     EXPECT_CALL(configMock, getSellDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
 
     cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, 100.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
     // ====================================================================
-    // TEST CASE: Unexpected maximum
+    // TEST CASE: Normal fall without double check
     // ====================================================================
     //
-    //                                                                /\
-    //                                                                ||
-    //                                                               /  \
-    //                                                               |  |
-    // -------------------------------------------------------------/    \X
-    //
-
-    fillWithData(
-        &stock,
-        {
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            120.0f,
-            120.0f,
-            80.0f,
-        },
-        true
-    );
-
-    EXPECT_CALL(configMock, getSellDecision3Config()).WillOnce(Return(&decisionConfigMock));
-    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
-
-    cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 80.0f, 100.0f, 0.04f);
-
-    ASSERT_EQ(cause, "");
-
-    // ====================================================================
-    // TEST CASE: Extreme fall without triple check
-    // ====================================================================
-    //
-    // --------------------------------------------------------------\
-    //                                                               |
-    //                                                                \
-    //                                                                |
+    // ----------------------------------------------\
+    //                                               |
+    //                                               \-------\
+    //                                                        \
+    //                                                         \
+    //                                                          \-----\
     //                                                                 \
-    //                                                                 |
     //                                                                  \
-    //                                                                  |
     //                                                                   \X
     //
 
     fillWithData(
         &stock,
         {
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
             80.0f,
             80.0f,
         },
@@ -222,43 +177,40 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
 
     EXPECT_CALL(configMock, getSellDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
 
     cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 80.0f, 100.0f, 0.04f);
 
-    ASSERT_EQ(cause, "");
-
     // ====================================================================
-    // TEST CASE: Extreme fall with triple check (negative yield)
+    // TEST CASE: Normal fall with double check
     // ====================================================================
     //
-    // ------------------------------------------------------------\
-    //                                                             |
-    //                                                              \
-    //                                                              |
+    // --------------------------------------------\
+    //                                             |
+    //                                             \-------\
+    //                                                      \
+    //                                                       \
+    //                                                        \-----\
     //                                                               \
-    //                                                               |
     //                                                                \
-    //                                                                |
     //                                                                 \--X
     //
 
     fillWithData(
         &stock,
         {
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            80.0f,
+            80.0f,
             80.0f,
             80.0f,
             80.0f,
@@ -268,66 +220,11 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
 
     EXPECT_CALL(configMock, getSellDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
 
     cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 80.0f, 100.0f, 0.04f);
 
-    ASSERT_EQ(
-        cause,
-        "Decided to sell because the price reached 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD and lost yield "
-        "-33.33% from the price 120.00 \u20BD at 2024-01-01 00:11:00 within last 10 minutes"
-    );
-
-    // ====================================================================
-    // TEST CASE: Extreme fall with triple check (positive yield)
-    // ====================================================================
-    //
-    // ------------------------------------------------------------\
-    //                                                             |
-    //                                                              \
-    //                                                              |
-    //                                                               \
-    //                                                               |
-    //                                                                \
-    //                                                                |
-    //                                                                 \--X
-    //
-
-    fillWithData(
-        &stock,
-        {
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-        },
-        true
-    );
-
-    EXPECT_CALL(configMock, getSellDecision3Config()).WillOnce(Return(&decisionConfigMock));
-    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
-
-    cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 120.0f, 100.0f, 0.04f);
-
-    ASSERT_EQ(
-        cause,
-        "Decided to sell because the price reached 120.00 \u20BD with yield +20.00% from the price 100.00 \u20BD and lost yield "
-        "-14.29% from the price 140.00 \u20BD at 2024-01-01 00:11:00 within last 10 minutes"
-    );
+    ASSERT_EQ(cause, "Decided to sell because the price fall to 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD");
 
     // ====================================================================
     // TEST CASE: Nothing happened to the price
@@ -360,67 +257,24 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
 
     EXPECT_CALL(configMock, getSellDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
 
     cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, 100.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
     // ====================================================================
-    // TEST CASE: Unexpected maximum
+    // TEST CASE: Normal fall without double check
     // ====================================================================
     //
-    //                                                                /\
-    //                                                                ||
-    //                                                               /  \
-    //                                                               |  |
-    // -------------------------------------------------------------/    \X
-    //
-
-    fillWithData(&stock, {}, false);
-    fillWithOperationalData(
-        &stock,
-        {
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            80.0f,
-            120.0f,
-            120.0f,
-            80.0f,
-        }
-    );
-
-    EXPECT_CALL(configMock, getSellDecision3Config()).WillOnce(Return(&decisionConfigMock));
-    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
-
-    cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 80.0f, 100.0f, 0.04f);
-
-    ASSERT_EQ(cause, "");
-
-    // ====================================================================
-    // TEST CASE: Extreme fall without triple check
-    // ====================================================================
-    //
-    // --------------------------------------------------------------\
-    //                                                               |
-    //                                                                \
-    //                                                                |
+    // ----------------------------------------------\
+    //                                               |
+    //                                               \-------\
+    //                                                        \
+    //                                                         \
+    //                                                          \-----\
     //                                                                 \
-    //                                                                 |
     //                                                                  \
-    //                                                                  |
     //                                                                   \X
     //
 
@@ -428,19 +282,19 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
     fillWithOperationalData(
         &stock,
         {
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
             80.0f,
             80.0f,
         }
@@ -448,25 +302,22 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
 
     EXPECT_CALL(configMock, getSellDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
 
     cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 80.0f, 100.0f, 0.04f);
 
-    ASSERT_EQ(cause, "");
-
     // ====================================================================
-    // TEST CASE: Extreme fall with triple check (negative yield)
+    // TEST CASE: Normal fall with double check
     // ====================================================================
     //
-    // ------------------------------------------------------------\
-    //                                                             |
-    //                                                              \
-    //                                                              |
+    // --------------------------------------------\
+    //                                             |
+    //                                             \-------\
+    //                                                      \
+    //                                                       \
+    //                                                        \-----\
     //                                                               \
-    //                                                               |
     //                                                                \
-    //                                                                |
     //                                                                 \--X
     //
 
@@ -474,18 +325,18 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
     fillWithOperationalData(
         &stock,
         {
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-            120.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            80.0f,
+            80.0f,
             80.0f,
             80.0f,
             80.0f,
@@ -494,72 +345,11 @@ TEST_F(Test_SellDecision3, Test_makeDecision)
 
     EXPECT_CALL(configMock, getSellDecision3Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2));
 
     cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 80.0f, 100.0f, 0.04f);
 
-    ASSERT_EQ(
-        cause,
-        QString(
-            "Decided to sell because the price reached 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD and lost "
-            "yield -33.33% from the price 120.00 \u20BD at %1 within last 10 minutes"
-        )
-            .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(11).timestamp).toString(DATETIME_FORMAT))
-    );
-
-    // ====================================================================
-    // TEST CASE: Extreme fall with triple check (positive yield)
-    // ====================================================================
-    //
-    // ------------------------------------------------------------\
-    //                                                             |
-    //                                                              \
-    //                                                              |
-    //                                                               \
-    //                                                               |
-    //                                                                \
-    //                                                                |
-    //                                                                 \--X
-    //
-
-    fillWithData(&stock, {}, false);
-    fillWithOperationalData(
-        &stock,
-        {
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            140.0f,
-            120.0f,
-            120.0f,
-            120.0f,
-        }
-    );
-
-    EXPECT_CALL(configMock, getSellDecision3Config()).WillOnce(Return(&decisionConfigMock));
-    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
-
-    cause = sellDecision3->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 120.0f, 100.0f, 0.04f);
-
-    ASSERT_EQ(
-        cause,
-        QString(
-            "Decided to sell because the price reached 120.00 \u20BD with yield +20.00% from the price 100.00 \u20BD and lost "
-            "yield -14.29% from the price 140.00 \u20BD at %1 within last 10 minutes"
-        )
-            .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(11).timestamp).toString(DATETIME_FORMAT))
-    );
+    ASSERT_EQ(cause, "Decided to sell because the price fall to 80.00 \u20BD with yield -20.00% from the price 100.00 \u20BD");
 }
 
 TEST_F(Test_SellDecision3, Test_asapMode)

@@ -35,12 +35,10 @@ public:
         IBuyDecision6ConfigWidgetFactory*  buyDecision6ConfigWidgetFactory,
         IBuyDecision7ConfigWidgetFactory*  buyDecision7ConfigWidgetFactory,
         IBuyDecision8ConfigWidgetFactory*  buyDecision8ConfigWidgetFactory,
-        IBuyDecision9ConfigWidgetFactory*  buyDecision9ConfigWidgetFactory,
         ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
-        ISellDecision5ConfigWidgetFactory* sellDecision5ConfigWidgetFactory,
         IUserStorage*                      userStorage,
         QWidget*                           parent = nullptr
     );

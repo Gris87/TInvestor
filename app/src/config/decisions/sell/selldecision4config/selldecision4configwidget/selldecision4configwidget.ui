@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>395</width>
-    <height>27</height>
+    <width>423</width>
+    <height>58</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Sell stocks if loss is more than</string>
+        <string>Sell stocks with Bollinger bands and interval is</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -42,7 +42,47 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="loseYieldDoubleSpinBox">
+      <widget class="QSpinBox" name="durationSpinBox">
+       <property name="suffix">
+        <string> minutes</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>100000</number>
+       </property>
+       <property name="value">
+        <number>15</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>and yield is above</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="yieldAboveDoubleSpinBox">
        <property name="suffix">
         <string notr="true"> %</string>
        </property>
@@ -50,19 +90,19 @@
         <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <double>5.000000000000000</double>
+        <double>1.000000000000000</double>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_2">
        <property name="text">
         <string>with commission</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>

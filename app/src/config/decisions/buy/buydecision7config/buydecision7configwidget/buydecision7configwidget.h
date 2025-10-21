@@ -8,9 +8,7 @@
 
 namespace Ui
 {
-
 class BuyDecision7ConfigWidget;
-
 }
 
 

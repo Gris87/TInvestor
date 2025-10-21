@@ -1,11 +1,9 @@
-Reorder decisions
-Remove buy decision 5
-Remove sell decision 3
 Refactor buy/sell decisions
 Real time for buy decision 6
 Real time for buy decision 7
 Real time for buy decision 8
 Real time for buy decision 9
+Double check operations clean refresh
 Different defaults based on commission
 Show warning if decisions config is not default
 Change best config search algorithm

@@ -7,8 +7,6 @@
 
 
 
-const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
-
 constexpr qint64 MS_IN_SECOND = 1000LL;
 constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
 
@@ -87,5 +85,5 @@ TEST_F(Test_BuyDecision6, Test_makeDecision)
 
 TEST_F(Test_BuyDecision6, Test_asapMode)
 {
-    ASSERT_EQ(buyDecision6->asapMode(), ASAP_MODE_NONE);
+    ASSERT_EQ(buyDecision6->asapMode(), ASAP_MODE_FOLLOW_PRICE);
 }

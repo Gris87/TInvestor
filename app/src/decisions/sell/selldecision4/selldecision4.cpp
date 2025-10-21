@@ -4,13 +4,18 @@
 
 
 
-constexpr int   MINUTES_TO_DOUBLE_CHECK = 5;
-constexpr float HUNDRED_PERCENT         = 100.0f;
+const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+
+constexpr double INCREDIBLE_SELL_COEF = 3.0;
+constexpr float  HUNDRED_PERCENT      = 100.0f;
+constexpr qint64 MS_IN_SECOND         = 1000LL;
+constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
 
 
 
-SellDecision4::SellDecision4() :
-    IActionDecision()
+SellDecision4::SellDecision4(IBollindger* bollindger) :
+    IActionDecision(),
+    mBollindger(bollindger)
 {
     qDebug() << "Create SellDecision4";
 }
@@ -20,21 +25,21 @@ SellDecision4::~SellDecision4()
     qDebug() << "Destroy SellDecision4";
 }
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString SellDecision4::makeDecision(
     QThread*              parentThread,
     IDecisionMakerConfig* config,
-    qint64 /*limitTimestamp*/,
-    Stock* stock,
-    bool   dateRange,
-    int    dataIndex,
-    float  price,
-    float  avgPrice,
-    float  commission
+    qint64                limitTimestamp,
+    Stock*                stock,
+    bool                  dateRange,
+    int                   dataIndex,
+    float                 price,
+    float                 avgPrice,
+    float                 commission
 )
 {
     Q_ASSERT_X(parentThread != nullptr, __FUNCTION__, "parentThread is invalid");
     Q_ASSERT_X(config != nullptr, __FUNCTION__, "config is invalid");
+    Q_ASSERT_X(limitTimestamp >= 0, __FUNCTION__, "limitTimestamp is invalid");
     Q_ASSERT_X(stock != nullptr, __FUNCTION__, "stock is invalid");
     Q_ASSERT_X(
         (dateRange && dataIndex >= 0 && dataIndex < stock->data.size()) || (!dateRange && dataIndex == -1),
@@ -49,84 +54,62 @@ QString SellDecision4::makeDecision(
 
     if (sellConfig->isEnabled())
     {
-        const float yield     = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-        const float loseYield = -sellConfig->getLoseYield() + (2 * commission);
+        const float coef = price / avgPrice;
 
-        if (yield <= loseYield)
+        if (coef < INCREDIBLE_SELL_COEF)
         {
-            if (dateRange)
+            const float yield      = (coef * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+            const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
+
+            if (yield >= yieldAbove)
             {
-                const StockData* stockData = stock->data.constData();
-
-                bool good = true;
-
-                int j           = dataIndex;
-                int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+                if (dateRange)
                 {
-                    const float prevPrice = stockData[j].price;
-                    const float prevYield = ((prevPrice / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                    if (prevYield > loseYield)
-                    {
-                        good = false;
-
-                        break;
-                    }
-
-                    --j;
-                    --minutesLeft;
-                }
-
-                if (good)
-                {
-                    return QObject::tr("Decided to sell because the price fall to %1 with yield %2 from the price %3")
-                        .arg(
-                            QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                            QString::number(yield, 'f', 2) + "%",
-                            QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
-                        );
+                    return makeDecisionBasedOnStockData(parentThread, sellConfig, limitTimestamp, stock, dataIndex);
                 }
             }
-            else
+        }
+    }
+
+    return "";
+}
+
+// NOLINTBEGIN(readability-function-cognitive-complexity)
+QString SellDecision4::makeDecisionBasedOnStockData(
+    QThread* parentThread, ISellDecision4Config* sellConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
+)
+{
+    const int duration = sellConfig->getDuration();
+
+    const StockData* stockData = stock->data.constData();
+
+    const qint64 currentTimestamp = stockData[dataIndex].timestamp;
+    limitTimestamp                = currentTimestamp - (duration * ONE_MINUTE);
+
+    for (int i = dataIndex - 1; i >= 2 && !parentThread->isInterruptionRequested(); --i)
+    {
+        const qint64 timestamp = stockData[i].timestamp;
+
+        if (timestamp < limitTimestamp)
+        {
+            const int startIndex = i - 2;
+
+            const double currentTopEdge        = mBollindger->getTopEdge(stock, startIndex + 2, dataIndex + 1);
+            const double previousTopEdge       = mBollindger->getTopEdge(stock, startIndex + 1, dataIndex);
+            const double beforePreviousTopEdge = mBollindger->getTopEdge(stock, startIndex, dataIndex - 1);
+
+            if (stockData[dataIndex].price < currentTopEdge && stockData[dataIndex - 1].price < previousTopEdge &&
+                stockData[dataIndex - 2].price > beforePreviousTopEdge)
             {
-                if (stock->operational.detailedData.size() > MINUTES_TO_DOUBLE_CHECK)
-                {
-                    const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
-
-                    bool good = true;
-
-                    int j           = stock->operational.detailedData.size() - 1;
-                    int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-                    {
-                        const float prevPrice = stockOperationalData[j].price;
-                        const float prevYield = ((prevPrice / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                        if (prevYield > loseYield)
-                        {
-                            good = false;
-
-                            break;
-                        }
-
-                        --j;
-                        --minutesLeft;
-                    }
-
-                    if (good)
-                    {
-                        return QObject::tr("Decided to sell because the price fall to %1 with yield %2 from the price %3")
-                            .arg(
-                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QString::number(yield, 'f', 2) + "%",
-                                QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
-                            );
-                    }
-                }
+                return QObject::tr("Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3")
+                    .arg(
+                        QString::number(stockData[dataIndex - 2].price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                        QString::number(beforePreviousTopEdge, 'f', stock->meta.pricePrecision) + " \u20BD",
+                        QDateTime::fromMSecsSinceEpoch(stockData[dataIndex - 2].timestamp).toString(DATETIME_FORMAT)
+                    );
             }
+
+            break;
         }
     }
 
@@ -136,5 +119,5 @@ QString SellDecision4::makeDecision(
 
 AsapMode SellDecision4::asapMode() const
 {
-    return ASAP_MODE_FOLLOW_PRICE;
+    return ASAP_MODE_NONE;
 }

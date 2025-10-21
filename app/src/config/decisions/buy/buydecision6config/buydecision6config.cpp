@@ -6,8 +6,9 @@
 
 
 
-constexpr bool ENABLED_DEFAULT  = true;
-constexpr int  DURATION_DEFAULT = 30;
+constexpr bool  ENABLED_DEFAULT  = true;
+constexpr float RSI_DEFAULT      = 25.0f;
+constexpr int   DURATION_DEFAULT = 15;
 
 
 
@@ -15,6 +16,7 @@ BuyDecision6Config::BuyDecision6Config() :
     IBuyDecision6Config(),
     mRwMutex(new QReadWriteLock()),
     mEnabled(),
+    mRsi(),
     mDuration()
 {
     qDebug() << "Create BuyDecision6Config";
@@ -50,6 +52,7 @@ void BuyDecision6Config::assign(IBuyDecision6Config* another)
     const QReadLocker         lock2(config.mRwMutex);
 
     mEnabled  = config.mEnabled;
+    mRsi      = config.mRsi;
     mDuration = config.mDuration;
 }
 
@@ -60,6 +63,7 @@ void BuyDecision6Config::makeDefault()
     qDebug() << "Set BuyDecision6Config to default";
 
     mEnabled  = ENABLED_DEFAULT;
+    mRsi      = RSI_DEFAULT;
     mDuration = DURATION_DEFAULT;
 }
 
@@ -71,6 +75,7 @@ void BuyDecision6Config::save(ISettingsEditor* settingsEditor, const QString& ty
 
     // clang-format off
     settingsEditor->setValue(type + "/Enabled",  mEnabled);
+    settingsEditor->setValue(type + "/Rsi",      mRsi);
     settingsEditor->setValue(type + "/Duration", mDuration);
     // clang-format on
 }
@@ -83,6 +88,7 @@ void BuyDecision6Config::load(ISettingsEditor* settingsEditor, const QString& ty
 
     // clang-format off
     mEnabled  = settingsEditor->value(type + "/Enabled",  mEnabled).toBool();
+    mRsi      = settingsEditor->value(type + "/Rsi",      mRsi).toFloat();
     mDuration = settingsEditor->value(type + "/Duration", mDuration).toInt();
     // clang-format on
 }
@@ -90,6 +96,11 @@ void BuyDecision6Config::load(ISettingsEditor* settingsEditor, const QString& ty
 static void configEnabledParse(BuyDecision6Config* config, simdjson::ondemand::value value)
 {
     config->setEnabled(value.get_bool());
+}
+
+static void configRsiParse(BuyDecision6Config* config, simdjson::ondemand::value value)
+{
+    config->setRsi(value.get_double_in_string());
 }
 
 static void configDurationParse(BuyDecision6Config* config, simdjson::ondemand::value value)
@@ -109,6 +120,7 @@ using ParseHandler = void (*)(BuyDecision6Config* config, simdjson::ondemand::va
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"enabled",  configEnabledParse },
+    {"rsi",      configRsiParse     },
     {"duration", configDurationParse}
 };
 // clang-format on
@@ -126,7 +138,8 @@ void BuyDecision6Config::fromJsonObject(simdjson::ondemand::object jsonObject) /
 
 QString BuyDecision6Config::toJsonString() const
 {
-    return QString(R"({"enabled":%1,"duration":%2})").arg(mEnabled ? "true" : "false", QString::number(mDuration));
+    return QString(R"({"enabled":%1,"rsi":"%2","duration":%3})")
+        .arg(mEnabled ? "true" : "false", QString::number(mRsi, 'f', 2), QString::number(mDuration));
 }
 
 QStringList BuyDecision6Config::variantsAsJson() const
@@ -135,11 +148,15 @@ QStringList BuyDecision6Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList durationVariants = {"15", "30", "60", "120", "180"};
+    const QStringList rsiVariants      = {"20.00", "25.00", "30.00", "35.00"};
+    const QStringList durationVariants = {"15", "20", "30"};
 
-    for (const QString& duration : durationVariants)
+    for (const QString& rsi : rsiVariants)
     {
-        res.append(QString(R"({"enabled":true,"duration":%1})").arg(duration));
+        for (const QString& duration : durationVariants)
+        {
+            res.append(QString(R"({"enabled":true,"rsi":"%1","duration":%2})").arg(rsi, duration));
+        }
     }
 
     return res;
@@ -157,6 +174,20 @@ bool BuyDecision6Config::isEnabled()
     const QReadLocker lock(mRwMutex);
 
     return mEnabled;
+}
+
+void BuyDecision6Config::setRsi(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mRsi = value;
+}
+
+float BuyDecision6Config::getRsi()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mRsi;
 }
 
 void BuyDecision6Config::setDuration(int value)

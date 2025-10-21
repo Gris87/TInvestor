@@ -251,8 +251,11 @@ void BiDirTradingControlThread::detectStocksForBiDirTrading(qint64 timestamp, bo
             QList<Stock*> stocks = mStocksStorage->getStocks();
             mStocksStorage->readUnlock();
 
+            const float hugeBid    = mConfig->getHugeBid();
+            const float hugeSpread = mConfig->getHugeSpread();
+
             DetectStocksForBiDirTradingInfo detectStocksForBiDirTradingInfo(
-                mGrpcClient, qualifiedUser, tradeHugeBid, tradeHugeSpread, mConfig->getHugeBid(), mConfig->getHugeSpread()
+                mGrpcClient, qualifiedUser, tradeHugeBid, tradeHugeSpread, hugeBid, hugeSpread
             );
             processInParallel(
                 QThread::currentThread(), stocks, detectStocksForBiDirTradingForParallel, &detectStocksForBiDirTradingInfo

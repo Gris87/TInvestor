@@ -28,12 +28,10 @@ DecisionMakerWidget::DecisionMakerWidget(
     IBuyDecision6ConfigWidgetFactory*  buyDecision6ConfigWidgetFactory,
     IBuyDecision7ConfigWidgetFactory*  buyDecision7ConfigWidgetFactory,
     IBuyDecision8ConfigWidgetFactory*  buyDecision8ConfigWidgetFactory,
-    IBuyDecision9ConfigWidgetFactory*  buyDecision9ConfigWidgetFactory,
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
     ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
-    ISellDecision5ConfigWidgetFactory* sellDecision5ConfigWidgetFactory,
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
     IOperationsTableModelFactory*      operationsTableModelFactory,
     ILogsTableModelFactory*            logsTableModelFactory,
@@ -87,12 +85,10 @@ DecisionMakerWidget::DecisionMakerWidget(
             buyDecision6ConfigWidgetFactory,
             buyDecision7ConfigWidgetFactory,
             buyDecision8ConfigWidgetFactory,
-            buyDecision9ConfigWidgetFactory,
             sellDecision1ConfigWidgetFactory,
             sellDecision2ConfigWidgetFactory,
             sellDecision3ConfigWidgetFactory,
-            sellDecision4ConfigWidgetFactory,
-            sellDecision5ConfigWidgetFactory
+            sellDecision4ConfigWidgetFactory
         ),
         ui->bestConfigTab
     );

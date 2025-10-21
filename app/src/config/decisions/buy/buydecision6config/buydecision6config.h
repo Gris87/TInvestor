@@ -36,11 +36,15 @@ public:
     void setEnabled(bool value) override;
     bool isEnabled() override;
 
+    void  setRsi(float value) override;
+    float getRsi() override;
+
     void setDuration(int value) override;
     int  getDuration() override;
 
 private:
     QReadWriteLock* mRwMutex;
     bool            mEnabled;
+    float           mRsi;
     int             mDuration;
 };

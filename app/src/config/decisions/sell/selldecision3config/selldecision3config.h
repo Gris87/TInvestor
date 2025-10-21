@@ -39,12 +39,8 @@ public:
     void  setLoseYield(float value) override;
     float getLoseYield() override;
 
-    void setDuration(int value) override;
-    int  getDuration() override;
-
 private:
     QReadWriteLock* mRwMutex;
     bool            mEnabled;
     float           mLoseYield;
-    int             mDuration;
 };

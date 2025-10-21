@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Buy stocks with Bollinger bands and interval is</string>
+        <string>Buy stocks if the price reaches market limit and hold the price for</string>
        </property>
        <property name="checked">
         <bool>true</bool>

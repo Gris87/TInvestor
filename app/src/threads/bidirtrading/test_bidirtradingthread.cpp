@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
-#include "src/config/decisions/sell/selldecision4config/iselldecision4config_mock.h"
+#include "src/config/decisions/sell/selldecision3config/iselldecision3config_mock.h"
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/grpc/igrpcretryclient_mock.h"
@@ -46,7 +46,7 @@ protected:
         logsThreadMock          = new StrictMock<LogsThreadMock>();
         simulatorConfigMock     = new StrictMock<DecisionMakerConfigMock>();
         autoPilotConfigMock     = new StrictMock<DecisionMakerConfigMock>();
-        sellDecision4ConfigMock = new StrictMock<SellDecision4ConfigMock>();
+        sellDecision3ConfigMock = new StrictMock<SellDecision3ConfigMock>();
 
         stock = new Stock();
 
@@ -84,7 +84,7 @@ protected:
         delete logsThreadMock;
         delete simulatorConfigMock;
         delete autoPilotConfigMock;
-        delete sellDecision4ConfigMock;
+        delete sellDecision3ConfigMock;
         delete stock;
     }
 
@@ -99,7 +99,7 @@ protected:
     StrictMock<LogsThreadMock>*          logsThreadMock;
     StrictMock<DecisionMakerConfigMock>* simulatorConfigMock;
     StrictMock<DecisionMakerConfigMock>* autoPilotConfigMock;
-    StrictMock<SellDecision4ConfigMock>* sellDecision4ConfigMock;
+    StrictMock<SellDecision3ConfigMock>* sellDecision3ConfigMock;
     Stock*                               stock;
 };
 
@@ -346,9 +346,9 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
-    EXPECT_CALL(*simulatorConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
-    EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
+    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
@@ -401,9 +401,9 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
-    EXPECT_CALL(*simulatorConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
-    EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
+    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
@@ -447,9 +447,9 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
-    EXPECT_CALL(*autoPilotConfigMock, getSellDecision4Config()).WillOnce(Return(sellDecision4ConfigMock));
-    EXPECT_CALL(*sellDecision4ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision4ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*autoPilotConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
+    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));

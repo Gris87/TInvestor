@@ -39,7 +39,4 @@ public:
 
     virtual void  setLoseYield(float value) = 0;
     virtual float getLoseYield()            = 0;
-
-    virtual void setDuration(int value) = 0;
-    virtual int  getDuration()          = 0;
 };

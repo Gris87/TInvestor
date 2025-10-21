@@ -36,15 +36,11 @@ public:
     void setEnabled(bool value) override;
     bool isEnabled() override;
 
-    void  setPriceRaise(float value) override;
-    float getPriceRaise() override;
-
     void setDuration(int value) override;
     int  getDuration() override;
 
 private:
     QReadWriteLock* mRwMutex;
     bool            mEnabled;
-    float           mPriceRaise;
     int             mDuration;
 };

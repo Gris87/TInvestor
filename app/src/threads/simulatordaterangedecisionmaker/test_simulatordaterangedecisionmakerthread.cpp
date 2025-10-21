@@ -24,7 +24,7 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr int AMOUNT_OF_BUY_DECISIONS = 9;
+constexpr int AMOUNT_OF_BUY_DECISIONS = 8;
 
 
 
@@ -132,7 +132,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     StrictMock<FileMock>* configFileWriteMock6   = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
     StrictMock<FileMock>* configFileWriteMock7   = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
     StrictMock<FileMock>* configFileWriteMock8   = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
-    StrictMock<FileMock>* configFileWriteMock9   = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
     StrictMock<FileMock>* configFileWriteMock    = new StrictMock<FileMock>(); // Will be deleted in initConfigs function
 
     QList<StrictMock<FileMock>*> configFileMocksForWriting = {
@@ -143,8 +142,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
         configFileWriteMock5,
         configFileWriteMock6,
         configFileWriteMock7,
-        configFileWriteMock8,
-        configFileWriteMock9
+        configFileWriteMock8
     };
 
     StrictMock<ConfigMock>              clonedConfigMock;
@@ -165,7 +163,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     StrictMock<FileMock>* configFileReadMock6 = new StrictMock<FileMock>(); // Will be deleted in loadConfigs function
     StrictMock<FileMock>* configFileReadMock7 = new StrictMock<FileMock>(); // Will be deleted in loadConfigs function
     StrictMock<FileMock>* configFileReadMock8 = new StrictMock<FileMock>(); // Will be deleted in loadConfigs function
-    StrictMock<FileMock>* configFileReadMock9 = new StrictMock<FileMock>(); // Will be deleted in loadConfigs function
 
     QList<StrictMock<FileMock>*> configFileMocksForReading = {
         configFileReadMock1,
@@ -175,8 +172,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
         configFileReadMock5,
         configFileReadMock6,
         configFileReadMock7,
-        configFileReadMock8,
-        configFileReadMock9
+        configFileReadMock8
     };
 
     thread->reset();
@@ -214,19 +210,18 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     Logo logo;
 
     QStringList configVariants = {
-        R"([{"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":true},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":true},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":true},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":true},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}}])",
-        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}}])"
+        R"([{"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":true},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":true},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":true},"b8":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])",
+        R"([{"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}}])"
     };
 
     QString configVariant = {
-        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}})"
+        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})"
     };
 
     QList<Stock*> stocks;
@@ -1044,15 +1039,14 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     InstrumentsForTrading emptyInstrumentsForTrading;
 
     QStringList bestConfigs = {
-        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":true},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":true},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":true},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":true},"b9":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}})",
-        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}})"
+        R"({"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":true},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":true},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":true},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":true},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":true},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":true},"b8":{"enabled":false},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})",
+        R"({"b1":{"enabled":false},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":true},"s1":{"enabled":false},"s2":{"enabled":true},"s3":{"enabled":false},"s4":{"enabled":false}})"
     };
 
     QString bestConfigsExtended = "[{}]";
@@ -1772,7 +1766,7 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
     Instruments instruments;
 
     QString configVariant = {
-        R"([{"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"b9":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false},"s5":{"enabled":false}}])"
+        R"([{"b1":{"enabled":true},"b2":{"enabled":false},"b3":{"enabled":false},"b4":{"enabled":false},"b5":{"enabled":false},"b6":{"enabled":false},"b7":{"enabled":false},"b8":{"enabled":false},"s1":{"enabled":true},"s2":{"enabled":false},"s3":{"enabled":false},"s4":{"enabled":false}}])"
     };
 
     QList<Stock*> stocks;

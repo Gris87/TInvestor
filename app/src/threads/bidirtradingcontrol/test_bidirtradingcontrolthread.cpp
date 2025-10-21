@@ -61,12 +61,14 @@ TEST_F(Test_BiDirTradingControlThread, Test_run)
 {
     const InSequence seq;
 
+    EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
     EXPECT_CALL(*timeUtilsMock, isWorkingHours(Ge(1704056400000))).WillOnce(Return(false));
 
     thread->run();
 }
 
-TEST_F(Test_BiDirTradingControlThread, Test_detectHugeSpreadStocks)
+TEST_F(Test_BiDirTradingControlThread, Test_detectStocksForBiDirTrading)
 {
     const InSequence seq;
 
@@ -90,7 +92,7 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectHugeSpreadStocks)
     askPrice->set_units(20);
     askPrice->set_nano(500000000);
 
-    bid->set_quantity(10);
+    bid->set_quantity(50);
     bid->set_allocated_price(bidPrice);
     ask->set_quantity(10);
     ask->set_allocated_price(askPrice);
@@ -103,11 +105,12 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectHugeSpreadStocks)
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*configMock, getHugeBid()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.3f));
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
 
-    thread->detectHugeSpreadStocks(1704092400000);
+    thread->detectStocksForBiDirTrading(1704092400000, true, true);
 }
 
 TEST_F(Test_BiDirTradingControlThread, Test_terminateThread)
