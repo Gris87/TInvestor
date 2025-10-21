@@ -51,7 +51,10 @@ QString BuyDecision8::makeDecision(
 
     if (buyConfig->isEnabled())
     {
-        return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, dataIndex, price);
+        if (dateRange)
+        {
+            return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, dataIndex, price);
+        }
     }
 
     return "";

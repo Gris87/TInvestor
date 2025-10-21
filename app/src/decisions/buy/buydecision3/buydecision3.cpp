@@ -60,10 +60,8 @@ QString BuyDecision3::makeDecision(
         {
             return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, dataIndex, price);
         }
-        else
-        {
-            return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, stock->data.size() - 1, price);
-        }
+
+        return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, stock->data.size() - 1, price);
     }
 
     return "";
