@@ -10,6 +10,7 @@
 
 constexpr float  HUNDRED_PERCENT            = 100.0f;
 constexpr float  LIMIT_COMMISSION           = 0.06f;
+constexpr int    ORDER_BOOK_DEPTH           = 20;
 constexpr int    AMOUNT_OF_LAST_INSTRUMENTS = 5;
 constexpr qint64 MS_IN_SECOND               = 1000LL;
 constexpr qint64 ONE_MINUTE                 = 60LL * MS_IN_SECOND;
@@ -31,8 +32,9 @@ BiDirTradingControlThread::BiDirTradingControlThread(
     mConfig(config),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
-    mMoscowTimezone("Europe/Moscow"),
     mLastDetectionTimestamp(),
+    mLastTradeHugeBid(),
+    mLastTradeHugeSpread(),
     mLastInstrumentsForBiDirTrading(),
     mLastInstrumentsId()
 {
@@ -50,23 +52,126 @@ void BiDirTradingControlThread::run()
 
     blockSignals(false);
 
-    const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+    const qint64 timestamp       = QDateTime::currentMSecsSinceEpoch();
+    const bool   tradeHugeBid    = mConfig->isTradeHugeBid();
+    const bool   tradeHugeSpread = mConfig->isTradeHugeSpread();
 
-    if (timestamp - mLastDetectionTimestamp > DETECTION_INTERVAL)
+    if (timestamp - mLastDetectionTimestamp > DETECTION_INTERVAL || mLastTradeHugeBid != tradeHugeBid ||
+        mLastTradeHugeSpread != tradeHugeSpread)
     {
-        detectHugeSpreadStocks(timestamp);
+        detectStocksForBiDirTrading(timestamp, tradeHugeBid, tradeHugeSpread);
 
         mLastDetectionTimestamp = timestamp;
+        mLastTradeHugeBid       = tradeHugeBid;
+        mLastTradeHugeSpread    = tradeHugeSpread;
     }
 
     qDebug() << "Finish BiDirTradingControlThread";
 }
 
-struct DetectHugeSpreadStocksInfo
+static BiDirTradingInfo
+checkStockForHugeBid(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinkoffOrderBook, Stock* stock, float hugeBid)
 {
-    explicit DetectHugeSpreadStocksInfo(IGrpcClient* _grpcClient, bool _qualifiedUser, float _hugeSpread) :
+    qint64 bids = 0;
+    qint64 asks = 0;
+
+    for (int i = 0; i < tinkoffOrderBook->bids_size(); ++i)
+    {
+        bids += tinkoffOrderBook->bids(i).quantity();
+    }
+
+    for (int i = 0; i < tinkoffOrderBook->asks_size(); ++i)
+    {
+        asks += tinkoffOrderBook->asks(i).quantity();
+    }
+
+    if (bids > 0 && asks > 0)
+    {
+        const float coef = static_cast<double>(bids) / static_cast<double>(asks);
+
+        if (coef > hugeBid)
+        {
+            return BiDirTradingInfo(
+                stock,
+                BIDIR_MODE_HUGE_BID,
+                QObject::tr("Decided to start reselling because amount of bids more than amount of asks in %1 times")
+                    .arg(QString::number(coef, 'f', 2))
+            );
+        }
+    }
+
+    return BiDirTradingInfo();
+}
+
+static BiDirTradingInfo
+checkStockForHugeSpread(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinkoffOrderBook, Stock* stock, float hugeSpread)
+{
+    const float bidPrice = quotationToFloat(tinkoffOrderBook->bids(0).price());
+    const float askPrice = quotationToFloat(tinkoffOrderBook->asks(0).price());
+
+    const float spread = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+    if (spread > hugeSpread)
+    {
+        return BiDirTradingInfo(
+            stock,
+            BIDIR_MODE_HUGE_SPREAD,
+            QObject::tr("Decided to start reselling because spread is %1").arg(QString::number(spread, 'f', 3) + "%")
+        );
+    }
+
+    return BiDirTradingInfo();
+}
+
+static BiDirTradingInfo checkStockForHugeBidOrSpread(
+    const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinkoffOrderBook,
+    Stock*                                                stock,
+    bool                                                  tradeHugeBid,
+    bool                                                  tradeHugeSpread,
+    float                                                 hugeBid,
+    float                                                 hugeSpread
+)
+{
+    BiDirTradingInfo res;
+
+    if (tradeHugeBid)
+    {
+        BiDirTradingInfo biDirTradingInfo = checkStockForHugeBid(tinkoffOrderBook, stock, hugeBid);
+
+        if (biDirTradingInfo.cause != "")
+        {
+            res = biDirTradingInfo;
+        }
+    }
+
+    if (tradeHugeSpread)
+    {
+        BiDirTradingInfo biDirTradingInfo = checkStockForHugeSpread(tinkoffOrderBook, stock, hugeSpread);
+
+        if (biDirTradingInfo.cause != "")
+        {
+            res = biDirTradingInfo;
+        }
+    }
+
+    return res;
+}
+
+struct DetectStocksForBiDirTradingInfo
+{
+    explicit DetectStocksForBiDirTradingInfo(
+        IGrpcClient* _grpcClient,
+        bool         _qualifiedUser,
+        bool         _tradeHugeBid,
+        bool         _tradeHugeSpread,
+        float        _hugeBid,
+        float        _hugeSpread
+    ) :
         grpcClient(_grpcClient),
         qualifiedUser(_qualifiedUser),
+        tradeHugeBid(_tradeHugeBid),
+        tradeHugeSpread(_tradeHugeSpread),
+        hugeBid(_hugeBid),
         hugeSpread(_hugeSpread)
     {
         results.resize(getCpuCount());
@@ -75,21 +180,28 @@ struct DetectHugeSpreadStocksInfo
 
     IGrpcClient*                      grpcClient;
     bool                              qualifiedUser;
+    bool                              tradeHugeBid;
+    bool                              tradeHugeSpread;
+    float                             hugeBid;
     float                             hugeSpread;
     QList<InstrumentsForBiDirTrading> results;
     InstrumentsForBiDirTrading*       resultsArray;
 };
 
-static void detectHugeSpreadStocksForParallel(
+static void detectStocksForBiDirTradingForParallel(
     QThread* parentThread, int threadId, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    DetectHugeSpreadStocksInfo* detectHugeSpreadStocksInfo = reinterpret_cast<DetectHugeSpreadStocksInfo*>(additionalArgs);
+    DetectStocksForBiDirTradingInfo* detectStocksForBiDirTradingInfo =
+        reinterpret_cast<DetectStocksForBiDirTradingInfo*>(additionalArgs);
 
-    IGrpcClient*                grpcClient    = detectHugeSpreadStocksInfo->grpcClient;
-    const bool                  qualifiedUser = detectHugeSpreadStocksInfo->qualifiedUser;
-    const float                 hugeSpread    = detectHugeSpreadStocksInfo->hugeSpread;
-    InstrumentsForBiDirTrading* resultsArray  = detectHugeSpreadStocksInfo->resultsArray;
+    IGrpcClient*                grpcClient      = detectStocksForBiDirTradingInfo->grpcClient;
+    const bool                  qualifiedUser   = detectStocksForBiDirTradingInfo->qualifiedUser;
+    const bool                  tradeHugeBid    = detectStocksForBiDirTradingInfo->tradeHugeBid;
+    const bool                  tradeHugeSpread = detectStocksForBiDirTradingInfo->tradeHugeSpread;
+    const float                 hugeBid         = detectStocksForBiDirTradingInfo->hugeBid;
+    const float                 hugeSpread      = detectStocksForBiDirTradingInfo->hugeSpread;
+    InstrumentsForBiDirTrading* resultsArray    = detectStocksForBiDirTradingInfo->resultsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -100,25 +212,18 @@ static void detectHugeSpreadStocksForParallel(
         if (qualifiedUser || !stock->meta.forQualInvestorFlag)
         {
             const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-                grpcClient->getOrderBook(parentThread, stock->meta.instrumentId, 1);
+                grpcClient->getOrderBook(parentThread, stock->meta.instrumentId, ORDER_BOOK_DEPTH);
 
             if (!parentThread->isInterruptionRequested() && tinkoffOrderBook != nullptr)
             {
                 if (tinkoffOrderBook->bids_size() > 0 && tinkoffOrderBook->asks_size() > 0)
                 {
-                    const float bidPrice = quotationToFloat(tinkoffOrderBook->bids(0).price());
-                    const float askPrice = quotationToFloat(tinkoffOrderBook->asks(0).price());
+                    const BiDirTradingInfo biDirTradingInfo =
+                        checkStockForHugeBidOrSpread(tinkoffOrderBook, stock, tradeHugeBid, tradeHugeSpread, hugeBid, hugeSpread);
 
-                    const float spread = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                    if (spread > hugeSpread)
+                    if (biDirTradingInfo.cause != "")
                     {
-                        resultsArray[threadId][stock->meta.instrumentId] = BiDirTradingInfo(
-                            stock,
-                            BIDIR_MODE_HUGE_SPREAD,
-                            QObject::tr("Decided to start reselling because spread is %1")
-                                .arg(QString::number(spread, 'f', 3) + "%")
-                        );
+                        resultsArray[threadId][stock->meta.instrumentId] = biDirTradingInfo;
                     }
                 }
             }
@@ -129,7 +234,7 @@ static void detectHugeSpreadStocksForParallel(
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
-void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
+void BiDirTradingControlThread::detectStocksForBiDirTrading(qint64 timestamp, bool tradeHugeBid, bool tradeHugeSpread)
 {
     InstrumentsForBiDirTrading instrumentsForTrading;
 
@@ -146,10 +251,14 @@ void BiDirTradingControlThread::detectHugeSpreadStocks(qint64 timestamp)
             QList<Stock*> stocks = mStocksStorage->getStocks();
             mStocksStorage->readUnlock();
 
-            DetectHugeSpreadStocksInfo detectHugeSpreadStocksInfo(mGrpcClient, qualifiedUser, mConfig->getHugeSpread());
-            processInParallel(QThread::currentThread(), stocks, detectHugeSpreadStocksForParallel, &detectHugeSpreadStocksInfo);
+            DetectStocksForBiDirTradingInfo detectStocksForBiDirTradingInfo(
+                mGrpcClient, qualifiedUser, tradeHugeBid, tradeHugeSpread, mConfig->getHugeBid(), mConfig->getHugeSpread()
+            );
+            processInParallel(
+                QThread::currentThread(), stocks, detectStocksForBiDirTradingForParallel, &detectStocksForBiDirTradingInfo
+            );
 
-            for (const InstrumentsForBiDirTrading& result : std::as_const(detectHugeSpreadStocksInfo.results))
+            for (const InstrumentsForBiDirTrading& result : std::as_const(detectStocksForBiDirTradingInfo.results))
             {
                 instrumentsForTrading.insert(result);
             }

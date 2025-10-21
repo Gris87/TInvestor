@@ -1083,6 +1083,11 @@
         <translation>Заявка выполнена. %1/%1 куплено по цене %2</translation>
     </message>
     <message>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="97"/>
+        <source>Decided to start reselling because amount of bids more than amount of asks in %1 times</source>
+        <translation>Решено начать перепродажу, потому что количество покупателей больше в %1 раза</translation>
+    </message>
+    <message>
         <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="119"/>
         <source>Decided to start reselling because spread is %1</source>
         <translation>Решено начать перепродажу, потому что спред %1</translation>
@@ -1111,11 +1116,6 @@
         <location filename="../../src/decisions/buy/buydecision9/buydecision9.cpp" line="90"/>
         <source>Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes</source>
         <translation>Решено покупать, потому что цена %1 выше SMA %2 и EMA %3 и RSI %4 меньше, чем %5 за последние %6 минут</translation>
-    </message>
-    <message>
-        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="159"/>
-        <source>Decided to buy because the price raise to %1 from %2 at %3 within last %4 minutes and the raise is %5</source>
-        <translation>Решено покупать, потому что цена выросла до %1 от %2* в %3 за последние %4 минут и рост составил %5</translation>
     </message>
 </context>
 <context>

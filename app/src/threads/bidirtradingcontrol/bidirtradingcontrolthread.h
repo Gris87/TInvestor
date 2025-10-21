@@ -34,7 +34,7 @@ public:
 
     void run() override;
 
-    void detectHugeSpreadStocks(qint64 timestamp);
+    void detectStocksForBiDirTrading(qint64 timestamp, bool tradeHugeBid, bool tradeHugeSpread);
 
     void terminateThread() override;
 
@@ -44,8 +44,9 @@ private:
     IConfig*                          mConfig;
     ITimeUtils*                       mTimeUtils;
     IGrpcClient*                      mGrpcClient;
-    QTimeZone                         mMoscowTimezone;
     qint64                            mLastDetectionTimestamp;
+    bool                              mLastTradeHugeBid;
+    bool                              mLastTradeHugeSpread;
     QList<InstrumentsForBiDirTrading> mLastInstrumentsForBiDirTrading;
     int                               mLastInstrumentsId;
 };

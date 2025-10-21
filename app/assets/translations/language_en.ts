@@ -1083,6 +1083,11 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="97"/>
+        <source>Decided to start reselling because amount of bids more than amount of asks in %1 times</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="119"/>
         <source>Decided to start reselling because spread is %1</source>
         <translation></translation>
@@ -1110,11 +1115,6 @@
     <message>
         <location filename="../../src/decisions/buy/buydecision9/buydecision9.cpp" line="90"/>
         <source>Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="159"/>
-        <source>Decided to buy because the price raise to %1 from %2 at %3 within last %4 minutes and the raise is %5</source>
         <translation></translation>
     </message>
 </context>

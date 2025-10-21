@@ -124,7 +124,7 @@ public:
         IFollowThread*                          followThread,
         IOrderBookThread*                       orderBookThread,
         ITradingThreadFactory*                  tradingThreadFactory,
-        IBiDirTradingThreadFactory*             bidirTradingThreadFactory,
+        IBiDirTradingThreadFactory*             biDirTradingThreadFactory,
         IFileDialogFactory*                     fileDialogFactory,
         ITimeUtils*                             timeUtils,
         ITradeUtils*                            tradeUtils,

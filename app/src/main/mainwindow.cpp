@@ -544,7 +544,7 @@ void MainWindow::makeDecisionTimerTicked()
         {
             mAutoPilotDecisionMakerThread->start();
 
-            if (mConfig->isTradeHugeSpread())
+            if (mConfig->isTradeHugeBid() || mConfig->isTradeHugeSpread())
             {
                 mBiDirTradingControlThread->start();
             }
@@ -756,7 +756,7 @@ void MainWindow::startAutoPilot()
         {
             mAutoPilotDecisionMakerThread->start();
 
-            if (mConfig->isTradeHugeSpread())
+            if (mConfig->isTradeHugeBid() || mConfig->isTradeHugeSpread())
             {
                 mBiDirTradingControlThread->start();
             }
@@ -1423,7 +1423,7 @@ void MainWindow::applyConfig()
     setCpuCount(mConfig->getCpuUsage());
     makeDecisionTimer.setInterval(mConfig->getMakeDecisionTimeout() * ONE_MINUTE);
 
-    if (!mConfig->isTradeHugeSpread())
+    if (!mConfig->isTradeHugeBid() && !mConfig->isTradeHugeSpread())
     {
         mBiDirTradingControlThread->terminateThread();
         mBiDirTradingControlThread->wait();
