@@ -87,7 +87,7 @@ checkStockForHugeBid(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinko
 
     if (bids > 0 && asks > 0)
     {
-        const float coef = static_cast<double>(bids) / static_cast<double>(asks);
+        const float coef = static_cast<double>(asks) / static_cast<double>(bids);
 
         if (coef > hugeBid)
         {
