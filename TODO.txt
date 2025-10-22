@@ -10,6 +10,7 @@ Inform about manual buy on huge fall
 Improve coverage
 Create release
 
+Add comments on decisions
 Asap mode immediately but with positive yield and small spread
 Sell into chunks
 

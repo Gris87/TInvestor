@@ -109,7 +109,7 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
         if (nextTimestamp - timestamp >= NIGHT_DELAY)
         {
             const float prevPrice    = stockData[i].price;
-            const float maximumPrice = prevPrice / (1 - (priceRaise / HUNDRED_PERCENT));
+            const float maximumPrice = prevPrice * (1 + (priceRaise / HUNDRED_PERCENT));
 
             if (doubleCheck(parentThread, stock, stockData, i + 1, nextTimestamp, maximumPrice))
             {
