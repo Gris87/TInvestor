@@ -98,49 +98,15 @@ QString BuyDecision2::makeDecisionBasedOnStockData(
 
         if (prevPrice >= maximumPrice)
         {
-            bool good = true;
-
-            int j           = i - 1;
-            int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-            while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-            {
-                if (stockData[j].price < maximumPrice)
-                {
-                    good = false;
-
-                    break;
-                }
-
-                --j;
-                --minutesLeft;
-            }
-
-            if (good)
+            if (doubleCheckBasedOnStockData(parentThread, stockData, i - 1, maximumPrice))
             {
                 const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
 
-                int j         = i - mStepForTripleCheck;
-                int hoursLeft = HOURS_TO_TRIPLE_CHECK;
-
-                while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
-                {
-                    if (stockData[j].price < tripleMinimumPrice)
-                    {
-                        good = false;
-
-                        break;
-                    }
-
-                    j -= mStepForTripleCheck;
-                    --hoursLeft;
-                }
-
-                if (good)
+                if (tripleCheck(parentThread, stockData, i - mStepForTripleCheck, tripleMinimumPrice))
                 {
                     const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
 
-                    for (j = dataIndex; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+                    for (int j = dataIndex; j >= 0 && !parentThread->isInterruptionRequested(); --j)
                     {
                         const float prevPrice2 = stockData[j].price;
 
@@ -204,82 +170,44 @@ QString BuyDecision2::makeDecisionBasedOnStockOperationalData(
 
         if (prevPrice >= maximumPrice)
         {
-            if (i >= MINUTES_TO_DOUBLE_CHECK)
+            if (doubleCheckBasedOnStockOperationalData(parentThread, stockOperationalData, i - 1, maximumPrice))
             {
-                bool good = true;
+                const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
 
-                int j           = i - 1;
-                int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+                if (tripleCheck(parentThread, stockData, stock->data.size() - 1, tripleMinimumPrice))
                 {
-                    if (stockOperationalData[j].price < maximumPrice)
+                    const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
+
+                    for (int j = stock->operational.detailedData.size() - 1; j >= 0 && !parentThread->isInterruptionRequested();
+                         --j)
                     {
-                        good = false;
+                        const float prevPrice2 = stockOperationalData[j].price;
 
-                        break;
-                    }
-
-                    --j;
-                    --minutesLeft;
-                }
-
-                if (good)
-                {
-                    const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
-
-                    int j         = stock->data.size() - 1;
-                    int hoursLeft = HOURS_TO_TRIPLE_CHECK;
-
-                    while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
-                    {
-                        if (stockData[j].price < tripleMinimumPrice)
+                        if (prevPrice2 >= maximumPrice)
                         {
-                            good = false;
-
                             break;
                         }
 
-                        j -= mStepForTripleCheck;
-                        --hoursLeft;
-                    }
-
-                    if (good)
-                    {
-                        const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
-
-                        for (j = stock->operational.detailedData.size() - 1; j >= 0 && !parentThread->isInterruptionRequested();
-                             --j)
+                        if (prevPrice2 <= minimumPrice)
                         {
-                            const float prevPrice2 = stockOperationalData[j].price;
+                            const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+                            const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
-                            if (prevPrice2 >= maximumPrice)
-                            {
-                                break;
-                            }
-
-                            if (prevPrice2 <= minimumPrice)
-                            {
-                                const float fall      = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-                                const float lostYield = ((price / prevPrice2) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                                return QObject::tr(
-                                           "Decided to buy because the price fall to %1 from %2 at %3 and lost "
-                                           "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall "
-                                           "is %8"
-                                )
-                                    .arg(
-                                        QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                        QString::number(lostYield, 'f', 2) + "%",
-                                        QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(stockOperationalData[j].timestamp)
-                                            .toString(DATETIME_FORMAT),
-                                        QString::number(duration),
-                                        QString::number(fall, 'f', 2) + "%"
-                                    );
-                            }
+                            return QObject::tr(
+                                       "Decided to buy because the price fall to %1 from %2 at %3 and lost "
+                                       "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall "
+                                       "is %8"
+                            )
+                                .arg(
+                                    QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                    QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                    QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                                    QString::number(lostYield, 'f', 2) + "%",
+                                    QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                    QDateTime::fromMSecsSinceEpoch(stockOperationalData[j].timestamp).toString(DATETIME_FORMAT),
+                                    QString::number(duration),
+                                    QString::number(fall, 'f', 2) + "%"
+                                );
                         }
                     }
                 }
@@ -288,4 +216,85 @@ QString BuyDecision2::makeDecisionBasedOnStockOperationalData(
     }
 
     return "";
+}
+
+bool BuyDecision2::doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float maximumPrice)
+{
+    bool res = false;
+
+    if (index >= MINUTES_TO_DOUBLE_CHECK - 1)
+    {
+        res = true;
+
+        int j           = index;
+        int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+        {
+            if (stockData[j].price < maximumPrice)
+            {
+                res = false;
+
+                break;
+            }
+
+            --j;
+            --minutesLeft;
+        }
+    }
+
+    return res;
+}
+
+bool BuyDecision2::doubleCheckBasedOnStockOperationalData(
+    QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float maximumPrice
+)
+{
+    bool res = false;
+
+    if (index >= MINUTES_TO_DOUBLE_CHECK - 1)
+    {
+        res = true;
+
+        int j           = index;
+        int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+        {
+            if (stockOperationalData[j].price < maximumPrice)
+            {
+                res = false;
+
+                break;
+            }
+
+            --j;
+            --minutesLeft;
+        }
+    }
+
+    return res;
+}
+
+bool BuyDecision2::tripleCheck(QThread* parentThread, const StockData* stockData, int index, float tripleMinimumPrice)
+{
+    bool res = true;
+
+    int j         = index;
+    int hoursLeft = HOURS_TO_TRIPLE_CHECK;
+
+    while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
+    {
+        if (stockData[j].price < tripleMinimumPrice)
+        {
+            res = false;
+
+            break;
+        }
+
+        j -= mStepForTripleCheck;
+        --hoursLeft;
+    }
+
+    return res;
 }

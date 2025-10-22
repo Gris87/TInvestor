@@ -86,27 +86,8 @@ QString BuyDecision8::makeDecisionBasedOnStockData(
             if (dataIndex - i > MINUTES_TO_DOUBLE_CHECK)
             {
                 limitTimestamp = stockData[dataIndex].timestamp - ONE_DAY;
-                bool good      = true;
 
-                for (int j = i - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
-                {
-                    const qint64 anotherTimestamp = stockData[j].timestamp;
-                    const float  anotherPrevPrice = stockData[j].price;
-
-                    if (anotherTimestamp < limitTimestamp)
-                    {
-                        break;
-                    }
-
-                    if (anotherPrevPrice > price)
-                    {
-                        good = false;
-
-                        break;
-                    }
-                }
-
-                if (good)
+                if (doubleCheck(parentThread, stockData, i - 1, limitTimestamp, price))
                 {
                     return QObject::tr("Decided to buy because the price reach market limit at %1 and hold it for %2 minutes")
                         .arg(QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD", QString::number(duration));
@@ -123,4 +104,29 @@ QString BuyDecision8::makeDecisionBasedOnStockData(
     }
 
     return "";
+}
+
+bool BuyDecision8::doubleCheck(QThread* parentThread, const StockData* stockData, int index, qint64 limitTimestamp, float price)
+{
+    bool res = true;
+
+    for (int j = index; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+    {
+        const qint64 anotherTimestamp = stockData[j].timestamp;
+        const float  anotherPrevPrice = stockData[j].price;
+
+        if (anotherTimestamp < limitTimestamp)
+        {
+            break;
+        }
+
+        if (anotherPrevPrice > price)
+        {
+            res = false;
+
+            break;
+        }
+    }
+
+    return res;
 }

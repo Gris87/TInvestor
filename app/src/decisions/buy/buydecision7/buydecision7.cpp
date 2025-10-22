@@ -108,34 +108,10 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
 
         if (nextTimestamp - timestamp >= NIGHT_DELAY)
         {
-            const qint64 anotherLimitTimestamp = nextTimestamp + (MINUTES_TO_CHECK * ONE_MINUTE);
-            const float  prevPrice             = stockData[i].price;
-            const float  maximumPrice          = prevPrice / (1 - (priceRaise / HUNDRED_PERCENT));
+            const float prevPrice    = stockData[i].price;
+            const float maximumPrice = prevPrice / (1 - (priceRaise / HUNDRED_PERCENT));
 
-            int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-            for (int j = i + 1; j < stock->data.size() && !parentThread->isInterruptionRequested(); ++j)
-            {
-                const qint64 anotherTimestamp = stockData[j].timestamp;
-                const float  anotherPrice     = stockData[j].price;
-
-                if (anotherTimestamp > anotherLimitTimestamp)
-                {
-                    break;
-                }
-
-                if (anotherPrice >= maximumPrice)
-                {
-                    --minutesLeft;
-
-                    if (minutesLeft <= 0)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            if (minutesLeft <= 0)
+            if (doubleCheck(parentThread, stock, stockData, i + 1, nextTimestamp, maximumPrice))
             {
                 ++successNights;
             }
@@ -157,3 +133,34 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
     return "";
 }
 // NOLINTEND(readability-function-cognitive-complexity)
+
+bool BuyDecision7::doubleCheck(
+    QThread* parentThread, Stock* stock, const StockData* stockData, int index, qint64 nextTimestamp, float maximumPrice
+)
+{
+    const qint64 anotherLimitTimestamp = nextTimestamp + (MINUTES_TO_CHECK * ONE_MINUTE);
+    int          minutesLeft           = MINUTES_TO_DOUBLE_CHECK;
+
+    for (int j = index; j < stock->data.size() && !parentThread->isInterruptionRequested(); ++j)
+    {
+        const qint64 anotherTimestamp = stockData[j].timestamp;
+        const float  anotherPrice     = stockData[j].price;
+
+        if (anotherTimestamp > anotherLimitTimestamp)
+        {
+            break;
+        }
+
+        if (anotherPrice >= maximumPrice)
+        {
+            --minutesLeft;
+
+            if (minutesLeft <= 0)
+            {
+                break;
+            }
+        }
+    }
+
+    return minutesLeft <= 0;
+}

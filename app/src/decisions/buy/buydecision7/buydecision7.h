@@ -36,6 +36,9 @@ private:
     QString makeDecisionBasedOnStockData(
         QThread* parentThread, IBuyDecision7Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
     );
+    bool doubleCheck(
+        QThread* parentThread, Stock* stock, const StockData* stockData, int index, qint64 nextTimestamp, float maximumPrice
+    );
 
     ITimeUtils* mTimeUtils;
 };

@@ -44,6 +44,11 @@ private:
     QString makeDecisionBasedOnStockOperationalData(
         QThread* parentThread, IBuyDecision1Config* buyConfig, qint64 limitTimestamp, Stock* stock, float price
     );
+    bool doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float maximumPrice);
+    bool doubleCheckBasedOnStockOperationalData(
+        QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float maximumPrice
+    );
+    bool tripleCheck(QThread* parentThread, const StockData* stockData, int index, float tripleMinimumPrice);
 
     int mStepForTripleCheck;
 };

@@ -98,29 +98,11 @@ QString BuyDecision4::makeDecisionBasedOnStockData(
 
         if (prevPrice >= maximumPrice)
         {
-            bool good = true;
-
-            int j           = i - 1;
-            int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-            while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-            {
-                if (stockData[j].price < maximumPrice)
-                {
-                    good = false;
-
-                    break;
-                }
-
-                --j;
-                --minutesLeft;
-            }
-
-            if (good)
+            if (doubleCheck(parentThread, stockData, i - 1, maximumPrice))
             {
                 const float minimumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
 
-                for (j = dataIndex; j >= 0 && !parentThread->isInterruptionRequested(); j -= mStep)
+                for (int j = dataIndex; j >= 0 && !parentThread->isInterruptionRequested(); j -= mStep)
                 {
                     const float prevPrice2 = stockData[j].price;
 
@@ -155,4 +137,27 @@ QString BuyDecision4::makeDecisionBasedOnStockData(
     }
 
     return "";
+}
+
+bool BuyDecision4::doubleCheck(QThread* parentThread, const StockData* stockData, int index, float maximumPrice)
+{
+    bool res = true;
+
+    int j           = index;
+    int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+    {
+        if (stockData[j].price < maximumPrice)
+        {
+            res = false;
+
+            break;
+        }
+
+        --j;
+        --minutesLeft;
+    }
+
+    return res;
 }

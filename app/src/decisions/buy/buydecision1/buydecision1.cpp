@@ -97,45 +97,11 @@ QString BuyDecision1::makeDecisionBasedOnStockData(
 
         if (prevPrice >= maximumPrice)
         {
-            bool good = true;
-
-            int j           = i - 1;
-            int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-            while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-            {
-                if (stockData[j].price < maximumPrice)
-                {
-                    good = false;
-
-                    break;
-                }
-
-                --j;
-                --minutesLeft;
-            }
-
-            if (good)
+            if (doubleCheckBasedOnStockData(parentThread, stockData, i - 1, maximumPrice))
             {
                 const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
 
-                int j         = i - mStepForTripleCheck;
-                int hoursLeft = HOURS_TO_TRIPLE_CHECK;
-
-                while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
-                {
-                    if (stockData[j].price < tripleMinimumPrice)
-                    {
-                        good = false;
-
-                        break;
-                    }
-
-                    j -= mStepForTripleCheck;
-                    --hoursLeft;
-                }
-
-                if (good)
+                if (tripleCheck(parentThread, stockData, i - mStepForTripleCheck, tripleMinimumPrice))
                 {
                     const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
@@ -183,66 +149,110 @@ QString BuyDecision1::makeDecisionBasedOnStockOperationalData(
 
         if (prevPrice >= maximumPrice)
         {
-            if (i >= MINUTES_TO_DOUBLE_CHECK)
+            if (doubleCheckBasedOnStockOperationalData(parentThread, stockOperationalData, i - 1, maximumPrice))
             {
-                bool good = true;
+                const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
 
-                int j           = i - 1;
-                int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-                while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+                if (tripleCheck(parentThread, stockData, stock->data.size() - 1, tripleMinimumPrice))
                 {
-                    if (stockOperationalData[j].price < maximumPrice)
-                    {
-                        good = false;
+                    const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
-                        break;
-                    }
-
-                    --j;
-                    --minutesLeft;
-                }
-
-                if (good)
-                {
-                    const float tripleMinimumPrice = prevPrice / (1 - (TRIPLE_MINIMUM_COEF * priceFall / HUNDRED_PERCENT));
-
-                    int j         = stock->data.size() - 1;
-                    int hoursLeft = HOURS_TO_TRIPLE_CHECK;
-
-                    while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
-                    {
-                        if (stockData[j].price < tripleMinimumPrice)
-                        {
-                            good = false;
-
-                            break;
-                        }
-
-                        j -= mStepForTripleCheck;
-                        --hoursLeft;
-                    }
-
-                    if (good)
-                    {
-                        const float fall = ((price / prevPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                        return QObject::tr(
-                                   "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
-                                   "fall is %5"
-                        )
-                            .arg(
-                                QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
-                                QString::number(duration),
-                                QString::number(fall, 'f', 2) + "%"
-                            );
-                    }
+                    return QObject::tr(
+                               "Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the "
+                               "fall is %5"
+                    )
+                        .arg(
+                            QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                            QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
+                            QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
+                            QString::number(duration),
+                            QString::number(fall, 'f', 2) + "%"
+                        );
                 }
             }
         }
     }
 
     return "";
+}
+
+bool BuyDecision1::doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float maximumPrice)
+{
+    bool res = false;
+
+    if (index >= MINUTES_TO_DOUBLE_CHECK - 1)
+    {
+        res = true;
+
+        int j           = index;
+        int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+        {
+            if (stockData[j].price < maximumPrice)
+            {
+                res = false;
+
+                break;
+            }
+
+            --j;
+            --minutesLeft;
+        }
+    }
+
+    return res;
+}
+
+bool BuyDecision1::doubleCheckBasedOnStockOperationalData(
+    QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float maximumPrice
+)
+{
+    bool res = false;
+
+    if (index >= MINUTES_TO_DOUBLE_CHECK - 1)
+    {
+        res = true;
+
+        int j           = index;
+        int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+        {
+            if (stockOperationalData[j].price < maximumPrice)
+            {
+                res = false;
+
+                break;
+            }
+
+            --j;
+            --minutesLeft;
+        }
+    }
+
+    return res;
+}
+
+bool BuyDecision1::tripleCheck(QThread* parentThread, const StockData* stockData, int index, float tripleMinimumPrice)
+{
+    bool res = true;
+
+    int j         = index;
+    int hoursLeft = HOURS_TO_TRIPLE_CHECK;
+
+    while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
+    {
+        if (stockData[j].price < tripleMinimumPrice)
+        {
+            res = false;
+
+            break;
+        }
+
+        j -= mStepForTripleCheck;
+        --hoursLeft;
+    }
+
+    return res;
 }

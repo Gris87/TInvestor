@@ -82,29 +82,9 @@ QString SellDecision3::makeDecisionBasedOnStockData(
     if (yield <= loseYield)
     {
         const StockData* stockData = stock->data.constData();
+        const float      minimumPrice = avgPrice * (1 + (loseYield / HUNDRED_PERCENT));
 
-        bool good = true;
-
-        int j           = dataIndex;
-        int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-        {
-            const float prevPrice = stockData[j].price;
-            const float prevYield = ((prevPrice / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-            if (prevYield > loseYield)
-            {
-                good = false;
-
-                break;
-            }
-
-            --j;
-            --minutesLeft;
-        }
-
-        if (good)
+        if (doubleCheckBasedOnStockData(parentThread, stockData, dataIndex, minimumPrice))
         {
             return QObject::tr("Decided to sell because the price fall to %1 with yield %2 from the price %3")
                 .arg(
@@ -130,29 +110,11 @@ QString SellDecision3::makeDecisionBasedOnStockOperationalData(
         if (stock->operational.detailedData.size() > MINUTES_TO_DOUBLE_CHECK)
         {
             const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
+            const float                 minimumPrice         = avgPrice * (1 + (loseYield / HUNDRED_PERCENT));
 
-            bool good = true;
-
-            int j           = stock->operational.detailedData.size() - 1;
-            int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
-
-            while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
-            {
-                const float prevPrice = stockOperationalData[j].price;
-                const float prevYield = ((prevPrice / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-                if (prevYield > loseYield)
-                {
-                    good = false;
-
-                    break;
-                }
-
-                --j;
-                --minutesLeft;
-            }
-
-            if (good)
+            if (doubleCheckBasedOnStockOperationalData(
+                    parentThread, stockOperationalData, stock->operational.detailedData.size() - 1, minimumPrice
+                ))
             {
                 return QObject::tr("Decided to sell because the price fall to %1 with yield %2 from the price %3")
                     .arg(
@@ -165,4 +127,62 @@ QString SellDecision3::makeDecisionBasedOnStockOperationalData(
     }
 
     return "";
+}
+
+bool SellDecision3::doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float minimumPrice)
+{
+    bool res = false;
+
+    if (index >= MINUTES_TO_DOUBLE_CHECK - 1)
+    {
+        res = true;
+
+        int j           = index;
+        int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+        {
+            if (stockData[j].price > minimumPrice)
+            {
+                res = false;
+
+                break;
+            }
+
+            --j;
+            --minutesLeft;
+        }
+    }
+
+    return res;
+}
+
+bool SellDecision3::doubleCheckBasedOnStockOperationalData(
+    QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float minimumPrice
+)
+{
+    bool res = false;
+
+    if (index >= MINUTES_TO_DOUBLE_CHECK - 1)
+    {
+        res = true;
+
+        int j           = index;
+        int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
+
+        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+        {
+            if (stockOperationalData[j].price > minimumPrice)
+            {
+                res = false;
+
+                break;
+            }
+
+            --j;
+            --minutesLeft;
+        }
+    }
+
+    return res;
 }
