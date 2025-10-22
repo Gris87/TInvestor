@@ -260,7 +260,6 @@ TEST_F(Test_SellDecision2, Test_makeDecision)
     EXPECT_CALL(configMock, getSellDecision2Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2.0f));
 
     cause = sellDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, 100.0f, 0.04f);
 
@@ -301,8 +300,6 @@ TEST_F(Test_SellDecision2, Test_makeDecision)
 
     EXPECT_CALL(configMock, getSellDecision2Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
     EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
 
@@ -357,142 +354,6 @@ TEST_F(Test_SellDecision2, Test_makeDecision)
             "yield -4.00% from the maximum price 125.00 \u20BD at %1"
         )
             .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(13).timestamp).toString(DATETIME_FORMAT))
-    );
-
-    // ====================================================================
-    // TEST CASE: Nothing happened to the price
-    // ====================================================================
-    //
-    // -------------------------------------------------------------------X
-    //
-
-    fillWithOperationalData(&stock, {});
-    fillWithData(
-        &stock,
-        {
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-        },
-        false
-    );
-
-    EXPECT_CALL(configMock, getSellDecision2Config()).WillOnce(Return(&decisionConfigMock));
-    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2.0f));
-
-    cause = sellDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, 100.0f, 0.04f);
-
-    ASSERT_EQ(cause, "");
-
-    // ====================================================================
-    // TEST CASE: TEST CASE: Normal raise without fall
-    // ====================================================================
-    //
-    //                                                                   /X
-    //                                                                  /
-    //                                                                 /
-    //                                                                /
-    // --------------------------------------------------------------/
-    //
-
-    fillWithOperationalData(&stock, {});
-    fillWithData(
-        &stock,
-        {
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            120.0f,
-            120.0f,
-        },
-        false
-    );
-
-    EXPECT_CALL(configMock, getSellDecision2Config()).WillOnce(Return(&decisionConfigMock));
-    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
-    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
-
-    cause = sellDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 120.0f, 100.0f, 0.04f);
-
-    ASSERT_EQ(cause, "");
-
-    // ====================================================================
-    // TEST CASE: TEST CASE: Normal raise with fall
-    // ====================================================================
-    //
-    //                                                                /\
-    //                                                               /  \
-    //                                                              /    \X
-    //                                                             /
-    // -----------------------------------------------------------/
-    //
-
-    fillWithOperationalData(&stock, {});
-    fillWithData(
-        &stock,
-        {
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            100.0f,
-            124.5f,
-            124.6f,
-            124.7f,
-            124.8f,
-            124.9f,
-            125.0f,
-            120.0f,
-        },
-        false
-    );
-
-    EXPECT_CALL(configMock, getSellDecision2Config()).WillOnce(Return(&decisionConfigMock));
-    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
-    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2.0f));
-    EXPECT_CALL(decisionConfigMock, getLoseYield()).WillOnce(Return(0.7f));
-
-    cause = sellDecision2->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 120.0f, 100.0f, 0.04f);
-
-    ASSERT_EQ(
-        cause,
-        QString(
-            "Decided to sell because the price reached 120.00 \u20BD with yield +20.00% from the price 100.00 \u20BD and lost "
-            "yield -4.00% from the maximum price 125.00 \u20BD at %1"
-        )
-            .arg(QDateTime::fromMSecsSinceEpoch(stock.data.at(13).timestamp).toString(DATETIME_FORMAT))
     );
 }
 

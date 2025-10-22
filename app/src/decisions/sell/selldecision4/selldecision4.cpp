@@ -56,9 +56,7 @@ QString SellDecision4::makeDecision(
     {
         if (dateRange)
         {
-            return makeDecisionBasedOnStockData(
-                parentThread, sellConfig, limitTimestamp, stock, dataIndex, price, avgPrice, commission
-            );
+            return makeDecisionBasedOnStockData(parentThread, sellConfig, stock, dataIndex, price, avgPrice, commission);
         }
     }
 
@@ -69,7 +67,6 @@ QString SellDecision4::makeDecision(
 QString SellDecision4::makeDecisionBasedOnStockData(
     QThread*              parentThread,
     ISellDecision4Config* sellConfig,
-    qint64                limitTimestamp,
     Stock*                stock,
     int                   dataIndex,
     float                 price,
@@ -91,7 +88,7 @@ QString SellDecision4::makeDecisionBasedOnStockData(
             const StockData* stockData = stock->data.constData();
 
             const qint64 currentTimestamp = stockData[dataIndex].timestamp;
-            limitTimestamp                = currentTimestamp - (duration * ONE_MINUTE);
+            const qint64 limitTimestamp   = currentTimestamp - (duration * ONE_MINUTE);
 
             for (int i = dataIndex; i >= 2 && !parentThread->isInterruptionRequested(); --i)
             {

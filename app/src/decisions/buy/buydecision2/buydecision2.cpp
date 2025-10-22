@@ -61,14 +61,7 @@ QString BuyDecision2::makeDecision(
             return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, dataIndex, price);
         }
 
-        QString cause = makeDecisionBasedOnStockOperationalData(parentThread, buyConfig, limitTimestamp, stock, price);
-
-        if (cause != "")
-        {
-            return cause;
-        }
-
-        return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, stock->data.size() - 1, price);
+        return makeDecisionBasedOnStockOperationalData(parentThread, buyConfig, limitTimestamp, stock, price);
     }
 
     return "";

@@ -56,14 +56,7 @@ QString SellDecision2::makeDecision(
             return makeDecisionBasedOnStockData(parentThread, sellConfig, stock, dataIndex, price, avgPrice, commission);
         }
 
-        QString cause = makeDecisionBasedOnStockOperationalData(parentThread, sellConfig, stock, price, avgPrice, commission);
-
-        if (cause != "")
-        {
-            return cause;
-        }
-
-        return makeDecisionBasedOnStockData(parentThread, sellConfig, stock, stock->data.size() - 1, price, avgPrice, commission);
+        return makeDecisionBasedOnStockOperationalData(parentThread, sellConfig, stock, price, avgPrice, commission);
     }
 
     return "";
