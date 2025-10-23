@@ -20,4 +20,10 @@ public:
 
     [[nodiscard]]
     virtual float getBottomEdge(Stock* stock, int startIndex, int endIndex) const = 0;
+
+    [[nodiscard]]
+    virtual float getTopEdgeOperational(Stock* stock, int startIndex, int endIndex) const = 0;
+
+    [[nodiscard]]
+    virtual float getBottomEdgeOperational(Stock* stock, int startIndex, int endIndex) const = 0;
 };

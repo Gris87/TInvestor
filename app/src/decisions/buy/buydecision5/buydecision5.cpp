@@ -54,6 +54,8 @@ QString BuyDecision5::makeDecision(
         {
             return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, dataIndex);
         }
+
+        return makeDecisionBasedOnStockOperationalData(parentThread, buyConfig, limitTimestamp, stock);
     }
 
     return "";
@@ -64,7 +66,6 @@ AsapMode BuyDecision5::asapMode() const
     return ASAP_MODE_NONE;
 }
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString BuyDecision5::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision5Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
 )
@@ -73,8 +74,7 @@ QString BuyDecision5::makeDecisionBasedOnStockData(
 
     const StockData* stockData = stock->data.constData();
 
-    const qint64 currentTimestamp = stockData[dataIndex].timestamp;
-    limitTimestamp                = currentTimestamp - (duration * ONE_MINUTE);
+    limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
 
     for (int i = dataIndex; i >= 2 && !parentThread->isInterruptionRequested(); --i)
     {
@@ -105,4 +105,52 @@ QString BuyDecision5::makeDecisionBasedOnStockData(
 
     return "";
 }
-// NOLINTEND(readability-function-cognitive-complexity)
+
+QString BuyDecision5::makeDecisionBasedOnStockOperationalData(
+    QThread* parentThread, IBuyDecision5Config* buyConfig, qint64 limitTimestamp, Stock* stock
+)
+{
+    const int duration = buyConfig->getDuration();
+
+    const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
+
+    limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE);
+
+    for (int i = stock->operational.detailedData.size() - 1; i >= 2 && !parentThread->isInterruptionRequested(); --i)
+    {
+        const qint64 timestamp = stockOperationalData[i].timestamp;
+
+        if (timestamp < limitTimestamp)
+        {
+            const int startIndex = i - 2;
+
+            const double currentBottomEdge =
+                mBollindger->getBottomEdgeOperational(stock, startIndex + 2, stock->operational.detailedData.size());
+            const double previousBottomEdge =
+                mBollindger->getBottomEdgeOperational(stock, startIndex + 1, stock->operational.detailedData.size() - 1);
+            const double beforePreviousBottomEdge =
+                mBollindger->getBottomEdgeOperational(stock, startIndex, stock->operational.detailedData.size() - 2);
+
+            if (stockOperationalData[stock->operational.detailedData.size() - 1].price > currentBottomEdge &&
+                stockOperationalData[stock->operational.detailedData.size() - 2].price > previousBottomEdge &&
+                stockOperationalData[stock->operational.detailedData.size() - 3].price < beforePreviousBottomEdge)
+            {
+                return QObject::tr("Decided to buy because the price %1 exceeds bottom Bollindger edge price %2 at %3")
+                    .arg(
+                        QString::number(
+                            stockOperationalData[stock->operational.detailedData.size() - 3].price,
+                            'f',
+                            stock->meta.pricePrecision
+                        ) + " \u20BD",
+                        QString::number(beforePreviousBottomEdge, 'f', stock->meta.pricePrecision) + " \u20BD",
+                        QDateTime::fromMSecsSinceEpoch(stockOperationalData[stock->operational.detailedData.size() - 3].timestamp)
+                            .toString(DATETIME_FORMAT)
+                    );
+            }
+
+            break;
+        }
+    }
+
+    return "";
+}

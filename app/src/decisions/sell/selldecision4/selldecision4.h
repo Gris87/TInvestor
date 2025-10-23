@@ -36,8 +36,18 @@ private:
     QString makeDecisionBasedOnStockData(
         QThread*              parentThread,
         ISellDecision4Config* sellConfig,
+        qint64                limitTimestamp,
         Stock*                stock,
         int                   dataIndex,
+        float                 price,
+        float                 avgPrice,
+        float                 commission
+    );
+    QString makeDecisionBasedOnStockOperationalData(
+        QThread*              parentThread,
+        ISellDecision4Config* sellConfig,
+        qint64                limitTimestamp,
+        Stock*                stock,
         float                 price,
         float                 avgPrice,
         float                 commission

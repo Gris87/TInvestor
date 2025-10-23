@@ -59,6 +59,8 @@ QString BuyDecision7::makeDecision(
         {
             return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, dataIndex);
         }
+
+        return makeDecisionBasedOnStockData(parentThread, buyConfig, limitTimestamp, stock, stock->data.size() - 1);
     }
 
     return "";

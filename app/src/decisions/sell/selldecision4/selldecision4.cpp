@@ -56,17 +56,28 @@ QString SellDecision4::makeDecision(
     {
         if (dateRange)
         {
-            return makeDecisionBasedOnStockData(parentThread, sellConfig, stock, dataIndex, price, avgPrice, commission);
+            return makeDecisionBasedOnStockData(
+                parentThread, sellConfig, limitTimestamp, stock, dataIndex, price, avgPrice, commission
+            );
         }
+
+        return makeDecisionBasedOnStockOperationalData(
+            parentThread, sellConfig, limitTimestamp, stock, price, avgPrice, commission
+        );
     }
 
     return "";
 }
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
+AsapMode SellDecision4::asapMode() const
+{
+    return ASAP_MODE_NONE;
+}
+
 QString SellDecision4::makeDecisionBasedOnStockData(
     QThread*              parentThread,
     ISellDecision4Config* sellConfig,
+    qint64                limitTimestamp,
     Stock*                stock,
     int                   dataIndex,
     float                 price,
@@ -87,8 +98,7 @@ QString SellDecision4::makeDecisionBasedOnStockData(
 
             const StockData* stockData = stock->data.constData();
 
-            const qint64 currentTimestamp = stockData[dataIndex].timestamp;
-            const qint64 limitTimestamp   = currentTimestamp - (duration * ONE_MINUTE);
+            limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
 
             for (int i = dataIndex; i >= 2 && !parentThread->isInterruptionRequested(); --i)
             {
@@ -121,9 +131,71 @@ QString SellDecision4::makeDecisionBasedOnStockData(
 
     return "";
 }
-// NOLINTEND(readability-function-cognitive-complexity)
 
-AsapMode SellDecision4::asapMode() const
+QString SellDecision4::makeDecisionBasedOnStockOperationalData(
+    QThread*              parentThread,
+    ISellDecision4Config* sellConfig,
+    qint64                limitTimestamp,
+    Stock*                stock,
+    float                 price,
+    float                 avgPrice,
+    float                 commission
+)
 {
-    return ASAP_MODE_NONE;
+    const float coef = price / avgPrice;
+
+    if (coef < INCREDIBLE_SELL_COEF)
+    {
+        const float yield      = (coef * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+        const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
+
+        if (yield >= yieldAbove)
+        {
+            const int duration = sellConfig->getDuration();
+
+            const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
+
+            limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE);
+
+            for (int i = stock->operational.detailedData.size() - 1; i >= 2 && !parentThread->isInterruptionRequested(); --i)
+            {
+                const qint64 timestamp = stockOperationalData[i].timestamp;
+
+                if (timestamp < limitTimestamp)
+                {
+                    const int startIndex = i - 2;
+
+                    const double currentTopEdge =
+                        mBollindger->getTopEdgeOperational(stock, startIndex + 2, stock->operational.detailedData.size());
+                    const double previousTopEdge =
+                        mBollindger->getTopEdgeOperational(stock, startIndex + 1, stock->operational.detailedData.size() - 1);
+                    const double beforePreviousTopEdge =
+                        mBollindger->getTopEdgeOperational(stock, startIndex, stock->operational.detailedData.size() - 2);
+
+                    if (stockOperationalData[stock->operational.detailedData.size() - 1].price < currentTopEdge &&
+                        stockOperationalData[stock->operational.detailedData.size() - 2].price < previousTopEdge &&
+                        stockOperationalData[stock->operational.detailedData.size() - 3].price > beforePreviousTopEdge)
+                    {
+                        return QObject::tr("Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3")
+                            .arg(
+                                QString::number(
+                                    stockOperationalData[stock->operational.detailedData.size() - 3].price,
+                                    'f',
+                                    stock->meta.pricePrecision
+                                ) + " \u20BD",
+                                QString::number(beforePreviousTopEdge, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                QDateTime::fromMSecsSinceEpoch(
+                                    stockOperationalData[stock->operational.detailedData.size() - 3].timestamp
+                                )
+                                    .toString(DATETIME_FORMAT)
+                            );
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+
+    return "";
 }

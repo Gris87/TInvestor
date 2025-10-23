@@ -81,7 +81,7 @@ QString SellDecision3::makeDecisionBasedOnStockData(
 
     if (yield <= loseYield)
     {
-        const StockData* stockData = stock->data.constData();
+        const StockData* stockData    = stock->data.constData();
         const float      minimumPrice = avgPrice * (1 + (loseYield / HUNDRED_PERCENT));
 
         if (doubleCheckBasedOnStockData(parentThread, stockData, dataIndex, minimumPrice))

@@ -26,4 +26,16 @@ public:
 
     [[nodiscard]]
     double getStandartDeviation(Stock* stock, int startIndex, int endIndex, double mean) const;
+
+    [[nodiscard]]
+    float getTopEdgeOperational(Stock* stock, int startIndex, int endIndex) const override;
+
+    [[nodiscard]]
+    float getBottomEdgeOperational(Stock* stock, int startIndex, int endIndex) const override;
+
+    [[nodiscard]]
+    double getMovingAverageOperational(Stock* stock, int startIndex, int endIndex) const;
+
+    [[nodiscard]]
+    double getStandartDeviationOperational(Stock* stock, int startIndex, int endIndex, double mean) const;
 };

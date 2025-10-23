@@ -1,7 +1,4 @@
-Real time for buy decision 6
-Real time for buy decision 7
-Real time for buy decision 8
-Real time for buy decision 9
+Analyze trading
 Different defaults based on commission
 Show warning if decisions config is not default
 Change best config search algorithm

@@ -36,6 +36,9 @@ private:
     QString makeDecisionBasedOnStockData(
         QThread* parentThread, IBuyDecision5Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
     );
+    QString makeDecisionBasedOnStockOperationalData(
+        QThread* parentThread, IBuyDecision5Config* buyConfig, qint64 limitTimestamp, Stock* stock
+    );
 
     IBollindger* mBollindger;
 };

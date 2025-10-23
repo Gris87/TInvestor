@@ -22,4 +22,6 @@ public:
 
     MOCK_METHOD(float, getTopEdge, (Stock * stock, int startIndex, int endIndex), (const, override));
     MOCK_METHOD(float, getBottomEdge, (Stock * stock, int startIndex, int endIndex), (const, override));
+    MOCK_METHOD(float, getTopEdgeOperational, (Stock * stock, int startIndex, int endIndex), (const, override));
+    MOCK_METHOD(float, getBottomEdgeOperational, (Stock * stock, int startIndex, int endIndex), (const, override));
 };
