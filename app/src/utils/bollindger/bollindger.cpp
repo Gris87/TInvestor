@@ -67,7 +67,6 @@ double Bollindger::getStandartDeviation(Stock* stock, int startIndex, int endInd
     return qSqrt(total / (endIndex - startIndex + 1));
 }
 
-
 float Bollindger::getTopEdgeOperational(Stock* stock, int startIndex, int endIndex) const
 {
     if (startIndex >= endIndex)
