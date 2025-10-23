@@ -18,7 +18,7 @@ DECISION_5 = "Decision 5"
 DECISION_6 = "Decision 6"
 DECISION_7 = "Decision 7"
 DECISION_8 = "Decision 8"
-DECISION_9 = "Decision 9"
+DECISION_HUGE_BID = "Huge bid"
 DECISION_HUGE_SPREAD = "Huge spread"
 DECISION_HIGH_LIQUIDITY = "High liquidity"
 DECISION_OTHER = "Other"
@@ -110,7 +110,7 @@ def _collect_statistics(operations, logs):
                 DECISION_6: 0,
                 DECISION_7: 0,
                 DECISION_8: 0,
-                DECISION_9: 0,
+                DECISION_HUGE_BID: 0,
                 DECISION_HUGE_SPREAD: 0,
                 DECISION_HIGH_LIQUIDITY: 0,
                 DECISION_OTHER: 0,
@@ -133,7 +133,7 @@ def _collect_statistics(operations, logs):
         DECISION_6: 0,
         DECISION_7: 0,
         DECISION_8: 0,
-        DECISION_9: 0,
+        DECISION_HUGE_BID: 0,
         DECISION_HUGE_SPREAD: 0,
         DECISION_HIGH_LIQUIDITY: 0,
         DECISION_OTHER: 0,
@@ -147,7 +147,7 @@ def _collect_statistics(operations, logs):
         DECISION_6: 0,
         DECISION_7: 0,
         DECISION_8: 0,
-        DECISION_9: 0,
+        DECISION_HUGE_BID: 0,
         DECISION_HUGE_SPREAD: 0,
         DECISION_HIGH_LIQUIDITY: 0,
         DECISION_OTHER: 0,
@@ -161,7 +161,7 @@ def _collect_statistics(operations, logs):
         DECISION_6: 0,
         DECISION_7: 0,
         DECISION_8: 0,
-        DECISION_9: 0,
+        DECISION_HUGE_BID: 0,
         DECISION_HUGE_SPREAD: 0,
         DECISION_HIGH_LIQUIDITY: 0,
         DECISION_OTHER: 0,
@@ -300,7 +300,7 @@ def _create_daily_decision_yield_sheet(workbook, stats):
                 entry[DECISION_6],
                 entry[DECISION_7],
                 entry[DECISION_8],
-                entry[DECISION_9],
+                entry[DECISION_HUGE_BID],
                 entry[DECISION_HUGE_SPREAD],
                 entry[DECISION_HIGH_LIQUIDITY],
                 entry[DECISION_OTHER],
@@ -324,7 +324,7 @@ def _create_daily_decision_yield_sheet(workbook, stats):
                 {"header": DECISION_6},
                 {"header": DECISION_7},
                 {"header": DECISION_8},
-                {"header": DECISION_9},
+                {"header": DECISION_HUGE_BID},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -464,7 +464,7 @@ def _create_combined_yield_sheet(workbook, stats):
             combined[DECISION_6],
             combined[DECISION_7],
             combined[DECISION_8],
-            combined[DECISION_9],
+            combined[DECISION_HUGE_BID],
             combined[DECISION_HUGE_SPREAD],
             combined[DECISION_HIGH_LIQUIDITY],
             combined[DECISION_OTHER],
@@ -486,7 +486,7 @@ def _create_combined_yield_sheet(workbook, stats):
                 {"header": DECISION_6},
                 {"header": DECISION_7},
                 {"header": DECISION_8},
-                {"header": DECISION_9},
+                {"header": DECISION_HUGE_BID},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -643,7 +643,7 @@ def _create_combined_positive_yield_sheet(workbook, stats):
             combined[DECISION_6],
             combined[DECISION_7],
             combined[DECISION_8],
-            combined[DECISION_9],
+            combined[DECISION_HUGE_BID],
             combined[DECISION_HUGE_SPREAD],
             combined[DECISION_HIGH_LIQUIDITY],
             combined[DECISION_OTHER],
@@ -665,7 +665,7 @@ def _create_combined_positive_yield_sheet(workbook, stats):
                 {"header": DECISION_6},
                 {"header": DECISION_7},
                 {"header": DECISION_8},
-                {"header": DECISION_9},
+                {"header": DECISION_HUGE_BID},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -720,7 +720,7 @@ def _create_combined_negative_yield_sheet(workbook, stats):
             combined[DECISION_6],
             combined[DECISION_7],
             combined[DECISION_8],
-            combined[DECISION_9],
+            combined[DECISION_HUGE_BID],
             combined[DECISION_HUGE_SPREAD],
             combined[DECISION_HIGH_LIQUIDITY],
             combined[DECISION_OTHER],
@@ -742,7 +742,7 @@ def _create_combined_negative_yield_sheet(workbook, stats):
                 {"header": DECISION_6},
                 {"header": DECISION_7},
                 {"header": DECISION_8},
-                {"header": DECISION_9},
+                {"header": DECISION_HUGE_BID},
                 {"header": DECISION_HUGE_SPREAD},
                 {"header": DECISION_HIGH_LIQUIDITY},
                 {"header": DECISION_OTHER},
@@ -881,10 +881,10 @@ def _get_buy_decision_from_log_message(log_message):
     if match is not None:
         return DECISION_8
 
-    match = decision_9_regexp.match(log_message)
+    match = huge_bid_regexp.match(log_message)
 
     if match is not None:
-        return DECISION_9
+        return DECISION_HUGE_BID
 
     match = huge_spread_regexp.match(log_message)
 
