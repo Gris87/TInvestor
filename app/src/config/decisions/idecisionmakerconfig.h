@@ -32,7 +32,7 @@ public:
     virtual IDecisionMakerConfig* clone()                               = 0;
     virtual void                  deleteRecursively()                   = 0;
     virtual void                  assign(IDecisionMakerConfig* another) = 0;
-    virtual void                  makeDefault()                         = 0;
+    virtual void                  makeDefault(int commissionInt)        = 0;
 
     virtual void save(ISettingsEditor* settingsEditor, const QString& type) = 0;
     virtual void load(ISettingsEditor* settingsEditor, const QString& type) = 0;

@@ -20,7 +20,7 @@ public:
     IBuyDecision6Config* clone() override;
     void                 deleteRecursively() override;
     void                 assign(IBuyDecision6Config* another) override;
-    void                 makeDefault() override;
+    void                 makeDefault(int commissionInt) override;
 
     void save(ISettingsEditor* settingsEditor, const QString& type) override;
     void load(ISettingsEditor* settingsEditor, const QString& type) override;

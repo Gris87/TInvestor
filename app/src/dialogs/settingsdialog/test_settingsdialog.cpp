@@ -107,7 +107,7 @@ protected:
             .WillOnce(Return(autoPilotConfigWidgetMock));
 
         EXPECT_CALL(*userStorageMock, readLock());
-        EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+        EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
         EXPECT_CALL(*userStorageMock, readUnlock());
 
         dialog = new SettingsDialog(
@@ -1042,7 +1042,10 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
 
-    EXPECT_CALL(*configMock, makeDefault());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*configMock, makeDefault(0.04f));
 
     EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());

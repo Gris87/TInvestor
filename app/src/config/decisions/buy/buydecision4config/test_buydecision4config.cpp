@@ -119,7 +119,25 @@ TEST_F(Test_BuyDecision4Config, Test_makeDefault)
     ASSERT_EQ(config->getDuration(),  123);
     // clang-format on
 
-    config->makeDefault();
+    config->makeDefault(30);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),    true);
+    ASSERT_EQ(config->getPriceFall(), 10.0f);
+    ASSERT_EQ(config->getLoseYield(), 1.0f);
+    ASSERT_EQ(config->getDuration(),  7);
+    // clang-format on
+
+    config->makeDefault(5);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),    true);
+    ASSERT_EQ(config->getPriceFall(), 10.0f);
+    ASSERT_EQ(config->getLoseYield(), 1.0f);
+    ASSERT_EQ(config->getDuration(),  7);
+    // clang-format on
+
+    config->makeDefault(4);
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),    true);

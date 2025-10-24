@@ -210,20 +210,20 @@ TEST_F(Test_DecisionMakerConfig, Test_makeDefault)
 {
     const InSequence seq;
 
-    EXPECT_CALL(*buyDecision1ConfigMock, makeDefault());
-    EXPECT_CALL(*buyDecision2ConfigMock, makeDefault());
-    EXPECT_CALL(*buyDecision3ConfigMock, makeDefault());
-    EXPECT_CALL(*buyDecision4ConfigMock, makeDefault());
-    EXPECT_CALL(*buyDecision5ConfigMock, makeDefault());
-    EXPECT_CALL(*buyDecision6ConfigMock, makeDefault());
-    EXPECT_CALL(*buyDecision7ConfigMock, makeDefault());
-    EXPECT_CALL(*buyDecision8ConfigMock, makeDefault());
-    EXPECT_CALL(*sellDecision1ConfigMock, makeDefault());
-    EXPECT_CALL(*sellDecision2ConfigMock, makeDefault());
-    EXPECT_CALL(*sellDecision3ConfigMock, makeDefault());
-    EXPECT_CALL(*sellDecision4ConfigMock, makeDefault());
+    EXPECT_CALL(*buyDecision1ConfigMock, makeDefault(4));
+    EXPECT_CALL(*buyDecision2ConfigMock, makeDefault(4));
+    EXPECT_CALL(*buyDecision3ConfigMock, makeDefault(4));
+    EXPECT_CALL(*buyDecision4ConfigMock, makeDefault(4));
+    EXPECT_CALL(*buyDecision5ConfigMock, makeDefault(4));
+    EXPECT_CALL(*buyDecision6ConfigMock, makeDefault(4));
+    EXPECT_CALL(*buyDecision7ConfigMock, makeDefault(4));
+    EXPECT_CALL(*buyDecision8ConfigMock, makeDefault(4));
+    EXPECT_CALL(*sellDecision1ConfigMock, makeDefault(4));
+    EXPECT_CALL(*sellDecision2ConfigMock, makeDefault(4));
+    EXPECT_CALL(*sellDecision3ConfigMock, makeDefault(4));
+    EXPECT_CALL(*sellDecision4ConfigMock, makeDefault(4));
 
-    config->makeDefault();
+    config->makeDefault(4);
 }
 
 TEST_F(Test_DecisionMakerConfig, Test_save)

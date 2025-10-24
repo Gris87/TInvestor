@@ -98,21 +98,37 @@ TEST_F(Test_BuyDecision1Config, Test_assign)
 TEST_F(Test_BuyDecision1Config, Test_makeDefault)
 {
     config->setEnabled(false);
-    config->setPriceFall(2.5f);
+    config->setPriceFall(22.5f);
     config->setDuration(123);
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),    false);
-    ASSERT_EQ(config->getPriceFall(), 2.5f);
+    ASSERT_EQ(config->getPriceFall(), 22.5f);
     ASSERT_EQ(config->getDuration(),  123);
     // clang-format on
 
-    config->makeDefault();
+    config->makeDefault(30);
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),    true);
-    ASSERT_EQ(config->getPriceFall(), 2.5f);
-    ASSERT_EQ(config->getDuration(),  30);
+    ASSERT_EQ(config->getPriceFall(), 4.5f);
+    ASSERT_EQ(config->getDuration(),  60);
+    // clang-format on
+
+    config->makeDefault(5);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),    true);
+    ASSERT_EQ(config->getPriceFall(), 4.5f);
+    ASSERT_EQ(config->getDuration(),  60);
+    // clang-format on
+
+    config->makeDefault(4);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),    true);
+    ASSERT_EQ(config->getPriceFall(), 4.5f);
+    ASSERT_EQ(config->getDuration(),  60);
     // clang-format on
 }
 

@@ -23,7 +23,7 @@ public:
     MOCK_METHOD(IConfig*, clone, (), (override));
     MOCK_METHOD(void, deleteRecursively, (), (override));
     MOCK_METHOD(void, assign, (IConfig * another), (override));
-    MOCK_METHOD(void, makeDefault, (), (override));
+    MOCK_METHOD(void, makeDefault, (float commission), (override));
 
     MOCK_METHOD(void, save, (ISettingsEditor * settingsEditor), (override));
     MOCK_METHOD(void, load, (ISettingsEditor * settingsEditor), (override));

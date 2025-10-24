@@ -51,7 +51,8 @@ SettingsDialog::SettingsDialog(
 ) :
     ISettingsDialog(parent),
     ui(new Ui::SettingsDialog),
-    mConfig(config)
+    mConfig(config),
+    mUserStorage(userStorage)
 {
     qDebug() << "Create SettingsDialog";
 
@@ -97,9 +98,9 @@ SettingsDialog::SettingsDialog(
     ui->layoutForSimulatorConfigWidget->addWidget(mSimulatorConfigWidget);
     ui->layoutForAutoPilotConfigWidget->addWidget(mAutoPilotConfigWidget);
 
-    userStorage->readLock();
-    const float commission = userStorage->getCommission();
-    userStorage->readUnlock();
+    mUserStorage->readLock();
+    const float commission = mUserStorage->getCommission();
+    mUserStorage->readUnlock();
 
     ui->autorunCheckBox->setText(
         tr("Autorun on %1 startup").arg(QSysInfo::productType().at(0).toUpper() + QSysInfo::productType().mid(1))
@@ -431,6 +432,10 @@ void SettingsDialog::on_cancelButton_clicked()
 
 void SettingsDialog::on_defaultButton_clicked()
 {
-    mConfig->makeDefault();
+    mUserStorage->readLock();
+    const float commission = mUserStorage->getCommission();
+    mUserStorage->readUnlock();
+
+    mConfig->makeDefault(commission);
     updateUiFromConfig();
 }

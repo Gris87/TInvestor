@@ -1,5 +1,5 @@
 Analyze trading
-Different defaults based on commission
+Change translation huge bid => huge ask
 Show warning if decisions config is not default
 Change best config search algorithm
 Find best configs for different commission

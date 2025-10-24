@@ -95,7 +95,21 @@ TEST_F(Test_SellDecision1Config, Test_makeDefault)
     ASSERT_EQ(config->getYieldAbove(), 2.5f);
     // clang-format on
 
-    config->makeDefault();
+    config->makeDefault(30);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),     true);
+    ASSERT_EQ(config->getYieldAbove(), 0.5f);
+    // clang-format on
+
+    config->makeDefault(5);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),     true);
+    ASSERT_EQ(config->getYieldAbove(), 0.5f);
+    // clang-format on
+
+    config->makeDefault(4);
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),     true);

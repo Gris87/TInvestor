@@ -53,6 +53,7 @@ public:
 
 private:
     IConfig*                    mConfig;
+    IUserStorage*               mUserStorage;
     IDecisionMakerConfigWidget* mSimulatorConfigWidget;
     IDecisionMakerConfigWidget* mAutoPilotConfigWidget;
 

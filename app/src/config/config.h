@@ -20,7 +20,7 @@ public:
     IConfig* clone() override;
     void     deleteRecursively() override;
     void     assign(IConfig* another) override;
-    void     makeDefault() override;
+    void     makeDefault(float commission) override;
 
     void save(ISettingsEditor* settingsEditor) override;
     void load(ISettingsEditor* settingsEditor) override;

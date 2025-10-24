@@ -114,22 +114,22 @@ void DecisionMakerConfig::assign(IDecisionMakerConfig* another)
     mSellDecision4Config->assign(config.mSellDecision4Config);
 }
 
-void DecisionMakerConfig::makeDefault()
+void DecisionMakerConfig::makeDefault(int commissionInt)
 {
     qDebug() << "Set DecisionMakerConfig to default";
 
-    mBuyDecision1Config->makeDefault();
-    mBuyDecision2Config->makeDefault();
-    mBuyDecision3Config->makeDefault();
-    mBuyDecision4Config->makeDefault();
-    mBuyDecision5Config->makeDefault();
-    mBuyDecision6Config->makeDefault();
-    mBuyDecision7Config->makeDefault();
-    mBuyDecision8Config->makeDefault();
-    mSellDecision1Config->makeDefault();
-    mSellDecision2Config->makeDefault();
-    mSellDecision3Config->makeDefault();
-    mSellDecision4Config->makeDefault();
+    mBuyDecision1Config->makeDefault(commissionInt);
+    mBuyDecision2Config->makeDefault(commissionInt);
+    mBuyDecision3Config->makeDefault(commissionInt);
+    mBuyDecision4Config->makeDefault(commissionInt);
+    mBuyDecision5Config->makeDefault(commissionInt);
+    mBuyDecision6Config->makeDefault(commissionInt);
+    mBuyDecision7Config->makeDefault(commissionInt);
+    mBuyDecision8Config->makeDefault(commissionInt);
+    mSellDecision1Config->makeDefault(commissionInt);
+    mSellDecision2Config->makeDefault(commissionInt);
+    mSellDecision3Config->makeDefault(commissionInt);
+    mSellDecision4Config->makeDefault(commissionInt);
 }
 
 void DecisionMakerConfig::save(ISettingsEditor* settingsEditor, const QString& type)

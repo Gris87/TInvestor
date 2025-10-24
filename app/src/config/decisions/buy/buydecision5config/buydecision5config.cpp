@@ -6,8 +6,20 @@
 
 
 
-constexpr bool ENABLED_DEFAULT  = true;
-constexpr int  DURATION_DEFAULT = 30;
+constexpr int COMMISSION_30 = 30;
+constexpr int COMMISSION_5  = 5;
+
+// For commission 0.30%
+constexpr bool ENABLED_DEFAULT_30  = true;
+constexpr int  DURATION_DEFAULT_30 = 30;
+
+// For commission 0.05%
+constexpr bool ENABLED_DEFAULT_5  = true;
+constexpr int  DURATION_DEFAULT_5 = 30;
+
+// For commission 0.04%
+constexpr bool ENABLED_DEFAULT_4  = true;
+constexpr int  DURATION_DEFAULT_4 = 30;
 
 
 
@@ -53,14 +65,27 @@ void BuyDecision5Config::assign(IBuyDecision5Config* another)
     mDuration = config.mDuration;
 }
 
-void BuyDecision5Config::makeDefault()
+void BuyDecision5Config::makeDefault(int commissionInt)
 {
     const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Set BuyDecision5Config to default";
 
-    mEnabled  = ENABLED_DEFAULT;
-    mDuration = DURATION_DEFAULT;
+    if (commissionInt == COMMISSION_30)
+    {
+        mEnabled  = ENABLED_DEFAULT_30;
+        mDuration = DURATION_DEFAULT_30;
+    }
+    else if (commissionInt == COMMISSION_5)
+    {
+        mEnabled  = ENABLED_DEFAULT_5;
+        mDuration = DURATION_DEFAULT_5;
+    }
+    else
+    {
+        mEnabled  = ENABLED_DEFAULT_4;
+        mDuration = DURATION_DEFAULT_4;
+    }
 }
 
 void BuyDecision5Config::save(ISettingsEditor* settingsEditor, const QString& type)

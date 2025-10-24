@@ -156,14 +156,14 @@ void Config::assign(IConfig* another)
     mAutoPilotConfigCommon                 = config.mAutoPilotConfigCommon;
 }
 
-void Config::makeDefault()
+void Config::makeDefault(float commission)
 {
     const QWriteLocker lock(mRwMutex);
 
     qInfo() << "Set Config to default";
 
-    mSimulatorConfig->makeDefault();
-    mAutoPilotConfig->makeDefault();
+    mSimulatorConfig->makeDefault(qRound(commission * 100));
+    mAutoPilotConfig->makeDefault(qRound(commission * 100));
 
     mAutorun                               = AUTORUN_DEFAULT;
     mCpuUsage                              = CPU_USAGE_DEFAULT;

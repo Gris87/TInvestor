@@ -279,7 +279,7 @@ protected:
 
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
-        EXPECT_CALL(*configMock, makeDefault());
+        EXPECT_CALL(*configMock, makeDefault(0.0f));
         EXPECT_CALL(*configMock, load(settingsEditorMock));
         EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
         EXPECT_CALL(*autorunEnablerMock, setEnabled(true));

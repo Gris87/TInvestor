@@ -5,10 +5,23 @@
 #include "src/utils/exception/exception.h"
 
 
+constexpr int COMMISSION_30 = 30;
+constexpr int COMMISSION_5  = 5;
 
-constexpr bool  ENABLED_DEFAULT  = true;
-constexpr float RSI_DEFAULT      = 25.0f;
-constexpr int   DURATION_DEFAULT = 15;
+// For commission 0.30%
+constexpr bool  ENABLED_DEFAULT_30  = true;
+constexpr float RSI_DEFAULT_30      = 25.0f;
+constexpr int   DURATION_DEFAULT_30 = 15;
+
+// For commission 0.05%
+constexpr bool  ENABLED_DEFAULT_5  = true;
+constexpr float RSI_DEFAULT_5      = 25.0f;
+constexpr int   DURATION_DEFAULT_5 = 15;
+
+// For commission 0.04%
+constexpr bool  ENABLED_DEFAULT_4  = true;
+constexpr float RSI_DEFAULT_4      = 25.0f;
+constexpr int   DURATION_DEFAULT_4 = 15;
 
 
 
@@ -56,15 +69,30 @@ void BuyDecision6Config::assign(IBuyDecision6Config* another)
     mDuration = config.mDuration;
 }
 
-void BuyDecision6Config::makeDefault()
+void BuyDecision6Config::makeDefault(int commissionInt)
 {
     const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Set BuyDecision6Config to default";
 
-    mEnabled  = ENABLED_DEFAULT;
-    mRsi      = RSI_DEFAULT;
-    mDuration = DURATION_DEFAULT;
+    if (commissionInt == COMMISSION_30)
+    {
+        mEnabled  = ENABLED_DEFAULT_30;
+        mRsi      = RSI_DEFAULT_30;
+        mDuration = DURATION_DEFAULT_30;
+    }
+    else if (commissionInt == COMMISSION_5)
+    {
+        mEnabled  = ENABLED_DEFAULT_5;
+        mRsi      = RSI_DEFAULT_5;
+        mDuration = DURATION_DEFAULT_5;
+    }
+    else
+    {
+        mEnabled  = ENABLED_DEFAULT_4;
+        mRsi      = RSI_DEFAULT_4;
+        mDuration = DURATION_DEFAULT_4;
+    }
 }
 
 void BuyDecision6Config::save(ISettingsEditor* settingsEditor, const QString& type)

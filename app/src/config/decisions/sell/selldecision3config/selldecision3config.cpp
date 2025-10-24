@@ -6,17 +6,20 @@
 
 
 
-// For 2020-2024 years
-constexpr bool  ENABLED_DEFAULT    = true;
-constexpr float LOSE_YIELD_DEFAULT = 3.0f;
+constexpr int COMMISSION_30 = 30;
+constexpr int COMMISSION_5  = 5;
 
-// For 2024 year
-// constexpr bool  ENABLED_DEFAULT    = true;
-// constexpr float LOSE_YIELD_DEFAULT = 5.0f;
+// For commission 0.30%
+constexpr bool  ENABLED_DEFAULT_30    = true;
+constexpr float LOSE_YIELD_DEFAULT_30 = 3.0f;
 
-// For 2019 year
-// constexpr bool  ENABLED_DEFAULT    = true;
-// constexpr float LOSE_YIELD_DEFAULT = 7.0f;
+// For commission 0.05%
+constexpr bool  ENABLED_DEFAULT_5    = true;
+constexpr float LOSE_YIELD_DEFAULT_5 = 3.0f;
+
+// For commission 0.04%
+constexpr bool  ENABLED_DEFAULT_4    = true;
+constexpr float LOSE_YIELD_DEFAULT_4 = 3.0f;
 
 
 
@@ -62,14 +65,27 @@ void SellDecision3Config::assign(ISellDecision3Config* another)
     mLoseYield = config.mLoseYield;
 }
 
-void SellDecision3Config::makeDefault()
+void SellDecision3Config::makeDefault(int commissionInt)
 {
     const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Set SellDecision3Config to default";
 
-    mEnabled   = ENABLED_DEFAULT;
-    mLoseYield = LOSE_YIELD_DEFAULT;
+    if (commissionInt == COMMISSION_30)
+    {
+        mEnabled   = ENABLED_DEFAULT_30;
+        mLoseYield = LOSE_YIELD_DEFAULT_30;
+    }
+    else if (commissionInt == COMMISSION_5)
+    {
+        mEnabled   = ENABLED_DEFAULT_5;
+        mLoseYield = LOSE_YIELD_DEFAULT_5;
+    }
+    else
+    {
+        mEnabled   = ENABLED_DEFAULT_4;
+        mLoseYield = LOSE_YIELD_DEFAULT_4;
+    }
 }
 
 void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)

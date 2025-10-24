@@ -6,17 +6,20 @@
 
 
 
-// For 2020-2024 years
-constexpr bool  ENABLED_DEFAULT     = true;
-constexpr float YIELD_ABOVE_DEFAULT = 0.5f;
+constexpr int COMMISSION_30 = 30;
+constexpr int COMMISSION_5  = 5;
 
-// For 2024 year
-// constexpr bool  ENABLED_DEFAULT     = true;
-// constexpr float YIELD_ABOVE_DEFAULT = 0.5f;
+// For commission 0.30%
+constexpr bool  ENABLED_DEFAULT_30     = true;
+constexpr float YIELD_ABOVE_DEFAULT_30 = 0.5f;
 
-// For 2019 year
-// constexpr bool  ENABLED_DEFAULT     = true;
-// constexpr float YIELD_ABOVE_DEFAULT = 0.5f;
+// For commission 0.05%
+constexpr bool  ENABLED_DEFAULT_5     = true;
+constexpr float YIELD_ABOVE_DEFAULT_5 = 0.5f;
+
+// For commission 0.04%
+constexpr bool  ENABLED_DEFAULT_4     = true;
+constexpr float YIELD_ABOVE_DEFAULT_4 = 0.5f;
 
 
 
@@ -62,14 +65,27 @@ void SellDecision1Config::assign(ISellDecision1Config* another)
     mYieldAbove = config.mYieldAbove;
 }
 
-void SellDecision1Config::makeDefault()
+void SellDecision1Config::makeDefault(int commissionInt)
 {
     const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Set SellDecision1Config to default";
 
-    mEnabled    = ENABLED_DEFAULT;
-    mYieldAbove = YIELD_ABOVE_DEFAULT;
+    if (commissionInt == COMMISSION_30)
+    {
+        mEnabled    = ENABLED_DEFAULT_30;
+        mYieldAbove = YIELD_ABOVE_DEFAULT_30;
+    }
+    else if (commissionInt == COMMISSION_5)
+    {
+        mEnabled    = ENABLED_DEFAULT_5;
+        mYieldAbove = YIELD_ABOVE_DEFAULT_5;
+    }
+    else
+    {
+        mEnabled    = ENABLED_DEFAULT_4;
+        mYieldAbove = YIELD_ABOVE_DEFAULT_4;
+    }
 }
 
 void SellDecision1Config::save(ISettingsEditor* settingsEditor, const QString& type)

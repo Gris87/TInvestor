@@ -23,7 +23,7 @@ public:
     MOCK_METHOD(IDecisionMakerConfig*, clone, (), (override));
     MOCK_METHOD(void, deleteRecursively, (), (override));
     MOCK_METHOD(void, assign, (IDecisionMakerConfig * another), (override));
-    MOCK_METHOD(void, makeDefault, (), (override));
+    MOCK_METHOD(void, makeDefault, (int commissionInt), (override));
 
     MOCK_METHOD(void, save, (ISettingsEditor * settingsEditor, const QString& type), (override));
     MOCK_METHOD(void, load, (ISettingsEditor * settingsEditor, const QString& type), (override));

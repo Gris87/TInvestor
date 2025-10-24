@@ -21,7 +21,7 @@ public:
     virtual ISellDecision2Config* clone()                               = 0;
     virtual void                  deleteRecursively()                   = 0;
     virtual void                  assign(ISellDecision2Config* another) = 0;
-    virtual void                  makeDefault()                         = 0;
+    virtual void                  makeDefault(int commissionInt)        = 0;
 
     virtual void save(ISettingsEditor* settingsEditor, const QString& type) = 0;
     virtual void load(ISettingsEditor* settingsEditor, const QString& type) = 0;

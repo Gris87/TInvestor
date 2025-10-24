@@ -324,7 +324,7 @@ MainWindow::MainWindow(
 
     mTrayIcon->show();
 
-    mConfig->makeDefault();
+    mConfig->makeDefault(0.0f);
     mConfig->load(mSettingsEditor);
     applyConfig();
 

@@ -6,20 +6,23 @@
 
 
 
-// For 2020-2024 years
-constexpr bool  ENABLED_DEFAULT    = true;
-constexpr float PRICE_FALL_DEFAULT = 5.0f;
-constexpr int   DURATION_DEFAULT   = 3;
+constexpr int COMMISSION_30 = 30;
+constexpr int COMMISSION_5  = 5;
 
-// For 2024 year
-// constexpr bool  ENABLED_DEFAULT    = true;
-// constexpr float PRICE_FALL_DEFAULT = 5.0f;
-// constexpr int   DURATION_DEFAULT   = 7;
+// For commission 0.30%
+constexpr bool  ENABLED_DEFAULT_30    = true;
+constexpr float PRICE_FALL_DEFAULT_30 = 5.0f;
+constexpr int   DURATION_DEFAULT_30   = 3;
 
-// For 2019 year
-// constexpr bool  ENABLED_DEFAULT    = true;
-// constexpr float PRICE_FALL_DEFAULT = 5.0f;
-// constexpr int   DURATION_DEFAULT   = 7;
+// For commission 0.05%
+constexpr bool  ENABLED_DEFAULT_5    = true;
+constexpr float PRICE_FALL_DEFAULT_5 = 5.0f;
+constexpr int   DURATION_DEFAULT_5   = 3;
+
+// For commission 0.04%
+constexpr bool  ENABLED_DEFAULT_4    = true;
+constexpr float PRICE_FALL_DEFAULT_4 = 5.0f;
+constexpr int   DURATION_DEFAULT_4   = 3;
 
 
 
@@ -67,15 +70,30 @@ void BuyDecision3Config::assign(IBuyDecision3Config* another)
     mDuration  = config.mDuration;
 }
 
-void BuyDecision3Config::makeDefault()
+void BuyDecision3Config::makeDefault(int commissionInt)
 {
     const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Set BuyDecision3Config to default";
 
-    mEnabled   = ENABLED_DEFAULT;
-    mPriceFall = PRICE_FALL_DEFAULT;
-    mDuration  = DURATION_DEFAULT;
+    if (commissionInt == COMMISSION_30)
+    {
+        mEnabled   = ENABLED_DEFAULT_30;
+        mPriceFall = PRICE_FALL_DEFAULT_30;
+        mDuration  = DURATION_DEFAULT_30;
+    }
+    else if (commissionInt == COMMISSION_5)
+    {
+        mEnabled   = ENABLED_DEFAULT_5;
+        mPriceFall = PRICE_FALL_DEFAULT_5;
+        mDuration  = DURATION_DEFAULT_5;
+    }
+    else
+    {
+        mEnabled   = ENABLED_DEFAULT_4;
+        mPriceFall = PRICE_FALL_DEFAULT_4;
+        mDuration  = DURATION_DEFAULT_4;
+    }
 }
 
 void BuyDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)

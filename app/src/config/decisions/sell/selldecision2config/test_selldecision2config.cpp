@@ -107,7 +107,23 @@ TEST_F(Test_SellDecision2Config, Test_makeDefault)
     ASSERT_EQ(config->getLoseYield(),  4.2f);
     // clang-format on
 
-    config->makeDefault();
+    config->makeDefault(30);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),     false);
+    ASSERT_EQ(config->getYieldAbove(), 1.0f);
+    ASSERT_EQ(config->getLoseYield(),  0.1f);
+    // clang-format on
+
+    config->makeDefault(5);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),     false);
+    ASSERT_EQ(config->getYieldAbove(), 1.0f);
+    ASSERT_EQ(config->getLoseYield(),  0.1f);
+    // clang-format on
+
+    config->makeDefault(4);
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),     false);

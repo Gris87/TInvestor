@@ -107,7 +107,23 @@ TEST_F(Test_BuyDecision6Config, Test_makeDefault)
     ASSERT_EQ(config->getDuration(), 123);
     // clang-format on
 
-    config->makeDefault();
+    config->makeDefault(30);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),   true);
+    ASSERT_EQ(config->getRsi(),      25.0f);
+    ASSERT_EQ(config->getDuration(), 15);
+    // clang-format on
+
+    config->makeDefault(5);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),   true);
+    ASSERT_EQ(config->getRsi(),      25.0f);
+    ASSERT_EQ(config->getDuration(), 15);
+    // clang-format on
+
+    config->makeDefault(4);
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),   true);
