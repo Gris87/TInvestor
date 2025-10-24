@@ -174,12 +174,12 @@
 <context>
     <name>BiDirTradingThread</name>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="86"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="87"/>
         <source>Reselling completed successfully</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="149"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="150"/>
         <source>Impossible to continue reselling</source>
         <translation></translation>
     </message>
@@ -969,41 +969,36 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="84"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="117"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="145"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="109"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="161"/>
         <source>Decided to sell because the price reached %1 with yield %2 from the price %3 and lost yield %4 from the maximum price %5 at %6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="84"/>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="121"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="89"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="119"/>
         <source>Decided to sell because the price fall to %1 with yield %2 from the price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="123"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="203"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="272"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="108"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="160"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the fall is %5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="139"/>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="237"/>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="330"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="122"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="197"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 and lost yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="118"/>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="190"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="119"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 and lost yield %4 from the minimum price %5 at %6 within last %7 days and the fall is %8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="103"/>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="156"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="104"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 days and the fall is %5</source>
         <translation></translation>
     </message>
@@ -1060,7 +1055,7 @@
     </message>
     <message>
         <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="97"/>
-        <source>Decided to start reselling because amount of bids more than amount of asks in %1 times</source>
+        <source>Decided to start reselling because amount of asks more than amount of bids in %1 times</source>
         <translation></translation>
     </message>
     <message>
@@ -1074,22 +1069,24 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision7/buydecision7.cpp" line="148"/>
+        <location filename="../../src/decisions/buy/buydecision7/buydecision7.cpp" line="131"/>
         <source>Decided to buy because the price raises more than %1 during last %2 nights</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="89"/>
+        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="94"/>
+        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="138"/>
         <source>Decided to buy because the price %1 exceeds bottom Bollindger edge price %2 at %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="104"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="118"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="179"/>
         <source>Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision6/buydecision6.cpp" line="90"/>
+        <location filename="../../src/decisions/buy/buydecision6/buydecision6.cpp" line="92"/>
         <source>Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes</source>
         <translation></translation>
     </message>
@@ -1249,7 +1246,7 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="199"/>
-        <source>Trade stocks when amount of bids more than amount of asks in</source>
+        <source>Trade stocks when amount of asks more than amount of bids in</source>
         <translation></translation>
     </message>
     <message>
@@ -1308,47 +1305,53 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1019"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="395"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="417"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="396"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="418"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1040"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1076"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1042"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1136"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1055"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="394"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="418"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1093"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1187"/>
+        <source>non-default values</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1113"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="395"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="419"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1112"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1228"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1135"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1251"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1155"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1271"/>
         <source>Default</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="105"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="106"/>
         <source>Autorun on %1 startup</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="389"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="412"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="390"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="413"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>

@@ -1,5 +1,4 @@
 Analyze trading
-Change translation huge bid => huge ask
 Show warning if decisions config is not default
 Change best config search algorithm
 Find best configs for different commission
@@ -8,7 +7,9 @@ Improve coverage
 Create release
 
 Add comments on decisions
+Override chart labels => 1.25 K rub
 Asap mode immediately but with positive yield and small spread
+Create script to sell gifts
 Sell into chunks
 
 =======================================

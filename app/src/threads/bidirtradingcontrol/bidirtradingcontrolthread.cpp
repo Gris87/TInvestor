@@ -94,7 +94,7 @@ checkStockForHugeBid(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinko
             return BiDirTradingInfo(
                 stock,
                 BIDIR_MODE_HUGE_BID,
-                QObject::tr("Decided to start reselling because amount of bids more than amount of asks in %1 times")
+                QObject::tr("Decided to start reselling because amount of asks more than amount of bids in %1 times")
                     .arg(QString::number(coef, 'f', 2))
             );
         }

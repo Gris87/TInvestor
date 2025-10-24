@@ -438,4 +438,7 @@ void SettingsDialog::on_defaultButton_clicked()
 
     mConfig->makeDefault(commission);
     updateUiFromConfig();
+
+    ui->simulationNonDefaultWidget->setVisible(false);
+    ui->autoPilotNonDefaultWidget->setVisible(false);
 }
