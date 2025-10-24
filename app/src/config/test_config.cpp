@@ -506,8 +506,8 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isAutoPilotConfigCommon(),                    true);
     // clang-format on
 
-    EXPECT_CALL(*simulatorConfigMock, makeDefault(4));
-    EXPECT_CALL(*autoPilotConfigMock, makeDefault(4));
+    EXPECT_CALL(*simulatorConfigMock, makeDefault(0.04f));
+    EXPECT_CALL(*autoPilotConfigMock, makeDefault(0.04f));
 
     config->makeDefault(0.04f);
 

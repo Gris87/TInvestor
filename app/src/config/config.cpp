@@ -162,8 +162,8 @@ void Config::makeDefault(float commission)
 
     qInfo() << "Set Config to default";
 
-    mSimulatorConfig->makeDefault(qRound(commission * 100));
-    mAutoPilotConfig->makeDefault(qRound(commission * 100));
+    mSimulatorConfig->makeDefault(commission);
+    mAutoPilotConfig->makeDefault(commission);
 
     mAutorun                               = AUTORUN_DEFAULT;
     mCpuUsage                              = CPU_USAGE_DEFAULT;

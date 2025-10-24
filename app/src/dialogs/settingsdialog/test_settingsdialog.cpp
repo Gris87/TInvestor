@@ -59,6 +59,8 @@ protected:
         userStorageMock                      = new StrictMock<UserStorageMock>();
 
         EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+        EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
+
         EXPECT_CALL(
             *decisionMakerConfigWidgetFactoryMock,
             newInstance(
@@ -81,8 +83,6 @@ protected:
             )
         )
             .WillOnce(Return(simulatorConfigWidgetMock));
-
-        EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
         EXPECT_CALL(
             *decisionMakerConfigWidgetFactoryMock,
             newInstance(
@@ -109,6 +109,8 @@ protected:
         EXPECT_CALL(*userStorageMock, readLock());
         EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
         EXPECT_CALL(*userStorageMock, readUnlock());
+        EXPECT_CALL(*simulatorConfigMock, isDefault(0.04f)).WillOnce(Return(true));
+        EXPECT_CALL(*autoPilotConfigMock, isDefault(0.04f)).WillOnce(Return(true));
 
         dialog = new SettingsDialog(
             configMock,

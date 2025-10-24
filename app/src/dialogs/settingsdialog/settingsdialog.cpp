@@ -58,9 +58,12 @@ SettingsDialog::SettingsDialog(
 
     ui->setupUi(this);
 
+    IDecisionMakerConfig* simulatorConfig = mConfig->getSimulatorConfig();
+    IDecisionMakerConfig* autoPilotConfig = mConfig->getAutoPilotConfig();
+
     mSimulatorConfigWidget = decisionMakerConfigWidgetFactory->newInstance(
         DecisionMakerConfigWidgetFactoryNewInstanceArgsMore15(
-            mConfig->getSimulatorConfig(),
+            simulatorConfig,
             buyDecision1ConfigWidgetFactory,
             buyDecision2ConfigWidgetFactory,
             buyDecision3ConfigWidgetFactory,
@@ -78,7 +81,7 @@ SettingsDialog::SettingsDialog(
     );
     mAutoPilotConfigWidget = decisionMakerConfigWidgetFactory->newInstance(
         DecisionMakerConfigWidgetFactoryNewInstanceArgsMore15(
-            mConfig->getAutoPilotConfig(),
+            autoPilotConfig,
             buyDecision1ConfigWidgetFactory,
             buyDecision2ConfigWidgetFactory,
             buyDecision3ConfigWidgetFactory,
@@ -112,6 +115,8 @@ SettingsDialog::SettingsDialog(
     ui->tradeHugeSpreadCheckBox->setEnabled(commission < LIMIT_COMMISSION);
     ui->hugeSpreadWidget->setEnabled(commission < LIMIT_COMMISSION);
     ui->tradeHugeSpreadCommissionWidget->setVisible(commission >= LIMIT_COMMISSION);
+    ui->simulationNonDefaultWidget->setVisible(!simulatorConfig->isDefault(commission));
+    ui->autoPilotNonDefaultWidget->setVisible(!autoPilotConfig->isDefault(commission));
 }
 
 SettingsDialog::~SettingsDialog()

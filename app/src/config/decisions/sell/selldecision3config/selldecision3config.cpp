@@ -88,6 +88,16 @@ void SellDecision3Config::makeDefault(int commissionInt)
     }
 }
 
+bool SellDecision3Config::isDefault(int commissionInt)
+{
+    SellDecision3Config defaultConfig;
+    defaultConfig.makeDefault(commissionInt);
+
+    const QReadLocker lock(mRwMutex);
+
+    return mEnabled == defaultConfig.mEnabled && mLoseYield == defaultConfig.mLoseYield;
+}
+
 void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
     const QReadLocker lock(mRwMutex);

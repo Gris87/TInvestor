@@ -21,6 +21,7 @@ public:
     void                 deleteRecursively() override;
     void                 assign(IBuyDecision3Config* another) override;
     void                 makeDefault(int commissionInt) override;
+    bool                 isDefault(int commissionInt) override;
 
     void save(ISettingsEditor* settingsEditor, const QString& type) override;
     void load(ISettingsEditor* settingsEditor, const QString& type) override;

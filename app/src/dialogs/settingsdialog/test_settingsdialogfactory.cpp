@@ -78,6 +78,8 @@ TEST_F(Test_SettingsDialogFactory, Test_newInstance)
     StrictMock<DecisionMakerConfigWidgetMock>* autoPilotConfigWidgetMock = new StrictMock<DecisionMakerConfigWidgetMock>();
 
     EXPECT_CALL(configMock, getSimulatorConfig()).WillOnce(Return(&simulatorConfigMock));
+    EXPECT_CALL(configMock, getAutoPilotConfig()).WillOnce(Return(&autoPilotConfigMock));
+
     EXPECT_CALL(
         decisionMakerConfigWidgetFactoryMock,
         newInstance(
@@ -100,8 +102,6 @@ TEST_F(Test_SettingsDialogFactory, Test_newInstance)
         )
     )
         .WillOnce(Return(simulatorConfigWidgetMock));
-
-    EXPECT_CALL(configMock, getAutoPilotConfig()).WillOnce(Return(&autoPilotConfigMock));
     EXPECT_CALL(
         decisionMakerConfigWidgetFactoryMock,
         newInstance(
@@ -128,6 +128,8 @@ TEST_F(Test_SettingsDialogFactory, Test_newInstance)
     EXPECT_CALL(userStorageMock, readLock());
     EXPECT_CALL(userStorageMock, getCommission()).WillOnce(Return(0.04));
     EXPECT_CALL(userStorageMock, readUnlock());
+    EXPECT_CALL(simulatorConfigMock, isDefault(0.04f)).WillOnce(Return(true));
+    EXPECT_CALL(autoPilotConfigMock, isDefault(0.04f)).WillOnce(Return(true));
 
     const std::shared_ptr<ISettingsDialog> dialog = factory->newInstance(
         SettingsDialogFactoryNewInstanceArgsMore15(

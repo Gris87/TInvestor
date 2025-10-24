@@ -88,6 +88,16 @@ void BuyDecision8Config::makeDefault(int commissionInt)
     }
 }
 
+bool BuyDecision8Config::isDefault(int commissionInt)
+{
+    BuyDecision8Config defaultConfig;
+    defaultConfig.makeDefault(commissionInt);
+
+    const QReadLocker lock(mRwMutex);
+
+    return mEnabled == defaultConfig.mEnabled && mDuration == defaultConfig.mDuration;
+}
+
 void BuyDecision8Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
     const QReadLocker lock(mRwMutex);

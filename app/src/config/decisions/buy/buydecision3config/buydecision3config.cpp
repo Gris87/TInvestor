@@ -96,6 +96,16 @@ void BuyDecision3Config::makeDefault(int commissionInt)
     }
 }
 
+bool BuyDecision3Config::isDefault(int commissionInt)
+{
+    BuyDecision3Config defaultConfig;
+    defaultConfig.makeDefault(commissionInt);
+
+    const QReadLocker lock(mRwMutex);
+
+    return mEnabled == defaultConfig.mEnabled && mPriceFall == defaultConfig.mPriceFall && mDuration == defaultConfig.mDuration;
+}
+
 void BuyDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
     const QReadLocker lock(mRwMutex);

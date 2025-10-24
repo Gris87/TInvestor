@@ -1,5 +1,4 @@
 Analyze trading
-Show warning if decisions config is not default
 Change best config search algorithm
 Find best configs for different commission
 Inform about manual buy on huge fall

@@ -223,7 +223,27 @@ TEST_F(Test_DecisionMakerConfig, Test_makeDefault)
     EXPECT_CALL(*sellDecision3ConfigMock, makeDefault(4));
     EXPECT_CALL(*sellDecision4ConfigMock, makeDefault(4));
 
-    config->makeDefault(4);
+    config->makeDefault(0.04f);
+}
+
+TEST_F(Test_DecisionMakerConfig, Test_isDefault)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*buyDecision1ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*buyDecision2ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*buyDecision3ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*buyDecision4ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*buyDecision5ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*buyDecision6ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*buyDecision7ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*buyDecision8ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision1ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision2ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision3ConfigMock, isDefault(4)).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision4ConfigMock, isDefault(4)).WillOnce(Return(true));
+
+    ASSERT_EQ(config->isDefault(0.04f), true);
 }
 
 TEST_F(Test_DecisionMakerConfig, Test_save)

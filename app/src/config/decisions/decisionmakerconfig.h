@@ -31,7 +31,8 @@ public:
     IDecisionMakerConfig* clone() override;
     void                  deleteRecursively() override;
     void                  assign(IDecisionMakerConfig* another) override;
-    void                  makeDefault(int commissionInt) override;
+    void                  makeDefault(float commission) override;
+    bool                  isDefault(float commission) override;
 
     void save(ISettingsEditor* settingsEditor, const QString& type) override;
     void load(ISettingsEditor* settingsEditor, const QString& type) override;
