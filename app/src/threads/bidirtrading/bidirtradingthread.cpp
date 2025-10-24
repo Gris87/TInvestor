@@ -13,7 +13,7 @@ constexpr float  MINIMUM_YIELD_PERCENT               = 0.10f;
 constexpr float  MAXIMUM_LOSE_PERCENT                = 2.00f;
 constexpr float  MINIMUM_BID_PERCENT_FOR_HUGE_BID    = 80.0f;
 constexpr float  MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD = 25.0f;
-constexpr float  SPREAD_FOR_HUGE_BID                 = 0.40f;
+constexpr float  SPREAD_FOR_HUGE_BID                 = 0.50f;
 constexpr int    ORDER_BOOK_DEPTH                    = 20;
 constexpr qint64 MS_IN_SECOND                        = 1000LL;
 constexpr qint64 SLEEP_DELAY                         = 30LL * MS_IN_SECOND; // 30 seconds
@@ -533,23 +533,22 @@ BiDirTradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& tinko
 
     if (mode == BIDIR_MODE_HUGE_BID)
     {
+        const double maximumBuyPrice = topAskPrice * (1 - (SPREAD_FOR_HUGE_BID / HUNDRED_PERCENT));
+        res                          = maximumBuyPrice;
+
         for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
         {
-            if (tinkoffOrderBook.bids(i).quantity() > 0)
+            const float quantityPercent = (tinkoffOrderBook.bids(i).quantity() * HUNDRED_PERCENT) / maxQuantity;
+
+            if (quantityPercent >= MINIMUM_BID_PERCENT_FOR_HUGE_BID)
             {
-                const float quantityPercent = (tinkoffOrderBook.bids(i).quantity() * HUNDRED_PERCENT) / maxQuantity;
+                const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
 
-                if (quantityPercent >= MINIMUM_BID_PERCENT_FOR_HUGE_BID)
+                if (curPrice <= maximumBuyPrice)
                 {
-                    const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
-                    const float  spread   = ((topAskPrice / curPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
                     res = curPrice;
 
-                    if (spread >= SPREAD_FOR_HUGE_BID)
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
         }
@@ -558,23 +557,22 @@ BiDirTradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& tinko
     {
         const float hugeSpread = mConfig->getHugeSpread();
 
+        const double maximumBuyPrice = topAskPrice * (1 - (hugeSpread / HUNDRED_PERCENT));
+        res                          = maximumBuyPrice;
+
         for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
         {
-            if (tinkoffOrderBook.bids(i).quantity() > 0)
+            const float quantityPercent = (tinkoffOrderBook.bids(i).quantity() * HUNDRED_PERCENT) / maxQuantity;
+
+            if (quantityPercent >= MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD)
             {
-                const float quantityPercent = (tinkoffOrderBook.bids(i).quantity() * HUNDRED_PERCENT) / maxQuantity;
+                const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
 
-                if (quantityPercent >= MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD)
+                if (curPrice <= maximumBuyPrice)
                 {
-                    const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
-                    const float  spread   = ((topAskPrice / curPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
                     res = curPrice;
 
-                    if (spread >= hugeSpread)
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
         }
@@ -605,7 +603,7 @@ double BiDirTradingThread::calculateAskPrice(
         if (!isNeedToSellAsap(QDateTime::currentMSecsSinceEpoch(), mode, part, yield, commission))
         {
             const double minimumSellPrice =
-                instrumentAvgPrice * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT;
+                instrumentAvgPrice * (1 + (MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
             res = minimumSellPrice;
 
             for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)
