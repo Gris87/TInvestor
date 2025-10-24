@@ -76,7 +76,7 @@ QString SellDecision2::makeDecisionBasedOnStockData(
     float                 price,
     float                 avgPrice,
     float                 commission
-)
+) const
 {
     const float coef = price / avgPrice;
 
@@ -128,7 +128,7 @@ QString SellDecision2::makeDecisionBasedOnStockData(
 
 QString SellDecision2::makeDecisionBasedOnStockOperationalData(
     QThread* parentThread, ISellDecision2Config* sellConfig, Stock* stock, float price, float avgPrice, float commission
-)
+) const
 {
     const float coef = price / avgPrice;
 

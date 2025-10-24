@@ -74,7 +74,7 @@ QString SellDecision3::makeDecisionBasedOnStockData(
     float                 price,
     float                 avgPrice,
     float                 commission
-)
+) const
 {
     const float yield     = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
     const float loseYield = -sellConfig->getLoseYield() + (2 * commission);
@@ -100,7 +100,7 @@ QString SellDecision3::makeDecisionBasedOnStockData(
 
 QString SellDecision3::makeDecisionBasedOnStockOperationalData(
     QThread* parentThread, ISellDecision3Config* sellConfig, Stock* stock, float price, float avgPrice, float commission
-)
+) const
 {
     const float yield     = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
     const float loseYield = -sellConfig->getLoseYield() + (2 * commission);
@@ -129,7 +129,8 @@ QString SellDecision3::makeDecisionBasedOnStockOperationalData(
     return "";
 }
 
-bool SellDecision3::doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float minimumPrice)
+bool
+SellDecision3::doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float minimumPrice) const
 {
     bool res = false;
 
@@ -159,7 +160,7 @@ bool SellDecision3::doubleCheckBasedOnStockData(QThread* parentThread, const Sto
 
 bool SellDecision3::doubleCheckBasedOnStockOperationalData(
     QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float minimumPrice
-)
+) const
 {
     bool res = false;
 

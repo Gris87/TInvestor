@@ -70,7 +70,7 @@ AsapMode BuyDecision8::asapMode() const
 
 QString BuyDecision8::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision8Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
-)
+) const
 {
     const int duration = buyConfig->getDuration();
 
@@ -108,7 +108,8 @@ QString BuyDecision8::makeDecisionBasedOnStockData(
     return "";
 }
 
-bool BuyDecision8::doubleCheck(QThread* parentThread, const StockData* stockData, int index, qint64 limitTimestamp, float price)
+bool
+BuyDecision8::doubleCheck(QThread* parentThread, const StockData* stockData, int index, qint64 limitTimestamp, float price) const
 {
     bool res = true;
 

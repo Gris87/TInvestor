@@ -83,7 +83,7 @@ QString SellDecision4::makeDecisionBasedOnStockData(
     float                 price,
     float                 avgPrice,
     float                 commission
-)
+) const
 {
     const float coef = price / avgPrice;
 
@@ -140,7 +140,7 @@ QString SellDecision4::makeDecisionBasedOnStockOperationalData(
     float                 price,
     float                 avgPrice,
     float                 commission
-)
+) const
 {
     const float coef = price / avgPrice;
 

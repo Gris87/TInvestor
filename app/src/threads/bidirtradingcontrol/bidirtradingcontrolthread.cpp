@@ -136,7 +136,7 @@ static BiDirTradingInfo checkStockForHugeBidOrSpread(
 
     if (tradeHugeBid)
     {
-        BiDirTradingInfo biDirTradingInfo = checkStockForHugeBid(tinkoffOrderBook, stock, hugeBid);
+        const BiDirTradingInfo biDirTradingInfo = checkStockForHugeBid(tinkoffOrderBook, stock, hugeBid);
 
         if (biDirTradingInfo.cause != "")
         {
@@ -146,7 +146,7 @@ static BiDirTradingInfo checkStockForHugeBidOrSpread(
 
     if (tradeHugeSpread)
     {
-        BiDirTradingInfo biDirTradingInfo = checkStockForHugeSpread(tinkoffOrderBook, stock, hugeSpread);
+        const BiDirTradingInfo biDirTradingInfo = checkStockForHugeSpread(tinkoffOrderBook, stock, hugeSpread);
 
         if (biDirTradingInfo.cause != "")
         {

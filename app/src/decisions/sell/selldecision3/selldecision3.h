@@ -31,6 +31,7 @@ public:
     AsapMode asapMode() const override;
 
 private:
+    [[nodiscard]]
     QString makeDecisionBasedOnStockData(
         QThread*              parentThread,
         ISellDecision3Config* sellConfig,
@@ -39,12 +40,18 @@ private:
         float                 price,
         float                 avgPrice,
         float                 commission
-    );
+    ) const;
+
+    [[nodiscard]]
     QString makeDecisionBasedOnStockOperationalData(
         QThread* parentThread, ISellDecision3Config* sellConfig, Stock* stock, float price, float avgPrice, float commission
-    );
-    bool doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float minimumPrice);
+    ) const;
+
+    [[nodiscard]]
+    bool doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float minimumPrice) const;
+
+    [[nodiscard]]
     bool doubleCheckBasedOnStockOperationalData(
         QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float minimumPrice
-    );
+    ) const;
 };

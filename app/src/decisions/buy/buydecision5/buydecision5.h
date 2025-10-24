@@ -33,12 +33,15 @@ public:
     AsapMode asapMode() const override;
 
 private:
+    [[nodiscard]]
     QString makeDecisionBasedOnStockData(
         QThread* parentThread, IBuyDecision5Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
-    );
+    ) const;
+
+    [[nodiscard]]
     QString makeDecisionBasedOnStockOperationalData(
         QThread* parentThread, IBuyDecision5Config* buyConfig, qint64 limitTimestamp, Stock* stock
-    );
+    ) const;
 
     IBollindger* mBollindger;
 };

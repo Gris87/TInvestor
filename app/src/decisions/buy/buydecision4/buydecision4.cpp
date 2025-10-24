@@ -75,7 +75,7 @@ AsapMode BuyDecision4::asapMode() const
 
 QString BuyDecision4::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision4Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
-)
+) const
 {
     const float priceFall    = -buyConfig->getPriceFall();
     const float loseYield    = buyConfig->getLoseYield();
@@ -139,7 +139,7 @@ QString BuyDecision4::makeDecisionBasedOnStockData(
     return "";
 }
 
-bool BuyDecision4::doubleCheck(QThread* parentThread, const StockData* stockData, int index, float maximumPrice)
+bool BuyDecision4::doubleCheck(QThread* parentThread, const StockData* stockData, int index, float maximumPrice) const
 {
     bool res = true;
 

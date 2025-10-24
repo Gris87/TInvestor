@@ -71,7 +71,7 @@ AsapMode BuyDecision6::asapMode() const
 
 QString BuyDecision6::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision6Config* buyConfig, qint64 /*limitTimestamp*/, Stock* stock, int dataIndex, float price
-)
+) const
 {
     const float rsiLimit = buyConfig->getRsi();
     const int   duration = buyConfig->getDuration();
@@ -105,7 +105,7 @@ QString BuyDecision6::makeDecisionBasedOnStockData(
     return "";
 }
 
-QList<float> BuyDecision6::getDayPrices(QThread* parentThread, Stock* stock, int dataIndex, int duration)
+QList<float> BuyDecision6::getDayPrices(QThread* parentThread, Stock* stock, int dataIndex, int duration) const
 {
     const StockData* stockData = stock->data.constData();
 
@@ -114,7 +114,7 @@ QList<float> BuyDecision6::getDayPrices(QThread* parentThread, Stock* stock, int
 
     QList<float> prices;
 
-    for (int i = dataIndex; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+    for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
     {
         const qint64 timestamp = stockData[i].timestamp;
 
@@ -134,12 +134,12 @@ QList<float> BuyDecision6::getDayPrices(QThread* parentThread, Stock* stock, int
     return prices;
 }
 
-float BuyDecision6::calculateSma(const QList<float>& prices)
+float BuyDecision6::calculateSma(const QList<float>& prices) const
 {
     return std::accumulate(prices.begin(), prices.end(), 0.0) / prices.size();
 }
 
-float BuyDecision6::calculateEma(const QList<float>& prices)
+float BuyDecision6::calculateEma(const QList<float>& prices) const
 {
     const double span = prices.size();
 
@@ -157,7 +157,7 @@ float BuyDecision6::calculateEma(const QList<float>& prices)
     return sum / weights;
 }
 
-float BuyDecision6::calculateRsi(const QList<float>& prices)
+float BuyDecision6::calculateRsi(const QList<float>& prices) const
 {
     double gain = 0.0;
     double loss = 0.0;

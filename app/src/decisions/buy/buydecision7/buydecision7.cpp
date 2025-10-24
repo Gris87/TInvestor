@@ -74,7 +74,7 @@ AsapMode BuyDecision7::asapMode() const
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 QString BuyDecision7::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision7Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
-)
+) const
 {
     int successNights = 0;
     int failedNights  = 0;
@@ -138,7 +138,7 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
 
 bool BuyDecision7::doubleCheck(
     QThread* parentThread, Stock* stock, const StockData* stockData, int index, qint64 nextTimestamp, float maximumPrice
-)
+) const
 {
     const qint64 anotherLimitTimestamp = nextTimestamp + (MINUTES_TO_CHECK * ONE_MINUTE);
     int          minutesLeft           = MINUTES_TO_DOUBLE_CHECK;

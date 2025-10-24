@@ -68,7 +68,7 @@ AsapMode BuyDecision5::asapMode() const
 
 QString BuyDecision5::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision5Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
-)
+) const
 {
     const int duration = buyConfig->getDuration();
 
@@ -108,7 +108,7 @@ QString BuyDecision5::makeDecisionBasedOnStockData(
 
 QString BuyDecision5::makeDecisionBasedOnStockOperationalData(
     QThread* parentThread, IBuyDecision5Config* buyConfig, qint64 limitTimestamp, Stock* stock
-)
+) const
 {
     const int duration = buyConfig->getDuration();
 

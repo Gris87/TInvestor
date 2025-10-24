@@ -31,8 +31,11 @@ public:
     AsapMode asapMode() const override;
 
 private:
+    [[nodiscard]]
     QString makeDecisionBasedOnStockData(
         QThread* parentThread, IBuyDecision8Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
-    );
-    bool doubleCheck(QThread* parentThread, const StockData* stockData, int index, qint64 limitTimestamp, float price);
+    ) const;
+
+    [[nodiscard]]
+    bool doubleCheck(QThread* parentThread, const StockData* stockData, int index, qint64 limitTimestamp, float price) const;
 };

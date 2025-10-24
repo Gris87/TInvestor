@@ -75,7 +75,7 @@ AsapMode BuyDecision1::asapMode() const
 
 QString BuyDecision1::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision1Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
-)
+) const
 {
     const float priceFall    = -buyConfig->getPriceFall();
     const int   duration     = buyConfig->getDuration();
@@ -126,7 +126,7 @@ QString BuyDecision1::makeDecisionBasedOnStockData(
 
 QString BuyDecision1::makeDecisionBasedOnStockOperationalData(
     QThread* parentThread, IBuyDecision1Config* buyConfig, qint64 limitTimestamp, Stock* stock, float price
-)
+) const
 {
     const float priceFall    = -buyConfig->getPriceFall();
     const int   duration     = buyConfig->getDuration();
@@ -176,7 +176,8 @@ QString BuyDecision1::makeDecisionBasedOnStockOperationalData(
     return "";
 }
 
-bool BuyDecision1::doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float maximumPrice)
+bool
+BuyDecision1::doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float maximumPrice) const
 {
     bool res = false;
 
@@ -206,7 +207,7 @@ bool BuyDecision1::doubleCheckBasedOnStockData(QThread* parentThread, const Stoc
 
 bool BuyDecision1::doubleCheckBasedOnStockOperationalData(
     QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float maximumPrice
-)
+) const
 {
     bool res = false;
 
@@ -234,7 +235,7 @@ bool BuyDecision1::doubleCheckBasedOnStockOperationalData(
     return res;
 }
 
-bool BuyDecision1::tripleCheck(QThread* parentThread, const StockData* stockData, int index, float tripleMinimumPrice)
+bool BuyDecision1::tripleCheck(QThread* parentThread, const StockData* stockData, int index, float tripleMinimumPrice) const
 {
     bool res = true;
 

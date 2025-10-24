@@ -28,7 +28,6 @@ BuyDecision2::~BuyDecision2()
     qDebug() << "Destroy BuyDecision2";
 }
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString BuyDecision2::makeDecision(
     QThread*              parentThread,
     IDecisionMakerConfig* config,
@@ -66,16 +65,16 @@ QString BuyDecision2::makeDecision(
 
     return "";
 }
-// NOLINTEND(readability-function-cognitive-complexity)
 
 AsapMode BuyDecision2::asapMode() const
 {
     return ASAP_MODE_NONE;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString BuyDecision2::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision2Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
-)
+) const
 {
     const float priceFall    = -buyConfig->getPriceFall();
     const float loseYield    = buyConfig->getLoseYield();
@@ -143,10 +142,12 @@ QString BuyDecision2::makeDecisionBasedOnStockData(
 
     return "";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString BuyDecision2::makeDecisionBasedOnStockOperationalData(
     QThread* parentThread, IBuyDecision2Config* buyConfig, qint64 limitTimestamp, Stock* stock, float price
-)
+) const
 {
     const float priceFall    = -buyConfig->getPriceFall();
     const float loseYield    = buyConfig->getLoseYield();
@@ -217,8 +218,10 @@ QString BuyDecision2::makeDecisionBasedOnStockOperationalData(
 
     return "";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
-bool BuyDecision2::doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float maximumPrice)
+bool
+BuyDecision2::doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float maximumPrice) const
 {
     bool res = false;
 
@@ -248,7 +251,7 @@ bool BuyDecision2::doubleCheckBasedOnStockData(QThread* parentThread, const Stoc
 
 bool BuyDecision2::doubleCheckBasedOnStockOperationalData(
     QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float maximumPrice
-)
+) const
 {
     bool res = false;
 
@@ -276,7 +279,7 @@ bool BuyDecision2::doubleCheckBasedOnStockOperationalData(
     return res;
 }
 
-bool BuyDecision2::tripleCheck(QThread* parentThread, const StockData* stockData, int index, float tripleMinimumPrice)
+bool BuyDecision2::tripleCheck(QThread* parentThread, const StockData* stockData, int index, float tripleMinimumPrice) const
 {
     bool res = true;
 

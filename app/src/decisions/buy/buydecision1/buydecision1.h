@@ -38,17 +38,26 @@ public:
 #endif
 
 private:
+    [[nodiscard]]
     QString makeDecisionBasedOnStockData(
         QThread* parentThread, IBuyDecision1Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
-    );
+    ) const;
+
+    [[nodiscard]]
     QString makeDecisionBasedOnStockOperationalData(
         QThread* parentThread, IBuyDecision1Config* buyConfig, qint64 limitTimestamp, Stock* stock, float price
-    );
-    bool doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float maximumPrice);
+    ) const;
+
+    [[nodiscard]]
+    bool doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float maximumPrice) const;
+
+    [[nodiscard]]
     bool doubleCheckBasedOnStockOperationalData(
         QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float maximumPrice
-    );
-    bool tripleCheck(QThread* parentThread, const StockData* stockData, int index, float tripleMinimumPrice);
+    ) const;
+
+    [[nodiscard]]
+    bool tripleCheck(QThread* parentThread, const StockData* stockData, int index, float tripleMinimumPrice) const;
 
     int mStepForTripleCheck;
 };
