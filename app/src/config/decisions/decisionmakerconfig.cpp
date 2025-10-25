@@ -6,6 +6,10 @@
 
 
 
+constexpr int COMMISSION_FLOAT_TO_INT = 100;
+
+
+
 DecisionMakerConfig::DecisionMakerConfig(
     IBuyDecision1Config*  buyDecision1Config,
     IBuyDecision2Config*  buyDecision2Config,
@@ -118,7 +122,7 @@ void DecisionMakerConfig::makeDefault(float commission)
 {
     qDebug() << "Set DecisionMakerConfig to default";
 
-    int commissionInt = qRound(commission * 100);
+    const int commissionInt = qRound(commission * COMMISSION_FLOAT_TO_INT);
 
     mBuyDecision1Config->makeDefault(commissionInt);
     mBuyDecision2Config->makeDefault(commissionInt);
@@ -136,7 +140,7 @@ void DecisionMakerConfig::makeDefault(float commission)
 
 bool DecisionMakerConfig::isDefault(float commission)
 {
-    int commissionInt = qRound(commission * 100);
+    const int commissionInt = qRound(commission * COMMISSION_FLOAT_TO_INT);
 
     return mBuyDecision1Config->isDefault(commissionInt) && mBuyDecision2Config->isDefault(commissionInt) &&
            mBuyDecision3Config->isDefault(commissionInt) && mBuyDecision4Config->isDefault(commissionInt) &&
