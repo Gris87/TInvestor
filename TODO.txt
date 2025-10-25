@@ -1,15 +1,15 @@
 Analyze trading
 Change best config search algorithm
 Find best configs for different commission
-Inform about manual buy on huge fall
 Improve coverage
 Create release
 
 Add comments on decisions
 Override chart labels => 1.25 K rub
 Asap mode immediately but with positive yield and small spread
-Create script to sell gifts
+Thread to sell gifts
 Sell into chunks
+Fix auto-restart non-running app
 
 =======================================
 For the best times
