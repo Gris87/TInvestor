@@ -117,6 +117,27 @@ TEST_F(Test_BuyDecision8Config, Test_makeDefault)
     // clang-format on
 }
 
+TEST_F(Test_BuyDecision8Config, Test_isDefault)
+{
+    config->makeDefault(4);
+    ASSERT_EQ(config->isDefault(4), true);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),   true);
+    ASSERT_EQ(config->getDuration(), 30);
+    // clang-format on
+
+    config->setEnabled(false);
+    ASSERT_EQ(config->isDefault(4), false);
+    config->setEnabled(true);
+    ASSERT_EQ(config->isDefault(4), true);
+
+    config->setDuration(123);
+    ASSERT_EQ(config->isDefault(4), false);
+    config->setDuration(30);
+    ASSERT_EQ(config->isDefault(4), true);
+}
+
 TEST_F(Test_BuyDecision8Config, Test_save)
 {
     const InSequence seq;

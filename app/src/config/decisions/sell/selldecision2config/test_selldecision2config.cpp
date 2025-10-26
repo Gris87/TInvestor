@@ -132,6 +132,33 @@ TEST_F(Test_SellDecision2Config, Test_makeDefault)
     // clang-format on
 }
 
+TEST_F(Test_SellDecision2Config, Test_isDefault)
+{
+    config->makeDefault(4);
+    ASSERT_EQ(config->isDefault(4), true);
+
+    // clang-format off
+    ASSERT_EQ(config->isEnabled(),     false);
+    ASSERT_EQ(config->getYieldAbove(), 1.0f);
+    ASSERT_EQ(config->getLoseYield(),  0.1f);
+    // clang-format on
+
+    config->setEnabled(true);
+    ASSERT_EQ(config->isDefault(4), false);
+    config->setEnabled(false);
+    ASSERT_EQ(config->isDefault(4), true);
+
+    config->setYieldAbove(10.0f);
+    ASSERT_EQ(config->isDefault(4), false);
+    config->setYieldAbove(1.0f);
+    ASSERT_EQ(config->isDefault(4), true);
+
+    config->setLoseYield(10.0f);
+    ASSERT_EQ(config->isDefault(4), false);
+    config->setLoseYield(0.1f);
+    ASSERT_EQ(config->isDefault(4), true);
+}
+
 TEST_F(Test_SellDecision2Config, Test_save)
 {
     const InSequence seq;
