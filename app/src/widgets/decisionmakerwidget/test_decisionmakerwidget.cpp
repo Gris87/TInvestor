@@ -411,6 +411,15 @@ TEST_F(Test_DecisionMakerWidget, Test_lastPriceChanged)
     decisionMakerWidget->lastPriceChanged("aaaaa", 1.5f);
 }
 
+TEST_F(Test_DecisionMakerWidget, Test_refreshOperationsBackground)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*operationsTableWidgetMock, refreshBackground());
+
+    decisionMakerWidget->refreshOperationsBackground();
+}
+
 TEST_F(Test_DecisionMakerWidget, Test_updateLastPrices)
 {
     const InSequence seq;
@@ -519,6 +528,23 @@ TEST_F(Test_DecisionMakerWidget, Test_on_totalMoneyButton_clicked)
     ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    true);
     ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   true);
     // clang-format on
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_on_timeRangeComboBox_currentIndexChanged)
+{
+    const InSequence seq;
+
+    decisionMakerWidget->ui->timeRangeComboBox->blockSignals(true);
+    decisionMakerWidget->ui->timeRangeComboBox->setCurrentIndex(0);
+    decisionMakerWidget->ui->timeRangeComboBox->blockSignals(false);
+
+    EXPECT_CALL(*accountChartWidgetMock, setTimeRange(TIME_RANGE_LAST_DAY));
+
+    decisionMakerWidget->ui->timeRangeComboBox->setCurrentIndex(1);
+
+    EXPECT_CALL(*accountChartWidgetMock, setTimeRange(TIME_RANGE_LAST_WEEK));
+
+    decisionMakerWidget->ui->timeRangeComboBox->setCurrentIndex(2);
 }
 
 TEST_F(Test_DecisionMakerWidget, Test_on_copyToSimulatorConfigButton_clicked)

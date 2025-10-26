@@ -72,7 +72,7 @@ TEST_F(Test_LastPriceThread, Test_run)
 
     google::protobuf::Timestamp* time1 = new google::protobuf::Timestamp(); // marketDataResponse1 will take ownership
 
-    time1->set_seconds(2000);
+    time1->set_seconds(1000);
     time1->set_nanos(123000000);
 
     lastPrice1->set_allocated_price(price1);
@@ -128,11 +128,9 @@ TEST_F(Test_LastPriceThread, Test_run)
     thread->run();
 
     // clang-format off
-    ASSERT_EQ(stock.operational.detailedData.size(),          2);
+    ASSERT_EQ(stock.operational.detailedData.size(),          1);
     ASSERT_EQ(stock.operational.detailedData.at(0).timestamp, 1000123);
-    ASSERT_NEAR(stock.operational.detailedData.at(0).price,   100.4f, 0.0001f);
-    ASSERT_EQ(stock.operational.detailedData.at(1).timestamp, 2000123);
-    ASSERT_NEAR(stock.operational.detailedData.at(1).price,   100.5f, 0.0001f);
+    ASSERT_NEAR(stock.operational.detailedData.at(0).price,   100.5f, 0.0001f);
     // clang-format on
 
     EXPECT_CALL(*stocksStorageMock, readLock());

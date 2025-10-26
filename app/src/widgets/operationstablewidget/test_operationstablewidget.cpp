@@ -104,6 +104,15 @@ TEST_F(Test_OperationsTableWidget, Test_operationsAdded)
     operationsTableWidget->operationsAdded(operations);
 }
 
+TEST_F(Test_OperationsTableWidget, Test_refreshBackground)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*operationsTableModelMock, refreshBackground());
+
+    operationsTableWidget->refreshBackground();
+}
+
 TEST_F(Test_OperationsTableWidget, Test_on_tableView_customContextMenuRequested)
 {
     const QPoint pos;

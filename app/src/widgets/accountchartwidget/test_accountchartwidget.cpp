@@ -108,6 +108,23 @@ TEST_F(Test_AccountChartWidget, Test_switchChart)
     // clang-format on
 }
 
+TEST_F(Test_AccountChartWidget, Test_setTimeRange)
+{
+    QList<Operation> operations;
+
+    accountChartWidget->operationsRead(operations);
+    accountChartWidget->setTimeRange(TIME_RANGE_LAST_DAY);
+
+    Operation operation;
+    operation.timestamp                       = 1704056400000;
+    operation.originalTimestamp               = 1704056400000;
+    operation.totalYieldWithCommissionPercent = 1.0f;
+    operations << operation;
+
+    accountChartWidget->operationsRead(operations);
+    accountChartWidget->setTimeRange(TIME_RANGE_LAST_WEEK);
+}
+
 TEST_F(Test_AccountChartWidget, Test_operationsRead_and_operationsAdded)
 {
     QList<Operation> operations;

@@ -99,6 +99,8 @@ TEST_F(Test_OperationsTableModel, Test_headerData)
 
 TEST_F(Test_OperationsTableModel, Test_data)
 {
+    // const InSequence seq;
+
     Logo logo;
 
     QList<Operation> operations;
@@ -223,6 +225,11 @@ TEST_F(Test_OperationsTableModel, Test_data)
     model->operationsRead(operations);
     ASSERT_EQ(model->rowCount(), 3);
 
+    EXPECT_CALL(*configMock, isHighlightGoodOperations()).WillRepeatedly(Return(true));
+    EXPECT_CALL(*configMock, getHighlightGoodOperationsYield()).WillRepeatedly(Return(1));
+    EXPECT_CALL(*configMock, isHighlightBadOperations()).WillRepeatedly(Return(true));
+    EXPECT_CALL(*configMock, getHighlightBadOperationsLose()).WillRepeatedly(Return(2));
+
     // clang-format off
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_TIME_COLUMN),                                Qt::DisplayRole),           QVariant("2024-01-01 00:02:00"));
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_NAME_COLUMN),                                Qt::DisplayRole),           QVariant("ABBA"));
@@ -275,6 +282,57 @@ TEST_F(Test_OperationsTableModel, Test_data)
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::DisplayRole),           QVariant("+521.00%"));
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_REMAINED_MONEY_COLUMN),                      Qt::DisplayRole),           QVariant("522.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_TOTAL_MONEY_COLUMN),                         Qt::DisplayRole),           QVariant("524.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_TIME_COLUMN),                                Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_NAME_COLUMN),                                Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_DESCRIPTION_COLUMN),                         Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_PRICE_COLUMN),                               Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_AVG_PRICE_FIFO_COLUMN),                      Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_AVG_PRICE_WAVG_COLUMN),                      Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_QUANTITY_COLUMN),                            Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_REMAINED_QUANTITY_COLUMN),                   Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_PAYMENT_COLUMN),                             Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_COMMISSION_COLUMN),                          Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_YIELD_COLUMN),                               Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN),               Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN),       Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN),         Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_REMAINED_MONEY_COLUMN),                      Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_TOTAL_MONEY_COLUMN),                         Qt::BackgroundRole),        QVariant(QBrush(QColor("#563337"))));
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_TIME_COLUMN),                                Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_NAME_COLUMN),                                Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_DESCRIPTION_COLUMN),                         Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_PRICE_COLUMN),                               Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_AVG_PRICE_FIFO_COLUMN),                      Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_AVG_PRICE_WAVG_COLUMN),                      Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_QUANTITY_COLUMN),                            Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_REMAINED_QUANTITY_COLUMN),                   Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_PAYMENT_COLUMN),                             Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_COMMISSION_COLUMN),                          Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_YIELD_COLUMN),                               Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN),               Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN),       Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN),         Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_REMAINED_MONEY_COLUMN),                      Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_TOTAL_MONEY_COLUMN),                         Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_TIME_COLUMN),                                Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_NAME_COLUMN),                                Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_DESCRIPTION_COLUMN),                         Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_PRICE_COLUMN),                               Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_AVG_PRICE_FIFO_COLUMN),                      Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_AVG_PRICE_WAVG_COLUMN),                      Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_QUANTITY_COLUMN),                            Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_REMAINED_QUANTITY_COLUMN),                   Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_PAYMENT_COLUMN),                             Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_COMMISSION_COLUMN),                          Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_YIELD_COLUMN),                               Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN),               Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN),       Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN),         Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_REMAINED_MONEY_COLUMN),                      Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_TOTAL_MONEY_COLUMN),                         Qt::BackgroundRole),        QVariant(QBrush(QColor("#335648"))));
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_TIME_COLUMN),                                Qt::ForegroundRole),        QVariant());
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_NAME_COLUMN),                                Qt::ForegroundRole),        QVariant());
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_DESCRIPTION_COLUMN),                         Qt::ForegroundRole),        QVariant());
@@ -1630,6 +1688,11 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     ASSERT_EQ(model->data(model->index(1, OPERATIONS_TOTAL_MONEY_COLUMN), Qt::DisplayRole), QVariant("524.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_TOTAL_MONEY_COLUMN), Qt::DisplayRole), QVariant("224.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(3, OPERATIONS_TOTAL_MONEY_COLUMN), Qt::DisplayRole), QVariant("124.00 \u20BD"));
+}
+
+TEST_F(Test_OperationsTableModel, Test_refreshBackground)
+{
+    model->refreshBackground();
 }
 
 TEST_F(Test_OperationsTableModel, Test_exportToExcel)
