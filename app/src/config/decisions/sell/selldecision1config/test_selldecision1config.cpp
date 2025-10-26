@@ -212,8 +212,8 @@ TEST_F(Test_SellDecision1Config, Test_variantsAsJson)
 
     ASSERT_EQ(variants.size(), 4);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
-    ASSERT_EQ(variants.at(1), R"({"enabled":true,"yieldAbove":"0.50"})");
-    ASSERT_EQ(variants.at(2), R"({"enabled":true,"yieldAbove":"1.00"})");
+    ASSERT_EQ(variants.at(1), R"({"enabled":true,"yieldAbove":"1.00"})");
+    ASSERT_EQ(variants.at(2), R"({"enabled":true,"yieldAbove":"1.50"})");
     ASSERT_EQ(variants.at(3), R"({"enabled":true,"yieldAbove":"2.00"})");
 }
 

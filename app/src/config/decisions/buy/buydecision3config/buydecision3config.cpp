@@ -187,8 +187,8 @@ QStringList BuyDecision3Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList priceFallVariants = {"5.00", "7.00", "10.00", "12.00", "15.00"};
-    const QStringList durationVariants  = {"3", "7", "14", "30", "60", "90"};
+    const QStringList priceFallVariants = {"7.00", "10.00", "12.00", "15.00"};
+    const QStringList durationVariants  = {"3", "7", "14"};
 
     for (const QString& priceFall : priceFallVariants)
     {

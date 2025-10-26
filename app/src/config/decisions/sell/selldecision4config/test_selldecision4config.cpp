@@ -240,12 +240,12 @@ TEST_F(Test_SellDecision4Config, Test_variantsAsJson)
     ASSERT_EQ(variants.at(1), R"({"enabled":true,"duration":15,"yieldAbove":"0.50"})");
     ASSERT_EQ(variants.at(2), R"({"enabled":true,"duration":15,"yieldAbove":"1.00"})");
     ASSERT_EQ(variants.at(3), R"({"enabled":true,"duration":15,"yieldAbove":"1.50"})");
-    ASSERT_EQ(variants.at(4), R"({"enabled":true,"duration":30,"yieldAbove":"0.50"})");
-    ASSERT_EQ(variants.at(5), R"({"enabled":true,"duration":30,"yieldAbove":"1.00"})");
-    ASSERT_EQ(variants.at(6), R"({"enabled":true,"duration":30,"yieldAbove":"1.50"})");
-    ASSERT_EQ(variants.at(7), R"({"enabled":true,"duration":60,"yieldAbove":"0.50"})");
-    ASSERT_EQ(variants.at(8), R"({"enabled":true,"duration":60,"yieldAbove":"1.00"})");
-    ASSERT_EQ(variants.at(9), R"({"enabled":true,"duration":60,"yieldAbove":"1.50"})");
+    ASSERT_EQ(variants.at(4), R"({"enabled":true,"duration":20,"yieldAbove":"0.50"})");
+    ASSERT_EQ(variants.at(5), R"({"enabled":true,"duration":20,"yieldAbove":"1.00"})");
+    ASSERT_EQ(variants.at(6), R"({"enabled":true,"duration":20,"yieldAbove":"1.50"})");
+    ASSERT_EQ(variants.at(7), R"({"enabled":true,"duration":30,"yieldAbove":"0.50"})");
+    ASSERT_EQ(variants.at(8), R"({"enabled":true,"duration":30,"yieldAbove":"1.00"})");
+    ASSERT_EQ(variants.at(9), R"({"enabled":true,"duration":30,"yieldAbove":"1.50"})");
 }
 
 TEST_F(Test_SellDecision4Config, Test_setEnabled_and_isEnabled)

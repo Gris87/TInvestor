@@ -1,5 +1,4 @@
 Analyze trading
-Change best config search algorithm
 Find best configs for different commission
 Improve coverage
 Create release

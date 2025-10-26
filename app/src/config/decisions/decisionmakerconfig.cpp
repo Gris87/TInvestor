@@ -322,13 +322,12 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
     const QList<QStringList> sellVariants = {
         mSellDecision1Config->variantsAsJson(),
         mSellDecision2Config->variantsAsJson(),
-        // Do not add sell decisions below
+        // Do not add sell decision below
         // mSellDecision3Config->variantsAsJson(),
-        // mSellDecision4Config->variantsAsJson(),
+        mSellDecision4Config->variantsAsJson(),
     };
 
     const QString s3 = R"({"enabled":false})";
-    const QString s4 = R"({"enabled":false})";
 
     QStringList results;
 
@@ -365,7 +364,7 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
                                 buyConfigs[6],
                                 buyConfigs[7]
                             ),
-                        QString(R"("s1":%1,"s2":%2,"s3":%3,"s4":%4)").arg(sellConfigs[0], sellConfigs[1], s3, s4)
+                        QString(R"("s1":%1,"s2":%2,"s3":%3,"s4":%4)").arg(sellConfigs[0], sellConfigs[1], s3, sellConfigs[2])
                     ));
                     // NOLINTEND(readability-magic-numbers)
                 }
@@ -424,19 +423,14 @@ QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(con
     unitedBestConfigs.removeDuplicates();
 
     const QStringList sellVariants3 = mSellDecision3Config->variantsAsJson();
-    const QStringList sellVariants4 = mSellDecision4Config->variantsAsJson();
 
     for (const QString& bestConfig : unitedBestConfigs)
     {
         for (const QString& s3 : sellVariants3)
         {
-            for (const QString& s4 : sellVariants4)
-            {
-                QString temp = bestConfig;
+            QString temp = bestConfig;
 
-                res.append(temp.replace(R"("s3":{"enabled":false})", QString(R"("s3":%1)").arg(s3))
-                               .replace(R"("s4":{"enabled":false})", QString(R"("s4":%1)").arg(s4)));
-            }
+            res.append(temp.replace(R"("s3":{"enabled":false})", QString(R"("s3":%1)").arg(s3)));
         }
     }
 

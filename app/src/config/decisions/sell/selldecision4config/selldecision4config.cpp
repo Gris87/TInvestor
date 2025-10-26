@@ -187,7 +187,7 @@ QStringList SellDecision4Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList durationVariants   = {"15", "30", "60"};
+    const QStringList durationVariants   = {"15", "20", "30"};
     const QStringList yieldAboveVariants = {"0.50", "1.00", "1.50"};
 
     for (const QString& duration : durationVariants)

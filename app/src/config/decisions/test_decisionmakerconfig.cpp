@@ -373,7 +373,7 @@ TEST_F(Test_DecisionMakerConfig, Test_variantsToJsonStringList)
     EXPECT_CALL(*sellDecision1ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     EXPECT_CALL(*sellDecision2ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     //EXPECT_CALL(*sellDecision3ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
-    //EXPECT_CALL(*sellDecision4ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    EXPECT_CALL(*sellDecision4ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     // clang-format on
 
     const QStringList variants         = config->variantsToJsonStringList();
@@ -383,49 +383,73 @@ TEST_F(Test_DecisionMakerConfig, Test_variantsToJsonStringList)
         "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":true},"
         "\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{"
         "\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":"
-        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
+        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":false},"
+        "\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{"
+        "\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":"
+        "false},\"s4\":{\"enabled\":true}}\n]",
         "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{"
         "\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":"
         "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},"
         "\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{"
         "\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":"
-        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
+        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":true},"
+        "\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{"
+        "\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":"
+        "false},\"s4\":{\"enabled\":true}}\n]",
         "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":false},\"b5\":{"
         "\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":"
         "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},"
         "\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{"
         "\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":"
-        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
+        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},"
+        "\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{"
+        "\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":"
+        "false},\"s4\":{\"enabled\":true}}\n]",
         "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":true},\"b5\":{"
         "\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":"
         "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},"
         "\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":false},\"b6\":{"
         "\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":"
-        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
+        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},"
+        "\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{"
+        "\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":"
+        "false},\"s4\":{\"enabled\":true}}\n]",
         "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{"
         "\"enabled\":true},\"b6\":{\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":"
         "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},"
         "\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":true},\"b6\":{"
         "\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":"
-        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
+        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},"
+        "\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":true},\"b6\":{\"enabled\":false},\"b7\":{"
+        "\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":"
+        "false},\"s4\":{\"enabled\":true}}\n]",
         "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{"
         "\"enabled\":false},\"b6\":{\"enabled\":true},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":"
         "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},"
         "\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{"
         "\"enabled\":true},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":"
-        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
+        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},"
+        "\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{\"enabled\":true},\"b7\":{"
+        "\"enabled\":false},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":"
+        "false},\"s4\":{\"enabled\":true}}\n]",
         "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{"
         "\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{\"enabled\":true},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":"
         "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},"
         "\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{"
         "\"enabled\":false},\"b7\":{\"enabled\":true},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":"
-        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
+        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},"
+        "\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{"
+        "\"enabled\":true},\"b8\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":"
+        "false},\"s4\":{\"enabled\":true}}\n]",
         "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{"
         "\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":true},\"s1\":{\"enabled\":"
         "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},"
         "\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{"
         "\"enabled\":false},\"b7\":{\"enabled\":false},\"b8\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":"
-        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]"
+        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},"
+        "\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"b5\":{\"enabled\":false},\"b6\":{\"enabled\":false},\"b7\":{"
+        "\"enabled\":false},\"b8\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":"
+        "false},\"s4\":{\"enabled\":true}}\n]"
     };
 
     ASSERT_EQ(variants, expectedVariants);
@@ -447,7 +471,7 @@ TEST_F(Test_DecisionMakerConfig, Test_variantsToJsonStringListExtendedBySellDeci
     //EXPECT_CALL(*sellDecision1ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     //EXPECT_CALL(*sellDecision2ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     EXPECT_CALL(*sellDecision3ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
-    EXPECT_CALL(*sellDecision4ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
+    //EXPECT_CALL(*sellDecision4ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     // clang-format on
 
     QStringList bestConfigs = {
@@ -468,24 +492,13 @@ TEST_F(Test_DecisionMakerConfig, Test_variantsToJsonStringListExtendedBySellDeci
         "true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}},\n{\"b1\":{\"enabled\":true},"
         "\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":true},\"b6\":{"
         "\"enabled\":true},\"b7\":{\"enabled\":true},\"b8\":{\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":"
-        "false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":true}}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},"
+        "false},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":false}}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},"
         "\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":true},\"b6\":{\"enabled\":true},\"b7\":{"
-        "\"enabled\":true},\"b8\":{\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":"
-        "true},\"s4\":{\"enabled\":false}}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},"
+        "\"enabled\":true},\"b8\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":"
+        "false},\"s4\":{\"enabled\":false}}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},"
         "\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":true},\"b6\":{\"enabled\":true},\"b7\":{\"enabled\":true},\"b8\":{"
-        "\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":"
-        "true}}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},"
-        "\"b5\":{\"enabled\":true},\"b6\":{\"enabled\":true},\"b7\":{\"enabled\":true},\"b8\":{\"enabled\":true},\"s1\":{"
-        "\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}},\n{\"b1\":{"
-        "\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":"
-        "true},\"b6\":{\"enabled\":true},\"b7\":{\"enabled\":true},\"b8\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{"
-        "\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":true}}},\n{\"b1\":{\"enabled\":true},\"b2\":{"
-        "\"enabled\":true},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":true},\"b6\":{\"enabled\":"
-        "true},\"b7\":{\"enabled\":true},\"b8\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{"
-        "\"enabled\":true},\"s4\":{\"enabled\":false}}},\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":true},\"b3\":{"
-        "\"enabled\":true},\"b4\":{\"enabled\":true},\"b5\":{\"enabled\":true},\"b6\":{\"enabled\":true},\"b7\":{\"enabled\":"
-        "true},\"b8\":{\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":true},\"s4\":{"
-        "\"enabled\":true}}}\n]";
+        "\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":true},\"s4\":{\"enabled\":"
+        "false}}}\n]";
 
     ASSERT_EQ(variants, expectedVariants);
 }

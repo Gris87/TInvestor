@@ -213,8 +213,8 @@ TEST_F(Test_BuyDecision5Config, Test_variantsAsJson)
     ASSERT_EQ(variants.size(), 4);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
     ASSERT_EQ(variants.at(1), R"({"enabled":true,"duration":15})");
-    ASSERT_EQ(variants.at(2), R"({"enabled":true,"duration":30})");
-    ASSERT_EQ(variants.at(3), R"({"enabled":true,"duration":60})");
+    ASSERT_EQ(variants.at(2), R"({"enabled":true,"duration":20})");
+    ASSERT_EQ(variants.at(3), R"({"enabled":true,"duration":30})");
 }
 
 TEST_F(Test_BuyDecision5Config, Test_setEnabled_and_isEnabled)

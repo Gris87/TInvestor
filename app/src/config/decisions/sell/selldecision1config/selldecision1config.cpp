@@ -170,7 +170,7 @@ QStringList SellDecision1Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList yieldAboveVariants = {"0.50", "1.00", "2.00"};
+    const QStringList yieldAboveVariants = {"1.00", "1.50", "2.00"};
 
     for (const QString& yieldAbove : yieldAboveVariants)
     {
