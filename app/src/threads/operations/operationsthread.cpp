@@ -9,15 +9,17 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr int    LIMIT_OPERATIONS     = 100000;
-constexpr int    OPTIMIZE_SIZE        = 10000;
-constexpr float  HUNDRED_PERCENT      = 100.0f;
-constexpr qint64 MS_IN_SECOND         = 1000LL;
-constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
-constexpr qint64 ONE_DAY              = 24LL * ONE_HOUR;
-constexpr qint64 SLEEP_DELAY          = 5LL * MS_IN_SECOND;  // 5 seconds
-constexpr qint64 SLEEP_BEFORE_REQUEST = 10LL * MS_IN_SECOND; // 10 seconds
+constexpr int    LIMIT_OPERATIONS       = 100000;
+constexpr int    OPTIMIZE_SIZE          = 10000;
+constexpr float  HUNDRED_PERCENT        = 100.0f;
+constexpr qint64 MS_IN_SECOND           = 1000LL;
+constexpr qint64 ONE_MINUTE             = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR               = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY                = 24LL * ONE_HOUR;
+constexpr qint64 SLEEP_DELAY            = 5LL * MS_IN_SECOND;  // 5 seconds
+constexpr qint64 SLEEP_BEFORE_REQUEST   = 10LL * MS_IN_SECOND; // 10 seconds
+constexpr qint64 CLEAN_REFRESH_INTERVAL = 1LL * ONE_DAY;       // 1 day
+constexpr qint64 CLEAN_REFRESH_RANGE    = 3LL * ONE_DAY;       // 3 days
 
 
 
@@ -50,7 +52,7 @@ OperationsThread::OperationsThread(
     mLimitOperations(LIMIT_OPERATIONS),
     mOptimizeSize(OPTIMIZE_SIZE),
     mLastPositionUidForExtAccount(),
-    mOperationsLastDay(),
+    mOperationsLastDays(),
     mInstruments(),
     mInputMoney(),
     mMaxInputMoney(),
@@ -182,7 +184,7 @@ void OperationsThread::cleanRefreshOperations()
     if (!operations.isEmpty())
     {
         const Operation& lastOperation     = operations.constFirst(); // Since it reversed
-        const qint64     obsoleteTimestamp = lastOperation.timestamp - ONE_DAY;
+        const qint64     obsoleteTimestamp = lastOperation.timestamp - CLEAN_REFRESH_INTERVAL;
 
         const int operationsToRemove = std::distance(
             operations.constBegin(),
@@ -224,14 +226,14 @@ void OperationsThread::cleanRefreshOperations()
     mAmountOfOperationsWithSameTimestamp = 0;
     mLastPositionUidForExtAccount        = "";
 
-    mOperationsLastDay.clear();
+    mOperationsLastDays.clear();
     mInstruments.clear();
 
     for (int i = operations.size() - 1; i >= 0; --i)
     {
         const Operation& operation = operations.at(i);
 
-        mOperationsLastDay.insert(
+        mOperationsLastDays.insert(
             QString("%1_%2_%3").arg(QString::number(operation.originalTimestamp), operation.instrumentId, operation.description)
         );
 
@@ -259,14 +261,14 @@ bool OperationsThread::requestOperations()
 {
     const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
 
-    if (timestamp - mLastCleanRefreshTimestamp > ONE_DAY)
+    if (timestamp - mLastCleanRefreshTimestamp > CLEAN_REFRESH_INTERVAL)
     {
         mLastCleanRefreshTimestamp = timestamp;
 
         cleanRefreshOperations();
     }
 
-    const qint64 startTimestamp = qMax(mLastRequestTimestamp - ONE_DAY, 0);
+    const qint64 startTimestamp = qMax(mLastRequestTimestamp - CLEAN_REFRESH_RANGE, 0);
     const qint64 endTimestamp   = timestamp + ONE_DAY;
     QString      cursor;
 
@@ -312,7 +314,7 @@ bool OperationsThread::requestOperations()
                                                            QString::fromStdString(tinkoffOperation.description())
                                                        );
 
-                    if (!mOperationsLastDay.contains(operationIdStr))
+                    if (!mOperationsLastDays.contains(operationIdStr))
                     {
                         ++totalOperations;
                     }
@@ -365,7 +367,7 @@ bool OperationsThread::requestOperations()
                                                            QString::fromStdString(tinkoffOperation.description())
                                                        );
 
-                    if (!mOperationsLastDay.contains(operationIdStr))
+                    if (!mOperationsLastDays.contains(operationIdStr))
                     {
                         handleOperationItem(tinkoffOperation, &operations[curOperation]);
                         --curOperation;
@@ -388,7 +390,7 @@ bool OperationsThread::requestOperations()
         }
 
         mLastRequestTimestamp = operations.constFirst().timestamp; // Since it reversed
-        mOperationsLastDay    = operationsLastDay;
+        mOperationsLastDays   = operationsLastDay;
 
         mAmountOfEntries += totalOperations;
     }

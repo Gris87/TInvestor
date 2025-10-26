@@ -481,7 +481,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
 
     EXPECT_CALL(
         *grpcRetryClientMock,
-        getValidOperations(QThread::currentThread(), QString("account-id"), 1703970060000, Ge(1704056461000), QString(""))
+        getValidOperations(QThread::currentThread(), QString("account-id"), 1703797260000, Ge(1704056461000), QString(""))
     )
         .WillOnce(Return(getOperationsByCursorResponse3));
     EXPECT_CALL(*instrumentsStorageMock, readLock());

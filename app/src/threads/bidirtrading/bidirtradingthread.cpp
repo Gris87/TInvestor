@@ -526,7 +526,6 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
 double
 BiDirTradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity)
 {
-    const double topBidPrice = quotationToDouble(tinkoffOrderBook.bids(0).price());
     const double topAskPrice = quotationToDouble(tinkoffOrderBook.asks(0).price());
 
     double res;

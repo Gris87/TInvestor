@@ -86,7 +86,7 @@ private:
     int                              mLimitOperations;
     int                              mOptimizeSize;
     QString                          mLastPositionUidForExtAccount;
-    QSet<QString>                    mOperationsLastDay;
+    QSet<QString>                    mOperationsLastDays;
     QuantityAndCostInstruments       mInstruments;
     Quotation                        mInputMoney;
     Quotation                        mMaxInputMoney;
