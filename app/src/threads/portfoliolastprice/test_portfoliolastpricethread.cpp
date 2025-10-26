@@ -90,6 +90,8 @@ TEST_F(Test_PortfolioLastPriceThread, Test_run)
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
     EXPECT_CALL(*grpcClientMock, createMarketDataStreamForLastPrice(QStringList() << "aaaaa")).WillOnce(Return(nullptr));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*grpcClientMock, createMarketDataStreamForLastPrice(QStringList() << "aaaaa")).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
 
     thread->run();

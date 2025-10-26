@@ -9,6 +9,7 @@ Asap mode immediately but with positive yield and small spread
 Thread to sell gifts
 Sell into chunks
 Fix auto-restart non-running app
+Double check mutexes
 Improve coverage
 Create release
 

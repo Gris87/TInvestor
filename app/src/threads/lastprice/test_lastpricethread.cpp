@@ -115,12 +115,14 @@ TEST_F(Test_LastPriceThread, Test_run)
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
     EXPECT_CALL(*stocksStorageMock, readLock());
-    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(emptyStocks));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*grpcClientMock, createMarketDataStreamForLastPrice(QStringList() << "aaaa")).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*stocksStorageMock, readLock());
-    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(emptyStocks));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*grpcClientMock, createMarketDataStreamForLastPrice(QStringList() << "aaaa")).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
 
     thread->run();
@@ -132,6 +134,17 @@ TEST_F(Test_LastPriceThread, Test_run)
     ASSERT_EQ(stock.operational.detailedData.at(1).timestamp, 2000123);
     ASSERT_NEAR(stock.operational.detailedData.at(1).price,   100.5f, 0.0001f);
     // clang-format on
+
+    EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(emptyStocks));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(emptyStocks));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    thread->run();
 }
 
 TEST_F(Test_LastPriceThread, Test_stocksChanged)

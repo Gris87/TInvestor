@@ -116,6 +116,10 @@ TEST_F(Test_OrderBookThread, Test_run)
     EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
     EXPECT_CALL(*grpcClientMock, createMarketDataStreamForOrderBook(QString("aaaaa"), 50)).WillOnce(Return(marketDataStream));
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 50)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, createMarketDataStreamForOrderBook(QString("aaaaa"), 50)).WillOnce(Return(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 50)).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
     EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
 

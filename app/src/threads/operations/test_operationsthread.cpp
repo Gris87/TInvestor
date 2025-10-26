@@ -135,23 +135,29 @@ TEST_F(Test_OperationsThread, Test_run)
         *grpcRetryClientMock,
         getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
     )
+        .WillOnce(Return(getOperationsByCursorResponse2));
+    EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(portfolioStreamResponse2));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream));
+    EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
+    EXPECT_CALL(
+        *grpcRetryClientMock,
+        getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
+    )
+        .WillOnce(Return(nullptr));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream));
+    EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
+    EXPECT_CALL(
+        *grpcRetryClientMock,
+        getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
+    )
         .WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
     EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream));
 
     thread->run();
 
-    EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(portfolioStream));
-    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
-    EXPECT_CALL(*operationsDatabaseMock, writeOperations(operations, -1));
-    EXPECT_CALL(
-        *grpcRetryClientMock,
-        getValidOperations(QThread::currentThread(), QString("account-id"), 0, Ge(1704056400000), QString(""))
-    )
-        .WillOnce(Return(getOperationsByCursorResponse2));
-    EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(portfolioStreamResponse2));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
-    EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"))).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
 
