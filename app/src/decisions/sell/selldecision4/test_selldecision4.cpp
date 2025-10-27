@@ -110,7 +110,7 @@ TEST_F(Test_SellDecision4, Test_makeDecision)
     ASSERT_EQ(cause, "");
 
     // ====================================================================
-    // TEST CASE: Nothing happened to the price within 10 minutes
+    // TEST CASE: Nothing happened to the price
     // ====================================================================
     //
     // -------------------------------------------------------------------X
@@ -199,7 +199,7 @@ TEST_F(Test_SellDecision4, Test_makeDecision)
     );
 
     // ====================================================================
-    // TEST CASE: Nothing happened to the price within 10 minutes
+    // TEST CASE: Nothing happened to the price
     // ====================================================================
     //
     // -------------------------------------------------------------------X

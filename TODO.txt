@@ -1,8 +1,10 @@
 Analyze trading
+void fillWithData(Stock* stock, QList<float> data, bool dateRange)
 Find best configs for different commission
 Improve coverage
 Create release
 
+Priority to single trading thread over bi-directional trading thread
 Add comments on decisions
 Override chart labels => 1.25 K rub
 Asap mode immediately but with positive yield and small spread
