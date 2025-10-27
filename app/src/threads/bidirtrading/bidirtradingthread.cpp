@@ -528,7 +528,7 @@ BiDirTradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& tinko
 {
     const double topAskPrice = quotationToDouble(tinkoffOrderBook.asks(0).price());
 
-    double res;
+    double res = 0.0;
 
     if (mode == BIDIR_MODE_HUGE_BID)
     {

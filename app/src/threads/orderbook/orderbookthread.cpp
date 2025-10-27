@@ -72,15 +72,7 @@ void OrderBookThread::run()
             }
             else
             {
-                if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
-                {
-                    const QWriteLocker lock(mRwMutex);
-
-                    mGrpcClient->finishMarketDataStream(mMarketDataStream);
-                    mMarketDataStream = nullptr;
-
-                    break;
-                }
+                mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread());
             }
 
             const QWriteLocker lock(mRwMutex);

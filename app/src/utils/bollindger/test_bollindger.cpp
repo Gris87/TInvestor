@@ -452,3 +452,403 @@ TEST_F(Test_Bollindger, Test_getStandartDeviation)
 
     ASSERT_NEAR(bollindger->getStandartDeviation(&stock, 0, stock.data.size(), 196.7533), 1.31902, 0.0001);
 }
+
+TEST_F(Test_Bollindger, Test_getTopEdgeOperational)
+{
+    Stock stock;
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getTopEdgeOperational(&stock, 0, stock.operational.detailedData.size()), 199.7285, 0.0001);
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getTopEdgeOperational(&stock, 0, stock.operational.detailedData.size()), 199.7109, 0.0001);
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+            195.3f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getTopEdgeOperational(&stock, 0, stock.operational.detailedData.size()), 199.5890, 0.0001);
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+            195.3f,
+            195.8f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getTopEdgeOperational(&stock, 0, stock.operational.detailedData.size()), 199.3913, 0.0001);
+
+    ASSERT_NEAR(bollindger->getTopEdgeOperational(&stock, 0, 0), -1.0, 0.0001);
+}
+
+TEST_F(Test_Bollindger, Test_getBottomEdgeOperational)
+{
+    Stock stock;
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getBottomEdgeOperational(&stock, 0, stock.operational.detailedData.size()), 194.91146, 0.0001);
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getBottomEdgeOperational(&stock, 0, stock.operational.detailedData.size()), 194.50238, 0.0001);
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+            195.3f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getBottomEdgeOperational(&stock, 0, stock.operational.detailedData.size()), 194.23764, 0.0001);
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+            195.3f,
+            195.8f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getBottomEdgeOperational(&stock, 0, stock.operational.detailedData.size()), 194.11528, 0.0001);
+
+    ASSERT_NEAR(bollindger->getBottomEdgeOperational(&stock, 0, 0), -1.0, 0.0001);
+}
+
+TEST_F(Test_Bollindger, Test_getMovingAverageOperational)
+{
+    Stock stock;
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getMovingAverageOperational(&stock, 0, stock.operational.detailedData.size()), 197.32, 0.0001);
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getMovingAverageOperational(&stock, 0, stock.operational.detailedData.size()), 197.1067, 0.0001);
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+            195.3f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getMovingAverageOperational(&stock, 0, stock.operational.detailedData.size()), 196.9133, 0.0001);
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+            195.3f,
+            195.8f,
+        }
+    );
+
+    ASSERT_NEAR(bollindger->getMovingAverageOperational(&stock, 0, stock.operational.detailedData.size()), 196.7533, 0.0001);
+}
+
+TEST_F(Test_Bollindger, Test_getStandartDeviationOperational)
+{
+    Stock stock;
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+        }
+    );
+
+    ASSERT_NEAR(
+        bollindger->getStandartDeviationOperational(&stock, 0, stock.operational.detailedData.size(), 197.32), 1.20426, 0.0001
+    );
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+        }
+    );
+
+    ASSERT_NEAR(
+        bollindger->getStandartDeviationOperational(&stock, 0, stock.operational.detailedData.size(), 197.1067), 1.30214, 0.0001
+    );
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+            195.3f,
+        }
+    );
+
+    ASSERT_NEAR(
+        bollindger->getStandartDeviationOperational(&stock, 0, stock.operational.detailedData.size(), 196.9133), 1.33784, 0.0001
+    );
+
+    fillWithOperationalData(
+        &stock,
+        {
+            198.2f,
+            198.2f,
+            198.1f,
+            198.1f,
+            197.7f,
+            198.1f,
+            197.7f,
+            197.4f,
+            196.8f,
+            195.4f,
+            194.9f,
+            194.6f,
+            195.0f,
+            195.3f,
+            195.8f,
+        }
+    );
+
+    ASSERT_NEAR(
+        bollindger->getStandartDeviationOperational(&stock, 0, stock.operational.detailedData.size(), 196.7533), 1.31902, 0.0001
+    );
+}

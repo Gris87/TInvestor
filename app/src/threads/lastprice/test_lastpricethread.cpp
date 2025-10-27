@@ -120,20 +120,6 @@ TEST_F(Test_LastPriceThread, Test_run)
     EXPECT_CALL(*grpcClientMock, createMarketDataStreamForLastPrice(QStringList() << "aaaa")).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*stocksStorageMock, readLock());
-    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*stocksStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, createMarketDataStreamForLastPrice(QStringList() << "aaaa")).WillOnce(Return(nullptr));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
-
-    thread->run();
-
-    // clang-format off
-    ASSERT_EQ(stock.operational.detailedData.size(),          1);
-    ASSERT_EQ(stock.operational.detailedData.at(0).timestamp, 1000123);
-    ASSERT_NEAR(stock.operational.detailedData.at(0).price,   100.5f, 0.0001f);
-    // clang-format on
-
-    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(emptyStocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
@@ -143,6 +129,12 @@ TEST_F(Test_LastPriceThread, Test_run)
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
 
     thread->run();
+
+    // clang-format off
+    ASSERT_EQ(stock.operational.detailedData.size(),          1);
+    ASSERT_EQ(stock.operational.detailedData.at(0).timestamp, 1000123);
+    ASSERT_NEAR(stock.operational.detailedData.at(0).price,   100.5f, 0.0001f);
+    // clang-format on
 }
 
 TEST_F(Test_LastPriceThread, Test_stocksChanged)

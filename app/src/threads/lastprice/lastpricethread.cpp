@@ -75,10 +75,7 @@ void LastPriceThread::run()
             }
             else
             {
-                if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
-                {
-                    break;
-                }
+                mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread());
             }
         }
         else

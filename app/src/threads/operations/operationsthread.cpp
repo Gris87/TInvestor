@@ -18,7 +18,7 @@ constexpr qint64 ONE_HOUR               = 60LL * ONE_MINUTE;
 constexpr qint64 ONE_DAY                = 24LL * ONE_HOUR;
 constexpr qint64 SLEEP_DELAY            = 5LL * MS_IN_SECOND;  // 5 seconds
 constexpr qint64 SLEEP_BEFORE_REQUEST   = 10LL * MS_IN_SECOND; // 10 seconds
-constexpr qint64 CLEAN_REFRESH_INTERVAL = 1LL * ONE_DAY;       // 1 day
+constexpr qint64 CLEAN_REFRESH_INTERVAL = 3LL * ONE_HOUR;      // 3 hours
 constexpr qint64 CLEAN_REFRESH_RANGE    = 3LL * ONE_DAY;       // 3 days
 
 
@@ -111,15 +111,7 @@ void OperationsThread::run()
             }
             else
             {
-                if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
-                {
-                    const QWriteLocker lock(mRwMutex);
-
-                    mGrpcClient->finishPortfolioStream(mPortfolioStream);
-                    mPortfolioStream = nullptr;
-
-                    break;
-                }
+                mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread());
             }
 
             const QWriteLocker lock(mRwMutex);

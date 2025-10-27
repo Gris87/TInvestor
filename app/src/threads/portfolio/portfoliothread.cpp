@@ -91,15 +91,7 @@ void PortfolioThread::run()
             }
             else
             {
-                if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
-                {
-                    const QWriteLocker lock(mRwMutex);
-
-                    mGrpcClient->finishPortfolioStream(mPortfolioStream);
-                    mPortfolioStream = nullptr;
-
-                    break;
-                }
+                mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread());
             }
 
             const QWriteLocker lock(mRwMutex);

@@ -8,11 +8,14 @@
 
 
 
+const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+
 constexpr qint64 MS_IN_SECOND = 1000LL;
 constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
 
 
 
+using ::testing::Ge;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -86,6 +89,202 @@ TEST_F(Test_SellDecision4, Test_constructor_and_destructor)
 
 TEST_F(Test_SellDecision4, Test_makeDecision)
 {
+    const InSequence seq;
+
+    StrictMock<DecisionMakerConfigMock> configMock;
+    StrictMock<SellDecision4ConfigMock> decisionConfigMock;
+
+    Stock stock;
+    stock.meta.pricePrecision = 2;
+
+    // ====================================================================
+    // TEST CASE: Decision is disabled
+    // ====================================================================
+
+    EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(false));
+
+    QString cause =
+        sellDecision4->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, 80.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: Nothing happened to the price within 10 minutes
+    // ====================================================================
+    //
+    // -------------------------------------------------------------------X
+    //
+
+    fillWithData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+    EXPECT_CALL(*bollindgerMock, getTopEdge(&stock, 3, 15)).WillOnce(Return(100.0f));
+    EXPECT_CALL(*bollindgerMock, getTopEdge(&stock, 2, 14)).WillOnce(Return(100.0f));
+    EXPECT_CALL(*bollindgerMock, getTopEdge(&stock, 1, 13)).WillOnce(Return(100.0f));
+
+    cause = sellDecision4->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, 80.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: Bollindger top edge reached
+    // ====================================================================
+    //
+    //                                                                   /X
+    //                                                                  /
+    //                                                                 /
+    //                                                                /
+    // --------------------------------------------------------------/
+    //
+
+    fillWithData(
+        &stock,
+        {
+            70.0f,
+            71.0f,
+            72.0f,
+            73.0f,
+            74.0f,
+            75.0f,
+            76.0f,
+            77.0f,
+            78.0f,
+            99.5f,
+            99.6f,
+            99.7f,
+            99.8f,
+            99.9f,
+            100.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+    EXPECT_CALL(*bollindgerMock, getTopEdge(&stock, 3, 15)).WillOnce(Return(110.0f));
+    EXPECT_CALL(*bollindgerMock, getTopEdge(&stock, 2, 14)).WillOnce(Return(110.0f));
+    EXPECT_CALL(*bollindgerMock, getTopEdge(&stock, 1, 13)).WillOnce(Return(90.0f));
+
+    cause = sellDecision4->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, 80.0f, 0.04f);
+
+    ASSERT_EQ(
+        cause,
+        "Decided to sell because the price 99.80 \u20BD exceeds top Bollindger edge price 90.00 \u20BD at 2024-01-01 00:12:00"
+    );
+
+    // ====================================================================
+    // TEST CASE: Nothing happened to the price within 10 minutes
+    // ====================================================================
+    //
+    // -------------------------------------------------------------------X
+    //
+
+    fillWithOperationalData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        }
+    );
+
+    EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+    EXPECT_CALL(*bollindgerMock, getTopEdgeOperational(&stock, Ge(3), 15)).WillOnce(Return(100.0f));
+    EXPECT_CALL(*bollindgerMock, getTopEdgeOperational(&stock, Ge(2), 14)).WillOnce(Return(100.0f));
+    EXPECT_CALL(*bollindgerMock, getTopEdgeOperational(&stock, Ge(1), 13)).WillOnce(Return(100.0f));
+
+    cause = sellDecision4->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, 80.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: Bollindger top edge reached
+    // ====================================================================
+    //
+    //                                                                   /X
+    //                                                                  /
+    //                                                                 /
+    //                                                                /
+    // --------------------------------------------------------------/
+    //
+
+    fillWithOperationalData(
+        &stock,
+        {
+            70.0f,
+            71.0f,
+            72.0f,
+            73.0f,
+            74.0f,
+            75.0f,
+            76.0f,
+            77.0f,
+            78.0f,
+            99.5f,
+            99.6f,
+            99.7f,
+            99.8f,
+            99.9f,
+            100.0f,
+        }
+    );
+
+    EXPECT_CALL(configMock, getSellDecision4Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+    EXPECT_CALL(*bollindgerMock, getTopEdgeOperational(&stock, Ge(3), 15)).WillOnce(Return(110.0f));
+    EXPECT_CALL(*bollindgerMock, getTopEdgeOperational(&stock, Ge(2), 14)).WillOnce(Return(110.0f));
+    EXPECT_CALL(*bollindgerMock, getTopEdgeOperational(&stock, Ge(1), 13)).WillOnce(Return(90.0f));
+
+    cause = sellDecision4->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, 80.0f, 0.04f);
+
+    ASSERT_EQ(
+        cause,
+        QString("Decided to sell because the price 99.80 \u20BD exceeds top Bollindger edge price 90.00 \u20BD at %1")
+            .arg(QDateTime::fromMSecsSinceEpoch(stock.operational.detailedData.at(12).timestamp).toString(DATETIME_FORMAT))
+    );
 }
 
 TEST_F(Test_SellDecision4, Test_asapMode)
