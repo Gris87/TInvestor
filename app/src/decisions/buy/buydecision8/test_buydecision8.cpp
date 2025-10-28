@@ -7,10 +7,10 @@
 
 
 
-const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
-
 constexpr qint64 MS_IN_SECOND = 1000LL;
 constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR     = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY      = 24LL * ONE_HOUR;
 
 
 
@@ -83,6 +83,330 @@ TEST_F(Test_BuyDecision8, Test_constructor_and_destructor)
 
 TEST_F(Test_BuyDecision8, Test_makeDecision)
 {
+    const InSequence seq;
+
+    StrictMock<DecisionMakerConfigMock> configMock;
+    StrictMock<BuyDecision8ConfigMock>  decisionConfigMock;
+
+    Stock stock;
+    stock.meta.pricePrecision = 2;
+
+    // ====================================================================
+    // TEST CASE: Decision is disabled
+    // ====================================================================
+
+    EXPECT_CALL(configMock, getBuyDecision8Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(false));
+
+    QString cause = buyDecision8->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: Nothing happened to the price
+    // ====================================================================
+    //
+    // -------------------------------------------------------------------X
+    //
+
+    fillWithData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        true
+    );
+
+    stock.data[0].timestamp -= 2 * ONE_DAY;
+
+    EXPECT_CALL(configMock, getBuyDecision8Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+
+    cause = buyDecision8->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "Decided to buy because the price reach market limit at 100.00 \u20BD and hold it for 10 minutes");
+
+    // ====================================================================
+    // TEST CASE: It's not a price limit
+    // ====================================================================
+    //
+    // ------------------------------\  /---------------------------------X
+    //                                \/
+    //
+
+    fillWithData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            90.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getBuyDecision8Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+
+    cause = buyDecision8->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: It's not a price limit 2
+    // ====================================================================
+    //
+    // \
+    //  ------------------------------------------------------------------X
+    //
+
+    fillWithData(
+        &stock,
+        {
+            110.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getBuyDecision8Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+
+    cause = buyDecision8->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: It's a price limit
+    // ====================================================================
+    //
+    //  ------------------------------------------------------------------X
+    // /
+    //
+
+    fillWithData(
+        &stock,
+        {
+            90.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getBuyDecision8Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+
+    cause = buyDecision8->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "Decided to buy because the price reach market limit at 100.00 \u20BD and hold it for 10 minutes");
+
+    // ====================================================================
+    // TEST CASE: Nothing happened to the price
+    // ====================================================================
+    //
+    // -------------------------------------------------------------------X
+    //
+
+    fillWithData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        true
+    );
+
+    stock.data[0].timestamp -= 2 * ONE_DAY;
+
+    EXPECT_CALL(configMock, getBuyDecision8Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+
+    cause = buyDecision8->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "Decided to buy because the price reach market limit at 100.00 \u20BD and hold it for 10 minutes");
+
+    // ====================================================================
+    // TEST CASE: It's not a price limit
+    // ====================================================================
+    //
+    // ------------------------------\  /---------------------------------X
+    //                                \/
+    //
+
+    fillWithData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            90.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getBuyDecision8Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+
+    cause = buyDecision8->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: It's not a price limit 2
+    // ====================================================================
+    //
+    // \
+    //  ------------------------------------------------------------------X
+    //
+
+    fillWithData(
+        &stock,
+        {
+            110.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getBuyDecision8Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+
+    cause = buyDecision8->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
+    // TEST CASE: It's a price limit
+    // ====================================================================
+    //
+    //  ------------------------------------------------------------------X
+    // /
+    //
+
+    fillWithData(
+        &stock,
+        {
+            90.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        },
+        true
+    );
+
+    EXPECT_CALL(configMock, getBuyDecision8Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(10));
+
+    cause = buyDecision8->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "Decided to buy because the price reach market limit at 100.00 \u20BD and hold it for 10 minutes");
 }
 
 TEST_F(Test_BuyDecision8, Test_asapMode)
