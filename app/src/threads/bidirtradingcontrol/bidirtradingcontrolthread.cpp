@@ -72,6 +72,8 @@ void BiDirTradingControlThread::run()
 static BiDirTradingInfo
 checkStockForHugeBid(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinkoffOrderBook, Stock* stock, float hugeBid)
 {
+    BiDirTradingInfo res;
+
     qint64 bids = 0;
     qint64 asks = 0;
 
@@ -91,7 +93,7 @@ checkStockForHugeBid(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinko
 
         if (coef > hugeBid)
         {
-            return BiDirTradingInfo(
+            res = BiDirTradingInfo(
                 stock,
                 BIDIR_MODE_HUGE_BID,
                 QObject::tr("Decided to start reselling because amount of asks more than amount of bids in %1 times")
@@ -100,12 +102,14 @@ checkStockForHugeBid(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinko
         }
     }
 
-    return BiDirTradingInfo();
+    return res;
 }
 
 static BiDirTradingInfo
 checkStockForHugeSpread(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinkoffOrderBook, Stock* stock, float hugeSpread)
 {
+    BiDirTradingInfo res;
+
     const float bidPrice = quotationToFloat(tinkoffOrderBook->bids(0).price());
     const float askPrice = quotationToFloat(tinkoffOrderBook->asks(0).price());
 
@@ -113,14 +117,14 @@ checkStockForHugeSpread(const std::shared_ptr<tinkoff::GetOrderBookResponse>& ti
 
     if (spread > hugeSpread)
     {
-        return BiDirTradingInfo(
+        res = BiDirTradingInfo(
             stock,
             BIDIR_MODE_HUGE_SPREAD,
             QObject::tr("Decided to start reselling because spread is %1").arg(QString::number(spread, 'f', 3) + "%")
         );
     }
 
-    return BiDirTradingInfo();
+    return res;
 }
 
 static BiDirTradingInfo checkStockForHugeBidOrSpread(
