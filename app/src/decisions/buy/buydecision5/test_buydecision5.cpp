@@ -39,7 +39,7 @@ protected:
         delete bollindgerMock;
     }
 
-    void fillWithData(Stock* stock, QList<float> data, bool dateRange)
+    void fillWithData(Stock* stock, QList<float> data)
     {
         stock->data.clear();
 
@@ -47,16 +47,8 @@ protected:
         {
             StockData stockData;
 
-            if (dateRange)
-            {
-                stockData.timestamp = 1704056400000 + i * ONE_MINUTE;
-            }
-            else
-            {
-                stockData.timestamp = QDateTime::currentMSecsSinceEpoch() - (data.size() - i - 1) * ONE_MINUTE;
-            }
-
-            stockData.price = data.at(i);
+            stockData.timestamp = 1704056400000 + i * ONE_MINUTE;
+            stockData.price     = data.at(i);
 
             stock->data.append(stockData);
         }
@@ -133,8 +125,7 @@ TEST_F(Test_BuyDecision5, Test_makeDecision)
             100.0f,
             100.0f,
             100.0f,
-        },
-        true
+        }
     );
 
     EXPECT_CALL(configMock, getBuyDecision5Config()).WillOnce(Return(&decisionConfigMock));
@@ -181,8 +172,7 @@ TEST_F(Test_BuyDecision5, Test_makeDecision)
             102.0f,
             101.0f,
             100.0f,
-        },
-        true
+        }
     );
 
     EXPECT_CALL(configMock, getBuyDecision5Config()).WillOnce(Return(&decisionConfigMock));

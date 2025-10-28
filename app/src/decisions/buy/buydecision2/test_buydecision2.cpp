@@ -34,7 +34,7 @@ protected:
         delete buyDecision2;
     }
 
-    void fillWithData(Stock* stock, QList<float> data, bool dateRange)
+    void fillWithData(Stock* stock, QList<float> data)
     {
         stock->data.clear();
 
@@ -42,16 +42,8 @@ protected:
         {
             StockData stockData;
 
-            if (dateRange)
-            {
-                stockData.timestamp = 1704056400000 + i * ONE_MINUTE;
-            }
-            else
-            {
-                stockData.timestamp = QDateTime::currentMSecsSinceEpoch() - (data.size() - i - 1) * ONE_MINUTE;
-            }
-
-            stockData.price = data.at(i);
+            stockData.timestamp = 1704056400000 + i * ONE_MINUTE;
+            stockData.price     = data.at(i);
 
             stock->data.append(stockData);
         }
@@ -129,8 +121,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
             100.0f,
             100.0f,
             100.0f,
-        },
-        true
+        }
     );
 
     EXPECT_CALL(configMock, getBuyDecision2Config()).WillOnce(Return(&decisionConfigMock));
@@ -172,8 +163,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
             100.0f,
             100.0f,
             100.0f,
-        },
-        true
+        }
     );
 
     EXPECT_CALL(configMock, getBuyDecision2Config()).WillOnce(Return(&decisionConfigMock));
@@ -219,8 +209,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
             100.0f,
             100.0f,
             100.0f,
-        },
-        true
+        }
     );
 
     EXPECT_CALL(configMock, getBuyDecision2Config()).WillOnce(Return(&decisionConfigMock));
@@ -266,8 +255,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
             100.0f,
             100.0f,
             100.0f,
-        },
-        true
+        }
     );
 
     EXPECT_CALL(configMock, getBuyDecision2Config()).WillOnce(Return(&decisionConfigMock));
@@ -313,8 +301,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
             100.0f,
             80.0f,
             100.0f,
-        },
-        true
+        }
     );
 
     EXPECT_CALL(configMock, getBuyDecision2Config()).WillOnce(Return(&decisionConfigMock));
@@ -338,7 +325,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     // -------------------------------------------------------------------X
     //
 
-    fillWithData(&stock, {}, false);
+    fillWithData(&stock, {});
     fillWithOperationalData(
         &stock,
         {
@@ -381,7 +368,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     // -------------------------------------------------------------/    \X
     //
 
-    fillWithData(&stock, {}, false);
+    fillWithData(&stock, {});
     fillWithOperationalData(
         &stock,
         {
@@ -436,8 +423,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
             100.0f,
             100.0f,
             150.0f,
-        },
-        false
+        }
     );
     fillWithOperationalData(
         &stock,
@@ -485,7 +471,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     //                                                                   \X
     //
 
-    fillWithData(&stock, {}, false);
+    fillWithData(&stock, {});
     fillWithOperationalData(
         &stock,
         {
@@ -532,7 +518,7 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     //                                                                \/
     //
 
-    fillWithData(&stock, {}, false);
+    fillWithData(&stock, {});
     fillWithOperationalData(
         &stock,
         {

@@ -1,6 +1,4 @@
 Analyze trading
-void fillWithData(Stock* stock, QList<float> data, bool dateRange)
-void fillWithOperationalData(Stock* stock, QList<float> data)
 Find best configs for different commission
 Improve coverage
 Create release

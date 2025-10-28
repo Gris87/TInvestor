@@ -1697,6 +1697,273 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     // clang-format on
 }
 
+TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
+{
+    const InSequence seq;
+
+    QList<Stock*> stocks = storage->getStocks();
+    ASSERT_EQ(stocks.size(), 0);
+
+    QList<Stock*> stocksDB;
+
+    Stock* stock1 = new Stock(); // StocksStorage will take ownership
+    Stock* stock2 = new Stock(); // StocksStorage will take ownership
+    Stock* stock3 = new Stock(); // StocksStorage will take ownership
+
+    StockData stockData1;
+    StockData stockData2;
+    StockData stockData3;
+    StockData stockData4;
+    StockData stockData5;
+    StockData stockData6;
+    StockData stockData7;
+
+    stock1->meta.instrumentId        = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
+    stock1->meta.instrumentTicker    = "TEST";
+    stock1->meta.instrumentName      = "abc";
+    stock1->meta.forQualInvestorFlag = true;
+    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.pricePrecision      = 1;
+    stock1->meta.lastTradeTime       = QTime(18, 39);
+    stock1->meta.turnover            = 2000;
+
+    stock2->meta.instrumentId        = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb";
+    stock2->meta.instrumentTicker    = "MAGA";
+    stock2->meta.instrumentName      = "def";
+    stock2->meta.forQualInvestorFlag = false;
+    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.pricePrecision      = 2;
+    stock2->meta.lastTradeTime       = QTime(23, 49);
+    stock2->meta.turnover            = 5000000;
+
+    stock3->meta.instrumentId        = "cccccccc-cccc-cccc-cccc-cccccccccccc";
+    stock3->meta.instrumentTicker    = "HNYA";
+    stock3->meta.instrumentName      = "aaaa";
+    stock3->meta.forQualInvestorFlag = true;
+    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.pricePrecision      = 3;
+    stock3->meta.lastTradeTime       = QTime(9, 59);
+    stock3->meta.turnover            = 9000000000;
+
+    stockData1.timestamp = 1704092400000; // 10:00
+    stockData2.timestamp = 1704182400000; // 11:00
+    stockData3.timestamp = 1704272400000; // 12:00
+    stockData4.timestamp = 1704362400000; // 13:00
+    stockData5.timestamp = 1704452400000; // 14:00
+    stockData6.timestamp = 1704542400000; // 15:00
+    stockData7.timestamp = 1704632400000; // 16:00
+
+    stockData1.quantity = 1;
+    stockData2.quantity = 2;
+    stockData3.quantity = 3;
+    stockData4.quantity = 4;
+    stockData5.quantity = 5;
+    stockData6.quantity = 6;
+    stockData7.quantity = 7;
+
+    stockData1.price = 0.1f;
+    stockData2.price = 0.9f;
+    stockData3.price = 0.3f;
+    stockData4.price = 0.4f;
+    stockData5.price = 0.2f;
+    stockData6.price = 0.6f;
+    stockData7.price = 0.1f;
+
+    stock1->data << stockData1 << stockData2 << stockData5;
+    stock2->data << stockData2 << stockData3 << stockData6 << stockData7;
+    stock3->data << stockData1 << stockData3 << stockData4 << stockData5;
+
+    stock1->operational.lastStoredTimestamp = stock1->data.constLast().timestamp;
+    stock2->operational.lastStoredTimestamp = stock2->data.constLast().timestamp;
+    stock3->operational.lastStoredTimestamp = stock3->data.constLast().timestamp;
+
+    stocksDB << stock1 << stock2 << stock3;
+
+    EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(Ne(QList<Stock*>())));
+
+    storage->readFromDatabase();
+    stocks = storage->getStocks();
+
+    // clang-format off
+    ASSERT_EQ(stocks.size(),                                  3);
+    ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
+    ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
+    ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
+    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
+    ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  1704452400000);
+    ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(0)->data.size(),                      3);
+    ASSERT_EQ(stocks.at(0)->data.at(0).timestamp,             1704092400000);
+    ASSERT_EQ(stocks.at(0)->data.at(0).quantity,              1);
+    ASSERT_NEAR(stocks.at(0)->data.at(0).price,               0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->data.at(1).timestamp,             1704182400000);
+    ASSERT_EQ(stocks.at(0)->data.at(1).quantity,              2);
+    ASSERT_NEAR(stocks.at(0)->data.at(1).price,               0.9f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->data.at(2).timestamp,             1704452400000);
+    ASSERT_EQ(stocks.at(0)->data.at(2).quantity,              5);
+    ASSERT_NEAR(stocks.at(0)->data.at(2).price,               0.2f, 0.0001f);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
+    ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
+    ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
+    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
+    ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  1704632400000);
+    ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(1)->data.size(),                      4);
+    ASSERT_EQ(stocks.at(1)->data.at(0).timestamp,             1704182400000);
+    ASSERT_EQ(stocks.at(1)->data.at(0).quantity,              2);
+    ASSERT_NEAR(stocks.at(1)->data.at(0).price,               0.9f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(1).timestamp,             1704272400000);
+    ASSERT_EQ(stocks.at(1)->data.at(1).quantity,              3);
+    ASSERT_NEAR(stocks.at(1)->data.at(1).price,               0.3f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(2).timestamp,             1704542400000);
+    ASSERT_EQ(stocks.at(1)->data.at(2).quantity,              6);
+    ASSERT_NEAR(stocks.at(1)->data.at(2).price,               0.6f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(3).timestamp,             1704632400000);
+    ASSERT_EQ(stocks.at(1)->data.at(3).quantity,              7);
+    ASSERT_NEAR(stocks.at(1)->data.at(3).price,               0.1f, 0.0001f);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
+    ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
+    ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
+    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
+    ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  1704452400000);
+    ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(2)->data.size(),                      4);
+    ASSERT_EQ(stocks.at(2)->data.at(0).timestamp,             1704092400000);
+    ASSERT_EQ(stocks.at(2)->data.at(0).quantity,              1);
+    ASSERT_NEAR(stocks.at(2)->data.at(0).price,               0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(1).timestamp,             1704272400000);
+    ASSERT_EQ(stocks.at(2)->data.at(1).quantity,              3);
+    ASSERT_NEAR(stocks.at(2)->data.at(1).price,               0.3f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(2).timestamp,             1704362400000);
+    ASSERT_EQ(stocks.at(2)->data.at(2).quantity,              4);
+    ASSERT_NEAR(stocks.at(2)->data.at(2).price,               0.4f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(3).timestamp,             1704452400000);
+    ASSERT_EQ(stocks.at(2)->data.at(3).quantity,              5);
+    ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
+    // clang-format on
+
+    storage->obtainLastTradeTime(1704182400000);
+
+    // clang-format off
+    ASSERT_EQ(stocks.size(),                                  3);
+    ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
+    ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
+    ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(11, 0));
+    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
+    ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  1704452400000);
+    ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(0)->data.size(),                      3);
+    ASSERT_EQ(stocks.at(0)->data.at(0).timestamp,             1704092400000);
+    ASSERT_EQ(stocks.at(0)->data.at(0).quantity,              1);
+    ASSERT_NEAR(stocks.at(0)->data.at(0).price,               0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->data.at(1).timestamp,             1704182400000);
+    ASSERT_EQ(stocks.at(0)->data.at(1).quantity,              2);
+    ASSERT_NEAR(stocks.at(0)->data.at(1).price,               0.9f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->data.at(2).timestamp,             1704452400000);
+    ASSERT_EQ(stocks.at(0)->data.at(2).quantity,              5);
+    ASSERT_NEAR(stocks.at(0)->data.at(2).price,               0.2f, 0.0001f);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
+    ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
+    ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(15, 0));
+    ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
+    ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  1704632400000);
+    ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(1)->data.size(),                      4);
+    ASSERT_EQ(stocks.at(1)->data.at(0).timestamp,             1704182400000);
+    ASSERT_EQ(stocks.at(1)->data.at(0).quantity,              2);
+    ASSERT_NEAR(stocks.at(1)->data.at(0).price,               0.9f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(1).timestamp,             1704272400000);
+    ASSERT_EQ(stocks.at(1)->data.at(1).quantity,              3);
+    ASSERT_NEAR(stocks.at(1)->data.at(1).price,               0.3f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(2).timestamp,             1704542400000);
+    ASSERT_EQ(stocks.at(1)->data.at(2).quantity,              6);
+    ASSERT_NEAR(stocks.at(1)->data.at(2).price,               0.6f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(3).timestamp,             1704632400000);
+    ASSERT_EQ(stocks.at(1)->data.at(3).quantity,              7);
+    ASSERT_NEAR(stocks.at(1)->data.at(3).price,               0.1f, 0.0001f);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
+    ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
+    ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(13, 0));
+    ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
+    ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  1704452400000);
+    ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(2)->data.size(),                      4);
+    ASSERT_EQ(stocks.at(2)->data.at(0).timestamp,             1704092400000);
+    ASSERT_EQ(stocks.at(2)->data.at(0).quantity,              1);
+    ASSERT_NEAR(stocks.at(2)->data.at(0).price,               0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(1).timestamp,             1704272400000);
+    ASSERT_EQ(stocks.at(2)->data.at(1).quantity,              3);
+    ASSERT_NEAR(stocks.at(2)->data.at(1).price,               0.3f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(2).timestamp,             1704362400000);
+    ASSERT_EQ(stocks.at(2)->data.at(2).quantity,              4);
+    ASSERT_NEAR(stocks.at(2)->data.at(2).price,               0.4f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(3).timestamp,             1704452400000);
+    ASSERT_EQ(stocks.at(2)->data.at(3).quantity,              5);
+    ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
+    // clang-format on
+}
+
 TEST_F(Test_StocksStorage, Test_obtainTurnover)
 {
     const InSequence seq;
