@@ -145,6 +145,8 @@ TEST_F(Test_BiDirTradingThread, Test_terminateThread)
 
 TEST_F(Test_BiDirTradingThread, Test_setMode_and_bidirMode)
 {
+    const InSequence seq;
+
     ASSERT_EQ(thread->bidirMode(), BIDIR_MODE_HUGE_BID);
 
     thread->setMode(BIDIR_MODE_HUGE_BID, "Huge bid is on");
@@ -778,8 +780,6 @@ TEST_F(Test_BiDirTradingThread, Test_isNeedToSellAsap)
 
 TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
 {
-    const InSequence seq;
-
     tinkoff::GetOrderBookResponse getOrderBookResponse;
 
     tinkoff::Order* bid1 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
@@ -813,7 +813,7 @@ TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
     const std::shared_ptr<tinkoff::OrderState> buyOrderState(new tinkoff::OrderState());
     const std::shared_ptr<tinkoff::OrderState> sellOrderState(new tinkoff::OrderState());
 
-    tinkoff::MoneyValue* buyOrderPrice = new tinkoff::MoneyValue(); // buyOrderState will take ownership
+    tinkoff::MoneyValue* buyOrderPrice  = new tinkoff::MoneyValue(); // buyOrderState will take ownership
     tinkoff::MoneyValue* sellOrderPrice = new tinkoff::MoneyValue(); // sellOrderState will take ownership
 
     buyOrderPrice->set_units(875);
@@ -952,9 +952,13 @@ TEST_F(Test_BiDirTradingThread, Test_calculateAskPrice)
 
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(true));
 
-    ASSERT_NEAR(thread->calculateAskPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100000.0, 10000.0, 880.0, 0.04f), 900.0, 0.0001);
+    ASSERT_NEAR(
+        thread->calculateAskPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100000.0, 10000.0, 880.0, 0.04f), 900.0, 0.0001
+    );
 
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(true));
 
-    ASSERT_NEAR(thread->calculateAskPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100000.0, 10000.0, 899.0, 0.04f), 905.0, 0.0001);
+    ASSERT_NEAR(
+        thread->calculateAskPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100000.0, 10000.0, 899.0, 0.04f), 905.0, 0.0001
+    );
 }

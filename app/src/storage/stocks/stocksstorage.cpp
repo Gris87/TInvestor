@@ -211,10 +211,10 @@ struct CopyDataToOperationalInfo
 
 static void copyDataToOperationalForParallel(
     QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
-    )
+)
 {
     CopyDataToOperationalInfo* copyDataToOperationalInfo = reinterpret_cast<CopyDataToOperationalInfo*>(additionalArgs);
-    const qint64                limitTimestamp          = copyDataToOperationalInfo->limitTimestamp;
+    const qint64               limitTimestamp            = copyDataToOperationalInfo->limitTimestamp;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -238,8 +238,8 @@ static void copyDataToOperationalForParallel(
                     stock->operational.detailedData.constEnd(),
                     stockData.timestamp,
                     [](const StockOperationalData& stockData, qint64 value) { return stockData.timestamp < value; }
-                    )
-                );
+                )
+            );
 
             StockOperationalData stockOperationalData; // NOLINT(cppcoreguidelines-pro-type-member-init)
 
@@ -254,10 +254,10 @@ static void copyDataToOperationalForParallel(
                 stock->operational.detailedData.constBegin(),
                 stock->operational.detailedData.constEnd(),
                 [](const StockOperationalData& l, const StockOperationalData& r) { return l.timestamp < r.timestamp; }
-                ),
+            ),
             __FUNCTION__,
             "Stock data is unsorted"
-            );
+        );
 
         for (int i = 0; i < stock->operational.detailedData.size() - 1; ++i)
         {
