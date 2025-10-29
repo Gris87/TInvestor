@@ -92,6 +92,7 @@ void StockCollectThread::run()
         storeNewInstrumentsInfo();
         const bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
         obtainStocksData();
+        copyDataToOperational();
         cleanupOperationalData();
         const bool needPricesUpdate = obtainStocksDayStartPrice();
         obtainLastTradeTime();
@@ -685,60 +686,6 @@ static void getCandlesWithHttp(
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
-static void copyDataToOperational(Stock* stock)
-{
-    const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() - ONE_HOUR;
-
-    for (int i = stock->data.size() - 1; i >= 0; --i)
-    {
-        const StockData& stockData = stock->data.at(i);
-
-        if (stockData.timestamp < limitTimestamp)
-        {
-            break;
-        }
-
-        const int index = std::distance(
-            stock->operational.detailedData.constBegin(),
-            std::lower_bound(
-                stock->operational.detailedData.constBegin(),
-                stock->operational.detailedData.constEnd(),
-                stockData.timestamp,
-                [](const StockOperationalData& stockData, qint64 value) { return stockData.timestamp < value; }
-            )
-        );
-
-        StockOperationalData stockOperationalData; // NOLINT(cppcoreguidelines-pro-type-member-init)
-
-        stockOperationalData.timestamp = stockData.timestamp;
-        stockOperationalData.price     = stockData.price;
-
-        stock->operational.detailedData.insert(index, stockOperationalData);
-    }
-
-    Q_ASSERT_X(
-        std::is_sorted(
-            stock->operational.detailedData.constBegin(),
-            stock->operational.detailedData.constEnd(),
-            [](const StockOperationalData& l, const StockOperationalData& r) { return l.timestamp < r.timestamp; }
-        ),
-        __FUNCTION__,
-        "Stock data is unsorted"
-    );
-
-    for (int i = 0; i < stock->operational.detailedData.size() - 1; ++i)
-    {
-        const qint64 prevMinute = stock->operational.detailedData.at(i).timestamp / ONE_MINUTE;
-        const qint64 nextMinute = stock->operational.detailedData.at(i + 1).timestamp / ONE_MINUTE;
-
-        if (nextMinute == prevMinute)
-        {
-            stock->operational.detailedData.removeAt(i);
-            --i;
-        }
-    }
-}
-
 struct GetCandlesInfo
 {
     explicit GetCandlesInfo(
@@ -830,7 +777,6 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, Stock** stocks, i
         }
 
         getCandlesWithGrpc(parentThread, stocksStorage, grpcClient, stock, startTimestamp, currentTimestamp);
-        copyDataToOperational(stock);
 
         stock->writeUnlock();
 
@@ -876,6 +822,13 @@ void StockCollectThread::obtainStocksData()
 
     ok = deleteDir->removeRecursively();
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to delete dir");
+}
+
+void StockCollectThread::copyDataToOperational()
+{
+    mStocksStorage->readLock();
+    mStocksStorage->copyDataToOperational(QDateTime::currentMSecsSinceEpoch() - ONE_HOUR);
+    mStocksStorage->readUnlock();
 }
 
 void StockCollectThread::cleanupOperationalData()

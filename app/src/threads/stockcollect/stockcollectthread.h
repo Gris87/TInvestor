@@ -67,6 +67,7 @@ public:
     void storeNewInstrumentsInfo();
     void downloadLogo(const QString& instrumentId, const QUrl& url);
     void obtainStocksData();
+    void copyDataToOperational();
     void cleanupOperationalData();
     bool obtainStocksDayStartPrice();
     void obtainLastTradeTime();

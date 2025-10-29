@@ -199,6 +199,90 @@ void StocksStorage::deleteObsoleteData(qint64 timestamp)
     processInParallel(QThread::currentThread(), mStocks, deleteObsoleteDataForParallel, &deleteObsoleteDataInfo);
 }
 
+struct CopyDataToOperationalInfo
+{
+    explicit CopyDataToOperationalInfo(qint64 _limitTimestamp) :
+        limitTimestamp(_limitTimestamp)
+    {
+    }
+
+    qint64 limitTimestamp;
+};
+
+static void copyDataToOperationalForParallel(
+    QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
+    )
+{
+    CopyDataToOperationalInfo* copyDataToOperationalInfo = reinterpret_cast<CopyDataToOperationalInfo*>(additionalArgs);
+    const qint64                limitTimestamp          = copyDataToOperationalInfo->limitTimestamp;
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock* stock = stocks[i];
+
+        stock->writeLock();
+
+        for (int j = stock->data.size() - 1; j >= 0; --j)
+        {
+            const StockData& stockData = stock->data.at(j);
+
+            if (stockData.timestamp < limitTimestamp)
+            {
+                break;
+            }
+
+            const int index = std::distance(
+                stock->operational.detailedData.constBegin(),
+                std::lower_bound(
+                    stock->operational.detailedData.constBegin(),
+                    stock->operational.detailedData.constEnd(),
+                    stockData.timestamp,
+                    [](const StockOperationalData& stockData, qint64 value) { return stockData.timestamp < value; }
+                    )
+                );
+
+            StockOperationalData stockOperationalData; // NOLINT(cppcoreguidelines-pro-type-member-init)
+
+            stockOperationalData.timestamp = stockData.timestamp;
+            stockOperationalData.price     = stockData.price;
+
+            stock->operational.detailedData.insert(index, stockOperationalData);
+        }
+
+        Q_ASSERT_X(
+            std::is_sorted(
+                stock->operational.detailedData.constBegin(),
+                stock->operational.detailedData.constEnd(),
+                [](const StockOperationalData& l, const StockOperationalData& r) { return l.timestamp < r.timestamp; }
+                ),
+            __FUNCTION__,
+            "Stock data is unsorted"
+            );
+
+        for (int i = 0; i < stock->operational.detailedData.size() - 1; ++i)
+        {
+            const qint64 prevMinute = stock->operational.detailedData.at(i).timestamp / ONE_MINUTE;
+            const qint64 nextMinute = stock->operational.detailedData.at(i + 1).timestamp / ONE_MINUTE;
+
+            if (nextMinute == prevMinute)
+            {
+                stock->operational.detailedData.removeAt(i);
+                --i;
+            }
+        }
+
+        stock->writeUnlock();
+    }
+}
+
+void StocksStorage::copyDataToOperational(qint64 timestamp)
+{
+    qDebug() << "Copy data to operational";
+
+    CopyDataToOperationalInfo copyDataToOperationalInfo(timestamp);
+    processInParallel(QThread::currentThread(), mStocks, copyDataToOperationalForParallel, &copyDataToOperationalInfo);
+}
+
 struct CleanupOperationalDataInfo
 {
     explicit CleanupOperationalDataInfo(qint64 _obsoleteTimestamp) :

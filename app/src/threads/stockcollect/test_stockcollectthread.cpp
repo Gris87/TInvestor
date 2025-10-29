@@ -449,6 +449,9 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*dirMock2, removeRecursively()).WillOnce(Return(true));
 
     EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, copyDataToOperational(Ge(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, cleanupOperationalData(Ge(1704056400000)));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*stocksStorageMock, readLock());
