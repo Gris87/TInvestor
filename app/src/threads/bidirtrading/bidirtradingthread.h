@@ -66,30 +66,11 @@ public:
     );
     void sellWithPrice(const Quotation& price);
     void buyWithPrice(qint64 amountOfLots, const Quotation& price);
-
     bool isNeedToSellAsap(qint64 timestamp, BiDirMode mode, float part, float yield, float commission);
-
-private:
-    void calculateTotalCostAndInstrumentCost(
-        const tinkoff::PortfolioResponse& tinkoffPortfolio,
-        double&                           totalCost,
-        double&                           instrumentCost,
-        qint64&                           instrumentLots,
-        double&                           instrumentAvgPrice
-    );
     void removeOwnOrdersFromOrderBook(
-        tinkoff::GetOrderBookResponse*              tinkoffOrderBook,
+        tinkoff::GetOrderBookResponse&              tinkoffOrderBook,
         const std::shared_ptr<tinkoff::OrderState>& tinkoffBuyOrder,
         const std::shared_ptr<tinkoff::OrderState>& tinkoffSellOrder
-    );
-    void calculateBuySellPriceAndLots(
-        const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
-        const tinkoff::PortfolioResponse&    tinkoffPortfolio,
-        float                                commission,
-        qint64&                              lotsToBuy,
-        qint64&                              lotsToSell,
-        Quotation&                           buyPrice,
-        Quotation&                           sellPrice
     );
     double calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity);
     double calculateAskPrice(
@@ -99,6 +80,24 @@ private:
         double                               instrumentCost,
         double                               instrumentAvgPrice,
         float                                commission
+    );
+
+private:
+    void calculateTotalCostAndInstrumentCost(
+        const tinkoff::PortfolioResponse& tinkoffPortfolio,
+        double&                           totalCost,
+        double&                           instrumentCost,
+        qint64&                           instrumentLots,
+        double&                           instrumentAvgPrice
+    );
+    void calculateBuySellPriceAndLots(
+        const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
+        const tinkoff::PortfolioResponse&    tinkoffPortfolio,
+        float                                commission,
+        qint64&                              lotsToBuy,
+        qint64&                              lotsToSell,
+        Quotation&                           buyPrice,
+        Quotation&                           sellPrice
     );
     qint64                calculateLotsToKeep(BiDirMode mode, double totalCost, double bidPrice);
     IDecisionMakerConfig* chooseDecisionConfig();

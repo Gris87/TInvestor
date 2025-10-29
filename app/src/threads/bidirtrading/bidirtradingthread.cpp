@@ -175,7 +175,7 @@ bool BiDirTradingThread::trade()
 
         if (tinkoffBuyOrder != nullptr || tinkoffSellOrder != nullptr)
         {
-            removeOwnOrdersFromOrderBook(tinkoffOrderBook.get(), tinkoffBuyOrder, tinkoffSellOrder);
+            removeOwnOrdersFromOrderBook(*tinkoffOrderBook, tinkoffBuyOrder, tinkoffSellOrder);
         }
 
         qint64    lotsToBuy  = -1;
@@ -439,7 +439,7 @@ void BiDirTradingThread::calculateTotalCostAndInstrumentCost(
 }
 
 void BiDirTradingThread::removeOwnOrdersFromOrderBook(
-    tinkoff::GetOrderBookResponse*              tinkoffOrderBook,
+    tinkoff::GetOrderBookResponse&              tinkoffOrderBook,
     const std::shared_ptr<tinkoff::OrderState>& tinkoffBuyOrder,
     const std::shared_ptr<tinkoff::OrderState>& tinkoffSellOrder
 )
@@ -449,9 +449,9 @@ void BiDirTradingThread::removeOwnOrdersFromOrderBook(
         const Quotation orderPrice    = quotationConvert(tinkoffBuyOrder->initial_security_price());
         const qint64    lotsRemaining = tinkoffBuyOrder->lots_requested() - tinkoffBuyOrder->lots_executed();
 
-        for (int i = 0; i < tinkoffOrderBook->bids_size(); ++i)
+        for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
         {
-            const tinkoff::Order& order = tinkoffOrderBook->bids(i);
+            const tinkoff::Order& order = tinkoffOrderBook.bids(i);
 
             if (quotationConvert(order.price()) == orderPrice)
             {
@@ -468,9 +468,9 @@ void BiDirTradingThread::removeOwnOrdersFromOrderBook(
         const Quotation orderPrice    = quotationConvert(tinkoffSellOrder->initial_security_price());
         const qint64    lotsRemaining = tinkoffSellOrder->lots_requested() - tinkoffSellOrder->lots_executed();
 
-        for (int i = 0; i < tinkoffOrderBook->asks_size(); ++i)
+        for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)
         {
-            const tinkoff::Order& order = tinkoffOrderBook->asks(i);
+            const tinkoff::Order& order = tinkoffOrderBook.asks(i);
 
             if (quotationConvert(order.price()) == orderPrice)
             {

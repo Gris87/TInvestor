@@ -66,7 +66,7 @@ protected:
             logsThreadMock,
             "account-id",
             stock,
-            BIDIR_MODE_HUGE_SPREAD,
+            BIDIR_MODE_HUGE_BID,
             "But why"
         );
     }
@@ -141,6 +141,19 @@ TEST_F(Test_BiDirTradingThread, Test_run)
 TEST_F(Test_BiDirTradingThread, Test_terminateThread)
 {
     thread->terminateThread();
+}
+
+TEST_F(Test_BiDirTradingThread, Test_setMode_and_bidirMode)
+{
+    ASSERT_EQ(thread->bidirMode(), BIDIR_MODE_HUGE_BID);
+
+    thread->setMode(BIDIR_MODE_HUGE_BID, "Huge bid is on");
+    ASSERT_EQ(thread->bidirMode(), BIDIR_MODE_HUGE_BID);
+
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("aaa-aaa"), QString("Huge spread is on")));
+
+    thread->setMode(BIDIR_MODE_HUGE_SPREAD, "Huge spread is on");
+    ASSERT_EQ(thread->bidirMode(), BIDIR_MODE_HUGE_SPREAD);
 }
 
 TEST_F(Test_BiDirTradingThread, Test_trade)
@@ -342,19 +355,18 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
     EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
     EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitByTurnover()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitByTurnoverPercent()).WillOnce(Return(1.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitByTurnoverPercent()).WillOnce(Return(1.0f));
     EXPECT_CALL(
         *tradeUtilsMock,
         calculateAmountOfLotsToBuy(
@@ -397,19 +409,18 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(orderState));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
-    EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
     EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
     EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitByTurnover()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitByTurnoverPercent()).WillOnce(Return(1.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitByTurnoverPercent()).WillOnce(Return(1.0f));
     EXPECT_CALL(
         *tradeUtilsMock,
         calculateAmountOfLotsToBuy(
@@ -443,19 +454,18 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.5f));
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
     EXPECT_CALL(*autoPilotConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
     EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitByTurnover()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitByTurnoverPercent()).WillOnce(Return(1.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitByTurnoverPercent()).WillOnce(Return(1.0f));
     EXPECT_CALL(
         *tradeUtilsMock,
         calculateAmountOfLotsToBuy(
@@ -702,4 +712,249 @@ TEST_F(Test_BiDirTradingThread, Test_buyWithPrice)
 
     EXPECT_CALL(*grpcClientMock, cancelOrder(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(cancelOrderResponse));
+}
+
+TEST_F(Test_BiDirTradingThread, Test_isNeedToSellAsap)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(true));
+
+    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_BID, 2.0f, 0.0f, 0.04f), false);
+
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
+    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+
+    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_BID, 90.0f, -4.93f, 0.04f), true);
+
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
+    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
+
+    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_BID, 90.0f, -4.92f, 0.04f), false);
+
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
+    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
+
+    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_BID, 1.0f, -4.92f, 0.04f), true);
+
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
+    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
+
+    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_SPREAD, 90.0f, -4.92f, 0.04f), false);
+
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
+    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
+    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
+
+    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_SPREAD, 1.0f, -4.92f, 0.04f), true);
+}
+
+TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
+{
+    const InSequence seq;
+
+    tinkoff::GetOrderBookResponse getOrderBookResponse;
+
+    tinkoff::Order* bid1 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* bid2 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* ask1 = getOrderBookResponse.add_asks(); // getOrderBookResponse will take ownership
+    tinkoff::Order* ask2 = getOrderBookResponse.add_asks(); // getOrderBookResponse will take ownership
+
+    tinkoff::Quotation* bidPrice1 = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* bidPrice2 = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* askPrice1 = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* askPrice2 = new tinkoff::Quotation(); // ask will take ownership
+
+    bidPrice1->set_units(880);
+    bidPrice1->set_nano(0);
+    bidPrice2->set_units(875);
+    bidPrice2->set_nano(0);
+    askPrice1->set_units(885);
+    askPrice1->set_nano(0);
+    askPrice2->set_units(890);
+    askPrice2->set_nano(0);
+
+    bid1->set_quantity(100);
+    bid1->set_allocated_price(bidPrice1);
+    bid2->set_quantity(200);
+    bid2->set_allocated_price(bidPrice2);
+    ask1->set_quantity(300);
+    ask1->set_allocated_price(askPrice1);
+    ask2->set_quantity(400);
+    ask2->set_allocated_price(askPrice2);
+
+    const std::shared_ptr<tinkoff::OrderState> buyOrderState(new tinkoff::OrderState());
+    const std::shared_ptr<tinkoff::OrderState> sellOrderState(new tinkoff::OrderState());
+
+    tinkoff::MoneyValue* buyOrderPrice = new tinkoff::MoneyValue(); // buyOrderState will take ownership
+    tinkoff::MoneyValue* sellOrderPrice = new tinkoff::MoneyValue(); // sellOrderState will take ownership
+
+    buyOrderPrice->set_units(875);
+    buyOrderPrice->set_nano(0);
+    sellOrderPrice->set_units(890);
+    sellOrderPrice->set_nano(0);
+
+    buyOrderState->set_direction(tinkoff::ORDER_DIRECTION_BUY);
+    buyOrderState->set_lots_executed(0);
+    buyOrderState->set_lots_requested(15);
+    buyOrderState->set_allocated_initial_security_price(buyOrderPrice);
+    buyOrderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_NEW);
+
+    sellOrderState->set_direction(tinkoff::ORDER_DIRECTION_SELL);
+    sellOrderState->set_lots_executed(0);
+    sellOrderState->set_lots_requested(5);
+    sellOrderState->set_allocated_initial_security_price(sellOrderPrice);
+    sellOrderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_NEW);
+
+    // clang-format off
+    ASSERT_EQ(getOrderBookResponse.bids_size(),             2);
+    ASSERT_EQ(getOrderBookResponse.bids(0).quantity(),      100);
+    ASSERT_EQ(getOrderBookResponse.bids(0).price().units(), 880);
+    ASSERT_EQ(getOrderBookResponse.bids(0).price().nano(),  0);
+    ASSERT_EQ(getOrderBookResponse.bids(1).quantity(),      200);
+    ASSERT_EQ(getOrderBookResponse.bids(1).price().units(), 875);
+    ASSERT_EQ(getOrderBookResponse.bids(1).price().nano(),  0);
+    ASSERT_EQ(getOrderBookResponse.asks_size(),             2);
+    ASSERT_EQ(getOrderBookResponse.asks(0).quantity(),      300);
+    ASSERT_EQ(getOrderBookResponse.asks(0).price().units(), 885);
+    ASSERT_EQ(getOrderBookResponse.asks(0).price().nano(),  0);
+    ASSERT_EQ(getOrderBookResponse.asks(1).quantity(),      400);
+    ASSERT_EQ(getOrderBookResponse.asks(1).price().units(), 890);
+    ASSERT_EQ(getOrderBookResponse.asks(1).price().nano(),  0);
+    // clang-format on
+
+    thread->removeOwnOrdersFromOrderBook(getOrderBookResponse, buyOrderState, sellOrderState);
+
+    // clang-format off
+    ASSERT_EQ(getOrderBookResponse.bids_size(),             2);
+    ASSERT_EQ(getOrderBookResponse.bids(0).quantity(),      100);
+    ASSERT_EQ(getOrderBookResponse.bids(0).price().units(), 880);
+    ASSERT_EQ(getOrderBookResponse.bids(0).price().nano(),  0);
+    ASSERT_EQ(getOrderBookResponse.bids(1).quantity(),      185);
+    ASSERT_EQ(getOrderBookResponse.bids(1).price().units(), 875);
+    ASSERT_EQ(getOrderBookResponse.bids(1).price().nano(),  0);
+    ASSERT_EQ(getOrderBookResponse.asks_size(),             2);
+    ASSERT_EQ(getOrderBookResponse.asks(0).quantity(),      300);
+    ASSERT_EQ(getOrderBookResponse.asks(0).price().units(), 885);
+    ASSERT_EQ(getOrderBookResponse.asks(0).price().nano(),  0);
+    ASSERT_EQ(getOrderBookResponse.asks(1).quantity(),      395);
+    ASSERT_EQ(getOrderBookResponse.asks(1).price().units(), 890);
+    ASSERT_EQ(getOrderBookResponse.asks(1).price().nano(),  0);
+    // clang-format on
+}
+
+TEST_F(Test_BiDirTradingThread, Test_calculateBidPrice)
+{
+    const InSequence seq;
+
+    tinkoff::GetOrderBookResponse getOrderBookResponse;
+
+    tinkoff::Order* bid1 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* bid2 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* ask1 = getOrderBookResponse.add_asks(); // getOrderBookResponse will take ownership
+    tinkoff::Order* ask2 = getOrderBookResponse.add_asks(); // getOrderBookResponse will take ownership
+
+    tinkoff::Quotation* bidPrice1 = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* bidPrice2 = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* askPrice1 = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* askPrice2 = new tinkoff::Quotation(); // ask will take ownership
+
+    bidPrice1->set_units(860);
+    bidPrice1->set_nano(0);
+    bidPrice2->set_units(855);
+    bidPrice2->set_nano(0);
+    askPrice1->set_units(900);
+    askPrice1->set_nano(0);
+    askPrice2->set_units(905);
+    askPrice2->set_nano(0);
+
+    bid1->set_quantity(100);
+    bid1->set_allocated_price(bidPrice1);
+    bid2->set_quantity(200);
+    bid2->set_allocated_price(bidPrice2);
+    ask1->set_quantity(300);
+    ask1->set_allocated_price(askPrice1);
+    ask2->set_quantity(400);
+    ask2->set_allocated_price(askPrice2);
+
+    ASSERT_NEAR(thread->calculateBidPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100), 860.0, 0.0001);
+    ASSERT_NEAR(thread->calculateBidPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 200), 855.0, 0.0001);
+
+    EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.7f));
+
+    ASSERT_NEAR(thread->calculateBidPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD, 100), 860.0, 0.0001);
+
+    EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.7f));
+
+    ASSERT_NEAR(thread->calculateBidPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD, 500), 855.0, 0.0001);
+}
+
+TEST_F(Test_BiDirTradingThread, Test_calculateAskPrice)
+{
+    const InSequence seq;
+
+    tinkoff::GetOrderBookResponse getOrderBookResponse;
+
+    tinkoff::Order* bid1 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* bid2 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* ask1 = getOrderBookResponse.add_asks(); // getOrderBookResponse will take ownership
+    tinkoff::Order* ask2 = getOrderBookResponse.add_asks(); // getOrderBookResponse will take ownership
+
+    tinkoff::Quotation* bidPrice1 = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* bidPrice2 = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* askPrice1 = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* askPrice2 = new tinkoff::Quotation(); // ask will take ownership
+
+    bidPrice1->set_units(860);
+    bidPrice1->set_nano(0);
+    bidPrice2->set_units(855);
+    bidPrice2->set_nano(0);
+    askPrice1->set_units(900);
+    askPrice1->set_nano(0);
+    askPrice2->set_units(905);
+    askPrice2->set_nano(0);
+
+    bid1->set_quantity(100);
+    bid1->set_allocated_price(bidPrice1);
+    bid2->set_quantity(200);
+    bid2->set_allocated_price(bidPrice2);
+    ask1->set_quantity(300);
+    ask1->set_allocated_price(askPrice1);
+    ask2->set_quantity(400);
+    ask2->set_allocated_price(askPrice2);
+
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(true));
+
+    ASSERT_NEAR(thread->calculateAskPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100000.0, 10000.0, 880.0, 0.04f), 900.0, 0.0001);
+
+    EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(true));
+
+    ASSERT_NEAR(thread->calculateAskPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100000.0, 10000.0, 899.0, 0.04f), 905.0, 0.0001);
 }
