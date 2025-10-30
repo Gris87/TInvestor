@@ -900,13 +900,13 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     QVariantList timestamps[3];
     QVariantList prices[3];
 
-    timestamps[0] << 1704056400000 << 1704056460000 << 1704056490000;
+    timestamps[0] << 1704056400 << 1704056460 << 1704056490;
     prices[0] << 20 << 1000 << 500;
 
-    timestamps[1] << 1704060000000 << 1704060030000 << 1704060050000 << 1704060110000 << 1704060119000 << 1704060120000;
+    timestamps[1] << 1704060000 << 1704060030 << 1704060050 << 1704060110 << 1704060119 << 1704060120;
     prices[1] << 1000.0f << 999.85f << 1000.35f << 875.95f << 1550.75f << 650.15f;
 
-    timestamps[2] << 1704063600000 << 1704063610000 << 1704063620000 << 1704063630000 << 1704063640000;
+    timestamps[2] << 1704063600 << 1704063610 << 1704063620 << 1704063630 << 1704063640;
     prices[2] << 300 << 130 << 450 << 600 << 100;
 
     stocksDB << stock1 << stock2 << stock3;
@@ -920,7 +920,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
         {
             StockData stockData;
 
-            stockData.timestamp = timestamps[i][j].toLongLong();
+            stockData.timestamp = timestamps[i][j].toLongLong() * 1000;
             stockData.price     = prices[i][j].toFloat();
 
             stock->data << stockData;
