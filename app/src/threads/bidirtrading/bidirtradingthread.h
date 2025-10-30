@@ -99,6 +99,7 @@ private:
         Quotation&                           buyPrice,
         Quotation&                           sellPrice
     );
+    double calculateBidPriceInternal(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread, qint64 minQuantity);
     qint64                calculateLotsToKeep(BiDirMode mode, double totalCost, double bidPrice);
     IDecisionMakerConfig* chooseDecisionConfig();
 

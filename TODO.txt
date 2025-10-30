@@ -11,6 +11,9 @@ Thread to sell gifts
 Sell into chunks
 Fix auto-restart non-running app
 Double check mutexes
+Allow to sell manually (immediately or with good yield)
+Good yield for single trading thread should stay together with someone else
+Do not count own order in single trading thread
 Improve coverage
 Create release
 

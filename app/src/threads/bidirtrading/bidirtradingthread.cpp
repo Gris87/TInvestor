@@ -7,6 +7,10 @@
 
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+const char* const LNZL_UID  = "4563f7a1-8245-4caf-aba5-ac49827ba775";
+const char* const LNZLP_UID = "28fdec79-fcf0-40cb-b53c-586179f024e5";
+const char* const VRSB_UID  = "3c899002-e8f5-42fd-b617-4bc2f31e6767";
+const char* const CHMK_UID  = "b5e26096-d013-48e4-b2a9-2f38b6090feb";
 
 constexpr float  HUNDRED_PERCENT                     = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT               = 0.10f;
@@ -19,6 +23,17 @@ constexpr qint64 MS_IN_SECOND                        = 1000LL;
 constexpr qint64 SLEEP_DELAY                         = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY                  = 3LL * MS_IN_SECOND;  // 3 seconds
 constexpr qint64 ORDER_RETRY_DELAY                   = 1LL * MS_IN_SECOND;  // 1 second
+
+
+
+// clang-format off
+static const QMap<QString, float> BAD_INSTRUMENTS_SPREAD{ // clazy:exclude=non-pod-global-static
+    {LNZL_UID,  3.00f},
+    {LNZLP_UID, 3.00f},
+    {VRSB_UID,  1.50f},
+    {CHMK_UID,  0.80f}
+};
+// clang-format on
 
 
 
@@ -526,53 +541,53 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
 double
 BiDirTradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity)
 {
-    const double topAskPrice = quotationToDouble(tinkoffOrderBook.asks(0).price());
+    float badSpread = BAD_INSTRUMENTS_SPREAD.value(mInstrumentId, 0.0f);
+
+    if (badSpread > 0.0f)
+    {
+        return calculateBidPriceInternal(
+            tinkoffOrderBook, badSpread, (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD) / HUNDRED_PERCENT
+        );
+    }
 
     double res = 0.0;
 
     if (mode == BIDIR_MODE_HUGE_BID)
     {
-        const double maximumBuyPrice = topAskPrice * (1 - (SPREAD_FOR_HUGE_BID / HUNDRED_PERCENT));
-        res                          = maximumBuyPrice;
-
-        for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
-        {
-            const float quantityPercent = (tinkoffOrderBook.bids(i).quantity() * HUNDRED_PERCENT) / maxQuantity;
-
-            if (quantityPercent >= MINIMUM_BID_PERCENT_FOR_HUGE_BID)
-            {
-                const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
-
-                if (curPrice <= maximumBuyPrice)
-                {
-                    res = curPrice;
-
-                    break;
-                }
-            }
-        }
+        res = calculateBidPriceInternal(
+            tinkoffOrderBook, SPREAD_FOR_HUGE_BID, (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_BID) / HUNDRED_PERCENT
+        );
     }
     else
     {
-        const float hugeSpread = mConfig->getHugeSpread();
+        res = calculateBidPriceInternal(
+            tinkoffOrderBook, mConfig->getHugeSpread(), (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD) / HUNDRED_PERCENT
+        );
+    }
 
-        const double maximumBuyPrice = topAskPrice * (1 - (hugeSpread / HUNDRED_PERCENT));
-        res                          = maximumBuyPrice;
+    return res;
+}
 
-        for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
+double BiDirTradingThread::calculateBidPriceInternal(
+    const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread, qint64 minQuantity
+)
+{
+    const double topAskPrice = quotationToDouble(tinkoffOrderBook.asks(0).price());
+
+    const double maximumBuyPrice = topAskPrice * (1 - (spread / HUNDRED_PERCENT));
+    double       res             = maximumBuyPrice;
+
+    for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
+    {
+        if (tinkoffOrderBook.bids(i).quantity() >= minQuantity)
         {
-            const float quantityPercent = (tinkoffOrderBook.bids(i).quantity() * HUNDRED_PERCENT) / maxQuantity;
+            const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
 
-            if (quantityPercent >= MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD)
+            if (curPrice <= maximumBuyPrice)
             {
-                const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
+                res = curPrice;
 
-                if (curPrice <= maximumBuyPrice)
-                {
-                    res = curPrice;
-
-                    break;
-                }
+                break;
             }
         }
     }

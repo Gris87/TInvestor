@@ -16,6 +16,7 @@
 
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+const char* const CHMK_UID  = "b5e26096-d013-48e4-b2a9-2f38b6090feb";
 
 
 
@@ -914,6 +915,31 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBidPrice)
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.7f));
 
     ASSERT_NEAR(thread->calculateBidPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD, 500), 855.0, 0.0001);
+
+    delete thread;
+
+    stock->meta.instrumentId = CHMK_UID;
+    stock->meta.turnover     = 1000000;
+
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString(CHMK_UID), QString("But why")));
+
+    thread = new BiDirTradingThread(
+        instrumentsStorageMock,
+        userStorageMock,
+        configMock,
+        timeUtilsMock,
+        tradeUtilsMock,
+        grpcClientMock,
+        grpcRetryClientMock,
+        logsThreadMock,
+        "account-id",
+        stock,
+        BIDIR_MODE_HUGE_BID,
+        "But why"
+    );
+
+    ASSERT_NEAR(thread->calculateBidPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100), 860.0, 0.0001);
+    ASSERT_NEAR(thread->calculateBidPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 500), 855.0, 0.0001);
 }
 
 TEST_F(Test_BiDirTradingThread, Test_calculateAskPrice)
