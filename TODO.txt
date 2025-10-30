@@ -1,8 +1,3 @@
-Analyze trading
-Find best configs for different commission
-Improve coverage
-Create release
-
 Priority to single trading thread over bi-directional trading thread
 Add comments on decisions
 Override chart labels => 1.25 K rub
@@ -14,6 +9,8 @@ Double check mutexes
 Allow to sell manually (immediately or with good yield)
 Good yield for single trading thread should stay together with someone else
 Do not count own order in single trading thread
+Buy if price continuosly increasing during time period
+Find best configs for different commission
 Improve coverage
 Create release
 
