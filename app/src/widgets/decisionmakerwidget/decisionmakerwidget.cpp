@@ -37,6 +37,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     ILogsTableModelFactory*            logsTableModelFactory,
     IPortfolioTreeModelFactory*        portfolioTreeModelFactory,
     IFileDialogFactory*                fileDialogFactory,
+    IMessageBoxUtils*                  messageBoxUtils,
     IConfig*                           config,
     IConfig*                           configForSimulation,
     ISettingsEditor*                   settingsEditor,
@@ -92,8 +93,9 @@ DecisionMakerWidget::DecisionMakerWidget(
         ),
         ui->bestConfigTab
     );
-    mPortfolioTreeWidget =
-        portfolioTreeWidgetFactory->newInstance(portfolioTreeModelFactory, fileDialogFactory, mSettingsEditor, this);
+    mPortfolioTreeWidget = portfolioTreeWidgetFactory->newInstance(
+        portfolioTreeModelFactory, fileDialogFactory, messageBoxUtils, mSettingsEditor, this
+    );
 
     mLogsTableWidget->setFilter(mLogsFilterWidget->getFilter());
     mBestConfigWidget->makeReadOnly();

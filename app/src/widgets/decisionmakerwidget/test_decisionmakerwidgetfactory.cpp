@@ -19,6 +19,7 @@
 #include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
+#include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
@@ -92,6 +93,7 @@ TEST_F(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<LogsTableModelFactoryMock>            logsTableModelFactoryMock;
     StrictMock<PortfolioTreeModelFactoryMock>        portfolioTreeModelFactoryMock;
     StrictMock<FileDialogFactoryMock>                fileDialogFactoryMock;
+    StrictMock<MessageBoxUtilsMock>                  messageBoxUtilsMock;
     StrictMock<ConfigMock>                           configMock;
     StrictMock<ConfigMock>                           configForSimulationMock;
     StrictMock<DecisionMakerConfigMock>              simulatorConfigMock;
@@ -145,7 +147,7 @@ TEST_F(Test_DecisionMakerWidgetFactory, Test_newInstance)
         .WillOnce(Return(bestConfigWidgetMock));
     EXPECT_CALL(
         portfolioTreeWidgetFactoryMock,
-        newInstance(&portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, NotNull())
+        newInstance(&portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &messageBoxUtilsMock, &settingsEditorMock, NotNull())
     )
         .WillOnce(Return(portfolioTreeWidgetMock));
 
@@ -177,6 +179,7 @@ TEST_F(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &logsTableModelFactoryMock,
             &portfolioTreeModelFactoryMock,
             &fileDialogFactoryMock,
+            &messageBoxUtilsMock,
             &configMock,
             &configForSimulationMock,
             &settingsEditorMock

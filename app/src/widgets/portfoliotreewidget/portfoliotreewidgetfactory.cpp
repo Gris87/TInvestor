@@ -20,9 +20,10 @@ PortfolioTreeWidgetFactory::~PortfolioTreeWidgetFactory()
 IPortfolioTreeWidget* PortfolioTreeWidgetFactory::newInstance(
     IPortfolioTreeModelFactory* portfolioTreeModelFactory,
     IFileDialogFactory*         fileDialogFactory,
+    IMessageBoxUtils*           messageBoxUtils,
     ISettingsEditor*            settingsEditor,
     QWidget*                    parent
 ) const
 {
-    return new PortfolioTreeWidget(portfolioTreeModelFactory, fileDialogFactory, settingsEditor, parent);
+    return new PortfolioTreeWidget(portfolioTreeModelFactory, fileDialogFactory, messageBoxUtils, settingsEditor, parent);
 }

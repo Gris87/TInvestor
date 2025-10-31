@@ -6,6 +6,7 @@
 
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
+#include "src/utils/messagebox/imessageboxutils.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory.h"
 #include "src/widgets/logsfilterwidget/ilogsfilterwidgetfactory.h"
@@ -40,6 +41,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         ILogsTableModelFactory*            _logsTableModelFactory,
         IPortfolioTreeModelFactory*        _portfolioTreeModelFactory,
         IFileDialogFactory*                _fileDialogFactory,
+        IMessageBoxUtils*                  _messageBoxUtils,
         IConfig*                           _config,
         IConfig*                           _configForSimulation,
         ISettingsEditor*                   _settingsEditor
@@ -66,6 +68,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         logsTableModelFactory(_logsTableModelFactory),
         portfolioTreeModelFactory(_portfolioTreeModelFactory),
         fileDialogFactory(_fileDialogFactory),
+        messageBoxUtils(_messageBoxUtils),
         config(_config),
         configForSimulation(_configForSimulation),
         settingsEditor(_settingsEditor)
@@ -96,6 +99,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
     ILogsTableModelFactory*            logsTableModelFactory;
     IPortfolioTreeModelFactory*        portfolioTreeModelFactory;
     IFileDialogFactory*                fileDialogFactory;
+    IMessageBoxUtils*                  messageBoxUtils;
     IConfig*                           config;
     IConfig*                           configForSimulation;
     ISettingsEditor*                   settingsEditor;

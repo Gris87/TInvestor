@@ -18,6 +18,7 @@ public:
     IPortfolioTreeWidget* newInstance(
         IPortfolioTreeModelFactory* portfolioTreeModelFactory,
         IFileDialogFactory*         fileDialogFactory,
+        IMessageBoxUtils*           messageBoxUtils,
         ISettingsEditor*            settingsEditor,
         QWidget*                    parent
     ) const override;

@@ -174,12 +174,12 @@
 <context>
     <name>BiDirTradingThread</name>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="87"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="103"/>
         <source>Reselling completed successfully</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="150"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="166"/>
         <source>Impossible to continue reselling</source>
         <translation></translation>
     </message>
@@ -410,7 +410,7 @@
     </message>
     <message>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="292"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="144"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="146"/>
         <source>Best config</source>
         <translation></translation>
     </message>
@@ -435,8 +435,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="59"/>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="60"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="61"/>
         <source>Loading</source>
         <translation></translation>
     </message>
@@ -444,14 +444,14 @@
 <context>
     <name>FollowThread</name>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="282"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="310"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="274"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="302"/>
         <source>Decided to sell up to cost %1 due to following account &quot;%2&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="262"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="293"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="254"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="285"/>
         <source>Decided to buy up to cost %1 due to following account &quot;%2&quot;</source>
         <translation></translation>
     </message>
@@ -522,13 +522,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="409"/>
+        <location filename="../../src/main/mainwindow.cpp" line="410"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="679"/>
+        <location filename="../../src/main/mainwindow.cpp" line="680"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -554,7 +554,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="520"/>
-        <location filename="../../src/main/mainwindow.cpp" line="780"/>
+        <location filename="../../src/main/mainwindow.cpp" line="781"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -610,65 +610,65 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="410"/>
+        <location filename="../../src/main/mainwindow.cpp" line="411"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="453"/>
+        <location filename="../../src/main/mainwindow.cpp" line="454"/>
         <source>GRPC error happened with code %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="477"/>
+        <location filename="../../src/main/mainwindow.cpp" line="478"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="614"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1373"/>
+        <location filename="../../src/main/mainwindow.cpp" line="615"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1374"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="631"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1221"/>
+        <location filename="../../src/main/mainwindow.cpp" line="632"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1222"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="768"/>
+        <location filename="../../src/main/mainwindow.cpp" line="769"/>
         <source>Auto-pilot started</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="774"/>
+        <location filename="../../src/main/mainwindow.cpp" line="775"/>
         <source>Auto-pilot stopped</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1221"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1222"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="723"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1252"/>
+        <location filename="../../src/main/mainwindow.cpp" line="724"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1253"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="266"/>
+        <location filename="../../src/main/mainwindow.cpp" line="267"/>
         <source>Simulator</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="267"/>
+        <location filename="../../src/main/mainwindow.cpp" line="268"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1252"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1253"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -901,27 +901,56 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="109"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="111"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="138"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="140"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="175"/>
+        <source>Sell</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="142"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="155"/>
+        <source>ASAP</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="143"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="160"/>
+        <source>with following sell price</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="144"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="165"/>
+        <source>with positive yield</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="148"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="148"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="175"/>
+        <source>Do you really want to sell %1(%2) %3?</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="188"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="148"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="188"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="167"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="207"/>
         <source>Portfolio</source>
         <translation></translation>
     </message>
@@ -964,41 +993,41 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="54"/>
+        <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="65"/>
         <source>Decided to sell because the price reached %1 with yield %2 from the price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="109"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="161"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="120"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="172"/>
         <source>Decided to sell because the price reached %1 with yield %2 from the price %3 and lost yield %4 from the maximum price %5 at %6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="89"/>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="119"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="104"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="134"/>
         <source>Decided to sell because the price fall to %1 with yield %2 from the price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="108"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="160"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="123"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="175"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the fall is %5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="122"/>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="197"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="137"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="212"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 and lost yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="119"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="134"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 and lost yield %4 from the minimum price %5 at %6 within last %7 days and the fall is %8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="104"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="119"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 days and the fall is %5</source>
         <translation></translation>
     </message>
@@ -1054,39 +1083,39 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="97"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="109"/>
         <source>Decided to start reselling because amount of asks more than amount of bids in %1 times</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="119"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="133"/>
         <source>Decided to start reselling because spread is %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision8/buydecision8.cpp" line="94"/>
+        <location filename="../../src/decisions/buy/buydecision8/buydecision8.cpp" line="103"/>
         <source>Decided to buy because the price reach market limit at %1 and hold it for %2 minutes</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision7/buydecision7.cpp" line="131"/>
+        <location filename="../../src/decisions/buy/buydecision7/buydecision7.cpp" line="140"/>
         <source>Decided to buy because the price raises more than %1 during last %2 nights</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="94"/>
-        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="138"/>
+        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="109"/>
+        <location filename="../../src/decisions/buy/buydecision5/buydecision5.cpp" line="153"/>
         <source>Decided to buy because the price %1 exceeds bottom Bollindger edge price %2 at %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="118"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="179"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="133"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="194"/>
         <source>Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision6/buydecision6.cpp" line="92"/>
+        <location filename="../../src/decisions/buy/buydecision6/buydecision6.cpp" line="107"/>
         <source>Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes</source>
         <translation></translation>
     </message>
@@ -1305,8 +1334,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1019"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="396"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="418"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="401"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="423"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
@@ -1324,8 +1353,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1113"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="395"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="419"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="400"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="424"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
@@ -1345,13 +1374,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="106"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="109"/>
         <source>Autorun on %1 startup</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="390"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="413"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="395"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="418"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>
@@ -1446,14 +1475,14 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="438"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="466"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="439"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="467"/>
         <source>Downloading logos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="840"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="848"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="786"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="794"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>

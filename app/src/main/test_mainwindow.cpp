@@ -229,6 +229,7 @@ protected:
                     logsTableModelFactoryMock,
                     portfolioTreeModelFactoryMock,
                     fileDialogFactoryMock,
+                    messageBoxUtilsMock,
                     configMock,
                     configForSimulationMock,
                     settingsEditorMock
@@ -263,6 +264,7 @@ protected:
                     logsTableModelFactoryMock,
                     portfolioTreeModelFactoryMock,
                     fileDialogFactoryMock,
+                    messageBoxUtilsMock,
                     configMock,
                     configForSimulationMock,
                     settingsEditorMock

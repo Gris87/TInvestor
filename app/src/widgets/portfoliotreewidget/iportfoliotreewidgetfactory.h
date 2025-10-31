@@ -3,6 +3,7 @@
 
 
 #include "src/utils/filedialog/ifiledialogfactory.h"
+#include "src/utils/messagebox/imessageboxutils.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory.h"
@@ -21,6 +22,7 @@ public:
     virtual IPortfolioTreeWidget* newInstance(
         IPortfolioTreeModelFactory* portfolioTreeModelFactory,
         IFileDialogFactory*         fileDialogFactory,
+        IMessageBoxUtils*           messageBoxUtils,
         ISettingsEditor*            settingsEditor,
         QWidget*                    parent
     ) const = 0;

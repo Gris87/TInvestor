@@ -20,6 +20,7 @@
 #include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
+#include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
@@ -83,6 +84,7 @@ protected:
         logsTableModelFactoryMock            = new StrictMock<LogsTableModelFactoryMock>();
         portfolioTreeModelFactoryMock        = new StrictMock<PortfolioTreeModelFactoryMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
+        messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         configMock                           = new StrictMock<ConfigMock>();
         configForSimulationMock              = new StrictMock<ConfigMock>();
         simulationSimulatorConfigMock        = new StrictMock<DecisionMakerConfigMock>();
@@ -130,7 +132,7 @@ protected:
             .WillOnce(Return(bestConfigWidgetMock));
         EXPECT_CALL(
             *portfolioTreeWidgetFactoryMock,
-            newInstance(portfolioTreeModelFactoryMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
+            newInstance(portfolioTreeModelFactoryMock, fileDialogFactoryMock, messageBoxUtilsMock, settingsEditorMock, NotNull())
         )
             .WillOnce(Return(portfolioTreeWidgetMock));
 
@@ -161,6 +163,7 @@ protected:
             logsTableModelFactoryMock,
             portfolioTreeModelFactoryMock,
             fileDialogFactoryMock,
+            messageBoxUtilsMock,
             configMock,
             configForSimulationMock,
             settingsEditorMock
@@ -201,6 +204,7 @@ protected:
         delete logsTableModelFactoryMock;
         delete portfolioTreeModelFactoryMock;
         delete fileDialogFactoryMock;
+        delete messageBoxUtilsMock;
         delete configMock;
         delete configForSimulationMock;
         delete simulationSimulatorConfigMock;
@@ -238,6 +242,7 @@ protected:
     StrictMock<LogsTableModelFactoryMock>*            logsTableModelFactoryMock;
     StrictMock<PortfolioTreeModelFactoryMock>*        portfolioTreeModelFactoryMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
+    StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<ConfigMock>*                           configMock;
     StrictMock<ConfigMock>*                           configForSimulationMock;
     StrictMock<DecisionMakerConfigMock>*              simulationSimulatorConfigMock;

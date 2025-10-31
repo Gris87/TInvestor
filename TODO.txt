@@ -1,4 +1,5 @@
 Allow to sell manually (immediately or with good yield)
+Double check huge spread quantity limits
 Good yield for single trading thread should stay together with someone else
 Do not count own order in single trading thread
 Override chart labels => 1.25 K rub

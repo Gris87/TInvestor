@@ -7,6 +7,7 @@
 
 #include "src/utils/filedialog/ifiledialog_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
+#include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodel_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory_mock.h"
@@ -32,6 +33,7 @@ protected:
 
         portfolioTreeModelFactoryMock = new StrictMock<PortfolioTreeModelFactoryMock>();
         fileDialogFactoryMock         = new StrictMock<FileDialogFactoryMock>();
+        messageBoxUtilsMock           = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock            = new StrictMock<SettingsEditorMock>();
 
         portfolioTreeModelMock = new StrictMock<PortfolioTreeModelMock>();
@@ -44,7 +46,9 @@ protected:
         EXPECT_CALL(*portfolioTreeModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
         EXPECT_CALL(*portfolioTreeModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
-        portfolioTreeWidget = new PortfolioTreeWidget(portfolioTreeModelFactoryMock, fileDialogFactoryMock, settingsEditorMock);
+        portfolioTreeWidget = new PortfolioTreeWidget(
+            portfolioTreeModelFactoryMock, fileDialogFactoryMock, messageBoxUtilsMock, settingsEditorMock
+        );
     }
 
     void TearDown() override
@@ -52,6 +56,7 @@ protected:
         delete portfolioTreeWidget;
         delete portfolioTreeModelFactoryMock;
         delete fileDialogFactoryMock;
+        delete messageBoxUtilsMock;
         delete settingsEditorMock;
         delete portfolioTreeModelMock;
 
@@ -61,6 +66,7 @@ protected:
     PortfolioTreeWidget*                       portfolioTreeWidget;
     StrictMock<PortfolioTreeModelFactoryMock>* portfolioTreeModelFactoryMock;
     StrictMock<FileDialogFactoryMock>*         fileDialogFactoryMock;
+    StrictMock<MessageBoxUtilsMock>*           messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*            settingsEditorMock;
     StrictMock<PortfolioTreeModelMock>*        portfolioTreeModelMock;
     QString                                    appDir;

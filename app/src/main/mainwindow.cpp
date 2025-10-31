@@ -157,7 +157,6 @@ MainWindow::MainWindow(
     mOrderBookThread(orderBookThread),
     mTradingThreadFactory(tradingThreadFactory),
     mBiDirTradingThreadFactory(biDirTradingThreadFactory),
-    mFileDialogFactory(fileDialogFactory),
     mTimeUtils(timeUtils),
     mTradeUtils(tradeUtils),
     mMessageBoxUtils(messageBoxUtils),
@@ -198,7 +197,7 @@ MainWindow::MainWindow(
         mUserStorage,
         mOrderBookThread,
         mHttpClient,
-        mFileDialogFactory,
+        fileDialogFactory,
         mSettingsEditor,
         this
     );
@@ -225,7 +224,8 @@ MainWindow::MainWindow(
             operationsTableModelFactory,
             logsTableModelFactory,
             portfolioTreeModelFactory,
-            mFileDialogFactory,
+            fileDialogFactory,
+            mMessageBoxUtils,
             config,
             configForSimulation,
             mSettingsEditor
@@ -255,7 +255,8 @@ MainWindow::MainWindow(
             operationsTableModelFactory,
             logsTableModelFactory,
             portfolioTreeModelFactory,
-            mFileDialogFactory,
+            fileDialogFactory,
+            mMessageBoxUtils,
             config,
             configForSimulation,
             mSettingsEditor

@@ -213,7 +213,6 @@ private:
     IOrderBookThread*                       mOrderBookThread;
     ITradingThreadFactory*                  mTradingThreadFactory;
     IBiDirTradingThreadFactory*             mBiDirTradingThreadFactory;
-    IFileDialogFactory*                     mFileDialogFactory;
     ITimeUtils*                             mTimeUtils;
     ITradeUtils*                            mTradeUtils;
     IMessageBoxUtils*                       mMessageBoxUtils;

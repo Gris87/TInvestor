@@ -43,6 +43,7 @@ DecisionMakerWidgetFactory::newInstance(const DecisionMakerWidgetFactoryNewInsta
         args.logsTableModelFactory,
         args.portfolioTreeModelFactory,
         args.fileDialogFactory,
+        args.messageBoxUtils,
         args.config,
         args.configForSimulation,
         args.settingsEditor,

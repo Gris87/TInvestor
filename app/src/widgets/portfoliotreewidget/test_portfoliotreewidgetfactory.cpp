@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
+#include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodel_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory_mock.h"
@@ -45,6 +46,7 @@ TEST_F(Test_PortfolioTreeWidgetFactory, Test_newInstance)
 
     StrictMock<PortfolioTreeModelFactoryMock> portfolioTreeModelFactoryMock;
     StrictMock<FileDialogFactoryMock>         fileDialogFactoryMock;
+    StrictMock<MessageBoxUtilsMock>           messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>            settingsEditorMock;
 
     StrictMock<PortfolioTreeModelMock> portfolioTreeModelMock;
@@ -53,8 +55,9 @@ TEST_F(Test_PortfolioTreeWidgetFactory, Test_newInstance)
     EXPECT_CALL(portfolioTreeModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
     EXPECT_CALL(portfolioTreeModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
-    const IPortfolioTreeWidget* widget =
-        factory->newInstance(&portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
+    const IPortfolioTreeWidget* widget = factory->newInstance(
+        &portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &messageBoxUtilsMock, &settingsEditorMock, nullptr
+    );
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

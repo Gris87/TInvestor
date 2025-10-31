@@ -6,7 +6,9 @@
 
 #include <QLabel>
 
+#include "src/domain/trading/tradinginfo.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
+#include "src/utils/messagebox/imessageboxutils.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory.h"
 
@@ -27,6 +29,7 @@ public:
     explicit PortfolioTreeWidget(
         IPortfolioTreeModelFactory* portfolioTreeModelFactory,
         IFileDialogFactory*         fileDialogFactory,
+        IMessageBoxUtils*           messageBoxUtils,
         ISettingsEditor*            settingsEditor,
         QWidget*                    parent = nullptr
     );
@@ -50,9 +53,11 @@ private:
     void updateAllTimeLabel();
     void updateForTodayLabel();
     void updateYieldLabel(QLabel* label, double yield, double cost);
+    void sellInstrument(AsapMode mode, const QString& modeText);
     void exportToExcel(const QString& path) const;
 
     IFileDialogFactory*  mFileDialogFactory;
+    IMessageBoxUtils*    mMessageBoxUtils;
     ISettingsEditor*     mSettingsEditor;
     IPortfolioTreeModel* mPortfolioTreeModel;
     double               mTotalCost;
@@ -60,5 +65,8 @@ private:
 
 public slots:
     void on_treeView_customContextMenuRequested(const QPoint& pos);
+    void actionSellAsapTriggered();
+    void actionSellFollowPriceTriggered();
+    void actionSellGoodYieldTriggered();
     void actionExportToExcelTriggered();
 };

@@ -30,12 +30,14 @@ constexpr double COLUMN_GAP      = 0.71;
 PortfolioTreeWidget::PortfolioTreeWidget(
     IPortfolioTreeModelFactory* portfolioTreeModelFactory,
     IFileDialogFactory*         fileDialogFactory,
+    IMessageBoxUtils*           messageBoxUtils,
     ISettingsEditor*            settingsEditor,
     QWidget*                    parent
 ) :
     IPortfolioTreeWidget(parent),
     ui(new Ui::PortfolioTreeWidget),
     mFileDialogFactory(fileDialogFactory),
+    mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mTotalCost(),
     mTotalDailyCost()
@@ -135,9 +137,47 @@ void PortfolioTreeWidget::on_treeView_customContextMenuRequested(const QPoint& p
 {
     QMenu* contextMenu = new QMenu(this);
 
+    QMenu* sellMenu = new QMenu(tr("Sell"), this);
+
+    sellMenu->addAction(tr("ASAP"), this, SLOT(actionSellAsapTriggered()));
+    sellMenu->addAction(tr("with following sell price"), this, SLOT(actionSellFollowPriceTriggered()));
+    sellMenu->addAction(tr("with positive yield"), this, SLOT(actionSellGoodYieldTriggered()));
+
+    contextMenu->addMenu(sellMenu);
+    contextMenu->addSeparator();
     contextMenu->addAction(tr("Export to Excel"), this, SLOT(actionExportToExcelTriggered()));
 
     contextMenu->popup(ui->treeView->viewport()->mapToGlobal(pos));
+}
+
+void PortfolioTreeWidget::actionSellAsapTriggered()
+{
+    sellInstrument(ASAP_MODE_IMMEDIATELY_TRADE, tr("ASAP"));
+}
+
+void PortfolioTreeWidget::actionSellFollowPriceTriggered()
+{
+    sellInstrument(ASAP_MODE_FOLLOW_PRICE, tr("with following sell price"));
+}
+
+void PortfolioTreeWidget::actionSellGoodYieldTriggered()
+{
+    sellInstrument(ASAP_MODE_NONE, tr("with positive yield"));
+}
+
+void PortfolioTreeWidget::sellInstrument(AsapMode mode, const QString& modeText)
+{
+    // TODO: Use instrument name
+    const QString instrumentTicker = "Hello";
+    const QString instrumentName   = "World";
+
+    if (mMessageBoxUtils->question(
+            this, tr("Sell"), tr("Do you really want to sell %1(%2) %3?").arg(instrumentTicker, instrumentName, modeText)
+        ) == QMessageBox::Yes)
+    {
+        // TODO: Send trading info to sell instrument
+        qInfo() << mode;
+    }
 }
 
 void PortfolioTreeWidget::actionExportToExcelTriggered()
