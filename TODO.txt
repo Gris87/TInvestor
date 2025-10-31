@@ -1,13 +1,12 @@
-Priority to single trading thread over bi-directional trading thread
+Allow to sell manually (immediately or with good yield)
+Good yield for single trading thread should stay together with someone else
+Do not count own order in single trading thread
 Override chart labels => 1.25 K rub
 Asap mode immediately but with positive yield and small spread
 Thread to sell gifts
 Sell into chunks
 Fix auto-restart non-running app
 Double check mutexes
-Allow to sell manually (immediately or with good yield)
-Good yield for single trading thread should stay together with someone else
-Do not count own order in single trading thread
 Buy if price continuosly increasing during time period
 Find best configs for different commission
 Improve coverage

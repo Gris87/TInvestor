@@ -947,53 +947,74 @@ void MainWindow::autoPilotPortfolioLastPriceChanged(const QString& instrumentId,
 
 void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instruments)
 {
+    QStringList biDirTradingThreadsToKill;
+
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {
         const QString& instrumentId = it.key();
 
-        if (!biDirTradingThreads.contains(instrumentId))
+        IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.value(instrumentId);
+
+        if (biDirTradingThread != nullptr)
         {
-            const TradingInfo& tradingInfo = it.value();
+            biDirTradingThread->terminateThread();
 
-            if (tradingInfo.expectedCost == 0)
-            {
-                mAutoPilotDecisionMakerThread->notifyAboutSell(instrumentId);
-            }
+            biDirTradingThreadsToKill.append(instrumentId);
+        }
+    }
 
-            ITradingThread* tradingThread = tradingThreads.value(instrumentId);
+    for (const QString& instrumentId : biDirTradingThreadsToKill)
+    {
+        IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.take(instrumentId);
+        Q_ASSERT_X(biDirTradingThread != nullptr, __FUNCTION__, "Unexpected behavior");
 
-            if (tradingThread == nullptr)
-            {
-                tradingThread = mTradingThreadFactory->newInstance(
-                    mInstrumentsStorage,
-                    mUserStorage,
-                    mTimeUtils,
-                    mGrpcClient,
-                    mGrpcRetryClient,
-                    mLogsThread,
-                    mAutoPilotAccountId,
-                    instrumentId,
-                    tradingInfo.asapMode,
-                    tradingInfo.avgPrice,
-                    tradingInfo.price,
-                    tradingInfo.expectedCost,
-                    tradingInfo.cause,
-                    this
-                );
+        biDirTradingThread->wait();
+        delete biDirTradingThread;
+    }
 
-                connect(
-                    tradingThread, SIGNAL(tradingCompleted(const QString&)), this, SLOT(autoPilotTradingCompleted(const QString&))
-                );
+    for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
+    {
+        const QString&     instrumentId = it.key();
+        const TradingInfo& tradingInfo  = it.value();
 
-                tradingThreads[instrumentId] = tradingThread;
-                tradingThread->start();
-            }
-            else
-            {
-                tradingThread->setAsapMode(tradingInfo.asapMode);
-                tradingThread->setAvgPrice(tradingInfo.avgPrice);
-                tradingThread->setExpectedCost(tradingInfo.expectedCost, tradingInfo.cause);
-            }
+        if (tradingInfo.expectedCost == 0)
+        {
+            mAutoPilotDecisionMakerThread->notifyAboutSell(instrumentId);
+        }
+
+        ITradingThread* tradingThread = tradingThreads.value(instrumentId);
+
+        if (tradingThread == nullptr)
+        {
+            tradingThread = mTradingThreadFactory->newInstance(
+                mInstrumentsStorage,
+                mUserStorage,
+                mTimeUtils,
+                mGrpcClient,
+                mGrpcRetryClient,
+                mLogsThread,
+                mAutoPilotAccountId,
+                instrumentId,
+                tradingInfo.asapMode,
+                tradingInfo.avgPrice,
+                tradingInfo.price,
+                tradingInfo.expectedCost,
+                tradingInfo.cause,
+                this
+            );
+
+            connect(
+                tradingThread, SIGNAL(tradingCompleted(const QString&)), this, SLOT(autoPilotTradingCompleted(const QString&))
+            );
+
+            tradingThreads[instrumentId] = tradingThread;
+            tradingThread->start();
+        }
+        else
+        {
+            tradingThread->setAsapMode(tradingInfo.asapMode);
+            tradingThread->setAvgPrice(tradingInfo.avgPrice);
+            tradingThread->setExpectedCost(tradingInfo.expectedCost, tradingInfo.cause);
         }
     }
 }
@@ -1011,31 +1032,6 @@ void MainWindow::autoPilotTradingCompleted(const QString& instrumentId)
 
 void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading& instruments)
 {
-    QStringList tradingThreadsToKill;
-
-    for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
-    {
-        const QString& instrumentId = it.key();
-
-        ITradingThread* tradingThread = tradingThreads.value(instrumentId);
-
-        if (tradingThread != nullptr)
-        {
-            tradingThread->terminateThread();
-
-            tradingThreadsToKill.append(instrumentId);
-        }
-    }
-
-    for (const QString& instrumentId : tradingThreadsToKill)
-    {
-        ITradingThread* tradingThread = tradingThreads.take(instrumentId);
-        Q_ASSERT_X(tradingThread != nullptr, __FUNCTION__, "Unexpected behavior");
-
-        tradingThread->wait();
-        delete tradingThread;
-    }
-
     for (auto it = biDirTradingThreads.constBegin(); it != biDirTradingThreads.constEnd(); ++it)
     {
         const QString& instrumentId = it.key();
@@ -1048,42 +1044,46 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
 
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {
-        const QString&          instrumentId     = it.key();
-        const BiDirTradingInfo& biDirTradingInfo = it.value();
+        const QString& instrumentId = it.key();
 
-        IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.value(instrumentId);
-
-        if (biDirTradingThread == nullptr)
+        if (!tradingThreads.contains(instrumentId))
         {
-            biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
-                mInstrumentsStorage,
-                mUserStorage,
-                mConfig,
-                mTimeUtils,
-                mTradeUtils,
-                mGrpcClient,
-                mGrpcRetryClient,
-                mLogsThread,
-                mAutoPilotAccountId,
-                biDirTradingInfo.stock,
-                biDirTradingInfo.mode,
-                biDirTradingInfo.cause,
-                this
-            );
+            const BiDirTradingInfo& biDirTradingInfo = it.value();
 
-            connect(
-                biDirTradingThread,
-                SIGNAL(tradingCompleted(const QString&)),
-                this,
-                SLOT(autoPilotBiDirTradingCompleted(const QString&))
-            );
+            IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.value(instrumentId);
 
-            biDirTradingThreads[instrumentId] = biDirTradingThread;
-            biDirTradingThread->start();
-        }
-        else
-        {
-            biDirTradingThread->setMode(biDirTradingInfo.mode, biDirTradingInfo.cause);
+            if (biDirTradingThread == nullptr)
+            {
+                biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
+                    mInstrumentsStorage,
+                    mUserStorage,
+                    mConfig,
+                    mTimeUtils,
+                    mTradeUtils,
+                    mGrpcClient,
+                    mGrpcRetryClient,
+                    mLogsThread,
+                    mAutoPilotAccountId,
+                    biDirTradingInfo.stock,
+                    biDirTradingInfo.mode,
+                    biDirTradingInfo.cause,
+                    this
+                );
+
+                connect(
+                    biDirTradingThread,
+                    SIGNAL(tradingCompleted(const QString&)),
+                    this,
+                    SLOT(autoPilotBiDirTradingCompleted(const QString&))
+                );
+
+                biDirTradingThreads[instrumentId] = biDirTradingThread;
+                biDirTradingThread->start();
+            }
+            else
+            {
+                biDirTradingThread->setMode(biDirTradingInfo.mode, biDirTradingInfo.cause);
+            }
         }
     }
 }

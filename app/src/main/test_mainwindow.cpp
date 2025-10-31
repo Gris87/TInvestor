@@ -1095,10 +1095,55 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
     // const InSequence seq;
 
     // Will be deleted in MainWindow destructor
-    StrictMock<TradingThreadMock>* tradingThreadMock1 = new StrictMock<TradingThreadMock>();
-    StrictMock<TradingThreadMock>* tradingThreadMock2 = new StrictMock<TradingThreadMock>();
+    StrictMock<TradingThreadMock>*      tradingThreadMock1     = new StrictMock<TradingThreadMock>();
+    StrictMock<TradingThreadMock>*      tradingThreadMock2     = new StrictMock<TradingThreadMock>();
+    StrictMock<BiDirTradingThreadMock>* biDirTradingThreadMock = new StrictMock<BiDirTradingThreadMock>();
 
-    ASSERT_EQ(mainWindow->tradingThreads.size(), 0);
+    // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),      0);
+    ASSERT_EQ(mainWindow->biDirTradingThreads.size(), 0);
+    // clang-format on
+
+    BiDirTradingInfo tradingInfo;
+    Stock            stock;
+
+    tradingInfo.stock = &stock;
+    tradingInfo.mode  = BIDIR_MODE_HUGE_SPREAD;
+    tradingInfo.cause = "Need to buy";
+
+    InstrumentsForBiDirTrading instruments;
+    instruments["aaaaa"] = tradingInfo;
+
+    EXPECT_CALL(
+        *biDirTradingThreadFactoryMock,
+        newInstance(
+            instrumentsStorageMock,
+            userStorageMock,
+            configMock,
+            timeUtilsMock,
+            tradeUtilsMock,
+            grpcClientMock,
+            grpcRetryClientMock,
+            logsThreadMock,
+            QString(""),
+            &stock,
+            BIDIR_MODE_HUGE_SPREAD,
+            QString("Need to buy"),
+            mainWindow
+        )
+    )
+        .WillOnce(Return(biDirTradingThreadMock));
+    EXPECT_CALL(*biDirTradingThreadMock, run());
+
+    mainWindow->autoPilotBiDirTradeInstruments(instruments);
+
+    biDirTradingThreadMock->wait();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),        0);
+    ASSERT_EQ(mainWindow->biDirTradingThreads.size(),   1);
+    ASSERT_EQ(mainWindow->biDirTradingThreads["aaaaa"], biDirTradingThreadMock);
+    // clang-format on
 
     TradingInfo tradingInfo1;
     TradingInfo tradingInfo2;
@@ -1122,14 +1167,15 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
     tradingInfo3.expectedCost = 0.0;
     tradingInfo3.cause        = "Sell ASAP";
 
-    InstrumentsForTrading instruments;
     InstrumentsForTrading instruments2;
+    InstrumentsForTrading instruments3;
 
-    instruments["aaaaa"] = tradingInfo1;
-    instruments["bbbbb"] = tradingInfo2;
+    instruments2["aaaaa"] = tradingInfo1;
+    instruments2["bbbbb"] = tradingInfo2;
 
-    instruments2["aaaaa"] = tradingInfo3;
+    instruments3["aaaaa"] = tradingInfo3;
 
+    EXPECT_CALL(*biDirTradingThreadMock, terminateThread());
     EXPECT_CALL(
         *tradingThreadFactoryMock,
         newInstance(
@@ -1173,15 +1219,16 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
         .WillOnce(Return(tradingThreadMock2));
     EXPECT_CALL(*tradingThreadMock2, run());
 
-    mainWindow->autoPilotTradeInstruments(instruments);
+    mainWindow->autoPilotTradeInstruments(instruments2);
 
     tradingThreadMock1->wait();
     tradingThreadMock2->wait();
 
     // clang-format off
-    ASSERT_EQ(mainWindow->tradingThreads.size(),   2);
-    ASSERT_EQ(mainWindow->tradingThreads["aaaaa"], tradingThreadMock1);
-    ASSERT_EQ(mainWindow->tradingThreads["bbbbb"], tradingThreadMock2);
+    ASSERT_EQ(mainWindow->tradingThreads.size(),      2);
+    ASSERT_EQ(mainWindow->tradingThreads["aaaaa"],    tradingThreadMock1);
+    ASSERT_EQ(mainWindow->tradingThreads["bbbbb"],    tradingThreadMock2);
+    ASSERT_EQ(mainWindow->biDirTradingThreads.size(), 0);
     // clang-format on
 
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, notifyAboutSell(QString("aaaaa")));
@@ -1189,19 +1236,21 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
     EXPECT_CALL(*tradingThreadMock1, setAvgPrice(FloatEq(1000000.0f)));
     EXPECT_CALL(*tradingThreadMock1, setExpectedCost(DoubleEq(0.0), QString("Sell ASAP")));
 
-    mainWindow->autoPilotTradeInstruments(instruments2);
+    mainWindow->autoPilotTradeInstruments(instruments3);
 
     // clang-format off
-    ASSERT_EQ(mainWindow->tradingThreads.size(),   2);
-    ASSERT_EQ(mainWindow->tradingThreads["aaaaa"], tradingThreadMock1);
-    ASSERT_EQ(mainWindow->tradingThreads["bbbbb"], tradingThreadMock2);
+    ASSERT_EQ(mainWindow->tradingThreads.size(),      2);
+    ASSERT_EQ(mainWindow->tradingThreads["aaaaa"],    tradingThreadMock1);
+    ASSERT_EQ(mainWindow->tradingThreads["bbbbb"],    tradingThreadMock2);
+    ASSERT_EQ(mainWindow->biDirTradingThreads.size(), 0);
     // clang-format on
 
     mainWindow->autoPilotTradingCompleted("aaaaa");
 
     // clang-format off
-    ASSERT_EQ(mainWindow->tradingThreads.size(),   1);
-    ASSERT_EQ(mainWindow->tradingThreads["bbbbb"], tradingThreadMock2);
+    ASSERT_EQ(mainWindow->tradingThreads.size(),      1);
+    ASSERT_EQ(mainWindow->tradingThreads["bbbbb"],    tradingThreadMock2);
+    ASSERT_EQ(mainWindow->biDirTradingThreads.size(), 0);
     // clang-format on
 
     EXPECT_CALL(*tradingThreadMock2, terminateThread());
@@ -1212,55 +1261,11 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     // const InSequence seq;
 
     // Will be deleted in MainWindow destructor
-    StrictMock<TradingThreadMock>*      tradingThreadMock       = new StrictMock<TradingThreadMock>();
     StrictMock<BiDirTradingThreadMock>* biDirTradingThreadMock1 = new StrictMock<BiDirTradingThreadMock>();
     StrictMock<BiDirTradingThreadMock>* biDirTradingThreadMock2 = new StrictMock<BiDirTradingThreadMock>();
 
     // clang-format off
     ASSERT_EQ(mainWindow->tradingThreads.size(),      0);
-    ASSERT_EQ(mainWindow->biDirTradingThreads.size(), 0);
-    // clang-format on
-
-    TradingInfo tradingInfo;
-
-    tradingInfo.asapMode     = ASAP_MODE_NONE;
-    tradingInfo.avgPrice     = -1.0f;
-    tradingInfo.price        = 10.0f;
-    tradingInfo.expectedCost = 10000.0;
-    tradingInfo.cause        = "Need to buy";
-
-    InstrumentsForTrading instruments;
-    instruments["aaaaa"] = tradingInfo;
-
-    EXPECT_CALL(
-        *tradingThreadFactoryMock,
-        newInstance(
-            instrumentsStorageMock,
-            userStorageMock,
-            timeUtilsMock,
-            grpcClientMock,
-            grpcRetryClientMock,
-            logsThreadMock,
-            QString(""),
-            QString("aaaaa"),
-            ASAP_MODE_NONE,
-            FloatEq(-1.0f),
-            FloatEq(10.0f),
-            DoubleEq(10000.0),
-            QString("Need to buy"),
-            mainWindow
-        )
-    )
-        .WillOnce(Return(tradingThreadMock));
-    EXPECT_CALL(*tradingThreadMock, run());
-
-    mainWindow->autoPilotTradeInstruments(instruments);
-
-    tradingThreadMock->wait();
-
-    // clang-format off
-    ASSERT_EQ(mainWindow->tradingThreads.size(),      1);
-    ASSERT_EQ(mainWindow->tradingThreads["aaaaa"],    tradingThreadMock);
     ASSERT_EQ(mainWindow->biDirTradingThreads.size(), 0);
     // clang-format on
 
@@ -1281,15 +1286,14 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     tradingInfo3.mode  = BIDIR_MODE_HUGE_SPREAD;
     tradingInfo3.cause = "Sell ASAP";
 
+    InstrumentsForBiDirTrading instruments;
     InstrumentsForBiDirTrading instruments2;
-    InstrumentsForBiDirTrading instruments3;
 
-    instruments2["aaaaa"] = tradingInfo1;
-    instruments2["bbbbb"] = tradingInfo2;
+    instruments["aaaaa"] = tradingInfo1;
+    instruments["bbbbb"] = tradingInfo2;
 
-    instruments3["aaaaa"] = tradingInfo3;
+    instruments2["aaaaa"] = tradingInfo3;
 
-    EXPECT_CALL(*tradingThreadMock, terminateThread());
     EXPECT_CALL(
         *biDirTradingThreadFactoryMock,
         newInstance(
@@ -1331,7 +1335,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
         .WillOnce(Return(biDirTradingThreadMock2));
     EXPECT_CALL(*biDirTradingThreadMock2, run());
 
-    mainWindow->autoPilotBiDirTradeInstruments(instruments2);
+    mainWindow->autoPilotBiDirTradeInstruments(instruments);
 
     biDirTradingThreadMock1->wait();
     biDirTradingThreadMock2->wait();
@@ -1346,7 +1350,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     EXPECT_CALL(*biDirTradingThreadMock2, terminateTrading());
     EXPECT_CALL(*biDirTradingThreadMock1, setMode(BIDIR_MODE_HUGE_SPREAD, QString("Sell ASAP")));
 
-    mainWindow->autoPilotBiDirTradeInstruments(instruments3);
+    mainWindow->autoPilotBiDirTradeInstruments(instruments2);
 
     // clang-format off
     ASSERT_EQ(mainWindow->tradingThreads.size(),        0);
@@ -1354,8 +1358,6 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     ASSERT_EQ(mainWindow->biDirTradingThreads["aaaaa"], biDirTradingThreadMock1);
     ASSERT_EQ(mainWindow->biDirTradingThreads["bbbbb"], biDirTradingThreadMock2);
     // clang-format on
-
-    mainWindow->autoPilotTradeInstruments(instruments);
 
     mainWindow->autoPilotBiDirTradingCompleted("aaaaa");
 

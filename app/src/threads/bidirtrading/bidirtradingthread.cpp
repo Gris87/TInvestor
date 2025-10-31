@@ -27,8 +27,8 @@ constexpr qint64 ORDER_RETRY_DELAY                   = 1LL * MS_IN_SECOND;  // 1
 
 // clang-format off
 static const QMap<QString, float> BAD_INSTRUMENTS_SPREAD{ // clazy:exclude=non-pod-global-static
-    {LNZL_UID,  3.00f},
-    {LNZLP_UID, 3.00f},
+    {LNZL_UID,  2.50f},
+    {LNZLP_UID, 2.00f},
     {CHMK_UID,  0.80f}
 };
 // clang-format on
