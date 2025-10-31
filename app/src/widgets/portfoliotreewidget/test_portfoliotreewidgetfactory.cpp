@@ -56,7 +56,7 @@ TEST_F(Test_PortfolioTreeWidgetFactory, Test_newInstance)
     EXPECT_CALL(portfolioTreeModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
     const IPortfolioTreeWidget* widget = factory->newInstance(
-        &portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &messageBoxUtilsMock, &settingsEditorMock, nullptr
+        &portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &messageBoxUtilsMock, &settingsEditorMock, true, nullptr
     );
     ASSERT_TRUE(widget != nullptr);
 

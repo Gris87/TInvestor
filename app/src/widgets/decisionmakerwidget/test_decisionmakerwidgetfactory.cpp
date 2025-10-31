@@ -147,7 +147,9 @@ TEST_F(Test_DecisionMakerWidgetFactory, Test_newInstance)
         .WillOnce(Return(bestConfigWidgetMock));
     EXPECT_CALL(
         portfolioTreeWidgetFactoryMock,
-        newInstance(&portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &messageBoxUtilsMock, &settingsEditorMock, NotNull())
+        newInstance(
+            &portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &messageBoxUtilsMock, &settingsEditorMock, true, NotNull()
+        )
     )
         .WillOnce(Return(portfolioTreeWidgetMock));
 
@@ -182,7 +184,8 @@ TEST_F(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &messageBoxUtilsMock,
             &configMock,
             &configForSimulationMock,
-            &settingsEditorMock
+            &settingsEditorMock,
+            true
         ),
         nullptr
     );

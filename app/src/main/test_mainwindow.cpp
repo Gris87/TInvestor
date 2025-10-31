@@ -232,7 +232,8 @@ protected:
                     messageBoxUtilsMock,
                     configMock,
                     configForSimulationMock,
-                    settingsEditorMock
+                    settingsEditorMock,
+                    false
                 ),
                 NotNull()
             )
@@ -267,7 +268,8 @@ protected:
                     messageBoxUtilsMock,
                     configMock,
                     configForSimulationMock,
-                    settingsEditorMock
+                    settingsEditorMock,
+                    true
                 ),
                 NotNull()
             )

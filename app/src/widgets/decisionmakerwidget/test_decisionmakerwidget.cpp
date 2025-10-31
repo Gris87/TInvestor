@@ -132,7 +132,9 @@ protected:
             .WillOnce(Return(bestConfigWidgetMock));
         EXPECT_CALL(
             *portfolioTreeWidgetFactoryMock,
-            newInstance(portfolioTreeModelFactoryMock, fileDialogFactoryMock, messageBoxUtilsMock, settingsEditorMock, NotNull())
+            newInstance(
+                portfolioTreeModelFactoryMock, fileDialogFactoryMock, messageBoxUtilsMock, settingsEditorMock, true, NotNull()
+            )
         )
             .WillOnce(Return(portfolioTreeWidgetMock));
 
@@ -166,7 +168,8 @@ protected:
             messageBoxUtilsMock,
             configMock,
             configForSimulationMock,
-            settingsEditorMock
+            settingsEditorMock,
+            true
         );
     }
 

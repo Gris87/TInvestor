@@ -47,6 +47,7 @@ DecisionMakerWidgetFactory::newInstance(const DecisionMakerWidgetFactoryNewInsta
         args.config,
         args.configForSimulation,
         args.settingsEditor,
+        args.autoPilot,
         parent
     );
 }

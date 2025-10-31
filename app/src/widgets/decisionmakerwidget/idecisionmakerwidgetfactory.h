@@ -44,7 +44,8 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         IMessageBoxUtils*                  _messageBoxUtils,
         IConfig*                           _config,
         IConfig*                           _configForSimulation,
-        ISettingsEditor*                   _settingsEditor
+        ISettingsEditor*                   _settingsEditor,
+        bool                               _autoPilot
     ) :
         operationsTableWidgetFactory(_operationsTableWidgetFactory),
         accountChartWidgetFactory(_accountChartWidgetFactory),
@@ -71,7 +72,8 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         messageBoxUtils(_messageBoxUtils),
         config(_config),
         configForSimulation(_configForSimulation),
-        settingsEditor(_settingsEditor)
+        settingsEditor(_settingsEditor),
+        autoPilot(_autoPilot)
     {
     }
 
@@ -103,6 +105,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
     IConfig*                           config;
     IConfig*                           configForSimulation;
     ISettingsEditor*                   settingsEditor;
+    bool                               autoPilot;
 };
 
 

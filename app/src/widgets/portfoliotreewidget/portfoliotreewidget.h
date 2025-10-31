@@ -31,6 +31,7 @@ public:
         IFileDialogFactory*         fileDialogFactory,
         IMessageBoxUtils*           messageBoxUtils,
         ISettingsEditor*            settingsEditor,
+        bool                        autoPilot,
         QWidget*                    parent = nullptr
     );
     ~PortfolioTreeWidget() override;
@@ -60,6 +61,7 @@ private:
     IMessageBoxUtils*    mMessageBoxUtils;
     ISettingsEditor*     mSettingsEditor;
     IPortfolioTreeModel* mPortfolioTreeModel;
+    bool                 mAutoPilot;
     double               mTotalCost;
     double               mTotalDailyCost;
 

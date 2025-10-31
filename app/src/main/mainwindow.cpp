@@ -228,7 +228,8 @@ MainWindow::MainWindow(
             mMessageBoxUtils,
             config,
             configForSimulation,
-            mSettingsEditor
+            mSettingsEditor,
+            false
         ),
         this
     );
@@ -259,7 +260,8 @@ MainWindow::MainWindow(
             mMessageBoxUtils,
             config,
             configForSimulation,
-            mSettingsEditor
+            mSettingsEditor,
+            true
         ),
         this
     );

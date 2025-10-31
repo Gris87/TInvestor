@@ -32,6 +32,7 @@ PortfolioTreeWidget::PortfolioTreeWidget(
     IFileDialogFactory*         fileDialogFactory,
     IMessageBoxUtils*           messageBoxUtils,
     ISettingsEditor*            settingsEditor,
+    bool                        autoPilot,
     QWidget*                    parent
 ) :
     IPortfolioTreeWidget(parent),
@@ -39,6 +40,7 @@ PortfolioTreeWidget::PortfolioTreeWidget(
     mFileDialogFactory(fileDialogFactory),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
+    mAutoPilot(autoPilot),
     mTotalCost(),
     mTotalDailyCost()
 {
@@ -137,14 +139,20 @@ void PortfolioTreeWidget::on_treeView_customContextMenuRequested(const QPoint& p
 {
     QMenu* contextMenu = new QMenu(this);
 
-    QMenu* sellMenu = new QMenu(tr("Sell"), this);
+    if (mAutoPilot)
+    {
+        QMenu* sellMenu = new QMenu(tr("Sell"), this);
 
-    sellMenu->addAction(tr("ASAP"), this, SLOT(actionSellAsapTriggered()));
-    sellMenu->addAction(tr("with following sell price"), this, SLOT(actionSellFollowPriceTriggered()));
-    sellMenu->addAction(tr("with positive yield"), this, SLOT(actionSellGoodYieldTriggered()));
+        // clang-format off
+        sellMenu->addAction(tr("ASAP"),                      this, SLOT(actionSellAsapTriggered()));
+        sellMenu->addAction(tr("with following sell price"), this, SLOT(actionSellFollowPriceTriggered()));
+        sellMenu->addAction(tr("with positive yield"),       this, SLOT(actionSellGoodYieldTriggered()));
+        // clang-format on
 
-    contextMenu->addMenu(sellMenu);
-    contextMenu->addSeparator();
+        contextMenu->addMenu(sellMenu);
+        contextMenu->addSeparator();
+    }
+
     contextMenu->addAction(tr("Export to Excel"), this, SLOT(actionExportToExcelTriggered()));
 
     contextMenu->popup(ui->treeView->viewport()->mapToGlobal(pos));

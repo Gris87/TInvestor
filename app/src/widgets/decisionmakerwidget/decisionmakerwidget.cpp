@@ -41,6 +41,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     IConfig*                           config,
     IConfig*                           configForSimulation,
     ISettingsEditor*                   settingsEditor,
+    bool                               autoPilot,
     QWidget*                           parent
 ) :
     IDecisionMakerWidget(parent),
@@ -94,7 +95,7 @@ DecisionMakerWidget::DecisionMakerWidget(
         ui->bestConfigTab
     );
     mPortfolioTreeWidget = portfolioTreeWidgetFactory->newInstance(
-        portfolioTreeModelFactory, fileDialogFactory, messageBoxUtils, mSettingsEditor, this
+        portfolioTreeModelFactory, fileDialogFactory, messageBoxUtils, mSettingsEditor, autoPilot, this
     );
 
     mLogsTableWidget->setFilter(mLogsFilterWidget->getFilter());

@@ -47,7 +47,7 @@ protected:
         EXPECT_CALL(*portfolioTreeModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
         portfolioTreeWidget = new PortfolioTreeWidget(
-            portfolioTreeModelFactoryMock, fileDialogFactoryMock, messageBoxUtilsMock, settingsEditorMock
+            portfolioTreeModelFactoryMock, fileDialogFactoryMock, messageBoxUtilsMock, settingsEditorMock, true
         );
     }
 

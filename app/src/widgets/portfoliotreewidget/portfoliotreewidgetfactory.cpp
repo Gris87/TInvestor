@@ -22,8 +22,11 @@ IPortfolioTreeWidget* PortfolioTreeWidgetFactory::newInstance(
     IFileDialogFactory*         fileDialogFactory,
     IMessageBoxUtils*           messageBoxUtils,
     ISettingsEditor*            settingsEditor,
+    bool                        autoPilot,
     QWidget*                    parent
 ) const
 {
-    return new PortfolioTreeWidget(portfolioTreeModelFactory, fileDialogFactory, messageBoxUtils, settingsEditor, parent);
+    return new PortfolioTreeWidget(
+        portfolioTreeModelFactory, fileDialogFactory, messageBoxUtils, settingsEditor, autoPilot, parent
+    );
 }

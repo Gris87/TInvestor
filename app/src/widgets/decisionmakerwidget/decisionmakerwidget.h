@@ -58,6 +58,7 @@ public:
         IConfig*                           config,
         IConfig*                           configForSimulation,
         ISettingsEditor*                   settingsEditor,
+        bool                               autoPilot,
         QWidget*                           parent = nullptr
     );
     ~DecisionMakerWidget() override;

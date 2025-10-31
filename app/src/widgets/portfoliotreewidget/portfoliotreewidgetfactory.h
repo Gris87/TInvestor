@@ -20,6 +20,7 @@ public:
         IFileDialogFactory*         fileDialogFactory,
         IMessageBoxUtils*           messageBoxUtils,
         ISettingsEditor*            settingsEditor,
+        bool                        autoPilot,
         QWidget*                    parent
     ) const override;
 };
