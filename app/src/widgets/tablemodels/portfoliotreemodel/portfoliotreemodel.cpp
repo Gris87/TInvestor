@@ -451,6 +451,20 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
         return mPortfolio.positions.at(category->id).items.at(row).instrumentName;
     }
 
+    if (role == ROLE_PORTFOLIO_ITEM)
+    {
+        PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
+
+        if (category == nullptr)
+        {
+            return QVariant();
+        }
+
+        const int row = index.row();
+
+        return reinterpret_cast<qint64>(&mPortfolio.positions.at(category->id).items.at(row));
+    }
+
     return QVariant();
 }
 

@@ -6,6 +6,7 @@
 
 #include "src/qxlsx/xlsxdocument.h"
 #include "src/widgets/tabledelegates/instrumentitemdelegate.h"
+#include "src/widgets/tablemodels/modelroles.h"
 
 
 
@@ -149,6 +150,11 @@ void PortfolioTreeWidget::on_treeView_customContextMenuRequested(const QPoint& p
         sellMenu->addAction(tr("with positive yield"),       this, SLOT(actionSellGoodYieldTriggered()));
         // clang-format on
 
+        const qint64   itemAddress = ui->treeView->currentIndex().data(ROLE_PORTFOLIO_ITEM).toLongLong();
+        PortfolioItem* item         = reinterpret_cast<PortfolioItem*>(itemAddress); // NOLINT(performance-no-int-to-ptr)
+
+        sellMenu->setEnabled(item != nullptr && item->showPrices);
+
         contextMenu->addMenu(sellMenu);
         contextMenu->addSeparator();
     }
@@ -175,16 +181,17 @@ void PortfolioTreeWidget::actionSellGoodYieldTriggered()
 
 void PortfolioTreeWidget::sellInstrument(AsapMode mode, const QString& modeText)
 {
-    // TODO: Use instrument name
-    const QString instrumentTicker = "Hello";
-    const QString instrumentName   = "World";
+    const qint64   itemAddress = ui->treeView->currentIndex().data(ROLE_PORTFOLIO_ITEM).toLongLong();
+    PortfolioItem* item         = reinterpret_cast<PortfolioItem*>(itemAddress); // NOLINT(performance-no-int-to-ptr)
 
     if (mMessageBoxUtils->question(
-            this, tr("Sell"), tr("Do you really want to sell %1(%2) %3?").arg(instrumentTicker, instrumentName, modeText)
+            this,
+            tr("Sell"),
+            tr("Do you really want to sell %1 (%2) %3?").arg(item->instrumentTicker, item->instrumentName, modeText)
         ) == QMessageBox::Yes)
     {
         // TODO: Send trading info to sell instrument
-        qInfo() << mode;
+        qInfo() << mode << item->instrumentId;
     }
 }
 

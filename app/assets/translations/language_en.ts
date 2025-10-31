@@ -936,7 +936,7 @@
     </message>
     <message>
         <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="175"/>
-        <source>Do you really want to sell %1(%2) %3?</source>
+        <source>Do you really want to sell %1 (%2) %3?</source>
         <translation></translation>
     </message>
     <message>
