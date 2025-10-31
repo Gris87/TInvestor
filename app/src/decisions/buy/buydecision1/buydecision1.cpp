@@ -16,6 +16,21 @@ constexpr qint64 ONE_MINUTE              = 60LL * MS_IN_SECOND;
 
 
 
+// ====================================================================
+// Buy stock if price fall more than N % during time period (minutes)
+// ====================================================================
+//
+// ----------------------------------------------\
+//                                               |
+//                                               \-------\
+//                                                        \
+//                                                         \
+//                                                          \-----\
+//                                                                 \
+//                                                                  \
+//                                                                   \X
+//
+
 BuyDecision1::BuyDecision1() :
     IActionDecision(),
     mStepForTripleCheck(STEP_FOR_TRIPLE_CHECK)

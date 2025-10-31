@@ -11,6 +11,17 @@ constexpr float  HUNDRED_PERCENT      = 100.0f;
 
 
 
+// ============================================================================
+// Sell stock if price raise more than N % and fall for M % during time period
+// ============================================================================
+//
+//                                                                /\
+//                                                               /  \
+//                                                              /    \X
+//                                                             /
+// -----------------------------------------------------------/
+//
+
 SellDecision2::SellDecision2() :
     IActionDecision()
 {

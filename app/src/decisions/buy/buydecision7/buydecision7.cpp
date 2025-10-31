@@ -16,6 +16,15 @@ constexpr int    MINUTES_BEFORE_DAY_END  = 10;
 
 
 
+// ====================================================================
+// Buy stock if price raises multiple times during night
+// ====================================================================
+//
+//           /\                  /\                  /\
+//          /  \                /  \                /  \
+// -------|/    \-------------|/    \-------------|/    \-------------X
+//
+
 BuyDecision7::BuyDecision7(ITimeUtils* timeUtils) :
     IActionDecision(),
     mTimeUtils(timeUtils)

@@ -1,5 +1,4 @@
 Priority to single trading thread over bi-directional trading thread
-Add comments on decisions
 Override chart labels => 1.25 K rub
 Asap mode immediately but with positive yield and small spread
 Thread to sell gifts

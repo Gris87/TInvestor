@@ -11,6 +11,21 @@ constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
 
 
 
+// ====================================================================
+// Buy stock if price exceeds bottom Bollindger edge
+// ====================================================================
+//
+// ----------------------------------------------\
+//                                               |
+//                                               \-------\
+//                                                        \
+//                                                         \
+//                                                          \-----\
+//                                                                 \
+//                                                                  \
+//                                                                   \X
+//
+
 BuyDecision5::BuyDecision5(IBollindger* bollindger) :
     IActionDecision(),
     mBollindger(bollindger)

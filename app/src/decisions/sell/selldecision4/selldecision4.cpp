@@ -13,6 +13,21 @@ constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
 
 
 
+// ====================================================================
+// Sell stock if price exceeds top Bollindger edge with positive yield
+// ====================================================================
+//
+// ----------------------------------------------\
+//                                               |
+//                                               \-------\
+//                                                        \
+//                                                         \
+//                                                          \-----\
+//                                                                 \
+//                                                                  \
+//                                                                   \X
+//
+
 SellDecision4::SellDecision4(IBollindger* bollindger) :
     IActionDecision(),
     mBollindger(bollindger)

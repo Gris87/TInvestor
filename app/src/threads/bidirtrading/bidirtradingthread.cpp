@@ -65,6 +65,7 @@ BiDirTradingThread::BiDirTradingThread(
     mBidirMode(bidirMode),
     mTerminateTrading(),
     mInstrumentId(),
+    mBadSpread(),
     mInstrumentLot(),
     mMinPriceIncrement(),
     mBuyOrderId(),
@@ -75,6 +76,8 @@ BiDirTradingThread::BiDirTradingThread(
     mStock->readLock();
     mInstrumentId = mStock->meta.instrumentId;
     mStock->readUnlock();
+
+    mBadSpread = BAD_INSTRUMENTS_SPREAD.value(mInstrumentId, 0.0f);
 
     mLogsThread->addLog(LOG_LEVEL_DEBUG, mInstrumentId, cause);
 }
@@ -539,12 +542,10 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
 double
 BiDirTradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity)
 {
-    float badSpread = BAD_INSTRUMENTS_SPREAD.value(mInstrumentId, 0.0f);
-
-    if (badSpread > 0.0f)
+    if (mBadSpread > 0.0f)
     {
         return calculateBidPriceInternal(
-            tinkoffOrderBook, badSpread, (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD) / HUNDRED_PERCENT
+            tinkoffOrderBook, mBadSpread, (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD) / HUNDRED_PERCENT
         );
     }
 
