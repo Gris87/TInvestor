@@ -85,10 +85,9 @@ QString BuyDecision5::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision5Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
 ) const
 {
-    const int duration = buyConfig->getDuration();
-
     const StockData* stockData = stock->data.constData();
 
+    const int duration = buyConfig->getDuration();
     limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
 
     for (int i = dataIndex; i >= 2 && !parentThread->isInterruptionRequested(); --i)

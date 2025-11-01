@@ -96,8 +96,9 @@ QString SellDecision3::makeDecisionBasedOnStockData(
 
     if (yield <= loseYield)
     {
-        const StockData* stockData    = stock->data.constData();
-        const float      minimumPrice = avgPrice * (1 + (loseYield / HUNDRED_PERCENT));
+        const StockData* stockData = stock->data.constData();
+
+        const float minimumPrice = avgPrice * (1 + (loseYield / HUNDRED_PERCENT));
 
         if (doubleCheckBasedOnStockData(parentThread, stockData, dataIndex, minimumPrice))
         {
@@ -125,7 +126,8 @@ QString SellDecision3::makeDecisionBasedOnStockOperationalData(
         if (stock->operational.detailedData.size() > MINUTES_TO_DOUBLE_CHECK)
         {
             const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
-            const float                 minimumPrice         = avgPrice * (1 + (loseYield / HUNDRED_PERCENT));
+
+            const float minimumPrice = avgPrice * (1 + (loseYield / HUNDRED_PERCENT));
 
             if (doubleCheckBasedOnStockOperationalData(
                     parentThread, stockOperationalData, stock->operational.detailedData.size() - 1, minimumPrice

@@ -6,13 +6,15 @@
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
-constexpr int    MINUTES_TO_DOUBLE_CHECK = 5;
-constexpr int    HOURS_TO_TRIPLE_CHECK   = 3;
-constexpr int    STEP_FOR_TRIPLE_CHECK   = 60;
-constexpr float  TRIPLE_MINIMUM_COEF     = 3.0f;
-constexpr float  HUNDRED_PERCENT         = 100.0f;
-constexpr qint64 MS_IN_SECOND            = 1000LL;
-constexpr qint64 ONE_MINUTE              = 60LL * MS_IN_SECOND;
+constexpr int    MINUTES_TO_DOUBLE_CHECK  = 5;
+constexpr int    HOURS_TO_TRIPLE_CHECK    = 3;
+constexpr int    STEP_FOR_TRIPLE_CHECK    = 60;
+constexpr float  TRIPLE_MINIMUM_COEF      = 3.0f;
+constexpr float  HUNDRED_PERCENT          = 100.0f;
+constexpr qint64 MS_IN_SECOND             = 1000LL;
+constexpr qint64 ONE_MINUTE               = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR                 = 60LL * ONE_MINUTE;
+constexpr qint64 MINIMAL_DELAY_AFTER_SELL = 1LL * ONE_HOUR; // 1 hour
 
 
 
@@ -91,12 +93,17 @@ QString BuyDecision2::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision2Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
 ) const
 {
+    const StockData* stockData = stock->data.constData();
+
+    if (stockData[dataIndex].timestamp - limitTimestamp < MINIMAL_DELAY_AFTER_SELL)
+    {
+        return "";
+    }
+
     const float priceFall    = -buyConfig->getPriceFall();
     const float loseYield    = buyConfig->getLoseYield();
     const int   duration     = buyConfig->getDuration();
     const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
-
-    const StockData* stockData = stock->data.constData();
 
     limitTimestamp = qMax(limitTimestamp, stockData[dataIndex].timestamp - (duration * ONE_MINUTE));
 
@@ -164,13 +171,18 @@ QString BuyDecision2::makeDecisionBasedOnStockOperationalData(
     QThread* parentThread, IBuyDecision2Config* buyConfig, qint64 limitTimestamp, Stock* stock, float price
 ) const
 {
+    if (QDateTime::currentMSecsSinceEpoch() - limitTimestamp < MINIMAL_DELAY_AFTER_SELL)
+    {
+        return "";
+    }
+
+    const StockData*            stockData            = stock->data.constData();
+    const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
+
     const float priceFall    = -buyConfig->getPriceFall();
     const float loseYield    = buyConfig->getLoseYield();
     const int   duration     = buyConfig->getDuration();
     const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
-
-    const StockData*            stockData            = stock->data.constData();
-    const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
 
     limitTimestamp = qMax(limitTimestamp, QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE));
 

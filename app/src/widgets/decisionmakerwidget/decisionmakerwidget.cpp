@@ -111,7 +111,10 @@ DecisionMakerWidget::DecisionMakerWidget(
     ui->tabWidget->removeTab(BEST_CONFIG_TAB_ID);
     ui->tabWidget->setCurrentWidget(ui->operationsTab);
 
-    connect(mLogsFilterWidget, SIGNAL(filterChanged(const LogFilter&)), this, SLOT(logFilterChanged(const LogFilter&)));
+    // clang-format off
+    connect(mLogsFilterWidget,    SIGNAL(filterChanged(const LogFilter&)),                this, SLOT(logFilterChanged(const LogFilter&)));
+    connect(mPortfolioTreeWidget, SIGNAL(tradeInstruments(const InstrumentsForTrading&)), this, SLOT(portfolioTreeWidgetManualSell(const InstrumentsForTrading&)));
+    // clang-format on
 }
 
 DecisionMakerWidget::~DecisionMakerWidget()
@@ -201,6 +204,11 @@ void DecisionMakerWidget::refreshOperationsBackground()
 void DecisionMakerWidget::logFilterChanged(const LogFilter& filter)
 {
     mLogsTableWidget->setFilter(filter);
+}
+
+void DecisionMakerWidget::portfolioTreeWidgetManualSell(const InstrumentsForTrading& instruments)
+{
+    emit tradeInstruments(instruments);
 }
 
 void DecisionMakerWidget::on_yieldButton_clicked()

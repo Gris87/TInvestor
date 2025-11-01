@@ -99,6 +99,7 @@ private:
 
 public slots:
     void logFilterChanged(const LogFilter& filter);
+    void portfolioTreeWidgetManualSell(const InstrumentsForTrading& instruments);
 
 private slots:
     void on_yieldButton_clicked();

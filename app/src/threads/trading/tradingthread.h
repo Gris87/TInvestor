@@ -62,6 +62,11 @@ public:
     void getInstrumentData();
     bool sell(double expected, double delta);
     bool buy(double expected, double delta);
+    void removeOwnOrdersFromOrderBook(
+        tinkoff::GetOrderBookResponse& tinkoffOrderBook, const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder
+    );
+    double calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode);
+    double calculateAskPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode);
 
 private:
     double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);

@@ -6,8 +6,6 @@
 
 
 
-const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
-
 constexpr float  HUNDRED_PERCENT             = 100.0f;
 constexpr float  MAXIMUM_PRICE_RAISE_PERCENT = 0.50f;
 constexpr float  MINIMUM_YIELD_PERCENT       = 0.30f;
@@ -620,6 +618,23 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
     }
 
     return false;
+}
+
+void TradingThread::removeOwnOrdersFromOrderBook(
+    tinkoff::GetOrderBookResponse& /*tinkoffOrderBook*/, const std::shared_ptr<tinkoff::OrderState>& /*tinkoffOrder*/
+)
+{
+    // TODO: Implement
+}
+
+double TradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& /*tinkoffOrderBook*/, AsapMode /*mode*/)
+{
+    return 0.0;
+}
+
+double TradingThread::calculateAskPrice(const tinkoff::GetOrderBookResponse& /*tinkoffOrderBook*/, AsapMode /*mode*/)
+{
+    return 0.0;
 }
 
 void TradingThread::cancelOrder()

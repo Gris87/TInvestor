@@ -85,13 +85,13 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision7Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex
 ) const
 {
+    const StockData* stockData = stock->data.constData();
+
     int successNights = 0;
     int failedNights  = 0;
 
     const float priceRaise = buyConfig->getPriceRaise();
     const int   duration   = buyConfig->getDuration();
-
-    const StockData* stockData = stock->data.constData();
 
     const qint64 currentTimestamp = stockData[dataIndex].timestamp;
 

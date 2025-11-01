@@ -6,13 +6,14 @@
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
-constexpr int    STEP                    = 60;
-constexpr int    MINUTES_TO_DOUBLE_CHECK = 5;
-constexpr float  HUNDRED_PERCENT         = 100.0f;
-constexpr qint64 MS_IN_SECOND            = 1000LL;
-constexpr qint64 ONE_MINUTE              = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR                = 60LL * ONE_MINUTE;
-constexpr qint64 ONE_DAY                 = 24LL * ONE_HOUR;
+constexpr int    STEP                     = 60;
+constexpr int    MINUTES_TO_DOUBLE_CHECK  = 5;
+constexpr float  HUNDRED_PERCENT          = 100.0f;
+constexpr qint64 MS_IN_SECOND             = 1000LL;
+constexpr qint64 ONE_MINUTE               = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR                 = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY                  = 24LL * ONE_HOUR;
+constexpr qint64 MINIMAL_DELAY_AFTER_SELL = 1LL * ONE_HOUR; // 1 hour
 
 
 
@@ -92,11 +93,16 @@ QString BuyDecision3::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision3Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
 ) const
 {
+    const StockData* stockData = stock->data.constData();
+
+    if (stockData[dataIndex].timestamp - limitTimestamp < MINIMAL_DELAY_AFTER_SELL)
+    {
+        return "";
+    }
+
     const float priceFall    = -buyConfig->getPriceFall();
     const int   duration     = buyConfig->getDuration();
     const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
-
-    const StockData* stockData = stock->data.constData();
 
     limitTimestamp = qMax(limitTimestamp, stockData[dataIndex].timestamp - (duration * ONE_DAY));
 

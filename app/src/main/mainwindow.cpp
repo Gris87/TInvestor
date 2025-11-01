@@ -323,6 +323,7 @@ MainWindow::MainWindow(
     connect(mFollowThread,                            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),      this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),         this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const StockFilter&)),                   this, SLOT(stockFilterChanged(const StockFilter&)));
+    connect(mAutoPilotDecisionMakerWidget,            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),      this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     // clang-format on
 
     mTrayIcon->show();

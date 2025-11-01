@@ -98,11 +98,11 @@ QString SellDecision2::makeDecisionBasedOnStockData(
 
         if (yield >= yieldAbove)
         {
+            const StockData* stockData = stock->data.constData();
+
             const float loseYield    = -sellConfig->getLoseYield();
             const float minimumPrice = avgPrice * (1 + (yieldAbove / HUNDRED_PERCENT));
             const float maximumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
-
-            const StockData* stockData = stock->data.constData();
 
             for (int i = dataIndex; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
@@ -150,11 +150,11 @@ QString SellDecision2::makeDecisionBasedOnStockOperationalData(
 
         if (yield >= yieldAbove)
         {
+            const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
+
             const float loseYield    = -sellConfig->getLoseYield();
             const float minimumPrice = avgPrice * (1 + (yieldAbove / HUNDRED_PERCENT));
             const float maximumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
-
-            const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
 
             for (int i = stock->operational.detailedData.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {

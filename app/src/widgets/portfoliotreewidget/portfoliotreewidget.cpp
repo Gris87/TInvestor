@@ -190,8 +190,11 @@ void PortfolioTreeWidget::sellInstrument(AsapMode mode, const QString& modeText)
             tr("Do you really want to sell %1 (%2) %3?").arg(item->instrumentTicker, item->instrumentName, modeText)
         ) == QMessageBox::Yes)
     {
-        // TODO: Send trading info to sell instrument
-        qInfo() << mode << item->instrumentId;
+        InstrumentsForTrading instruments;
+        instruments[item->instrumentId] =
+            TradingInfo(mode, item->avgPriceWavg, item->price, 0.0, tr("Manual sell requested %1").arg(modeText));
+
+        emit tradeInstruments(instruments);
     }
 }
 

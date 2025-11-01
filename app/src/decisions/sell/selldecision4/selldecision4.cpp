@@ -109,11 +109,10 @@ QString SellDecision4::makeDecisionBasedOnStockData(
 
         if (yield >= yieldAbove)
         {
-            const int duration = sellConfig->getDuration();
-
             const StockData* stockData = stock->data.constData();
 
-            limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
+            const int duration = sellConfig->getDuration();
+            limitTimestamp     = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
 
             for (int i = dataIndex; i >= 2 && !parentThread->isInterruptionRequested(); --i)
             {
@@ -166,11 +165,10 @@ QString SellDecision4::makeDecisionBasedOnStockOperationalData(
 
         if (yield >= yieldAbove)
         {
-            const int duration = sellConfig->getDuration();
-
             const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
 
-            limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE);
+            const int duration = sellConfig->getDuration();
+            limitTimestamp     = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE);
 
             for (int i = stock->operational.detailedData.size() - 1; i >= 2 && !parentThread->isInterruptionRequested(); --i)
             {

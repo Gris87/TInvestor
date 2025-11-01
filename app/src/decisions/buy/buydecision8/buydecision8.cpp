@@ -81,11 +81,10 @@ QString BuyDecision8::makeDecisionBasedOnStockData(
     QThread* parentThread, IBuyDecision8Config* buyConfig, qint64 limitTimestamp, Stock* stock, int dataIndex, float price
 ) const
 {
-    const int duration = buyConfig->getDuration();
-
     const StockData* stockData = stock->data.constData();
 
-    limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
+    const int duration = buyConfig->getDuration();
+    limitTimestamp     = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
 
     for (int i = dataIndex; i >= 0 && !parentThread->isInterruptionRequested(); --i)
     {

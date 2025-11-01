@@ -8,6 +8,7 @@
 #include "src/domain/log/logentry.h"
 #include "src/domain/operation/operation.h"
 #include "src/domain/portfolio/portfolio.h"
+#include "src/domain/trading/tradinginfo.h"
 
 
 
@@ -40,4 +41,7 @@ public:
 
     virtual void saveWindowState(const QString& type) = 0;
     virtual void loadWindowState(const QString& type) = 0;
+
+signals:
+    void tradeInstruments(const InstrumentsForTrading& instruments); // Instrument UID => TradingInfo
 };
