@@ -321,9 +321,7 @@ TEST_F(Test_GrpcClient, Test_getMaxLots)
     const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
     const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
-    Quotation price;
-    price.units = 500;
-    price.nano  = 0;
+    Quotation price(500, 0);
 
     EXPECT_CALL(*rawGrpcClientMock, getMaxLots(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
 
@@ -349,9 +347,7 @@ TEST_F(Test_GrpcClient, Test_postOrder)
     const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
     const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
-    Quotation price;
-    price.units = 500;
-    price.nano  = 0;
+    Quotation price(500, 0);
 
     EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
 

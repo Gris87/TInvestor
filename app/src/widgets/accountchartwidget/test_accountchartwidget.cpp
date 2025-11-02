@@ -226,28 +226,22 @@ TEST_F(Test_AccountChartWidget, Test_lineSeriesHovered)
     operation.timestamp                       = 1704056460000;
     operation.originalTimestamp               = 1704056460000;
     operation.totalYieldWithCommissionPercent = -3.0f;
-    operation.remainedMoney.units             = 50;
-    operation.remainedMoney.nano              = 0;
-    operation.totalMoney.units                = 100;
-    operation.totalMoney.nano                 = 0;
+    operation.remainedMoney                   = Quotation(50, 0);
+    operation.totalMoney                      = Quotation(100, 0);
     operations << operation;
 
     operation.timestamp                       = 1704056430000;
     operation.originalTimestamp               = 1704056430000;
     operation.totalYieldWithCommissionPercent = 2.0f;
-    operation.remainedMoney.units             = 2000;
-    operation.remainedMoney.nano              = 0;
-    operation.totalMoney.units                = 200000;
-    operation.totalMoney.nano                 = 0;
+    operation.remainedMoney                   = Quotation(2000, 0);
+    operation.totalMoney                      = Quotation(200000, 0);
     operations << operation;
 
     operation.timestamp                       = 1704056400000;
     operation.originalTimestamp               = 1704056400000;
     operation.totalYieldWithCommissionPercent = 1.0f;
-    operation.remainedMoney.units             = 5000;
-    operation.remainedMoney.nano              = 0;
-    operation.totalMoney.units                = 50000;
-    operation.totalMoney.nano                 = 0;
+    operation.remainedMoney                   = Quotation(5000, 0);
+    operation.totalMoney                      = Quotation(50000, 0);
     operations << operation;
 
     accountChartWidget->operationsRead(operations);
@@ -345,28 +339,22 @@ TEST_F(Test_AccountChartWidget, Test_barSeriesHovered)
     operation.timestamp                       = 1706821200000;
     operation.originalTimestamp               = 1706821200000;
     operation.totalYieldWithCommissionPercent = -3.0f;
-    operation.remainedMoney.units             = 50;
-    operation.remainedMoney.nano              = 0;
-    operation.totalMoney.units                = 100;
-    operation.totalMoney.nano                 = 0;
+    operation.remainedMoney                   = Quotation(50, 0);
+    operation.totalMoney                      = Quotation(100, 0);
     operations << operation;
 
     operation.timestamp                       = 1704056430000;
     operation.originalTimestamp               = 1704056430000;
     operation.totalYieldWithCommissionPercent = 2.0f;
-    operation.remainedMoney.units             = 2000;
-    operation.remainedMoney.nano              = 0;
-    operation.totalMoney.units                = 200000;
-    operation.totalMoney.nano                 = 0;
+    operation.remainedMoney                   = Quotation(2000, 0);
+    operation.totalMoney                      = Quotation(200000, 0);
     operations << operation;
 
     operation.timestamp                       = 1704056400000;
     operation.originalTimestamp               = 1704056400000;
     operation.totalYieldWithCommissionPercent = 1.0f;
-    operation.remainedMoney.units             = 5000;
-    operation.remainedMoney.nano              = 0;
-    operation.totalMoney.units                = 50000;
-    operation.totalMoney.nano                 = 0;
+    operation.remainedMoney                   = Quotation(5000, 0);
+    operation.totalMoney                      = Quotation(50000, 0);
     operations << operation;
 
     accountChartWidget->operationsRead(operations);

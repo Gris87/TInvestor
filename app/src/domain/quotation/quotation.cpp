@@ -10,6 +10,12 @@ Quotation::Quotation() :
 {
 }
 
+Quotation::Quotation(qint64 _units, qint32 _nano) :
+    units(_units),
+    nano(_nano)
+{
+}
+
 static void quotationUnitsParse(Quotation* quotation, simdjson::ondemand::value value)
 {
     quotation->units = value.get_int64();

@@ -64,16 +64,16 @@ public:
         bool&                                       needToCancel,
         bool&                                       needToOrder
     );
-    void sellWithPrice(const Quotation& price);
     void buyWithPrice(qint64 amountOfLots, const Quotation& price);
+    void sellWithPrice(const Quotation& price);
     bool isNeedToSellAsap(qint64 timestamp, BiDirMode mode, float part, float yield, float commission);
     void removeOwnOrdersFromOrderBook(
         tinkoff::GetOrderBookResponse&              tinkoffOrderBook,
         const std::shared_ptr<tinkoff::OrderState>& tinkoffBuyOrder,
         const std::shared_ptr<tinkoff::OrderState>& tinkoffSellOrder
     );
-    double calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity);
-    double calculateAskPrice(
+    Quotation calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity);
+    Quotation calculateSellPrice(
         const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
         BiDirMode                            mode,
         double                               totalCost,
@@ -99,8 +99,8 @@ private:
         Quotation&                           buyPrice,
         Quotation&                           sellPrice
     );
-    double calculateBidPriceInternal(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread, qint64 minQuantity);
-    qint64 calculateLotsToKeep(BiDirMode mode, double totalCost, double bidPrice);
+    Quotation calculateBuyPriceInternal(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread, qint64 minQuantity);
+    qint64    calculateLotsToKeep(BiDirMode mode, double totalCost, double buyPrice);
     IDecisionMakerConfig* chooseDecisionConfig();
 
     void cancelBuyOrder();

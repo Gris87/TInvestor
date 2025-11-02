@@ -26,10 +26,8 @@ TEST_F(Test_QuantityAndCost, Test_constructor_and_destructor)
     // clang-format off
     ASSERT_EQ(quantityAndCost1.quantity,         0);
     ASSERT_EQ(quantityAndCost1.fifoItems.size(), 0);
-    ASSERT_EQ(quantityAndCost1.costFifo.units,   0);
-    ASSERT_EQ(quantityAndCost1.costFifo.nano,    0);
-    ASSERT_EQ(quantityAndCost1.costWavg.units,   0);
-    ASSERT_EQ(quantityAndCost1.costWavg.nano,    0);
+    ASSERT_EQ(quantityAndCost1.costFifo,         Quotation(0, 0));
+    ASSERT_EQ(quantityAndCost1.costWavg,         Quotation(0, 0));
     // clang-format on
 
     // clang-format off

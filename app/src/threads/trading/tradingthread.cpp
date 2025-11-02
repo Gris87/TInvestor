@@ -157,18 +157,8 @@ bool TradingThread::trade()
         const double cost     = handlePortfolioResponse(*tinkoffPortfolio);
         const double expected = expectedCost();
 
-        const double delta = expected - cost;
-
-        bool completed = false;
-
-        if (delta <= 0)
-        {
-            completed = sell(expected, -delta);
-        }
-        else
-        {
-            completed = buy(expected, delta);
-        }
+        const double delta     = expected - cost;
+        const bool   completed = delta > 0 ? buy(expected, delta) : sell(expected, -delta);
 
         if (completed)
         {
@@ -217,6 +207,179 @@ double TradingThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
     return 0;
 }
 
+bool TradingThread::buy(double expected, double delta)
+{
+    const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
+        mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, 1);
+
+    if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrderBook == nullptr)
+    {
+        return false;
+    }
+
+    std::shared_ptr<tinkoff::OrderState> tinkoffOrder;
+
+    if (mOrderId != "")
+    {
+        tinkoffOrder = mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mOrderId);
+    }
+
+    removeOwnOrdersFromOrderBook(*tinkoffOrderBook, tinkoffOrder);
+
+    const Quotation price = calculateBuyPrice(*tinkoffOrderBook, asapMode());
+
+    if (price.units < 0)
+    {
+        return true;
+    }
+
+    if (price.units != 0 || price.nano != 0)
+    {
+        const float marketPrice = tinkoffOrderBook->asks_size() > 0 ? quotationToDouble(tinkoffOrderBook->asks(0).price()) : 0;
+
+        return buyWithPrice(tinkoffOrder, expected, delta, price, marketPrice);
+    }
+
+    return false;
+}
+
+bool TradingThread::buyWithPrice(
+    const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
+    double                                      expected,
+    double                                      delta,
+    const Quotation&                            price,
+    float                                       marketPrice
+)
+{
+    if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
+    {
+        if (mOrderId != "")
+        {
+            cancelOrder(tinkoffOrder);
+
+            if (mTimeUtils->interruptibleSleep(ORDER_CANCEL_DELAY, QThread::currentThread()))
+            {
+                return false;
+            }
+        }
+
+        return buyWithPriceOptimalAmount(expected, delta, price, marketPrice);
+    }
+
+    if (tinkoffOrder != nullptr)
+    {
+        informAboutOrderState(*tinkoffOrder);
+
+        const tinkoff::OrderExecutionReportStatus status = tinkoffOrder->execution_report_status();
+
+        if (status == tinkoff::EXECUTION_REPORT_STATUS_FILL)
+        {
+            return true;
+        }
+
+        if (status == tinkoff::EXECUTION_REPORT_STATUS_REJECTED || status == tinkoff::EXECUTION_REPORT_STATUS_CANCELLED)
+        {
+            mOrderId = "";
+        }
+    }
+    else
+    {
+        mOrderId = "";
+    }
+
+    return false;
+}
+
+bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice)
+{
+    while (true)
+    {
+        const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
+            mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
+
+        if (QThread::currentThread()->isInterruptionRequested() || tinkoffMaxLots == nullptr)
+        {
+            return false;
+        }
+
+        const double lotPrice      = mInstrumentLot * quotationToDouble(price);
+        const qint64 deltaQuantity = qRound64(delta / lotPrice);
+
+        const qint64 amountToBuy = qMin(deltaQuantity, tinkoffMaxLots->buy_limits().buy_max_lots());
+
+        if (amountToBuy > 0)
+        {
+            const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
+                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price
+            );
+
+            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
+            {
+                mLogsThread->addLog(
+                    LOG_LEVEL_WARNING,
+                    mInstrumentId,
+                    tr("Failed to create order to buy %1 with a price %2")
+                        .arg(
+                            QString::number(amountToBuy * mInstrumentLot),
+                            QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
+                        )
+                );
+
+                if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
+                {
+                    return false;
+                }
+
+                continue;
+            }
+
+            if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
+            {
+                mLogsThread->addLog(
+                    LOG_LEVEL_VERBOSE,
+                    mInstrumentId,
+                    tr("Order to buy %1 created with a price %2")
+                            .arg(
+                                QString::number(amountToBuy * mInstrumentLot),
+                                QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
+                            ) +
+                        (marketPrice > 0
+                             ? " " +
+                                   tr("while market price %1").arg(QString::number(marketPrice, 'f', mPricePrecision) + " \u20BD")
+                             : "")
+                );
+
+                mOrderId          = QString::fromStdString(tinkoffOrder->order_id());
+                mLastOrderPrice   = price;
+                mLastExpectedCost = expected;
+
+                break;
+            }
+
+            mLogsThread->addLog(
+                LOG_LEVEL_DEBUG,
+                mInstrumentId,
+                tr("Order to buy %1 rejected with a price %2. Let's try again")
+                    .arg(
+                        QString::number(amountToBuy * mInstrumentLot),
+                        QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
+                    )
+            );
+
+            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 bool TradingThread::sell(double expected, double delta)
 {
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
@@ -227,60 +390,40 @@ bool TradingThread::sell(double expected, double delta)
         return false;
     }
 
-    const AsapMode mode = asapMode();
-    Quotation      limitPrice;
-    double         price = -1;
+    std::shared_ptr<tinkoff::OrderState> tinkoffOrder;
 
-    if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->bids_size() > 0)
+    if (mOrderId != "")
     {
-        limitPrice = quotationConvert(tinkoffOrderBook->bids(0).price());
-        price      = quotationToDouble(limitPrice);
+        tinkoffOrder = mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mOrderId);
     }
 
-    if (tinkoffOrderBook->asks_size() > 0 && price < 0)
+    removeOwnOrdersFromOrderBook(*tinkoffOrderBook, tinkoffOrder);
+
+    const Quotation price = calculateSellPrice(*tinkoffOrderBook, asapMode());
+
+    if (price.units != 0 || price.nano != 0)
     {
-        limitPrice = quotationConvert(tinkoffOrderBook->asks(0).price());
-        price      = quotationToDouble(limitPrice);
-
-        if (mode == ASAP_MODE_NONE)
-        {
-            mUserStorage->readLock();
-            const float commission = mUserStorage->getCommission();
-            mUserStorage->readUnlock();
-
-            price = qMax(price, avgPrice() * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
-        }
-    }
-
-    if (price > 0)
-    {
-        const qint64 coef           = static_cast<qint64>(std::ceil(price / quotationToDouble(mMinPriceIncrement)));
-        Quotation    priceQuotation = quotationMultiply(mMinPriceIncrement, coef);
-
-        if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->bids_size() > 0)
-        {
-            priceQuotation = qMin(priceQuotation, limitPrice);
-        }
-        else
-        {
-            priceQuotation = qMax(priceQuotation, limitPrice);
-        }
-
         const float marketPrice = tinkoffOrderBook->bids_size() > 0 ? quotationToDouble(tinkoffOrderBook->bids(0).price()) : 0;
 
-        return sellWithPrice(expected, delta, priceQuotation, marketPrice);
+        return sellWithPrice(tinkoffOrder, expected, delta, price, marketPrice);
     }
 
     return false;
 }
 
-bool TradingThread::sellWithPrice(double expected, double delta, const Quotation& price, float marketPrice)
+bool TradingThread::sellWithPrice(
+    const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
+    double                                      expected,
+    double                                      delta,
+    const Quotation&                            price,
+    float                                       marketPrice
+)
 {
     if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
         if (mOrderId != "")
         {
-            cancelOrder();
+            cancelOrder(tinkoffOrder);
 
             if (mTimeUtils->interruptibleSleep(ORDER_CANCEL_DELAY, QThread::currentThread()))
             {
@@ -291,10 +434,7 @@ bool TradingThread::sellWithPrice(double expected, double delta, const Quotation
         return sellWithPriceOptimalAmount(expected, delta, price, marketPrice);
     }
 
-    const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
-        mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mOrderId);
-
-    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
+    if (tinkoffOrder != nullptr)
     {
         informAboutOrderState(*tinkoffOrder);
 
@@ -415,29 +555,59 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
-bool TradingThread::buy(double expected, double delta)
+void TradingThread::removeOwnOrdersFromOrderBook(
+    tinkoff::GetOrderBookResponse& tinkoffOrderBook, const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder
+)
 {
-    const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-        mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, 1);
-
-    if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrderBook == nullptr)
+    if (tinkoffOrder != nullptr)
     {
-        return false;
+        const Quotation orderPrice    = quotationConvert(tinkoffOrder->initial_security_price());
+        const qint64    lotsRemaining = tinkoffOrder->lots_requested() - tinkoffOrder->lots_executed();
+
+        for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
+        {
+            const tinkoff::Order& order = tinkoffOrderBook.bids(i);
+
+            if (quotationConvert(order.price()) == orderPrice)
+            {
+                // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
+                const_cast<tinkoff::Order&>(order).set_quantity(order.quantity() - lotsRemaining);
+
+                return;
+            }
+        }
+
+        for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)
+        {
+            const tinkoff::Order& order = tinkoffOrderBook.asks(i);
+
+            if (quotationConvert(order.price()) == orderPrice)
+            {
+                // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
+                const_cast<tinkoff::Order&>(order).set_quantity(order.quantity() - lotsRemaining);
+
+                return;
+            }
+        }
     }
+}
 
-    const AsapMode mode = asapMode();
-    Quotation      limitPrice;
-    double         price = -1;
+Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode)
+{
+    Quotation res;
 
-    if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->asks_size() > 0)
+    Quotation limitPrice;
+    double    price = -1;
+
+    if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook.asks_size() > 0)
     {
-        limitPrice = quotationConvert(tinkoffOrderBook->asks(0).price());
+        limitPrice = quotationConvert(tinkoffOrderBook.asks(0).price());
         price      = quotationToDouble(limitPrice);
     }
 
-    if (tinkoffOrderBook->bids_size() > 0 && price < 0)
+    if (tinkoffOrderBook.bids_size() > 0 && price < 0)
     {
-        limitPrice = quotationConvert(tinkoffOrderBook->bids(0).price());
+        limitPrice = quotationConvert(tinkoffOrderBook.bids(0).price());
         price      = quotationToDouble(limitPrice);
 
         if (mode == ASAP_MODE_NONE)
@@ -458,183 +628,75 @@ bool TradingThread::buy(double expected, double delta)
                 );
 
                 cancelOrder();
+                res.units = -1;
 
-                return true;
+                return res;
             }
         }
     }
 
     if (price > 0)
     {
-        const qint64 coef           = static_cast<qint64>(std::floor(price / quotationToDouble(mMinPriceIncrement)));
-        Quotation    priceQuotation = quotationMultiply(mMinPriceIncrement, coef);
+        const qint64 coef = static_cast<qint64>(std::floor(price / quotationToDouble(mMinPriceIncrement)));
+        res               = quotationMultiply(mMinPriceIncrement, coef);
 
-        if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook->asks_size() > 0)
+        if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook.asks_size() > 0)
         {
-            priceQuotation = qMax(priceQuotation, limitPrice);
+            res = qMax(res, limitPrice);
         }
         else
         {
-            priceQuotation = qMin(priceQuotation, limitPrice);
+            res = qMin(res, limitPrice);
         }
-
-        const float marketPrice = tinkoffOrderBook->asks_size() > 0 ? quotationToDouble(tinkoffOrderBook->asks(0).price()) : 0;
-
-        return buyWithPrice(expected, delta, priceQuotation, marketPrice);
     }
 
-    return false;
+    return res;
 }
 
-bool TradingThread::buyWithPrice(double expected, double delta, const Quotation& price, float marketPrice)
+Quotation TradingThread::calculateSellPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode)
 {
-    if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
+    Quotation res;
+
+    Quotation limitPrice;
+    double    price = -1;
+
+    if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook.bids_size() > 0)
     {
-        if (mOrderId != "")
-        {
-            cancelOrder();
-
-            if (mTimeUtils->interruptibleSleep(ORDER_CANCEL_DELAY, QThread::currentThread()))
-            {
-                return false;
-            }
-        }
-
-        return buyWithPriceOptimalAmount(expected, delta, price, marketPrice);
+        limitPrice = quotationConvert(tinkoffOrderBook.bids(0).price());
+        price      = quotationToDouble(limitPrice);
     }
 
-    const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
-        mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mOrderId);
-
-    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
+    if (tinkoffOrderBook.asks_size() > 0 && price < 0)
     {
-        informAboutOrderState(*tinkoffOrder);
+        limitPrice = quotationConvert(tinkoffOrderBook.asks(0).price());
+        price      = quotationToDouble(limitPrice);
 
-        const tinkoff::OrderExecutionReportStatus status = tinkoffOrder->execution_report_status();
-
-        if (status == tinkoff::EXECUTION_REPORT_STATUS_FILL)
+        if (mode == ASAP_MODE_NONE)
         {
-            return true;
-        }
+            mUserStorage->readLock();
+            const float commission = mUserStorage->getCommission();
+            mUserStorage->readUnlock();
 
-        if (status == tinkoff::EXECUTION_REPORT_STATUS_REJECTED || status == tinkoff::EXECUTION_REPORT_STATUS_CANCELLED)
-        {
-            mOrderId = "";
+            price = qMax(price, avgPrice() * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
         }
     }
-    else
+
+    if (price > 0)
     {
-        mOrderId = "";
-    }
+        const qint64 coef = static_cast<qint64>(std::ceil(price / quotationToDouble(mMinPriceIncrement)));
+        res               = quotationMultiply(mMinPriceIncrement, coef);
 
-    return false;
-}
-
-bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice)
-{
-    while (true)
-    {
-        const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
-            mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
-
-        if (QThread::currentThread()->isInterruptionRequested() || tinkoffMaxLots == nullptr)
+        if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook.bids_size() > 0)
         {
-            return false;
-        }
-
-        const double lotPrice      = mInstrumentLot * quotationToDouble(price);
-        const qint64 deltaQuantity = qRound64(delta / lotPrice);
-
-        const qint64 amountToBuy = qMin(deltaQuantity, tinkoffMaxLots->buy_limits().buy_max_lots());
-
-        if (amountToBuy > 0)
-        {
-            const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
-                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price
-            );
-
-            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
-            {
-                mLogsThread->addLog(
-                    LOG_LEVEL_WARNING,
-                    mInstrumentId,
-                    tr("Failed to create order to buy %1 with a price %2")
-                        .arg(
-                            QString::number(amountToBuy * mInstrumentLot),
-                            QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
-                        )
-                );
-
-                if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
-                {
-                    return false;
-                }
-
-                continue;
-            }
-
-            if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
-            {
-                mLogsThread->addLog(
-                    LOG_LEVEL_VERBOSE,
-                    mInstrumentId,
-                    tr("Order to buy %1 created with a price %2")
-                            .arg(
-                                QString::number(amountToBuy * mInstrumentLot),
-                                QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
-                            ) +
-                        (marketPrice > 0
-                             ? " " +
-                                   tr("while market price %1").arg(QString::number(marketPrice, 'f', mPricePrecision) + " \u20BD")
-                             : "")
-                );
-
-                mOrderId          = QString::fromStdString(tinkoffOrder->order_id());
-                mLastOrderPrice   = price;
-                mLastExpectedCost = expected;
-
-                break;
-            }
-
-            mLogsThread->addLog(
-                LOG_LEVEL_DEBUG,
-                mInstrumentId,
-                tr("Order to buy %1 rejected with a price %2. Let's try again")
-                    .arg(
-                        QString::number(amountToBuy * mInstrumentLot),
-                        QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
-                    )
-            );
-
-            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
-            {
-                return false;
-            }
+            res = qMin(res, limitPrice);
         }
         else
         {
-            return true;
+            res = qMax(res, limitPrice);
         }
     }
 
-    return false;
-}
-
-void TradingThread::removeOwnOrdersFromOrderBook(
-    tinkoff::GetOrderBookResponse& /*tinkoffOrderBook*/, const std::shared_ptr<tinkoff::OrderState>& /*tinkoffOrder*/
-)
-{
-    // TODO: Implement
-}
-
-double TradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& /*tinkoffOrderBook*/, AsapMode /*mode*/)
-{
-    return 0.0;
-}
-
-double TradingThread::calculateAskPrice(const tinkoff::GetOrderBookResponse& /*tinkoffOrderBook*/, AsapMode /*mode*/)
-{
-    return 0.0;
+    return res;
 }
 
 void TradingThread::cancelOrder()
@@ -643,21 +705,25 @@ void TradingThread::cancelOrder()
     {
         const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
             mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mOrderId);
-
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
-        {
-            informAboutOrderState(*tinkoffOrder);
-
-            if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_FILL)
-            {
-                mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Order cancelled"));
-
-                mGrpcClient->cancelOrder(QThread::currentThread(), mAccountId, mOrderId);
-            }
-        }
-
-        mOrderId = "";
+        cancelOrder(tinkoffOrder);
     }
+}
+
+void TradingThread::cancelOrder(const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder)
+{
+    if (tinkoffOrder != nullptr)
+    {
+        informAboutOrderState(*tinkoffOrder);
+
+        if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_FILL)
+        {
+            mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Order cancelled"));
+
+            mGrpcClient->cancelOrder(QThread::currentThread(), mAccountId, mOrderId);
+        }
+    }
+
+    mOrderId = "";
 }
 
 void TradingThread::informAboutOrderState(const tinkoff::OrderState& tinkoffOrder)

@@ -29,6 +29,11 @@ TEST_F(Test_Quotation, Test_constructor_and_destructor)
 
     ASSERT_EQ(quotation.units, 0);
     ASSERT_EQ(quotation.nano, 0);
+
+    const Quotation quotation2(1, 2);
+
+    ASSERT_EQ(quotation2.units, 1);
+    ASSERT_EQ(quotation2.nano, 2);
 }
 
 TEST_F(Test_Quotation, Test_copy_constructor)

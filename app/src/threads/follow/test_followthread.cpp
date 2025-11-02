@@ -257,19 +257,17 @@ TEST_F(Test_FollowThread, Test_run)
     Instrument  instrument1;
     Instrument  instrument2;
 
-    instrument1.ticker                  = "ABBA";
-    instrument1.name                    = "Abstract Basics";
-    instrument1.lot                     = 10;
-    instrument1.pricePrecision          = 1;
-    instrument1.minPriceIncrement.units = 0;
-    instrument1.minPriceIncrement.nano  = 100000000;
+    instrument1.ticker            = "ABBA";
+    instrument1.name              = "Abstract Basics";
+    instrument1.lot               = 10;
+    instrument1.pricePrecision    = 1;
+    instrument1.minPriceIncrement = Quotation(0, 100000000);
 
-    instrument2.ticker                  = "BASE";
-    instrument2.name                    = "Basketball enhancement";
-    instrument2.lot                     = 5;
-    instrument2.pricePrecision          = 2;
-    instrument2.minPriceIncrement.units = 0;
-    instrument2.minPriceIncrement.nano  = 10000000;
+    instrument2.ticker            = "BASE";
+    instrument2.name              = "Basketball enhancement";
+    instrument2.lot               = 5;
+    instrument2.pricePrecision    = 2;
+    instrument2.minPriceIncrement = Quotation(0, 10000000);
 
     instruments["aaaaa"] = instrument1;
     instruments["bbbbb"] = instrument2;

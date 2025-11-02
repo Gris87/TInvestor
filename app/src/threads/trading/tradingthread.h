@@ -60,22 +60,35 @@ public:
 
     bool trade();
     void getInstrumentData();
-    bool sell(double expected, double delta);
     bool buy(double expected, double delta);
+    bool sell(double expected, double delta);
     void removeOwnOrdersFromOrderBook(
         tinkoff::GetOrderBookResponse& tinkoffOrderBook, const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder
     );
-    double calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode);
-    double calculateAskPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode);
+    Quotation calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode);
+    Quotation calculateSellPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode);
 
 private:
     double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    bool   sellWithPrice(double expected, double delta, const Quotation& price, float marketPrice);
-    bool   sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
-    bool   buyWithPrice(double expected, double delta, const Quotation& price, float marketPrice);
-    bool   buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
+    bool   buyWithPrice(
+          const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
+          double                                      expected,
+          double                                      delta,
+          const Quotation&                            price,
+          float                                       marketPrice
+      );
+    bool buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
+    bool sellWithPrice(
+        const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
+        double                                      expected,
+        double                                      delta,
+        const Quotation&                            price,
+        float                                       marketPrice
+    );
+    bool sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
 
     void cancelOrder();
+    void cancelOrder(const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder);
     void informAboutOrderState(const tinkoff::OrderState& tinkoffOrder);
 
     QReadWriteLock*      mRwMutex;

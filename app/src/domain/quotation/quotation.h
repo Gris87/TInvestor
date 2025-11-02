@@ -11,6 +11,7 @@
 struct Quotation
 {
     explicit Quotation();
+    explicit Quotation(qint64 _units, qint32 _nano);
     Quotation(const Quotation& another) = default;
     ~Quotation()                        = default;
 

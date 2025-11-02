@@ -168,14 +168,6 @@ bool BiDirTradingThread::trade()
             break;
         }
 
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);
-
-        if (QThread::currentThread()->isInterruptionRequested() || tinkoffPortfolio == nullptr)
-        {
-            return false;
-        }
-
         std::shared_ptr<tinkoff::OrderState> tinkoffBuyOrder;
         std::shared_ptr<tinkoff::OrderState> tinkoffSellOrder;
 
@@ -189,9 +181,14 @@ bool BiDirTradingThread::trade()
             tinkoffSellOrder = mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mSellOrderId);
         }
 
-        if (tinkoffBuyOrder != nullptr || tinkoffSellOrder != nullptr)
+        removeOwnOrdersFromOrderBook(*tinkoffOrderBook, tinkoffBuyOrder, tinkoffSellOrder);
+
+        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+            mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);
+
+        if (QThread::currentThread()->isInterruptionRequested() || tinkoffPortfolio == nullptr)
         {
-            removeOwnOrdersFromOrderBook(*tinkoffOrderBook, tinkoffBuyOrder, tinkoffSellOrder);
+            return false;
         }
 
         qint64    lotsToBuy  = -1;
@@ -293,55 +290,6 @@ void BiDirTradingThread::checkIfNeedToCancelAndCreateOrder(
     }
 }
 
-void BiDirTradingThread::sellWithPrice(const Quotation& price)
-{
-    while (true)
-    {
-        const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
-            mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
-
-        if (QThread::currentThread()->isInterruptionRequested() || tinkoffMaxLots == nullptr)
-        {
-            return;
-        }
-
-        const qint64 amountToSell = tinkoffMaxLots->sell_limits().sell_max_lots();
-
-        if (amountToSell > 0)
-        {
-            const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
-                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price
-            );
-
-            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
-            {
-                if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
-                {
-                    return;
-                }
-
-                continue;
-            }
-
-            if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
-            {
-                mSellOrderId = QString::fromStdString(tinkoffOrder->order_id());
-
-                break;
-            }
-
-            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
-            {
-                return;
-            }
-        }
-        else
-        {
-            return;
-        }
-    }
-}
-
 void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& price)
 {
     while (true)
@@ -375,6 +323,55 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
             if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
             {
                 mBuyOrderId = QString::fromStdString(tinkoffOrder->order_id());
+
+                break;
+            }
+
+            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
+            {
+                return;
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+
+void BiDirTradingThread::sellWithPrice(const Quotation& price)
+{
+    while (true)
+    {
+        const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
+            mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
+
+        if (QThread::currentThread()->isInterruptionRequested() || tinkoffMaxLots == nullptr)
+        {
+            return;
+        }
+
+        const qint64 amountToSell = tinkoffMaxLots->sell_limits().sell_max_lots();
+
+        if (amountToSell > 0)
+        {
+            const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
+                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price
+            );
+
+            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
+            {
+                if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
+                {
+                    return;
+                }
+
+                continue;
+            }
+
+            if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
+            {
+                mSellOrderId = QString::fromStdString(tinkoffOrder->order_id());
 
                 break;
             }
@@ -525,41 +522,35 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
         maxQuantity = qMax(maxQuantity, tinkoffOrderBook.bids(i).quantity());
     }
 
-    const double bidPrice = calculateBidPrice(tinkoffOrderBook, mode, maxQuantity);
-    const double askPrice = calculateAskPrice(tinkoffOrderBook, mode, totalCost, instrumentCost, instrumentAvgPrice, commission);
-    const qint64 lotsToKeep = calculateLotsToKeep(mode, totalCost, bidPrice);
-
-    const qint64 coefBuy  = qRound64(bidPrice / quotationToDouble(mMinPriceIncrement));
-    const qint64 coefSell = static_cast<qint64>(std::ceil(askPrice / quotationToDouble(mMinPriceIncrement)));
+    buyPrice  = calculateBuyPrice(tinkoffOrderBook, mode, maxQuantity);
+    sellPrice = calculateSellPrice(tinkoffOrderBook, mode, totalCost, instrumentCost, instrumentAvgPrice, commission);
+    const qint64 lotsToKeep = calculateLotsToKeep(mode, totalCost, quotationToDouble(buyPrice));
 
     lotsToBuy  = qMax(qMin(lotsToKeep - instrumentLots, maxQuantity), 0);
     lotsToSell = instrumentLots;
-
-    buyPrice  = quotationMultiply(mMinPriceIncrement, coefBuy);
-    sellPrice = quotationMultiply(mMinPriceIncrement, coefSell);
 }
 
-double
-BiDirTradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity)
+Quotation
+BiDirTradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity)
 {
     if (mBadSpread > 0.0f)
     {
-        return calculateBidPriceInternal(
+        return calculateBuyPriceInternal(
             tinkoffOrderBook, mBadSpread, (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD) / HUNDRED_PERCENT
         );
     }
 
-    double res = 0.0;
+    Quotation res;
 
     if (mode == BIDIR_MODE_HUGE_BID)
     {
-        res = calculateBidPriceInternal(
+        res = calculateBuyPriceInternal(
             tinkoffOrderBook, SPREAD_FOR_HUGE_BID, (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_BID) / HUNDRED_PERCENT
         );
     }
     else
     {
-        res = calculateBidPriceInternal(
+        res = calculateBuyPriceInternal(
             tinkoffOrderBook, mConfig->getHugeSpread(), (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD) / HUNDRED_PERCENT
         );
     }
@@ -567,7 +558,7 @@ BiDirTradingThread::calculateBidPrice(const tinkoff::GetOrderBookResponse& tinko
     return res;
 }
 
-double BiDirTradingThread::calculateBidPriceInternal(
+Quotation BiDirTradingThread::calculateBuyPriceInternal(
     const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread, qint64 minQuantity
 )
 {
@@ -591,10 +582,12 @@ double BiDirTradingThread::calculateBidPriceInternal(
         }
     }
 
-    return res;
+    const qint64 coef = qRound64(res / quotationToDouble(mMinPriceIncrement));
+
+    return quotationMultiply(mMinPriceIncrement, coef);
 }
 
-double BiDirTradingThread::calculateAskPrice(
+Quotation BiDirTradingThread::calculateSellPrice(
     const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
     BiDirMode                            mode,
     double                               totalCost,
@@ -636,12 +629,14 @@ double BiDirTradingThread::calculateAskPrice(
         }
     }
 
-    return res;
+    const qint64 coef = static_cast<qint64>(std::ceil(res / quotationToDouble(mMinPriceIncrement)));
+
+    return quotationMultiply(mMinPriceIncrement, coef);
 }
 
-qint64 BiDirTradingThread::calculateLotsToKeep(BiDirMode mode, double totalCost, double bidPrice)
+qint64 BiDirTradingThread::calculateLotsToKeep(BiDirMode mode, double totalCost, double buyPrice)
 {
-    const double lotPrice = mInstrumentLot * bidPrice;
+    const double lotPrice = mInstrumentLot * buyPrice;
 
     const bool limitStockPurchase =
         mode == BIDIR_MODE_HUGE_BID ? mConfig->isHugeBidLimitStockPurchase() : mConfig->isHugeSpreadLimitStockPurchase();

@@ -84,12 +84,11 @@ TEST_F(Test_TradingThread, Test_run)
     Instruments instruments;
     Instrument  instrument;
 
-    instrument.ticker                  = "ABBA";
-    instrument.name                    = "Abstract Basics";
-    instrument.lot                     = 10;
-    instrument.pricePrecision          = 3;
-    instrument.minPriceIncrement.units = 0;
-    instrument.minPriceIncrement.nano  = 1000000;
+    instrument.ticker            = "ABBA";
+    instrument.name              = "Abstract Basics";
+    instrument.lot               = 10;
+    instrument.pricePrecision    = 3;
+    instrument.minPriceIncrement = Quotation(0, 1000000);
 
     instruments["aaaaa"] = instrument;
 
@@ -169,9 +168,7 @@ TEST_F(Test_TradingThread, Test_run)
 
     getMaxLotsResponse->set_allocated_buy_limits(buyLimits);
 
-    Quotation price;
-    price.units = 10;
-    price.nano  = 500000000;
+    Quotation price(10, 500000000);
 
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
@@ -226,6 +223,7 @@ TEST_F(Test_TradingThread, Test_setExpectedCost_and_expectedCost)
     ASSERT_NEAR(thread->expectedCost(), 15000.0, 0.0001);
 }
 
+// TODO: try to simplify
 TEST_F(Test_TradingThread, Test_sell)
 {
     const InSequence seq;
@@ -233,12 +231,11 @@ TEST_F(Test_TradingThread, Test_sell)
     Instruments instruments;
     Instrument  instrument;
 
-    instrument.ticker                  = "ABBA";
-    instrument.name                    = "Abstract Basics";
-    instrument.lot                     = 10;
-    instrument.pricePrecision          = 3;
-    instrument.minPriceIncrement.units = 0;
-    instrument.minPriceIncrement.nano  = 1000000;
+    instrument.ticker            = "ABBA";
+    instrument.name              = "Abstract Basics";
+    instrument.lot               = 10;
+    instrument.pricePrecision    = 3;
+    instrument.minPriceIncrement = Quotation(0, 1000000);
 
     instruments["aaaaa"] = instrument;
 
@@ -275,13 +272,8 @@ TEST_F(Test_TradingThread, Test_sell)
     ask->set_quantity(10);
     ask->set_allocated_price(askPrice);
 
-    Quotation priceForBid;
-    priceForBid.units = 10;
-    priceForBid.nano  = 400000000;
-
-    Quotation priceForAsk;
-    priceForAsk.units = 10;
-    priceForAsk.nano  = 500000000;
+    Quotation priceForBid(10, 400000000);
+    Quotation priceForAsk(10, 500000000);
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
         .WillOnce(Return(getOrderBookResponse));
@@ -440,11 +432,11 @@ TEST_F(Test_TradingThread, Test_sell)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(orderState));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
-        .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
         addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 sold with a price 10.500 \u20BD"))
@@ -476,11 +468,11 @@ TEST_F(Test_TradingThread, Test_sell)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(orderState));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
-        .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
         addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order partially completed. 50/50 sold with a price 10.500 \u20BD"))
@@ -521,11 +513,11 @@ TEST_F(Test_TradingThread, Test_sell)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(orderState));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
-        .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
         addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 sold with a price 10.500 \u20BD"))
@@ -537,11 +529,11 @@ TEST_F(Test_TradingThread, Test_sell)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(orderState));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
-        .WillOnce(Return(orderState));
     EXPECT_CALL(
         *logsThreadMock,
         addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order rejected. 50/50 sold with a price 10.500 \u20BD"))
@@ -578,11 +570,11 @@ TEST_F(Test_TradingThread, Test_sell)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(nullptr));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
-        .WillOnce(Return(nullptr));
 
     ASSERT_EQ(thread->sell(10000, 40000), false);
 
@@ -596,6 +588,7 @@ TEST_F(Test_TradingThread, Test_sell)
     ASSERT_EQ(thread->sell(10000, 40000), false);
 }
 
+// TODO: try to simplify
 TEST_F(Test_TradingThread, Test_buy)
 {
     const InSequence seq;
@@ -603,12 +596,11 @@ TEST_F(Test_TradingThread, Test_buy)
     Instruments instruments;
     Instrument  instrument;
 
-    instrument.ticker                  = "ABBA";
-    instrument.name                    = "Abstract Basics";
-    instrument.lot                     = 10;
-    instrument.pricePrecision          = 3;
-    instrument.minPriceIncrement.units = 0;
-    instrument.minPriceIncrement.nano  = 1000000;
+    instrument.ticker            = "ABBA";
+    instrument.name              = "Abstract Basics";
+    instrument.lot               = 10;
+    instrument.pricePrecision    = 3;
+    instrument.minPriceIncrement = Quotation(0, 1000000);
 
     instruments["aaaaa"] = instrument;
 
@@ -645,13 +637,8 @@ TEST_F(Test_TradingThread, Test_buy)
     ask->set_quantity(10);
     ask->set_allocated_price(askPrice);
 
-    Quotation priceForBid;
-    priceForBid.units = 10;
-    priceForBid.nano  = 500000000;
-
-    Quotation priceForAsk;
-    priceForAsk.units = 10;
-    priceForAsk.nano  = 600000000;
+    Quotation priceForBid(10, 500000000);
+    Quotation priceForAsk(10, 600000000);
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
         .WillOnce(Return(getOrderBookResponse));
