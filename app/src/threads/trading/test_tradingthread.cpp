@@ -130,11 +130,11 @@ TEST_F(Test_TradingThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20)).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(30000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse2));
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20)).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(30000, QThread::currentThread())).WillOnce(Return(true));
 
     thread->run();
@@ -175,7 +175,7 @@ TEST_F(Test_TradingThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse2));
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), price))
         .WillOnce(Return(getMaxLotsResponse));
@@ -245,13 +245,13 @@ TEST_F(Test_TradingThread, Test_sell)
 
     thread->getInstrumentData();
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20)).WillOnce(Return(nullptr));
 
     ASSERT_EQ(thread->sell(10000, 40000), false);
 
     const std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBookResponse(new tinkoff::GetOrderBookResponse());
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
 
     ASSERT_EQ(thread->sell(10000, 40000), false);
@@ -275,7 +275,7 @@ TEST_F(Test_TradingThread, Test_sell)
     Quotation priceForBid(10, 400000000);
     Quotation priceForAsk(10, 500000000);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -294,7 +294,7 @@ TEST_F(Test_TradingThread, Test_sell)
 
     getMaxLotsResponse->set_allocated_sell_limits(sellLimits);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -306,7 +306,7 @@ TEST_F(Test_TradingThread, Test_sell)
 
     sellLimits->set_sell_max_lots(5);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -347,7 +347,7 @@ TEST_F(Test_TradingThread, Test_sell)
     postOrderResponse->set_order_id("order-id");
     postOrderResponse->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_REJECTED);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -376,7 +376,7 @@ TEST_F(Test_TradingThread, Test_sell)
     postOrderResponse2->set_order_id("order-id");
     postOrderResponse2->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_NEW);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -430,7 +430,7 @@ TEST_F(Test_TradingThread, Test_sell)
     orderState->set_allocated_initial_security_price(orderPrice);
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_FILL);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
@@ -466,7 +466,7 @@ TEST_F(Test_TradingThread, Test_sell)
 
     const std::shared_ptr<tinkoff::CancelOrderResponse> cancelOrderResponse(new tinkoff::CancelOrderResponse());
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
@@ -484,7 +484,7 @@ TEST_F(Test_TradingThread, Test_sell)
 
     ASSERT_EQ(thread->sell(10000, 40000), false);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -511,7 +511,7 @@ TEST_F(Test_TradingThread, Test_sell)
 
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_FILL);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
@@ -527,7 +527,7 @@ TEST_F(Test_TradingThread, Test_sell)
 
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_REJECTED);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
@@ -541,7 +541,7 @@ TEST_F(Test_TradingThread, Test_sell)
 
     ASSERT_EQ(thread->sell(10000, 40000), false);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -568,7 +568,7 @@ TEST_F(Test_TradingThread, Test_sell)
 
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_REJECTED);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(nullptr));
@@ -580,7 +580,7 @@ TEST_F(Test_TradingThread, Test_sell)
 
     thread->setAsapMode(ASAP_MODE_IMMEDIATELY_TRADE);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(nullptr));
@@ -610,13 +610,13 @@ TEST_F(Test_TradingThread, Test_buy)
 
     thread->getInstrumentData();
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20)).WillOnce(Return(nullptr));
 
     ASSERT_EQ(thread->buy(10000, 40000), false);
 
     const std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBookResponse(new tinkoff::GetOrderBookResponse());
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
 
     ASSERT_EQ(thread->buy(10000, 40000), false);
@@ -640,7 +640,7 @@ TEST_F(Test_TradingThread, Test_buy)
     Quotation priceForBid(10, 500000000);
     Quotation priceForAsk(10, 600000000);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(nullptr));
@@ -656,7 +656,7 @@ TEST_F(Test_TradingThread, Test_buy)
 
     getMaxLotsResponse->set_allocated_buy_limits(buyLimits);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
@@ -665,7 +665,7 @@ TEST_F(Test_TradingThread, Test_buy)
 
     buyLimits->set_buy_max_lots(5);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
@@ -699,7 +699,7 @@ TEST_F(Test_TradingThread, Test_buy)
     postOrderResponse->set_order_id("order-id");
     postOrderResponse->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_REJECTED);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
@@ -721,7 +721,7 @@ TEST_F(Test_TradingThread, Test_buy)
     postOrderResponse2->set_order_id("order-id");
     postOrderResponse2->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_NEW);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
@@ -766,7 +766,7 @@ TEST_F(Test_TradingThread, Test_buy)
     orderState->set_allocated_initial_security_price(orderPrice);
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_FILL);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
@@ -797,7 +797,7 @@ TEST_F(Test_TradingThread, Test_buy)
 
     const std::shared_ptr<tinkoff::CancelOrderResponse> cancelOrderResponse(new tinkoff::CancelOrderResponse());
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
@@ -812,7 +812,7 @@ TEST_F(Test_TradingThread, Test_buy)
 
     ASSERT_EQ(thread->buy(10000, 40000), false);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
@@ -834,7 +834,7 @@ TEST_F(Test_TradingThread, Test_buy)
 
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_FILL);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
@@ -847,7 +847,7 @@ TEST_F(Test_TradingThread, Test_buy)
 
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_CANCELLED);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
@@ -858,7 +858,7 @@ TEST_F(Test_TradingThread, Test_buy)
 
     ASSERT_EQ(thread->buy(10000, 40000), false);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
@@ -880,7 +880,7 @@ TEST_F(Test_TradingThread, Test_buy)
 
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_REJECTED);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(nullptr));
@@ -890,7 +890,7 @@ TEST_F(Test_TradingThread, Test_buy)
     bidPrice->set_units(20);
     bidPrice->set_nano(500000000);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(
         *logsThreadMock,
@@ -905,7 +905,7 @@ TEST_F(Test_TradingThread, Test_buy)
 
     thread->setAsapMode(ASAP_MODE_IMMEDIATELY_TRADE);
 
-    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 1))
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForAsk))
         .WillOnce(Return(nullptr));

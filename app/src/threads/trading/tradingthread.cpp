@@ -9,6 +9,7 @@
 constexpr float  HUNDRED_PERCENT             = 100.0f;
 constexpr float  MAXIMUM_PRICE_RAISE_PERCENT = 0.50f;
 constexpr float  MINIMUM_YIELD_PERCENT       = 0.30f;
+constexpr int    ORDER_BOOK_DEPTH            = 20;
 constexpr qint64 MS_IN_SECOND                = 1000LL;
 constexpr qint64 SLEEP_DELAY                 = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY          = 3LL * MS_IN_SECOND;  // 3 seconds
@@ -210,7 +211,7 @@ double TradingThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
 bool TradingThread::buy(double expected, double delta)
 {
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-        mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, 1);
+        mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, ORDER_BOOK_DEPTH);
 
     if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrderBook == nullptr)
     {
@@ -383,7 +384,7 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
 bool TradingThread::sell(double expected, double delta)
 {
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-        mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, 1);
+        mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, ORDER_BOOK_DEPTH);
 
     if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrderBook == nullptr)
     {
@@ -607,8 +608,11 @@ Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& 
 
     if (tinkoffOrderBook.bids_size() > 0 && price < 0)
     {
-        limitPrice = quotationConvert(tinkoffOrderBook.bids(0).price());
-        price      = quotationToDouble(limitPrice);
+        limitPrice = quotationConvert(
+            tinkoffOrderBook.bids_size() == 1 || tinkoffOrderBook.bids(0).quantity() > 0 ? tinkoffOrderBook.bids(0).price()
+                                                                                         : tinkoffOrderBook.bids(1).price()
+        );
+        price = quotationToDouble(limitPrice);
 
         if (mode == ASAP_MODE_NONE)
         {
@@ -668,8 +672,11 @@ Quotation TradingThread::calculateSellPrice(const tinkoff::GetOrderBookResponse&
 
     if (tinkoffOrderBook.asks_size() > 0 && price < 0)
     {
-        limitPrice = quotationConvert(tinkoffOrderBook.asks(0).price());
-        price      = quotationToDouble(limitPrice);
+        limitPrice = quotationConvert(
+            tinkoffOrderBook.asks_size() == 1 || tinkoffOrderBook.asks(0).quantity() > 0 ? tinkoffOrderBook.asks(0).price()
+                                                                                         : tinkoffOrderBook.asks(1).price()
+        );
+        price = quotationToDouble(limitPrice);
 
         if (mode == ASAP_MODE_NONE)
         {
@@ -677,7 +684,23 @@ Quotation TradingThread::calculateSellPrice(const tinkoff::GetOrderBookResponse&
             const float commission = mUserStorage->getCommission();
             mUserStorage->readUnlock();
 
-            price = qMax(price, avgPrice() * (HUNDRED_PERCENT + MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
+            const double minimumSellPrice = avgPrice() * (1 + (MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
+            price                         = minimumSellPrice;
+
+            for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)
+            {
+                if (tinkoffOrderBook.asks(i).quantity() > 0)
+                {
+                    const double curPrice = quotationToDouble(tinkoffOrderBook.asks(i).price());
+
+                    if (curPrice >= minimumSellPrice)
+                    {
+                        price = curPrice;
+
+                        break;
+                    }
+                }
+            }
         }
     }
 

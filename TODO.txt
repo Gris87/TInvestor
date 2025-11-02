@@ -1,5 +1,3 @@
-Good yield for single trading thread should stay together with someone else
-Do not count own order in single trading thread
 Do not count small sell operations in auto-pilot decision maker < 5%
 Operations clean refresh removes all
 `2025-11-01 14:03:06.009 WARNING  0x74C033FFF6C0 src/db/operations/operationsdatabase.cpp:174 void readOperationsForParallel(QThread*, int, Operation*, int, int, int, void*): Failed to parse operation`
