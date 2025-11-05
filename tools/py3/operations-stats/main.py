@@ -28,7 +28,7 @@ def operations_stats(args):
     operations = _read_operations(args)
     logs = _read_logs(args)
 
-    stats = _collect_statistics(operations, logs)
+    stats = _collect_statistics(args, operations, logs)
     _generate_excel(args, stats)
 
     return True
@@ -50,8 +50,10 @@ def _read_logs(args):
     return logs
 
 
-def _collect_statistics(operations, logs):
+def _collect_statistics(args, operations, logs):
     entries = []
+
+    from_date = datetime.strptime(args.from_date, "%Y-%m-%d").timestamp() * 1000
 
     for operation in operations:
         operation_description = operation["description"]
@@ -59,12 +61,13 @@ def _collect_statistics(operations, logs):
         if operation_description.startswith(text_sale):
             operation_timestamp = operation["timestamp"]
             operation_instrumentId = operation["instrumentId"]
+            operation_instrumentTicker = operation["instrumentTicker"]
 
-            # if operation_timestamp < datetime(2025, 9, 25, 0, 0, 0).timestamp() * 1000:
-            #     continue
+            if operation_timestamp < from_date:
+                continue
 
-            # if operation["instrumentTicker"] != "AAAA":
-            #     continue
+            if args.filter_instrument != "" and args.filter_instrument != operation_instrumentTicker:
+                continue
 
             last_log_message = None
 
@@ -84,7 +87,7 @@ def _collect_statistics(operations, logs):
             entry = {
                 "timestamp": operation_timestamp,
                 "instrumentId": operation_instrumentId,
-                "instrumentTicker": operation["instrumentTicker"],
+                "instrumentTicker": operation_instrumentTicker,
                 "instrumentName": operation["instrumentName"],
                 "description": operation_description,
                 "decision": _get_buy_decision_from_log_message(last_log_message),
@@ -914,6 +917,20 @@ def main():
         type=str,
         default="build/Desktop-Debug/app/build/data/autopilot/4fa4713d40ede79c630b609d3a95c5ed/logs.json",
         help="Path to logs.json file"
+    )
+    parser.add_argument(
+        "--from-date",
+        dest="from_date",
+        type=str,
+        default="2000-01-01",
+        help="Filter operations by date"
+    )
+    parser.add_argument(
+        "--filter-instrument",
+        dest="filter_instrument",
+        type=str,
+        default="",
+        help="Filter by instrument ticker"
     )
     parser.add_argument(
         "--output",

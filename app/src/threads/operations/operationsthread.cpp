@@ -264,7 +264,7 @@ bool OperationsThread::requestOperations()
     const qint64 endTimestamp   = timestamp + ONE_DAY;
     QString      cursor;
 
-    QSet<QString>                                                  operationsLastDay;
+    QSet<QString>                                                  operationsLastDays;
     QList<std::shared_ptr<tinkoff::GetOperationsByCursorResponse>> allTinkoffOperations;
     int                                                            totalOperations = 0;
 
@@ -311,7 +311,7 @@ bool OperationsThread::requestOperations()
                         ++totalOperations;
                     }
 
-                    operationsLastDay.insert(operationIdStr);
+                    operationsLastDays.insert(operationIdStr);
                 }
             }
         }
@@ -382,7 +382,7 @@ bool OperationsThread::requestOperations()
         }
 
         mLastRequestTimestamp = operations.constFirst().timestamp; // Since it reversed
-        mOperationsLastDays   = operationsLastDay;
+        mOperationsLastDays   = operationsLastDays;
 
         mAmountOfEntries += totalOperations;
     }

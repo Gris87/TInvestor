@@ -10,6 +10,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 const char* const LNZL_UID  = "4563f7a1-8245-4caf-aba5-ac49827ba775";
 const char* const LNZLP_UID = "28fdec79-fcf0-40cb-b53c-586179f024e5";
 const char* const CHMK_UID  = "b5e26096-d013-48e4-b2a9-2f38b6090feb";
+const char* const KROT_UID  = "14d147b9-d977-438a-80c0-441e5589da30";
 
 constexpr float  HUNDRED_PERCENT                     = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT               = 0.10f;
@@ -29,7 +30,8 @@ constexpr qint64 ORDER_RETRY_DELAY                   = 1LL * MS_IN_SECOND;  // 1
 static const QMap<QString, float> BAD_INSTRUMENTS_SPREAD{ // clazy:exclude=non-pod-global-static
     {LNZL_UID,  2.50f},
     {LNZLP_UID, 2.00f},
-    {CHMK_UID,  0.80f}
+    {CHMK_UID,  0.80f},
+    {KROT_UID,  0.60f}
 };
 // clang-format on
 

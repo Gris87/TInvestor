@@ -186,7 +186,7 @@ void AccountChartWidget::initYieldChart()
 
     mYieldAxisX.setFormat(DATETIME_FORMAT);
     mYieldAxisX.setTitleText(tr("Time"));
-    mYieldAxisY.setLabelFormat("%g");
+    mYieldAxisY.setLabelFormat("%.2f");
     mYieldAxisY.setTitleText("%");
 
     mYieldChart.addAxis(&mYieldAxisX, Qt::AlignBottom);
@@ -203,7 +203,7 @@ void AccountChartWidget::initMonthlyYieldChart()
     mMonthlyYieldChart.addSeries(&mMonthlyYieldSeries);
 
     mMonthlyYieldAxisX.setTitleText(tr("Time"));
-    mMonthlyYieldAxisY.setLabelFormat("%g");
+    mMonthlyYieldAxisY.setLabelFormat("%.2f");
     mMonthlyYieldAxisY.setTitleText("%");
 
     mMonthlyYieldChart.addAxis(&mMonthlyYieldAxisX, Qt::AlignBottom);
@@ -233,7 +233,8 @@ void AccountChartWidget::initDailyYieldChart()
     mDailyYieldChart.addSeries(&mDailyYieldSeries);
 
     mDailyYieldAxisX.setTitleText(tr("Time"));
-    mDailyYieldAxisY.setLabelFormat("%g");
+    mDailyYieldAxisX.setLabelsAngle(-90); // NOLINT(readability-magic-numbers)
+    mDailyYieldAxisY.setLabelFormat("%.2f");
     mDailyYieldAxisY.setTitleText(tr("Money") + ", \u20BD");
 
     mDailyYieldChart.addAxis(&mDailyYieldAxisX, Qt::AlignBottom);
@@ -264,7 +265,7 @@ void AccountChartWidget::initRemainedMoneyChart()
 
     mRemainedMoneyAxisX.setFormat(DATETIME_FORMAT);
     mRemainedMoneyAxisX.setTitleText(tr("Time"));
-    mRemainedMoneyAxisY.setLabelFormat("%g");
+    mRemainedMoneyAxisY.setLabelFormat("%.2f");
     mRemainedMoneyAxisY.setTitleText(tr("Money") + ", \u20BD");
 
     mRemainedMoneyChart.addAxis(&mRemainedMoneyAxisX, Qt::AlignBottom);
@@ -282,7 +283,7 @@ void AccountChartWidget::initTotalMoneyChart()
 
     mTotalMoneyAxisX.setFormat(DATETIME_FORMAT);
     mTotalMoneyAxisX.setTitleText(tr("Time"));
-    mTotalMoneyAxisY.setLabelFormat("%g");
+    mTotalMoneyAxisY.setLabelFormat("%.2f");
     mTotalMoneyAxisY.setTitleText(tr("Money") + ", \u20BD");
 
     mTotalMoneyChart.addAxis(&mTotalMoneyAxisX, Qt::AlignBottom);
