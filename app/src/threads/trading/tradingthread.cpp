@@ -657,6 +657,7 @@ Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& 
     return res;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 Quotation TradingThread::calculateSellPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode)
 {
     Quotation res;
@@ -721,6 +722,7 @@ Quotation TradingThread::calculateSellPrice(const tinkoff::GetOrderBookResponse&
 
     return res;
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void TradingThread::cancelOrder()
 {

@@ -136,7 +136,7 @@ static Quotation unitsAndNanoSum(qint64 units, qint64 nano, qint64 units2, qint6
 {
     const qint64 nano64 = nano + nano2;
 
-    return Quotation(units + units2 + nano64 / NANOS_INT, nano64 % NANOS_INT);
+    return Quotation(units + units2 + (nano64 / NANOS_INT), nano64 % NANOS_INT);
 }
 
 Quotation quotationSum(const Quotation& quotation1, const tinkoff::MoneyValue& money)
@@ -168,7 +168,7 @@ static Quotation unitsAndNanoDiff(qint64 units, qint64 nano, qint64 units2, qint
 {
     const qint64 nano64 = nano - nano2;
 
-    return Quotation(units - units2 + nano64 / NANOS_INT, nano64 % NANOS_INT);
+    return Quotation(units - units2 + (nano64 / NANOS_INT), nano64 % NANOS_INT);
 }
 
 Quotation quotationDiff(const Quotation& quotation1, const tinkoff::MoneyValue& money)
@@ -200,7 +200,7 @@ static Quotation unitsAndNanoMultiply(qint64 units, qint64 nano, qint64 coef)
 {
     const qint64 nano64 = nano * coef;
 
-    return Quotation(units * coef + nano64 / NANOS_INT, nano64 % NANOS_INT);
+    return Quotation((units * coef) + (nano64 / NANOS_INT), nano64 % NANOS_INT);
 }
 
 Quotation quotationMultiply(const tinkoff::MoneyValue& money, qint64 coef)
@@ -220,7 +220,7 @@ Quotation quotationMultiply(const Quotation& quotation, qint64 coef)
 
 static Quotation unitsAndNanoDivide(qint64 units, qint32 nano, qint64 coef)
 {
-    return Quotation(units / coef, static_cast<qint32>(static_cast<double>(units % coef) / coef * NANOS_INT) + nano / coef);
+    return Quotation(units / coef, static_cast<qint32>(static_cast<double>(units % coef) / coef * NANOS_INT) + (nano / coef));
 }
 
 Quotation quotationDivide(const tinkoff::MoneyValue& money, qint64 coef)
