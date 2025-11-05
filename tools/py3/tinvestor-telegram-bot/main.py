@@ -103,7 +103,7 @@ def _check_huge_sell(args):
 
         #         break
 
-        if _is_huge_sell_found(data, len(data) - 1):
+        if len(data) > 0 and _is_huge_sell_found(data, len(data) - 1):
             _send_message(args, msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
 
 
