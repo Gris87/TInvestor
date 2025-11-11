@@ -4951,6 +4951,8 @@ class PostOrderResponse final : public ::google::protobuf::Message
     kFigiFieldNumber = 11,
     kMessageFieldNumber = 15,
     kInstrumentUidFieldNumber = 17,
+    kTickerFieldNumber = 18,
+    kClassCodeFieldNumber = 19,
     kOrderRequestIdFieldNumber = 20,
     kInitialOrderPriceFieldNumber = 5,
     kExecutedOrderPriceFieldNumber = 6,
@@ -5029,6 +5031,38 @@ class PostOrderResponse final : public ::google::protobuf::Message
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_instrument_uid(
       const std::string& value);
   std::string* _internal_mutable_instrument_uid();
+
+  public:
+  // string ticker = 18;
+  void clear_ticker() ;
+  const std::string& ticker() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_ticker(Arg_&& arg, Args_... args);
+  std::string* mutable_ticker();
+  PROTOBUF_NODISCARD std::string* release_ticker();
+  void set_allocated_ticker(std::string* value);
+
+  private:
+  const std::string& _internal_ticker() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ticker(
+      const std::string& value);
+  std::string* _internal_mutable_ticker();
+
+  public:
+  // string class_code = 19;
+  void clear_class_code() ;
+  const std::string& class_code() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_class_code(Arg_&& arg, Args_... args);
+  std::string* mutable_class_code();
+  PROTOBUF_NODISCARD std::string* release_class_code();
+  void set_allocated_class_code(std::string* value);
+
+  private:
+  const std::string& _internal_class_code() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_class_code(
+      const std::string& value);
+  std::string* _internal_mutable_class_code();
 
   public:
   // string order_request_id = 20;
@@ -5237,8 +5271,8 @@ class PostOrderResponse final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      5, 19, 9,
-      129, 7>
+      5, 21, 9,
+      145, 7>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -5261,6 +5295,8 @@ class PostOrderResponse final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr figi_;
     ::google::protobuf::internal::ArenaStringPtr message_;
     ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
+    ::google::protobuf::internal::ArenaStringPtr ticker_;
+    ::google::protobuf::internal::ArenaStringPtr class_code_;
     ::google::protobuf::internal::ArenaStringPtr order_request_id_;
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* initial_order_price_;
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* executed_order_price_;
@@ -6331,6 +6367,8 @@ class OrderState final : public ::google::protobuf::Message
     kCurrencyFieldNumber = 16,
     kInstrumentUidFieldNumber = 19,
     kOrderRequestIdFieldNumber = 20,
+    kTickerFieldNumber = 21,
+    kClassCodeFieldNumber = 22,
     kInitialOrderPriceFieldNumber = 5,
     kExecutedOrderPriceFieldNumber = 6,
     kTotalOrderAmountFieldNumber = 7,
@@ -6441,6 +6479,38 @@ class OrderState final : public ::google::protobuf::Message
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_order_request_id(
       const std::string& value);
   std::string* _internal_mutable_order_request_id();
+
+  public:
+  // string ticker = 21;
+  void clear_ticker() ;
+  const std::string& ticker() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_ticker(Arg_&& arg, Args_... args);
+  std::string* mutable_ticker();
+  PROTOBUF_NODISCARD std::string* release_ticker();
+  void set_allocated_ticker(std::string* value);
+
+  private:
+  const std::string& _internal_ticker() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ticker(
+      const std::string& value);
+  std::string* _internal_mutable_ticker();
+
+  public:
+  // string class_code = 22;
+  void clear_class_code() ;
+  const std::string& class_code() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_class_code(Arg_&& arg, Args_... args);
+  std::string* mutable_class_code();
+  PROTOBUF_NODISCARD std::string* release_class_code();
+  void set_allocated_class_code(std::string* value);
+
+  private:
+  const std::string& _internal_class_code() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_class_code(
+      const std::string& value);
+  std::string* _internal_mutable_class_code();
 
   public:
   // .tinkoff.public.invest.api.contract.v1.MoneyValue initial_order_price = 5;
@@ -6633,8 +6703,8 @@ class OrderState final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      5, 20, 10,
-      123, 2>
+      5, 22, 10,
+      139, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -6659,6 +6729,8 @@ class OrderState final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr currency_;
     ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
     ::google::protobuf::internal::ArenaStringPtr order_request_id_;
+    ::google::protobuf::internal::ArenaStringPtr ticker_;
+    ::google::protobuf::internal::ArenaStringPtr class_code_;
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* initial_order_price_;
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* executed_order_price_;
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* total_order_amount_;
@@ -10929,6 +11001,102 @@ inline void PostOrderResponse::set_allocated_instrument_uid(std::string* value) 
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PostOrderResponse.instrument_uid)
 }
 
+// string ticker = 18;
+inline void PostOrderResponse::clear_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.ClearToEmpty();
+}
+inline const std::string& PostOrderResponse::ticker() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PostOrderResponse.ticker)
+  return _internal_ticker();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void PostOrderResponse::set_ticker(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PostOrderResponse.ticker)
+}
+inline std::string* PostOrderResponse::mutable_ticker() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_ticker();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PostOrderResponse.ticker)
+  return _s;
+}
+inline const std::string& PostOrderResponse::_internal_ticker() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.ticker_.Get();
+}
+inline void PostOrderResponse::_internal_set_ticker(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(value, GetArena());
+}
+inline std::string* PostOrderResponse::_internal_mutable_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.ticker_.Mutable( GetArena());
+}
+inline std::string* PostOrderResponse::release_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PostOrderResponse.ticker)
+  return _impl_.ticker_.Release();
+}
+inline void PostOrderResponse::set_allocated_ticker(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ticker_.IsDefault()) {
+    _impl_.ticker_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PostOrderResponse.ticker)
+}
+
+// string class_code = 19;
+inline void PostOrderResponse::clear_class_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.class_code_.ClearToEmpty();
+}
+inline const std::string& PostOrderResponse::class_code() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PostOrderResponse.class_code)
+  return _internal_class_code();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void PostOrderResponse::set_class_code(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.class_code_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PostOrderResponse.class_code)
+}
+inline std::string* PostOrderResponse::mutable_class_code() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_class_code();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PostOrderResponse.class_code)
+  return _s;
+}
+inline const std::string& PostOrderResponse::_internal_class_code() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.class_code_.Get();
+}
+inline void PostOrderResponse::_internal_set_class_code(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.class_code_.Set(value, GetArena());
+}
+inline std::string* PostOrderResponse::_internal_mutable_class_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.class_code_.Mutable( GetArena());
+}
+inline std::string* PostOrderResponse::release_class_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PostOrderResponse.class_code)
+  return _impl_.class_code_.Release();
+}
+inline void PostOrderResponse::set_allocated_class_code(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.class_code_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.class_code_.IsDefault()) {
+    _impl_.class_code_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PostOrderResponse.class_code)
+}
+
 // string order_request_id = 20;
 inline void PostOrderResponse::clear_order_request_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
@@ -13710,6 +13878,102 @@ inline void OrderState::set_allocated_order_request_id(std::string* value) {
     _impl_.order_request_id_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderState.order_request_id)
+}
+
+// string ticker = 21;
+inline void OrderState::clear_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.ClearToEmpty();
+}
+inline const std::string& OrderState::ticker() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderState.ticker)
+  return _internal_ticker();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void OrderState::set_ticker(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderState.ticker)
+}
+inline std::string* OrderState::mutable_ticker() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_ticker();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderState.ticker)
+  return _s;
+}
+inline const std::string& OrderState::_internal_ticker() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.ticker_.Get();
+}
+inline void OrderState::_internal_set_ticker(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(value, GetArena());
+}
+inline std::string* OrderState::_internal_mutable_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.ticker_.Mutable( GetArena());
+}
+inline std::string* OrderState::release_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderState.ticker)
+  return _impl_.ticker_.Release();
+}
+inline void OrderState::set_allocated_ticker(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ticker_.IsDefault()) {
+    _impl_.ticker_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderState.ticker)
+}
+
+// string class_code = 22;
+inline void OrderState::clear_class_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.class_code_.ClearToEmpty();
+}
+inline const std::string& OrderState::class_code() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderState.class_code)
+  return _internal_class_code();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void OrderState::set_class_code(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.class_code_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderState.class_code)
+}
+inline std::string* OrderState::mutable_class_code() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_class_code();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderState.class_code)
+  return _s;
+}
+inline const std::string& OrderState::_internal_class_code() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.class_code_.Get();
+}
+inline void OrderState::_internal_set_class_code(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.class_code_.Set(value, GetArena());
+}
+inline std::string* OrderState::_internal_mutable_class_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.class_code_.Mutable( GetArena());
+}
+inline std::string* OrderState::release_class_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderState.class_code)
+  return _impl_.class_code_.Release();
+}
+inline void OrderState::set_allocated_class_code(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.class_code_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.class_code_.IsDefault()) {
+    _impl_.class_code_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderState.class_code)
 }
 
 // -------------------------------------------------------------------

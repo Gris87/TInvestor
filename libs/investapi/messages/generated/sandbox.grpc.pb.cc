@@ -36,6 +36,7 @@ static const char* SandboxService_method_names[] = {
   "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxOrders",
   "/tinkoff.public.invest.api.contract.v1.SandboxService/CancelSandboxOrder",
   "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxOrderState",
+  "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxOrderPrice",
   "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxPositions",
   "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxOperations",
   "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxOperationsByCursor",
@@ -64,16 +65,17 @@ SandboxService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& cha
   , rpcmethod_GetSandboxOrders_(SandboxService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_CancelSandboxOrder_(SandboxService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetSandboxOrderState_(SandboxService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetSandboxPositions_(SandboxService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetSandboxOperations_(SandboxService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetSandboxOperationsByCursor_(SandboxService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetSandboxPortfolio_(SandboxService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_SandboxPayIn_(SandboxService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetSandboxWithdrawLimits_(SandboxService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetSandboxMaxLots_(SandboxService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_PostSandboxStopOrder_(SandboxService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetSandboxStopOrders_(SandboxService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CancelSandboxStopOrder_(SandboxService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSandboxOrderPrice_(SandboxService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSandboxPositions_(SandboxService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSandboxOperations_(SandboxService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSandboxOperationsByCursor_(SandboxService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSandboxPortfolio_(SandboxService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SandboxPayIn_(SandboxService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSandboxWithdrawLimits_(SandboxService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSandboxMaxLots_(SandboxService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_PostSandboxStopOrder_(SandboxService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSandboxStopOrders_(SandboxService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CancelSandboxStopOrder_(SandboxService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status SandboxService::Stub::OpenSandboxAccount(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountRequest& request, ::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountResponse* response) {
@@ -279,6 +281,29 @@ void SandboxService::Stub::async::GetSandboxOrderState(::grpc::ClientContext* co
 ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::OrderState>* SandboxService::Stub::AsyncGetSandboxOrderStateRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetSandboxOrderStateRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status SandboxService::Stub::GetSandboxOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetSandboxOrderPrice_, context, request, response);
+}
+
+void SandboxService::Stub::async::GetSandboxOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSandboxOrderPrice_, context, request, response, std::move(f));
+}
+
+void SandboxService::Stub::async::GetSandboxOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSandboxOrderPrice_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>* SandboxService::Stub::PrepareAsyncGetSandboxOrderPriceRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetSandboxOrderPrice_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>* SandboxService::Stub::AsyncGetSandboxOrderPriceRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetSandboxOrderPriceRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -607,6 +632,16 @@ SandboxService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       SandboxService_method_names[9],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](SandboxService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* resp) {
+               return service->GetSandboxOrderPrice(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      SandboxService_method_names[10],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::PositionsRequest, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SandboxService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -615,7 +650,7 @@ SandboxService::Service::Service() {
                return service->GetSandboxPositions(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      SandboxService_method_names[10],
+      SandboxService_method_names[11],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::OperationsRequest, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SandboxService::Service* service,
@@ -625,7 +660,7 @@ SandboxService::Service::Service() {
                return service->GetSandboxOperations(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      SandboxService_method_names[11],
+      SandboxService_method_names[12],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SandboxService::Service* service,
@@ -635,7 +670,7 @@ SandboxService::Service::Service() {
                return service->GetSandboxOperationsByCursor(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      SandboxService_method_names[12],
+      SandboxService_method_names[13],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SandboxService::Service* service,
@@ -645,7 +680,7 @@ SandboxService::Service::Service() {
                return service->GetSandboxPortfolio(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      SandboxService_method_names[13],
+      SandboxService_method_names[14],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::SandboxPayInRequest, ::tinkoff::public_::invest::api::contract::v1::SandboxPayInResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SandboxService::Service* service,
@@ -655,7 +690,7 @@ SandboxService::Service::Service() {
                return service->SandboxPayIn(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      SandboxService_method_names[14],
+      SandboxService_method_names[15],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SandboxService::Service* service,
@@ -665,7 +700,7 @@ SandboxService::Service::Service() {
                return service->GetSandboxWithdrawLimits(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      SandboxService_method_names[15],
+      SandboxService_method_names[16],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SandboxService::Service* service,
@@ -675,7 +710,7 @@ SandboxService::Service::Service() {
                return service->GetSandboxMaxLots(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      SandboxService_method_names[16],
+      SandboxService_method_names[17],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SandboxService::Service* service,
@@ -685,7 +720,7 @@ SandboxService::Service::Service() {
                return service->PostSandboxStopOrder(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      SandboxService_method_names[17],
+      SandboxService_method_names[18],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SandboxService::Service* service,
@@ -695,7 +730,7 @@ SandboxService::Service::Service() {
                return service->GetSandboxStopOrders(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      SandboxService_method_names[18],
+      SandboxService_method_names[19],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< SandboxService::Service, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SandboxService::Service* service,
@@ -766,6 +801,13 @@ SandboxService::Service::~Service() {
 }
 
 ::grpc::Status SandboxService::Service::GetSandboxOrderState(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status SandboxService::Service::GetSandboxOrderPrice(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response) {
   (void) context;
   (void) request;
   (void) response;

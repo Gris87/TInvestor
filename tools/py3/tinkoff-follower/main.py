@@ -64,9 +64,9 @@ def _get_token(token, token_file):
 async def _validate_account(client, account_id, direction):
     accounts = {}
 
-    tinkoff_account = await client.users.get_accounts()
+    tinkoff_accounts = await client.users.get_accounts()
 
-    for account in tinkoff_account.accounts:
+    for account in tinkoff_accounts.accounts:
         accounts[account.id] = account.name
 
     if account_id not in accounts:

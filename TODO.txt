@@ -1,3 +1,4 @@
+Create script for bi-directional trading based on subsciption
 Find best configs for different commission
 Improve coverage
 Create release

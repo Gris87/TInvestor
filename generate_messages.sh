@@ -24,8 +24,10 @@ cp -r /tmp/investAPI/src/docs/contracts libs/investapi/messages
 rm -rf /tmp/investAPI
 
 rm -rf tools/py3/tinkoff-accounts/tinkoff
+rm -rf tools/py3/tinkoff-asap-trading/tinkoff
 rm -rf tools/py3/tinkoff-follower/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-accounts/tinkoff
+cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-asap-trading/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-follower/tinkoff
 rm -rf /tmp/invest-python
 
