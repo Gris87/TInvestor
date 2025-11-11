@@ -5,6 +5,7 @@ import os
 import sys
 import time
 from aiostream import stream
+from datetime import datetime, timedelta
 from decimal import Decimal
 from loguru import logger
 
@@ -19,7 +20,12 @@ from tinkoff.invest.utils import quotation_to_decimal
 #logging.basicConfig(level=logging.DEBUG)
 
 
-async def follow(args):
+HUNDRED_PERCENT       = 100.0
+MINIMUM_YIELD_PERCENT = 0.30
+COMMISSION            = 0.04
+
+
+async def asap_trading(args):
     if args.official and not args.confirm:
         answer = input("Are you sure to use official account? [Y/n]")
 
@@ -37,7 +43,7 @@ async def follow(args):
         if not await _validate_account(client, args.account):
             return
 
-        await _start_orderbook_streaming(client, args.account, args.instrument_id)
+        await _start_orderbook_streaming(client, args.account, args.instrument_id, args.limit_lots, args.limit_by_time)
         await _cancel_orders(client)
 
     return
@@ -70,7 +76,9 @@ async def _validate_account(client, account_id):
     return True
 
 
-async def _start_orderbook_streaming(client, account, instrument_id):
+async def _start_orderbook_streaming(client, account, instrument_id, limit_lots, limit_by_time):
+    start_time = datetime.now()
+
     stream = client.create_market_data_stream()
     stream.order_book.subscribe(
         [
@@ -82,46 +90,60 @@ async def _start_orderbook_streaming(client, account, instrument_id):
     )
 
     orderbook = await client.market_data.get_order_book(instrument_id=instrument_id, depth=50)
-    await _handle_orderbook(client, account, instrument_id, orderbook)
+    await _handle_orderbook(client, account, instrument_id, limit_lots, orderbook)
 
     async for x in stream:
+        if limit_by_time > 0 and datetime.now() - start_time > timedelta(minutes=limit_by_time):
+            break
+
         if x.orderbook is not None:
-            await _handle_orderbook(client, account, instrument_id, x.orderbook)
+            await _handle_orderbook(client, account, instrument_id, limit_lots, x.orderbook)
 
 
-async def _handle_orderbook(client, account, instrument_id, orderbook):
+async def _handle_orderbook(client, account, instrument_id, limit_lots, orderbook):
     tasks = []
 
     portfolio = await client.operations.get_portfolio(account_id=account)
     amount_of_lots = Decimal(0)
     avg_price = Decimal(0)
 
-    for position in dest_portfolio.positions:
+    for position in portfolio.positions:
         if position.instrument_uid == instrument_id:
             amount_of_lots = quotation_to_decimal(position.quantity)
             avg_price = quotation_to_decimal(position.average_position_price)
 
             break
 
-    if len(orderbook.bids) > 0:
-        tasks.append(_buy(client, account, instrument_id, orderbook.bids[0].price))
+    if amount_of_lots < limit_lots and len(orderbook.bids) > 0:
+        tasks.append(_buy(client, account, instrument_id, limit_lots - amount_of_lots, orderbook.bids[0].price))
 
-    if len(orderbook.asks) > 0:
-        tasks.append(_sell(client, account, instrument_id, orderbook.asks[0].price))
+    if amount_of_lots > 0 and len(orderbook.asks) > 0:
+        minimum_sell_price = avg_price * Decimal(1 + (MINIMUM_YIELD_PERCENT + (2 * COMMISSION)) / HUNDRED_PERCENT)
 
-    await asyncio.gather(*tasks)
+        for ask in orderbook.asks:
+            if quotation_to_decimal(ask.price) >= minimum_sell_price:
+                tasks.append(_sell(client, account, instrument_id, amount_of_lots, ask.price))
+
+                break
+
+    if len(tasks) > 0:
+        await asyncio.gather(*tasks)
 
 
-async def _buy(client, account, instrument_id, price):
-    print(f"Buy {price}")
+async def _buy(client, account, instrument_id, amount_of_lots, price):
+    price_decimal = quotation_to_decimal(price)
+
+    logger.info(f"Buy {amount_of_lots} lots with price - {price_decimal}")
 
 
-async def _sell(client, account, instrument_id, price):
-    print(f"Sell {price}")
+async def _sell(client, account, instrument_id, amount_of_lots, price):
+    price_decimal = quotation_to_decimal(price)
+
+    logger.info(f"Sell {amount_of_lots} lots with price - {price_decimal}")
 
 
 async def _cancel_orders(client):
-    print(f"Cancel orders")
+    logger.info(f"Cancel orders")
 
 
 def main():
@@ -209,4 +231,4 @@ def main():
 
         sys.exit(1)
 
-    asyncio.run(follow(args))
+    asyncio.run(asap_trading(args))
