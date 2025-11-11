@@ -133,13 +133,13 @@ async def _handle_orderbook(client, account, instrument_id, limit_lots, orderboo
 async def _buy(client, account, instrument_id, amount_of_lots, price):
     price_decimal = quotation_to_decimal(price)
 
-    logger.info(f"Buy {amount_of_lots} lots with price - {price_decimal}")
+    logger.info(f"Buy {amount_of_lots} lots with price {price_decimal}")
 
 
 async def _sell(client, account, instrument_id, amount_of_lots, price):
     price_decimal = quotation_to_decimal(price)
 
-    logger.info(f"Sell {amount_of_lots} lots with price - {price_decimal}")
+    logger.info(f"Sell {amount_of_lots} lots with price {price_decimal}")
 
 
 async def _cancel_orders(client):
