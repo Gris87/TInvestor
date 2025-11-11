@@ -421,29 +421,31 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
 
     Operation operation3;
 
-    operation3.timestamp                       = 1704056460001;
-    operation3.originalTimestamp               = 1704056460000;
-    operation3.instrumentId                    = "aaaaa";
-    operation3.instrumentTicker                = "aaaaa";
-    operation3.instrumentName                  = "?????";
-    operation3.description                     = "Sell 10 ivashka durashka shares";
-    operation3.price                           = 280.0f;
-    operation3.avgPriceFifo                    = 253.3f;
-    operation3.avgPriceWavg                    = 253.3f;
-    operation3.quantity                        = 10;
-    operation3.remainedQuantity                = 0;
-    operation3.payment                         = 2800.0f;
-    operation3.avgCostFifo                     = 2533.0f;
-    operation3.costFifo                        = Quotation(0, 0);
-    operation3.costWavg                        = Quotation(0, 0);
-    operation3.commission                      = -1.4f;
-    operation3.yield                           = 267.0f;
-    operation3.yieldWithCommission             = 265.6f;
-    operation3.yieldWithCommissionPercent      = 10.4856f;
-    operation3.inputMoney                      = Quotation(200000, 0);
-    operation3.maxInputMoney                   = Quotation(200000, 0);
-    operation3.totalYieldWithCommission        = Quotation(265, -666500000);
-    operation3.totalYieldWithCommissionPercent = 0.1321667f;
+    operation3.timestamp                  = 1704056460001;
+    operation3.originalTimestamp          = 1704056460000;
+    operation3.instrumentId               = "aaaaa";
+    operation3.instrumentTicker           = "aaaaa";
+    operation3.instrumentName             = "?????";
+    operation3.description                = "Sell 10 ivashka durashka shares";
+    operation3.price                      = 280.0f;
+    operation3.avgPriceFifo               = 253.3f;
+    operation3.avgPriceWavg               = 253.3f;
+    operation3.quantity                   = 10;
+    operation3.remainedQuantity           = 0;
+    operation3.payment                    = 2800.0f;
+    operation3.avgCostFifo                = 2533.0f;
+    operation3.costFifo                   = Quotation(0, 0);
+    operation3.costWavg                   = Quotation(0, 0);
+    operation3.commission                 = -1.4f;
+    operation3.yield                      = 267.0f;
+    operation3.yieldWithCommission        = 265.6f;
+    operation3.yieldWithCommissionPercent = 10.4856f;
+    operation3.inputMoney                 = Quotation(200000, 0);
+    operation3.maxInputMoney              = Quotation(200000, 0);
+    // Instead of Quotation(265, -666500000) after alignRemainedAndTotalMoneyFromPortfolio
+    operation3.totalYieldWithCommission = Quotation(300, 0);
+    // Instead of 0.1321667f after alignRemainedAndTotalMoneyFromPortfolio
+    operation3.totalYieldWithCommissionPercent = 0.15f;
     // Instead of Quotation(200265, -666500000) after alignRemainedAndTotalMoneyFromPortfolio
     operation3.remainedMoney = Quotation(200300, 0);
     // Instead of Quotation(200265, -666500000) after alignRemainedAndTotalMoneyFromPortfolio

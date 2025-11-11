@@ -669,8 +669,20 @@ void OperationsThread::alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOp
             }
         }
 
-        lastOperation->remainedMoney = mRemainedMoney;
-        lastOperation->totalMoney    = mTotalMoney;
+        mTotalYieldWithCommission = quotationDiff(mTotalMoney, mMaxInputMoney);
+
+        float totalYieldWithCommissionPercent = 0.0f;
+
+        if (mMaxInputMoney.units != 0 || mMaxInputMoney.nano != 0)
+        {
+            totalYieldWithCommissionPercent =
+                quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mMaxInputMoney) * HUNDRED_PERCENT;
+        }
+
+        lastOperation->remainedMoney                   = mRemainedMoney;
+        lastOperation->totalMoney                      = mTotalMoney;
+        lastOperation->totalYieldWithCommission        = mTotalYieldWithCommission;
+        lastOperation->totalYieldWithCommissionPercent = totalYieldWithCommissionPercent;
     }
 }
 

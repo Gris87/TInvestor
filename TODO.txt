@@ -15,6 +15,7 @@ Add more logs
 Thread to sell gifts
 Asap mode immediately but with positive yield and small spread
 Sell into chunks
+Own chart library
 
 AI
 Trade with USD/EUR/CNY
