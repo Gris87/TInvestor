@@ -82,25 +82,14 @@ async def _validate_account(client, account_id):
 async def _start_orderbook_streaming(client, account, instrument_id, limit_lots, limit_by_time):
     start_time = datetime.now()
 
-    stream = client.create_market_data_stream()
-    stream.order_book.subscribe(
-        [
-            OrderBookInstrument(
-                instrument_id=instrument_id,
-                depth=50,
-            )
-        ]
-    )
-
-    orderbook = await client.market_data.get_order_book(instrument_id=instrument_id, depth=50)
-    await _handle_orderbook(client, account, instrument_id, limit_lots, orderbook)
-
-    async for x in stream:
+    while True:
         if limit_by_time > 0 and datetime.now() - start_time > timedelta(minutes=limit_by_time):
             break
 
-        if x.orderbook is not None:
-            await _handle_orderbook(client, account, instrument_id, limit_lots, x.orderbook)
+        orderbook = await client.market_data.get_order_book(instrument_id=instrument_id, depth=50)
+        await _handle_orderbook(client, account, instrument_id, limit_lots, orderbook)
+
+        await asyncio.sleep(1)
 
 
 async def _handle_orderbook(client, account, instrument_id, limit_lots, orderbook):
@@ -134,8 +123,6 @@ async def _handle_orderbook(client, account, instrument_id, limit_lots, orderboo
 
 
 async def _buy(client, account, instrument_id, amount_of_lots, price):
-    logger.info(f"Buy {amount_of_lots} lots with price {quotation_to_decimal(price)}")
-
     global buy_order_id
 
     if buy_order_id is not None:
@@ -146,14 +133,17 @@ async def _buy(client, account, instrument_id, amount_of_lots, price):
             order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
         )
 
-        if order_state.initial_security_price == price and order_state.lots_requested - order_state.lots_executed == amount_of_lots:
-            return
+        if order_state.execution_report_status in [OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_NEW, OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_PARTIALLYFILL]:
+            lots_remained = order_state.lots_requested - order_state.lots_executed
 
-        await client.orders.cancel_order(
-            account_id=account,
-            order_id=buy_order_id,
-            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
-        )
+            if order_state.initial_security_price.units == price.units and order_state.initial_security_price.nano == price.nano and lots_remained == amount_of_lots:
+                return
+
+            await client.orders.cancel_order(
+                account_id=account,
+                order_id=buy_order_id,
+                order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+            )
 
         buy_order_id = None
 
@@ -176,6 +166,8 @@ async def _buy(client, account, instrument_id, amount_of_lots, price):
             )
 
             if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                logger.info(f"Buy {amount_of_lots} lots with price {quotation_to_decimal(price)}")
+
                 buy_order_id = resp.order_id
 
                 break
@@ -186,8 +178,6 @@ async def _buy(client, account, instrument_id, amount_of_lots, price):
 
 
 async def _sell(client, account, instrument_id, amount_of_lots, price):
-    logger.info(f"Sell {amount_of_lots} lots with price {quotation_to_decimal(price)}")
-
     global sell_order_id
 
     if sell_order_id is not None:
@@ -198,14 +188,17 @@ async def _sell(client, account, instrument_id, amount_of_lots, price):
             order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
         )
 
-        if order_state.initial_security_price == price and order_state.lots_requested - order_state.lots_executed == amount_of_lots:
-            return
+        if order_state.execution_report_status in [OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_NEW, OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_PARTIALLYFILL]:
+            lots_remained = order_state.lots_requested - order_state.lots_executed
 
-        await client.orders.cancel_order(
-            account_id=account,
-            order_id=sell_order_id,
-            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
-        )
+            if order_state.initial_security_price.units == price.units and order_state.initial_security_price.nano == price.nano and lots_remained == amount_of_lots:
+                return
+
+            await client.orders.cancel_order(
+                account_id=account,
+                order_id=sell_order_id,
+                order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+            )
 
         sell_order_id = None
 
@@ -228,6 +221,8 @@ async def _sell(client, account, instrument_id, amount_of_lots, price):
             )
 
             if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                logger.info(f"Sell {amount_of_lots} lots with price {quotation_to_decimal(price)}")
+
                 sell_order_id = resp.order_id
 
                 break
