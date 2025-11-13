@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 from loguru import logger
 
-from tinkoff.invest import InstrumentIdType, GetMaxLotsRequest, OrderDirection, OrderExecutionReportStatus, OrderType, PriceType, TimeInForceType
+from tinkoff.invest import GetMaxLotsRequest, OrderDirection, OrderExecutionReportStatus, OrderType, PriceType, TimeInForceType
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
@@ -23,6 +23,9 @@ from tinkoff.invest.utils import quotation_to_decimal
 HUNDRED_PERCENT       = 100.0
 MINIMUM_YIELD_PERCENT = 0.30
 COMMISSION            = 0.04
+
+buy_order_id = None
+sell_order_id = None
 
 
 async def asap_trading(args):
@@ -44,7 +47,7 @@ async def asap_trading(args):
             return
 
         await _start_orderbook_streaming(client, args.account, args.instrument_id, args.limit_lots, args.limit_by_time)
-        await _cancel_orders(client)
+        await _cancel_orders(client, args.account)
 
     return
 
@@ -104,12 +107,12 @@ async def _handle_orderbook(client, account, instrument_id, limit_lots, orderboo
     tasks = []
 
     portfolio = await client.operations.get_portfolio(account_id=account)
-    amount_of_lots = Decimal(0)
+    amount_of_lots = 0
     avg_price = Decimal(0)
 
     for position in portfolio.positions:
         if position.instrument_uid == instrument_id:
-            amount_of_lots = quotation_to_decimal(position.quantity)
+            amount_of_lots = int(quotation_to_decimal(position.quantity))
             avg_price = quotation_to_decimal(position.average_position_price)
 
             break
@@ -131,19 +134,132 @@ async def _handle_orderbook(client, account, instrument_id, limit_lots, orderboo
 
 
 async def _buy(client, account, instrument_id, amount_of_lots, price):
-    price_decimal = quotation_to_decimal(price)
+    logger.info(f"Buy {amount_of_lots} lots with price {quotation_to_decimal(price)}")
 
-    logger.info(f"Buy {amount_of_lots} lots with price {price_decimal}")
+    global buy_order_id
+
+    if buy_order_id is not None:
+        order_state = await client.orders.get_order_state(
+            account_id=account,
+            order_id=buy_order_id,
+            price_type=PriceType.PRICE_TYPE_CURRENCY,
+            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+        )
+
+        if order_state.initial_security_price == price and order_state.lots_requested - order_state.lots_executed == amount_of_lots:
+            return
+
+        await client.orders.cancel_order(
+            account_id=account,
+            order_id=buy_order_id,
+            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+        )
+
+        buy_order_id = None
+
+    while True:
+        req = GetMaxLotsRequest(account_id=account, instrument_id=instrument_id, price=price)
+        max_lots = await client.orders.get_max_lots(req)
+
+        amount_to_buy = min(amount_of_lots, max_lots.buy_limits.buy_max_lots)
+
+        if amount_to_buy > 0:
+            resp = await client.orders.post_order(
+                quantity=amount_to_buy,
+                price=price,
+                direction=OrderDirection.ORDER_DIRECTION_BUY,
+                account_id=account,
+                order_type=OrderType.ORDER_TYPE_LIMIT,
+                instrument_id=instrument_id,
+                time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+                price_type=PriceType.PRICE_TYPE_CURRENCY
+            )
+
+            if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                buy_order_id = resp.order_id
+
+                break
+        else:
+            break
+
+        await asyncio.sleep(1)
 
 
 async def _sell(client, account, instrument_id, amount_of_lots, price):
-    price_decimal = quotation_to_decimal(price)
+    logger.info(f"Sell {amount_of_lots} lots with price {quotation_to_decimal(price)}")
 
-    logger.info(f"Sell {amount_of_lots} lots with price {price_decimal}")
+    global sell_order_id
+
+    if sell_order_id is not None:
+        order_state = await client.orders.get_order_state(
+            account_id=account,
+            order_id=sell_order_id,
+            price_type=PriceType.PRICE_TYPE_CURRENCY,
+            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+        )
+
+        if order_state.initial_security_price == price and order_state.lots_requested - order_state.lots_executed == amount_of_lots:
+            return
+
+        await client.orders.cancel_order(
+            account_id=account,
+            order_id=sell_order_id,
+            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+        )
+
+        sell_order_id = None
+
+    while True:
+        req = GetMaxLotsRequest(account_id=account, instrument_id=instrument_id, price=price)
+        max_lots = await client.orders.get_max_lots(req)
+
+        amount_to_sell = min(amount_of_lots, max_lots.sell_limits.sell_max_lots)
+
+        if amount_to_sell > 0:
+            resp = await client.orders.post_order(
+                quantity=amount_to_sell,
+                price=price,
+                direction=OrderDirection.ORDER_DIRECTION_SELL,
+                account_id=account,
+                order_type=OrderType.ORDER_TYPE_LIMIT,
+                instrument_id=instrument_id,
+                time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+                price_type=PriceType.PRICE_TYPE_CURRENCY
+            )
+
+            if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                sell_order_id = resp.order_id
+
+                break
+        else:
+            break
+
+        await asyncio.sleep(1)
 
 
-async def _cancel_orders(client):
+async def _cancel_orders(client, account):
     logger.info(f"Cancel orders")
+
+    global buy_order_id
+    global sell_order_id
+
+    if buy_order_id is not None:
+        await client.orders.cancel_order(
+            account_id=account,
+            order_id=buy_order_id,
+            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+        )
+
+        buy_order_id = None
+
+    if sell_order_id is not None:
+        await client.orders.cancel_order(
+            account_id=account,
+            order_id=sell_order_id,
+            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+        )
+
+        sell_order_id = None
 
 
 def main():
