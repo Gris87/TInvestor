@@ -31,7 +31,7 @@ static const QMap<QString, float> BAD_INSTRUMENTS_SPREAD{ // clazy:exclude=non-p
     {LNZL_UID,  2.50f},
     {LNZLP_UID, 2.00f},
     {CHMK_UID,  1.30f},
-    {KROT_UID,  0.70f}
+    {KROT_UID,  0.60f}
 };
 // clang-format on
 
