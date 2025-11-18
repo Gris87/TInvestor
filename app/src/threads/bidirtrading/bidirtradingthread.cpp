@@ -12,6 +12,7 @@ const char* const LNZLP_UID = "28fdec79-fcf0-40cb-b53c-586179f024e5";
 const char* const CHMK_UID  = "b5e26096-d013-48e4-b2a9-2f38b6090feb";
 const char* const KROT_UID  = "14d147b9-d977-438a-80c0-441e5589da30";
 const char* const DELI_UID  = "df58ca03-aed0-4e1c-97fb-54a01dfb539e";
+const char* const PMSBP_UID = "80a39145-b2f7-46f5-9ef0-1478baafb0a6";
 
 constexpr float  HUNDRED_PERCENT                     = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT               = 0.10f;
@@ -33,7 +34,8 @@ static const QMap<QString, float> BAD_INSTRUMENTS_SPREAD{ // clazy:exclude=non-p
     {LNZLP_UID, 2.00f},
     {CHMK_UID,  1.30f},
     {KROT_UID,  0.60f},
-    {DELI_UID,  0.60f}
+    {DELI_UID,  0.60f},
+    {PMSBP_UID, 0.60f}
 };
 // clang-format on
 

@@ -1,3 +1,4 @@
+Put bid for the biggest ask
 Find best configs for different commission
 Improve coverage
 Create release
