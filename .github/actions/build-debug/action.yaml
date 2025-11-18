@@ -104,7 +104,7 @@ runs:
         switch ("${{ runner.os }}")
         {
             "Windows" {
-                Get-Volume
+                Get-WmiObject -Class Win32_LogicalDisk | Where-Object {$_.DriveType -eq 3} | Select-Object DeviceID, @{Name="FreeSpace(GB)"; Expression={[int]($_.FreeSpace/1GB)}}
 
                 ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
                 & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -115,8 +115,8 @@ runs:
             }
             "Linux" {
                 df -h
-                set
-                env
+                & set
+                & env
 
                 ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
                 & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
