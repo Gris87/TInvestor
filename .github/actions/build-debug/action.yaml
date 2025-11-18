@@ -95,15 +95,15 @@ runs:
         ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg"
         ${Env:GOOGLETEST_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source"
 
-        # Create TInvestor-source/build/Desktop-Debug folder and enter into it
-        New-Item -Path "TInvestor-source/build/Desktop-Debug" -ItemType "directory" -Force
-        Set-Location -Path "TInvestor-source/build/Desktop-Debug"
-
         (Get-Content "${Env:GITHUB_WORKSPACE}/TInvestor-source/app/src/main.cpp") -replace 'DEV_BUILD', ${Env:GITHUB_SHA} | Set-Content "${Env:GITHUB_WORKSPACE}/TInvestor-source/app/src/main.cpp"
 
         switch ("${{ runner.os }}")
         {
             "Windows" {
+                # Create TInvestor-source/build/Desktop-Debug folder and enter into it
+                New-Item -Path "TInvestor-source/build/Desktop-Debug" -ItemType "directory" -Force
+                Set-Location -Path "TInvestor-source/build/Desktop-Debug"
+
                 ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
                 & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
                 & chcp 65001
@@ -112,11 +112,13 @@ runs:
                 & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
             }
             "Linux" {
-                Get-ChildItem Env:
+                # Create /mnt/TInvestor-source/build/Desktop-Debug folder and enter into it
+                New-Item -Path "/mnt/TInvestor-source/build/Desktop-Debug" -ItemType "directory" -Force
+                Set-Location -Path "/mnt/TInvestor-source/build/Desktop-Debug"
 
                 ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
                 & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
-                & make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
+                & make -f "/mnt/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
                 & make -j4
             }
         }
@@ -126,11 +128,11 @@ runs:
       if: steps.cache-build.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-        Copy-Item "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug" -Destination artifacts -Recurse
-
         switch ("${{ runner.os }}")
         {
             "Windows" {
+                Copy-Item "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug" -Destination artifacts -Recurse
+
                 # Remove-Item "artifacts/app/build/gen" -Recurse -Force # Do not delete. Needed for clang-tidy
                 Remove-Item "artifacts/app/debug" -Recurse -Force
                 Remove-Item "artifacts/app/release" -Recurse -Force
@@ -148,6 +150,8 @@ runs:
                 Remove-Item "artifacts/Makefile" -Force
             }
             "Linux" {
+                Copy-Item "/mnt/TInvestor-source/build/Desktop-Debug" -Destination artifacts -Recurse
+
                 # Remove-Item "artifacts/app/build/gen" -Recurse -Force # Do not delete. Needed for clang-tidy
                 Remove-Item "artifacts/app/Makefile.TInvestor" -Force
                 Remove-Item "artifacts/libs" -Recurse -Force
