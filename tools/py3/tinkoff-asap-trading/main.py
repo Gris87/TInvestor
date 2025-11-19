@@ -117,7 +117,7 @@ async def _handle_orderbook(client, account, instrument_id, spread, limit_lots, 
 
         for bid in orderbook.bids:
             if quotation_to_decimal(bid.price) <= maximum_buy_price:
-                tasks.append(_buy(client, account, instrument_id, limit_lots - amount_of_lots, orderbook.bids[0].price))
+                tasks.append(_buy(client, account, instrument_id, limit_lots - amount_of_lots, bid.price))
 
                 break
 
