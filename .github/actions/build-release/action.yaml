@@ -8,6 +8,7 @@ runs:
       if: runner.os != 'Windows'
       uses: easimon/maximize-build-space@master
       with:
+        root-reserve-mb: 4096
         remove-dotnet: "true"
         remove-android: "true"
         remove-haskell: "true"
