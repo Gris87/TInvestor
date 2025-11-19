@@ -112,6 +112,8 @@ runs:
                 & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
             }
             "Linux" {
+                & ls -laR /mnt/
+
                 # Create /mnt/TInvestor-source/build/Desktop-Debug folder and enter into it
                 New-Item -Path "/mnt/TInvestor-source/build/Desktop-Debug" -ItemType "directory" -Force
                 Set-Location -Path "/mnt/TInvestor-source/build/Desktop-Debug"
