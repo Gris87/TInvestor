@@ -112,6 +112,7 @@ runs:
                 & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
             }
             "Linux" {
+                & ls -la "${Env:GITHUB_WORKSPACE}"
                 & ls -laR /mnt/
 
                 # Create /mnt/TInvestor-source/build/Desktop-Debug folder and enter into it
