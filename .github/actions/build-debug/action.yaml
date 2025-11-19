@@ -3,18 +3,6 @@ description: Build debug
 runs:
   using: "composite"
   steps:
-    # Free some space for a build
-    - name: Maximize build space
-      if: runner.os != 'Windows'
-      uses: easimon/maximize-build-space@master
-      with:
-        root-reserve-mb: 8192
-        remove-dotnet: "true"
-        remove-android: "true"
-        remove-haskell: "true"
-        remove-codeql: "true"
-        remove-docker-images: "true"
-
     # Set git to disable line endings conversion
     - name: Configure git
       shell: pwsh
