@@ -46,7 +46,7 @@ async def asap_trading(args):
         if not await _validate_account(client, args.account):
             return
 
-        await _start_orderbook_streaming(client, args.account, args.instrument_id, args.spread, args.limit_lots, args.limit_by_time)
+        await _start_orderbook_streaming(client, args.account, args.instrument_id, args.spread, args.max_buy_price, args.limit_lots, args.limit_by_time)
         await _cancel_orders(client, args.account)
 
     return
@@ -79,7 +79,7 @@ async def _validate_account(client, account_id):
     return True
 
 
-async def _start_orderbook_streaming(client, account, instrument_id, spread, limit_lots, limit_by_time):
+async def _start_orderbook_streaming(client, account, instrument_id, spread, max_buy_price, limit_lots, limit_by_time):
     start_time = datetime.now()
 
     while True:
@@ -87,12 +87,12 @@ async def _start_orderbook_streaming(client, account, instrument_id, spread, lim
             break
 
         orderbook = await client.market_data.get_order_book(instrument_id=instrument_id, depth=50)
-        await _handle_orderbook(client, account, instrument_id, spread, limit_lots, orderbook)
+        await _handle_orderbook(client, account, instrument_id, spread, max_buy_price, limit_lots, orderbook)
 
         await asyncio.sleep(1)
 
 
-async def _handle_orderbook(client, account, instrument_id, spread, limit_lots, orderbook):
+async def _handle_orderbook(client, account, instrument_id, spread, max_buy_price, limit_lots, orderbook):
     tasks = []
 
     portfolio = await client.operations.get_portfolio(account_id=account)
@@ -107,7 +107,7 @@ async def _handle_orderbook(client, account, instrument_id, spread, limit_lots, 
             break
 
     if amount_of_lots < limit_lots and len(orderbook.bids) > 0:
-        maximum_buy_price = quotation_to_decimal(orderbook.bids[0].price)
+        maximum_buy_price = max(quotation_to_decimal(orderbook.bids[0].price), Decimal(max_buy_price))
 
         if amount_of_lots > 0:
             maximum_buy_price = min(maximum_buy_price, avg_price * Decimal(1 - (spread / HUNDRED_PERCENT)))
@@ -319,6 +319,13 @@ def main():
         type=float,
         default=0.7,
         help="Keep spread between bid and maximum ask",
+    )
+    parser.add_argument(
+        "--max-buy-price",
+        dest="max_buy_price",
+        type=float,
+        default=-1.0,
+        help="Maximum buy price",
     )
     parser.add_argument(
         "--limit-lots",

@@ -1,4 +1,6 @@
 Put bid for the biggest ask
+Create script for creating map instrument => minimum spread for good yield
+Create script for trading by huge sell/buy amount
 Find best configs for different commission
 Improve coverage
 Create release
