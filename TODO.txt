@@ -1,6 +1,11 @@
+Dependent subdirs
+Try to take profit in 0.2% per bi-dir
+Different GRPC connection on order requests
 Put bid for the biggest ask
+Do not buy bi-dir if price raise recently
 Change order for sale if available changed
 Terminate all tradings if mega sell detected
+Fix issue with output money
 Create script for creating map instrument => minimum spread for good yield
 Create script for trading by huge sell/buy amount
 Find best configs for different commission
