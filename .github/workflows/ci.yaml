@@ -9,7 +9,7 @@ env:
   QTC_VERSION:         "18.0.0"
   ZLIB_VERSION:        "v1.3.1"
   QUAZIP_VERSION:      "v1.5"
-  VCPKG_VERSION:       "2025.10.17"
+  VCPKG_VERSION:       "2025.08.27"
   CLANG_VERSION:       "21.1.7"
   GOOGLE_TEST_VERSION: "v1.17.0"
   GIST_ID:             "c6ca4b78912b06400bb99a569cc9fccd"
