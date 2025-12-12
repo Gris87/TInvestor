@@ -6,6 +6,9 @@ Do not buy bi-dir if price raise recently
 Change order for sale if available changed
 Terminate all tradings if mega sell detected
 Fix issue with output money
+Always create -2% order by refreshing each 10 minutes
+Convert bi-dir to normal trading with full load if price fall to -3% during first sell order 30 minutes
+Do not sell bi-dir with duration less 30 minutes from first sell order
 Create script for creating map instrument => minimum spread for good yield
 Create script for trading by huge sell/buy amount
 Find best configs for different commission
