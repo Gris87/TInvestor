@@ -8,8 +8,6 @@
 
 
 
-const char* const JETL_UID = "34f51a49-919b-4eb1-9ed0-59c26f4cdc1e";
-
 constexpr float  HUNDRED_PERCENT            = 100.0f;
 constexpr float  LIMIT_COMMISSION           = 0.06f;
 constexpr int    ORDER_BOOK_DEPTH           = 20;
@@ -17,14 +15,6 @@ constexpr int    AMOUNT_OF_LAST_INSTRUMENTS = 5;
 constexpr qint64 MS_IN_SECOND               = 1000LL;
 constexpr qint64 ONE_MINUTE                 = 60LL * MS_IN_SECOND;
 constexpr qint64 DETECTION_INTERVAL         = 15LL * ONE_MINUTE; // 15 minutes
-
-
-
-// clang-format off
-static const QSet<QString> HARDCODED_INSTRUMENTS{ // clazy:exclude=non-pod-global-static
-    JETL_UID
-};
-// clang-format on
 
 
 
@@ -125,7 +115,7 @@ checkStockForHugeSpread(const std::shared_ptr<tinkoff::GetOrderBookResponse>& ti
 
     const float spread = ((askPrice / bidPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
-    if (spread > hugeSpread || HARDCODED_INSTRUMENTS.contains(stock->meta.instrumentId))
+    if (spread > hugeSpread)
     {
         res = BiDirTradingInfo(
             stock,
