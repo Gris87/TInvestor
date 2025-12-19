@@ -17,7 +17,7 @@ const char* const GLRX_UID  = "51be1fe4-9fe1-4626-9400-6cd1fb6286c5";
 
 constexpr float  HUNDRED_PERCENT                     = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT               = 0.10f;
-constexpr float  MAXIMUM_LOSE_PERCENT                = 2.00f;
+constexpr float  MAXIMUM_LOSE_PERCENT                = 3.00f;
 constexpr float  MINIMUM_BID_PERCENT_FOR_HUGE_BID    = 80.0f;
 constexpr float  MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD = 25.0f;
 constexpr float  SPREAD_FOR_HUGE_BID                 = 0.50f;
