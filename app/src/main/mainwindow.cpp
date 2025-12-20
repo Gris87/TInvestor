@@ -799,7 +799,7 @@ void MainWindow::stopAutoPilot()
 
     for (auto it = biDirTradingThreads.constBegin(); it != biDirTradingThreads.constEnd(); ++it)
     {
-        it.value()->terminateThread();
+        it.value()->terminateThread(); // TODO: Crash is here
     }
 
     autoPilotPortfolioUpdateLastPricesTimer.stop();

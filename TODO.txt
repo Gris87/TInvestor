@@ -1,7 +1,113 @@
 Fix crashes
+
+------------------------------
+#1  0x000059e90ced3349 in MainWindow::stopAutoPilot (this=0x7ffc67954be0) at ../../../app/src/main/mainwindow.cpp:802
+#2  0x000059e90ced0229 in MainWindow::authFailed (this=0x7ffc67954be0, errorCodeString=...) at ../../../app/src/main/mainwindow.cpp:474
+#3  0x000059e90d0799c6 in MainWindow::qt_static_metacall (_o=0x7ffc67954be0, _c=QMetaObject::InvokeMetaMethod, _id=3, _a=0x7ffc67952530) at build/gen/TInvestor/moc/moc_mainwindow.cpp:317
+#4  0x000075ddf73ed450 in ?? () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#5  0x000059e90d079553 in QMetaObject::activate<void, QString> (sender=0x7ffc67954230, mo=0x59e90f6f2620 <IGrpcClient::staticMetaObject>, local_signal_index=0, ret=0x0)
+    at ../../../../Qt/6.11.0/gcc_64/include/QtCore/qobjectdefs.h:319
+#6  0x000059e90d0793f2 in IGrpcClient::authFailed (this=0x7ffc67954230, _t1=...) at build/gen/TInvestor/moc/moc_igrpcclient.cpp:119
+#7  0x000059e90ce9f0d0 in GrpcClient::emitAuthFailed (this=0x7ffc67954230, status=...) at ../../../app/src/grpc/grpcclient.cpp:637
+#8  0x000059e90ceafb82 in GrpcClient::repeatRequest<tinkoff::public_::invest::api::contract::v1::CancelOrderRequest, std::shared_ptr<tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>, std::unique_ptr<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub, std::default_delete<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub> > > (
+    this=0x7ffc67954230, parentThread=0x59e922585f10, 
+    action=0x59e90ce9def4 <cancelOrderAction(IRawGrpcClient*, std::unique_ptr<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub, std::default_delete<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub> > const&, std::shared_ptr<grpc::CallCredentials> const&, tinkoff::public_::invest::api::contract::v1::CancelOrderRequest const&, std::shared_ptr<tinkoff::public_::invest::api::contract::v1::CancelOrderResponse> const&)>, service=std::unique_ptr<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub> = {...}, req=..., 
+    resp=std::shared_ptr<tinkoff::public_::invest::api::contract::v1::CancelOrderResponse> (use count 1, weak count 0) = {...}, ignoreInvalidArg=true)
+    at ../../../app/src/grpc/grpcclient.h:78
+#9  0x000059e90ce9e186 in GrpcClient::cancelOrder (this=0x7ffc67954230, parentThread=0x59e922585f10, accountId=..., orderId=...) at ../../../app/src/grpc/grpcclient.cpp:496
+#10 0x000059e90cefe4dc in BiDirTradingThread::cancelBuyOrder (this=0x59e9230acc80) at ../../../app/src/threads/bidirtrading/bidirtradingthread.cpp:689
+#11 0x000059e90cefbd41 in BiDirTradingThread::~BiDirTradingThread (this=0x59e9230acc80, __in_chrg=<optimized out>) at ../../../app/src/threads/bidirtrading/bidirtradingthread.cpp:97
+#12 0x000059e90cefbdf6 in BiDirTradingThread::~BiDirTradingThread (this=0x59e9230acc80, __in_chrg=<optimized out>) at ../../../app/src/threads/bidirtrading/bidirtradingthread.cpp:101
+#13 0x000059e90ced3693 in MainWindow::stopAutoPilot (this=0x7ffc67954be0) at ../../../app/src/main/mainwindow.cpp:825
+#14 0x000059e90ced0229 in MainWindow::authFailed (this=0x7ffc67954be0, errorCodeString=...) at ../../../app/src/main/mainwindow.cpp:474
+#15 0x000059e90d0799c6 in MainWindow::qt_static_metacall (_o=0x7ffc67954be0, _c=QMetaObject::InvokeMetaMethod, _id=3, _a=0x75ddac8bdff8) at build/gen/TInvestor/moc/moc_mainwindow.cpp:317
+#16 0x000075ddf73e11e9 in QObject::event(QEvent*) () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#17 0x000075ddf8b9341b in QApplicationPrivate::notify_helper(QObject*, QEvent*) () from /home/user/TInvestor/app/build/libQt6Widgets.so.6
+#18 0x000075ddf73883a0 in QCoreApplication::notifyInternal2(QObject*, QEvent*) () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#19 0x000075ddf738bf34 in QCoreApplicationPrivate::sendPostedEvents(QObject*, int, QThreadData*) () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#20 0x000075ddf7692e17 in ?? () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#21 0x000075ddf6d145c5 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#22 0x000075ddf6d73737 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#23 0x000075ddf6d13a63 in g_main_context_iteration () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#24 0x000075ddf76924be in QEventDispatcherGlib::processEvents(QFlags<QEventLoop::ProcessEventsFlag>) () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#25 0x000075ddf739464b in QEventLoop::exec(QFlags<QEventLoop::ProcessEventsFlag>) () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#26 0x000075ddf738ffba in QCoreApplication::exec() () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#27 0x000059e90d06a6f3 in runApplication (app=0x7ffc679559a0) at ../../../app/src/main.cpp:628
+#28 0x000059e90d06c7e6 in main (argc=2, argv=0x7ffc67955b18) at ../../../app/src/main.cpp:671
+------------------------------
+#0  __pthread_kill_implementation (no_tid=0, signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:44
+#1  __pthread_kill_internal (signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:78
+#2  __GI___pthread_kill (threadid=<optimized out>, signo=signo@entry=6) at ./nptl/pthread_kill.c:89
+#3  0x00007c533be4527e in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+#4  0x00007c533be288ff in __GI_abort () at ./stdlib/abort.c:79
+#5  0x00007c533c6c2f76 in ?? () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#6  0x00007c533c704114 in ?? () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#7  0x00007c533c6c47cb in QMessageLogger::fatal(char const*, ...) const () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#8  0x00007c533c6c2fd5 in qt_assert(char const*, char const*, int) () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#9  0x000061d7746f213f in QStringView::QStringView<QChar, true> (this=0x7fff501ac210, str=0x0, len=36) at ../../../../Qt/6.11.0/gcc_64/include/QtCore/qstringview.h:135
+#10 0x000061d774753924 in QStringView::QStringView<QString, true> (this=0x7fff501ac210, str=...) at ../../../../Qt/6.11.0/gcc_64/include/QtCore/qstringview.h:165
+#11 0x000061d77475241d in compareThreeWay (s1=..., s2=...) at ../../../../Qt/6.11.0/gcc_64/include/QtCore/qstring.h:904
+#12 0x000061d77475248f in operator<=>(QString const&, QString const&) (lhs=..., rhs=...) at ../../../../Qt/6.11.0/gcc_64/include/QtCore/qstring.h:905
+#13 0x000061d774755cf7 in std::less<QString>::operator() (this=0x61d7a8810008, __x=..., __y=...) at /usr/include/c++/13/bits/stl_function.h:408
+#14 0x000061d77485fb17 in std::_Rb_tree<QString, std::pair<QString const, long long>, std::_Select1st<std::pair<QString const, long long> >, std::less<QString>, std::allocator<std::pair<QString const, long long> > >::_M_lower_bound (this=0x61d7a8810008, __x=0x61d7a6fc0700, __y=0x61d7a8810010, __k=...) at /usr/include/c++/13/bits/stl_tree.h:1952
+#15 0x000061d77485e67c in std::_Rb_tree<QString, std::pair<QString const, long long>, std::_Select1st<std::pair<QString const, long long> >, std::less<QString>, std::allocator<std::pair<QString const, long long> > >::find (this=0x61d7a8810008, __k=...) at /usr/include/c++/13/bits/stl_tree.h:2532
+#16 0x000061d77485d9cd in std::map<QString, long long, std::less<QString>, std::allocator<std::pair<QString const, long long> > >::find (this=0x61d7a8810008, __x=...)
+    at /usr/include/c++/13/bits/stl_map.h:1220
+#17 0x000061d77485d112 in QMap<QString, long long>::operator[] (this=0x7fff501aee20, key=...) at ../../../../Qt/6.11.0/gcc_64/include/QtCore/qmap.h:380
+#18 0x000061d77485c3c8 in AutoPilotDecisionMakerThread::notifyAboutSell (this=0x7fff501aedc0, instrumentId=...)
+    at ../../../app/src/threads/autopilotdecisionmaker/autopilotdecisionmakerthread.cpp:104
+#19 0x000061d77483b374 in MainWindow::autoPilotTradeInstruments (this=0x7fff501af5b0, instruments=...) at ../../../app/src/main/mainwindow.cpp:986
+#20 0x000061d7749e0deb in MainWindow::qt_static_metacall (_o=0x7fff501af5b0, _c=QMetaObject::InvokeMetaMethod, _id=41, _a=0x7fff501ac630) at build/gen/TInvestor/moc/moc_mainwindow.cpp:355
+#21 0x00007c533c7ed450 in ?? () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#22 0x000061d7749e3597 in QMetaObject::activate<void, QMap<QString, TradingInfo> > (sender=0x61d7a6ce2f20, mo=0x61d777060780 <IDecisionMakerWidget::staticMetaObject>, local_signal_index=0, 
+    ret=0x0) at ../../../../Qt/6.11.0/gcc_64/include/QtCore/qobjectdefs.h:319
+#23 0x000061d7749f1032 in IDecisionMakerWidget::tradeInstruments (this=0x61d7a6ce2f20, _t1=...) at build/gen/TInvestor/moc/moc_idecisionmakerwidget.cpp:120
+#24 0x000061d7748f237b in DecisionMakerWidget::portfolioTreeWidgetManualSell (this=0x61d7a6ce2f20, instruments=...)
+    at ../../../app/src/widgets/decisionmakerwidget/decisionmakerwidget.cpp:211
+#25 0x000061d7749f05c1 in DecisionMakerWidget::qt_static_metacall (_o=0x61d7a6ce2f20, _c=QMetaObject::InvokeMetaMethod, _id=1, _a=0x7fff501ac7e0)
+    at build/gen/TInvestor/moc/moc_decisionmakerwidget.cpp:114
+#26 0x00007c533c7ed450 in ?? () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#27 0x000061d7749e3597 in QMetaObject::activate<void, QMap<QString, TradingInfo> > (sender=0x61d7a6d36330, mo=0x61d777062b80 <IPortfolioTreeWidget::staticMetaObject>, local_signal_index=0, 
+    ret=0x0) at ../../../../Qt/6.11.0/gcc_64/include/QtCore/qobjectdefs.h:319
+#28 0x000061d7749f3fa2 in IPortfolioTreeWidget::tradeInstruments (this=0x61d7a6d36330, _t1=...) at build/gen/TInvestor/moc/moc_iportfoliotreewidget.cpp:120
+#29 0x000061d77490de2b in PortfolioTreeWidget::sellInstrument (this=0x61d7a6d36330, mode=ASAP_MODE_NONE, modeText=...)
+    at ../../../app/src/widgets/portfoliotreewidget/portfoliotreewidget.cpp:197
+#30 0x000061d77490db12 in PortfolioTreeWidget::actionSellGoodYieldTriggered (this=0x61d7a6d36330) at ../../../app/src/widgets/portfoliotreewidget/portfoliotreewidget.cpp:179
+#31 0x000061d7749f44b2 in PortfolioTreeWidget::qt_static_metacall (_o=0x61d7a6d36330, _c=QMetaObject::InvokeMetaMethod, _id=3, _a=0x7fff501acab0)
+    at build/gen/TInvestor/moc/moc_portfoliotreewidget.cpp:92
+#32 0x00007c533c7ed450 in ?? () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#33 0x00007c533d867a06 in QAction::triggered(bool) () from /home/user/TInvestor/app/build/libQt6Gui.so.6
+#34 0x00007c533d86aacd in QAction::activate(QAction::ActionEvent) () from /home/user/TInvestor/app/build/libQt6Gui.so.6
+#35 0x00007c533e17a26e in ?? () from /home/user/TInvestor/app/build/libQt6Widgets.so.6
+#36 0x00007c533e182c53 in ?? () from /home/user/TInvestor/app/build/libQt6Widgets.so.6
+#37 0x00007c533dff748e in QWidget::event(QEvent*) () from /home/user/TInvestor/app/build/libQt6Widgets.so.6
+#38 0x00007c533df9341b in QApplicationPrivate::notify_helper(QObject*, QEvent*) () from /home/user/TInvestor/app/build/libQt6Widgets.so.6
+#39 0x00007c533df9c5f8 in QApplication::notify(QObject*, QEvent*) () from /home/user/TInvestor/app/build/libQt6Widgets.so.6
+#40 0x00007c533c7883a0 in QCoreApplication::notifyInternal2(QObject*, QEvent*) () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#41 0x00007c533df9b009 in QApplicationPrivate::sendMouseEvent(QWidget*, QMouseEvent*, QWidget*, QWidget*, QWidget**, QPointer<QWidget>&, bool, bool) ()
+   from /home/user/TInvestor/app/build/libQt6Widgets.so.6
+#42 0x00007c533e00bad1 in ?? () from /home/user/TInvestor/app/build/libQt6Widgets.so.6
+#43 0x00007c533e00e3c8 in ?? () from /home/user/TInvestor/app/build/libQt6Widgets.so.6
+#44 0x00007c533df9341b in QApplicationPrivate::notify_helper(QObject*, QEvent*) () from /home/user/TInvestor/app/build/libQt6Widgets.so.6
+#45 0x00007c533c7883a0 in QCoreApplication::notifyInternal2(QObject*, QEvent*) () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#46 0x00007c533d45a732 in QWindowPrivate::forwardToPopup(QEvent*, QWindow const*) () from /home/user/TInvestor/app/build/libQt6Gui.so.6
+#47 0x00007c533d3f9465 in QGuiApplicationPrivate::processMouseEvent(QWindowSystemInterfacePrivate::MouseEvent*) () from /home/user/TInvestor/app/build/libQt6Gui.so.6
+#48 0x00007c533d4620fc in QWindowSystemInterface::sendWindowSystemEvents(QFlags<QEventLoop::ProcessEventsFlag>) () from /home/user/TInvestor/app/build/libQt6Gui.so.6
+#49 0x00007c533906531e in ?? () from /home/user/TInvestor/app/build/libQt6XcbQpa.so.6
+#50 0x00007c533c1145c5 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#51 0x00007c533c173737 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#52 0x00007c533c113a63 in g_main_context_iteration () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#53 0x00007c533ca924be in QEventDispatcherGlib::processEvents(QFlags<QEventLoop::ProcessEventsFlag>) () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#54 0x00007c533c79464b in QEventLoop::exec(QFlags<QEventLoop::ProcessEventsFlag>) () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#55 0x00007c533c78ffba in QCoreApplication::exec() () from /home/user/TInvestor/app/build/libQt6Core.so.6
+#56 0x000061d7749d16f3 in runApplication (app=0x7fff501b0370) at ../../../app/src/main.cpp:628
+#57 0x000061d7749d37e6 in main (argc=2, argv=0x7fff501b04e8) at ../../../app/src/main.cpp:671
+------------------------------
+
 Create script for creating map instrument => minimum spread for good yield
 Terminate all tradings if mega sell detected
 Do not buy bi-dir if price raise recently
+Huge spread for weekend
 Dependent subdirs
 Try to take profit in 0.2% per bi-dir
 Different GRPC connection on order requests
