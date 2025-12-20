@@ -101,7 +101,7 @@ async def _handle_orderbook(client, account, instrument_id, spread, max_buy_pric
 
     for position in portfolio.positions:
         if position.instrument_uid == instrument_id:
-            amount_of_lots = int(quotation_to_decimal(position.quantity))
+            amount_of_lots = int(quotation_to_decimal(position.quantity_lots))
             avg_price = quotation_to_decimal(position.average_position_price)
 
             break
