@@ -19,7 +19,10 @@ TELEGRAM_SEND_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
 
 HUGE_SELL = 45.0
 HUNDRED_PERCENT = 100.0
-ONE_DAY = 24 * 60 * 60 * 1000
+MS_IN_SECOND = 1000
+ONE_MINUTE = 60 * MS_IN_SECOND
+ONE_HOUR = 60 * ONE_MINUTE
+ONE_DAY = 24 * ONE_HOUR
 HUGE_SELL_INTERVAL = 5 * ONE_DAY
 HUGE_SELL_STEP = 60
 
@@ -40,7 +43,7 @@ def _check_operations_json(args):
         content = f.read()
         operations = json.loads(f"[{content}]")
 
-    now = round(time.time() * 1000)
+    now = round(time.time() * MS_IN_SECOND)
     last_timestamp = operations[-1]["timestamp"]
 
     delta = now - last_timestamp
@@ -55,7 +58,7 @@ def _check_core_file(args):
     if core_file.exists():
         _send_message(args, msg_core_file_found)
 
-        now = round(time.time() * 1000)
+        now = round(time.time() * MS_IN_SECOND)
         os.rename(core_file, f"{core_file}_{now}")
 
 
