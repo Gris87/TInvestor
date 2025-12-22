@@ -7,13 +7,14 @@ import struct
 import subprocess
 import sys
 import time
+
 from loguru import logger
 from pathlib import Path
 
 from localization import *
 
 
-TELEGRAM_TOKEN = "8347815362:AAH2Xa8Mujy7OBsyJm_FWjZJeZekYaIABns"
+TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
 TELEGRAM_SEND_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
 
 HUGE_SELL = 45.0
