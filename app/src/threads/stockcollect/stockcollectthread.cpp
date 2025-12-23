@@ -644,6 +644,7 @@ static void getCandlesWithHttp(
 
             url.setQuery(query.query());
 
+            // TODO: No need
             IHttpClient::Headers headers;
             userStorage->readLock();
             headers["Authorization"] = QString("Bearer %1").arg(userStorage->getToken());

@@ -20,10 +20,9 @@ CSV_FIELD_VOLUME = 6
 zip_filename_regexp = re.compile(r".*_(\d{4})(\d{2})(\d{2})\.csv")
 
 
-def load_data(args, stock, start_timestamp, end_timestamp):
+def load_data(args, instrument_id, start_timestamp, end_timestamp):
     res = []
 
-    instrument_id = stock["instrumentId"]
     cache_folder_path = Path(args.cache) / "bidirinfo"
 
     start_datetime = datetime.fromtimestamp(start_timestamp / MS_IN_SECOND, timezone.utc)
@@ -54,10 +53,10 @@ def load_data(args, stock, start_timestamp, end_timestamp):
                                 for row in csv_reader:
                                     entry = {
                                         "timestamp": int(datetime.fromisoformat(row[CSV_FIELD_TIMESTAMP]).timestamp() * 1000),
-                                        "openPrice": row[CSV_FIELD_OPEN_PRICE],
-                                        "closePrice": row[CSV_FIELD_CLOSE_PRICE],
-                                        "highPrice": row[CSV_FIELD_HIGH_PRICE],
-                                        "lowPrice": row[CSV_FIELD_LOW_PRICE],
+                                        "openPrice": float(row[CSV_FIELD_OPEN_PRICE]),
+                                        "closePrice": float(row[CSV_FIELD_CLOSE_PRICE]),
+                                        "highPrice": float(row[CSV_FIELD_HIGH_PRICE]),
+                                        "lowPrice": float(row[CSV_FIELD_LOW_PRICE]),
                                     }
 
                                     res.append(entry)
