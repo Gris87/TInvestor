@@ -99,7 +99,9 @@ def _process_stock(args, stock):
                     "--instrument-id", instrument_id,
                     "--min-price-increment", min_price_increment,
                     "--spread", f"{spread:.1f}",
-                    "--min-yield", f"{min_yield:.1f}"
+                    "--min-yield", f"{min_yield:.1f}",
+                    "--start-timestamp", str(start_timestamp),
+                    "--end-timestamp", str(end_timestamp)
                 ]
             )
 

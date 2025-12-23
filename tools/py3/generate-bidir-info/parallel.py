@@ -45,6 +45,20 @@ if __name__ == "__main__":
         default=0.1,
         help="Minimum yield",
     )
+    parser.add_argument(
+        "--start-timestamp",
+        dest="start_timestamp",
+        type=int,
+        default=0,
+        help="Start timestamp",
+    )
+    parser.add_argument(
+        "--end-timestamp",
+        dest="end_timestamp",
+        type=int,
+        default=0,
+        help="End timestamp",
+    )
     args = parser.parse_args()
 
     sys.exit(0 if process_stock(args) else 1)
