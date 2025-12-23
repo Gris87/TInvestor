@@ -107,6 +107,7 @@ Fix crashes
 Create script for creating map instrument => minimum spread for good yield
 Terminate all tradings if mega sell detected
 Do not buy bi-dir if price raise recently
+Do not cancel sell order for bi-dir
 Huge spread for weekend
 Dependent subdirs
 Try to take profit in 0.2% per bi-dir

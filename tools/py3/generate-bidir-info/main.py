@@ -8,6 +8,8 @@ from datetime import datetime, timezone
 from http import HTTPStatus
 from pathlib import Path
 
+from utils import *
+
 
 HISTORY_DATA_URL = "https://invest-public-api.tinkoff.ru/history-data"
 
@@ -38,20 +40,21 @@ def _get_stocks(args):
 def _process_stocks(args, stocks):
     res = []
 
-    print("=========================================================")
-    print("N        Stock    Spread  Min Yield  Total yield")
-    print("=========================================================")
+    print("========================================================")
+    print("N          Stock      Spread    Min Yield    Total yield")
+    print("========================================================")
 
     for i, stock in enumerate(stocks):
         instrument_ticker = stock["instrumentTicker"]
 
-        print(f"{i+1:3}/{len(stocks)}  {instrument_ticker:9}", end="", flush=True)
-        stock_result, total_yield = _process_stock(args, stock)
+        print(f"{i+1:3}/{len(stocks)}    {instrument_ticker:11}", end="", flush=True)
+        stock_result = _process_stock(args, stock)
 
         spread = stock_result["spread"]
         min_yield = stock_result["minYield"]
+        total_yield = stock_result["totalYield"]
 
-        print(f"{spread:3}%    {min_yield:3}%     {total_yield:5}%")
+        print(f"{spread:3}%      {min_yield:3}%       {total_yield:5}%")
 
         res.append(stock_result)
 
@@ -68,11 +71,13 @@ def _process_stock(args, stock):
     end_timestamp   = now
 
     _download_data(args, stock, start_timestamp, end_timestamp)
+    data = load_data(args, stock, start_timestamp, end_timestamp)
 
     res["spread"] = 0.7
     res["minYield"] = 0.3
+    res["totalYield"] = 1.0
 
-    return res, total_yield
+    return res
 
 
 def _download_data(args, stock, start_timestamp, end_timestamp):
@@ -126,7 +131,7 @@ def main():
         "--month-range",
         dest="month_range",
         type=int,
-        default=21,  # TODO: 1
+        default=1,
         help="Amount of months to check"
     )
     parser.add_argument(
