@@ -5,6 +5,7 @@ import math
 import os
 import re
 import requests
+import shutil
 import subprocess
 import sys
 import time
@@ -46,7 +47,12 @@ zip_filename_regexp = re.compile(r".*_(\d{4})(\d{2})(\d{2})\.csv")
 
 def generate_bidir_info(args):
     stocks = _get_stocks(args)
-    _process_stocks(args, stocks)
+    bidir_info = _process_stocks(args, stocks)
+
+    with open(args.output, "w", encoding="utf-8") as f:
+        json.dump(bidir_info, f, ensure_ascii=False)
+
+    shutil.rmtree(Path(args.cache) / "bidirinfo")
 
     return True
 
@@ -58,11 +64,13 @@ def _get_stocks(args):
         content = f.read()
         res = json.loads(content)
 
+    res.sort(key=lambda x: x["instrumentTicker"])
+
     return res
 
 
 def _process_stocks(args, stocks):
-    res = []
+    res = {}
 
     print("========================================================")
     print("N          Stock      Spread    Min Yield    Total yield")
@@ -70,6 +78,7 @@ def _process_stocks(args, stocks):
 
     for i, stock in enumerate(stocks):
         instrument_ticker = stock["instrumentTicker"]
+        instrument_id = stock["instrumentId"]
 
         print(f"{i+1:3}/{len(stocks)}    {instrument_ticker:11}", end="", flush=True)
         stock_result = _process_stock(args, stock)
@@ -78,9 +87,9 @@ def _process_stocks(args, stocks):
         min_yield = stock_result["minYield"]
         total_yield = stock_result["totalYield"]
 
-        print(f"{spread:3}%      {min_yield:3}%       {total_yield:5}%")
+        print(f"{spread:3}%      {min_yield:3}%        {total_yield:5}%")
 
-        res.append(stock_result)
+        res[instrument_id] = stock_result
 
     return res
 
@@ -139,6 +148,8 @@ def _process_stock(args, stock):
                 res["spread"] = float(fields[0])
                 res["minYield"] = float(fields[1])
                 res["totalYield"] = total_yield
+
+    preprocess_file.unlink()
 
     return res
 
