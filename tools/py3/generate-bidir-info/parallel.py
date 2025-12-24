@@ -1,11 +1,53 @@
 import argparse
+import json
 import sys
+
+from pathlib import Path
+
+
+BAD_YIELD = -3.0
 
 
 def process_stock(args):
-    print("0.4;0.1;10.0")
+    preprocess_data = _load_preprocess_data(args)
+    total_yield = _calculate_total_yield(args, preprocess_data)
+
+    print(f"{args.spread};{args.min_yield};{total_yield:.1f}")
 
     return True
+
+
+def _load_preprocess_data(args):
+    res = {}
+
+    with open(Path(args.cache) / "bidirinfo" / f"{args.instrument_id}.json", "r", encoding="utf-8") as f:
+        content = f.read()
+        res = json.loads(content)
+
+    return res
+
+
+def _calculate_total_yield(args, preprocess_data):
+    total_yield = 0.0
+
+    min_price_increment = preprocess_data["minPriceIncrement"]
+    spreads = preprocess_data["spreads"]
+    data = preprocess_data["data"]
+
+    for spread in spreads:
+        if spread["spread"] < args.spread:
+            break
+
+        if _is_good_to_buy(args, data, spread["index"], min_price_increment):
+            total_yield += args.min_yield
+        else:
+            total_yield += BAD_YIELD
+
+    return total_yield
+
+
+def _is_good_to_buy(args, data, index, min_price_increment):
+    return False
 
 
 if __name__ == "__main__":

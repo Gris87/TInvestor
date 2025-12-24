@@ -138,6 +138,13 @@ def _process_stock(args, stock):
     res["minYield"] = 0.1
     res["totalYield"] = 0.0
 
+    # TODO: Remove it
+    success, output = _execute_command(commands[0])
+    print("")
+    for line in output:
+        print(line)
+    sys.exit(1000)
+
     success, output = _execute_commands(commands)
 
     if success:
@@ -255,7 +262,7 @@ def _preprocess_stock(stock, data):
     spreads.sort(key=lambda x: x["spread"], reverse=True)
 
     return {
-        "stock": stock,
+        "minPriceIncrement": stock["minPriceIncrement"],
         "spreads": spreads,
         "maxSpread": math.floor(max_spread * 10.0) / 10.0,
         "data": data
