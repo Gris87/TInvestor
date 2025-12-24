@@ -25,13 +25,6 @@ if __name__ == "__main__":
         help="Instrument ID",
     )
     parser.add_argument(
-        "--min-price-increment",
-        dest="min_price_increment",
-        type=float,
-        default=0.1,
-        help="Minimum price increment",
-    )
-    parser.add_argument(
         "--spread",
         dest="spread",
         type=float,
@@ -44,20 +37,6 @@ if __name__ == "__main__":
         type=float,
         default=0.1,
         help="Minimum yield",
-    )
-    parser.add_argument(
-        "--start-timestamp",
-        dest="start_timestamp",
-        type=int,
-        default=0,
-        help="Start timestamp",
-    )
-    parser.add_argument(
-        "--end-timestamp",
-        dest="end_timestamp",
-        type=int,
-        default=0,
-        help="End timestamp",
     )
     args = parser.parse_args()
 
