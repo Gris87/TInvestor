@@ -49,6 +49,8 @@ def generate_bidir_info(args):
     stocks = _get_stocks(args)
     bidir_info = _process_stocks(args, stocks)
 
+    Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(bidir_info, f, ensure_ascii=False)
 
@@ -77,8 +79,8 @@ def _process_stocks(args, stocks):
     print("========================================================")
 
     for i, stock in enumerate(stocks):
-        instrument_ticker = stock["instrumentTicker"]
         instrument_id = stock["instrumentId"]
+        instrument_ticker = stock["instrumentTicker"]
 
         print(f"{i+1:3}/{len(stocks)}    {instrument_ticker:11}", end="", flush=True)
         stock_result = _process_stock(args, stock)
@@ -133,7 +135,7 @@ def _process_stock(args, stock):
         spread += 0.1
 
     res["spread"] = max_spread
-    res["minYield"] = 0.3
+    res["minYield"] = 0.1
     res["totalYield"] = 0.0
 
     success, output = _execute_commands(commands)
@@ -230,7 +232,7 @@ def _download_file(params):
 
 def _preprocess_stock(stock, data):
     spreads = []
-    max_spread = 0.0
+    max_spread = MINIMUM_SPREAD
 
     for i in range(len(data) - 1):
         cur = data[i]
@@ -248,7 +250,7 @@ def _preprocess_stock(stock, data):
                     "spread": spread
                 })
 
-            max_spread = max(max_spread, spread)
+                max_spread = max(max_spread, spread)
 
     spreads.sort(key=lambda x: x["spread"], reverse=True)
 
