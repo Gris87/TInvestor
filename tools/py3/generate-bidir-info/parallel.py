@@ -1,11 +1,22 @@
 import argparse
 import json
+import math
 import sys
 
 from pathlib import Path
 
 
+HUNDRED_PERCENT = 100
+
+MS_IN_SECOND = 1000
+ONE_MINUTE   = 60 * MS_IN_SECOND
+ONE_HOUR     = 60 * ONE_MINUTE
+
+MINIMUM_STEP_DELTA = 2 * ONE_HOUR
+
+GOOD_COUNT_DOUBLE_CHECK = 3
 BAD_YIELD = -3.0
+COMMISSION = 0.04
 
 
 def process_stock(args):
@@ -21,8 +32,7 @@ def _load_preprocess_data(args):
     res = {}
 
     with open(Path(args.cache) / "bidirinfo" / f"{args.instrument_id}.json", "r", encoding="utf-8") as f:
-        content = f.read()
-        res = json.loads(content)
+        res = json.loads(f.read())
 
     return res
 
@@ -34,11 +44,18 @@ def _calculate_total_yield(args, preprocess_data):
     spreads = preprocess_data["spreads"]
     data = preprocess_data["data"]
 
-    for spread in spreads:
-        if spread["spread"] < args.spread:
-            break
+    index = 0
 
-        if _is_good_to_buy(args, data, spread["index"], min_price_increment):
+    for spread in spreads:
+        if spread["index"] < index:
+            continue
+
+        if spread["spread"] < args.spread:
+            continue
+
+        ok, index = _is_good_to_buy(args, data, spread["index"], min_price_increment)
+
+        if ok:
             total_yield += args.min_yield
         else:
             total_yield += BAD_YIELD
@@ -47,7 +64,39 @@ def _calculate_total_yield(args, preprocess_data):
 
 
 def _is_good_to_buy(args, data, index, min_price_increment):
-    return False
+    cur = data[index]
+    next = data[index + 1]
+
+    cur_close_price = cur["closePrice"]
+    buy_price = cur_close_price * (1 - (args.spread / HUNDRED_PERCENT))
+    buy_price = max(math.floor(buy_price / min_price_increment) * min_price_increment, next["lowPrice"])
+
+    good_sell_price = buy_price * (1 + ((args.min_yield + 2 * COMMISSION) / HUNDRED_PERCENT))
+    good_sell_price = (math.ceil(good_sell_price / min_price_increment) + 1) * min_price_increment
+    bad_sell_price = buy_price * (1 + ((BAD_YIELD + 2 * COMMISSION) / HUNDRED_PERCENT))
+
+    index += 1
+    good_count = 0
+
+    while index < len(data) - 1:
+        cur = data[index]
+        next = data[index + 1]
+
+        #if next["timestamp"] - cur["timestamp"] >= MINIMUM_STEP_DELTA:
+        #    break
+
+        if cur["closePrice"] <= bad_sell_price:
+            break
+
+        if cur["highPrice"] >= good_sell_price:
+            good_count += 1
+
+            if good_count >= GOOD_COUNT_DOUBLE_CHECK:
+                return True, index
+
+        index += 1
+
+    return False, index
 
 
 if __name__ == "__main__":

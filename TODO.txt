@@ -10,8 +10,8 @@ Fix crashes
 #6  0x000059e90d0793f2 in IGrpcClient::authFailed (this=0x7ffc67954230, _t1=...) at build/gen/TInvestor/moc/moc_igrpcclient.cpp:119
 #7  0x000059e90ce9f0d0 in GrpcClient::emitAuthFailed (this=0x7ffc67954230, status=...) at ../../../app/src/grpc/grpcclient.cpp:637
 #8  0x000059e90ceafb82 in GrpcClient::repeatRequest<tinkoff::public_::invest::api::contract::v1::CancelOrderRequest, std::shared_ptr<tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>, std::unique_ptr<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub, std::default_delete<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub> > > (
-    this=0x7ffc67954230, parentThread=0x59e922585f10, 
-    action=0x59e90ce9def4 <cancelOrderAction(IRawGrpcClient*, std::unique_ptr<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub, std::default_delete<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub> > const&, std::shared_ptr<grpc::CallCredentials> const&, tinkoff::public_::invest::api::contract::v1::CancelOrderRequest const&, std::shared_ptr<tinkoff::public_::invest::api::contract::v1::CancelOrderResponse> const&)>, service=std::unique_ptr<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub> = {...}, req=..., 
+    this=0x7ffc67954230, parentThread=0x59e922585f10,
+    action=0x59e90ce9def4 <cancelOrderAction(IRawGrpcClient*, std::unique_ptr<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub, std::default_delete<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub> > const&, std::shared_ptr<grpc::CallCredentials> const&, tinkoff::public_::invest::api::contract::v1::CancelOrderRequest const&, std::shared_ptr<tinkoff::public_::invest::api::contract::v1::CancelOrderResponse> const&)>, service=std::unique_ptr<tinkoff::public_::invest::api::contract::v1::OrdersService::Stub> = {...}, req=...,
     resp=std::shared_ptr<tinkoff::public_::invest::api::contract::v1::CancelOrderResponse> (use count 1, weak count 0) = {...}, ignoreInvalidArg=true)
     at ../../../app/src/grpc/grpcclient.h:78
 #9  0x000059e90ce9e186 in GrpcClient::cancelOrder (this=0x7ffc67954230, parentThread=0x59e922585f10, accountId=..., orderId=...) at ../../../app/src/grpc/grpcclient.cpp:496
@@ -59,7 +59,7 @@ Fix crashes
 #19 0x000061d77483b374 in MainWindow::autoPilotTradeInstruments (this=0x7fff501af5b0, instruments=...) at ../../../app/src/main/mainwindow.cpp:986
 #20 0x000061d7749e0deb in MainWindow::qt_static_metacall (_o=0x7fff501af5b0, _c=QMetaObject::InvokeMetaMethod, _id=41, _a=0x7fff501ac630) at build/gen/TInvestor/moc/moc_mainwindow.cpp:355
 #21 0x00007c533c7ed450 in ?? () from /home/user/TInvestor/app/build/libQt6Core.so.6
-#22 0x000061d7749e3597 in QMetaObject::activate<void, QMap<QString, TradingInfo> > (sender=0x61d7a6ce2f20, mo=0x61d777060780 <IDecisionMakerWidget::staticMetaObject>, local_signal_index=0, 
+#22 0x000061d7749e3597 in QMetaObject::activate<void, QMap<QString, TradingInfo> > (sender=0x61d7a6ce2f20, mo=0x61d777060780 <IDecisionMakerWidget::staticMetaObject>, local_signal_index=0,
     ret=0x0) at ../../../../Qt/6.11.0/gcc_64/include/QtCore/qobjectdefs.h:319
 #23 0x000061d7749f1032 in IDecisionMakerWidget::tradeInstruments (this=0x61d7a6ce2f20, _t1=...) at build/gen/TInvestor/moc/moc_idecisionmakerwidget.cpp:120
 #24 0x000061d7748f237b in DecisionMakerWidget::portfolioTreeWidgetManualSell (this=0x61d7a6ce2f20, instruments=...)
@@ -67,7 +67,7 @@ Fix crashes
 #25 0x000061d7749f05c1 in DecisionMakerWidget::qt_static_metacall (_o=0x61d7a6ce2f20, _c=QMetaObject::InvokeMetaMethod, _id=1, _a=0x7fff501ac7e0)
     at build/gen/TInvestor/moc/moc_decisionmakerwidget.cpp:114
 #26 0x00007c533c7ed450 in ?? () from /home/user/TInvestor/app/build/libQt6Core.so.6
-#27 0x000061d7749e3597 in QMetaObject::activate<void, QMap<QString, TradingInfo> > (sender=0x61d7a6d36330, mo=0x61d777062b80 <IPortfolioTreeWidget::staticMetaObject>, local_signal_index=0, 
+#27 0x000061d7749e3597 in QMetaObject::activate<void, QMap<QString, TradingInfo> > (sender=0x61d7a6d36330, mo=0x61d777062b80 <IPortfolioTreeWidget::staticMetaObject>, local_signal_index=0,
     ret=0x0) at ../../../../Qt/6.11.0/gcc_64/include/QtCore/qobjectdefs.h:319
 #28 0x000061d7749f3fa2 in IPortfolioTreeWidget::tradeInstruments (this=0x61d7a6d36330, _t1=...) at build/gen/TInvestor/moc/moc_iportfoliotreewidget.cpp:120
 #29 0x000061d77490de2b in PortfolioTreeWidget::sellInstrument (this=0x61d7a6d36330, mode=ASAP_MODE_NONE, modeText=...)
@@ -104,6 +104,7 @@ Fix crashes
 #57 0x000061d7749d37e6 in main (argc=2, argv=0x7fff501b04e8) at ../../../app/src/main.cpp:671
 ------------------------------
 
+Always check for buy decisions even if already keep some
 Create script for creating map instrument => minimum spread for good yield
 Terminate all tradings if mega sell detected
 Do not buy bi-dir if price raise recently

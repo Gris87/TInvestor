@@ -1,5 +1,6 @@
 import argparse
 import csv
+import datetime as dt
 import json
 import math
 import os
@@ -16,9 +17,10 @@ from datetime import datetime, timezone
 from http import HTTPStatus
 from io import TextIOWrapper
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 
-path_to_script = Path(__file__).parent
+PATH_TO_SCRIPT = Path(__file__).parent
 
 HISTORY_DATA_URL = "https://invest-public-api.tinkoff.ru/history-data"
 
@@ -32,7 +34,7 @@ ONE_MONTH    = 31 * ONE_DAY
 
 MINIMUM_STEP_DELTA = 2 * ONE_HOUR
 MINIMUM_SPREAD = 0.4
-MINIMUM_YIELD_VARIANTS = [0.1, 0.2, 0.3, 0.4]
+MINIMUM_YIELD_VARIANTS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
 
 CSV_FIELD_FIGI = 0
 CSV_FIELD_TIMESTAMP = 1
@@ -42,7 +44,20 @@ CSV_FIELD_HIGH_PRICE = 4
 CSV_FIELD_LOW_PRICE = 5
 CSV_FIELD_VOLUME = 6
 
-zip_filename_regexp = re.compile(r".*_(\d{4})(\d{2})(\d{2})\.csv")
+ZIP_FILENAME_REGEXP = re.compile(r".*_(\d{4})(\d{2})(\d{2})\.csv")
+
+MOSCOW_TZ = ZoneInfo("Europe/Moscow")
+
+WORKDAY_START = dt.time(10, 5, tzinfo=MOSCOW_TZ)
+WORKDAY_END   = dt.time(18, 40, tzinfo=MOSCOW_TZ)
+
+LNZL_UID  = "4563f7a1-8245-4caf-aba5-ac49827ba775"
+LNZLP_UID = "28fdec79-fcf0-40cb-b53c-586179f024e5"
+
+BAD_INSTRUMENTS = {
+    LNZL_UID: 2.50,
+    LNZLP_UID: 2.00
+}
 
 
 def generate_bidir_info(args):
@@ -63,8 +78,7 @@ def _get_stocks(args):
     res = []
 
     with open(Path(args.path_to_stocks) / "stocks.json", "r", encoding="utf-8") as f:
-        content = f.read()
-        res = json.loads(content)
+        res = json.loads(f.read())
 
     res.sort(key=lambda x: x["instrumentTicker"])
 
@@ -89,7 +103,7 @@ def _process_stocks(args, stocks):
         min_yield = stock_result["minYield"]
         total_yield = stock_result["totalYield"]
 
-        print(f"{spread:3}%      {min_yield:3}%        {total_yield:5}%")
+        print(f"{spread:4}%     {min_yield:3}%        {total_yield:5}%")
 
         res[instrument_id] = stock_result
 
@@ -97,9 +111,14 @@ def _process_stocks(args, stocks):
 
 
 def _process_stock(args, stock):
-    res = {}
-
     instrument_id = stock["instrumentId"]
+
+    if instrument_id in BAD_INSTRUMENTS:
+        return {
+            "spread": BAD_INSTRUMENTS[instrument_id],
+            "minYield": 0.1,
+            "totalYield": 0.0
+        }
 
     now = round(time.time() * MS_IN_SECOND)
 
@@ -121,29 +140,25 @@ def _process_stock(args, stock):
 
     while spread <= max_spread:
         for min_yield in MINIMUM_YIELD_VARIANTS:
-            commands.append(
-                [
-                    "python",
-                    str(Path(path_to_script) / "parallel.py"),
-                    "--cache", args.cache,
-                    "--instrument-id", instrument_id,
-                    "--spread", f"{spread:.1f}",
-                    "--min-yield", f"{min_yield:.1f}"
-                ]
-            )
+            if min_yield < spread:
+                commands.append(
+                    [
+                        "python",
+                        str(Path(PATH_TO_SCRIPT) / "parallel.py"),
+                        "--cache", args.cache,
+                        "--instrument-id", instrument_id,
+                        "--spread", f"{spread:.1f}",
+                        "--min-yield", f"{min_yield:.1f}"
+                    ]
+                )
 
         spread += 0.1
 
-    res["spread"] = max_spread
-    res["minYield"] = 0.1
-    res["totalYield"] = 0.0
-
-    # TODO: Remove it
-    success, output = _execute_command(commands[0])
-    print("")
-    for line in output:
-        print(line)
-    sys.exit(1000)
+    res = {
+        "spread": max_spread,
+        "minYield": 0.1,
+        "totalYield": 0.0
+    }
 
     success, output = _execute_commands(commands)
 
@@ -193,7 +208,7 @@ def _download_data(args, instrument_id, start_timestamp, end_timestamp):
         if zip_file_path.exists():
             with zipfile.ZipFile(zip_file_path, "r") as z:
                 for filename in sorted(z.namelist()):
-                    match = zip_filename_regexp.match(filename)
+                    match = ZIP_FILENAME_REGEXP.match(filename)
 
                     if match is not None:
                         data_year = int(match.group(1))
@@ -252,17 +267,18 @@ def _preprocess_stock(stock, data):
             spread = HUNDRED_PERCENT - (next_low_price / cur_close_price) * HUNDRED_PERCENT
 
             if spread >= MINIMUM_SPREAD:
-                spreads.append({
-                    "index": i,
-                    "spread": spread
-                })
+                cur_datetime = datetime.fromtimestamp(cur["timestamp"] / MS_IN_SECOND)
 
-                max_spread = max(max_spread, spread)
+                if _is_working_day(cur_datetime):
+                    spreads.append({
+                        "index": i,
+                        "spread": spread
+                    })
 
-    spreads.sort(key=lambda x: x["spread"], reverse=True)
+                    max_spread = max(max_spread, spread)
 
     return {
-        "minPriceIncrement": stock["minPriceIncrement"],
+        "minPriceIncrement": float(stock["minPriceIncrement"]),
         "spreads": spreads,
         "maxSpread": math.floor(max_spread * 10.0) / 10.0,
         "data": data
@@ -306,13 +322,22 @@ def _execute_command(command):
     return process.returncode == 0, lines
 
 
+def _is_working_day(d):
+    if d.isoweekday() >= 6:
+        return False
+
+    t = d.timetz()
+
+    return t >= WORKDAY_START and t < WORKDAY_END
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--month-range",
         dest="month_range",
         type=int,
-        default=1,
+        default=3,
         help="Amount of months to check"
     )
     parser.add_argument(
