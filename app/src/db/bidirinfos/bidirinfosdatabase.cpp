@@ -1,4 +1,4 @@
-#include "src/db/bidirinfo/bidirinfodatabase.h"
+#include "src/db/bidirinfos/bidirinfosdatabase.h"
 
 #include <QCoreApplication>
 #include <QDebug>

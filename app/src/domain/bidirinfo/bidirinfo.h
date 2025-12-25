@@ -4,7 +4,6 @@
 
 #include <QJsonObject>
 
-#include "src/domain/quotation/quotation.h"
 #include "src/simdjson/simdjson_wrapped.h"
 
 
@@ -22,11 +21,9 @@ struct BidirInfo
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 
-    QString   ticker;
-    QString   name;
-    qint32    lot;
-    qint8     pricePrecision;
-    Quotation minPriceIncrement;
+    float spread;
+    float minYield;
+    float totalYield;
 };
 
 using BidirInfos = QMap<QString, BidirInfo>; // UID => BidirInfo

@@ -4,40 +4,30 @@
 
 
 
+constexpr float FLOAT_EPSILON = 0.0001f;
+
+
+
 BidirInfo::BidirInfo() :
-    ticker(),
-    name(),
-    lot(),
-    pricePrecision(),
-    minPriceIncrement()
+    spread(),
+    minYield(),
+    totalYield()
 {
 }
 
-static void bidirInfoTickerParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
+static void bidirInfoSpreadParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
 {
-    const std::string_view valueStr = value.get_string();
-    bidirInfo->ticker               = QString::fromUtf8(valueStr.data(), valueStr.size());
+    bidirInfo->spread = value.get_double();
 }
 
-static void bidirInfoNameParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
+static void bidirInfoMinYieldParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
 {
-    const std::string_view valueStr = value.get_string();
-    bidirInfo->name                 = QString::fromUtf8(valueStr.data(), valueStr.size());
+    bidirInfo->minYield = value.get_double();
 }
 
-static void bidirInfoLotParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
+static void bidirInfoTotalYieldParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
 {
-    bidirInfo->lot = value.get_int64();
-}
-
-static void bidirInfoPricePrecisionParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
-{
-    bidirInfo->pricePrecision = value.get_int64();
-}
-
-static void bidirInfoMinPriceIncrementParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
-{
-    bidirInfo->minPriceIncrement.fromJsonObject(value.get_object());
+    bidirInfo->totalYield = value.get_double();
 }
 
 static void bidirInfoThrowParseException(
@@ -51,11 +41,9 @@ using ParseHandler = void (*)(BidirInfo* bidirInfo, simdjson::ondemand::value va
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"ticker",            bidirInfoTickerParse           },
-    {"name",              bidirInfoNameParse             },
-    {"lot",               bidirInfoLotParse              },
-    {"pricePrecision",    bidirInfoPricePrecisionParse   },
-    {"minPriceIncrement", bidirInfoMinPriceIncrementParse}
+    {"spread",     bidirInfoSpreadParse    },
+    {"minYield",   bidirInfoMinYieldParse  },
+    {"totalYield", bidirInfoTotalYieldParse}
 };
 // clang-format on
 
@@ -75,11 +63,9 @@ QJsonObject BidirInfo::toJsonObject() const
     QJsonObject res;
 
     // clang-format off
-    res.insert("ticker",            ticker);
-    res.insert("name",              name);
-    res.insert("lot",               lot);
-    res.insert("pricePrecision",    pricePrecision);
-    res.insert("minPriceIncrement", minPriceIncrement.toJsonObject());
+    res.insert("spread",     spread);
+    res.insert("minYield",   minYield);
+    res.insert("totalYield", totalYield);
     // clang-format on
 
     return res;
@@ -87,6 +73,6 @@ QJsonObject BidirInfo::toJsonObject() const
 
 bool operator==(const BidirInfo& lhs, const BidirInfo& rhs)
 {
-    return lhs.ticker == rhs.ticker && lhs.name == rhs.name && lhs.lot == rhs.lot && lhs.pricePrecision == rhs.pricePrecision &&
-           lhs.minPriceIncrement == rhs.minPriceIncrement;
+    return qAbs(lhs.spread - rhs.spread) < FLOAT_EPSILON && qAbs(lhs.minYield - rhs.minYield) < FLOAT_EPSILON &&
+           qAbs(lhs.totalYield - rhs.totalYield) < FLOAT_EPSILON;
 }

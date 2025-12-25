@@ -2,7 +2,7 @@
 
 
 
-#include "src/db/bidirinfo/ibidirinfodatabase.h"
+#include "src/db/bidirinfos/ibidirinfosdatabase.h"
 
 #include <gmock/gmock.h>
 

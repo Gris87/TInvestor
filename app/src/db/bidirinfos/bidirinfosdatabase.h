@@ -2,7 +2,7 @@
 
 
 
-#include "src/db/bidirinfo/ibidirinfodatabase.h"
+#include "src/db/bidirinfos/ibidirinfosdatabase.h"
 
 #include "src/utils/fs/dir/idirfactory.h"
 #include "src/utils/fs/file/ifilefactory.h"

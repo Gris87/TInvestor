@@ -41,7 +41,7 @@ SOURCES += \
     src/config/decisions/sell/selldecision4config/test_selldecision4config.cpp \
     src/config/decisions/test_decisionmakerconfig.cpp \
     src/config/test_config.cpp \
-    src/db/bidirinfo/test_bidirinfodatabase.cpp \
+    src/db/bidirinfos/test_bidirinfosdatabase.cpp \
     src/db/instruments/test_instrumentsdatabase.cpp \
     src/db/logos/test_logosdatabase.cpp \
     src/db/logs/test_logsdatabase.cpp \
@@ -223,7 +223,7 @@ HEADERS += \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidget_mock.h \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h \
     src/config/iconfig_mock.h \
-    src/db/bidirinfo/ibidirinfodatabase_mock.h \
+    src/db/bidirinfos/ibidirinfosdatabase_mock.h \
     src/db/instruments/iinstrumentsdatabase_mock.h \
     src/db/logos/ilogosdatabase_mock.h \
     src/db/logs/ilogsdatabase_mock.h \
