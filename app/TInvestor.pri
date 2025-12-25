@@ -46,6 +46,7 @@ SOURCES += \
     src/config/decisions/sell/selldecision4config/selldecision4config.cpp \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.cpp \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidgetfactory.cpp \
+    src/db/bidirinfo/bidirinfodatabase.cpp \
     src/db/instruments/instrumentsdatabase.cpp \
     src/db/logos/logosdatabase.cpp \
     src/db/logs/logsdatabase.cpp \
@@ -76,6 +77,7 @@ SOURCES += \
     src/dialogs/startautopilotdialog/startautopilotdialogfactory.cpp \
     src/dialogs/startsimulationdialog/startsimulationdialog.cpp \
     src/dialogs/startsimulationdialog/startsimulationdialogfactory.cpp \
+    src/domain/bidirinfo/bidirinfo.cpp \
     src/domain/filter/logfilter.cpp \
     src/domain/filter/stockfilter.cpp \
     src/domain/instrument/instrument.cpp \
@@ -265,6 +267,8 @@ HEADERS += \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.h \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidgetfactory.h \
     src/config/iconfig.h \
+    src/db/bidirinfo/bidirinfodatabase.h \
+    src/db/bidirinfo/ibidirinfodatabase.h \
     src/db/instruments/iinstrumentsdatabase.h \
     src/db/instruments/instrumentsdatabase.h \
     src/db/logos/ilogosdatabase.h \
@@ -314,6 +318,7 @@ HEADERS += \
     src/dialogs/startsimulationdialog/istartsimulationdialogfactory.h \
     src/dialogs/startsimulationdialog/startsimulationdialog.h \
     src/dialogs/startsimulationdialog/startsimulationdialogfactory.h \
+    src/domain/bidirinfo/bidirinfo.h \
     src/domain/filter/logfilter.h \
     src/domain/filter/stockfilter.h \
     src/domain/instrument/instrument.h \

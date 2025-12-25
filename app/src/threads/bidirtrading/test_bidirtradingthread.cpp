@@ -203,7 +203,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     tinkoff::Quotation* bidPrice = new tinkoff::Quotation(); // bid will take ownership
     tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
 
-    bidPrice->set_units(880);
+    bidPrice->set_units(870);
     bidPrice->set_nano(0);
     askPrice->set_units(885);
     askPrice->set_nano(0);
@@ -213,7 +213,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     ask->set_quantity(100);
     ask->set_allocated_price(askPrice);
 
-    Quotation priceForBuy(880, 0);
+    Quotation priceForBuy(870, 0);
     Quotation priceForSell(885, 0);
 
     StockOperationalData stockOperationalData;
@@ -282,7 +282,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     tinkoffQuantity2->set_nano(0);
 
     tinkoffCurrentPrice2->set_currency("rub");
-    tinkoffCurrentPrice2->set_units(880);
+    tinkoffCurrentPrice2->set_units(870);
     tinkoffCurrentPrice2->set_nano(0);
 
     tinkoffAvgPriceFifo2->set_currency("rub");
@@ -373,8 +373,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
             DoubleEq(103600.0),
             DoubleEq(103600.0),
             1000000,
-            DoubleEq(880),
-            DoubleEq(880)
+            DoubleEq(870),
+            DoubleEq(870)
         )
     )
         .WillOnce(Return(20));
@@ -427,8 +427,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
             DoubleEq(103600.0),
             DoubleEq(103600.0),
             1000000,
-            DoubleEq(880),
-            DoubleEq(880)
+            DoubleEq(870),
+            DoubleEq(870)
         )
     )
         .WillOnce(Return(20));
@@ -472,8 +472,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
             DoubleEq(103600.0),
             DoubleEq(103600.0),
             1000000,
-            DoubleEq(880),
-            DoubleEq(880)
+            DoubleEq(870),
+            DoubleEq(870)
         )
     )
         .WillOnce(Return(20));
@@ -492,7 +492,7 @@ TEST_F(Test_BiDirTradingThread, Test_checkIfNeedToCancelAndCreateOrder)
 
     tinkoff::MoneyValue* orderPrice = new tinkoff::MoneyValue(); // orderState will take ownership
 
-    orderPrice->set_units(880);
+    orderPrice->set_units(870);
     orderPrice->set_nano(0);
 
     orderState->set_direction(tinkoff::ORDER_DIRECTION_BUY);
@@ -501,7 +501,7 @@ TEST_F(Test_BiDirTradingThread, Test_checkIfNeedToCancelAndCreateOrder)
     orderState->set_allocated_initial_security_price(orderPrice);
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_NEW);
 
-    Quotation price(880, 0);
+    Quotation price(870, 0);
 
     bool needToCancel = false;
     bool needToOrder  = false;
@@ -548,7 +548,7 @@ TEST_F(Test_BiDirTradingThread, Test_buyWithPrice)
 
     const std::shared_ptr<tinkoff::CancelOrderResponse> cancelOrderResponse(new tinkoff::CancelOrderResponse());
 
-    Quotation price(880, 0);
+    Quotation price(870, 0);
 
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), price))
         .WillOnce(Return(nullptr));
@@ -636,7 +636,7 @@ TEST_F(Test_BiDirTradingThread, Test_sellWithPrice)
 
     const std::shared_ptr<tinkoff::CancelOrderResponse> cancelOrderResponse(new tinkoff::CancelOrderResponse());
 
-    Quotation price(880, 0);
+    Quotation price(870, 0);
 
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), price))
         .WillOnce(Return(nullptr));
@@ -780,7 +780,7 @@ TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
     tinkoff::Quotation* askPrice1 = new tinkoff::Quotation(); // ask will take ownership
     tinkoff::Quotation* askPrice2 = new tinkoff::Quotation(); // ask will take ownership
 
-    bidPrice1->set_units(880);
+    bidPrice1->set_units(870);
     bidPrice1->set_nano(0);
     bidPrice2->set_units(875);
     bidPrice2->set_nano(0);
@@ -824,7 +824,7 @@ TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
     // clang-format off
     ASSERT_EQ(getOrderBookResponse.bids_size(),             2);
     ASSERT_EQ(getOrderBookResponse.bids(0).quantity(),      100);
-    ASSERT_EQ(getOrderBookResponse.bids(0).price().units(), 880);
+    ASSERT_EQ(getOrderBookResponse.bids(0).price().units(), 870);
     ASSERT_EQ(getOrderBookResponse.bids(0).price().nano(),  0);
     ASSERT_EQ(getOrderBookResponse.bids(1).quantity(),      200);
     ASSERT_EQ(getOrderBookResponse.bids(1).price().units(), 875);
@@ -843,7 +843,7 @@ TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
     // clang-format off
     ASSERT_EQ(getOrderBookResponse.bids_size(),             2);
     ASSERT_EQ(getOrderBookResponse.bids(0).quantity(),      100);
-    ASSERT_EQ(getOrderBookResponse.bids(0).price().units(), 880);
+    ASSERT_EQ(getOrderBookResponse.bids(0).price().units(), 870);
     ASSERT_EQ(getOrderBookResponse.bids(0).price().nano(),  0);
     ASSERT_EQ(getOrderBookResponse.bids(1).quantity(),      185);
     ASSERT_EQ(getOrderBookResponse.bids(1).price().units(), 875);
@@ -1008,7 +1008,7 @@ TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(true));
 
     ASSERT_EQ(
-        thread->calculateSellPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100000.0, 10000.0, 880.0, 0.04f), Quotation(900, 0)
+        thread->calculateSellPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100000.0, 10000.0, 870.0, 0.04f), Quotation(900, 0)
     );
 
     EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(true));

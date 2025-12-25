@@ -31,5 +31,6 @@
         <file>assets/images/waves_hover.png</file>
         <file>assets/translations/language_en.qm</file>
         <file>assets/translations/language_ru.qm</file>
+        <file>assets/bidir_info.json</file>
     </qresource>
 </RCC>

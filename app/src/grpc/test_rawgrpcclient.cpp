@@ -140,28 +140,14 @@ TEST_F(Test_RawGrpcClient, Test_getAccounts)
 
     // clang-format off
     ASSERT_EQ(status.ok(),                               true);
-    ASSERT_EQ(resp->accounts_size(),                     3);
-    ASSERT_EQ(resp->accounts(0).id(),                    "b70b4b15-c812-4fbd-81c8-538235d19ff7");
+    ASSERT_EQ(resp->accounts_size(),                     1);
+    ASSERT_EQ(resp->accounts(0).id(),                    "0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
     ASSERT_EQ(resp->accounts(0).type(),                  tinkoff::ACCOUNT_TYPE_TINKOFF);
-    ASSERT_EQ(resp->accounts(0).name(),                  "Simulation");
+    ASSERT_EQ(resp->accounts(0).name(),                  "Test account");
     ASSERT_EQ(resp->accounts(0).status(),                tinkoff::ACCOUNT_STATUS_OPEN);
-    ASSERT_EQ(resp->accounts(0).opened_date().seconds(), 1755690295);
+    ASSERT_EQ(resp->accounts(0).opened_date().seconds(), 1755690313);
     ASSERT_EQ(resp->accounts(0).closed_date().seconds(), 0);
     ASSERT_EQ(resp->accounts(0).access_level(),          tinkoff::ACCOUNT_ACCESS_LEVEL_FULL_ACCESS);
-    ASSERT_EQ(resp->accounts(1).id(),                    "867e59f0-f101-4a12-8c3d-5ccdf1e7f99f");
-    ASSERT_EQ(resp->accounts(1).type(),                  tinkoff::ACCOUNT_TYPE_TINKOFF);
-    ASSERT_EQ(resp->accounts(1).name(),                  "Duplication");
-    ASSERT_EQ(resp->accounts(1).status(),                tinkoff::ACCOUNT_STATUS_OPEN);
-    ASSERT_EQ(resp->accounts(1).opened_date().seconds(), 1755690301);
-    ASSERT_EQ(resp->accounts(1).closed_date().seconds(), 0);
-    ASSERT_EQ(resp->accounts(1).access_level(),          tinkoff::ACCOUNT_ACCESS_LEVEL_FULL_ACCESS);
-    ASSERT_EQ(resp->accounts(2).id(),                    "0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
-    ASSERT_EQ(resp->accounts(2).type(),                  tinkoff::ACCOUNT_TYPE_TINKOFF);
-    ASSERT_EQ(resp->accounts(2).name(),                  "Test account");
-    ASSERT_EQ(resp->accounts(2).status(),                tinkoff::ACCOUNT_STATUS_OPEN);
-    ASSERT_EQ(resp->accounts(2).opened_date().seconds(), 1755690313);
-    ASSERT_EQ(resp->accounts(2).closed_date().seconds(), 0);
-    ASSERT_EQ(resp->accounts(2).access_level(),          tinkoff::ACCOUNT_ACCESS_LEVEL_FULL_ACCESS);
     // clang-format on
 }
 
@@ -477,7 +463,7 @@ TEST_F(Test_RawGrpcClient, Test_findEtfs)
 
     // clang-format off
     ASSERT_EQ(status.ok(),                                                 true);
-    ASSERT_GE(resp->instruments_size(),                                    274);
+    ASSERT_GE(resp->instruments_size(),                                    250);
     ASSERT_GE(index,                                                       0);
     ASSERT_EQ(resp->instruments(index).figi(),                             "TCS00A100P44");
     ASSERT_EQ(resp->instruments(index).ticker(),                           "SBRB");

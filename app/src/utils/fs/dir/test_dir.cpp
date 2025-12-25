@@ -32,6 +32,8 @@ TEST_F(Test_Dir, Test_mkpath_and_entryList_and_removeRecursively)
     const QString appDir = qApp->applicationDirPath();
 
     QDir qDir(appDir + "/test/some_dir");
+
+    qDir.removeRecursively();
     ASSERT_TRUE(!qDir.exists());
 
     ASSERT_TRUE(dir->mkpath(appDir + "/test/some_dir"));

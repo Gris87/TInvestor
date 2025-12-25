@@ -41,6 +41,7 @@ SOURCES += \
     src/config/decisions/sell/selldecision4config/test_selldecision4config.cpp \
     src/config/decisions/test_decisionmakerconfig.cpp \
     src/config/test_config.cpp \
+    src/db/bidirinfo/test_bidirinfodatabase.cpp \
     src/db/instruments/test_instrumentsdatabase.cpp \
     src/db/logos/test_logosdatabase.cpp \
     src/db/logs/test_logsdatabase.cpp \
@@ -71,6 +72,7 @@ SOURCES += \
     src/dialogs/startautopilotdialog/test_startautopilotdialogfactory.cpp \
     src/dialogs/startsimulationdialog/test_startsimulationdialog.cpp \
     src/dialogs/startsimulationdialog/test_startsimulationdialogfactory.cpp \
+    src/domain/bidirinfo/test_bidirinfo.cpp \
     src/domain/filter/test_logfilter.cpp \
     src/domain/filter/test_stockfilter.cpp \
     src/domain/instrument/test_instrument.cpp \
@@ -221,6 +223,7 @@ HEADERS += \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidget_mock.h \
     src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h \
     src/config/iconfig_mock.h \
+    src/db/bidirinfo/ibidirinfodatabase_mock.h \
     src/db/instruments/iinstrumentsdatabase_mock.h \
     src/db/logos/ilogosdatabase_mock.h \
     src/db/logs/ilogsdatabase_mock.h \
