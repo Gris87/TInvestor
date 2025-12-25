@@ -100,6 +100,7 @@ SOURCES += \
     src/grpc/test_rawgrpcclient.cpp \
     src/grpc/test_utils.cpp \
     src/main/test_mainwindow.cpp \
+    src/storage/bidirinfos/test_bidirinfosstorage.cpp \
     src/storage/instruments/test_instrumentsstorage.cpp \
     src/storage/logos/test_logosstorage.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
@@ -246,6 +247,7 @@ HEADERS += \
     src/grpc/igrpcclient_mock.h \
     src/grpc/igrpcretryclient_mock.h \
     src/grpc/irawgrpcclient_mock.h \
+    src/storage/bidirinfos/ibidirinfosstorage_mock.h \
     src/storage/instruments/iinstrumentsstorage_mock.h \
     src/storage/logos/ilogosstorage_mock.h \
     src/storage/stocks/istocksstorage_mock.h \

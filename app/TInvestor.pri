@@ -104,6 +104,7 @@ SOURCES += \
     src/grpc/rawgrpcclient.cpp \
     src/grpc/utils.cpp \
     src/main/mainwindow.cpp \
+    src/storage/bidirinfos/bidirinfosstorage.cpp \
     src/storage/instruments/instrumentsstorage.cpp \
     src/storage/logos/logosstorage.cpp \
     src/storage/stocks/stocksstorage.cpp \
@@ -352,6 +353,8 @@ HEADERS += \
     src/grpc/rawgrpcclient.h \
     src/grpc/utils.h \
     src/main/mainwindow.h \
+    src/storage/bidirinfos/bidirinfosstorage.h \
+    src/storage/bidirinfos/ibidirinfosstorage.h \
     src/storage/instruments/iinstrumentsstorage.h \
     src/storage/instruments/instrumentsstorage.h \
     src/storage/logos/ilogosstorage.h \
