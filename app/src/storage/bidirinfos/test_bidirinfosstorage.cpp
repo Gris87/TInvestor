@@ -51,23 +51,17 @@ TEST_F(Test_BidirInfosStorage, Test_readFromDatabase_and_getBidirInfos)
     BidirInfo bidirInfo2;
     BidirInfo bidirInfo3;
 
-    bidirInfo1.ticker            = "BANA";
-    bidirInfo1.name              = "Banana";
-    bidirInfo1.lot               = 1;
-    bidirInfo1.pricePrecision    = 2;
-    bidirInfo1.minPriceIncrement = Quotation(0, 100000000);
+    bidirInfo1.spread     = 0.1f;
+    bidirInfo1.minYield   = 1.1f;
+    bidirInfo1.totalYield = 2.1f;
 
-    bidirInfo2.ticker            = "BODO";
-    bidirInfo2.name              = "BODO NE BODO";
-    bidirInfo2.lot               = 5;
-    bidirInfo2.pricePrecision    = 3;
-    bidirInfo2.minPriceIncrement = Quotation(0, 1000000);
+    bidirInfo2.spread     = 0.2f;
+    bidirInfo2.minYield   = 1.2f;
+    bidirInfo2.totalYield = 2.2f;
 
-    bidirInfo3.ticker            = "ZARA";
-    bidirInfo3.name              = "Zaraza";
-    bidirInfo3.lot               = 10;
-    bidirInfo3.pricePrecision    = 4;
-    bidirInfo3.minPriceIncrement = Quotation(0, 500000);
+    bidirInfo3.spread     = 0.3f;
+    bidirInfo3.minYield   = 1.3f;
+    bidirInfo3.totalYield = 2.3f;
 
     bidirInfos["aaaaa"] = bidirInfo1;
     bidirInfos["bbbbb"] = bidirInfo2;
@@ -79,22 +73,16 @@ TEST_F(Test_BidirInfosStorage, Test_readFromDatabase_and_getBidirInfos)
     bidirInfos = storage->getBidirInfos();
 
     // clang-format off
-    ASSERT_EQ(bidirInfos.size(),                     3);
-    ASSERT_EQ(bidirInfos["aaaaa"].ticker,            "BANA");
-    ASSERT_EQ(bidirInfos["aaaaa"].name,              "Banana");
-    ASSERT_EQ(bidirInfos["aaaaa"].lot,               1);
-    ASSERT_EQ(bidirInfos["aaaaa"].pricePrecision,    2);
-    ASSERT_EQ(bidirInfos["aaaaa"].minPriceIncrement, Quotation(0, 100000000));
-    ASSERT_EQ(bidirInfos["bbbbb"].ticker,            "BODO");
-    ASSERT_EQ(bidirInfos["bbbbb"].name,              "BODO NE BODO");
-    ASSERT_EQ(bidirInfos["bbbbb"].lot,               5);
-    ASSERT_EQ(bidirInfos["bbbbb"].pricePrecision,    3);
-    ASSERT_EQ(bidirInfos["bbbbb"].minPriceIncrement, Quotation(0, 1000000));
-    ASSERT_EQ(bidirInfos["ccccc"].ticker,            "ZARA");
-    ASSERT_EQ(bidirInfos["ccccc"].name,              "Zaraza");
-    ASSERT_EQ(bidirInfos["ccccc"].lot,               10);
-    ASSERT_EQ(bidirInfos["ccccc"].pricePrecision,    4);
-    ASSERT_EQ(bidirInfos["ccccc"].minPriceIncrement, Quotation(0, 500000));
+    ASSERT_EQ(bidirInfos.size(),                3);
+    ASSERT_NEAR(bidirInfos["aaaaa"].spread,     0.1f, 0.0001f);
+    ASSERT_NEAR(bidirInfos["aaaaa"].minYield,   1.1f, 0.0001f);
+    ASSERT_NEAR(bidirInfos["aaaaa"].totalYield, 2.1f, 0.0001f);
+    ASSERT_NEAR(bidirInfos["bbbbb"].spread,     0.2f, 0.0001f);
+    ASSERT_NEAR(bidirInfos["bbbbb"].minYield,   1.2f, 0.0001f);
+    ASSERT_NEAR(bidirInfos["bbbbb"].totalYield, 2.2f, 0.0001f);
+    ASSERT_NEAR(bidirInfos["ccccc"].spread,     0.3f, 0.0001f);
+    ASSERT_NEAR(bidirInfos["ccccc"].minYield,   1.3f, 0.0001f);
+    ASSERT_NEAR(bidirInfos["ccccc"].totalYield, 2.3f, 0.0001f);
     // clang-format on
 }
 
