@@ -7,6 +7,7 @@
 
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/bidirinfos/ibidirinfosstorage_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
@@ -49,6 +50,7 @@ protected:
         stocksStorageMock      = new StrictMock<StocksStorageMock>();
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         logosStorageMock       = new StrictMock<LogosStorageMock>();
+        bidirInfosStorageMock  = new StrictMock<BidirInfosStorageMock>();
         dirFactoryMock         = new StrictMock<DirFactoryMock>();
         fileFactoryMock        = new StrictMock<FileFactoryMock>();
         qZipFactoryMock        = new StrictMock<QZipFactoryMock>();
@@ -63,6 +65,7 @@ protected:
             stocksStorageMock,
             instrumentsStorageMock,
             logosStorageMock,
+            bidirInfosStorageMock,
             dirFactoryMock,
             fileFactoryMock,
             qZipFactoryMock,
@@ -81,6 +84,7 @@ protected:
         delete stocksStorageMock;
         delete instrumentsStorageMock;
         delete logosStorageMock;
+        delete bidirInfosStorageMock;
         delete dirFactoryMock;
         delete fileFactoryMock;
         delete qZipFactoryMock;
@@ -96,6 +100,7 @@ protected:
     StrictMock<StocksStorageMock>*      stocksStorageMock;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
     StrictMock<LogosStorageMock>*       logosStorageMock;
+    StrictMock<BidirInfosStorageMock>*  bidirInfosStorageMock;
     StrictMock<DirFactoryMock>*         dirFactoryMock;
     StrictMock<FileFactoryMock>*        fileFactoryMock;
     StrictMock<QZipFactoryMock>*        qZipFactoryMock;
@@ -347,6 +352,10 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, writeLock());
     EXPECT_CALL(*instrumentsStorageMock, mergeInstruments(Ne(Instruments())));
     EXPECT_CALL(*instrumentsStorageMock, writeUnlock());
+
+    EXPECT_CALL(*bidirInfosStorageMock, writeLock());
+    EXPECT_CALL(*bidirInfosStorageMock, readFromDatabase());
+    EXPECT_CALL(*bidirInfosStorageMock, writeUnlock());
 
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logoImage));

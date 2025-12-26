@@ -29,6 +29,7 @@
 #include "src/dialogs/startsimulationdialog/istartsimulationdialogfactory_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/grpc/igrpcretryclient_mock.h"
+#include "src/storage/bidirinfos/ibidirinfosstorage_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
@@ -148,6 +149,7 @@ protected:
         stocksStorageMock                         = new StrictMock<StocksStorageMock>();
         instrumentsStorageMock                    = new StrictMock<InstrumentsStorageMock>();
         logosStorageMock                          = new StrictMock<LogosStorageMock>();
+        bidirInfosStorageMock                     = new StrictMock<BidirInfosStorageMock>();
         httpClientMock                            = new StrictMock<HttpClientMock>();
         grpcClientMock                            = new StrictMock<GrpcClientMock>();
         grpcRetryClientMock                       = new StrictMock<GrpcRetryClientMock>();
@@ -345,6 +347,7 @@ protected:
             stocksStorageMock,
             instrumentsStorageMock,
             logosStorageMock,
+            bidirInfosStorageMock,
             httpClientMock,
             grpcClientMock,
             grpcRetryClientMock,
@@ -449,6 +452,7 @@ protected:
         delete stocksStorageMock;
         delete instrumentsStorageMock;
         delete logosStorageMock;
+        delete bidirInfosStorageMock;
         delete httpClientMock;
         delete grpcClientMock;
         delete grpcRetryClientMock;
@@ -529,6 +533,7 @@ protected:
     StrictMock<StocksStorageMock>*                         stocksStorageMock;
     StrictMock<InstrumentsStorageMock>*                    instrumentsStorageMock;
     StrictMock<LogosStorageMock>*                          logosStorageMock;
+    StrictMock<BidirInfosStorageMock>*                     bidirInfosStorageMock;
     StrictMock<HttpClientMock>*                            httpClientMock;
     StrictMock<GrpcClientMock>*                            grpcClientMock;
     StrictMock<GrpcRetryClientMock>*                       grpcRetryClientMock;
@@ -2101,6 +2106,9 @@ TEST_F(Test_MainWindow, Test_init)
     EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, readFromDatabase());
     EXPECT_CALL(*logosStorageMock, writeUnlock());
+    EXPECT_CALL(*bidirInfosStorageMock, writeLock());
+    EXPECT_CALL(*bidirInfosStorageMock, readFromDatabase());
+    EXPECT_CALL(*bidirInfosStorageMock, writeUnlock());
     EXPECT_CALL(*stocksStorageMock, readLock()).Times(2);
     EXPECT_CALL(*stocksStorageMock, assignLogos());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));

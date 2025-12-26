@@ -7,9 +7,8 @@
 
 
 
-BidirInfosDatabase::BidirInfosDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory) :
-    IBidirInfosDatabase(),
-    mFileFactory(fileFactory)
+BidirInfosDatabase::BidirInfosDatabase(IDirFactory* dirFactory) :
+    IBidirInfosDatabase()
 {
     qDebug() << "Create BidirInfosDatabase";
 
@@ -24,14 +23,11 @@ BidirInfosDatabase::~BidirInfosDatabase()
     qDebug() << "Destroy BidirInfosDatabase";
 }
 
-BidirInfos BidirInfosDatabase::readBidirInfos()
+BidirInfos BidirInfosDatabase::readBidirInfos(std::shared_ptr<IFile> bidirInfoFile)
 {
     qDebug() << "Reading bi-dir information from database";
 
     BidirInfos res;
-
-    const std::shared_ptr<IFile> bidirInfoFile =
-        mFileFactory->newInstance(qApp->applicationDirPath() + "/data/bidirinfo/bidirinfo.json");
 
     if (bidirInfoFile->open(QIODevice::ReadOnly))
     {

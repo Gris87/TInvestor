@@ -1,8 +1,11 @@
 #include "src/storage/bidirinfos/bidirinfosstorage.h"
 
+#include <QCoreApplication>
 #include <gtest/gtest.h>
 
 #include "src/db/bidirinfos/ibidirinfosdatabase_mock.h"
+#include "src/utils/fs/file/ifile_mock.h"
+#include "src/utils/fs/file/ifilefactory_mock.h"
 
 
 
@@ -19,19 +22,25 @@ class Test_BidirInfosStorage : public ::testing::Test
 protected:
     void SetUp() override
     {
-        bidirInfosDatabaseMock = new StrictMock<BidirInfosDatabaseMock>();
+        appDir = qApp->applicationDirPath();
 
-        storage = new BidirInfosStorage(bidirInfosDatabaseMock);
+        bidirInfosDatabaseMock = new StrictMock<BidirInfosDatabaseMock>();
+        fileFactoryMock        = new StrictMock<FileFactoryMock>();
+
+        storage = new BidirInfosStorage(bidirInfosDatabaseMock, fileFactoryMock);
     }
 
     void TearDown() override
     {
         delete storage;
         delete bidirInfosDatabaseMock;
+        delete fileFactoryMock;
     }
 
     BidirInfosStorage*                  storage;
     StrictMock<BidirInfosDatabaseMock>* bidirInfosDatabaseMock;
+    StrictMock<FileFactoryMock>*        fileFactoryMock;
+    QString                             appDir;
 };
 
 
@@ -67,7 +76,15 @@ TEST_F(Test_BidirInfosStorage, Test_readFromDatabase_and_getBidirInfos)
     bidirInfos["bbbbb"] = bidirInfo2;
     bidirInfos["ccccc"] = bidirInfo3;
 
-    EXPECT_CALL(*bidirInfosDatabaseMock, readBidirInfos()).WillOnce(Return(bidirInfos));
+    StrictMock<FileMock>*  fileMock1 = new StrictMock<FileMock>(); // Will be deleted in readFromDatabase
+    StrictMock<FileMock>*  fileMock2 = new StrictMock<FileMock>(); // Will be deleted in readFromDatabase
+    std::shared_ptr<IFile> filePtr1  = std::shared_ptr<IFile>(fileMock1);
+    std::shared_ptr<IFile> filePtr2  = std::shared_ptr<IFile>(fileMock2);
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/bidirinfo/bidirinfo.json"))).WillOnce(Return(filePtr1));
+    EXPECT_CALL(*fileMock1, lastModified()).WillOnce(Return(0));
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(":/assets/bidir_info.json"))).WillOnce(Return(filePtr2));
+    EXPECT_CALL(*bidirInfosDatabaseMock, readBidirInfos(filePtr2)).WillOnce(Return(bidirInfos));
 
     storage->readFromDatabase();
     bidirInfos = storage->getBidirInfos();

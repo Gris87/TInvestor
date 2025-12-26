@@ -6,7 +6,6 @@
 #include "src/utils/fs/dir/idir_mock.h"
 #include "src/utils/fs/dir/idirfactory_mock.h"
 #include "src/utils/fs/file/ifile_mock.h"
-#include "src/utils/fs/file/ifilefactory_mock.h"
 
 
 
@@ -28,12 +27,11 @@ protected:
 
         StrictMock<DirMock>* dirMock = new StrictMock<DirMock>(); // Will be deleted in BidirInfosDatabase constructor
         dirFactoryMock               = new StrictMock<DirFactoryMock>();
-        fileFactoryMock              = new StrictMock<FileFactoryMock>();
 
         EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
         EXPECT_CALL(*dirMock, mkpath(appDir + "/data/bidirinfo")).WillOnce(Return(true));
 
-        database = new BidirInfosDatabase(dirFactoryMock, fileFactoryMock);
+        database = new BidirInfosDatabase(dirFactoryMock);
 
         fillWithData();
     }
@@ -54,12 +52,10 @@ protected:
     {
         delete database;
         delete dirFactoryMock;
-        delete fileFactoryMock;
     }
 
     BidirInfosDatabase*          database;
     StrictMock<DirFactoryMock>*  dirFactoryMock;
-    StrictMock<FileFactoryMock>* fileFactoryMock;
     QString                      appDir;
     QByteArray                   testBidirInfos;
 };
@@ -76,27 +72,21 @@ TEST_F(Test_BidirInfosDatabase, Test_readBidirInfos)
 
     StrictMock<FileMock>* fileMock1 = new StrictMock<FileMock>(); // Will be deleted in readBidirInfos
 
-    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/bidirinfo/bidirinfo.json")))
-        .WillOnce(Return(std::shared_ptr<IFile>(fileMock1)));
-
     EXPECT_CALL(*fileMock1, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
     EXPECT_CALL(*fileMock1, readAll()).WillOnce(Return("{Bad content ::::: 555"));
     EXPECT_CALL(*fileMock1, close());
 
-    BidirInfos bidirInfos = database->readBidirInfos();
+    BidirInfos bidirInfos = database->readBidirInfos(std::shared_ptr<IFile>(fileMock1));
 
     ASSERT_EQ(bidirInfos.size(), 0);
 
     StrictMock<FileMock>* fileMock2 = new StrictMock<FileMock>(); // Will be deleted in readBidirInfos
 
-    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/bidirinfo/bidirinfo.json")))
-        .WillOnce(Return(std::shared_ptr<IFile>(fileMock2)));
-
     EXPECT_CALL(*fileMock2, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
     EXPECT_CALL(*fileMock2, readAll()).WillOnce(Return(testBidirInfos));
     EXPECT_CALL(*fileMock2, close());
 
-    bidirInfos = database->readBidirInfos();
+    bidirInfos = database->readBidirInfos(std::shared_ptr<IFile>(fileMock2));
 
     // clang-format off
     ASSERT_EQ(bidirInfos.size(),                3);

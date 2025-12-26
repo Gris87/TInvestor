@@ -20,5 +20,5 @@ public:
     BidirInfosDatabaseMock(const BidirInfosDatabaseMock& another)            = delete;
     BidirInfosDatabaseMock& operator=(const BidirInfosDatabaseMock& another) = delete;
 
-    MOCK_METHOD(BidirInfos, readBidirInfos, (), (override));
+    MOCK_METHOD(BidirInfos, readBidirInfos, (std::shared_ptr<IFile> bidirInfoFile), (override));
 };

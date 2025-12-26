@@ -34,6 +34,7 @@
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision4config/selldecision4config.h"
 #include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidgetfactory.h"
+#include "src/db/bidirinfos/bidirinfosdatabase.h"
 #include "src/db/instruments/instrumentsdatabase.h"
 #include "src/db/logos/logosdatabase.h"
 #include "src/db/logs/logsdatabase.h"
@@ -63,6 +64,7 @@
 #include "src/grpc/grpcretryclient.h"
 #include "src/grpc/rawgrpcclient.h"
 #include "src/main/mainwindow.h"
+#include "src/storage/bidirinfos/bidirinfosstorage.h"
 #include "src/storage/instruments/instrumentsstorage.h"
 #include "src/storage/logos/logosstorage.h"
 #include "src/storage/stocks/stocksstorage.h"
@@ -436,6 +438,8 @@ static int runApplication(QApplication* app)
     InstrumentsStorage  instrumentsStorage(&instrumentsDatabase);
     LogosDatabase       logosDatabase(&dirFactory, &fileFactory);
     LogosStorage        logosStorage(&logosDatabase);
+    BidirInfosDatabase  bidirInfosDatabase(&dirFactory);
+    BidirInfosStorage   bidirInfosStorage(&bidirInfosDatabase, &fileFactory);
     StocksDatabase      stocksDatabase(&dirFactory, &fileFactory, &logosStorage);
     StocksStorage       stocksStorage(&stocksDatabase, &userStorage);
     OperationsDatabase  simulatorOperationsDatabase(&dirFactory, &fileFactory, &logosStorage, false);
@@ -491,6 +495,7 @@ static int runApplication(QApplication* app)
         &stocksStorage,
         &instrumentsStorage,
         &logosStorage,
+        &bidirInfosStorage,
         &dirFactory,
         &fileFactory,
         &qZipFactory,
@@ -586,6 +591,7 @@ static int runApplication(QApplication* app)
         &stocksStorage,
         &instrumentsStorage,
         &logosStorage,
+        &bidirInfosStorage,
         &httpClient,
         &grpcClient,
         &grpcRetryClient,

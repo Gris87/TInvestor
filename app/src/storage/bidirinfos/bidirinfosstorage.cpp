@@ -1,14 +1,17 @@
 #include "src/storage/bidirinfos/bidirinfosstorage.h"
 
+#include <QCoreApplication>
 #include <QDebug>
 
 
 
-BidirInfosStorage::BidirInfosStorage(IBidirInfosDatabase* bidirInfosDatabase) :
+BidirInfosStorage::BidirInfosStorage(IBidirInfosDatabase* bidirInfosDatabase, IFileFactory* fileFactory) :
     IBidirInfosStorage(),
     mRwMutex(new QReadWriteLock()),
     mBidirInfosDatabase(bidirInfosDatabase),
-    mBidirInfos()
+    mFileFactory(fileFactory),
+    mBidirInfos(),
+    mLastModified(-1)
 {
     qDebug() << "Create BidirInfosStorage";
 }
@@ -22,7 +25,22 @@ BidirInfosStorage::~BidirInfosStorage()
 
 void BidirInfosStorage::readFromDatabase()
 {
-    mBidirInfos = mBidirInfosDatabase->readBidirInfos();
+    std::shared_ptr<IFile> bidirInfoFile =
+        mFileFactory->newInstance(qApp->applicationDirPath() + "/data/bidirinfo/bidirinfo.json");
+
+    qint64 lastModified = bidirInfoFile->lastModified();
+
+    if (mLastModified != lastModified)
+    {
+        mLastModified = lastModified;
+
+        if (mLastModified == 0)
+        {
+            bidirInfoFile = mFileFactory->newInstance(":/assets/bidir_info.json");
+        }
+
+        mBidirInfos = mBidirInfosDatabase->readBidirInfos(bidirInfoFile);
+    }
 }
 
 void BidirInfosStorage::readLock()

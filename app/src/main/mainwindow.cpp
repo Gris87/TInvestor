@@ -76,6 +76,7 @@ MainWindow::MainWindow(
     IStocksStorage*                         stocksStorage,
     IInstrumentsStorage*                    instrumentsStorage,
     ILogosStorage*                          logosStorage,
+    IBidirInfosStorage*                     bidirInfosStorage,
     IHttpClient*                            httpClient,
     IGrpcClient*                            grpcClient,
     IGrpcRetryClient*                       grpcRetryClient,
@@ -136,6 +137,7 @@ MainWindow::MainWindow(
     mStocksStorage(stocksStorage),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
+    mBidirInfosStorage(bidirInfosStorage),
     mHttpClient(httpClient),
     mGrpcClient(grpcClient),
     mGrpcRetryClient(grpcRetryClient),
@@ -1268,7 +1270,8 @@ enum DatabaseType : qint8
     DATABASE_TYPE_USER,
     DATABASE_TYPE_STOCKS,
     DATABASE_TYPE_INSTRUMENT,
-    DATABASE_TYPE_LOGOS
+    DATABASE_TYPE_LOGOS,
+    DATABASE_TYPE_BIDIR_INFO
 };
 
 struct ReadDatabasesInfo
@@ -1276,13 +1279,15 @@ struct ReadDatabasesInfo
     explicit ReadDatabasesInfo(
         IUserStorage*        _userStorage,
         IStocksStorage*      _stocksStorage,
-        IInstrumentsStorage* _instrumentsStoragen,
-        ILogosStorage*       _logosStorage
+        IInstrumentsStorage* _instrumentsStorage,
+        ILogosStorage*       _logosStorage,
+        IBidirInfosStorage*  _bidirInfosStorage
     ) :
         userStorage(_userStorage),
         stocksStorage(_stocksStorage),
-        instrumentsStorage(_instrumentsStoragen),
-        logosStorage(_logosStorage)
+        instrumentsStorage(_instrumentsStorage),
+        logosStorage(_logosStorage),
+        bidirInfosStorage(_bidirInfosStorage)
     {
     }
 
@@ -1290,6 +1295,7 @@ struct ReadDatabasesInfo
     IStocksStorage*      stocksStorage;
     IInstrumentsStorage* instrumentsStorage;
     ILogosStorage*       logosStorage;
+    IBidirInfosStorage*  bidirInfosStorage;
 };
 
 static void readDatabasesForParallel(
@@ -1332,6 +1338,12 @@ static void readDatabasesForParallel(
             readDatabasesInfo->logosStorage->readFromDatabase();
             readDatabasesInfo->logosStorage->writeUnlock();
         }
+        else if (dbType == DATABASE_TYPE_BIDIR_INFO)
+        {
+            readDatabasesInfo->bidirInfosStorage->writeLock();
+            readDatabasesInfo->bidirInfosStorage->readFromDatabase();
+            readDatabasesInfo->bidirInfosStorage->writeUnlock();
+        }
     }
 }
 
@@ -1340,9 +1352,10 @@ void MainWindow::init()
     qInfo() << "Start main initialization";
 
     QList<DatabaseType> databases;
-    databases << DATABASE_TYPE_USER << DATABASE_TYPE_STOCKS << DATABASE_TYPE_INSTRUMENT << DATABASE_TYPE_LOGOS;
+    databases << DATABASE_TYPE_USER << DATABASE_TYPE_STOCKS << DATABASE_TYPE_INSTRUMENT << DATABASE_TYPE_LOGOS
+              << DATABASE_TYPE_BIDIR_INFO;
 
-    ReadDatabasesInfo readDatabasesInfo(mUserStorage, mStocksStorage, mInstrumentsStorage, mLogosStorage);
+    ReadDatabasesInfo readDatabasesInfo(mUserStorage, mStocksStorage, mInstrumentsStorage, mLogosStorage, mBidirInfosStorage);
     processInParallel(QThread::currentThread(), databases, readDatabasesForParallel, &readDatabasesInfo);
 
     mStocksStorage->readLock();

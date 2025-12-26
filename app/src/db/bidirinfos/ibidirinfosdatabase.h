@@ -3,6 +3,7 @@
 
 
 #include "src/domain/bidirinfo/bidirinfo.h"
+#include "src/utils/fs/file/ifile.h"
 
 
 
@@ -15,5 +16,5 @@ public:
     IBidirInfosDatabase(const IBidirInfosDatabase& another)            = delete;
     IBidirInfosDatabase& operator=(const IBidirInfosDatabase& another) = delete;
 
-    virtual BidirInfos readBidirInfos() = 0;
+    virtual BidirInfos readBidirInfos(std::shared_ptr<IFile> bidirInfoFile) = 0;
 };

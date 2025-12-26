@@ -14,6 +14,7 @@
 #include "src/dialogs/startsimulationdialog/istartsimulationdialogfactory.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/grpc/igrpcretryclient.h"
+#include "src/storage/bidirinfos/ibidirinfosstorage.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
@@ -102,6 +103,7 @@ public:
         IStocksStorage*                         stocksStorage,
         IInstrumentsStorage*                    instrumentsStorage,
         ILogosStorage*                          logosStorage,
+        IBidirInfosStorage*                     bidirInfosStorage,
         IHttpClient*                            httpClient,
         IGrpcClient*                            grpcClient,
         IGrpcRetryClient*                       grpcRetryClient,
@@ -192,6 +194,7 @@ private:
     IStocksStorage*                         mStocksStorage;
     IInstrumentsStorage*                    mInstrumentsStorage;
     ILogosStorage*                          mLogosStorage;
+    IBidirInfosStorage*                     mBidirInfosStorage;
     IHttpClient*                            mHttpClient;
     IGrpcClient*                            mGrpcClient;
     IGrpcRetryClient*                       mGrpcRetryClient;

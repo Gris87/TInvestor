@@ -7,13 +7,14 @@
 #include <QReadWriteLock>
 
 #include "src/db/bidirinfos/ibidirinfosdatabase.h"
+#include "src/utils/fs/file/ifilefactory.h"
 
 
 
 class BidirInfosStorage : public IBidirInfosStorage
 {
 public:
-    explicit BidirInfosStorage(IBidirInfosDatabase* bidirInfosDatabase);
+    explicit BidirInfosStorage(IBidirInfosDatabase* bidirInfosDatabase, IFileFactory* fileFactory);
     ~BidirInfosStorage() override;
 
     BidirInfosStorage(const BidirInfosStorage& another)            = delete;
@@ -29,5 +30,7 @@ public:
 private:
     QReadWriteLock*       mRwMutex;
     IBidirInfosDatabase*  mBidirInfosDatabase;
+    IFileFactory*         mFileFactory;
     BidirInfos            mBidirInfos;
+    qint64                mLastModified;
 };

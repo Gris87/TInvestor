@@ -45,6 +45,7 @@ StockCollectThread::StockCollectThread(
     IStocksStorage*      stocksStorage,
     IInstrumentsStorage* instrumentsStorage,
     ILogosStorage*       logosStorage,
+    IBidirInfosStorage*  bidirInfosStorage,
     IDirFactory*         dirFactory,
     IFileFactory*        fileFactory,
     IQZipFactory*        qZipFactory,
@@ -60,6 +61,7 @@ StockCollectThread::StockCollectThread(
     mStocksStorage(stocksStorage),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
+    mBidirInfosStorage(bidirInfosStorage),
     mDirFactory(dirFactory),
     mFileFactory(fileFactory),
     mQZipFactory(qZipFactory),
@@ -90,6 +92,7 @@ void StockCollectThread::run()
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffStocks != nullptr)
     {
         storeNewInstrumentsInfo();
+        reloadBidirInfos();
         const bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
         obtainStocksData();
         copyDataToOperational();
@@ -111,43 +114,6 @@ void StockCollectThread::terminateThread()
     blockSignals(true);
 
     requestInterruption();
-}
-
-bool StockCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
-{
-    QList<StockMeta> stocksMeta;
-
-    stocksMeta.reserve(tinkoffStocks->instruments_size());
-
-    mLogosStorage->readLock();
-
-    for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
-    {
-        const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
-
-        if (tinkoffStock.currency() == "rub" && tinkoffStock.api_trade_available_flag())
-        {
-            StockMeta stockMeta;
-
-            stockMeta.instrumentId        = QString::fromStdString(tinkoffStock.uid());
-            stockMeta.instrumentLogo      = mLogosStorage->getLogo(stockMeta.instrumentId);
-            stockMeta.instrumentTicker    = QString::fromStdString(tinkoffStock.ticker());
-            stockMeta.instrumentName      = QString::fromStdString(tinkoffStock.name());
-            stockMeta.forQualInvestorFlag = tinkoffStock.for_qual_investor_flag();
-            stockMeta.minPriceIncrement   = quotationToFloat(tinkoffStock.min_price_increment());
-            stockMeta.pricePrecision      = quotationPrecision(tinkoffStock.min_price_increment());
-
-            stocksMeta.append(stockMeta);
-        }
-    }
-
-    mLogosStorage->readUnlock();
-
-    mStocksStorage->writeLock();
-    const bool res = mStocksStorage->mergeStocksMeta(stocksMeta);
-    mStocksStorage->writeUnlock();
-
-    return res;
 }
 
 static void
@@ -480,6 +446,50 @@ void StockCollectThread::storeNewInstrumentsInfo()
     mInstrumentsStorage->writeLock();
     mInstrumentsStorage->mergeInstruments(instruments);
     mInstrumentsStorage->writeUnlock();
+}
+
+void StockCollectThread::reloadBidirInfos()
+{
+    mBidirInfosStorage->writeLock();
+    mBidirInfosStorage->readFromDatabase();
+    mBidirInfosStorage->writeUnlock();
+}
+
+bool StockCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
+{
+    QList<StockMeta> stocksMeta;
+
+    stocksMeta.reserve(tinkoffStocks->instruments_size());
+
+    mLogosStorage->readLock();
+
+    for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
+    {
+        const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
+
+        if (tinkoffStock.currency() == "rub" && tinkoffStock.api_trade_available_flag())
+        {
+            StockMeta stockMeta;
+
+            stockMeta.instrumentId        = QString::fromStdString(tinkoffStock.uid());
+            stockMeta.instrumentLogo      = mLogosStorage->getLogo(stockMeta.instrumentId);
+            stockMeta.instrumentTicker    = QString::fromStdString(tinkoffStock.ticker());
+            stockMeta.instrumentName      = QString::fromStdString(tinkoffStock.name());
+            stockMeta.forQualInvestorFlag = tinkoffStock.for_qual_investor_flag();
+            stockMeta.minPriceIncrement   = quotationToFloat(tinkoffStock.min_price_increment());
+            stockMeta.pricePrecision      = quotationPrecision(tinkoffStock.min_price_increment());
+
+            stocksMeta.append(stockMeta);
+        }
+    }
+
+    mLogosStorage->readUnlock();
+
+    mStocksStorage->writeLock();
+    const bool res = mStocksStorage->mergeStocksMeta(stocksMeta);
+    mStocksStorage->writeUnlock();
+
+    return res;
 }
 
 static void getCandlesWithGrpc(

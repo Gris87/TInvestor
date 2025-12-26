@@ -25,6 +25,7 @@ public:
     qint64     size() override;
     void       close() override;
     bool       exists() override;
+    qint64     lastModified() override;
     bool       remove() override;
     QIODevice* getDevice() override;
 

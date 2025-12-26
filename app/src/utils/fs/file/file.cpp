@@ -1,6 +1,7 @@
 #include "src/utils/fs/file/file.h"
 
 #include <QDebug>
+#include <QFileInfo>
 
 
 
@@ -54,6 +55,11 @@ void File::close()
 bool File::exists()
 {
     return mFile.exists();
+}
+
+qint64 File::lastModified()
+{
+    return QFileInfo(mFile).lastModified().toMSecsSinceEpoch();
 }
 
 bool File::remove()

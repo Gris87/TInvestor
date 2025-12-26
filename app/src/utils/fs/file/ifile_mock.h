@@ -28,6 +28,7 @@ public:
     MOCK_METHOD(qint64, size, (), (override));
     MOCK_METHOD(void, close, (), (override));
     MOCK_METHOD(bool, exists, (), (override));
+    MOCK_METHOD(qint64, lastModified, (), (override));
     MOCK_METHOD(bool, remove, (), (override));
     MOCK_METHOD(QIODevice*, getDevice, (), (override));
 };
