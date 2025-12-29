@@ -68,6 +68,7 @@ def generate_bidir_info(args):
 
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(bidir_info, f, ensure_ascii=False)
+        f.write("\n")
 
     shutil.rmtree(Path(args.cache) / "bidirinfo")
 
