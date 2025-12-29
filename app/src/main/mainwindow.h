@@ -103,7 +103,7 @@ public:
         IStocksStorage*                         stocksStorage,
         IInstrumentsStorage*                    instrumentsStorage,
         ILogosStorage*                          logosStorage,
-        IBidirInfosStorage*                     bidirInfosStorage,
+        IBiDirInfosStorage*                     biDirInfosStorage,
         IHttpClient*                            httpClient,
         IGrpcClient*                            grpcClient,
         IGrpcRetryClient*                       grpcRetryClient,
@@ -194,7 +194,7 @@ private:
     IStocksStorage*                         mStocksStorage;
     IInstrumentsStorage*                    mInstrumentsStorage;
     ILogosStorage*                          mLogosStorage;
-    IBidirInfosStorage*                     mBidirInfosStorage;
+    IBiDirInfosStorage*                     mBiDirInfosStorage;
     IHttpClient*                            mHttpClient;
     IGrpcClient*                            mGrpcClient;
     IGrpcRetryClient*                       mGrpcRetryClient;

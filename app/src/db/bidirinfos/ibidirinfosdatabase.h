@@ -7,14 +7,14 @@
 
 
 
-class IBidirInfosDatabase
+class IBiDirInfosDatabase
 {
 public:
-    explicit IBidirInfosDatabase() = default;
-    virtual ~IBidirInfosDatabase() = default;
+    explicit IBiDirInfosDatabase() = default;
+    virtual ~IBiDirInfosDatabase() = default;
 
-    IBidirInfosDatabase(const IBidirInfosDatabase& another)            = delete;
-    IBidirInfosDatabase& operator=(const IBidirInfosDatabase& another) = delete;
+    IBiDirInfosDatabase(const IBiDirInfosDatabase& another)            = delete;
+    IBiDirInfosDatabase& operator=(const IBiDirInfosDatabase& another) = delete;
 
-    virtual BidirInfos readBidirInfos(std::shared_ptr<IFile> bidirInfoFile) = 0;
+    virtual BiDirInfos readBiDirInfos(std::shared_ptr<IFile> biDirInfoFile) = 0;
 };

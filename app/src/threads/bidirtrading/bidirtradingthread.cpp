@@ -45,6 +45,7 @@ static const QMap<QString, float> BAD_INSTRUMENTS_SPREAD{ // clazy:exclude=non-p
 
 BiDirTradingThread::BiDirTradingThread(
     IInstrumentsStorage* instrumentsStorage,
+    IBiDirInfosStorage*  biDirInfosStorage,
     IUserStorage*        userStorage,
     IConfig*             config,
     ITimeUtils*          timeUtils,
@@ -61,6 +62,7 @@ BiDirTradingThread::BiDirTradingThread(
     IBiDirTradingThread(parent),
     mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
+    mBiDirInfosStorage(biDirInfosStorage),
     mUserStorage(userStorage),
     mConfig(config),
     mTimeUtils(timeUtils),

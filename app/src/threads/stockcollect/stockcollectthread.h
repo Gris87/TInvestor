@@ -46,7 +46,7 @@ public:
         IStocksStorage*      stocksStorage,
         IInstrumentsStorage* instrumentsStorage,
         ILogosStorage*       logosStorage,
-        IBidirInfosStorage*  bidirInfosStorage,
+        IBiDirInfosStorage*  biDirInfosStorage,
         IDirFactory*         dirFactory,
         IFileFactory*        fileFactory,
         IQZipFactory*        qZipFactory,
@@ -67,7 +67,7 @@ public:
 
     void downloadLogo(const QString& instrumentId, const QUrl& url);
     void storeNewInstrumentsInfo();
-    void reloadBidirInfos();
+    void reloadBiDirInfos();
     bool storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     void obtainStocksData();
     void copyDataToOperational();
@@ -85,7 +85,7 @@ private:
     IStocksStorage*      mStocksStorage;
     IInstrumentsStorage* mInstrumentsStorage;
     ILogosStorage*       mLogosStorage;
-    IBidirInfosStorage*  mBidirInfosStorage;
+    IBiDirInfosStorage*  mBiDirInfosStorage;
     IDirFactory*         mDirFactory;
     IFileFactory*        mFileFactory;
     IQZipFactory*        mQZipFactory;

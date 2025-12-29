@@ -11,26 +11,26 @@
 
 
 
-class BidirInfosStorage : public IBidirInfosStorage
+class BiDirInfosStorage : public IBiDirInfosStorage
 {
 public:
-    explicit BidirInfosStorage(IBidirInfosDatabase* bidirInfosDatabase, IFileFactory* fileFactory);
-    ~BidirInfosStorage() override;
+    explicit BiDirInfosStorage(IBiDirInfosDatabase* biDirInfosDatabase, IFileFactory* fileFactory);
+    ~BiDirInfosStorage() override;
 
-    BidirInfosStorage(const BidirInfosStorage& another)            = delete;
-    BidirInfosStorage& operator=(const BidirInfosStorage& another) = delete;
+    BiDirInfosStorage(const BiDirInfosStorage& another)            = delete;
+    BiDirInfosStorage& operator=(const BiDirInfosStorage& another) = delete;
 
-    void               readFromDatabase() override;
-    void               readLock() override;
-    void               readUnlock() override;
-    void               writeLock() override;
-    void               writeUnlock() override;
-    const BidirInfos&  getBidirInfos() override;
+    void              readFromDatabase() override;
+    void              readLock() override;
+    void              readUnlock() override;
+    void              writeLock() override;
+    void              writeUnlock() override;
+    const BiDirInfos& getBiDirInfos() override;
 
 private:
-    QReadWriteLock*       mRwMutex;
-    IBidirInfosDatabase*  mBidirInfosDatabase;
-    IFileFactory*         mFileFactory;
-    BidirInfos            mBidirInfos;
-    qint64                mLastModified;
+    QReadWriteLock*      mRwMutex;
+    IBiDirInfosDatabase* mBiDirInfosDatabase;
+    IFileFactory*        mFileFactory;
+    BiDirInfos           mBiDirInfos;
+    qint64               mLastModified;
 };

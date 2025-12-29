@@ -438,8 +438,8 @@ static int runApplication(QApplication* app)
     InstrumentsStorage  instrumentsStorage(&instrumentsDatabase);
     LogosDatabase       logosDatabase(&dirFactory, &fileFactory);
     LogosStorage        logosStorage(&logosDatabase);
-    BidirInfosDatabase  bidirInfosDatabase(&dirFactory);
-    BidirInfosStorage   bidirInfosStorage(&bidirInfosDatabase, &fileFactory);
+    BiDirInfosDatabase  biDirInfosDatabase(&dirFactory);
+    BiDirInfosStorage   biDirInfosStorage(&biDirInfosDatabase, &fileFactory);
     StocksDatabase      stocksDatabase(&dirFactory, &fileFactory, &logosStorage);
     StocksStorage       stocksStorage(&stocksDatabase, &userStorage);
     OperationsDatabase  simulatorOperationsDatabase(&dirFactory, &fileFactory, &logosStorage, false);
@@ -495,7 +495,7 @@ static int runApplication(QApplication* app)
         &stocksStorage,
         &instrumentsStorage,
         &logosStorage,
-        &bidirInfosStorage,
+        &biDirInfosStorage,
         &dirFactory,
         &fileFactory,
         &qZipFactory,
@@ -591,7 +591,7 @@ static int runApplication(QApplication* app)
         &stocksStorage,
         &instrumentsStorage,
         &logosStorage,
-        &bidirInfosStorage,
+        &biDirInfosStorage,
         &httpClient,
         &grpcClient,
         &grpcRetryClient,

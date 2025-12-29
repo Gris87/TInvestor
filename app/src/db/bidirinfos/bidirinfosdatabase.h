@@ -8,14 +8,14 @@
 
 
 
-class BidirInfosDatabase : public IBidirInfosDatabase
+class BiDirInfosDatabase : public IBiDirInfosDatabase
 {
 public:
-    explicit BidirInfosDatabase(IDirFactory* dirFactory);
-    ~BidirInfosDatabase() override;
+    explicit BiDirInfosDatabase(IDirFactory* dirFactory);
+    ~BiDirInfosDatabase() override;
 
-    BidirInfosDatabase(const BidirInfosDatabase& another)            = delete;
-    BidirInfosDatabase& operator=(const BidirInfosDatabase& another) = delete;
+    BiDirInfosDatabase(const BiDirInfosDatabase& another)            = delete;
+    BiDirInfosDatabase& operator=(const BiDirInfosDatabase& another) = delete;
 
-    BidirInfos readBidirInfos(std::shared_ptr<IFile> bidirInfoFile) override;
+    BiDirInfos readBiDirInfos(std::shared_ptr<IFile> biDirInfoFile) override;
 };

@@ -149,7 +149,7 @@ protected:
         stocksStorageMock                         = new StrictMock<StocksStorageMock>();
         instrumentsStorageMock                    = new StrictMock<InstrumentsStorageMock>();
         logosStorageMock                          = new StrictMock<LogosStorageMock>();
-        bidirInfosStorageMock                     = new StrictMock<BidirInfosStorageMock>();
+        biDirInfosStorageMock                     = new StrictMock<BiDirInfosStorageMock>();
         httpClientMock                            = new StrictMock<HttpClientMock>();
         grpcClientMock                            = new StrictMock<GrpcClientMock>();
         grpcRetryClientMock                       = new StrictMock<GrpcRetryClientMock>();
@@ -347,7 +347,7 @@ protected:
             stocksStorageMock,
             instrumentsStorageMock,
             logosStorageMock,
-            bidirInfosStorageMock,
+            biDirInfosStorageMock,
             httpClientMock,
             grpcClientMock,
             grpcRetryClientMock,
@@ -452,7 +452,7 @@ protected:
         delete stocksStorageMock;
         delete instrumentsStorageMock;
         delete logosStorageMock;
-        delete bidirInfosStorageMock;
+        delete biDirInfosStorageMock;
         delete httpClientMock;
         delete grpcClientMock;
         delete grpcRetryClientMock;
@@ -533,7 +533,7 @@ protected:
     StrictMock<StocksStorageMock>*                         stocksStorageMock;
     StrictMock<InstrumentsStorageMock>*                    instrumentsStorageMock;
     StrictMock<LogosStorageMock>*                          logosStorageMock;
-    StrictMock<BidirInfosStorageMock>*                     bidirInfosStorageMock;
+    StrictMock<BiDirInfosStorageMock>*                     biDirInfosStorageMock;
     StrictMock<HttpClientMock>*                            httpClientMock;
     StrictMock<GrpcClientMock>*                            grpcClientMock;
     StrictMock<GrpcRetryClientMock>*                       grpcRetryClientMock;
@@ -1127,6 +1127,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            biDirInfosStorageMock,
             userStorageMock,
             configMock,
             timeUtilsMock,
@@ -1307,6 +1308,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            biDirInfosStorageMock,
             userStorageMock,
             configMock,
             timeUtilsMock,
@@ -1327,6 +1329,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            biDirInfosStorageMock,
             userStorageMock,
             configMock,
             timeUtilsMock,
@@ -1857,6 +1860,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            biDirInfosStorageMock,
             userStorageMock,
             configMock,
             timeUtilsMock,
@@ -2014,6 +2018,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         *biDirTradingThreadFactoryMock,
         newInstance(
             instrumentsStorageMock,
+            biDirInfosStorageMock,
             userStorageMock,
             configMock,
             timeUtilsMock,
@@ -2106,9 +2111,9 @@ TEST_F(Test_MainWindow, Test_init)
     EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, readFromDatabase());
     EXPECT_CALL(*logosStorageMock, writeUnlock());
-    EXPECT_CALL(*bidirInfosStorageMock, writeLock());
-    EXPECT_CALL(*bidirInfosStorageMock, readFromDatabase());
-    EXPECT_CALL(*bidirInfosStorageMock, writeUnlock());
+    EXPECT_CALL(*biDirInfosStorageMock, writeLock());
+    EXPECT_CALL(*biDirInfosStorageMock, readFromDatabase());
+    EXPECT_CALL(*biDirInfosStorageMock, writeUnlock());
     EXPECT_CALL(*stocksStorageMock, readLock()).Times(2);
     EXPECT_CALL(*stocksStorageMock, assignLogos());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));

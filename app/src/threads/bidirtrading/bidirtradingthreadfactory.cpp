@@ -19,6 +19,7 @@ BiDirTradingThreadFactory::~BiDirTradingThreadFactory()
 
 IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(
     IInstrumentsStorage* instrumentsStorage,
+    IBiDirInfosStorage*  biDirInfosStorage,
     IUserStorage*        userStorage,
     IConfig*             config,
     ITimeUtils*          timeUtils,
@@ -35,6 +36,7 @@ IBiDirTradingThread* BiDirTradingThreadFactory::newInstance(
 {
     return new BiDirTradingThread(
         instrumentsStorage,
+        biDirInfosStorage,
         userStorage,
         config,
         timeUtils,

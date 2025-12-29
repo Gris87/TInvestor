@@ -45,7 +45,7 @@ StockCollectThread::StockCollectThread(
     IStocksStorage*      stocksStorage,
     IInstrumentsStorage* instrumentsStorage,
     ILogosStorage*       logosStorage,
-    IBidirInfosStorage*  bidirInfosStorage,
+    IBiDirInfosStorage*  biDirInfosStorage,
     IDirFactory*         dirFactory,
     IFileFactory*        fileFactory,
     IQZipFactory*        qZipFactory,
@@ -61,7 +61,7 @@ StockCollectThread::StockCollectThread(
     mStocksStorage(stocksStorage),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
-    mBidirInfosStorage(bidirInfosStorage),
+    mBiDirInfosStorage(biDirInfosStorage),
     mDirFactory(dirFactory),
     mFileFactory(fileFactory),
     mQZipFactory(qZipFactory),
@@ -92,7 +92,7 @@ void StockCollectThread::run()
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffStocks != nullptr)
     {
         storeNewInstrumentsInfo();
-        reloadBidirInfos();
+        reloadBiDirInfos();
         const bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
         obtainStocksData();
         copyDataToOperational();
@@ -448,11 +448,11 @@ void StockCollectThread::storeNewInstrumentsInfo()
     mInstrumentsStorage->writeUnlock();
 }
 
-void StockCollectThread::reloadBidirInfos()
+void StockCollectThread::reloadBiDirInfos()
 {
-    mBidirInfosStorage->writeLock();
-    mBidirInfosStorage->readFromDatabase();
-    mBidirInfosStorage->writeUnlock();
+    mBiDirInfosStorage->writeLock();
+    mBiDirInfosStorage->readFromDatabase();
+    mBiDirInfosStorage->writeUnlock();
 }
 
 bool StockCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)

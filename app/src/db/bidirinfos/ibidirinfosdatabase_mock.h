@@ -8,17 +8,17 @@
 
 
 
-class BidirInfosDatabaseMock : public IBidirInfosDatabase
+class BiDirInfosDatabaseMock : public IBiDirInfosDatabase
 {
 public:
-    explicit BidirInfosDatabaseMock() :
-        IBidirInfosDatabase()
+    explicit BiDirInfosDatabaseMock() :
+        IBiDirInfosDatabase()
     {
     }
-    ~BidirInfosDatabaseMock() override = default;
+    ~BiDirInfosDatabaseMock() override = default;
 
-    BidirInfosDatabaseMock(const BidirInfosDatabaseMock& another)            = delete;
-    BidirInfosDatabaseMock& operator=(const BidirInfosDatabaseMock& another) = delete;
+    BiDirInfosDatabaseMock(const BiDirInfosDatabaseMock& another)            = delete;
+    BiDirInfosDatabaseMock& operator=(const BiDirInfosDatabaseMock& another) = delete;
 
-    MOCK_METHOD(BidirInfos, readBidirInfos, (std::shared_ptr<IFile> bidirInfoFile), (override));
+    MOCK_METHOD(BiDirInfos, readBiDirInfos, (std::shared_ptr<IFile> biDirInfoFile), (override));
 };

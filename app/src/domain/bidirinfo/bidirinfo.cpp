@@ -8,57 +8,57 @@ constexpr float FLOAT_EPSILON = 0.0001f;
 
 
 
-BidirInfo::BidirInfo() :
+BiDirInfo::BiDirInfo() :
     spread(),
     minYield(),
     totalYield()
 {
 }
 
-static void bidirInfoSpreadParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
+static void biDirInfoSpreadParse(BiDirInfo* biDirInfo, simdjson::ondemand::value value)
 {
-    bidirInfo->spread = value.get_double();
+    biDirInfo->spread = value.get_double();
 }
 
-static void bidirInfoMinYieldParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
+static void biDirInfoMinYieldParse(BiDirInfo* biDirInfo, simdjson::ondemand::value value)
 {
-    bidirInfo->minYield = value.get_double();
+    biDirInfo->minYield = value.get_double();
 }
 
-static void bidirInfoTotalYieldParse(BidirInfo* bidirInfo, simdjson::ondemand::value value)
+static void biDirInfoTotalYieldParse(BiDirInfo* biDirInfo, simdjson::ondemand::value value)
 {
-    bidirInfo->totalYield = value.get_double();
+    biDirInfo->totalYield = value.get_double();
 }
 
-static void bidirInfoThrowParseException(
-    BidirInfo* /*bidirInfo*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
+static void biDirInfoThrowParseException(
+    BiDirInfo* /*biDirInfo*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
 {
     throwException("Unknown parameter");
 }
 
-using ParseHandler = void (*)(BidirInfo* bidirInfo, simdjson::ondemand::value value);
+using ParseHandler = void (*)(BiDirInfo* biDirInfo, simdjson::ondemand::value value);
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"spread",     bidirInfoSpreadParse    },
-    {"minYield",   bidirInfoMinYieldParse  },
-    {"totalYield", bidirInfoTotalYieldParse}
+    {"spread",     biDirInfoSpreadParse    },
+    {"minYield",   biDirInfoMinYieldParse  },
+    {"totalYield", biDirInfoTotalYieldParse}
 };
 // clang-format on
 
-void BidirInfo::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:exclude=function-args-by-ref
+void BiDirInfo::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:exclude=function-args-by-ref
 {
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler           parseHandler = PARSE_HANDLER.value(key, bidirInfoThrowParseException);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key, biDirInfoThrowParseException);
 
         parseHandler(this, field.value());
     }
 }
 
-QJsonObject BidirInfo::toJsonObject() const
+QJsonObject BiDirInfo::toJsonObject() const
 {
     QJsonObject res;
 
@@ -71,7 +71,7 @@ QJsonObject BidirInfo::toJsonObject() const
     return res;
 }
 
-bool operator==(const BidirInfo& lhs, const BidirInfo& rhs)
+bool operator==(const BiDirInfo& lhs, const BiDirInfo& rhs)
 {
     return qAbs(lhs.spread - rhs.spread) < FLOAT_EPSILON && qAbs(lhs.minYield - rhs.minYield) < FLOAT_EPSILON &&
            qAbs(lhs.totalYield - rhs.totalYield) < FLOAT_EPSILON;

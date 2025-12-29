@@ -17,64 +17,64 @@ using ::testing::StrictMock;
 
 
 
-class Test_BidirInfosStorage : public ::testing::Test
+class Test_BiDirInfosStorage : public ::testing::Test
 {
 protected:
     void SetUp() override
     {
         appDir = qApp->applicationDirPath();
 
-        bidirInfosDatabaseMock = new StrictMock<BidirInfosDatabaseMock>();
+        biDirInfosDatabaseMock = new StrictMock<BiDirInfosDatabaseMock>();
         fileFactoryMock        = new StrictMock<FileFactoryMock>();
 
-        storage = new BidirInfosStorage(bidirInfosDatabaseMock, fileFactoryMock);
+        storage = new BiDirInfosStorage(biDirInfosDatabaseMock, fileFactoryMock);
     }
 
     void TearDown() override
     {
         delete storage;
-        delete bidirInfosDatabaseMock;
+        delete biDirInfosDatabaseMock;
         delete fileFactoryMock;
     }
 
-    BidirInfosStorage*                  storage;
-    StrictMock<BidirInfosDatabaseMock>* bidirInfosDatabaseMock;
+    BiDirInfosStorage*                  storage;
+    StrictMock<BiDirInfosDatabaseMock>* biDirInfosDatabaseMock;
     StrictMock<FileFactoryMock>*        fileFactoryMock;
     QString                             appDir;
 };
 
 
 
-TEST_F(Test_BidirInfosStorage, Test_constructor_and_destructor)
+TEST_F(Test_BiDirInfosStorage, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_BidirInfosStorage, Test_readFromDatabase_and_getBidirInfos)
+TEST_F(Test_BiDirInfosStorage, Test_readFromDatabase_and_getBiDirInfos)
 {
     const InSequence seq;
 
-    BidirInfos bidirInfos = storage->getBidirInfos();
-    ASSERT_EQ(bidirInfos.size(), 0);
+    BiDirInfos biDirInfos = storage->getBiDirInfos();
+    ASSERT_EQ(biDirInfos.size(), 0);
 
-    BidirInfo bidirInfo1;
-    BidirInfo bidirInfo2;
-    BidirInfo bidirInfo3;
+    BiDirInfo biDirInfo1;
+    BiDirInfo biDirInfo2;
+    BiDirInfo biDirInfo3;
 
-    bidirInfo1.spread     = 0.1f;
-    bidirInfo1.minYield   = 1.1f;
-    bidirInfo1.totalYield = 2.1f;
+    biDirInfo1.spread     = 0.1f;
+    biDirInfo1.minYield   = 1.1f;
+    biDirInfo1.totalYield = 2.1f;
 
-    bidirInfo2.spread     = 0.2f;
-    bidirInfo2.minYield   = 1.2f;
-    bidirInfo2.totalYield = 2.2f;
+    biDirInfo2.spread     = 0.2f;
+    biDirInfo2.minYield   = 1.2f;
+    biDirInfo2.totalYield = 2.2f;
 
-    bidirInfo3.spread     = 0.3f;
-    bidirInfo3.minYield   = 1.3f;
-    bidirInfo3.totalYield = 2.3f;
+    biDirInfo3.spread     = 0.3f;
+    biDirInfo3.minYield   = 1.3f;
+    biDirInfo3.totalYield = 2.3f;
 
-    bidirInfos["aaaaa"] = bidirInfo1;
-    bidirInfos["bbbbb"] = bidirInfo2;
-    bidirInfos["ccccc"] = bidirInfo3;
+    biDirInfos["aaaaa"] = biDirInfo1;
+    biDirInfos["bbbbb"] = biDirInfo2;
+    biDirInfos["ccccc"] = biDirInfo3;
 
     StrictMock<FileMock>*  fileMock1 = new StrictMock<FileMock>(); // Will be deleted in readFromDatabase
     StrictMock<FileMock>*  fileMock2 = new StrictMock<FileMock>(); // Will be deleted in readFromDatabase
@@ -84,26 +84,26 @@ TEST_F(Test_BidirInfosStorage, Test_readFromDatabase_and_getBidirInfos)
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/bidirinfo/bidirinfo.json"))).WillOnce(Return(filePtr1));
     EXPECT_CALL(*fileMock1, lastModified()).WillOnce(Return(0));
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(":/assets/bidir_info.json"))).WillOnce(Return(filePtr2));
-    EXPECT_CALL(*bidirInfosDatabaseMock, readBidirInfos(filePtr2)).WillOnce(Return(bidirInfos));
+    EXPECT_CALL(*biDirInfosDatabaseMock, readBiDirInfos(filePtr2)).WillOnce(Return(biDirInfos));
 
     storage->readFromDatabase();
-    bidirInfos = storage->getBidirInfos();
+    biDirInfos = storage->getBiDirInfos();
 
     // clang-format off
-    ASSERT_EQ(bidirInfos.size(),                3);
-    ASSERT_NEAR(bidirInfos["aaaaa"].spread,     0.1f, 0.0001f);
-    ASSERT_NEAR(bidirInfos["aaaaa"].minYield,   1.1f, 0.0001f);
-    ASSERT_NEAR(bidirInfos["aaaaa"].totalYield, 2.1f, 0.0001f);
-    ASSERT_NEAR(bidirInfos["bbbbb"].spread,     0.2f, 0.0001f);
-    ASSERT_NEAR(bidirInfos["bbbbb"].minYield,   1.2f, 0.0001f);
-    ASSERT_NEAR(bidirInfos["bbbbb"].totalYield, 2.2f, 0.0001f);
-    ASSERT_NEAR(bidirInfos["ccccc"].spread,     0.3f, 0.0001f);
-    ASSERT_NEAR(bidirInfos["ccccc"].minYield,   1.3f, 0.0001f);
-    ASSERT_NEAR(bidirInfos["ccccc"].totalYield, 2.3f, 0.0001f);
+    ASSERT_EQ(biDirInfos.size(),                3);
+    ASSERT_NEAR(biDirInfos["aaaaa"].spread,     0.1f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["aaaaa"].minYield,   1.1f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["aaaaa"].totalYield, 2.1f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["bbbbb"].spread,     0.2f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["bbbbb"].minYield,   1.2f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["bbbbb"].totalYield, 2.2f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["ccccc"].spread,     0.3f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["ccccc"].minYield,   1.3f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["ccccc"].totalYield, 2.3f, 0.0001f);
     // clang-format on
 }
 
-TEST_F(Test_BidirInfosStorage, Test_lock_and_unlock)
+TEST_F(Test_BiDirInfosStorage, Test_lock_and_unlock)
 {
     storage->writeLock();
     storage->writeUnlock();

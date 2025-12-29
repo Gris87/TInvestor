@@ -11,6 +11,7 @@
 #include "src/domain/trading/bidirtradinginfo.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/grpc/igrpcretryclient.h"
+#include "src/storage/bidirinfos/ibidirinfosstorage.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/logs/ilogsthread.h"
@@ -26,6 +27,7 @@ class BiDirTradingThread : public IBiDirTradingThread
 public:
     explicit BiDirTradingThread(
         IInstrumentsStorage* instrumentsStorage,
+        IBiDirInfosStorage*  biDirInfosStorage,
         IUserStorage*        userStorage,
         IConfig*             config,
         ITimeUtils*          timeUtils,
@@ -108,6 +110,7 @@ private:
 
     QReadWriteLock*      mRwMutex;
     IInstrumentsStorage* mInstrumentsStorage;
+    IBiDirInfosStorage*  mBiDirInfosStorage;
     IUserStorage*        mUserStorage;
     IConfig*             mConfig;
     ITimeUtils*          mTimeUtils;

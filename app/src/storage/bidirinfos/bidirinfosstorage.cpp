@@ -5,30 +5,30 @@
 
 
 
-BidirInfosStorage::BidirInfosStorage(IBidirInfosDatabase* bidirInfosDatabase, IFileFactory* fileFactory) :
-    IBidirInfosStorage(),
+BiDirInfosStorage::BiDirInfosStorage(IBiDirInfosDatabase* biDirInfosDatabase, IFileFactory* fileFactory) :
+    IBiDirInfosStorage(),
     mRwMutex(new QReadWriteLock()),
-    mBidirInfosDatabase(bidirInfosDatabase),
+    mBiDirInfosDatabase(biDirInfosDatabase),
     mFileFactory(fileFactory),
-    mBidirInfos(),
+    mBiDirInfos(),
     mLastModified(-1)
 {
-    qDebug() << "Create BidirInfosStorage";
+    qDebug() << "Create BiDirInfosStorage";
 }
 
-BidirInfosStorage::~BidirInfosStorage()
+BiDirInfosStorage::~BiDirInfosStorage()
 {
-    qDebug() << "Destroy BidirInfosStorage";
+    qDebug() << "Destroy BiDirInfosStorage";
 
     delete mRwMutex;
 }
 
-void BidirInfosStorage::readFromDatabase()
+void BiDirInfosStorage::readFromDatabase()
 {
-    std::shared_ptr<IFile> bidirInfoFile =
+    std::shared_ptr<IFile> biDirInfoFile =
         mFileFactory->newInstance(qApp->applicationDirPath() + "/data/bidirinfo/bidirinfo.json");
 
-    qint64 lastModified = bidirInfoFile->lastModified();
+    qint64 lastModified = biDirInfoFile->lastModified();
 
     if (mLastModified != lastModified)
     {
@@ -36,34 +36,34 @@ void BidirInfosStorage::readFromDatabase()
 
         if (mLastModified == 0)
         {
-            bidirInfoFile = mFileFactory->newInstance(":/assets/bidir_info.json");
+            biDirInfoFile = mFileFactory->newInstance(":/assets/bidir_info.json");
         }
 
-        mBidirInfos = mBidirInfosDatabase->readBidirInfos(bidirInfoFile);
+        mBiDirInfos = mBiDirInfosDatabase->readBiDirInfos(biDirInfoFile);
     }
 }
 
-void BidirInfosStorage::readLock()
+void BiDirInfosStorage::readLock()
 {
     mRwMutex->lockForRead();
 }
 
-void BidirInfosStorage::readUnlock()
+void BiDirInfosStorage::readUnlock()
 {
     mRwMutex->unlock();
 }
 
-void BidirInfosStorage::writeLock()
+void BiDirInfosStorage::writeLock()
 {
     mRwMutex->lockForWrite();
 }
 
-void BidirInfosStorage::writeUnlock()
+void BiDirInfosStorage::writeUnlock()
 {
     mRwMutex->unlock();
 }
 
-const BidirInfos& BidirInfosStorage::getBidirInfos()
+const BiDirInfos& BiDirInfosStorage::getBiDirInfos()
 {
-    return mBidirInfos;
+    return mBiDirInfos;
 }

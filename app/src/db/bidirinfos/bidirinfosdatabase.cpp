@@ -7,10 +7,10 @@
 
 
 
-BidirInfosDatabase::BidirInfosDatabase(IDirFactory* dirFactory) :
-    IBidirInfosDatabase()
+BiDirInfosDatabase::BiDirInfosDatabase(IDirFactory* dirFactory) :
+    IBiDirInfosDatabase()
 {
-    qDebug() << "Create BidirInfosDatabase";
+    qDebug() << "Create BiDirInfosDatabase";
 
     const std::shared_ptr<IDir> dir = dirFactory->newInstance();
 
@@ -18,21 +18,21 @@ BidirInfosDatabase::BidirInfosDatabase(IDirFactory* dirFactory) :
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
 }
 
-BidirInfosDatabase::~BidirInfosDatabase()
+BiDirInfosDatabase::~BiDirInfosDatabase()
 {
-    qDebug() << "Destroy BidirInfosDatabase";
+    qDebug() << "Destroy BiDirInfosDatabase";
 }
 
-BidirInfos BidirInfosDatabase::readBidirInfos(std::shared_ptr<IFile> bidirInfoFile)
+BiDirInfos BiDirInfosDatabase::readBiDirInfos(std::shared_ptr<IFile> biDirInfoFile)
 {
     qDebug() << "Reading bi-dir information from database";
 
-    BidirInfos res;
+    BiDirInfos res;
 
-    if (bidirInfoFile->open(QIODevice::ReadOnly))
+    if (biDirInfoFile->open(QIODevice::ReadOnly))
     {
-        const QByteArray content = bidirInfoFile->readAll();
-        bidirInfoFile->close();
+        const QByteArray content = biDirInfoFile->readAll();
+        biDirInfoFile->close();
 
         const simdjson::padded_string jsonData(content.toStdString());
 
@@ -42,9 +42,9 @@ BidirInfos BidirInfosDatabase::readBidirInfos(std::shared_ptr<IFile> bidirInfoFi
         {
             simdjson::ondemand::document doc = parser.iterate(jsonData);
 
-            simdjson::ondemand::object jsonBidirInfos = doc.get_object();
+            simdjson::ondemand::object jsonBiDirInfos = doc.get_object();
 
-            for (simdjson::ondemand::field field : jsonBidirInfos)
+            for (simdjson::ondemand::field field : jsonBiDirInfos)
             {
                 const std::string_view fieldStr     = field.escaped_key();
                 const QString          instrumentId = QString::fromUtf8(fieldStr.data(), fieldStr.size());

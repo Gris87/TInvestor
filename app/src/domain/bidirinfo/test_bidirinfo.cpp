@@ -7,7 +7,7 @@
 
 
 
-class Test_BidirInfo : public ::testing::Test
+class Test_BiDirInfo : public ::testing::Test
 {
 protected:
     void SetUp() override
@@ -21,60 +21,60 @@ protected:
 
 
 
-TEST_F(Test_BidirInfo, Test_constructor_and_destructor)
+TEST_F(Test_BiDirInfo, Test_constructor_and_destructor)
 {
-    const BidirInfo bidirInfo;
+    const BiDirInfo biDirInfo;
 
     // clang-format off
-    ASSERT_NEAR(bidirInfo.spread,     0.0f, 0.0001f);
-    ASSERT_NEAR(bidirInfo.minYield,   0.0f, 0.0001f);
-    ASSERT_NEAR(bidirInfo.totalYield, 0.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo.spread,     0.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo.minYield,   0.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo.totalYield, 0.0f, 0.0001f);
     // clang-format on
 }
 
-TEST_F(Test_BidirInfo, Test_copy_constructor)
+TEST_F(Test_BiDirInfo, Test_copy_constructor)
 {
-    BidirInfo bidirInfo;
+    BiDirInfo biDirInfo;
 
-    bidirInfo.spread     = 1.0f;
-    bidirInfo.minYield   = 2.0f;
-    bidirInfo.totalYield = 3.0f;
+    biDirInfo.spread     = 1.0f;
+    biDirInfo.minYield   = 2.0f;
+    biDirInfo.totalYield = 3.0f;
 
-    const BidirInfo bidirInfo2(bidirInfo);
+    const BiDirInfo biDirInfo2(biDirInfo);
 
     // clang-format off
-    ASSERT_NEAR(bidirInfo2.spread,     1.0f, 0.0001f);
-    ASSERT_NEAR(bidirInfo2.minYield,   2.0f, 0.0001f);
-    ASSERT_NEAR(bidirInfo2.totalYield, 3.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo2.spread,     1.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo2.minYield,   2.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo2.totalYield, 3.0f, 0.0001f);
     // clang-format on
 }
 
-TEST_F(Test_BidirInfo, Test_assign)
+TEST_F(Test_BiDirInfo, Test_assign)
 {
-    BidirInfo bidirInfo;
-    BidirInfo bidirInfo2;
+    BiDirInfo biDirInfo;
+    BiDirInfo biDirInfo2;
 
-    bidirInfo.spread     = 1.0f;
-    bidirInfo.minYield   = 2.0f;
-    bidirInfo.totalYield = 3.0f;
+    biDirInfo.spread     = 1.0f;
+    biDirInfo.minYield   = 2.0f;
+    biDirInfo.totalYield = 3.0f;
 
-    bidirInfo2 = bidirInfo;
+    biDirInfo2 = biDirInfo;
 
     // clang-format off
-    ASSERT_NEAR(bidirInfo2.spread,     1.0f, 0.0001f);
-    ASSERT_NEAR(bidirInfo2.minYield,   2.0f, 0.0001f);
-    ASSERT_NEAR(bidirInfo2.totalYield, 3.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo2.spread,     1.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo2.minYield,   2.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo2.totalYield, 3.0f, 0.0001f);
     // clang-format on
 }
 
-TEST_F(Test_BidirInfo, Test_fromJsonObject)
+TEST_F(Test_BiDirInfo, Test_fromJsonObject)
 {
-    BidirInfo bidirInfo;
+    BiDirInfo biDirInfo;
 
     // clang-format off
-    ASSERT_NEAR(bidirInfo.spread,     0.0f, 0.0001f);
-    ASSERT_NEAR(bidirInfo.minYield,   0.0f, 0.0001f);
-    ASSERT_NEAR(bidirInfo.totalYield, 0.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo.spread,     0.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo.minYield,   0.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo.totalYield, 0.0f, 0.0001f);
     // clang-format on
 
     const QString content = R"({"minYield":2,"spread":1,"totalYield":3})";
@@ -84,31 +84,31 @@ TEST_F(Test_BidirInfo, Test_fromJsonObject)
     simdjson::ondemand::parser   parser;
     simdjson::ondemand::document doc = parser.iterate(jsonData);
 
-    bidirInfo.fromJsonObject(doc.get_object());
+    biDirInfo.fromJsonObject(doc.get_object());
 
     // clang-format off
-    ASSERT_NEAR(bidirInfo.spread,     1.0f, 0.0001f);
-    ASSERT_NEAR(bidirInfo.minYield,   2.0f, 0.0001f);
-    ASSERT_NEAR(bidirInfo.totalYield, 3.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo.spread,     1.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo.minYield,   2.0f, 0.0001f);
+    ASSERT_NEAR(biDirInfo.totalYield, 3.0f, 0.0001f);
     // clang-format on
 
     const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
     doc                                     = parser.iterate(jsonData2);
 
     lastThrownException = "";
-    bidirInfo.fromJsonObject(doc.get_object());
+    biDirInfo.fromJsonObject(doc.get_object());
     ASSERT_EQ(lastThrownException, "Unknown parameter");
 }
 
-TEST_F(Test_BidirInfo, Test_toJsonObject)
+TEST_F(Test_BiDirInfo, Test_toJsonObject)
 {
-    BidirInfo bidirInfo;
+    BiDirInfo biDirInfo;
 
-    bidirInfo.spread     = 1.0f;
-    bidirInfo.minYield   = 2.0f;
-    bidirInfo.totalYield = 3.0f;
+    biDirInfo.spread     = 1.0f;
+    biDirInfo.minYield   = 2.0f;
+    biDirInfo.totalYield = 3.0f;
 
-    const QJsonObject   jsonObject = bidirInfo.toJsonObject();
+    const QJsonObject   jsonObject = biDirInfo.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
 
     const QString content         = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
@@ -117,33 +117,33 @@ TEST_F(Test_BidirInfo, Test_toJsonObject)
     ASSERT_EQ(content, expectedContent);
 }
 
-TEST_F(Test_BidirInfo, Test_equals)
+TEST_F(Test_BiDirInfo, Test_equals)
 {
-    BidirInfo bidirInfo;
-    BidirInfo bidirInfo2;
+    BiDirInfo biDirInfo;
+    BiDirInfo biDirInfo2;
 
-    bidirInfo.spread     = 1.0f;
-    bidirInfo.minYield   = 2.0f;
-    bidirInfo.totalYield = 3.0f;
+    biDirInfo.spread     = 1.0f;
+    biDirInfo.minYield   = 2.0f;
+    biDirInfo.totalYield = 3.0f;
 
-    bidirInfo2.spread     = 1.0f;
-    bidirInfo2.minYield   = 2.0f;
-    bidirInfo2.totalYield = 3.0f;
+    biDirInfo2.spread     = 1.0f;
+    biDirInfo2.minYield   = 2.0f;
+    biDirInfo2.totalYield = 3.0f;
 
-    ASSERT_EQ(bidirInfo, bidirInfo2);
+    ASSERT_EQ(biDirInfo, biDirInfo2);
 
-    bidirInfo2.spread = -1.0f;
-    ASSERT_NE(bidirInfo, bidirInfo2);
-    bidirInfo2.spread = 1.0f;
-    ASSERT_EQ(bidirInfo, bidirInfo2);
+    biDirInfo2.spread = -1.0f;
+    ASSERT_NE(biDirInfo, biDirInfo2);
+    biDirInfo2.spread = 1.0f;
+    ASSERT_EQ(biDirInfo, biDirInfo2);
 
-    bidirInfo2.minYield = -2.0f;
-    ASSERT_NE(bidirInfo, bidirInfo2);
-    bidirInfo2.minYield = 2.0f;
-    ASSERT_EQ(bidirInfo, bidirInfo2);
+    biDirInfo2.minYield = -2.0f;
+    ASSERT_NE(biDirInfo, biDirInfo2);
+    biDirInfo2.minYield = 2.0f;
+    ASSERT_EQ(biDirInfo, biDirInfo2);
 
-    bidirInfo2.totalYield = -3.0f;
-    ASSERT_NE(bidirInfo, bidirInfo2);
-    bidirInfo2.totalYield = 3.0f;
-    ASSERT_EQ(bidirInfo, bidirInfo2);
+    biDirInfo2.totalYield = -3.0f;
+    ASSERT_NE(biDirInfo, biDirInfo2);
+    biDirInfo2.totalYield = 3.0f;
+    ASSERT_EQ(biDirInfo, biDirInfo2);
 }

@@ -76,7 +76,7 @@ MainWindow::MainWindow(
     IStocksStorage*                         stocksStorage,
     IInstrumentsStorage*                    instrumentsStorage,
     ILogosStorage*                          logosStorage,
-    IBidirInfosStorage*                     bidirInfosStorage,
+    IBiDirInfosStorage*                     biDirInfosStorage,
     IHttpClient*                            httpClient,
     IGrpcClient*                            grpcClient,
     IGrpcRetryClient*                       grpcRetryClient,
@@ -137,7 +137,7 @@ MainWindow::MainWindow(
     mStocksStorage(stocksStorage),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
-    mBidirInfosStorage(bidirInfosStorage),
+    mBiDirInfosStorage(biDirInfosStorage),
     mHttpClient(httpClient),
     mGrpcClient(grpcClient),
     mGrpcRetryClient(grpcRetryClient),
@@ -1062,6 +1062,7 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
             {
                 biDirTradingThread = mBiDirTradingThreadFactory->newInstance(
                     mInstrumentsStorage,
+                    mBiDirInfosStorage,
                     mUserStorage,
                     mConfig,
                     mTimeUtils,
@@ -1281,13 +1282,13 @@ struct ReadDatabasesInfo
         IStocksStorage*      _stocksStorage,
         IInstrumentsStorage* _instrumentsStorage,
         ILogosStorage*       _logosStorage,
-        IBidirInfosStorage*  _bidirInfosStorage
+        IBiDirInfosStorage*  _biDirInfosStorage
     ) :
         userStorage(_userStorage),
         stocksStorage(_stocksStorage),
         instrumentsStorage(_instrumentsStorage),
         logosStorage(_logosStorage),
-        bidirInfosStorage(_bidirInfosStorage)
+        biDirInfosStorage(_biDirInfosStorage)
     {
     }
 
@@ -1295,7 +1296,7 @@ struct ReadDatabasesInfo
     IStocksStorage*      stocksStorage;
     IInstrumentsStorage* instrumentsStorage;
     ILogosStorage*       logosStorage;
-    IBidirInfosStorage*  bidirInfosStorage;
+    IBiDirInfosStorage*  biDirInfosStorage;
 };
 
 static void readDatabasesForParallel(
@@ -1340,9 +1341,9 @@ static void readDatabasesForParallel(
         }
         else if (dbType == DATABASE_TYPE_BIDIR_INFO)
         {
-            readDatabasesInfo->bidirInfosStorage->writeLock();
-            readDatabasesInfo->bidirInfosStorage->readFromDatabase();
-            readDatabasesInfo->bidirInfosStorage->writeUnlock();
+            readDatabasesInfo->biDirInfosStorage->writeLock();
+            readDatabasesInfo->biDirInfosStorage->readFromDatabase();
+            readDatabasesInfo->biDirInfosStorage->writeUnlock();
         }
     }
 }
@@ -1355,7 +1356,7 @@ void MainWindow::init()
     databases << DATABASE_TYPE_USER << DATABASE_TYPE_STOCKS << DATABASE_TYPE_INSTRUMENT << DATABASE_TYPE_LOGOS
               << DATABASE_TYPE_BIDIR_INFO;
 
-    ReadDatabasesInfo readDatabasesInfo(mUserStorage, mStocksStorage, mInstrumentsStorage, mLogosStorage, mBidirInfosStorage);
+    ReadDatabasesInfo readDatabasesInfo(mUserStorage, mStocksStorage, mInstrumentsStorage, mLogosStorage, mBiDirInfosStorage);
     processInParallel(QThread::currentThread(), databases, readDatabasesForParallel, &readDatabasesInfo);
 
     mStocksStorage->readLock();

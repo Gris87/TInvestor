@@ -5,6 +5,7 @@
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/grpc/igrpcretryclient_mock.h"
+#include "src/storage/bidirinfos/ibidirinfosstorage_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
@@ -45,6 +46,7 @@ TEST_F(Test_BiDirTradingThreadFactory, Test_newInstance)
     const InSequence seq;
 
     StrictMock<InstrumentsStorageMock> instrumentsStorageMock;
+    StrictMock<BiDirInfosStorageMock>  biDirInfosStorageMock;
     StrictMock<UserStorageMock>        userStorageMock;
     StrictMock<ConfigMock>             configMock;
     StrictMock<TimeUtilsMock>          timeUtilsMock;
@@ -62,6 +64,7 @@ TEST_F(Test_BiDirTradingThreadFactory, Test_newInstance)
 
     const IBiDirTradingThread* thread = factory->newInstance(
         &instrumentsStorageMock,
+        &biDirInfosStorageMock,
         &userStorageMock,
         &configMock,
         &timeUtilsMock,

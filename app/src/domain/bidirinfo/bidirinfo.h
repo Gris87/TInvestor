@@ -8,13 +8,13 @@
 
 
 
-struct BidirInfo
+struct BiDirInfo
 {
-    explicit BidirInfo();
-    BidirInfo(const BidirInfo& another) = default;
-    ~BidirInfo()                        = default;
+    explicit BiDirInfo();
+    BiDirInfo(const BiDirInfo& another) = default;
+    ~BiDirInfo()                        = default;
 
-    BidirInfo& operator=(const BidirInfo& another) = default;
+    BiDirInfo& operator=(const BiDirInfo& another) = default;
 
     void fromJsonObject(simdjson::ondemand::object jsonObject); // clazy:exclude=function-args-by-ref
 
@@ -26,8 +26,8 @@ struct BidirInfo
     float totalYield;
 };
 
-using BidirInfos = QMap<QString, BidirInfo>; // UID => BidirInfo
+using BiDirInfos = QMap<QString, BiDirInfo>; // UID => BiDirInfo
 
 
 
-bool operator==(const BidirInfo& lhs, const BidirInfo& rhs);
+bool operator==(const BiDirInfo& lhs, const BiDirInfo& rhs);
