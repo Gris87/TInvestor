@@ -818,13 +818,13 @@ void MainWindow::stopAutoPilot()
     for (auto it = tradingThreads.constBegin(); it != tradingThreads.constEnd(); ++it)
     {
         it.value()->wait();
-        delete it.value();
+        it.value()->deleteLater();
     }
 
     for (auto it = biDirTradingThreads.constBegin(); it != biDirTradingThreads.constEnd(); ++it)
     {
         it.value()->wait();
-        delete it.value();
+        it.value()->deleteLater();
     }
 
     tradingThreads.clear();

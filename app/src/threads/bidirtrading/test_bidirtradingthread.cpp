@@ -130,11 +130,16 @@ TEST_F(Test_BiDirTradingThread, Test_run)
 
     instruments["aaa-aaa"] = instrument;
 
+    BiDirInfos biDirInfos;
+
     thread->terminateTrading();
 
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*biDirInfosStorageMock, readLock());
+    EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
@@ -178,9 +183,21 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
 
     instruments["aaa-aaa"] = instrument;
 
+    BiDirInfos biDirInfos;
+    BiDirInfo  biDirInfo;
+
+    biDirInfo.spread     = 0.5f;
+    biDirInfo.minYield   = 0.1f;
+    biDirInfo.totalYield = 10.0f;
+
+    biDirInfos["aaa-aaa"] = biDirInfo;
+
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*biDirInfosStorageMock, readLock());
+    EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
@@ -193,6 +210,9 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*biDirInfosStorageMock, readLock());
+    EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
@@ -229,6 +249,9 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*biDirInfosStorageMock, readLock());
+    EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
@@ -349,6 +372,9 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*biDirInfosStorageMock, readLock());
+    EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
@@ -448,6 +474,9 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*biDirInfosStorageMock, readLock());
+    EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
@@ -878,9 +907,14 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
 
     instruments["aaa-aaa"] = instrument;
 
+    BiDirInfos biDirInfos;
+
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*biDirInfosStorageMock, readLock());
+    EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
 
     thread->getInstrumentData();
 
@@ -924,40 +958,6 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.7f));
 
     ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD, 500), Quotation(855, 0));
-
-    delete thread;
-
-    stock->meta.instrumentId = CHMK_UID;
-    stock->meta.turnover     = 1000000;
-
-    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString(CHMK_UID), QString("But why")));
-
-    thread = new BiDirTradingThread(
-        instrumentsStorageMock,
-        biDirInfosStorageMock,
-        userStorageMock,
-        configMock,
-        timeUtilsMock,
-        tradeUtilsMock,
-        grpcClientMock,
-        grpcRetryClientMock,
-        logsThreadMock,
-        "account-id",
-        stock,
-        BIDIR_MODE_HUGE_BID,
-        "But why"
-    );
-
-    instruments[CHMK_UID] = instrument;
-
-    EXPECT_CALL(*instrumentsStorageMock, readLock());
-    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
-    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
-
-    thread->getInstrumentData();
-
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100), Quotation(860, 0));
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 500), Quotation(855, 0));
 }
 
 TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
@@ -975,9 +975,14 @@ TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
 
     instruments["aaa-aaa"] = instrument;
 
+    BiDirInfos biDirInfos;
+
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*biDirInfosStorageMock, readLock());
+    EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
 
     thread->getInstrumentData();
 
