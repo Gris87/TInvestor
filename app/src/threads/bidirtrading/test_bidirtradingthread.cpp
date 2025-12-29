@@ -132,7 +132,7 @@ TEST_F(Test_BiDirTradingThread, Test_run)
 
     BiDirInfos biDirInfos;
 
-    thread->terminateTrading();
+    thread->terminateTrading(true);
 
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
@@ -150,7 +150,7 @@ TEST_F(Test_BiDirTradingThread, Test_run)
 
 TEST_F(Test_BiDirTradingThread, Test_terminateThread)
 {
-    thread->terminateThread();
+    thread->terminateThread(true);
 }
 
 TEST_F(Test_BiDirTradingThread, Test_setMode_and_bidirMode)

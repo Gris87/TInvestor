@@ -364,7 +364,7 @@ MainWindow::~MainWindow()
 
     for (auto it = biDirTradingThreads.constBegin(); it != biDirTradingThreads.constEnd(); ++it)
     {
-        it.value()->terminateThread();
+        it.value()->terminateThread(true);
     }
 
     mCleanupThread->wait();
@@ -801,7 +801,7 @@ void MainWindow::stopAutoPilot()
 
     for (auto it = biDirTradingThreads.constBegin(); it != biDirTradingThreads.constEnd(); ++it)
     {
-        it.value()->terminateThread(); // TODO: Crash is here
+        it.value()->terminateThread(false);
     }
 
     autoPilotPortfolioUpdateLastPricesTimer.stop();
@@ -966,7 +966,7 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
 
             if (biDirTradingThread != nullptr)
             {
-                biDirTradingThread->terminateThread();
+                biDirTradingThread->terminateThread(true);
 
                 biDirTradingThreadsToKill.append(instrumentId);
             }
@@ -980,7 +980,7 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
 
                 if (!biDirTradingThreadsToKill.contains(biDirInstrumentId))
                 {
-                    biDirTradingThread->terminateThread();
+                    biDirTradingThread->terminateThread(false);
 
                     biDirTradingThreadsToKill.append(instrumentId);
                 }
@@ -1065,7 +1065,7 @@ void MainWindow::autoPilotBiDirTradeInstruments(const InstrumentsForBiDirTrading
 
         if (!instruments.contains(instrumentId))
         {
-            it.value()->terminateTrading();
+            it.value()->terminateTrading(false);
         }
     }
 

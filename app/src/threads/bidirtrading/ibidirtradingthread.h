@@ -23,8 +23,8 @@ public:
     IBiDirTradingThread& operator=(const IBiDirTradingThread& another) = delete;
 
     virtual void setMode(BiDirMode bidirMode, const QString& cause) = 0;
-    virtual void terminateTrading()                                 = 0;
-    virtual void terminateThread()                                  = 0;
+    virtual void terminateTrading(bool needToCancelSell)            = 0;
+    virtual void terminateThread(bool needToCancelSell)             = 0;
 
 signals:
     void tradingCompleted(const QString& instrumentId);

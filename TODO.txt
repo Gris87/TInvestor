@@ -1,5 +1,4 @@
 Do not buy bi-dir if price raise recently
-Do not cancel sell order for bi-dir
 Huge spread for weekend
 Always check for buy decisions even if already keep some
 Dependent subdirs

@@ -1185,7 +1185,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
 
     instruments3["aaaaa"] = tradingInfo3;
 
-    EXPECT_CALL(*biDirTradingThreadMock, terminateThread());
+    EXPECT_CALL(*biDirTradingThreadMock, terminateThread(false));
     EXPECT_CALL(
         *tradingThreadFactoryMock,
         newInstance(
@@ -1359,7 +1359,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     ASSERT_EQ(mainWindow->biDirTradingThreads["bbbbb"], biDirTradingThreadMock2);
     // clang-format on
 
-    EXPECT_CALL(*biDirTradingThreadMock2, terminateTrading());
+    EXPECT_CALL(*biDirTradingThreadMock2, terminateTrading(false));
     EXPECT_CALL(*biDirTradingThreadMock1, setMode(BIDIR_MODE_HUGE_SPREAD, QString("Sell ASAP")));
 
     mainWindow->autoPilotBiDirTradeInstruments(instruments2);
@@ -1379,7 +1379,7 @@ TEST_F(Test_MainWindow, Test_autoPilotBiDirTradeInstruments_and_autoPilotBiDirTr
     ASSERT_EQ(mainWindow->biDirTradingThreads["bbbbb"], biDirTradingThreadMock2);
     // clang-format on
 
-    EXPECT_CALL(*biDirTradingThreadMock2, terminateThread());
+    EXPECT_CALL(*biDirTradingThreadMock2, terminateThread(true));
 }
 
 TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
@@ -1911,7 +1911,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*highLiquidityThreadMock, terminateThread());
     EXPECT_CALL(*followThreadMock, terminateThread());
     EXPECT_CALL(*tradingThreadMock, terminateThread());
-    EXPECT_CALL(*biDirTradingThreadMock, terminateThread());
+    EXPECT_CALL(*biDirTradingThreadMock, terminateThread(false));
 
     mainWindow->ui->startAutoPilotButton->click();
 
@@ -2069,7 +2069,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*highLiquidityThreadMock, terminateThread());
     EXPECT_CALL(*followThreadMock, terminateThread());
     EXPECT_CALL(*tradingThreadMock, terminateThread());
-    EXPECT_CALL(*biDirTradingThreadMock, terminateThread());
+    EXPECT_CALL(*biDirTradingThreadMock, terminateThread(false));
 
     mainWindow->ui->startAutoPilotButton->click();
 

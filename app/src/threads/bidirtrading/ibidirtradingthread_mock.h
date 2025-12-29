@@ -24,6 +24,6 @@ public:
 
     MOCK_METHOD(void, run, (), (override));
     MOCK_METHOD(void, setMode, (BiDirMode bidirMode, const QString& cause), (override));
-    MOCK_METHOD(void, terminateTrading, (), (override));
-    MOCK_METHOD(void, terminateThread, (), (override));
+    MOCK_METHOD(void, terminateTrading, (bool needToCancelSell), (override));
+    MOCK_METHOD(void, terminateThread, (bool needToCancelSell), (override));
 };

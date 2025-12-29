@@ -53,8 +53,8 @@ public:
     [[nodiscard]]
     BiDirMode bidirMode() const;
 
-    void terminateTrading() override;
-    void terminateThread() override;
+    void terminateTrading(bool needToCancelSell) override;
+    void terminateThread(bool needToCancelSell) override;
 
     bool trade();
     void getInstrumentData();
@@ -127,6 +127,7 @@ private:
     Quotation            mMinPriceIncrement;
     float                mMinSpread;
     float                mMinYield;
+    bool                 mNeedToCancelSell;
     QString              mBuyOrderId;
     QString              mSellOrderId;
 };

@@ -58,6 +58,7 @@ BiDirTradingThread::BiDirTradingThread(
     mMinPriceIncrement(),
     mMinSpread(),
     mMinYield(),
+    mNeedToCancelSell(true),
     mBuyOrderId(),
     mSellOrderId()
 {
@@ -118,14 +119,17 @@ BiDirMode BiDirTradingThread::bidirMode() const
     return mBidirMode;
 }
 
-void BiDirTradingThread::terminateTrading()
+void BiDirTradingThread::terminateTrading(bool needToCancelSell)
 {
     mTerminateTrading = true;
+    mNeedToCancelSell = needToCancelSell;
 }
 
-void BiDirTradingThread::terminateThread()
+void BiDirTradingThread::terminateThread(bool needToCancelSell)
 {
     blockSignals(true);
+
+    mNeedToCancelSell = needToCancelSell;
 
     requestInterruption();
 }
@@ -689,7 +693,7 @@ void BiDirTradingThread::cancelBuyOrder()
 
 void BiDirTradingThread::cancelSellOrder()
 {
-    if (mSellOrderId != "")
+    if (mSellOrderId != "" && mNeedToCancelSell)
     {
         mGrpcClient->cancelOrder(QThread::currentThread(), mAccountId, mSellOrderId);
         mSellOrderId = "";
