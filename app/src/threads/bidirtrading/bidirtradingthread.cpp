@@ -7,13 +7,6 @@
 
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
-const char* const LNZL_UID  = "4563f7a1-8245-4caf-aba5-ac49827ba775";
-const char* const LNZLP_UID = "28fdec79-fcf0-40cb-b53c-586179f024e5";
-const char* const CHMK_UID  = "b5e26096-d013-48e4-b2a9-2f38b6090feb";
-const char* const KROT_UID  = "14d147b9-d977-438a-80c0-441e5589da30";
-const char* const DELI_UID  = "df58ca03-aed0-4e1c-97fb-54a01dfb539e";
-const char* const PMSBP_UID = "80a39145-b2f7-46f5-9ef0-1478baafb0a6";
-const char* const GLRX_UID  = "51be1fe4-9fe1-4626-9400-6cd1fb6286c5";
 
 constexpr float  HUNDRED_PERCENT                     = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT               = 0.10f;
@@ -26,20 +19,6 @@ constexpr qint64 MS_IN_SECOND                        = 1000LL;
 constexpr qint64 SLEEP_DELAY                         = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY                  = 3LL * MS_IN_SECOND;  // 3 seconds
 constexpr qint64 ORDER_RETRY_DELAY                   = 1LL * MS_IN_SECOND;  // 1 second
-
-
-
-// clang-format off
-static const QMap<QString, float> BAD_INSTRUMENTS_SPREAD{ // clazy:exclude=non-pod-global-static
-    {LNZL_UID,  2.50f},
-    {LNZLP_UID, 2.00f},
-    {CHMK_UID,  1.30f},
-    {KROT_UID,  0.80f},
-    {DELI_UID,  0.60f},
-    {PMSBP_UID, 0.70f},
-    {GLRX_UID,  0.60f}
-};
-// clang-format on
 
 
 
@@ -75,9 +54,10 @@ BiDirTradingThread::BiDirTradingThread(
     mBidirMode(bidirMode),
     mTerminateTrading(),
     mInstrumentId(),
-    mBadSpread(),
     mInstrumentLot(),
     mMinPriceIncrement(),
+    mMinSpread(),
+    mMinYield(),
     mBuyOrderId(),
     mSellOrderId()
 {
@@ -86,8 +66,6 @@ BiDirTradingThread::BiDirTradingThread(
     mStock->readLock();
     mInstrumentId = mStock->meta.instrumentId;
     mStock->readUnlock();
-
-    mBadSpread = BAD_INSTRUMENTS_SPREAD.value(mInstrumentId, 0.0f);
 
     mLogsThread->addLog(LOG_LEVEL_DEBUG, mInstrumentId, cause);
 }
@@ -268,6 +246,25 @@ void BiDirTradingThread::getInstrumentData()
     mMinPriceIncrement = instrument.minPriceIncrement;
 
     mInstrumentsStorage->readUnlock();
+
+    mBiDirInfosStorage->readLock();
+
+    const BiDirInfos& biDirInfos = mBiDirInfosStorage->getBiDirInfos();
+
+    if (biDirInfos.contains(mInstrumentId))
+    {
+        const BiDirInfo& biDirInfo = biDirInfos.value(mInstrumentId);
+
+        mMinSpread = biDirInfo.spread;
+        mMinYield  = biDirInfo.minYield;
+    }
+    else
+    {
+        mMinSpread = SPREAD_FOR_HUGE_BID;
+        mMinYield  = MINIMUM_YIELD_PERCENT;
+    }
+
+    mBiDirInfosStorage->readUnlock();
 }
 
 void BiDirTradingThread::checkIfNeedToCancelAndCreateOrder(
@@ -543,25 +540,22 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
 Quotation
 BiDirTradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity)
 {
-    if (mBadSpread > 0.0f)
-    {
-        return calculateBuyPriceInternal(
-            tinkoffOrderBook, mBadSpread, (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD) / HUNDRED_PERCENT
-        );
-    }
-
     Quotation res;
 
     if (mode == BIDIR_MODE_HUGE_BID)
     {
         res = calculateBuyPriceInternal(
-            tinkoffOrderBook, SPREAD_FOR_HUGE_BID, (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_BID) / HUNDRED_PERCENT
+            tinkoffOrderBook,
+            qMax(mMinSpread, SPREAD_FOR_HUGE_BID),
+            (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_BID) / HUNDRED_PERCENT
         );
     }
     else
     {
         res = calculateBuyPriceInternal(
-            tinkoffOrderBook, mConfig->getHugeSpread(), (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD) / HUNDRED_PERCENT
+            tinkoffOrderBook,
+            qMax(mMinSpread, mConfig->getHugeSpread()),
+            (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD) / HUNDRED_PERCENT
         );
     }
 

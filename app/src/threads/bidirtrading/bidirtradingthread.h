@@ -123,9 +123,10 @@ private:
     BiDirMode            mBidirMode;
     bool                 mTerminateTrading;
     QString              mInstrumentId;
-    float                mBadSpread;
     qint32               mInstrumentLot;
     Quotation            mMinPriceIncrement;
+    float                mMinSpread;
+    float                mMinYield;
     QString              mBuyOrderId;
     QString              mSellOrderId;
 };
