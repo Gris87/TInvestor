@@ -957,15 +957,36 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
 
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {
-        const QString& instrumentId = it.key();
+        const QString&     instrumentId = it.key();
+        const TradingInfo& tradingInfo  = it.value();
 
-        IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.value(instrumentId);
-
-        if (biDirTradingThread != nullptr)
+        if (tradingInfo.expectedCost == 0)
         {
-            biDirTradingThread->terminateThread();
+            IBiDirTradingThread* biDirTradingThread = biDirTradingThreads.value(instrumentId);
 
-            biDirTradingThreadsToKill.append(instrumentId);
+            if (biDirTradingThread != nullptr)
+            {
+                biDirTradingThread->terminateThread();
+
+                biDirTradingThreadsToKill.append(instrumentId);
+            }
+        }
+        else
+        {
+            for (auto it2 = biDirTradingThreads.constBegin(); it2 != biDirTradingThreads.constEnd(); ++it2)
+            {
+                const QString&       biDirInstrumentId  = it2.key();
+                IBiDirTradingThread* biDirTradingThread = it2.value();
+
+                if (!biDirTradingThreadsToKill.contains(biDirInstrumentId))
+                {
+                    biDirTradingThread->terminateThread();
+
+                    biDirTradingThreadsToKill.append(instrumentId);
+                }
+            }
+
+            break;
         }
     }
 

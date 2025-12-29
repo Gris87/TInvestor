@@ -1,4 +1,3 @@
-Terminate all tradings if mega sell detected
 Do not buy bi-dir if price raise recently
 Do not cancel sell order for bi-dir
 Huge spread for weekend
