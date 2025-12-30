@@ -254,7 +254,9 @@ bool TradingThread::buyWithPrice(
     float                                       marketPrice
 )
 {
-    if (mOrderId == "" || mLastOrderPrice != price || cost - mLastCost <= DOUBLE_EPSILON ||
+    if (mOrderId == "" ||
+        mLastOrderPrice != price ||
+        mLastCost - cost >= DOUBLE_EPSILON ||
         qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
         if (mOrderId != "")

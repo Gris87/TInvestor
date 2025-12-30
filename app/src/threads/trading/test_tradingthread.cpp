@@ -791,7 +791,7 @@ TEST_F(Test_TradingThread, Test_buy)
         )
     );
 
-    ASSERT_EQ(thread->buy(10000, 20000, 30000), false);
+    ASSERT_EQ(thread->buy(30000, 20000, 30000), false);
 
     orderState->set_execution_report_status(tinkoff::EXECUTION_REPORT_STATUS_NEW);
 
