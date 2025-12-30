@@ -254,7 +254,7 @@ bool TradingThread::buyWithPrice(
     float                                       marketPrice
 )
 {
-    if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastCost - cost) >= DOUBLE_EPSILON ||
+    if (mOrderId == "" || mLastOrderPrice != price || cost - mLastCost <= DOUBLE_EPSILON ||
         qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
         if (mOrderId != "")
@@ -426,7 +426,7 @@ bool TradingThread::sellWithPrice(
     float                                       marketPrice
 )
 {
-    if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastCost - cost) >= DOUBLE_EPSILON ||
+    if (mOrderId == "" || mLastOrderPrice != price || cost - mLastCost >= DOUBLE_EPSILON ||
         qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
         if (mOrderId != "")
