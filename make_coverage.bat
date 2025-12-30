@@ -1,4 +1,4 @@
-cd build\Desktop-Debug\test\build
+cd build\Desktop-Debug\tests\build
 
 tests.exe > output.txt 2>&1
 set RESULT_CODE=%ERRORLEVEL%

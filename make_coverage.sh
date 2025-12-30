@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd build/Desktop-Debug/test/build
+cd build/Desktop-Debug/tests/build
 
 export LD_LIBRARY_PATH=`pwd`
 ./tests > output.txt 2>&1

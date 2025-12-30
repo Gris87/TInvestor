@@ -50,10 +50,10 @@ copy_dist_files.commands = echo "Nothing to copy from dist folder"
 
 
 
-include(../app/TInvestor.pri)
+include(../app/app.pri)
 include(../libs/gtest.pri)
 include(../libs/libs.pri)
-include(../test/tests.pri)
+include(../tests/tests.pri)
 
 
 

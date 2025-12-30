@@ -23,7 +23,7 @@ runs:
         path: |
           ./TInvestor-source/app
           ./TInvestor-source/libs
-          ./TInvestor-source/test
+          ./TInvestor-source/tests
 
     # Download/upload cache
     - name: Caching

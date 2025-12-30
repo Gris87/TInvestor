@@ -3,8 +3,8 @@
 
 
 PATH_TO_INVEST_API_PRI="libs/investapi/investapi.pri"
-PATH_TO_TINVESTOR_PRI="app/TInvestor.pri"
-PATH_TO_TESTS_PRI="test/tests.pri"
+PATH_TO_TINVESTOR_PRI="app/app.pri"
+PATH_TO_TESTS_PRI="tests/tests.pri"
 
 
 

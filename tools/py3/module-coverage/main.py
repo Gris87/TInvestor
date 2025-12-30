@@ -180,7 +180,7 @@ def _execute_command(command):
     module_path_simplified = command["module_path_simplified"]
 
     my_env = os.environ.copy()
-    my_env["LD_LIBRARY_PATH"] = str(Path("build/Desktop-Debug/test/build").absolute())
+    my_env["LD_LIBRARY_PATH"] = str(Path("build/Desktop-Debug/tests/build").absolute())
 
     for i in range(5):
         shutil.rmtree(f"build/ModuleCoverage/{module_path_simplified}", ignore_errors=True)
@@ -190,7 +190,7 @@ def _execute_command(command):
                 prepare_cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
-                cwd="build/Desktop-Debug/test/build",
+                cwd="build/Desktop-Debug/tests/build",
                 env=my_env
             )
 
@@ -203,7 +203,7 @@ def _execute_command(command):
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
-            cwd="build/Desktop-Debug/test/build"
+            cwd="build/Desktop-Debug/tests/build"
         )
 
         if is_windows:
@@ -226,7 +226,7 @@ def _execute_command(command):
                 post_cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
-                cwd="build/Desktop-Debug/test/build"
+                cwd="build/Desktop-Debug/tests/build"
             )
 
             process.wait()
@@ -243,7 +243,7 @@ def _execute_command(command):
             total_lines = 0
             covered_lines = 0
 
-            with open(f"build/Desktop-Debug/test/build/lcov.info", "r") as f:
+            with open(f"build/Desktop-Debug/tests/build/lcov.info", "r") as f:
                 lines = f.readlines()
 
             for line in lines:
@@ -263,7 +263,7 @@ def _execute_command(command):
         shutil.move(f"build/ModuleCoverage/{module_path_simplified}", f"build/ModuleCoverage/results/{int(coverage)}/{module_path_simplified}")
 
         if not is_windows:
-            shutil.move("build/Desktop-Debug/test/build/lcov.info", f"build/ModuleCoverage/results/{int(coverage)}/{module_path_simplified}/lcov.info")
+            shutil.move("build/Desktop-Debug/tests/build/lcov.info", f"build/ModuleCoverage/results/{int(coverage)}/{module_path_simplified}/lcov.info")
 
         return True, module_path, coverage
 

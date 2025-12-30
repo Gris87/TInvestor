@@ -39,14 +39,14 @@ def _generate_compile_commands(args):
         if need_to_skip:
             continue
 
-        if "_mock.h" not in file_path and "/test_" not in file_path and "/test/main.cpp" not in file_path:
+        if "_mock.h" not in file_path and "/test_" not in file_path and "/tests/main.cpp" not in file_path:
             res.append({
                 "arguments": _get_arguments_for_file(args, file_path, False),
                 "directory": directory,
                 "file": file_path,
             })
 
-        if ("/app/src/" in file_path and "/app/src/main.cpp" not in file_path) or "/test/main.cpp" in file_path:
+        if ("/app/src/" in file_path and "/app/src/main.cpp" not in file_path) or "/tests/main.cpp" in file_path:
             res.append({
                 "arguments": _get_arguments_for_file(args, file_path, True),
                 "directory": directory,
@@ -56,7 +56,7 @@ def _generate_compile_commands(args):
     for path in Path(".").rglob("*.ui"):
         header_file = path.name.replace(".ui", ".h")
         app_file_path = f"{cwd}/build/Desktop-Debug/app/build/gen/TInvestor/ui/ui_{header_file}".replace("\\", "/")
-        test_file_path = f"{cwd}/build/Desktop-Debug/test/build/gen/tests/ui/ui_{header_file}".replace("\\", "/")
+        test_file_path = f"{cwd}/build/Desktop-Debug/tests/build/gen/tests/ui/ui_{header_file}".replace("\\", "/")
 
         res.append({
             "arguments": _get_arguments_for_file(args, app_file_path, False),
@@ -95,7 +95,7 @@ def _get_arguments_for_file(args, file_path, duplicate_for_tests):
 def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res = []
 
-    app_or_test = "/app/src/" in file_path or "/test/main.cpp" in file_path or "/app/build/gen/" in file_path or "/test/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
+    app_or_test = "/app/src/" in file_path or "/tests/main.cpp" in file_path or "/app/build/gen/" in file_path or "/tests/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
 
     res.append("clang")
     res.append("-Wno-documentation-unknown-command")
@@ -213,7 +213,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
             res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
 
         if duplicate_for_tests:
-            res.append(f"-I{cwd}\\test")
+            res.append(f"-I{cwd}\\tests")
 
         res.append(f"-I{cwd}\\app")
 
@@ -253,9 +253,9 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}\\include\\QtCore")
 
         if duplicate_for_tests:
-            res.append(f"-I{cwd}\\build\\Desktop-Debug\\test\\build\\gen\\tests\\moc")
-            res.append(f"-I{cwd}\\build\\Desktop-Debug\\test\\build\\gen\\tests\\ui")
-            res.append(f"-I{cwd}\\build\\Desktop-Debug\\test")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\tests\\build\\gen\\tests\\moc")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\tests\\build\\gen\\tests\\ui")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\tests")
         else:
             res.append(f"-I{cwd}\\build\\Desktop-Debug\\app\\build\\gen\\TInvestor\\moc")
             res.append(f"-I{cwd}\\build\\Desktop-Debug\\app\\build\\gen\\TInvestor\\ui")
@@ -372,7 +372,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
 def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
     res = []
 
-    app_or_test = "/app/src/" in file_path or "/test/main.cpp" in file_path or "/app/build/gen/" in file_path or "/test/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
+    app_or_test = "/app/src/" in file_path or "/tests/main.cpp" in file_path or "/app/build/gen/" in file_path or "/tests/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
 
     res.append("clang")
     res.append("-Wno-documentation-unknown-command")
@@ -473,7 +473,7 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
             res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
 
         if duplicate_for_tests:
-            res.append(f"-I{cwd}/test")
+            res.append(f"-I{cwd}/tests")
 
         res.append(f"-I{cwd}/app")
 
@@ -513,9 +513,9 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}/include/QtCore")
 
         if duplicate_for_tests:
-            res.append(f"-I{cwd}/build/Desktop-Debug/test/build/gen/tests/moc")
-            res.append(f"-I{cwd}/build/Desktop-Debug/test/build/gen/tests/ui")
-            res.append(f"-I{cwd}/build/Desktop-Debug/test")
+            res.append(f"-I{cwd}/build/Desktop-Debug/tests/build/gen/tests/moc")
+            res.append(f"-I{cwd}/build/Desktop-Debug/tests/build/gen/tests/ui")
+            res.append(f"-I{cwd}/build/Desktop-Debug/tests")
         else:
             res.append(f"-I{cwd}/build/Desktop-Debug/app/build/gen/TInvestor/moc")
             res.append(f"-I{cwd}/build/Desktop-Debug/app/build/gen/TInvestor/ui")

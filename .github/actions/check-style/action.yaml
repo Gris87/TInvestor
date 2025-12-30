@@ -23,7 +23,7 @@ runs:
         path: |
           ./TInvestor-source/app
           ./TInvestor-source/libs
-          ./TInvestor-source/test
+          ./TInvestor-source/tests
           ./TInvestor-source/tools/py3/check-style
 
     # Download/upload cache

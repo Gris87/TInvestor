@@ -1,11 +1,15 @@
 TEMPLATE = subdirs
 
 SUBDIRS = \
-  libs/investapi/investapi.pro \
-  libs/qxlsx/qxlsx.pro \
-  libs/simdjson/simdjson.pro \
-  libs/simplecrypt/simplecrypt.pro \
-  libs/verticallabel/verticallabel.pro \
-  libs/waitingspinner/waitingspinner.pro \
-  app/TInvestor.pro \
-  test/tests.pro
+  libs \
+  app \
+  tests
+
+# where to find the sub projects - give the folders
+libs.subdir  = libs
+app.subdir   = app
+tests.subdir = tests
+
+# what subproject depends on others
+app.depends = libs
+tests.depends = libs
