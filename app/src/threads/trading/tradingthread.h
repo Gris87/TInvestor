@@ -60,8 +60,8 @@ public:
 
     bool trade();
     void getInstrumentData();
-    bool buy(double expected, double delta);
-    bool sell(double expected, double delta);
+    bool buy(double cost, double expected, double delta);
+    bool sell(double cost, double expected, double delta);
     void removeOwnOrdersFromOrderBook(
         tinkoff::GetOrderBookResponse& tinkoffOrderBook, const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder
     );
@@ -72,20 +72,22 @@ private:
     double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     bool   buyWithPrice(
           const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
+          double                                      cost,
           double                                      expected,
           double                                      delta,
           const Quotation&                            price,
           float                                       marketPrice
       );
-    bool buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
+    bool buyWithPriceOptimalAmount(double cost, double expected, double delta, const Quotation& price, float marketPrice);
     bool sellWithPrice(
         const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
+        double                                      cost,
         double                                      expected,
         double                                      delta,
         const Quotation&                            price,
         float                                       marketPrice
     );
-    bool sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice);
+    bool sellWithPriceOptimalAmount(double cost, double expected, double delta, const Quotation& price, float marketPrice);
 
     void cancelOrder();
     void cancelOrder(const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder);
@@ -109,5 +111,6 @@ private:
     Quotation            mMinPriceIncrement;
     QString              mOrderId;
     Quotation            mLastOrderPrice;
+    double               mLastCost;
     double               mLastExpectedCost;
 };

@@ -53,6 +53,7 @@ TradingThread::TradingThread(
     mMinPriceIncrement(),
     mOrderId(),
     mLastOrderPrice(),
+    mLastCost(),
     mLastExpectedCost()
 {
     qDebug() << "Create TradingThread";
@@ -159,7 +160,7 @@ bool TradingThread::trade()
         const double expected = expectedCost();
 
         const double delta     = expected - cost;
-        const bool   completed = delta > 0 ? buy(expected, delta) : sell(expected, -delta);
+        const bool   completed = delta > 0 ? buy(cost, expected, delta) : sell(cost, expected, -delta);
 
         if (completed)
         {
@@ -208,7 +209,7 @@ double TradingThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
     return 0;
 }
 
-bool TradingThread::buy(double expected, double delta)
+bool TradingThread::buy(double cost, double expected, double delta)
 {
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
         mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, ORDER_BOOK_DEPTH);
@@ -238,7 +239,7 @@ bool TradingThread::buy(double expected, double delta)
     {
         const float marketPrice = tinkoffOrderBook->asks_size() > 0 ? quotationToDouble(tinkoffOrderBook->asks(0).price()) : 0;
 
-        return buyWithPrice(tinkoffOrder, expected, delta, price, marketPrice);
+        return buyWithPrice(tinkoffOrder, cost, expected, delta, price, marketPrice);
     }
 
     return false;
@@ -246,13 +247,15 @@ bool TradingThread::buy(double expected, double delta)
 
 bool TradingThread::buyWithPrice(
     const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
+    double                                      cost,
     double                                      expected,
     double                                      delta,
     const Quotation&                            price,
     float                                       marketPrice
 )
 {
-    if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
+    if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastCost - cost) >= DOUBLE_EPSILON ||
+        qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
         if (mOrderId != "")
         {
@@ -264,7 +267,7 @@ bool TradingThread::buyWithPrice(
             }
         }
 
-        return buyWithPriceOptimalAmount(expected, delta, price, marketPrice);
+        return buyWithPriceOptimalAmount(cost, expected, delta, price, marketPrice);
     }
 
     if (tinkoffOrder != nullptr)
@@ -291,7 +294,8 @@ bool TradingThread::buyWithPrice(
     return false;
 }
 
-bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice)
+bool
+TradingThread::buyWithPriceOptimalAmount(double cost, double expected, double delta, const Quotation& price, float marketPrice)
 {
     while (true)
     {
@@ -352,6 +356,7 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
 
                 mOrderId          = QString::fromStdString(tinkoffOrder->order_id());
                 mLastOrderPrice   = price;
+                mLastCost         = cost;
                 mLastExpectedCost = expected;
 
                 break;
@@ -381,7 +386,7 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
     return false;
 }
 
-bool TradingThread::sell(double expected, double delta)
+bool TradingThread::sell(double cost, double expected, double delta)
 {
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
         mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, ORDER_BOOK_DEPTH);
@@ -406,7 +411,7 @@ bool TradingThread::sell(double expected, double delta)
     {
         const float marketPrice = tinkoffOrderBook->bids_size() > 0 ? quotationToDouble(tinkoffOrderBook->bids(0).price()) : 0;
 
-        return sellWithPrice(tinkoffOrder, expected, delta, price, marketPrice);
+        return sellWithPrice(tinkoffOrder, cost, expected, delta, price, marketPrice);
     }
 
     return false;
@@ -414,13 +419,15 @@ bool TradingThread::sell(double expected, double delta)
 
 bool TradingThread::sellWithPrice(
     const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
+    double                                      cost,
     double                                      expected,
     double                                      delta,
     const Quotation&                            price,
     float                                       marketPrice
 )
 {
-    if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
+    if (mOrderId == "" || mLastOrderPrice != price || qAbs(mLastCost - cost) >= DOUBLE_EPSILON ||
+        qAbs(mLastExpectedCost - expected) >= DOUBLE_EPSILON)
     {
         if (mOrderId != "")
         {
@@ -432,7 +439,7 @@ bool TradingThread::sellWithPrice(
             }
         }
 
-        return sellWithPriceOptimalAmount(expected, delta, price, marketPrice);
+        return sellWithPriceOptimalAmount(cost, expected, delta, price, marketPrice);
     }
 
     if (tinkoffOrder != nullptr)
@@ -460,7 +467,8 @@ bool TradingThread::sellWithPrice(
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
-bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price, float marketPrice)
+bool
+TradingThread::sellWithPriceOptimalAmount(double cost, double expected, double delta, const Quotation& price, float marketPrice)
 {
     while (true)
     {
@@ -526,6 +534,7 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
 
                 mOrderId          = QString::fromStdString(tinkoffOrder->order_id());
                 mLastOrderPrice   = price;
+                mLastCost         = cost;
                 mLastExpectedCost = expected;
 
                 break;

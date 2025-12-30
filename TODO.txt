@@ -2,7 +2,6 @@ Do not buy bi-dir if price raise recently
 Huge spread for weekend
 Always check for buy decisions even if already keep some
 Different GRPC connection on order requests
-Change order for sale if available changed
 Fix issue with output money
 Always create -2% order by refreshing each 10 minutes (Check for stock rating from script)
 Convert bi-dir to normal trading with full load if price fall to -3% during first sell order 30 minutes
