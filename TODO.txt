@@ -1,7 +1,6 @@
 Do not buy bi-dir if price raise recently
 Huge spread for weekend
 Always check for buy decisions even if already keep some
-Dependent subdirs
 Different GRPC connection on order requests
 Change order for sale if available changed
 Fix issue with output money
