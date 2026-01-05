@@ -37,18 +37,15 @@ protected:
     {
         const InSequence seq;
 
-        instrumentsStorageMock  = new StrictMock<InstrumentsStorageMock>();
-        biDirInfosStorageMock   = new StrictMock<BiDirInfosStorageMock>();
-        userStorageMock         = new StrictMock<UserStorageMock>();
-        configMock              = new StrictMock<ConfigMock>();
-        timeUtilsMock           = new StrictMock<TimeUtilsMock>();
-        tradeUtilsMock          = new StrictMock<TradeUtilsMock>();
-        grpcClientMock          = new StrictMock<GrpcClientMock>();
-        grpcRetryClientMock     = new StrictMock<GrpcRetryClientMock>();
-        logsThreadMock          = new StrictMock<LogsThreadMock>();
-        simulatorConfigMock     = new StrictMock<DecisionMakerConfigMock>();
-        autoPilotConfigMock     = new StrictMock<DecisionMakerConfigMock>();
-        sellDecision3ConfigMock = new StrictMock<SellDecision3ConfigMock>();
+        instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        biDirInfosStorageMock  = new StrictMock<BiDirInfosStorageMock>();
+        userStorageMock        = new StrictMock<UserStorageMock>();
+        configMock             = new StrictMock<ConfigMock>();
+        timeUtilsMock          = new StrictMock<TimeUtilsMock>();
+        tradeUtilsMock         = new StrictMock<TradeUtilsMock>();
+        grpcClientMock         = new StrictMock<GrpcClientMock>();
+        grpcRetryClientMock    = new StrictMock<GrpcRetryClientMock>();
+        logsThreadMock         = new StrictMock<LogsThreadMock>();
 
         stock = new Stock();
 
@@ -86,9 +83,6 @@ protected:
         delete grpcClientMock;
         delete grpcRetryClientMock;
         delete logsThreadMock;
-        delete simulatorConfigMock;
-        delete autoPilotConfigMock;
-        delete sellDecision3ConfigMock;
         delete stock;
     }
 
@@ -102,9 +96,6 @@ protected:
     StrictMock<GrpcClientMock>*          grpcClientMock;
     StrictMock<GrpcRetryClientMock>*     grpcRetryClientMock;
     StrictMock<LogsThreadMock>*          logsThreadMock;
-    StrictMock<DecisionMakerConfigMock>* simulatorConfigMock;
-    StrictMock<DecisionMakerConfigMock>* autoPilotConfigMock;
-    StrictMock<SellDecision3ConfigMock>* sellDecision3ConfigMock;
     Stock*                               stock;
 };
 
@@ -229,7 +220,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
 
     bidPrice->set_units(870);
     bidPrice->set_nano(0);
-    askPrice->set_units(885);
+    askPrice->set_units(905);
     askPrice->set_nano(0);
 
     bid->set_quantity(100);
@@ -238,7 +229,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     ask->set_allocated_price(askPrice);
 
     Quotation priceForBuy(870, 0);
-    Quotation priceForSell(885, 0);
+    Quotation priceForSell(905, 0);
 
     StockOperationalData stockOperationalData;
     stockOperationalData.price = 1000;
@@ -381,14 +372,6 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
-    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
-    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
@@ -435,14 +418,6 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(orderState));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
-    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
-    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
@@ -483,14 +458,6 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
-    EXPECT_CALL(*autoPilotConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
-    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));

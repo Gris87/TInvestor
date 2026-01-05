@@ -23,11 +23,16 @@ protected:
 
         settingsEditorMock = new StrictMock<SettingsEditorMock>();
 
+        const int currentYear = QDateTime::currentDateTime().date().year();
+
+        const QString defaultFromDate = QString("%1-01-01").arg(currentYear - 1);
+        const QString defaultToDate   = QString("%1-01-01").arg(currentYear);
+
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/mode"),       QVariant(SIMULATOR_MODE_REALTIME))).WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/startMoney"), QVariant(1000000))).WillOnce(Return(QVariant(1000000)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/fromDate"),   QVariant("2024-01-01"))).WillOnce(Return(QVariant("2024-01-01")));
-        EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/toDate"),     QVariant("2025-01-01"))).WillOnce(Return(QVariant("2025-01-01")));
+        EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/fromDate"),   QVariant(defaultFromDate))).WillOnce(Return(QVariant(defaultFromDate)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/toDate"),     QVariant(defaultToDate))).WillOnce(Return(QVariant(defaultToDate)));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/bestConfig"), QVariant(false))).WillOnce(Return(QVariant(false)));
         // clang-format on
 
@@ -136,11 +141,16 @@ TEST_F(Test_StartSimulationDialog, Test_on_startButton_clicked)
 {
     const InSequence seq;
 
+    const int currentYear = QDateTime::currentDateTime().date().year();
+
+    const QString defaultFromDate = QString("%1-01-01").arg(currentYear - 1);
+    const QString defaultToDate   = QString("%1-01-01").arg(currentYear);
+
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/startMoney"), QVariant(1000000)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/mode"),       QVariant(SIMULATOR_MODE_REALTIME)));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/fromDate"),   QVariant("2024-01-01")));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/toDate"),     QVariant("2025-01-01")));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/fromDate"),   QVariant(defaultFromDate)));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/toDate"),     QVariant(defaultToDate)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/bestConfig"), QVariant(false)));
     // clang-format on
 

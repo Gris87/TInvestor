@@ -645,8 +645,11 @@ TEST_F(Test_StocksControlsWidget, Test_loadWindowState)
 {
     const InSequence seq;
 
+    const int     currentYear           = QDateTime::currentDateTime().date().year();
+    const QString defaultDateChangeTime = QString("%1-01-01 00:00:00").arg(currentYear - 1);
+
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/dateChangeTime"),     QVariant("2024-01-01 00:00:00"))).WillOnce(Return(QVariant("2024-01-01 00:00:00")));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/dateChangeTime"),     QVariant(defaultDateChangeTime))).WillOnce(Return(QVariant(defaultDateChangeTime)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/useTicker"),          QVariant(false))).WillOnce(Return(QVariant(false)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/ticker"),             QVariant(""))).WillOnce(Return(QVariant("")));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/useQualInvestor"),    QVariant(false))).WillOnce(Return(QVariant(false)));
