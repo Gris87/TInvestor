@@ -1,11 +1,10 @@
 Do not buy bi-dir if price raise recently
+Bi-dir on non-working hours
 Huge spread for weekend
+Always create -2% order by refreshing each 10 minutes (Check for stock rating from script)
 Always check for buy decisions even if already keep some
 Different GRPC connection on order requests
 Fix issue with output money
-Always create -2% order by refreshing each 10 minutes (Check for stock rating from script)
-Convert bi-dir to normal trading with full load if price fall to -3% during first sell order 30 minutes
-Do not sell bi-dir (negative) with duration less 30 minutes from first sell order
 Create script for trading by huge sell/buy amount
 Create script for buying/selling in parts
 Find best configs for different commission
