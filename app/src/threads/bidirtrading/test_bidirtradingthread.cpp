@@ -17,7 +17,6 @@
 
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
-const char* const CHMK_UID  = "b5e26096-d013-48e4-b2a9-2f38b6090feb";
 
 
 
@@ -738,68 +737,6 @@ TEST_F(Test_BiDirTradingThread, Test_sellWithPrice)
         .WillOnce(Return(cancelOrderResponse));
 }
 
-TEST_F(Test_BiDirTradingThread, Test_isNeedToSellAsap)
-{
-    const InSequence seq;
-
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(true));
-
-    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_BID, 2.0f, 0.0f, 0.04f), false);
-
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
-    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
-    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-
-    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_BID, 90.0f, -4.93f, 0.04f), true);
-
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
-    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
-    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
-
-    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_BID, 90.0f, -4.92f, 0.04f), false);
-
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
-    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
-    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-    EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
-
-    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_BID, 1.0f, -4.92f, 0.04f), true);
-
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
-    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
-    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
-
-    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_SPREAD, 90.0f, -4.92f, 0.04f), false);
-
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(1704056400000)).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
-    EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
-    EXPECT_CALL(*sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(*sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.0f));
-    EXPECT_CALL(*configMock, isHugeSpreadLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getHugeSpreadLimitStockPurchasePart()).WillOnce(Return(2.0f));
-
-    ASSERT_EQ(thread->isNeedToSellAsap(1704056400000, BIDIR_MODE_HUGE_SPREAD, 1.0f, -4.92f, 0.04f), true);
-}
-
 TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
 {
     tinkoff::GetOrderBookResponse getOrderBookResponse;
@@ -1016,15 +953,7 @@ TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
     ask2->set_quantity(400);
     ask2->set_allocated_price(askPrice2);
 
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(true));
+    ASSERT_EQ(thread->calculateSellPrice(getOrderBookResponse, 870.0, 0.04f), Quotation(900, 0));
 
-    ASSERT_EQ(
-        thread->calculateSellPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100000.0, 10000.0, 870.0, 0.04f), Quotation(900, 0)
-    );
-
-    EXPECT_CALL(*timeUtilsMock, isMorningSession(_)).WillOnce(Return(true));
-
-    ASSERT_EQ(
-        thread->calculateSellPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100000.0, 10000.0, 899.0, 0.04f), Quotation(905, 0)
-    );
+    ASSERT_EQ(thread->calculateSellPrice(getOrderBookResponse, 899.0, 0.04f), Quotation(905, 0));
 }

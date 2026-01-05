@@ -68,21 +68,14 @@ public:
     );
     void buyWithPrice(qint64 amountOfLots, const Quotation& price);
     void sellWithPrice(const Quotation& price);
-    bool isNeedToSellAsap(qint64 timestamp, BiDirMode mode, float part, float yield, float commission);
     void removeOwnOrdersFromOrderBook(
         tinkoff::GetOrderBookResponse&              tinkoffOrderBook,
         const std::shared_ptr<tinkoff::OrderState>& tinkoffBuyOrder,
         const std::shared_ptr<tinkoff::OrderState>& tinkoffSellOrder
     );
     Quotation calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity);
-    Quotation calculateSellPrice(
-        const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
-        BiDirMode                            mode,
-        double                               totalCost,
-        double                               instrumentCost,
-        double                               instrumentAvgPrice,
-        float                                commission
-    );
+    Quotation
+    calculateSellPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, double instrumentAvgPrice, float commission);
 
 private:
     void calculateTotalCostAndInstrumentCost(

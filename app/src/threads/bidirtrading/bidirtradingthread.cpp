@@ -10,7 +10,6 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 constexpr float  HUNDRED_PERCENT                     = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT               = 0.10f;
-constexpr float  MAXIMUM_LOSE_PERCENT                = 3.00f;
 constexpr float  MINIMUM_BID_PERCENT_FOR_HUGE_BID    = 80.0f;
 constexpr float  MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD = 25.0f;
 constexpr float  SPREAD_FOR_HUGE_BID                 = 0.50f;
@@ -399,30 +398,6 @@ void BiDirTradingThread::sellWithPrice(const Quotation& price)
     }
 }
 
-bool BiDirTradingThread::isNeedToSellAsap(qint64 timestamp, BiDirMode mode, float part, float yield, float commission)
-{
-    if (mTimeUtils->isMorningSession(timestamp))
-    {
-        return false;
-    }
-
-    ISellDecision3Config* sellDecision3Config = chooseDecisionConfig()->getSellDecision3Config();
-
-    if (sellDecision3Config->isEnabled() && yield < -sellDecision3Config->getLoseYield() + (2 * commission))
-    {
-        return true;
-    }
-
-    if (mode == BIDIR_MODE_HUGE_BID)
-    {
-        return mConfig->isHugeBidLimitStockPurchase() && part < mConfig->getHugeBidLimitStockPurchasePart() * 2 &&
-               yield < -MAXIMUM_LOSE_PERCENT;
-    }
-
-    return mConfig->isHugeSpreadLimitStockPurchase() && part < mConfig->getHugeSpreadLimitStockPurchasePart() * 2 &&
-           yield < -MAXIMUM_LOSE_PERCENT;
-}
-
 void BiDirTradingThread::calculateTotalCostAndInstrumentCost(
     const tinkoff::PortfolioResponse& tinkoffPortfolio,
     double&                           totalCost,
@@ -533,8 +508,8 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
         maxQuantity = qMax(maxQuantity, tinkoffOrderBook.bids(i).quantity());
     }
 
-    buyPrice  = calculateBuyPrice(tinkoffOrderBook, mode, maxQuantity);
-    sellPrice = calculateSellPrice(tinkoffOrderBook, mode, totalCost, instrumentCost, instrumentAvgPrice, commission);
+    buyPrice                = calculateBuyPrice(tinkoffOrderBook, mode, maxQuantity);
+    sellPrice               = calculateSellPrice(tinkoffOrderBook, instrumentAvgPrice, commission);
     const qint64 lotsToKeep = calculateLotsToKeep(mode, totalCost, quotationToDouble(buyPrice));
 
     lotsToBuy  = qMax(qMin(lotsToKeep - instrumentLots, maxQuantity), 0);
@@ -596,42 +571,29 @@ Quotation BiDirTradingThread::calculateBuyPriceInternal(
 }
 
 Quotation BiDirTradingThread::calculateSellPrice(
-    const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
-    BiDirMode                            mode,
-    double                               totalCost,
-    double                               instrumentCost,
-    double                               instrumentAvgPrice,
-    float                                commission
+    const tinkoff::GetOrderBookResponse& tinkoffOrderBook, double instrumentAvgPrice, float commission
 )
 {
-    const double topBidPrice = quotationToDouble(tinkoffOrderBook.bids(0).price());
     const double topAskPrice = quotationToDouble(tinkoffOrderBook.asks(0).price());
 
     double res = topAskPrice;
 
     if (instrumentAvgPrice > 0)
     {
-        const float part  = (instrumentCost / totalCost) * HUNDRED_PERCENT;
-        const float yield = ((topBidPrice / instrumentAvgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+        const double minimumSellPrice = instrumentAvgPrice * (1 + (MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
+        res                           = minimumSellPrice;
 
-        if (!isNeedToSellAsap(QDateTime::currentMSecsSinceEpoch(), mode, part, yield, commission))
+        for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)
         {
-            const double minimumSellPrice =
-                instrumentAvgPrice * (1 + (MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
-            res = minimumSellPrice;
-
-            for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)
+            if (tinkoffOrderBook.asks(i).quantity() > 0)
             {
-                if (tinkoffOrderBook.asks(i).quantity() > 0)
+                const double curPrice = quotationToDouble(tinkoffOrderBook.asks(i).price());
+
+                if (curPrice >= minimumSellPrice)
                 {
-                    const double curPrice = quotationToDouble(tinkoffOrderBook.asks(i).price());
+                    res = curPrice;
 
-                    if (curPrice >= minimumSellPrice)
-                    {
-                        res = curPrice;
-
-                        break;
-                    }
+                    break;
                 }
             }
         }
