@@ -86,17 +86,17 @@ protected:
         delete stock;
     }
 
-    BiDirTradingThread*                  thread;
-    StrictMock<InstrumentsStorageMock>*  instrumentsStorageMock;
-    StrictMock<BiDirInfosStorageMock>*   biDirInfosStorageMock;
-    StrictMock<UserStorageMock>*         userStorageMock;
-    StrictMock<ConfigMock>*              configMock;
-    StrictMock<TimeUtilsMock>*           timeUtilsMock;
-    StrictMock<TradeUtilsMock>*          tradeUtilsMock;
-    StrictMock<GrpcClientMock>*          grpcClientMock;
-    StrictMock<GrpcRetryClientMock>*     grpcRetryClientMock;
-    StrictMock<LogsThreadMock>*          logsThreadMock;
-    Stock*                               stock;
+    BiDirTradingThread*                 thread;
+    StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<BiDirInfosStorageMock>*  biDirInfosStorageMock;
+    StrictMock<UserStorageMock>*        userStorageMock;
+    StrictMock<ConfigMock>*             configMock;
+    StrictMock<TimeUtilsMock>*          timeUtilsMock;
+    StrictMock<TradeUtilsMock>*         tradeUtilsMock;
+    StrictMock<GrpcClientMock>*         grpcClientMock;
+    StrictMock<GrpcRetryClientMock>*    grpcRetryClientMock;
+    StrictMock<LogsThreadMock>*         logsThreadMock;
+    Stock*                              stock;
 };
 
 
@@ -215,18 +215,23 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     tinkoff::Order* bid = getOrderBookResponse->add_bids(); // getOrderBookResponse will take ownership
     tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
 
-    tinkoff::Quotation* bidPrice = new tinkoff::Quotation(); // bid will take ownership
-    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* bidPrice  = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* askPrice  = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* lastPrice = new tinkoff::Quotation(); // getOrderBookResponse will take ownership
 
     bidPrice->set_units(870);
     bidPrice->set_nano(0);
     askPrice->set_units(905);
     askPrice->set_nano(0);
+    lastPrice->set_units(905);
+    lastPrice->set_nano(0);
 
     bid->set_quantity(100);
     bid->set_allocated_price(bidPrice);
     ask->set_quantity(100);
     ask->set_allocated_price(askPrice);
+
+    getOrderBookResponse->set_allocated_last_price(lastPrice);
 
     Quotation priceForBuy(870, 0);
     Quotation priceForSell(905, 0);
@@ -717,6 +722,7 @@ TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
     tinkoff::Quotation* bidPrice2 = new tinkoff::Quotation(); // bid will take ownership
     tinkoff::Quotation* askPrice1 = new tinkoff::Quotation(); // ask will take ownership
     tinkoff::Quotation* askPrice2 = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* lastPrice = new tinkoff::Quotation(); // getOrderBookResponse will take ownership
 
     bidPrice1->set_units(870);
     bidPrice1->set_nano(0);
@@ -726,6 +732,8 @@ TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
     askPrice1->set_nano(0);
     askPrice2->set_units(890);
     askPrice2->set_nano(0);
+    lastPrice->set_units(890);
+    lastPrice->set_nano(0);
 
     bid1->set_quantity(100);
     bid1->set_allocated_price(bidPrice1);
@@ -735,6 +743,8 @@ TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
     ask1->set_allocated_price(askPrice1);
     ask2->set_quantity(400);
     ask2->set_allocated_price(askPrice2);
+
+    getOrderBookResponse.set_allocated_last_price(lastPrice);
 
     const std::shared_ptr<tinkoff::OrderState> buyOrderState(new tinkoff::OrderState());
     const std::shared_ptr<tinkoff::OrderState> sellOrderState(new tinkoff::OrderState());
@@ -833,6 +843,7 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
     tinkoff::Quotation* bidPrice2 = new tinkoff::Quotation(); // bid will take ownership
     tinkoff::Quotation* askPrice1 = new tinkoff::Quotation(); // ask will take ownership
     tinkoff::Quotation* askPrice2 = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* lastPrice = new tinkoff::Quotation(); // getOrderBookResponse will take ownership
 
     bidPrice1->set_units(860);
     bidPrice1->set_nano(0);
@@ -842,6 +853,8 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
     askPrice1->set_nano(0);
     askPrice2->set_units(905);
     askPrice2->set_nano(0);
+    lastPrice->set_units(905);
+    lastPrice->set_nano(0);
 
     bid1->set_quantity(100);
     bid1->set_allocated_price(bidPrice1);
@@ -852,16 +865,13 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
     ask2->set_quantity(400);
     ask2->set_allocated_price(askPrice2);
 
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 100), Quotation(860, 0));
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID, 200), Quotation(855, 0));
+    getOrderBookResponse.set_allocated_last_price(lastPrice);
+
+    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID), Quotation(860, 0));
 
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.7f));
 
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD, 100), Quotation(860, 0));
-
-    EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.7f));
-
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD, 500), Quotation(855, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD), Quotation(860, 0));
 }
 
 TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
@@ -901,6 +911,7 @@ TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
     tinkoff::Quotation* bidPrice2 = new tinkoff::Quotation(); // bid will take ownership
     tinkoff::Quotation* askPrice1 = new tinkoff::Quotation(); // ask will take ownership
     tinkoff::Quotation* askPrice2 = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* lastPrice = new tinkoff::Quotation(); // getOrderBookResponse will take ownership
 
     bidPrice1->set_units(860);
     bidPrice1->set_nano(0);
@@ -910,6 +921,8 @@ TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
     askPrice1->set_nano(0);
     askPrice2->set_units(905);
     askPrice2->set_nano(0);
+    lastPrice->set_units(905);
+    lastPrice->set_nano(0);
 
     bid1->set_quantity(100);
     bid1->set_allocated_price(bidPrice1);
@@ -919,6 +932,8 @@ TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
     ask1->set_allocated_price(askPrice1);
     ask2->set_quantity(400);
     ask2->set_allocated_price(askPrice2);
+
+    getOrderBookResponse.set_allocated_last_price(lastPrice);
 
     ASSERT_EQ(thread->calculateSellPrice(getOrderBookResponse, 870.0, 0.04f), Quotation(900, 0));
 

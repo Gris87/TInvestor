@@ -73,7 +73,7 @@ public:
         const std::shared_ptr<tinkoff::OrderState>& tinkoffBuyOrder,
         const std::shared_ptr<tinkoff::OrderState>& tinkoffSellOrder
     );
-    Quotation calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity);
+    Quotation calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode);
     Quotation
     calculateSellPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, double instrumentAvgPrice, float commission);
 
@@ -94,8 +94,8 @@ private:
         Quotation&                           buyPrice,
         Quotation&                           sellPrice
     );
-    Quotation calculateBuyPriceInternal(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread, qint64 minQuantity);
-    qint64    calculateLotsToKeep(BiDirMode mode, double totalCost, double buyPrice);
+    Quotation             calculateBuyPriceInternal(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread);
+    qint64                calculateLotsToKeep(BiDirMode mode, double totalCost, double buyPrice);
     IDecisionMakerConfig* chooseDecisionConfig();
 
     void cancelBuyOrder();

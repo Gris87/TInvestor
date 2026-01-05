@@ -508,7 +508,7 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
         maxQuantity = qMax(maxQuantity, tinkoffOrderBook.bids(i).quantity());
     }
 
-    buyPrice                = calculateBuyPrice(tinkoffOrderBook, mode, maxQuantity);
+    buyPrice                = calculateBuyPrice(tinkoffOrderBook, mode);
     sellPrice               = calculateSellPrice(tinkoffOrderBook, instrumentAvgPrice, commission);
     const qint64 lotsToKeep = calculateLotsToKeep(mode, totalCost, quotationToDouble(buyPrice));
 
@@ -516,52 +516,39 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
     lotsToSell = instrumentLots;
 }
 
-Quotation
-BiDirTradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode, qint64 maxQuantity)
+Quotation BiDirTradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode)
 {
     Quotation res;
 
-    if (mode == BIDIR_MODE_HUGE_BID)
+    if (mode == BIDIR_MODE_HUGE_SPREAD)
     {
-        res = calculateBuyPriceInternal(
-            tinkoffOrderBook,
-            qMax(mMinSpread, SPREAD_FOR_HUGE_BID),
-            (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_BID) / HUNDRED_PERCENT
-        );
+        res = calculateBuyPriceInternal(tinkoffOrderBook, qMax(mMinSpread, mConfig->getHugeSpread()));
     }
     else
     {
-        res = calculateBuyPriceInternal(
-            tinkoffOrderBook,
-            qMax(mMinSpread, mConfig->getHugeSpread()),
-            (maxQuantity * MINIMUM_BID_PERCENT_FOR_HUGE_SPREAD) / HUNDRED_PERCENT
-        );
+        res = calculateBuyPriceInternal(tinkoffOrderBook, qMax(mMinSpread, SPREAD_FOR_HUGE_BID));
     }
 
     return res;
 }
 
-Quotation BiDirTradingThread::calculateBuyPriceInternal(
-    const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread, qint64 minQuantity
-)
+Quotation BiDirTradingThread::calculateBuyPriceInternal(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread)
 {
     const double topAskPrice = quotationToDouble(tinkoffOrderBook.asks(0).price());
+    const double lastPrice   = quotationToDouble(tinkoffOrderBook.last_price());
 
-    const double maximumBuyPrice = topAskPrice * (1 - (spread / HUNDRED_PERCENT));
+    const double maximumBuyPrice = qMin(topAskPrice, lastPrice) * (1 - (spread / HUNDRED_PERCENT));
     double       res             = maximumBuyPrice;
 
     for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
     {
-        if (tinkoffOrderBook.bids(i).quantity() >= minQuantity)
+        const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
+
+        if (curPrice <= maximumBuyPrice)
         {
-            const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
+            res = curPrice;
 
-            if (curPrice <= maximumBuyPrice)
-            {
-                res = curPrice;
-
-                break;
-            }
+            break;
         }
     }
 
