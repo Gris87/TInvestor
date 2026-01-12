@@ -256,19 +256,19 @@ BuyDecision2::doubleCheckBasedOnStockData(QThread* parentThread, const StockData
     {
         res = true;
 
-        int j           = index;
+        int i           = index;
         int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
 
-        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+        while (i >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
         {
-            if (stockData[j].price < maximumPrice)
+            if (stockData[i].price < maximumPrice)
             {
                 res = false;
 
                 break;
             }
 
-            --j;
+            --i;
             --minutesLeft;
         }
     }
@@ -286,19 +286,19 @@ bool BuyDecision2::doubleCheckBasedOnStockOperationalData(
     {
         res = true;
 
-        int j           = index;
+        int i           = index;
         int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
 
-        while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+        while (i >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
         {
-            if (stockOperationalData[j].price < maximumPrice)
+            if (stockOperationalData[i].price < maximumPrice)
             {
                 res = false;
 
                 break;
             }
 
-            --j;
+            --i;
             --minutesLeft;
         }
     }
@@ -310,19 +310,19 @@ bool BuyDecision2::tripleCheck(QThread* parentThread, const StockData* stockData
 {
     bool res = true;
 
-    int j         = index;
+    int i         = index;
     int hoursLeft = HOURS_TO_TRIPLE_CHECK;
 
-    while (j >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
+    while (i >= 0 && hoursLeft > 0 && !parentThread->isInterruptionRequested())
     {
-        if (stockData[j].price < tripleMinimumPrice)
+        if (stockData[i].price < tripleMinimumPrice)
         {
             res = false;
 
             break;
         }
 
-        j -= mStepForTripleCheck;
+        i -= mStepForTripleCheck;
         --hoursLeft;
     }
 

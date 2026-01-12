@@ -152,10 +152,10 @@ bool BuyDecision7::doubleCheck(
     const qint64 anotherLimitTimestamp = nextTimestamp + (MINUTES_TO_CHECK * ONE_MINUTE);
     int          minutesLeft           = MINUTES_TO_DOUBLE_CHECK;
 
-    for (int j = index; j < stock->data.size() && !parentThread->isInterruptionRequested(); ++j)
+    for (int i = index; i < stock->data.size() && !parentThread->isInterruptionRequested(); ++i)
     {
-        const qint64 anotherTimestamp = stockData[j].timestamp;
-        const float  anotherPrice     = stockData[j].price;
+        const qint64 anotherTimestamp = stockData[i].timestamp;
+        const float  anotherPrice     = stockData[i].price;
 
         if (anotherTimestamp > anotherLimitTimestamp)
         {

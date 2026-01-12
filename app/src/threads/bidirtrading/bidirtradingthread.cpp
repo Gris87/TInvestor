@@ -11,7 +11,11 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 constexpr float  HUNDRED_PERCENT       = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT = 0.10f;
 constexpr float  SPREAD_FOR_HUGE_BID   = 0.50f;
-constexpr int    ORDER_BOOK_DEPTH      = 20;
+constexpr float  TRIPLE_PRICE_RAISE    = 1.00f;
+constexpr float  TRIPLE_SAFE_SPREAD    = 2.00f;
+constexpr int    ORDER_BOOK_DEPTH      = 50;
+constexpr int    HOURS_TO_TRIPLE_CHECK = 5;
+constexpr int    STEP_FOR_TRIPLE_CHECK = 60;
 constexpr qint64 MS_IN_SECOND          = 1000LL;
 constexpr qint64 SLEEP_DELAY           = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY    = 3LL * MS_IN_SECOND;  // 3 seconds
@@ -57,7 +61,8 @@ BiDirTradingThread::BiDirTradingThread(
     mMinYield(),
     mNeedToCancelSell(true),
     mBuyOrderId(),
-    mSellOrderId()
+    mSellOrderId(),
+    mStepForTripleCheck(STEP_FOR_TRIPLE_CHECK)
 {
     qDebug() << "Create BiDirTradingThread";
 
@@ -534,8 +539,16 @@ Quotation BiDirTradingThread::calculateBuyPriceInternal(const tinkoff::GetOrderB
 {
     const double topAskPrice = quotationToDouble(tinkoffOrderBook.asks(0).price());
     const double lastPrice   = quotationToDouble(tinkoffOrderBook.last_price());
+    const double basePrice   = qMin(topAskPrice, lastPrice);
 
-    const double maximumBuyPrice = qMin(topAskPrice, lastPrice) * (1 - (spread / HUNDRED_PERCENT));
+    const float tripleMinimumPrice = basePrice / (1 + (TRIPLE_PRICE_RAISE / HUNDRED_PERCENT));
+
+    if (!tripleCheck(tripleMinimumPrice))
+    {
+        spread = TRIPLE_SAFE_SPREAD;
+    }
+
+    const double maximumBuyPrice = basePrice * (1 - (spread / HUNDRED_PERCENT));
     double       res             = maximumBuyPrice;
 
     for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
@@ -556,6 +569,34 @@ Quotation BiDirTradingThread::calculateBuyPriceInternal(const tinkoff::GetOrderB
     const qint64 coef = qRound64(res / quotationToDouble(mMinPriceIncrement));
 
     return quotationMultiply(mMinPriceIncrement, coef);
+}
+
+bool BiDirTradingThread::tripleCheck(float tripleMinimumPrice) const
+{
+    bool res = true;
+
+    mStock->readLock();
+
+    const StockData* stockData = mStock->data.constData();
+    int              i         = mStock->data.size() - 1;
+    int              hoursLeft = HOURS_TO_TRIPLE_CHECK;
+
+    while (i >= 0 && hoursLeft > 0 && !QThread::currentThread()->isInterruptionRequested())
+    {
+        if (stockData[i].price < tripleMinimumPrice)
+        {
+            res = false;
+
+            break;
+        }
+
+        i -= mStepForTripleCheck;
+        --hoursLeft;
+    }
+
+    mStock->readUnlock();
+
+    return res;
 }
 
 Quotation BiDirTradingThread::calculateSellPrice(
@@ -620,16 +661,6 @@ qint64 BiDirTradingThread::calculateLotsToKeep(BiDirMode mode, double totalCost,
         lotPrice,
         lotPrice
     );
-}
-
-IDecisionMakerConfig* BiDirTradingThread::chooseDecisionConfig()
-{
-    if (mConfig->isSimulatorConfigCommon())
-    {
-        return mConfig->getSimulatorConfig();
-    }
-
-    return mConfig->getAutoPilotConfig();
 }
 
 void BiDirTradingThread::cancelBuyOrder()

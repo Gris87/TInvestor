@@ -77,6 +77,13 @@ public:
     Quotation
     calculateSellPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, double instrumentAvgPrice, float commission);
 
+#ifdef TESTING_MODE
+    void testSetStepForTripleCheck(int step)
+    {
+        mStepForTripleCheck = step;
+    }
+#endif
+
 private:
     void calculateTotalCostAndInstrumentCost(
         const tinkoff::PortfolioResponse& tinkoffPortfolio,
@@ -95,8 +102,11 @@ private:
         Quotation&                           sellPrice
     );
     Quotation             calculateBuyPriceInternal(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread);
-    qint64                calculateLotsToKeep(BiDirMode mode, double totalCost, double buyPrice);
-    IDecisionMakerConfig* chooseDecisionConfig();
+
+    [[nodiscard]]
+    bool tripleCheck(float tripleMinimumPrice) const;
+
+    qint64 calculateLotsToKeep(BiDirMode mode, double totalCost, double buyPrice);
 
     void cancelBuyOrder();
     void cancelSellOrder();
@@ -123,4 +133,5 @@ private:
     bool                 mNeedToCancelSell;
     QString              mBuyOrderId;
     QString              mSellOrderId;
+    int                  mStepForTripleCheck;
 };

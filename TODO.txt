@@ -1,12 +1,11 @@
+Remove option with decision interval
+Fix issue with output money
 Make decision based on dividends
-Do not buy bi-dir if price raise recently
 Bi-dir on non-working hours
 Huge spread for weekend
 Always create -2% order by refreshing each 10 minutes (Check for stock rating from script)
 Always check for buy decisions even if already keep some
 Different GRPC connection on order requests
-Fix issue with output money
-Remove option with decision interval
 Create script for trading by huge sell/buy amount
 Create script for buying/selling in parts
 Find best configs for different commission

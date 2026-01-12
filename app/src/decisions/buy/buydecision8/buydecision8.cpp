@@ -121,10 +121,10 @@ BuyDecision8::doubleCheck(QThread* parentThread, const StockData* stockData, int
 {
     bool res = true;
 
-    for (int j = index; j >= 0 && !parentThread->isInterruptionRequested(); --j)
+    for (int i = index; i >= 0 && !parentThread->isInterruptionRequested(); --i)
     {
-        const qint64 anotherTimestamp = stockData[j].timestamp;
-        const float  anotherPrevPrice = stockData[j].price;
+        const qint64 anotherTimestamp = stockData[i].timestamp;
+        const float  anotherPrevPrice = stockData[i].price;
 
         if (anotherTimestamp < limitTimestamp)
         {

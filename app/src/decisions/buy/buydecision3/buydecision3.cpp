@@ -144,19 +144,19 @@ bool BuyDecision3::doubleCheck(QThread* parentThread, const StockData* stockData
 {
     bool res = true;
 
-    int j           = index;
+    int i           = index;
     int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
 
-    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
+    while (i >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
     {
-        if (stockData[j].price < maximumPrice)
+        if (stockData[i].price < maximumPrice)
         {
             res = false;
 
             break;
         }
 
-        --j;
+        --i;
         --minutesLeft;
     }
 
