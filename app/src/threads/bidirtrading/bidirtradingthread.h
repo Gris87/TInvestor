@@ -101,7 +101,7 @@ private:
         Quotation&                           buyPrice,
         Quotation&                           sellPrice
     );
-    Quotation             calculateBuyPriceInternal(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread);
+    Quotation calculateBuyPriceInternal(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread);
 
     [[nodiscard]]
     bool tripleCheck(float tripleMinimumPrice) const;
