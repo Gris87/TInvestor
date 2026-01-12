@@ -982,7 +982,7 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
                 {
                     biDirTradingThread->terminateThread(false);
 
-                    biDirTradingThreadsToKill.append(instrumentId);
+                    biDirTradingThreadsToKill.append(biDirInstrumentId);
                 }
             }
 
