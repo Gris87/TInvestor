@@ -106,6 +106,7 @@ public:
         IBiDirInfosStorage*                     biDirInfosStorage,
         IHttpClient*                            httpClient,
         IGrpcClient*                            grpcClient,
+        IGrpcClient*                            grpcClientForOrders,
         IGrpcRetryClient*                       grpcRetryClient,
         ICleanupThread*                         cleanupThread,
         IUserUpdateThread*                      userUpdateThread,
@@ -197,6 +198,7 @@ private:
     IBiDirInfosStorage*                     mBiDirInfosStorage;
     IHttpClient*                            mHttpClient;
     IGrpcClient*                            mGrpcClient;
+    IGrpcClient*                            mGrpcClientForOrders;
     IGrpcRetryClient*                       mGrpcRetryClient;
     ICleanupThread*                         mCleanupThread;
     IUserUpdateThread*                      mUserUpdateThread;

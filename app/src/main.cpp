@@ -455,6 +455,7 @@ static int runApplication(QApplication* app)
     HttpClient        httpClient;
     RawGrpcClient     rawGrpcClient;
     GrpcClient        grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
+    GrpcClient        grpcClientForOrders(&userStorage, &rawGrpcClient, &timeUtils);
     GrpcRetryClient   grpcRetryClient(&userStorage, &grpcClient, &timeUtils);
     Optimizer         optimizer;
     Bollindger        bollindger;
@@ -594,6 +595,7 @@ static int runApplication(QApplication* app)
         &biDirInfosStorage,
         &httpClient,
         &grpcClient,
+        &grpcClientForOrders,
         &grpcRetryClient,
         &cleanupThread,
         &userUpdateThread,

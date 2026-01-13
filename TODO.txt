@@ -2,7 +2,6 @@ Make decision based on dividends
 Bi-dir on non-working hours
 Huge spread for weekend
 Always check for buy decisions even if already keep some
-Different GRPC connection on order requests
 Try not to use biggest spread in bidir info
 Create script for buying/selling in parts
 Find best configs for different commission
