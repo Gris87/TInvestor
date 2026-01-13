@@ -1,5 +1,3 @@
-Always create -2% order by refreshing each 10 minutes (Check for stock rating from script)
-Create new telegram bot
 Make decision based on dividends
 Bi-dir on non-working hours
 Huge spread for weekend
