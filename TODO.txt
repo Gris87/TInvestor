@@ -1,6 +1,8 @@
 Make decision based on dividends
-Bi-dir on non-working hours
-Huge spread for weekend
+Improve coverage
+Create release
+
+Bi-dir on non-working hours (weekend also)
 Always check for buy decisions even if already keep some
 Try not to use biggest spread in bidir info
 Create script for buying/selling in parts
