@@ -289,7 +289,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     operation.yieldWithCommission             = 0.0f;
     operation.yieldWithCommissionPercent      = 0.0f;
     operation.inputMoney                      = Quotation(1000000, 0);
-    operation.maxInputMoney                   = Quotation(1000000, 0);
     operation.totalYieldWithCommission        = Quotation(0, 0);
     operation.totalYieldWithCommissionPercent = 0.0f;
     operation.remainedMoney                   = Quotation(1000000, 0);
@@ -362,7 +361,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     operation.yieldWithCommission             = 0.0f;
     operation.yieldWithCommissionPercent      = 0.0f;
     operation.inputMoney                      = Quotation(1000000, 0);
-    operation.maxInputMoney                   = Quotation(1000000, 0);
     operation.totalYieldWithCommission        = Quotation(0, 0);
     operation.totalYieldWithCommissionPercent = 0.0f;
     operation.remainedMoney                   = Quotation(1000000, 0);
@@ -446,7 +444,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     operation.yieldWithCommission             = -40.0f;
     operation.yieldWithCommissionPercent      = -0.04f;
     operation.inputMoney                      = Quotation(1000000, 0);
-    operation.maxInputMoney                   = Quotation(1000000, 0);
     operation.totalYieldWithCommission        = Quotation(-39, -999998989);
     operation.totalYieldWithCommissionPercent = -0.004f;
     operation.remainedMoney                   = Quotation(899960, 1010);
@@ -598,7 +595,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     operation.yieldWithCommission             = -60.0f;
     operation.yieldWithCommissionPercent      = -0.04f;
     operation.inputMoney                      = Quotation(1000000, 0);
-    operation.maxInputMoney                   = Quotation(1000000, 0);
     operation.totalYieldWithCommission        = Quotation(-99, -999997473);
     operation.totalYieldWithCommissionPercent = -0.01f;
     operation.remainedMoney                   = Quotation(749900, 2526);
@@ -757,7 +753,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     operation.yieldWithCommission             = 74910.0f;
     operation.yieldWithCommissionPercent      = 49.94f;
     operation.inputMoney                      = Quotation(1000000, 0);
-    operation.maxInputMoney                   = Quotation(1000000, 0);
     operation.totalYieldWithCommission        = Quotation(74810, 4799);
     operation.totalYieldWithCommissionPercent = 7.481f;
     operation.remainedMoney                   = Quotation(974810, 4799);
@@ -902,7 +897,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_run)
     operation.yieldWithCommission             = 0.0f;
     operation.yieldWithCommissionPercent      = 0.0f;
     operation.inputMoney                      = Quotation(1000000, 0);
-    operation.maxInputMoney                   = Quotation(1000000, 0);
     operation.totalYieldWithCommission        = Quotation(74810, 4799);
     operation.totalYieldWithCommissionPercent = 7.481f;
     operation.remainedMoney                   = Quotation(1074810, 4799);
@@ -1494,7 +1488,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
         operation1.yieldWithCommission             = 265.6f;
         operation1.yieldWithCommissionPercent      = 10.4856f;
         operation1.inputMoney                      = Quotation(200000, 0);
-        operation1.maxInputMoney                   = Quotation(200000, 0);
         operation1.totalYieldWithCommission        = Quotation(265, -666500000);
         operation1.totalYieldWithCommissionPercent = 0.1321667f;
         operation1.remainedMoney                   = Quotation(200300, 0);
@@ -1523,7 +1516,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
         operation2.yieldWithCommission             = -1.2665f;
         operation2.yieldWithCommissionPercent      = -0.05f;
         operation2.inputMoney                      = Quotation(200000, 0);
-        operation2.maxInputMoney                   = Quotation(200000, 0);
         operation2.totalYieldWithCommission        = Quotation(-1, -266500000);
         operation2.totalYieldWithCommissionPercent = -0.0006332f;
         operation2.remainedMoney                   = Quotation(197466, -266500000);
@@ -1558,7 +1550,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
         operation1.yieldWithCommission             = 265.6f;
         operation1.yieldWithCommissionPercent      = 10.4856f;
         operation1.inputMoney                      = Quotation(200000, 0);
-        operation1.maxInputMoney                   = Quotation(200000, 0);
         operation1.totalYieldWithCommission        = Quotation(265, -666500000);
         operation1.totalYieldWithCommissionPercent = 0.1321667f;
         operation1.remainedMoney                   = Quotation(200300, 0);
@@ -1587,7 +1578,6 @@ TEST_F(Test_SimulatorDateRangeDecisionMakerThread, Test_optimizeOperations_and_o
         operation2.yieldWithCommission             = -1.2665f;
         operation2.yieldWithCommissionPercent      = -0.05f;
         operation2.inputMoney                      = Quotation(200000, 0);
-        operation2.maxInputMoney                   = Quotation(200000, 0);
         operation2.totalYieldWithCommission        = Quotation(-1, -266500000);
         operation2.totalYieldWithCommissionPercent = -0.0006332f;
         operation2.remainedMoney                   = Quotation(197466, -266500000);

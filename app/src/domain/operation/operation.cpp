@@ -33,7 +33,6 @@ Operation::Operation() :
     yieldWithCommission(),
     yieldWithCommissionPercent(),
     inputMoney(),
-    maxInputMoney(),
     totalYieldWithCommission(),
     totalYieldWithCommissionPercent(),
     remainedMoney(),
@@ -162,11 +161,6 @@ static void operationInputMoneyParse(Operation* operation, simdjson::ondemand::v
     operation->inputMoney.fromJsonObject(value.get_object());
 }
 
-static void operationMaxInputMoneyParse(Operation* operation, simdjson::ondemand::value value)
-{
-    operation->maxInputMoney.fromJsonObject(value.get_object());
-}
-
 static void operationTotalYieldWithCommissionParse(Operation* operation, simdjson::ondemand::value value)
 {
     operation->totalYieldWithCommission.fromJsonObject(value.get_object());
@@ -234,7 +228,6 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
     {"yieldWithCommission",             operationYieldWithCommissionParse            },
     {"yieldWithCommissionPercent",      operationYieldWithCommissionPercentParse     },
     {"inputMoney",                      operationInputMoneyParse                     },
-    {"maxInputMoney",                   operationMaxInputMoneyParse                  },
     {"totalYieldWithCommission",        operationTotalYieldWithCommissionParse       },
     {"totalYieldWithCommissionPercent", operationTotalYieldWithCommissionPercentParse},
     {"remainedMoney",                   operationRemainedMoneyParse                  },
@@ -289,7 +282,6 @@ QJsonObject Operation::toJsonObject() const
     res.insert("yieldWithCommission",             yieldWithCommission);
     res.insert("yieldWithCommissionPercent",      yieldWithCommissionPercent);
     res.insert("inputMoney",                      inputMoney.toJsonObject());
-    res.insert("maxInputMoney",                   maxInputMoney.toJsonObject());
     res.insert("totalYieldWithCommission",        totalYieldWithCommission.toJsonObject());
     res.insert("totalYieldWithCommissionPercent", totalYieldWithCommissionPercent);
     res.insert("remainedMoney",                   remainedMoney.toJsonObject());
@@ -304,22 +296,32 @@ QJsonObject Operation::toJsonObject() const
 
 bool operator==(const Operation& lhs, const Operation& rhs)
 {
-    return lhs.timestamp == rhs.timestamp && lhs.originalTimestamp == rhs.originalTimestamp &&
-           lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
-           lhs.instrumentName == rhs.instrumentName && lhs.description == rhs.description &&
-           qAbs(lhs.price - rhs.price) < FLOAT_EPSILON && lhs.fifoItems == rhs.fifoItems &&
+    return lhs.timestamp == rhs.timestamp &&
+           lhs.originalTimestamp == rhs.originalTimestamp &&
+           lhs.instrumentId == rhs.instrumentId &&
+           lhs.instrumentTicker == rhs.instrumentTicker &&
+           lhs.instrumentName == rhs.instrumentName &&
+           lhs.description == rhs.description &&
+           qAbs(lhs.price - rhs.price) < FLOAT_EPSILON &&
+           lhs.fifoItems == rhs.fifoItems &&
            qAbs(lhs.avgPriceFifo - rhs.avgPriceFifo) < FLOAT_EPSILON &&
-           qAbs(lhs.avgPriceWavg - rhs.avgPriceWavg) < FLOAT_EPSILON && lhs.quantity == rhs.quantity &&
-           lhs.remainedQuantity == rhs.remainedQuantity && qAbs(lhs.payment - rhs.payment) < FLOAT_EPSILON &&
-           qAbs(lhs.avgCostFifo - rhs.avgCostFifo) < FLOAT_EPSILON && lhs.costFifo == rhs.costFifo &&
-           lhs.costWavg == rhs.costWavg && qAbs(lhs.commission - rhs.commission) < FLOAT_EPSILON &&
+           qAbs(lhs.avgPriceWavg - rhs.avgPriceWavg) < FLOAT_EPSILON &&
+           lhs.quantity == rhs.quantity &&
+           lhs.remainedQuantity == rhs.remainedQuantity &&
+           qAbs(lhs.payment - rhs.payment) < FLOAT_EPSILON &&
+           qAbs(lhs.avgCostFifo - rhs.avgCostFifo) < FLOAT_EPSILON &&
+           lhs.costFifo == rhs.costFifo &&
+           lhs.costWavg == rhs.costWavg &&
+           qAbs(lhs.commission - rhs.commission) < FLOAT_EPSILON &&
            qAbs(lhs.yield - rhs.yield) < FLOAT_EPSILON &&
            qAbs(lhs.yieldWithCommission - rhs.yieldWithCommission) < FLOAT_EPSILON &&
            qAbs(lhs.yieldWithCommissionPercent - rhs.yieldWithCommissionPercent) < FLOAT_EPSILON &&
-           lhs.inputMoney == rhs.inputMoney && lhs.maxInputMoney == rhs.maxInputMoney &&
+           lhs.inputMoney == rhs.inputMoney &&
            lhs.totalYieldWithCommission == rhs.totalYieldWithCommission &&
            qAbs(lhs.totalYieldWithCommissionPercent - rhs.totalYieldWithCommissionPercent) < FLOAT_EPSILON &&
-           lhs.remainedMoney == rhs.remainedMoney && lhs.totalMoney == rhs.totalMoney &&
-           lhs.pricePrecision == rhs.pricePrecision && lhs.paymentPrecision == rhs.paymentPrecision &&
+           lhs.remainedMoney == rhs.remainedMoney &&
+           lhs.totalMoney == rhs.totalMoney &&
+           lhs.pricePrecision == rhs.pricePrecision &&
+           lhs.paymentPrecision == rhs.paymentPrecision &&
            lhs.commissionPrecision == rhs.commissionPrecision;
 }

@@ -89,7 +89,6 @@ private:
     QSet<QString>                    mOperationsLastDays;
     QuantityAndCostInstruments       mInstruments;
     Quotation                        mInputMoney;
-    Quotation                        mMaxInputMoney;
     Quotation                        mTotalYieldWithCommission;
     Quotation                        mRemainedMoney;
     Quotation                        mTotalMoney;

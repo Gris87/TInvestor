@@ -55,7 +55,6 @@ OperationsThread::OperationsThread(
     mOperationsLastDays(),
     mInstruments(),
     mInputMoney(),
-    mMaxInputMoney(),
     mTotalYieldWithCommission(),
     mRemainedMoney(),
     mTotalMoney()
@@ -199,7 +198,6 @@ void OperationsThread::cleanRefreshOperations()
         mLastRequestTimestamp     = lastOperation.timestamp;
         mLastOperationTimestamp   = lastOperation.timestamp;
         mInputMoney               = lastOperation.inputMoney;
-        mMaxInputMoney            = lastOperation.maxInputMoney;
         mTotalYieldWithCommission = lastOperation.totalYieldWithCommission;
         mRemainedMoney            = lastOperation.remainedMoney;
         mTotalMoney               = lastOperation.totalMoney;
@@ -209,7 +207,6 @@ void OperationsThread::cleanRefreshOperations()
         mLastRequestTimestamp     = 0;
         mLastOperationTimestamp   = 0;
         mInputMoney               = Quotation();
-        mMaxInputMoney            = Quotation();
         mTotalYieldWithCommission = Quotation();
         mRemainedMoney            = Quotation();
         mTotalMoney               = Quotation();
@@ -561,16 +558,7 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
                 instrumentId = RUBLE_UID;
             }
 
-            if (operationType == tinkoff::OPERATION_TYPE_INPUT)
-            {
-                mInputMoney = quotationSum(mInputMoney, tinkoffOperation.payment());
-
-                if (mInputMoney > mMaxInputMoney)
-                {
-                    mMaxInputMoney = mInputMoney;
-                }
-            }
-            else if (operationType == tinkoff::OPERATION_TYPE_OUTPUT)
+            if (operationType == tinkoff::OPERATION_TYPE_INPUT || operationType == tinkoff::OPERATION_TYPE_OUTPUT)
             {
                 mInputMoney = quotationSum(mInputMoney, tinkoffOperation.payment());
             }
@@ -583,10 +571,10 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
         mLastPositionUidForExtAccount = positionUid;
     }
 
-    if (mMaxInputMoney.units != 0 || mMaxInputMoney.nano != 0)
+    if (quotationToDouble(mInputMoney) > 0)
     {
         totalYieldWithCommissionPercent =
-            quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mMaxInputMoney) * HUNDRED_PERCENT;
+            quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mInputMoney) * HUNDRED_PERCENT;
     }
 
     mInstrumentsStorage->readLock();
@@ -625,7 +613,6 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
     res->yieldWithCommission             = quotationToFloat(yieldWithCommission);
     res->yieldWithCommissionPercent      = yieldWithCommissionPercent;
     res->inputMoney                      = mInputMoney;
-    res->maxInputMoney                   = mMaxInputMoney;
     res->totalYieldWithCommission        = mTotalYieldWithCommission;
     res->totalYieldWithCommissionPercent = totalYieldWithCommissionPercent;
     res->remainedMoney                   = mRemainedMoney;
@@ -669,14 +656,14 @@ void OperationsThread::alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOp
             }
         }
 
-        mTotalYieldWithCommission = quotationDiff(mTotalMoney, mMaxInputMoney);
+        mTotalYieldWithCommission = quotationDiff(mTotalMoney, mInputMoney);
 
         float totalYieldWithCommissionPercent = 0.0f;
 
-        if (mMaxInputMoney.units != 0 || mMaxInputMoney.nano != 0)
+        if (quotationToDouble(mInputMoney) > 0)
         {
             totalYieldWithCommissionPercent =
-                quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mMaxInputMoney) * HUNDRED_PERCENT;
+                quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mInputMoney) * HUNDRED_PERCENT;
         }
 
         lastOperation->remainedMoney                   = mRemainedMoney;

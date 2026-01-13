@@ -53,7 +53,6 @@ createInitOperations(IInstrumentsStorage* instrumentsStorage, ILogosStorage* log
     operation.yieldWithCommission             = 0.0f;
     operation.yieldWithCommissionPercent      = 0.0f;
     operation.inputMoney                      = Quotation(startMoney, 0);
-    operation.maxInputMoney                   = Quotation(startMoney, 0);
     operation.totalYieldWithCommission        = Quotation(0, 0);
     operation.totalYieldWithCommissionPercent = 0.0f;
     operation.remainedMoney                   = Quotation(startMoney, 0);
@@ -173,7 +172,6 @@ static void simulateSellForOperations(
     operation.yieldWithCommission             = yieldWithCommission;
     operation.yieldWithCommissionPercent      = (yieldWithCommission / costFifo) * HUNDRED_PERCENT;
     operation.inputMoney                      = Quotation(startMoney, 0);
-    operation.maxInputMoney                   = Quotation(startMoney, 0);
     operation.totalYieldWithCommission        = quotationFromDouble(totalYieldWithCommission);
     operation.totalYieldWithCommissionPercent = (totalYieldWithCommission / startMoney) * HUNDRED_PERCENT;
     operation.remainedMoney  = quotationFromDouble(portfolio.positions[CURRENCY_ID].items.first().cost + cost - totalCommission);
@@ -375,7 +373,6 @@ static void simulateBuyForOperations(
     operation.yieldWithCommission             = -totalCommission;
     operation.yieldWithCommissionPercent      = -(totalCommission / cost) * HUNDRED_PERCENT;
     operation.inputMoney                      = Quotation(startMoney, 0);
-    operation.maxInputMoney                   = Quotation(startMoney, 0);
     operation.totalYieldWithCommission        = quotationFromDouble(totalYieldWithCommission);
     operation.totalYieldWithCommissionPercent = (totalYieldWithCommission / startMoney) * HUNDRED_PERCENT;
     operation.remainedMoney  = quotationFromDouble(portfolio.positions[CURRENCY_ID].items.first().cost - cost - totalCommission);

@@ -59,7 +59,6 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
         operation1.yieldWithCommission             = 265.6f;
         operation1.yieldWithCommissionPercent      = 10.4856f;
         operation1.inputMoney                      = Quotation(200000, 0);
-        operation1.maxInputMoney                   = Quotation(200000, 0);
         operation1.totalYieldWithCommission        = Quotation(265, -666500000);
         operation1.totalYieldWithCommissionPercent = 0.1321667f;
         operation1.remainedMoney                   = Quotation(200300, 0);
@@ -88,7 +87,6 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
         operation2.yieldWithCommission             = -1.2665f;
         operation2.yieldWithCommissionPercent      = -0.05f;
         operation2.inputMoney                      = Quotation(200000, 0);
-        operation2.maxInputMoney                   = Quotation(200000, 0);
         operation2.totalYieldWithCommission        = Quotation(-1, -266500000);
         operation2.totalYieldWithCommissionPercent = -0.0006332f;
         operation2.remainedMoney                   = Quotation(197466, -266500000);
@@ -123,7 +121,6 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
         operation1.yieldWithCommission             = 265.6f;
         operation1.yieldWithCommissionPercent      = 10.4856f;
         operation1.inputMoney                      = Quotation(200000, 0);
-        operation1.maxInputMoney                   = Quotation(200000, 0);
         operation1.totalYieldWithCommission        = Quotation(265, -666500000);
         operation1.totalYieldWithCommissionPercent = 0.1321667f;
         operation1.remainedMoney                   = Quotation(200300, 0);
@@ -152,7 +149,6 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
         operation2.yieldWithCommission             = -1.2665f;
         operation2.yieldWithCommissionPercent      = -0.05f;
         operation2.inputMoney                      = Quotation(200000, 0);
-        operation2.maxInputMoney                   = Quotation(200000, 0);
         operation2.totalYieldWithCommission        = Quotation(-1, -266500000);
         operation2.totalYieldWithCommissionPercent = -0.0006332f;
         operation2.remainedMoney                   = Quotation(197466, -266500000);
@@ -185,7 +181,6 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
     lastOperation1.yieldWithCommission             = -1.2665f;
     lastOperation1.yieldWithCommissionPercent      = -0.05f;
     lastOperation1.inputMoney                      = Quotation(200000, 0);
-    lastOperation1.maxInputMoney                   = Quotation(200000, 0);
     lastOperation1.totalYieldWithCommission        = Quotation(-1, -266500000);
     lastOperation1.totalYieldWithCommissionPercent = -0.0006332f;
     lastOperation1.remainedMoney                   = Quotation(197466, -266500000);
@@ -214,7 +209,6 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
     lastOperation2.yieldWithCommission             = -1.2665f;
     lastOperation2.yieldWithCommissionPercent      = -0.05f;
     lastOperation2.inputMoney                      = Quotation(200000, 0);
-    lastOperation2.maxInputMoney                   = Quotation(200000, 0);
     lastOperation2.totalYieldWithCommission        = Quotation(-1, -266500000);
     lastOperation2.totalYieldWithCommissionPercent = -0.0006332f;
     lastOperation2.remainedMoney                   = Quotation(197466, -266500000);

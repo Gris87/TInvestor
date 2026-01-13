@@ -296,7 +296,7 @@ static QVariant operationsYieldWithCommissionPercentTooltipRole(const Operation&
 
 static QVariant operationsTotalYieldWithCommissionPercentTooltipRole(const Operation& operation)
 {
-    return QObject::tr("From: %1").arg(quotationToFloat(operation.maxInputMoney), 0, 'f', 2) + " \u20BD";
+    return QObject::tr("From: %1").arg(quotationToFloat(operation.inputMoney), 0, 'f', 2) + " \u20BD";
 }
 
 static QVariant operationsNothingTooltipRole(const Operation& /*operation*/)

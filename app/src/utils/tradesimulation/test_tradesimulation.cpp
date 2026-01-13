@@ -80,7 +80,6 @@ TEST_F(Test_TradeSimulation, Test_createInitOperations)
     operation.yieldWithCommission             = 0.0f;
     operation.yieldWithCommissionPercent      = 0.0f;
     operation.inputMoney                      = Quotation(1000000, 0);
-    operation.maxInputMoney                   = Quotation(1000000, 0);
     operation.totalYieldWithCommission        = Quotation(0, 0);
     operation.totalYieldWithCommissionPercent = 0.0f;
     operation.remainedMoney                   = Quotation(1000000, 0);
@@ -114,7 +113,6 @@ TEST_F(Test_TradeSimulation, Test_createInitOperations)
     operation.yieldWithCommission             = 0.0f;
     operation.yieldWithCommissionPercent      = 0.0f;
     operation.inputMoney                      = Quotation(12345, 0);
-    operation.maxInputMoney                   = Quotation(12345, 0);
     operation.totalYieldWithCommission        = Quotation(0, 0);
     operation.totalYieldWithCommissionPercent = 0.0f;
     operation.remainedMoney                   = Quotation(12345, 0);
@@ -324,7 +322,6 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     operation.yieldWithCommission             = 0.0f;
     operation.yieldWithCommissionPercent      = 0.0f;
     operation.inputMoney                      = Quotation(1000000, 0);
-    operation.maxInputMoney                   = Quotation(1000000, 0);
     operation.totalYieldWithCommission        = Quotation(0, 0);
     operation.totalYieldWithCommissionPercent = 0.0f;
     operation.remainedMoney                   = Quotation(1000000, 0);
@@ -415,7 +412,6 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     buyOperation.yieldWithCommission             = -40.0f;
     buyOperation.yieldWithCommissionPercent      = -0.04f;
     buyOperation.inputMoney                      = Quotation(1000000, 0);
-    buyOperation.maxInputMoney                   = Quotation(1000000, 0);
     buyOperation.totalYieldWithCommission        = Quotation(-39, -999998989);
     buyOperation.totalYieldWithCommissionPercent = -0.004f;
     buyOperation.remainedMoney                   = Quotation(899960, 1010);
@@ -602,7 +598,6 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     buyOperation2.yieldWithCommission             = -60.0f;
     buyOperation2.yieldWithCommissionPercent      = -0.04f;
     buyOperation2.inputMoney                      = Quotation(1000000, 0);
-    buyOperation2.maxInputMoney                   = Quotation(1000000, 0);
     buyOperation2.totalYieldWithCommission        = Quotation(-99, -999997473);
     buyOperation2.totalYieldWithCommissionPercent = -0.01f;
     buyOperation2.remainedMoney                   = Quotation(749900, 2526);
@@ -798,7 +793,6 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     sellOperation.yieldWithCommission             = 74910.0f;
     sellOperation.yieldWithCommissionPercent      = 49.94f;
     sellOperation.inputMoney                      = Quotation(1000000, 0);
-    sellOperation.maxInputMoney                   = Quotation(1000000, 0);
     sellOperation.totalYieldWithCommission        = Quotation(74810, 4799);
     sellOperation.totalYieldWithCommissionPercent = 7.481f;
     sellOperation.remainedMoney                   = Quotation(974810, 4799);
@@ -978,7 +972,6 @@ TEST_F(Test_TradeSimulation, Test_simulateTrading)
     sellOperation2.yieldWithCommission             = 0.0f;
     sellOperation2.yieldWithCommissionPercent      = 0.0f;
     sellOperation2.inputMoney                      = Quotation(1000000, 0);
-    sellOperation2.maxInputMoney                   = Quotation(1000000, 0);
     sellOperation2.totalYieldWithCommission        = Quotation(74810, 4799);
     sellOperation2.totalYieldWithCommissionPercent = 7.481f;
     sellOperation2.remainedMoney                   = Quotation(1074810, 4799);

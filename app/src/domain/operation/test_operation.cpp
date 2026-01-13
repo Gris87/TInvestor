@@ -50,7 +50,6 @@ TEST_F(Test_Operation, Test_constructor_and_destructor)
     ASSERT_NEAR(operation.yieldWithCommission,             0, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      0, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(0, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(0, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(0, 0));
     ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 0, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(0, 0));
@@ -85,7 +84,6 @@ TEST_F(Test_Operation, Test_copy_constructor)
     operation.yieldWithCommission             = 16.0f;
     operation.yieldWithCommissionPercent      = 17.0f;
     operation.inputMoney                      = Quotation(18, 19);
-    operation.maxInputMoney                   = Quotation(20, 21);
     operation.totalYieldWithCommission        = Quotation(22, 23);
     operation.totalYieldWithCommissionPercent = 24.0f;
     operation.remainedMoney                   = Quotation(25, 26);
@@ -128,7 +126,6 @@ TEST_F(Test_Operation, Test_copy_constructor)
     ASSERT_NEAR(operation2.yieldWithCommission,             16, 0.0001f);
     ASSERT_NEAR(operation2.yieldWithCommissionPercent,      17, 0.0001f);
     ASSERT_EQ(operation2.inputMoney,                        Quotation(18, 19));
-    ASSERT_EQ(operation2.maxInputMoney,                     Quotation(20, 21));
     ASSERT_EQ(operation2.totalYieldWithCommission,          Quotation(22, 23));
     ASSERT_NEAR(operation2.totalYieldWithCommissionPercent, 24, 0.0001f);
     ASSERT_EQ(operation2.remainedMoney,                     Quotation(25, 26));
@@ -164,7 +161,6 @@ TEST_F(Test_Operation, Test_assign)
     operation.yieldWithCommission             = 16.0f;
     operation.yieldWithCommissionPercent      = 17.0f;
     operation.inputMoney                      = Quotation(18, 19);
-    operation.maxInputMoney                   = Quotation(20, 21);
     operation.totalYieldWithCommission        = Quotation(22, 23);
     operation.totalYieldWithCommissionPercent = 24.0f;
     operation.remainedMoney                   = Quotation(25, 26);
@@ -207,7 +203,6 @@ TEST_F(Test_Operation, Test_assign)
     ASSERT_NEAR(operation2.yieldWithCommission,             16, 0.0001f);
     ASSERT_NEAR(operation2.yieldWithCommissionPercent,      17, 0.0001f);
     ASSERT_EQ(operation2.inputMoney,                        Quotation(18, 19));
-    ASSERT_EQ(operation2.maxInputMoney,                     Quotation(20, 21));
     ASSERT_EQ(operation2.totalYieldWithCommission,          Quotation(22, 23));
     ASSERT_NEAR(operation2.totalYieldWithCommissionPercent, 24, 0.0001f);
     ASSERT_EQ(operation2.remainedMoney,                     Quotation(25, 26));
@@ -245,7 +240,6 @@ TEST_F(Test_Operation, Test_fromJsonObject)
     ASSERT_NEAR(operation.yieldWithCommission,             0, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      0, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(0, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(0, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(0, 0));
     ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 0, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(0, 0));
@@ -256,7 +250,7 @@ TEST_F(Test_Operation, Test_fromJsonObject)
     // clang-format on
 
     const QString content =
-        R"({"avgCostFifo":9,"avgPriceFifo":4,"avgPriceWavg":5,"commission":14,"commissionPrecision":31,"costFifo":{"nano":11,"units":10},"costWavg":{"nano":13,"units":12},"description":"d","fifoItems":[{"cost":{"nano":34,"units":33},"quantity":32}],"inputMoney":{"nano":19,"units":18},"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","maxInputMoney":{"nano":21,"units":20},"originalTimestamp":2,"payment":8,"paymentPrecision":30,"price":3,"pricePrecision":29,"quantity":6,"remainedMoney":{"nano":26,"units":25},"remainedQuantity":7,"timestamp":1,"totalMoney":{"nano":28,"units":27},"totalYieldWithCommission":{"nano":23,"units":22},"totalYieldWithCommissionPercent":24,"yield":15,"yieldWithCommission":16,"yieldWithCommissionPercent":17})";
+        R"({"avgCostFifo":9,"avgPriceFifo":4,"avgPriceWavg":5,"commission":14,"commissionPrecision":31,"costFifo":{"nano":11,"units":10},"costWavg":{"nano":13,"units":12},"description":"d","fifoItems":[{"cost":{"nano":34,"units":33},"quantity":32}],"inputMoney":{"nano":19,"units":18},"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","originalTimestamp":2,"payment":8,"paymentPrecision":30,"price":3,"pricePrecision":29,"quantity":6,"remainedMoney":{"nano":26,"units":25},"remainedQuantity":7,"timestamp":1,"totalMoney":{"nano":28,"units":27},"totalYieldWithCommission":{"nano":23,"units":22},"totalYieldWithCommissionPercent":24,"yield":15,"yieldWithCommission":16,"yieldWithCommissionPercent":17})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -290,7 +284,6 @@ TEST_F(Test_Operation, Test_fromJsonObject)
     ASSERT_NEAR(operation.yieldWithCommission,             16, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      17, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(18, 19));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(20, 21));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(22, 23));
     ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 24, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(25, 26));
@@ -332,7 +325,6 @@ TEST_F(Test_Operation, Test_toJsonObject)
     operation.yieldWithCommission             = 16.0f;
     operation.yieldWithCommissionPercent      = 17.0f;
     operation.inputMoney                      = Quotation(18, 19);
-    operation.maxInputMoney                   = Quotation(20, 21);
     operation.totalYieldWithCommission        = Quotation(22, 23);
     operation.totalYieldWithCommissionPercent = 24.0f;
     operation.remainedMoney                   = Quotation(25, 26);
@@ -353,7 +345,7 @@ TEST_F(Test_Operation, Test_toJsonObject)
 
     const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
-        R"({"avgCostFifo":9,"avgPriceFifo":4,"avgPriceWavg":5,"commission":14,"commissionPrecision":31,"costFifo":{"nano":11,"units":10},"costWavg":{"nano":13,"units":12},"description":"d","fifoItems":[{"cost":{"nano":34,"units":33},"quantity":32}],"inputMoney":{"nano":19,"units":18},"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","maxInputMoney":{"nano":21,"units":20},"originalTimestamp":2,"payment":8,"paymentPrecision":30,"price":3,"pricePrecision":29,"quantity":6,"remainedMoney":{"nano":26,"units":25},"remainedQuantity":7,"timestamp":1,"totalMoney":{"nano":28,"units":27},"totalYieldWithCommission":{"nano":23,"units":22},"totalYieldWithCommissionPercent":24,"yield":15,"yieldWithCommission":16,"yieldWithCommissionPercent":17})";
+        R"({"avgCostFifo":9,"avgPriceFifo":4,"avgPriceWavg":5,"commission":14,"commissionPrecision":31,"costFifo":{"nano":11,"units":10},"costWavg":{"nano":13,"units":12},"description":"d","fifoItems":[{"cost":{"nano":34,"units":33},"quantity":32}],"inputMoney":{"nano":19,"units":18},"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","originalTimestamp":2,"payment":8,"paymentPrecision":30,"price":3,"pricePrecision":29,"quantity":6,"remainedMoney":{"nano":26,"units":25},"remainedQuantity":7,"timestamp":1,"totalMoney":{"nano":28,"units":27},"totalYieldWithCommission":{"nano":23,"units":22},"totalYieldWithCommissionPercent":24,"yield":15,"yieldWithCommission":16,"yieldWithCommissionPercent":17})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -383,7 +375,6 @@ TEST_F(Test_Operation, Test_equals)
     operation.yieldWithCommission             = 16.0f;
     operation.yieldWithCommissionPercent      = 17.0f;
     operation.inputMoney                      = Quotation(18, 19);
-    operation.maxInputMoney                   = Quotation(20, 21);
     operation.totalYieldWithCommission        = Quotation(22, 23);
     operation.totalYieldWithCommissionPercent = 24.0f;
     operation.remainedMoney                   = Quotation(25, 26);
@@ -412,7 +403,6 @@ TEST_F(Test_Operation, Test_equals)
     operation2.yieldWithCommission             = 16.0f;
     operation2.yieldWithCommissionPercent      = 17.0f;
     operation2.inputMoney                      = Quotation(18, 19);
-    operation2.maxInputMoney                   = Quotation(20, 21);
     operation2.totalYieldWithCommission        = Quotation(22, 23);
     operation2.totalYieldWithCommissionPercent = 24.0f;
     operation2.remainedMoney                   = Quotation(25, 26);
@@ -540,11 +530,6 @@ TEST_F(Test_Operation, Test_equals)
     operation2.inputMoney = Quotation(-18, -19);
     ASSERT_NE(operation, operation2);
     operation2.inputMoney = Quotation(18, 19);
-    ASSERT_EQ(operation, operation2);
-
-    operation2.maxInputMoney = Quotation(-20, -21);
-    ASSERT_NE(operation, operation2);
-    operation2.maxInputMoney = Quotation(20, 21);
     ASSERT_EQ(operation, operation2);
 
     operation2.totalYieldWithCommission = Quotation(-22, -23);

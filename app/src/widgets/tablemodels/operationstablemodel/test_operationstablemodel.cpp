@@ -130,7 +130,6 @@ TEST_F(Test_OperationsTableModel, Test_data)
     operation1.yieldWithCommission             = -113.0f;
     operation1.yieldWithCommissionPercent      = -114.0f;
     operation1.inputMoney                      = Quotation(115, 116);
-    operation1.maxInputMoney                   = Quotation(117, 118);
     operation1.totalYieldWithCommission        = Quotation(-119, -120);
     operation1.totalYieldWithCommissionPercent = -121.0f;
     operation1.remainedMoney                   = Quotation(122, 123);
@@ -160,7 +159,6 @@ TEST_F(Test_OperationsTableModel, Test_data)
     operation2.yieldWithCommission             = 0.0f;
     operation2.yieldWithCommissionPercent      = 0.0f;
     operation2.inputMoney                      = Quotation(215, 216);
-    operation2.maxInputMoney                   = Quotation(217, 218);
     operation2.totalYieldWithCommission        = Quotation(0, 0);
     operation2.totalYieldWithCommission        = Quotation(0, 0);
     operation2.totalYieldWithCommissionPercent = 0.0f;
@@ -191,7 +189,6 @@ TEST_F(Test_OperationsTableModel, Test_data)
     operation3.yieldWithCommission             = 513.0f;
     operation3.yieldWithCommissionPercent      = 514.0f;
     operation3.inputMoney                      = Quotation(515, 516);
-    operation3.maxInputMoney                   = Quotation(517, 518);
     operation3.totalYieldWithCommission        = Quotation(519, 520);
     operation3.totalYieldWithCommissionPercent = 521.0f;
     operation3.remainedMoney                   = Quotation(522, 523);
@@ -378,7 +375,7 @@ TEST_F(Test_OperationsTableModel, Test_data)
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN),               Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN),       Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN),         Qt::ToolTipRole),           QVariant());
-    ASSERT_EQ(model->data(model->index(0, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::ToolTipRole),           QVariant("From: 117.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::ToolTipRole),           QVariant("From: 115.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_REMAINED_MONEY_COLUMN),                      Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_TOTAL_MONEY_COLUMN),                         Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, OPERATIONS_TIME_COLUMN),                                Qt::ToolTipRole),           QVariant());
@@ -395,7 +392,7 @@ TEST_F(Test_OperationsTableModel, Test_data)
     ASSERT_EQ(model->data(model->index(1, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN),               Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN),       Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN),         Qt::ToolTipRole),           QVariant());
-    ASSERT_EQ(model->data(model->index(1, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::ToolTipRole),           QVariant("From: 217.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::ToolTipRole),           QVariant("From: 215.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(1, OPERATIONS_REMAINED_MONEY_COLUMN),                      Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, OPERATIONS_TOTAL_MONEY_COLUMN),                         Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_TIME_COLUMN),                                Qt::ToolTipRole),           QVariant());
@@ -412,7 +409,7 @@ TEST_F(Test_OperationsTableModel, Test_data)
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN),               Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN),       Qt::ToolTipRole),           QVariant("From: 506.0000 \u20BD"));
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN),         Qt::ToolTipRole),           QVariant());
-    ASSERT_EQ(model->data(model->index(2, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::ToolTipRole),           QVariant("From: 517.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(2, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::ToolTipRole),           QVariant("From: 515.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_REMAINED_MONEY_COLUMN),                      Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_TOTAL_MONEY_COLUMN),                         Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_NAME_COLUMN),                                ROLE_INSTRUMENT_LOGO),      QVariant(0));
@@ -456,7 +453,6 @@ TEST_F(Test_OperationsTableModel, Test_sort)
     operation1.yieldWithCommission             = -113.0f;
     operation1.yieldWithCommissionPercent      = -114.0f;
     operation1.inputMoney                      = Quotation(115, 116);
-    operation1.maxInputMoney                   = Quotation(117, 118);
     operation1.totalYieldWithCommission        = Quotation(-119, -120);
     operation1.totalYieldWithCommissionPercent = -121.0f;
     operation1.remainedMoney                   = Quotation(122, 123);
@@ -486,7 +482,6 @@ TEST_F(Test_OperationsTableModel, Test_sort)
     operation2.yieldWithCommission             = 0.0f;
     operation2.yieldWithCommissionPercent      = 0.0f;
     operation2.inputMoney                      = Quotation(215, 216);
-    operation2.maxInputMoney                   = Quotation(217, 218);
     operation2.totalYieldWithCommission        = Quotation(0, 0);
     operation2.totalYieldWithCommission        = Quotation(0, 0);
     operation2.totalYieldWithCommissionPercent = 0.0f;
@@ -517,7 +512,6 @@ TEST_F(Test_OperationsTableModel, Test_sort)
     operation3.yieldWithCommission             = 513.0f;
     operation3.yieldWithCommissionPercent      = 514.0f;
     operation3.inputMoney                      = Quotation(515, 516);
-    operation3.maxInputMoney                   = Quotation(517, 518);
     operation3.totalYieldWithCommission        = Quotation(519, 520);
     operation3.totalYieldWithCommissionPercent = 521.0f;
     operation3.remainedMoney                   = Quotation(522, 523);
@@ -977,7 +971,6 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     operation1.yieldWithCommission             = -113.0f;
     operation1.yieldWithCommissionPercent      = -114.0f;
     operation1.inputMoney                      = Quotation(115, 116);
-    operation1.maxInputMoney                   = Quotation(117, 118);
     operation1.totalYieldWithCommission        = Quotation(-119, -120);
     operation1.totalYieldWithCommissionPercent = -121.0f;
     operation1.remainedMoney                   = Quotation(122, 123);
@@ -1007,7 +1000,6 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     operation2.yieldWithCommission             = 0.0f;
     operation2.yieldWithCommissionPercent      = 0.0f;
     operation2.inputMoney                      = Quotation(215, 216);
-    operation2.maxInputMoney                   = Quotation(217, 218);
     operation2.totalYieldWithCommission        = Quotation(0, 0);
     operation2.totalYieldWithCommission        = Quotation(0, 0);
     operation2.totalYieldWithCommissionPercent = 0.0f;
@@ -1038,7 +1030,6 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     operation3.yieldWithCommission             = 513.0f;
     operation3.yieldWithCommissionPercent      = 514.0f;
     operation3.inputMoney                      = Quotation(515, 516);
-    operation3.maxInputMoney                   = Quotation(517, 518);
     operation3.totalYieldWithCommission        = Quotation(519, 520);
     operation3.totalYieldWithCommissionPercent = 521.0f;
     operation3.remainedMoney                   = Quotation(522, 523);
@@ -1130,7 +1121,6 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     newOperation.yieldWithCommission             = 713.0f;
     newOperation.yieldWithCommissionPercent      = 714.0f;
     newOperation.inputMoney                      = Quotation(715, 716);
-    newOperation.maxInputMoney                   = Quotation(717, 718);
     newOperation.totalYieldWithCommission        = Quotation(719, 720);
     newOperation.totalYieldWithCommissionPercent = 721.0f;
     newOperation.remainedMoney                   = Quotation(722, 723);
@@ -1659,7 +1649,6 @@ TEST_F(Test_OperationsTableModel, Test_exportToExcel)
     operation1.yieldWithCommission             = -113.0f;
     operation1.yieldWithCommissionPercent      = -114.0f;
     operation1.inputMoney                      = Quotation(115, 116);
-    operation1.maxInputMoney                   = Quotation(117, 118);
     operation1.totalYieldWithCommission        = Quotation(-119, -120);
     operation1.totalYieldWithCommissionPercent = -121.0f;
     operation1.remainedMoney                   = Quotation(122, 123);
@@ -1689,7 +1678,6 @@ TEST_F(Test_OperationsTableModel, Test_exportToExcel)
     operation2.yieldWithCommission             = 0.0f;
     operation2.yieldWithCommissionPercent      = 0.0f;
     operation2.inputMoney                      = Quotation(215, 216);
-    operation2.maxInputMoney                   = Quotation(217, 218);
     operation2.totalYieldWithCommission        = Quotation(0, 0);
     operation2.totalYieldWithCommission        = Quotation(0, 0);
     operation2.totalYieldWithCommissionPercent = 0.0f;
@@ -1720,7 +1708,6 @@ TEST_F(Test_OperationsTableModel, Test_exportToExcel)
     operation3.yieldWithCommission             = 513.0f;
     operation3.yieldWithCommissionPercent      = 514.0f;
     operation3.inputMoney                      = Quotation(515, 516);
-    operation3.maxInputMoney                   = Quotation(517, 518);
     operation3.totalYieldWithCommission        = Quotation(519, 520);
     operation3.totalYieldWithCommissionPercent = 521.0f;
     operation3.remainedMoney                   = Quotation(522, 523);

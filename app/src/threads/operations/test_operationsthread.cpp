@@ -284,7 +284,6 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     operation1.yieldWithCommission             = -1.2665f;
     operation1.yieldWithCommissionPercent      = -0.05f;
     operation1.inputMoney                      = Quotation(200000, 0);
-    operation1.maxInputMoney                   = Quotation(200000, 0);
     operation1.totalYieldWithCommission        = Quotation(-1, -266500000);
     operation1.totalYieldWithCommissionPercent = -0.0006332f;
     operation1.remainedMoney                   = Quotation(197466, -266500000);
@@ -320,7 +319,6 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     operation2.yieldWithCommission             = 0.0f;
     operation2.yieldWithCommissionPercent      = 0.0f;
     operation2.inputMoney                      = Quotation(200000, 0);
-    operation2.maxInputMoney                   = Quotation(200000, 0);
     operation2.totalYieldWithCommission        = Quotation(0, 0);
     operation2.totalYieldWithCommissionPercent = 0.0f;
     operation2.remainedMoney                   = Quotation(200000, 0);
@@ -441,7 +439,6 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     operation3.yieldWithCommission        = 265.6f;
     operation3.yieldWithCommissionPercent = 10.4856f;
     operation3.inputMoney                 = Quotation(200000, 0);
-    operation3.maxInputMoney              = Quotation(200000, 0);
     // Instead of Quotation(265, -666500000) after alignRemainedAndTotalMoneyFromPortfolio
     operation3.totalYieldWithCommission = Quotation(300, 0);
     // Instead of 0.1321667f after alignRemainedAndTotalMoneyFromPortfolio
@@ -557,7 +554,6 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             0.0f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      0.0f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(200000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(0, 0));
     ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 0.0f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(200000, 0));
@@ -616,7 +612,6 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             -1.2665f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      -0.05f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(200000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(-1, -266500000));
     ASSERT_NEAR(operation.totalYieldWithCommissionPercent, -0.0006332f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(197466, -266500000));
@@ -677,7 +672,6 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             -10.0f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      -0.05f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(200000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(-11, -266500000));
     ASSERT_NEAR(operation.totalYieldWithCommissionPercent, -0.00563325f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(177456, -266500000));
@@ -740,7 +734,6 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             -15.0f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      -0.05f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(200000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(-26, -266500000));
     ASSERT_NEAR(operation.totalYieldWithCommissionPercent, -0.01313325f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(147441, -266500000));
@@ -801,7 +794,6 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             47437.0f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      378.4967f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(200000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(47411, -266500000));
     ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 23.705366f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(207411, -266500000));
@@ -858,7 +850,6 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             34962.5f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      87.40625f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(200000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(82374, -766500000));
     ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 41.186616f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(282374, -766500000));
@@ -915,9 +906,8 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             0.0f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      0.0f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(-50000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(82374, -766500000));
-    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 41.186616f, 0.0001f);
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 0.0f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(32374, -766500000));
     ASSERT_EQ(operation.totalMoney,                        Quotation(32374, -766500000));
     ASSERT_EQ(operation.pricePrecision,                    2);
@@ -974,9 +964,8 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             -15.0f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      -0.05f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(-50000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(82359, -766500000));
-    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 41.179116f, 0.0001f);
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 0.0f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(2359, -766500000));
     ASSERT_EQ(operation.totalMoney,                        Quotation(32359, -766500000));
     ASSERT_EQ(operation.pricePrecision,                    4);
@@ -1033,9 +1022,8 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             5000.0f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      16.6666f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(-50000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(87359, -766500000));
-    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 43.679116f, 0.0001f);
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 0.0f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(2359, -766500000));
     ASSERT_EQ(operation.totalMoney,                        Quotation(32359, -766500000));
     ASSERT_EQ(operation.pricePrecision,                    4);
@@ -1092,9 +1080,8 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             -500.0f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      -1.6666f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(-50000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(86859, -766500000));
-    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 43.429116f, 0.0001f);
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 0.0f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(2359, -766500000));
     ASSERT_EQ(operation.totalMoney,                        Quotation(32359, -766500000));
     ASSERT_EQ(operation.pricePrecision,                    4);
@@ -1149,9 +1136,8 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_NEAR(operation.yieldWithCommission,             -2000.0f, 0.0001f);
     ASSERT_NEAR(operation.yieldWithCommissionPercent,      -6.6666f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(-50000, 0));
-    ASSERT_EQ(operation.maxInputMoney,                     Quotation(200000, 0));
     ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(84859, -766500000));
-    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 42.429116f, 0.0001f);
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 0.0f, 0.0001f);
     ASSERT_EQ(operation.remainedMoney,                     Quotation(30359, -766500000));
     ASSERT_EQ(operation.totalMoney,                        Quotation(30359, -766500000));
     ASSERT_EQ(operation.pricePrecision,                    4);
@@ -1293,7 +1279,6 @@ TEST_F(Test_OperationsThread, Test_optimize)
         operation1.yieldWithCommission             = 265.6f;
         operation1.yieldWithCommissionPercent      = 10.4856f;
         operation1.inputMoney                      = Quotation(200000, 0);
-        operation1.maxInputMoney                   = Quotation(200000, 0);
         operation1.totalYieldWithCommission        = Quotation(265, -666500000);
         operation1.totalYieldWithCommissionPercent = 0.1321667f;
         operation1.remainedMoney                   = Quotation(200300, 0);
@@ -1322,7 +1307,6 @@ TEST_F(Test_OperationsThread, Test_optimize)
         operation2.yieldWithCommission             = -1.2665f;
         operation2.yieldWithCommissionPercent      = -0.05f;
         operation2.inputMoney                      = Quotation(200000, 0);
-        operation2.maxInputMoney                   = Quotation(200000, 0);
         operation2.totalYieldWithCommission        = Quotation(-1, -266500000);
         operation2.totalYieldWithCommissionPercent = -0.0006332f;
         operation2.remainedMoney                   = Quotation(197466, -266500000);
@@ -1357,7 +1341,6 @@ TEST_F(Test_OperationsThread, Test_optimize)
         operation1.yieldWithCommission             = 265.6f;
         operation1.yieldWithCommissionPercent      = 10.4856f;
         operation1.inputMoney                      = Quotation(200000, 0);
-        operation1.maxInputMoney                   = Quotation(200000, 0);
         operation1.totalYieldWithCommission        = Quotation(265, -666500000);
         operation1.totalYieldWithCommissionPercent = 0.1321667f;
         operation1.remainedMoney                   = Quotation(200300, 0);
@@ -1386,7 +1369,6 @@ TEST_F(Test_OperationsThread, Test_optimize)
         operation2.yieldWithCommission             = -1.2665f;
         operation2.yieldWithCommissionPercent      = -0.05f;
         operation2.inputMoney                      = Quotation(200000, 0);
-        operation2.maxInputMoney                   = Quotation(200000, 0);
         operation2.totalYieldWithCommission        = Quotation(-1, -266500000);
         operation2.totalYieldWithCommissionPercent = -0.0006332f;
         operation2.remainedMoney                   = Quotation(197466, -266500000);
@@ -1423,7 +1405,6 @@ TEST_F(Test_OperationsThread, Test_optimize)
     lastOperation1.yieldWithCommission             = -1.2665f;
     lastOperation1.yieldWithCommissionPercent      = -0.05f;
     lastOperation1.inputMoney                      = Quotation(200000, 0);
-    lastOperation1.maxInputMoney                   = Quotation(200000, 0);
     lastOperation1.totalYieldWithCommission        = Quotation(-1, -266500000);
     lastOperation1.totalYieldWithCommissionPercent = -0.0006332f;
     lastOperation1.remainedMoney                   = Quotation(197466, -266500000);
@@ -1452,7 +1433,6 @@ TEST_F(Test_OperationsThread, Test_optimize)
     lastOperation2.yieldWithCommission             = -1.2665f;
     lastOperation2.yieldWithCommissionPercent      = -0.05f;
     lastOperation2.inputMoney                      = Quotation(200000, 0);
-    lastOperation2.maxInputMoney                   = Quotation(200000, 0);
     lastOperation2.totalYieldWithCommission        = Quotation(-1, -266500000);
     lastOperation2.totalYieldWithCommissionPercent = -0.0006332f;
     lastOperation2.remainedMoney                   = Quotation(197466, -266500000);

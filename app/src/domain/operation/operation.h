@@ -45,7 +45,6 @@ struct Operation
     float                    yieldWithCommission;
     float                    yieldWithCommissionPercent;
     Quotation                inputMoney;
-    Quotation                maxInputMoney;
     Quotation                totalYieldWithCommission;
     float                    totalYieldWithCommissionPercent;
     Quotation                remainedMoney;
