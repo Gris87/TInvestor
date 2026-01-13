@@ -133,7 +133,6 @@ void SettingsDialog::updateUiFromConfig()
 
     ui->autorunCheckBox->setChecked(mConfig->isAutorun());
     ui->cpuUsageComboBox->setCurrentIndex(CPU_USAGE_INDEX.value(mConfig->getCpuUsage(), CPU_USAGE_INDEX.value("MAXIMUM")));
-    ui->makeDecisionTimeoutSpinBox->setValue(mConfig->getMakeDecisionTimeout());
     ui->tradeInNonWorkingHoursCheckBox->setChecked(mConfig->isTradeInNonWorkingHours());
     ui->tradeHugeBidCheckBox->setChecked(mConfig->isTradeHugeBid());
     ui->hugeBidDoubleSpinBox->setValue(mConfig->getHugeBid());
@@ -176,11 +175,6 @@ void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState& 
 void SettingsDialog::on_cpuUsageComboBox_currentIndexChanged(int index)
 {
     mConfig->setCpuUsage(CPU_USAGE_TO_STRING.value(index));
-}
-
-void SettingsDialog::on_makeDecisionTimeoutSpinBox_valueChanged(int value)
-{
-    mConfig->setMakeDecisionTimeout(value);
 }
 
 void SettingsDialog::on_tradeInNonWorkingHoursCheckBox_checkStateChanged(const Qt::CheckState& value)

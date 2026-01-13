@@ -7,7 +7,6 @@
 const char* const CPU_USAGE_DEFAULT = "MAXIMUM";
 
 constexpr bool  AUTORUN_DEFAULT                                     = true;
-constexpr int   MAKE_DECISION_TIMEOUT_DEFAULT                       = 1;
 constexpr bool  TRADE_IN_NON_WORKING_HOURS_DEFAULT                  = true;
 constexpr bool  TRADE_HUGE_BID_DEFAULT                              = true;
 constexpr float HUGE_BID_DEFAULT                                    = 2.5f;
@@ -48,7 +47,6 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mAutoPilotConfig(autoPilotConfig),
     mAutorun(),
     mCpuUsage(),
-    mMakeDecisionTimeout(),
     mTradeInNonWorkingHours(),
     mTradeHugeBid(),
     mHugeBid(),
@@ -123,7 +121,6 @@ void Config::assign(IConfig* another)
 
     mAutorun                               = config.mAutorun;
     mCpuUsage                              = config.mCpuUsage;
-    mMakeDecisionTimeout                   = config.mMakeDecisionTimeout;
     mTradeInNonWorkingHours                = config.mTradeInNonWorkingHours;
     mTradeHugeBid                          = config.mTradeHugeBid;
     mHugeBid                               = config.mHugeBid;
@@ -167,7 +164,6 @@ void Config::makeDefault(float commission)
 
     mAutorun                               = AUTORUN_DEFAULT;
     mCpuUsage                              = CPU_USAGE_DEFAULT;
-    mMakeDecisionTimeout                   = MAKE_DECISION_TIMEOUT_DEFAULT;
     mTradeInNonWorkingHours                = TRADE_IN_NON_WORKING_HOURS_DEFAULT;
     mTradeHugeBid                          = TRADE_HUGE_BID_DEFAULT;
     mHugeBid                               = HUGE_BID_DEFAULT;
@@ -212,7 +208,6 @@ void Config::save(ISettingsEditor* settingsEditor)
     // clang-format off
     settingsEditor->setValue("Config/Autorun",                               mAutorun);
     settingsEditor->setValue("Config/CpuUsage",                              mCpuUsage);
-    settingsEditor->setValue("Config/MakeDecisionTimeout",                   mMakeDecisionTimeout);
     settingsEditor->setValue("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours);
     settingsEditor->setValue("Config/TradeHugeBid",                          mTradeHugeBid);
     settingsEditor->setValue("Config/HugeBid",                               mHugeBid);
@@ -258,7 +253,6 @@ void Config::load(ISettingsEditor* settingsEditor)
     // clang-format off
     mAutorun                               = settingsEditor->value("Config/Autorun",                               mAutorun).toBool();
     mCpuUsage                              = settingsEditor->value("Config/CpuUsage",                              mCpuUsage).toString();
-    mMakeDecisionTimeout                   = settingsEditor->value("Config/MakeDecisionTimeout",                   mMakeDecisionTimeout).toInt();
     mTradeInNonWorkingHours                = settingsEditor->value("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours).toBool();
     mTradeHugeBid                          = settingsEditor->value("Config/TradeHugeBid",                          mTradeHugeBid).toBool();
     mHugeBid                               = settingsEditor->value("Config/HugeBid",                               mHugeBid).toFloat();
@@ -328,20 +322,6 @@ QString Config::getCpuUsage()
     const QReadLocker lock(mRwMutex);
 
     return mCpuUsage;
-}
-
-void Config::setMakeDecisionTimeout(int value)
-{
-    const QWriteLocker lock(mRwMutex);
-
-    mMakeDecisionTimeout = value;
-}
-
-int Config::getMakeDecisionTimeout()
-{
-    const QReadLocker lock(mRwMutex);
-
-    return mMakeDecisionTimeout;
 }
 
 void Config::setTradeInNonWorkingHours(bool value)

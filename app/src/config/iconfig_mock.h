@@ -37,9 +37,6 @@ public:
     MOCK_METHOD(void, setCpuUsage, (const QString& value), (override));
     MOCK_METHOD(QString, getCpuUsage, (), (override));
 
-    MOCK_METHOD(void, setMakeDecisionTimeout, (int value), (override));
-    MOCK_METHOD(int, getMakeDecisionTimeout, (), (override));
-
     MOCK_METHOD(void, setTradeInNonWorkingHours, (bool value), (override));
     MOCK_METHOD(bool, isTradeInNonWorkingHours, (), (override));
 

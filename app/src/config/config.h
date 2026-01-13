@@ -34,9 +34,6 @@ public:
     void    setCpuUsage(const QString& value) override;
     QString getCpuUsage() override;
 
-    void setMakeDecisionTimeout(int value) override;
-    int  getMakeDecisionTimeout() override;
-
     void setTradeInNonWorkingHours(bool value) override;
     bool isTradeInNonWorkingHours() override;
 
@@ -135,7 +132,6 @@ private:
 
     bool    mAutorun;
     QString mCpuUsage;
-    int     mMakeDecisionTimeout;
     bool    mTradeInNonWorkingHours;
     bool    mTradeHugeBid;
     float   mHugeBid;

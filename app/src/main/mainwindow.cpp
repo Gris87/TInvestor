@@ -22,6 +22,7 @@ constexpr qint64  ONE_HOUR                                 = 60LL * ONE_MINUTE;
 constexpr qint64  ONE_DAY                                  = 24LL * ONE_HOUR;
 constexpr qint64  USER_UPDATE_INTERVAL                     = 15LL * ONE_MINUTE; // 15 minutes
 constexpr qint64  PRICE_COLLECT_INTERVAL                   = ONE_HOUR;          // 1 hour
+constexpr qint64  MAKE_DECISION_INTERVAL                   = ONE_MINUTE;        // 1 minute
 constexpr qint64  CLEANUP_INTERVAL                         = ONE_DAY;           // 1 day
 constexpr qint64  STOCKS_TABLE_UPDATE_ALL_INTERVAL         = ONE_DAY;           // 1 day
 constexpr qint64  STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL = 3 * MS_IN_SECOND;  // 3 seconds
@@ -1391,6 +1392,7 @@ void MainWindow::init()
 
     userUpdateTimer.setInterval(USER_UPDATE_INTERVAL);
     stockCollectTimer.setInterval(PRICE_COLLECT_INTERVAL);
+    makeDecisionTimer.setInterval(MAKE_DECISION_INTERVAL);
     stocksTableUpdateAllTimer.setInterval(STOCKS_TABLE_UPDATE_ALL_INTERVAL);
     stocksTableUpdateLastPricesTimer.setInterval(STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL);
     simulatorPortfolioUpdateLastPricesTimer.setInterval(PORTFOLIO_UPDATE_LAST_PRICES_INTERVAL);
@@ -1450,7 +1452,6 @@ void MainWindow::applyConfig()
 {
     mAutorunEnabler->setEnabled(mConfig->isAutorun());
     setCpuCount(mConfig->getCpuUsage());
-    makeDecisionTimer.setInterval(mConfig->getMakeDecisionTimeout() * ONE_MINUTE);
 
     if (!mConfig->isTradeHugeBid() && !mConfig->isTradeHugeSpread())
     {

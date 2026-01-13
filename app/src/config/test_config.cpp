@@ -52,7 +52,6 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
 
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
-    config->setMakeDecisionTimeout(5);
     config->setTradeInNonWorkingHours(false);
     config->setTradeHugeBid(false);
     config->setHugeBid(3.0f);
@@ -87,7 +86,6 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     // clang-format off
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
@@ -130,7 +128,6 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     // clang-format off
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
@@ -166,7 +163,6 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     // clang-format off
     ASSERT_EQ(config2->isAutorun(),                                  false);
     ASSERT_EQ(config2->getCpuUsage(),                                "MINIMUM");
-    ASSERT_EQ(config2->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config2->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config2->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config2->getHugeBid(),                               3.0f, 0.0001f);
@@ -216,7 +212,6 @@ TEST_F(Test_Config, Test_assign)
 
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
-    config->setMakeDecisionTimeout(5);
     config->setTradeInNonWorkingHours(false);
     config->setTradeHugeBid(false);
     config->setHugeBid(3.0f);
@@ -251,7 +246,6 @@ TEST_F(Test_Config, Test_assign)
     // clang-format off
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
@@ -286,7 +280,6 @@ TEST_F(Test_Config, Test_assign)
 
     config2.setAutorun(true);
     config2.setCpuUsage("OPTIMAL");
-    config2.setMakeDecisionTimeout(30);
     config2.setTradeInNonWorkingHours(true);
     config2.setTradeHugeBid(true);
     config2.setHugeBid(4.5f);
@@ -321,7 +314,6 @@ TEST_F(Test_Config, Test_assign)
     // clang-format off
     ASSERT_EQ(config2.isAutorun(),                                  true);
     ASSERT_EQ(config2.getCpuUsage(),                                "OPTIMAL");
-    ASSERT_EQ(config2.getMakeDecisionTimeout(),                     30);
     ASSERT_EQ(config2.isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config2.isTradeHugeBid(),                             true);
     ASSERT_NEAR(config2.getHugeBid(),                               4.5f, 0.0001f);
@@ -362,7 +354,6 @@ TEST_F(Test_Config, Test_assign)
     // clang-format off
     ASSERT_EQ(config->isAutorun(),                                  true);
     ASSERT_EQ(config->getCpuUsage(),                                "OPTIMAL");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),                     30);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config->isTradeHugeBid(),                             true);
     ASSERT_NEAR(config->getHugeBid(),                               4.5f, 0.0001f);
@@ -398,7 +389,6 @@ TEST_F(Test_Config, Test_assign)
     // clang-format off
     ASSERT_EQ(config2.isAutorun(),                                  true);
     ASSERT_EQ(config2.getCpuUsage(),                                "OPTIMAL");
-    ASSERT_EQ(config2.getMakeDecisionTimeout(),                     30);
     ASSERT_EQ(config2.isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config2.isTradeHugeBid(),                             true);
     ASSERT_NEAR(config2.getHugeBid(),                               4.5f, 0.0001f);
@@ -438,7 +428,6 @@ TEST_F(Test_Config, Test_makeDefault)
 
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
-    config->setMakeDecisionTimeout(5);
     config->setTradeInNonWorkingHours(false);
     config->setTradeHugeBid(false);
     config->setHugeBid(3.0f);
@@ -473,7 +462,6 @@ TEST_F(Test_Config, Test_makeDefault)
     // clang-format off
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
@@ -514,7 +502,6 @@ TEST_F(Test_Config, Test_makeDefault)
     // clang-format off
     ASSERT_EQ(config->isAutorun(),                                  true);
     ASSERT_EQ(config->getCpuUsage(),                                "MAXIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),                     1);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config->isTradeHugeBid(),                             true);
     ASSERT_NEAR(config->getHugeBid(),                               2.5f, 0.0001f);
@@ -554,7 +541,6 @@ TEST_F(Test_Config, Test_save)
 
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
-    config->setMakeDecisionTimeout(5);
     config->setTradeInNonWorkingHours(false);
     config->setTradeHugeBid(false);
     config->setHugeBid(3.0f);
@@ -589,7 +575,6 @@ TEST_F(Test_Config, Test_save)
     // clang-format off
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
@@ -630,7 +615,6 @@ TEST_F(Test_Config, Test_save)
     // clang-format off
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),                               QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/CpuUsage"),                              QVariant("MINIMUM")));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/MakeDecisionTimeout"),                   QVariant(5)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeInNonWorkingHours"),                QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeHugeBid"),                          QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HugeBid"),                               QVariant(3.0f)));
@@ -672,7 +656,6 @@ TEST_F(Test_Config, Test_load)
 
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
-    config->setMakeDecisionTimeout(5);
     config->setTradeInNonWorkingHours(false);
     config->setTradeHugeBid(false);
     config->setHugeBid(3.0f);
@@ -707,7 +690,6 @@ TEST_F(Test_Config, Test_load)
     // clang-format off
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),                     5);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
@@ -748,7 +730,6 @@ TEST_F(Test_Config, Test_load)
     // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),                               QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/CpuUsage"),                              QVariant("MINIMUM"))).WillOnce(Return(QVariant("OPTIMAL")));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/MakeDecisionTimeout"),                   QVariant(5))).WillOnce(Return(QVariant(30)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeInNonWorkingHours"),                QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeHugeBid"),                          QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/HugeBid"),                               QVariant(3.0f))).WillOnce(Return(QVariant(9.0f)));
@@ -786,7 +767,6 @@ TEST_F(Test_Config, Test_load)
     // clang-format off
     ASSERT_EQ(config->isAutorun(),                                  true);
     ASSERT_EQ(config->getCpuUsage(),                                "OPTIMAL");
-    ASSERT_EQ(config->getMakeDecisionTimeout(),                     30);
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
     ASSERT_EQ(config->isTradeHugeBid(),                             true);
     ASSERT_NEAR(config->getHugeBid(),                               9.0f, 0.0001f);
@@ -846,15 +826,6 @@ TEST_F(Test_Config, Test_setCpuUsage_and_getCpuUsage)
 
     config->setCpuUsage("OPTIMAL");
     ASSERT_EQ(config->getCpuUsage(), "OPTIMAL");
-}
-
-TEST_F(Test_Config, Test_setMakeDecisionTimeout_and_getMakeDecisionTimeout)
-{
-    config->setMakeDecisionTimeout(1);
-    ASSERT_EQ(config->getMakeDecisionTimeout(), 1);
-
-    config->setMakeDecisionTimeout(2);
-    ASSERT_EQ(config->getMakeDecisionTimeout(), 2);
 }
 
 TEST_F(Test_Config, Test_setTradeInNonWorkingHours_and_isTradeInNonWorkingHours)

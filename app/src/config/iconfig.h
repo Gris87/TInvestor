@@ -33,9 +33,6 @@ public:
     virtual void    setCpuUsage(const QString& value) = 0;
     virtual QString getCpuUsage()                     = 0;
 
-    virtual void setMakeDecisionTimeout(int value) = 0;
-    virtual int  getMakeDecisionTimeout()          = 0;
-
     virtual void setTradeInNonWorkingHours(bool value) = 0;
     virtual bool isTradeInNonWorkingHours()            = 0;
 

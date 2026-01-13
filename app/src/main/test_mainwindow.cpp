@@ -290,7 +290,6 @@ protected:
         EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
         EXPECT_CALL(*autorunEnablerMock, setEnabled(true));
         EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
-        EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(1));
         EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(true));
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, refreshOperationsBackground());
         EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, refreshOperationsBackground());
@@ -589,7 +588,7 @@ TEST_F(Test_MainWindow, Test_constructor_and_destructor)
     ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   false);
     ASSERT_EQ(mainWindow->stockCollectTimer.interval(), 0);
     ASSERT_EQ(mainWindow->stockCollectTimer.isActive(), false);
-    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 0);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
     // clang-format on
 }
@@ -1395,7 +1394,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   false);
     ASSERT_EQ(mainWindow->stockCollectTimer.interval(), 0);
     ASSERT_EQ(mainWindow->stockCollectTimer.isActive(), false);
-    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 0);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
     // clang-format on
 
@@ -1456,7 +1455,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   true);
     ASSERT_EQ(mainWindow->stockCollectTimer.interval(), 0);
     ASSERT_EQ(mainWindow->stockCollectTimer.isActive(), true);
-    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 0);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
     // clang-format on
 
@@ -1551,7 +1550,6 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
     EXPECT_CALL(*autorunEnablerMock, setEnabled(false));
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
-    EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(false));
     EXPECT_CALL(*biDirTradingControlThreadMock, terminateThread());
@@ -1559,8 +1557,6 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, refreshOperationsBackground());
 
     mainWindow->ui->actionSettings->trigger();
-
-    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 120000);
 }
 
 TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
@@ -2095,7 +2091,7 @@ TEST_F(Test_MainWindow, Test_init)
     ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   false);
     ASSERT_EQ(mainWindow->stockCollectTimer.interval(), 0);
     ASSERT_EQ(mainWindow->stockCollectTimer.isActive(), false);
-    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 0);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
     // clang-format on
 
