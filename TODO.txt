@@ -1,4 +1,4 @@
-Make decision based on dividends
+Fix clang-tidy
 Improve coverage
 Create release
 
@@ -7,6 +7,7 @@ Always check for buy decisions even if already keep some
 Try not to use biggest spread in bidir info
 Create script for buying/selling in parts
 Find best configs for different commission
+Make decision based on dividends
 Improve coverage
 Create release
 
