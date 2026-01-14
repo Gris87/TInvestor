@@ -90,9 +90,6 @@ runs:
         switch ("${{ runner.os }}")
         {
           "Windows" {
-                Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\"
-                Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\Include\"
-
                 & python tools/py3/generate-compile-commands `
                     --os Windows `
                     --target clang-tidy `
@@ -108,8 +105,6 @@ runs:
                     --output build\Desktop-Debug\.qtc_clangd\compile_commands.json
             }
             "Linux" {
-                Get-ChildItem -Path /usr/include/c++
-
                 & python tools/py3/generate-compile-commands `
                     --os Linux `
                     --target clang-tidy `
@@ -119,7 +114,7 @@ runs:
                     --quazip-path "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/include/QuaZip-Qt6-1.5" `
                     --vcpkg-path "${Env:GITHUB_WORKSPACE}/Qt/vcpkg" `
                     --google-test-path "${Env:GITHUB_WORKSPACE}/Qt/googletest-source" `
-                    --gcc-path "/usr/include/c++/14" `
+                    --gcc-path "/usr/include/c++/13" `
                     --output build/Desktop-Debug/.qtc_clangd/compile_commands.json
             }
         }

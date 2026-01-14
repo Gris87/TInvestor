@@ -57,6 +57,7 @@
 # modernize-use-default-member-init                         - alias of `cppcoreguidelines-use-default-member-init`
 # modernize-use-ranges                                      - use a ranges version of this algorithm
 # modernize-use-trailing-return-type                        - use a trailing return type for this function
+# portability-avoid-pragma-once                             - avoid 'pragma once' directive; use include guards instead
 # readability-avoid-nested-conditional-operator             - conditional operator is used as sub-expression of parent conditional operator, refrain from using nested conditional operators
 # readability-convert-member-functions-to-static            - method 'trayIconExitClicked' can be made static
 # readability-identifier-length                             - parameter name 'c' is too short, expected at least 3 characters
@@ -125,6 +126,7 @@ Checks:
         -modernize-use-default-member-init,
         -modernize-use-ranges,
         -modernize-use-trailing-return-type,
+        -portability-avoid-pragma-once,
         -readability-avoid-nested-conditional-operator,
         -readability-convert-member-functions-to-static,
         -readability-identifier-length,
