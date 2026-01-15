@@ -224,7 +224,7 @@ static void makeDecisionsForParallel(
     QThread* parentThread, int threadId, StockWithAvgPrice* stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    MakeDecisionsInfo* makeDecisionsInfo = reinterpret_cast<MakeDecisionsInfo*>(additionalArgs);
+    const MakeDecisionsInfo* makeDecisionsInfo = reinterpret_cast<MakeDecisionsInfo*>(additionalArgs);
 
     IDecisionMakerConfig*   decisionConfig     = makeDecisionsInfo->decisionConfig;
     const qint64            timestamp          = makeDecisionsInfo->timestamp;

@@ -293,7 +293,7 @@ static void reverseOperationsForParallel(
     QThread* parentThread, int /*threadId*/, Operation* res, int size, int start, int end, void* additionalArgs
 )
 {
-    ReverseOperationsInfo* reverseOperationsInfo = reinterpret_cast<ReverseOperationsInfo*>(additionalArgs);
+    const ReverseOperationsInfo* reverseOperationsInfo = reinterpret_cast<ReverseOperationsInfo*>(additionalArgs);
 
     const Operation* operationsArray = reverseOperationsInfo->operationsArray;
 

@@ -22,6 +22,7 @@
 # cppcoreguidelines-pro-bounds-pointer-arithmetic           - do not use pointer arithmetic
 # cppcoreguidelines-pro-type-reinterpret-cast               - do not use reinterpret_cast
 # cppcoreguidelines-use-default-member-init                 - use default member initializer for 'result'
+# cppcoreguidelines-use-enum-class                          - enum 'TimeRange' is unscoped, use 'enum class' instead
 # fuchsia-default-arguments-calls                           - calling a function that uses a default argument is disallowed
 # fuchsia-default-arguments-declarations                    - declaring a parameter with a default argument is disallowed
 # fuchsia-multiple-inheritance                              - inheriting multiple classes that aren't pure virtual is discouraged
@@ -91,6 +92,7 @@ Checks:
         -cppcoreguidelines-pro-bounds-pointer-arithmetic,
         -cppcoreguidelines-pro-type-reinterpret-cast,
         -cppcoreguidelines-use-default-member-init,
+        -cppcoreguidelines-use-enum-class,
         -fuchsia-default-arguments-calls,
         -fuchsia-default-arguments-declarations,
         -fuchsia-multiple-inheritance,

@@ -350,7 +350,7 @@ QVariant StocksTableModel::data(const QModelIndex& index, int role) const
         const int row = index.row();
         Q_ASSERT_X(index.column() == STOCKS_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
-        Stock* stock = mStocks.value(mEntries->at(row).instrumentId);
+        const Stock* stock = mStocks.value(mEntries->at(row).instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
 
         return reinterpret_cast<qint64>(stock);
@@ -415,7 +415,7 @@ static void fillEntriesForParallel(
     QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    FillEntriesInfo* fillEntriesInfo = reinterpret_cast<FillEntriesInfo*>(additionalArgs);
+    const FillEntriesInfo* fillEntriesInfo = reinterpret_cast<FillEntriesInfo*>(additionalArgs);
 
     Stock* const* stocksArray = fillEntriesInfo->stocksArray;
     const bool    isQualified = fillEntriesInfo->isQualified;
@@ -501,7 +501,7 @@ static void updateAllForParallel(
     QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    UpdateAllInfo* updateAllInfo = reinterpret_cast<UpdateAllInfo*>(additionalArgs);
+    const UpdateAllInfo* updateAllInfo = reinterpret_cast<UpdateAllInfo*>(additionalArgs);
 
     StocksTableModel*            model         = updateAllInfo->model;
     const QMap<QString, Stock*>* stocks        = updateAllInfo->stocks;
@@ -603,7 +603,7 @@ static void updateLastPricesForParallel(
     QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    UpdateLastPricesInfo* updateLastPricesInfo = reinterpret_cast<UpdateLastPricesInfo*>(additionalArgs);
+    const UpdateLastPricesInfo* updateLastPricesInfo = reinterpret_cast<UpdateLastPricesInfo*>(additionalArgs);
 
     StocksTableModel*            model         = updateLastPricesInfo->model;
     const QMap<QString, Stock*>* stocks        = updateLastPricesInfo->stocks;
@@ -699,7 +699,7 @@ static void updatePricesForParallel(
     QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    UpdatePricesInfo* updatePricesInfo = reinterpret_cast<UpdatePricesInfo*>(additionalArgs);
+    const UpdatePricesInfo* updatePricesInfo = reinterpret_cast<UpdatePricesInfo*>(additionalArgs);
 
     StocksTableModel*            model         = updatePricesInfo->model;
     const QMap<QString, Stock*>* stocks        = updatePricesInfo->stocks;
@@ -785,7 +785,7 @@ static void updatePeriodicDataForParallel(
     QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    UpdatePeriodicDataInfo* updatePeriodicDataInfo = reinterpret_cast<UpdatePeriodicDataInfo*>(additionalArgs);
+    const UpdatePeriodicDataInfo* updatePeriodicDataInfo = reinterpret_cast<UpdatePeriodicDataInfo*>(additionalArgs);
 
     StocksTableModel*            model         = updatePeriodicDataInfo->model;
     const QMap<QString, Stock*>* stocks        = updatePeriodicDataInfo->stocks;
@@ -942,7 +942,7 @@ static void mergeSortedEntriesForParallel(
     QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
+    const MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
 
     const StockTableEntry* entriesArray  = mergeSortedEntriesInfo->entriesArray;
     const int*             indeciesArray = mergeSortedEntriesInfo->indeciesArray;
@@ -1061,7 +1061,7 @@ static void reverseEntriesForParallel(
     QThread* parentThread, int /*threadId*/, StockTableEntry* res, int size, int start, int end, void* additionalArgs
 )
 {
-    ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
+    const ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
 
     const StockTableEntry* entriesArray = reverseEntriesInfo->entriesArray;
 
@@ -1106,10 +1106,10 @@ static void filterEntriesForParallel(
     void* additionalArgs
 )
 {
-    FilterEntriesInfo* filterEntriesInfo = reinterpret_cast<FilterEntriesInfo*>(additionalArgs);
+    const FilterEntriesInfo* filterEntriesInfo = reinterpret_cast<FilterEntriesInfo*>(additionalArgs);
 
-    StockFilter* filter       = filterEntriesInfo->filter;
-    QList<int>*  resultsArray = filterEntriesInfo->resultsArray;
+    const StockFilter* filter       = filterEntriesInfo->filter;
+    QList<int>*        resultsArray = filterEntriesInfo->resultsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -1149,11 +1149,11 @@ static void mergeFilteredEntriesForParallel(
     QThread* parentThread, int threadId, StockTableEntry* res, int /*size*/, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
-    MergeFilteredEntriesInfo* mergeFilteredEntriesInfo = reinterpret_cast<MergeFilteredEntriesInfo*>(additionalArgs);
+    const MergeFilteredEntriesInfo* mergeFilteredEntriesInfo = reinterpret_cast<MergeFilteredEntriesInfo*>(additionalArgs);
 
-    QList<StockTableEntry>* entriesUnfiltered = mergeFilteredEntriesInfo->entriesUnfiltered;
-    const int               index             = mergeFilteredEntriesInfo->indecies.at(threadId);
-    const QList<int>&       results           = mergeFilteredEntriesInfo->results.at(threadId);
+    const QList<StockTableEntry>* entriesUnfiltered = mergeFilteredEntriesInfo->entriesUnfiltered;
+    const int                     index             = mergeFilteredEntriesInfo->indecies.at(threadId);
+    const QList<int>&             results           = mergeFilteredEntriesInfo->results.at(threadId);
 
     for (int i = 0; i < results.size() && !parentThread->isInterruptionRequested(); ++i)
     {

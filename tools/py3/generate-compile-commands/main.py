@@ -163,8 +163,9 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-DWIN64")
 
     if app_or_test and "/libs/" not in file_path:
+        res.append("-DUSE_SANDBOX")
+
         if duplicate_for_tests:
-            res.append("-DUSE_SANDBOX")
             res.append("-DTESTING_MODE")
 
     res.append("-DQT_QML_DEBUG")
@@ -428,8 +429,9 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
     res.append("--target=x86_64-pc-linux-gnu")
 
     if app_or_test and "/libs/" not in file_path:
+        res.append("-DUSE_SANDBOX")
+
         if duplicate_for_tests:
-            res.append("-DUSE_SANDBOX")
             res.append("-DTESTING_MODE")
 
     res.append("-DQT_QML_DEBUG")

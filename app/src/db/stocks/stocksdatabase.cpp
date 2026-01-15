@@ -92,8 +92,8 @@ static void readStocksDataForParallel(
     QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    ReadStocksDataInfo* readStocksDataInfo = reinterpret_cast<ReadStocksDataInfo*>(additionalArgs);
-    IFileFactory*       fileFactory        = readStocksDataInfo->fileFactory;
+    const ReadStocksDataInfo* readStocksDataInfo = reinterpret_cast<ReadStocksDataInfo*>(additionalArgs);
+    const IFileFactory*       fileFactory        = readStocksDataInfo->fileFactory;
 
     const QString appDir = qApp->applicationDirPath();
 
@@ -162,8 +162,8 @@ static void assignLogosForParallel(
     QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    AssignLogosInfo* assignLogosInfo = reinterpret_cast<AssignLogosInfo*>(additionalArgs);
-    ILogosStorage*   logosStorage    = assignLogosInfo->logosStorage;
+    const AssignLogosInfo* assignLogosInfo = reinterpret_cast<AssignLogosInfo*>(additionalArgs);
+    ILogosStorage*         logosStorage    = assignLogosInfo->logosStorage;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {

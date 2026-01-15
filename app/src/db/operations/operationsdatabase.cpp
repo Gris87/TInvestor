@@ -59,7 +59,7 @@ static void findOperationsIndeciesForParallel(
     QThread* parentThread, int threadId, int* /*temp*/, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    FindOperationsIndeciesInfo* findOperationsIndeciesInfo = reinterpret_cast<FindOperationsIndeciesInfo*>(additionalArgs);
+    const FindOperationsIndeciesInfo* findOperationsIndeciesInfo = reinterpret_cast<FindOperationsIndeciesInfo*>(additionalArgs);
 
     const char*  contentArray = findOperationsIndeciesInfo->contentArray;
     const qint64 contentSize  = findOperationsIndeciesInfo->contentSize;
@@ -112,7 +112,8 @@ static void mergeOperationsIndeciesForParallel(
     QThread* parentThread, int threadId, int* res, int /*size*/, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
-    MergeOperationsIndeciesInfo* mergeOperationsIndeciesInfo = reinterpret_cast<MergeOperationsIndeciesInfo*>(additionalArgs);
+    const MergeOperationsIndeciesInfo* mergeOperationsIndeciesInfo =
+        reinterpret_cast<MergeOperationsIndeciesInfo*>(additionalArgs);
 
     const int         index   = mergeOperationsIndeciesInfo->indeciesArray[threadId];
     const QList<int>& results = mergeOperationsIndeciesInfo->resultsArray[threadId];
@@ -144,7 +145,7 @@ static void readOperationsForParallel(
     QThread* parentThread, int /*threadId*/, Operation* res, int size, int start, int end, void* additionalArgs
 )
 {
-    ReadOperationsInfo* readOperationsInfo = reinterpret_cast<ReadOperationsInfo*>(additionalArgs);
+    const ReadOperationsInfo* readOperationsInfo = reinterpret_cast<ReadOperationsInfo*>(additionalArgs);
 
     ILogosStorage*    logosStorage  = readOperationsInfo->logosStorage;
     const QByteArray& content       = readOperationsInfo->content;
@@ -270,7 +271,7 @@ static void writeOperationsForParallel(
     QThread* parentThread, int threadId, Operation* operations, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    WriteOperationsInfo* writeOperationsInfo = reinterpret_cast<WriteOperationsInfo*>(additionalArgs);
+    const WriteOperationsInfo* writeOperationsInfo = reinterpret_cast<WriteOperationsInfo*>(additionalArgs);
 
     QByteArray* resultsArray = writeOperationsInfo->resultsArray;
 

@@ -281,7 +281,7 @@ static void mergeSortedEntriesForParallel(
     QThread* parentThread, int /*threadId*/, LogEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
+    const MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
 
     const LogEntry* entriesArray  = mergeSortedEntriesInfo->entriesArray;
     const int*      indeciesArray = mergeSortedEntriesInfo->indeciesArray;
@@ -376,7 +376,7 @@ static void reverseEntriesForParallel(
     QThread* parentThread, int /*threadId*/, LogEntry* res, int size, int start, int end, void* additionalArgs
 )
 {
-    ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
+    const ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
 
     const LogEntry* entriesArray = reverseEntriesInfo->entriesArray;
 
@@ -462,10 +462,10 @@ static void filterEntriesForParallel(
     QThread* parentThread, int threadId, LogEntry* entriesUnfiltered, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    FilterEntriesInfo* filterEntriesInfo = reinterpret_cast<FilterEntriesInfo*>(additionalArgs);
+    const FilterEntriesInfo* filterEntriesInfo = reinterpret_cast<FilterEntriesInfo*>(additionalArgs);
 
-    LogFilter*  filter       = filterEntriesInfo->filter;
-    QList<int>* resultsArray = filterEntriesInfo->resultsArray;
+    const LogFilter* filter       = filterEntriesInfo->filter;
+    QList<int>*      resultsArray = filterEntriesInfo->resultsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -507,7 +507,7 @@ static void mergeFilteredEntriesForParallel(
     QThread* parentThread, int threadId, LogEntry* res, int /*size*/, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
-    MergeFilteredEntriesInfo* mergeFilteredEntriesInfo = reinterpret_cast<MergeFilteredEntriesInfo*>(additionalArgs);
+    const MergeFilteredEntriesInfo* mergeFilteredEntriesInfo = reinterpret_cast<MergeFilteredEntriesInfo*>(additionalArgs);
 
     const LogEntry*   entriesUnfilteredArray = mergeFilteredEntriesInfo->entriesUnfilteredArray;
     const int         index                  = mergeFilteredEntriesInfo->indeciesArray[threadId];

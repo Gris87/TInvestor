@@ -85,14 +85,14 @@ bool OrderWavesWidget::eventFilter(QObject* object, QEvent* event)
 {
     if (event->type() == QEvent::MouseMove)
     {
-        QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
+        const QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
 
         mTargetViewportPos = mouseEvent->pos();
         mTargetScenePos    = mapToScene(mouseEvent->pos());
     }
     else if (event->type() == QEvent::Wheel)
     {
-        QWheelEvent* wheelEvent = dynamic_cast<QWheelEvent*>(event);
+        const QWheelEvent* wheelEvent = dynamic_cast<QWheelEvent*>(event);
 
         const double angle  = wheelEvent->angleDelta().y();
         const double factor = qPow(ZOOM_FACTOR_BASE, angle);

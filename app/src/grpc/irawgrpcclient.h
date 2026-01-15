@@ -6,7 +6,7 @@
 
 
 
-#if defined(Q_OS_WINDOWS)
+#ifdef Q_OS_WINDOWS
 #pragma warning(push)
 #pragma warning(disable : 4100 4189 4267)
 #elif defined(__clang__)
@@ -24,7 +24,7 @@
 #include "messages/generated/orders.grpc.pb.h"
 #include "messages/generated/users.grpc.pb.h"
 
-#if defined(Q_OS_WINDOWS)
+#ifdef Q_OS_WINDOWS
 #pragma warning(pop)
 #elif defined(__clang__)
 #pragma clang diagnostic pop

@@ -31,7 +31,7 @@ static void optimizeOperationsForParallel(
     QThread* parentThread, int /*threadId*/, Operation* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    OptimizeOperationsInfo* optimizeOperationsInfo = reinterpret_cast<OptimizeOperationsInfo*>(additionalArgs);
+    const OptimizeOperationsInfo* optimizeOperationsInfo = reinterpret_cast<OptimizeOperationsInfo*>(additionalArgs);
 
     const Operation* operationsArray = optimizeOperationsInfo->operationsArray;
 
@@ -69,7 +69,7 @@ static void optimizeLogsForParallel(
     QThread* parentThread, int /*threadId*/, LogEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    OptimizeLogsInfo* optimizeLogsInfo = reinterpret_cast<OptimizeLogsInfo*>(additionalArgs);
+    const OptimizeLogsInfo* optimizeLogsInfo = reinterpret_cast<OptimizeLogsInfo*>(additionalArgs);
 
     const LogEntry* entriesArray = optimizeLogsInfo->entriesArray;
 
@@ -111,7 +111,7 @@ static void addInstrumentsForParallel(
     QThread* parentThread, int threadId, QString* instrumentsToAdd, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    AddInstrumentsInfo* addInstrumentsInfo = reinterpret_cast<AddInstrumentsInfo*>(additionalArgs);
+    const AddInstrumentsInfo* addInstrumentsInfo = reinterpret_cast<AddInstrumentsInfo*>(additionalArgs);
 
     const Operation*  oldOperationsArray = addInstrumentsInfo->oldOperationsArray;
     const int         oldOperationsSize  = addInstrumentsInfo->oldOperationsSize;

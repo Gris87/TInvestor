@@ -57,7 +57,7 @@ static void findLogsIndeciesForParallel(
     QThread* parentThread, int threadId, int* /*temp*/, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    FindLogsIndeciesInfo* findLogsIndeciesInfo = reinterpret_cast<FindLogsIndeciesInfo*>(additionalArgs);
+    const FindLogsIndeciesInfo* findLogsIndeciesInfo = reinterpret_cast<FindLogsIndeciesInfo*>(additionalArgs);
 
     const char*  contentArray = findLogsIndeciesInfo->contentArray;
     const qint64 contentSize  = findLogsIndeciesInfo->contentSize;
@@ -110,7 +110,7 @@ static void mergeLogsIndeciesForParallel(
     QThread* parentThread, int threadId, int* res, int /*size*/, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
-    MergeLogsIndeciesInfo* mergeLogsIndeciesInfo = reinterpret_cast<MergeLogsIndeciesInfo*>(additionalArgs);
+    const MergeLogsIndeciesInfo* mergeLogsIndeciesInfo = reinterpret_cast<MergeLogsIndeciesInfo*>(additionalArgs);
 
     const int         index   = mergeLogsIndeciesInfo->indeciesArray[threadId];
     const QList<int>& results = mergeLogsIndeciesInfo->resultsArray[threadId];
@@ -141,7 +141,7 @@ struct ReadLogsInfo
 static void
 readLogsForParallel(QThread* parentThread, int /*threadId*/, LogEntry* res, int size, int start, int end, void* additionalArgs)
 {
-    ReadLogsInfo* readLogsInfo = reinterpret_cast<ReadLogsInfo*>(additionalArgs);
+    const ReadLogsInfo* readLogsInfo = reinterpret_cast<ReadLogsInfo*>(additionalArgs);
 
     ILogosStorage*    logosStorage  = readLogsInfo->logosStorage;
     const QByteArray& content       = readLogsInfo->content;
@@ -264,7 +264,7 @@ static void writeLogsForParallel(
     QThread* parentThread, int threadId, LogEntry* entries, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    WriteLogsInfo* writeLogsInfo = reinterpret_cast<WriteLogsInfo*>(additionalArgs);
+    const WriteLogsInfo* writeLogsInfo = reinterpret_cast<WriteLogsInfo*>(additionalArgs);
 
     QByteArray* resultsArray = writeLogsInfo->resultsArray;
 

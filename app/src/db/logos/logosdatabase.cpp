@@ -46,7 +46,7 @@ static void prepareLogosForParallel(
     QThread* parentThread, int /*threadId*/, QString* files, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    PrepareLogosInfo* prepareLogosInfo = reinterpret_cast<PrepareLogosInfo*>(additionalArgs);
+    const PrepareLogosInfo* prepareLogosInfo = reinterpret_cast<PrepareLogosInfo*>(additionalArgs);
 
     QString* instrumentsArray = prepareLogosInfo->instrumentsArray;
     Logo**   logosArray       = prepareLogosInfo->logosArray;

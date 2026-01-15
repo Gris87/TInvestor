@@ -150,8 +150,8 @@ void PortfolioTreeWidget::on_treeView_customContextMenuRequested(const QPoint& p
         sellMenu->addAction(tr("with positive yield"),       this, SLOT(actionSellGoodYieldTriggered()));
         // clang-format on
 
-        const qint64   itemAddress = ui->treeView->currentIndex().data(ROLE_PORTFOLIO_ITEM).toLongLong();
-        PortfolioItem* item        = reinterpret_cast<PortfolioItem*>(itemAddress); // NOLINT(performance-no-int-to-ptr)
+        const qint64         itemAddress = ui->treeView->currentIndex().data(ROLE_PORTFOLIO_ITEM).toLongLong();
+        const PortfolioItem* item        = reinterpret_cast<PortfolioItem*>(itemAddress); // NOLINT(performance-no-int-to-ptr)
 
         sellMenu->setEnabled(item != nullptr && item->showPrices);
 
@@ -181,8 +181,8 @@ void PortfolioTreeWidget::actionSellGoodYieldTriggered()
 
 void PortfolioTreeWidget::sellInstrument(AsapMode mode, const QString& modeText)
 {
-    const qint64   itemAddress = ui->treeView->currentIndex().data(ROLE_PORTFOLIO_ITEM).toLongLong();
-    PortfolioItem* item        = reinterpret_cast<PortfolioItem*>(itemAddress); // NOLINT(performance-no-int-to-ptr)
+    const qint64         itemAddress = ui->treeView->currentIndex().data(ROLE_PORTFOLIO_ITEM).toLongLong();
+    const PortfolioItem* item        = reinterpret_cast<PortfolioItem*>(itemAddress); // NOLINT(performance-no-int-to-ptr)
 
     if (mMessageBoxUtils->question(
             this,

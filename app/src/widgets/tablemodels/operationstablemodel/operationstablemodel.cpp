@@ -579,7 +579,7 @@ static void mergeSortedEntriesForParallel(
     QThread* parentThread, int /*threadId*/, Operation* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
+    const MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
 
     const Operation* entriesArray  = mergeSortedEntriesInfo->entriesArray;
     const int*       indeciesArray = mergeSortedEntriesInfo->indeciesArray;
@@ -832,7 +832,7 @@ static void reverseEntriesForParallel(
     QThread* parentThread, int /*threadId*/, Operation* res, int size, int start, int end, void* additionalArgs
 )
 {
-    ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
+    const ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
 
     const Operation* entriesArray = reverseEntriesInfo->entriesArray;
 

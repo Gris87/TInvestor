@@ -309,7 +309,7 @@ static void obtainInstrumentsForParallel(
     void* additionalArgs
 )
 {
-    ObtainInstrumentsInfo* obtainInstrumentsInfo = reinterpret_cast<ObtainInstrumentsInfo*>(additionalArgs);
+    const ObtainInstrumentsInfo* obtainInstrumentsInfo = reinterpret_cast<ObtainInstrumentsInfo*>(additionalArgs);
 
     IGrpcClient*                grpcClient   = obtainInstrumentsInfo->grpcClient;
     Instruments*                resultsArray = obtainInstrumentsInfo->resultsArray;
@@ -381,7 +381,7 @@ static void downloadLogosForParallel(
 {
     DownloadLogosInfo*  downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
     StockCollectThread* thread            = downloadLogosInfo->thread;
-    IFileFactory*       fileFactory       = downloadLogosInfo->fileFactory;
+    const IFileFactory* fileFactory       = downloadLogosInfo->fileFactory;
     const bool          forceToDownload   = downloadLogosInfo->forceToDownload;
 
     const QString appDir = qApp->applicationDirPath();

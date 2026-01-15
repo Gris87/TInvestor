@@ -57,7 +57,7 @@ QModelIndex PortfolioTreeModel::index(int row, int column, const QModelIndex& pa
 
 QModelIndex PortfolioTreeModel::parent(const QModelIndex& child) const
 {
-    PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(child.internalPointer());
+    const PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(child.internalPointer());
 
     if (category != nullptr)
     {
@@ -74,7 +74,7 @@ int PortfolioTreeModel::rowCount(const QModelIndex& parent) const
         return mPortfolio.positions.size();
     }
 
-    PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(parent.internalPointer());
+    const PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(parent.internalPointer());
 
     if (category == nullptr)
     {
@@ -381,7 +381,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
         const int row    = index.row();
         const int column = index.column();
 
-        PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
+        const PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
 
         if (category == nullptr)
         {
@@ -393,7 +393,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
 
     if (role == Qt::ForegroundRole)
     {
-        PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
+        const PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
 
         if (category == nullptr)
         {
@@ -408,7 +408,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
 
     if (role == Qt::ToolTipRole)
     {
-        PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
+        const PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
 
         if (category == nullptr)
         {
@@ -423,7 +423,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
 
     if (role == ROLE_INSTRUMENT_LOGO)
     {
-        PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
+        const PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
 
         if (category == nullptr)
         {
@@ -441,7 +441,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
         const int row = index.row();
         Q_ASSERT_X(index.column() == PORTFOLIO_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
-        PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
+        const PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
 
         if (category == nullptr)
         {
@@ -453,7 +453,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
 
     if (role == ROLE_PORTFOLIO_ITEM)
     {
-        PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
+        const PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
 
         if (category == nullptr)
         {
@@ -707,7 +707,7 @@ static void mergeSortedItemsForParallel(
     QThread* parentThread, int /*threadId*/, PortfolioItem* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    MergeSortedItemsInfo* mergeSortedItemsInfo = reinterpret_cast<MergeSortedItemsInfo*>(additionalArgs);
+    const MergeSortedItemsInfo* mergeSortedItemsInfo = reinterpret_cast<MergeSortedItemsInfo*>(additionalArgs);
 
     const PortfolioItem* itemsArray    = mergeSortedItemsInfo->itemsArray;
     const int*           indeciesArray = mergeSortedItemsInfo->indeciesArray;
@@ -862,7 +862,7 @@ static void reverseItemsForParallel(
     QThread* parentThread, int /*threadId*/, PortfolioItem* res, int size, int start, int end, void* additionalArgs
 )
 {
-    ReverseItemsInfo* reverseItemsInfo = reinterpret_cast<ReverseItemsInfo*>(additionalArgs);
+    const ReverseItemsInfo* reverseItemsInfo = reinterpret_cast<ReverseItemsInfo*>(additionalArgs);
 
     const PortfolioItem* itemsArray = reverseItemsInfo->itemsArray;
 
