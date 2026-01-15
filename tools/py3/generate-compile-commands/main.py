@@ -163,9 +163,8 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-DWIN64")
 
     if app_or_test and "/libs/" not in file_path:
-        res.append("-DUSE_SANDBOX")
-
         if duplicate_for_tests:
+            res.append("-DUSE_SANDBOX")
             res.append("-DTESTING_MODE")
 
     res.append("-DQT_QML_DEBUG")
@@ -239,16 +238,16 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}\\include\\QtOpenGL")
 
         if duplicate_for_tests:
-            res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.2")
-            res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.2\\QtGui")
+            res.append(f"-I{args.qt_path}\\include\\QtGui\\6.11.0")
+            res.append(f"-I{args.qt_path}\\include\\QtGui\\6.11.0\\QtGui")
 
         res.append(f"-I{args.qt_path}\\include\\QtGui")
         res.append(f"-I{args.qt_path}\\include\\QtNetwork")
         res.append(f"-I{args.qt_path}\\include\\QtSql")
 
         if duplicate_for_tests:
-            res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.2")
-            res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.2\\QtCore")
+            res.append(f"-I{args.qt_path}\\include\\QtCore\\6.11.0")
+            res.append(f"-I{args.qt_path}\\include\\QtCore\\6.11.0\\QtCore")
 
         res.append(f"-I{args.qt_path}\\include\\QtCore")
 
@@ -275,12 +274,12 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
             res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
 
         res.append(f"-I{cwd}\\libs\\qxlsx")
-        res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.2")
-        res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.2\\QtGui")
+        res.append(f"-I{args.qt_path}\\include\\QtGui\\6.11.0")
+        res.append(f"-I{args.qt_path}\\include\\QtGui\\6.11.0\\QtGui")
         res.append(f"-I{args.qt_path}\\include")
         res.append(f"-I{args.qt_path}\\include\\QtGui")
-        res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.2")
-        res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.2\\QtCore")
+        res.append(f"-I{args.qt_path}\\include\\QtCore\\6.11.0")
+        res.append(f"-I{args.qt_path}\\include\\QtCore\\6.11.0\\QtCore")
         res.append(f"-I{args.qt_path}\\include\\QtCore")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\qxlsx\\build\\gen\\qxlsx\\moc")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\qxlsx")
@@ -335,9 +334,11 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
 
     res.append(f"-I{args.qt_path}\\mkspecs\\win32-msvc")
     res.append("/clang:-isystem")
-    res.append(f"/clang:{args.qt_creator_path}\\bin\\clang\\lib\\clang\\20\\include")
+    res.append(f"/clang:{args.qt_creator_path}\\bin\\clang\\lib\\clang\\21\\include")
     res.append("/clang:-isystem")
     res.append(f"/clang:{args.msvc_tools_path}\\include")
+    res.append("/clang:-isystem")
+    res.append(f"/clang:{args.msvc_tools_path}\\ATLMFC\\include")
     res.append("/clang:-isystem")
     res.append(f"/clang:{args.msvc_auxiliary_path}\\VS\\include")
     res.append("/clang:-isystem")
@@ -364,7 +365,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         if args.target != "build":
             res.append("-Wno-pragma-once-outside-header")
 
-    res.append(file_path.replace("/", "\\"))
+    res.append(file_path)
 
     return res
 
@@ -427,9 +428,8 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
     res.append("--target=x86_64-pc-linux-gnu")
 
     if app_or_test and "/libs/" not in file_path:
-        res.append("-DUSE_SANDBOX")
-
         if duplicate_for_tests:
+            res.append("-DUSE_SANDBOX")
             res.append("-DTESTING_MODE")
 
     res.append("-DQT_QML_DEBUG")
@@ -499,16 +499,16 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}/include/QtOpenGL")
 
         if duplicate_for_tests:
-            res.append(f"-I{args.qt_path}/include/QtGui/6.9.2")
-            res.append(f"-I{args.qt_path}/include/QtGui/6.9.2/QtGui")
+            res.append(f"-I{args.qt_path}/include/QtGui/6.11.0")
+            res.append(f"-I{args.qt_path}/include/QtGui/6.11.0/QtGui")
 
         res.append(f"-I{args.qt_path}/include/QtGui")
         res.append(f"-I{args.qt_path}/include/QtNetwork")
         res.append(f"-I{args.qt_path}/include/QtSql")
 
         if duplicate_for_tests:
-            res.append(f"-I{args.qt_path}/include/QtCore/6.9.2")
-            res.append(f"-I{args.qt_path}/include/QtCore/6.9.2/QtCore")
+            res.append(f"-I{args.qt_path}/include/QtCore/6.11.0")
+            res.append(f"-I{args.qt_path}/include/QtCore/6.11.0/QtCore")
 
         res.append(f"-I{args.qt_path}/include/QtCore")
 
@@ -535,12 +535,12 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
             res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
 
         res.append(f"-I{cwd}/libs/qxlsx")
-        res.append(f"-I{args.qt_path}/include/QtGui/6.9.2")
-        res.append(f"-I{args.qt_path}/include/QtGui/6.9.2/QtGui")
+        res.append(f"-I{args.qt_path}/include/QtGui/6.11.0")
+        res.append(f"-I{args.qt_path}/include/QtGui/6.11.0/QtGui")
         res.append(f"-I{args.qt_path}/include")
         res.append(f"-I{args.qt_path}/include/QtGui")
-        res.append(f"-I{args.qt_path}/include/QtCore/6.9.2")
-        res.append(f"-I{args.qt_path}/include/QtCore/6.9.2/QtCore")
+        res.append(f"-I{args.qt_path}/include/QtCore/6.11.0")
+        res.append(f"-I{args.qt_path}/include/QtCore/6.11.0/QtCore")
         res.append(f"-I{args.qt_path}/include/QtCore")
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/qxlsx/build/gen/qxlsx/moc")
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/qxlsx")
@@ -603,7 +603,7 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
     res.append("-isystem")
     res.append("/usr/local/include")
     res.append("-isystem")
-    res.append(f"{args.qt_creator_path}/libexec/qtcreator/clang/lib/clang/20/include")
+    res.append(f"{args.qt_creator_path}/libexec/qtcreator/clang/lib/clang/21/include")
     res.append("-isystem")
     res.append("/usr/include/x86_64-linux-gnu")
     res.append("-isystem")
@@ -698,7 +698,7 @@ def main():
         "--qt-path",
         dest="qt_path",
         type=str,
-        default="E:\\Qt\\6.9.2\\msvc2022_64",
+        default="E:\\Qt\\6.11.0\\msvc2022_64",
         help="Path to Qt",
     )
     parser.add_argument(
