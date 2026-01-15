@@ -196,7 +196,7 @@ static void detectStocksForBiDirTradingForParallel(
     QThread* parentThread, int threadId, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    DetectStocksForBiDirTradingInfo* detectStocksForBiDirTradingInfo =
+    const DetectStocksForBiDirTradingInfo* detectStocksForBiDirTradingInfo =
         reinterpret_cast<DetectStocksForBiDirTradingInfo*>(additionalArgs);
 
     IGrpcClient*                grpcClient      = detectStocksForBiDirTradingInfo->grpcClient;

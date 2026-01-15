@@ -42,9 +42,17 @@ constexpr int    TITLE_FONT_SIZE       = 16;
 constexpr qreal  TOOLTIP_Z_VALUE       = 11;
 constexpr double COLUMN_GAP            = 0.71;
 
+// clang-format off
 // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
-static QList<TimeRange> TIME_RANGES = {TIME_RANGE_LAST_DAY, TIME_RANGE_LAST_WEEK, TIME_RANGE_LAST_MONTH, TIME_RANGE_LAST_3_MONTH};
-const qint64            TIME_RANGES_DELTAS[TIME_RANGE_COUNT] = {0, ONE_DAY, 7 * ONE_DAY, 31 * ONE_DAY, 90 * ONE_DAY};
+static QList<TimeRange> TIME_RANGES{ // clazy:exclude=non-pod-global-static
+    TIME_RANGE_LAST_DAY,
+    TIME_RANGE_LAST_WEEK,
+    TIME_RANGE_LAST_MONTH,
+    TIME_RANGE_LAST_3_MONTH
+};
+// clang-format on
+
+const qint64 TIME_RANGES_DELTAS[TIME_RANGE_COUNT] = {0, ONE_DAY, 7 * ONE_DAY, 31 * ONE_DAY, 90 * ONE_DAY};
 
 
 

@@ -31,7 +31,7 @@ StocksStorage::~StocksStorage()
 
     delete mRwMutex;
 
-    for (Stock* stock : std::as_const(mStocks))
+    for (const Stock* stock : std::as_const(mStocks))
     {
         delete stock;
     }
@@ -150,9 +150,9 @@ static void deleteObsoleteDataForParallel(
     QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
-    IStocksDatabase*        stocksDatabase         = deleteObsoleteDataInfo->stocksDatabase;
-    const qint64            obsoleteTimestamp      = deleteObsoleteDataInfo->obsoleteTimestamp;
+    const DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
+    IStocksDatabase*              stocksDatabase         = deleteObsoleteDataInfo->stocksDatabase;
+    const qint64                  obsoleteTimestamp      = deleteObsoleteDataInfo->obsoleteTimestamp;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -213,8 +213,8 @@ static void copyDataToOperationalForParallel(
     QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    CopyDataToOperationalInfo* copyDataToOperationalInfo = reinterpret_cast<CopyDataToOperationalInfo*>(additionalArgs);
-    const qint64               limitTimestamp            = copyDataToOperationalInfo->limitTimestamp;
+    const CopyDataToOperationalInfo* copyDataToOperationalInfo = reinterpret_cast<CopyDataToOperationalInfo*>(additionalArgs);
+    const qint64                     limitTimestamp            = copyDataToOperationalInfo->limitTimestamp;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -297,8 +297,8 @@ static void cleanupOperationalDataForParallel(
     QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    CleanupOperationalDataInfo* cleanupOperationalDataInfo = reinterpret_cast<CleanupOperationalDataInfo*>(additionalArgs);
-    const qint64                obsoleteTimestamp          = cleanupOperationalDataInfo->obsoleteTimestamp;
+    const CleanupOperationalDataInfo* cleanupOperationalDataInfo = reinterpret_cast<CleanupOperationalDataInfo*>(additionalArgs);
+    const qint64                      obsoleteTimestamp          = cleanupOperationalDataInfo->obsoleteTimestamp;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -359,9 +359,9 @@ static void getDatePriceForParallel(
     QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    GetDatePriceInfo* getDatePriceInfo = reinterpret_cast<GetDatePriceInfo*>(additionalArgs);
-    const qint64      startTimestamp   = getDatePriceInfo->startTimestamp;
-    const bool        isDayStartNeeded = getDatePriceInfo->isDayStartNeeded;
+    const GetDatePriceInfo* getDatePriceInfo = reinterpret_cast<GetDatePriceInfo*>(additionalArgs);
+    const qint64            startTimestamp   = getDatePriceInfo->startTimestamp;
+    const bool              isDayStartNeeded = getDatePriceInfo->isDayStartNeeded;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -435,8 +435,8 @@ static void getLastTradeTimeForParallel(
     QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    GetLastTradeTimeInfo* getLastTradeTimeInfo = reinterpret_cast<GetLastTradeTimeInfo*>(additionalArgs);
-    const qint64          startTimestamp       = getLastTradeTimeInfo->startTimestamp;
+    const GetLastTradeTimeInfo* getLastTradeTimeInfo = reinterpret_cast<GetLastTradeTimeInfo*>(additionalArgs);
+    const qint64                startTimestamp       = getLastTradeTimeInfo->startTimestamp;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -490,8 +490,8 @@ static void getTurnoverForParallel(
     QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    GetTurnoverInfo* getTurnoverInfo = reinterpret_cast<GetTurnoverInfo*>(additionalArgs);
-    const qint64     startTimestamp  = getTurnoverInfo->startTimestamp;
+    const GetTurnoverInfo* getTurnoverInfo = reinterpret_cast<GetTurnoverInfo*>(additionalArgs);
+    const qint64           startTimestamp  = getTurnoverInfo->startTimestamp;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -563,9 +563,9 @@ static void getPaybackForParallel(
     QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
-    GetPaybackInfo* getPaybackInfo = reinterpret_cast<GetPaybackInfo*>(additionalArgs);
-    IUserStorage*   userStorage    = getPaybackInfo->userStorage;
-    const qint64    startTimestamp = getPaybackInfo->startTimestamp;
+    const GetPaybackInfo* getPaybackInfo = reinterpret_cast<GetPaybackInfo*>(additionalArgs);
+    IUserStorage*         userStorage    = getPaybackInfo->userStorage;
+    const qint64          startTimestamp = getPaybackInfo->startTimestamp;
 
     userStorage->readLock();
     const float commission = userStorage->getCommission();

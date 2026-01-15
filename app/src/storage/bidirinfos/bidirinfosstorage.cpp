@@ -28,7 +28,7 @@ void BiDirInfosStorage::readFromDatabase()
     std::shared_ptr<IFile> biDirInfoFile =
         mFileFactory->newInstance(qApp->applicationDirPath() + "/data/bidirinfo/bidirinfo.json");
 
-    qint64 lastModified = biDirInfoFile->lastModified();
+    const qint64 lastModified = biDirInfoFile->lastModified();
 
     if (mLastModified != lastModified)
     {
