@@ -62,13 +62,13 @@ TEST_F(Test_GrpcClient, Test_getUserInfo)
     ASSERT_NE(client->getUserInfo(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getUserInfo(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getUserInfo(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getUserInfo(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getUserInfo(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->getUserInfo(QThread::currentThread()), nullptr);
 }
@@ -86,13 +86,13 @@ TEST_F(Test_GrpcClient, Test_getAccounts)
     ASSERT_NE(client->getAccounts(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getAccounts(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getAccounts(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getAccounts(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getAccounts(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->getAccounts(QThread::currentThread()), nullptr);
 }
@@ -110,13 +110,13 @@ TEST_F(Test_GrpcClient, Test_findStocks)
     ASSERT_NE(client->findStocks(QThread::currentThread(), tinkoff::INSTRUMENT_STATUS_ALL), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, findStocks(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, findStocks(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->findStocks(QThread::currentThread(), tinkoff::INSTRUMENT_STATUS_ALL), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, findStocks(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->findStocks(QThread::currentThread(), tinkoff::INSTRUMENT_STATUS_ALL), nullptr);
 }
@@ -134,13 +134,13 @@ TEST_F(Test_GrpcClient, Test_findBonds)
     ASSERT_NE(client->findBonds(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, findBonds(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, findBonds(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->findBonds(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, findBonds(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->findBonds(QThread::currentThread()), nullptr);
 }
@@ -158,13 +158,13 @@ TEST_F(Test_GrpcClient, Test_findCurrencies)
     ASSERT_NE(client->findCurrencies(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, findCurrencies(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, findCurrencies(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->findCurrencies(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, findCurrencies(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->findCurrencies(QThread::currentThread()), nullptr);
 }
@@ -182,13 +182,13 @@ TEST_F(Test_GrpcClient, Test_findEtfs)
     ASSERT_NE(client->findEtfs(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, findEtfs(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, findEtfs(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->findEtfs(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, findEtfs(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->findEtfs(QThread::currentThread()), nullptr);
 }
@@ -206,13 +206,13 @@ TEST_F(Test_GrpcClient, Test_findFutures)
     ASSERT_NE(client->findFutures(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, findFutures(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, findFutures(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->findFutures(QThread::currentThread()), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, findFutures(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->findFutures(QThread::currentThread()), nullptr);
 }
@@ -230,13 +230,13 @@ TEST_F(Test_GrpcClient, Test_getCandles)
     ASSERT_NE(client->getCandles(QThread::currentThread(), "aaaaa", 0, 1000), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getCandles(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getCandles(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getCandles(QThread::currentThread(), "aaaaa", 0, 1000), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getCandles(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->getCandles(QThread::currentThread(), "aaaaa", 0, 1000), nullptr);
 }
@@ -254,13 +254,13 @@ TEST_F(Test_GrpcClient, Test_getOrderBook)
     ASSERT_NE(client->getOrderBook(QThread::currentThread(), "aaaaa", 50), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getOrderBook(QThread::currentThread(), "aaaaa", 50), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->getOrderBook(QThread::currentThread(), "aaaaa", 50), nullptr);
 }
@@ -278,13 +278,13 @@ TEST_F(Test_GrpcClient, Test_getPortfolio)
     ASSERT_NE(client->getPortfolio(QThread::currentThread(), "aaaaa"), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getPortfolio(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getPortfolio(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getPortfolio(QThread::currentThread(), "aaaaa"), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getPortfolio(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->getPortfolio(QThread::currentThread(), "aaaaa"), nullptr);
 }
@@ -302,13 +302,13 @@ TEST_F(Test_GrpcClient, Test_getOperations)
     ASSERT_NE(client->getOperations(QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, ""), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getOperations(QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, ""), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->getOperations(QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, ""), nullptr);
 }
@@ -328,13 +328,13 @@ TEST_F(Test_GrpcClient, Test_getMaxLots)
     ASSERT_NE(client->getMaxLots(QThread::currentThread(), "aaaaa", "aaa-aaa", price), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getMaxLots(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getMaxLots(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getMaxLots(QThread::currentThread(), "aaaaa", "aaa-aaa", price), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getMaxLots(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->getMaxLots(QThread::currentThread(), "aaaaa", "aaa-aaa", price), nullptr);
 }
@@ -351,13 +351,13 @@ TEST_F(Test_GrpcClient, Test_postOrder)
 
     EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
 
-    ASSERT_NE(client->postOrder(QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_BUY, 1, price), nullptr);
+    ASSERT_NE(client->postOrder(QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_SELL, 1, price), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(3000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
-    ASSERT_EQ(client->postOrder(QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_BUY, 1, price), nullptr);
+    ASSERT_EQ(client->postOrder(QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_SELL, 1, price), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
@@ -378,13 +378,13 @@ TEST_F(Test_GrpcClient, Test_getOrderState)
     ASSERT_NE(client->getOrderState(QThread::currentThread(), "aaaaa", "007"), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getOrderState(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getOrderState(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getOrderState(QThread::currentThread(), "aaaaa", "007"), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getOrderState(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(10000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->getOrderState(QThread::currentThread(), "aaaaa", "007"), nullptr);
 }
@@ -402,13 +402,13 @@ TEST_F(Test_GrpcClient, Test_cancelOrder)
     ASSERT_NE(client->cancelOrder(QThread::currentThread(), "aaaaa", "007"), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, cancelOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, cancelOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->cancelOrder(QThread::currentThread(), "aaaaa", "007"), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, cancelOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(client->cancelOrder(QThread::currentThread(), "aaaaa", "007"), nullptr);
 }

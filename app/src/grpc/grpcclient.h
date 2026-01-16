@@ -10,7 +10,7 @@
 
 
 extern const QMap<grpc::StatusCode, QString> GRPC_STATUS_CODE_TO_STRING;
-
+extern const qint64                          GRPC_PRIOIRITY_TIMEOUTS[GRPC_PRIOIRITY_COUNT];
 
 
 class GrpcClient : public IGrpcClient
@@ -39,7 +39,8 @@ public:
         const SERVICE_T& service,
         const REQ_T&     req,
         const RESP_T&    resp,
-        bool             ignoreInvalidArg
+        bool             ignoreInvalidArg,
+        GrpcPriority     priority
     )
     {
         bool running = true;
@@ -52,19 +53,23 @@ public:
             {
                 const grpc::StatusCode errorCode = status.error_code();
 
-                if (errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNAVAILABLE &&
+                if (errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED &&
+                    errorCode != grpc::StatusCode::UNAVAILABLE &&
                     errorCode != grpc::StatusCode::CANCELLED &&
+                    errorCode != grpc::StatusCode::INTERNAL &&
                     (!ignoreInvalidArg || errorCode != grpc::StatusCode::INVALID_ARGUMENT))
                 {
-                    qWarning() << "GRPC error with code:" << errorCode << GRPC_STATUS_CODE_TO_STRING[errorCode]
+                    qWarning() << "GRPC error with code:" << errorCode << GRPC_STATUS_CODE_TO_STRING.value(errorCode)
                                << "message:" << QString::fromStdString(status.error_message())
                                << "details:" << QString::fromStdString(status.error_details());
                 }
 
-                if (errorCode == grpc::StatusCode::RESOURCE_EXHAUSTED || errorCode == grpc::StatusCode::UNAVAILABLE ||
-                    errorCode == grpc::StatusCode::UNKNOWN)
+                if (errorCode == grpc::StatusCode::RESOURCE_EXHAUSTED ||
+                    errorCode == grpc::StatusCode::UNAVAILABLE ||
+                    errorCode == grpc::StatusCode::UNKNOWN ||
+                    errorCode == grpc::StatusCode::INTERNAL)
                 {
-                    if (mTimeUtils->interruptibleSleep(5000, parentThread)) // 5 seconds // NOLINT(readability-magic-numbers)
+                    if (mTimeUtils->interruptibleSleep(GRPC_PRIOIRITY_TIMEOUTS[priority], parentThread))
                     {
                         return nullptr;
                     }

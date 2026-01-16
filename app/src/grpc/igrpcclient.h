@@ -11,6 +11,17 @@
 
 
 
+enum GrpcPriority : quint8
+{
+    GRPC_PRIOIRITY_NORMAL,
+    GRPC_PRIOIRITY_MINOR,
+    GRPC_PRIOIRITY_MAJOR,
+    GRPC_PRIOIRITY_CRITICAL,
+    GRPC_PRIOIRITY_COUNT
+};
+
+
+
 class IGrpcClient : public QObject
 {
     Q_OBJECT
