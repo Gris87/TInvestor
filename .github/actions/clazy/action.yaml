@@ -139,7 +139,7 @@ runs:
 
         & python tools/py3/run-clazy `
             --part ${{ matrix.part }} `
-            --number-of-parts 20
+            --number-of-parts 30
 
         New-Item -Path . -Name "../success" -ItemType "File"
 

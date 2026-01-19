@@ -100,7 +100,7 @@ jobs:
   # Run clang-tidy
   clang-tidy:
     needs: [env-qt-zlib-quazip, env-vcpkg, build-debug]
-    name: Clang-Tidy [${{ matrix.config.name }}] (${{ matrix.part }}/20)
+    name: Clang-Tidy [${{ matrix.config.name }}] (${{ matrix.part }}/10)
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -124,14 +124,14 @@ jobs:
   # Run clazy
   clazy:
     needs: [env-qt-zlib-quazip, env-vcpkg, build-debug]
-    name: Clazy [${{ matrix.config.name }}] (${{ matrix.part }}/20)
+    name: Clazy [${{ matrix.config.name }}] (${{ matrix.part }}/30)
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
         config:
           - { name: "win64", os: windows-latest }
           - { name: "linux", os: ubuntu-latest }
-        part: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        part: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
       fail-fast: false
 
     steps:
