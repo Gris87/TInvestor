@@ -364,6 +364,11 @@ TEST_F(Test_PortfolioTreeModel, Test_data)
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(0, 0)), ROLE_INSTRUMENT_NAME),      QVariant("Ruble"));
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), ROLE_INSTRUMENT_NAME),      QVariant("Abstract Basics"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), ROLE_INSTRUMENT_NAME),      QVariant("Basketball enhancement"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN),                              ROLE_PORTFOLIO_ITEM),       QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN),                              ROLE_PORTFOLIO_ITEM),       QVariant());
+    ASSERT_NE(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(0, 0)), ROLE_PORTFOLIO_ITEM),       QVariant(0));
+    ASSERT_NE(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), ROLE_PORTFOLIO_ITEM),       QVariant(0));
+    ASSERT_NE(model->data(model->index(1, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), ROLE_PORTFOLIO_ITEM),       QVariant(0));
     ASSERT_EQ(model->data(model->index(0, 0),                                                  Qt::WhatsThisPropertyRole), QVariant());
     // clang-format on
 }
