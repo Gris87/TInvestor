@@ -448,6 +448,13 @@ TEST_F(Test_DecisionMakerWidget, Test_logFilterChanged)
     decisionMakerWidget->logFilterChanged(filter);
 }
 
+TEST_F(Test_DecisionMakerWidget, Test_portfolioTreeWidgetManualSell)
+{
+    const InstrumentsForTrading instruments;
+
+    decisionMakerWidget->portfolioTreeWidgetManualSell(instruments);
+}
+
 TEST_F(Test_DecisionMakerWidget, Test_on_yieldButton_clicked)
 {
     const InSequence seq;
