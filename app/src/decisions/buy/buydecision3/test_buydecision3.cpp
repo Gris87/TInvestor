@@ -84,6 +84,39 @@ TEST_F(Test_BuyDecision3, Test_makeDecision)
     ASSERT_EQ(cause, "");
 
     // ====================================================================
+    // TEST CASE: It was sold recently
+    // ====================================================================
+
+    fillWithData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        }
+    );
+
+    EXPECT_CALL(configMock, getBuyDecision3Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+
+    cause =
+        buyDecision3->makeDecision(QThread::currentThread(), &configMock, 1705266000000, &stock, true, 14, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
     // TEST CASE: Nothing happened to the price
     // ====================================================================
     //

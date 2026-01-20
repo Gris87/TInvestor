@@ -97,6 +97,39 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
     ASSERT_EQ(cause, "");
 
     // ====================================================================
+    // TEST CASE: It was sold recently
+    // ====================================================================
+
+    fillWithData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        }
+    );
+
+    EXPECT_CALL(configMock, getBuyDecision2Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+
+    cause =
+        buyDecision2->makeDecision(QThread::currentThread(), &configMock, 1705266000000, &stock, true, 14, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
+
+    // ====================================================================
     // TEST CASE: Nothing happened to the price
     // ====================================================================
     //
@@ -317,6 +350,39 @@ TEST_F(Test_BuyDecision2, Test_makeDecision)
         "Decided to buy because the price fall to 100.00 \u20BD from 150.00 \u20BD at 2024-01-01 00:10:00 and lost yield 25.00% "
         "from the minimum price 80.00 \u20BD at 2024-01-01 00:13:00 within last 10 minutes and the fall is -33.33%"
     );
+
+    // ====================================================================
+    // TEST CASE: It was sold recently
+    // ====================================================================
+
+    fillWithData(&stock, {});
+    fillWithOperationalData(
+        &stock,
+        {
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+            100.0f,
+        }
+    );
+
+    EXPECT_CALL(configMock, getBuyDecision2Config()).WillOnce(Return(&decisionConfigMock));
+    EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
+
+    cause = buyDecision2->makeDecision(QThread::currentThread(), &configMock, QDateTime::currentMSecsSinceEpoch(), &stock, false, -1, 100.0f, -1.0f, 0.04f);
+
+    ASSERT_EQ(cause, "");
 
     // ====================================================================
     // TEST CASE: Nothing happened to the price

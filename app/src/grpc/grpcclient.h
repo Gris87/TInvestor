@@ -53,10 +53,8 @@ public:
             {
                 const grpc::StatusCode errorCode = status.error_code();
 
-                if (errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED &&
-                    errorCode != grpc::StatusCode::UNAVAILABLE &&
-                    errorCode != grpc::StatusCode::CANCELLED &&
-                    errorCode != grpc::StatusCode::INTERNAL &&
+                if (errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNAVAILABLE &&
+                    errorCode != grpc::StatusCode::CANCELLED && errorCode != grpc::StatusCode::INTERNAL &&
                     (!ignoreInvalidArg || errorCode != grpc::StatusCode::INVALID_ARGUMENT))
                 {
                     qWarning() << "GRPC error with code:" << errorCode << GRPC_STATUS_CODE_TO_STRING.value(errorCode)
@@ -64,10 +62,8 @@ public:
                                << "details:" << QString::fromStdString(status.error_details());
                 }
 
-                if (errorCode == grpc::StatusCode::RESOURCE_EXHAUSTED ||
-                    errorCode == grpc::StatusCode::UNAVAILABLE ||
-                    errorCode == grpc::StatusCode::UNKNOWN ||
-                    errorCode == grpc::StatusCode::INTERNAL)
+                if (errorCode == grpc::StatusCode::RESOURCE_EXHAUSTED || errorCode == grpc::StatusCode::UNAVAILABLE ||
+                    errorCode == grpc::StatusCode::UNKNOWN || errorCode == grpc::StatusCode::INTERNAL)
                 {
                     if (mTimeUtils->interruptibleSleep(GRPC_PRIOIRITY_TIMEOUTS[priority], parentThread))
                     {
