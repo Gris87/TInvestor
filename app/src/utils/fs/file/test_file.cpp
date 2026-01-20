@@ -185,6 +185,17 @@ TEST_F(Test_File, Test_exists)
     ASSERT_EQ(file->exists(), true);
 }
 
+TEST_F(Test_File, Test_lastModified)
+{
+    ASSERT_EQ(file->lastModified(), 0);
+
+    ASSERT_TRUE(qFile->open(QIODevice::WriteOnly));
+    ASSERT_EQ(qFile->write("TEST"), 4);
+    qFile->close();
+
+    ASSERT_GT(file->lastModified(), 1704056400000);
+}
+
 TEST_F(Test_File, Test_remove)
 {
     ASSERT_EQ(file->exists(), false);

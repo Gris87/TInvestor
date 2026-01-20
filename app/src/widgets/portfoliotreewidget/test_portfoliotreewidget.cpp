@@ -9,6 +9,7 @@
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/tablemodels/modelroles.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodel_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory_mock.h"
 
@@ -162,9 +163,161 @@ TEST_F(Test_PortfolioTreeWidget, Test_updateLastPrices)
 
 TEST_F(Test_PortfolioTreeWidget, Test_on_treeView_customContextMenuRequested)
 {
+    const InSequence seq;
+
+    PortfolioItem item;
+
+    item.instrumentId       = "aaaaa";
+    item.instrumentLogo     = nullptr;
+    item.instrumentTicker   = "ABBA";
+    item.instrumentName     = "Abstract Basics";
+    item.showPrices         = true;
+    item.available          = 100.0;
+    item.price              = 101.0f;
+    item.avgPriceFifo       = 102.0f;
+    item.avgPriceWavg       = 103.0f;
+    item.cost               = 400000.0;
+    item.part               = 40.0;
+    item.yield              = -105.0f;
+    item.yieldPercent       = -106.0f;
+    item.dailyYield         = 107.0f;
+    item.priceForDailyYield = 108.0f;
+    item.costForDailyYield  = 109.0;
+    item.dailyYieldPercent  = -110.0f;
+    item.pricePrecision     = 3;
+
+    EXPECT_CALL(*portfolioTreeModelMock, data(QModelIndex(), ROLE_PORTFOLIO_ITEM))
+        .WillOnce(Return(reinterpret_cast<qint64>(&item)));
+
     const QPoint pos;
 
     portfolioTreeWidget->on_treeView_customContextMenuRequested(pos);
+}
+
+TEST_F(Test_PortfolioTreeWidget, Test_actionSellAsapTriggered)
+{
+    const InSequence seq;
+
+    PortfolioItem item;
+
+    item.instrumentId       = "aaaaa";
+    item.instrumentLogo     = nullptr;
+    item.instrumentTicker   = "ABBA";
+    item.instrumentName     = "Abstract Basics";
+    item.showPrices         = true;
+    item.available          = 100.0;
+    item.price              = 101.0f;
+    item.avgPriceFifo       = 102.0f;
+    item.avgPriceWavg       = 103.0f;
+    item.cost               = 400000.0;
+    item.part               = 40.0;
+    item.yield              = -105.0f;
+    item.yieldPercent       = -106.0f;
+    item.dailyYield         = 107.0f;
+    item.priceForDailyYield = 108.0f;
+    item.costForDailyYield  = 109.0;
+    item.dailyYieldPercent  = -110.0f;
+    item.pricePrecision     = 3;
+
+    EXPECT_CALL(*portfolioTreeModelMock, data(QModelIndex(), ROLE_PORTFOLIO_ITEM))
+        .WillOnce(Return(reinterpret_cast<qint64>(&item)));
+    EXPECT_CALL(
+        *messageBoxUtilsMock,
+        question(
+            portfolioTreeWidget,
+            QString("Sell"),
+            QString("Do you really want to sell ABBA (Abstract Basics) ASAP?"),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::NoButton
+        )
+    )
+        .WillOnce(Return(QMessageBox::Yes));
+
+    portfolioTreeWidget->actionSellAsapTriggered();
+}
+
+TEST_F(Test_PortfolioTreeWidget, Test_actionSellFollowPriceTriggered)
+{
+    const InSequence seq;
+
+    PortfolioItem item;
+
+    item.instrumentId       = "aaaaa";
+    item.instrumentLogo     = nullptr;
+    item.instrumentTicker   = "ABBA";
+    item.instrumentName     = "Abstract Basics";
+    item.showPrices         = true;
+    item.available          = 100.0;
+    item.price              = 101.0f;
+    item.avgPriceFifo       = 102.0f;
+    item.avgPriceWavg       = 103.0f;
+    item.cost               = 400000.0;
+    item.part               = 40.0;
+    item.yield              = -105.0f;
+    item.yieldPercent       = -106.0f;
+    item.dailyYield         = 107.0f;
+    item.priceForDailyYield = 108.0f;
+    item.costForDailyYield  = 109.0;
+    item.dailyYieldPercent  = -110.0f;
+    item.pricePrecision     = 3;
+
+    EXPECT_CALL(*portfolioTreeModelMock, data(QModelIndex(), ROLE_PORTFOLIO_ITEM))
+        .WillOnce(Return(reinterpret_cast<qint64>(&item)));
+    EXPECT_CALL(
+        *messageBoxUtilsMock,
+        question(
+            portfolioTreeWidget,
+            QString("Sell"),
+            QString("Do you really want to sell ABBA (Abstract Basics) with following sell price?"),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::NoButton
+        )
+    )
+        .WillOnce(Return(QMessageBox::Yes));
+
+    portfolioTreeWidget->actionSellFollowPriceTriggered();
+}
+
+TEST_F(Test_PortfolioTreeWidget, Test_actionSellGoodYieldTriggered)
+{
+    const InSequence seq;
+
+    PortfolioItem item;
+
+    item.instrumentId       = "aaaaa";
+    item.instrumentLogo     = nullptr;
+    item.instrumentTicker   = "ABBA";
+    item.instrumentName     = "Abstract Basics";
+    item.showPrices         = true;
+    item.available          = 100.0;
+    item.price              = 101.0f;
+    item.avgPriceFifo       = 102.0f;
+    item.avgPriceWavg       = 103.0f;
+    item.cost               = 400000.0;
+    item.part               = 40.0;
+    item.yield              = -105.0f;
+    item.yieldPercent       = -106.0f;
+    item.dailyYield         = 107.0f;
+    item.priceForDailyYield = 108.0f;
+    item.costForDailyYield  = 109.0;
+    item.dailyYieldPercent  = -110.0f;
+    item.pricePrecision     = 3;
+
+    EXPECT_CALL(*portfolioTreeModelMock, data(QModelIndex(), ROLE_PORTFOLIO_ITEM))
+        .WillOnce(Return(reinterpret_cast<qint64>(&item)));
+    EXPECT_CALL(
+        *messageBoxUtilsMock,
+        question(
+            portfolioTreeWidget,
+            QString("Sell"),
+            QString("Do you really want to sell ABBA (Abstract Basics) with positive yield?"),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::NoButton
+        )
+    )
+        .WillOnce(Return(QMessageBox::Yes));
+
+    portfolioTreeWidget->actionSellGoodYieldTriggered();
 }
 
 TEST_F(Test_PortfolioTreeWidget, Test_actionExportToExcelTriggered)
