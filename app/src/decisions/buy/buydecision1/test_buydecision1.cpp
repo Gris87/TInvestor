@@ -330,7 +330,9 @@ TEST_F(Test_BuyDecision1, Test_makeDecision)
     EXPECT_CALL(configMock, getBuyDecision1Config()).WillOnce(Return(&decisionConfigMock));
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
 
-    cause = buyDecision1->makeDecision(QThread::currentThread(), &configMock, QDateTime::currentMSecsSinceEpoch(), &stock, false, -1, 100.0f, -1.0f, 0.04f);
+    cause = buyDecision1->makeDecision(
+        QThread::currentThread(), &configMock, QDateTime::currentMSecsSinceEpoch(), &stock, false, -1, 100.0f, -1.0f, 0.04f
+    );
 
     ASSERT_EQ(cause, "");
 

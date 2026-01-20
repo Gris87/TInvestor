@@ -18,6 +18,9 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
+constexpr qint64 MS_IN_SECOND = 1000LL;
+constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
+
 
 
 using ::testing::_;
@@ -84,6 +87,21 @@ protected:
         delete grpcRetryClientMock;
         delete logsThreadMock;
         delete stock;
+    }
+
+    void fillWithData(QList<float> data)
+    {
+        stock->data.clear();
+
+        for (int i = 0; i < data.size(); ++i)
+        {
+            StockData stockData;
+
+            stockData.timestamp = 1704056400000 + i * ONE_MINUTE;
+            stockData.price     = data.at(i);
+
+            stock->data.append(stockData);
+        }
     }
 
     BiDirTradingThread*                 thread;
@@ -836,19 +854,27 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
 
     tinkoff::Order* bid1 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
     tinkoff::Order* bid2 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* bid3 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
+    tinkoff::Order* bid4 = getOrderBookResponse.add_bids(); // getOrderBookResponse will take ownership
     tinkoff::Order* ask1 = getOrderBookResponse.add_asks(); // getOrderBookResponse will take ownership
     tinkoff::Order* ask2 = getOrderBookResponse.add_asks(); // getOrderBookResponse will take ownership
 
-    tinkoff::Quotation* bidPrice1 = new tinkoff::Quotation(); // bid will take ownership
-    tinkoff::Quotation* bidPrice2 = new tinkoff::Quotation(); // bid will take ownership
-    tinkoff::Quotation* askPrice1 = new tinkoff::Quotation(); // ask will take ownership
-    tinkoff::Quotation* askPrice2 = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* bidPrice1 = new tinkoff::Quotation(); // bid1 will take ownership
+    tinkoff::Quotation* bidPrice2 = new tinkoff::Quotation(); // bid2 will take ownership
+    tinkoff::Quotation* bidPrice3 = new tinkoff::Quotation(); // bid3 will take ownership
+    tinkoff::Quotation* bidPrice4 = new tinkoff::Quotation(); // bid4 will take ownership
+    tinkoff::Quotation* askPrice1 = new tinkoff::Quotation(); // ask1 will take ownership
+    tinkoff::Quotation* askPrice2 = new tinkoff::Quotation(); // ask2 will take ownership
     tinkoff::Quotation* lastPrice = new tinkoff::Quotation(); // getOrderBookResponse will take ownership
 
-    bidPrice1->set_units(860);
+    bidPrice1->set_units(900);
     bidPrice1->set_nano(0);
-    bidPrice2->set_units(855);
+    bidPrice2->set_units(895);
     bidPrice2->set_nano(0);
+    bidPrice3->set_units(890);
+    bidPrice3->set_nano(0);
+    bidPrice4->set_units(880);
+    bidPrice4->set_nano(0);
     askPrice1->set_units(900);
     askPrice1->set_nano(0);
     askPrice2->set_units(905);
@@ -860,6 +886,10 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
     bid1->set_allocated_price(bidPrice1);
     bid2->set_quantity(200);
     bid2->set_allocated_price(bidPrice2);
+    bid3->set_quantity(50);
+    bid3->set_allocated_price(bidPrice3);
+    bid4->set_quantity(70);
+    bid4->set_allocated_price(bidPrice4);
     ask1->set_quantity(300);
     ask1->set_allocated_price(askPrice1);
     ask2->set_quantity(400);
@@ -867,11 +897,33 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
 
     getOrderBookResponse.set_allocated_last_price(lastPrice);
 
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID), Quotation(860, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID), Quotation(895, 0));
 
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.7f));
 
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD), Quotation(860, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD), Quotation(890, 0));
+
+    fillWithData({
+        100.0f,
+        100.0f,
+        100.0f,
+        100.0f,
+        100.0f,
+        100.0f,
+        100.0f,
+        100.0f,
+        900.0f,
+        900.0f,
+        900.0f,
+        900.0f,
+        900.0f,
+        900.0f,
+        900.0f,
+    });
+
+    thread->testSetStepForTripleCheck(3);
+
+    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID), Quotation(880, 0));
 }
 
 TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)

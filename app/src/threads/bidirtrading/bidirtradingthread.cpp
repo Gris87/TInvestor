@@ -545,7 +545,7 @@ Quotation BiDirTradingThread::calculateBuyPriceInternal(const tinkoff::GetOrderB
 
     if (!tripleCheck(tripleMinimumPrice))
     {
-        spread = TRIPLE_SAFE_SPREAD;
+        spread = qMax(spread, TRIPLE_SAFE_SPREAD);
     }
 
     const double maximumBuyPrice = basePrice * (1 - (spread / HUNDRED_PERCENT));
