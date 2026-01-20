@@ -13,6 +13,7 @@ extern const QMap<grpc::StatusCode, QString> GRPC_STATUS_CODE_TO_STRING;
 extern const qint64                          GRPC_PRIOIRITY_TIMEOUTS[GRPC_PRIOIRITY_COUNT];
 
 
+
 class GrpcClient : public IGrpcClient
 {
     Q_OBJECT
