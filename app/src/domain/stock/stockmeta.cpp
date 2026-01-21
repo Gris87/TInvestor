@@ -128,13 +128,8 @@ QJsonObject StockMeta::toJsonObject() const
 
 bool operator==(const StockMeta& lhs, const StockMeta& rhs)
 {
-    return lhs.instrumentId == rhs.instrumentId &&
-           lhs.instrumentTicker == rhs.instrumentTicker &&
-           lhs.instrumentName == rhs.instrumentName &&
-           lhs.forQualInvestorFlag == rhs.forQualInvestorFlag &&
-           lhs.lot == rhs.lot &&
-           lhs.pricePrecision == rhs.pricePrecision &&
-           qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < FLOAT_EPSILON &&
-           lhs.lastTradeTime == rhs.lastTradeTime &&
-           lhs.turnover == rhs.turnover;
+    return lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
+           lhs.instrumentName == rhs.instrumentName && lhs.forQualInvestorFlag == rhs.forQualInvestorFlag && lhs.lot == rhs.lot &&
+           lhs.pricePrecision == rhs.pricePrecision && qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < FLOAT_EPSILON &&
+           lhs.lastTradeTime == rhs.lastTradeTime && lhs.turnover == rhs.turnover;
 }

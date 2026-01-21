@@ -525,12 +525,14 @@ static void getTurnoverForParallel(
 
         if (index < stock->data.size())
         {
-            qint64 totalTurnover = 0;
+            qint64       totalTurnover = 0;
+            const qint64 lot           = stock->meta.lot;
 
             for (int i = index; i < stock->data.size(); ++i)
             {
-                totalTurnover +=
-                    qRound64(static_cast<double>(stock->data.at(i).quantity) * static_cast<double>(stock->data.at(i).price));
+                totalTurnover += qRound64(
+                    static_cast<double>(lot * stock->data.at(i).quantity) * static_cast<double>(stock->data.at(i).price)
+                );
             }
 
             const qint64 deltaTimestamp = stock->data.constLast().timestamp - stock->data.at(index).timestamp;
