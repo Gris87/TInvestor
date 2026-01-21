@@ -129,7 +129,6 @@ private:
     qint32               mInstrumentLot;
     Quotation            mMinPriceIncrement;
     float                mMinSpread;
-    float                mMinYield;
     bool                 mNeedToCancelSell;
     QString              mBuyOrderId;
     QString              mSellOrderId;

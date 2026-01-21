@@ -8,18 +8,19 @@
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
-constexpr float  HUNDRED_PERCENT       = 100.0f;
-constexpr float  MINIMUM_YIELD_PERCENT = 0.10f;
-constexpr float  SPREAD_FOR_HUGE_BID   = 0.50f;
-constexpr float  TRIPLE_PRICE_RAISE    = 1.00f;
-constexpr float  TRIPLE_SAFE_SPREAD    = 2.00f;
-constexpr int    ORDER_BOOK_DEPTH      = 50;
-constexpr int    HOURS_TO_TRIPLE_CHECK = 5;
-constexpr int    STEP_FOR_TRIPLE_CHECK = 60;
-constexpr qint64 MS_IN_SECOND          = 1000LL;
-constexpr qint64 SLEEP_DELAY           = 30LL * MS_IN_SECOND; // 30 seconds
-constexpr qint64 ORDER_CANCEL_DELAY    = 3LL * MS_IN_SECOND;  // 3 seconds
-constexpr qint64 ORDER_RETRY_DELAY     = 1LL * MS_IN_SECOND;  // 1 second
+constexpr float  HUNDRED_PERCENT           = 100.0f;
+constexpr float  MINIMUM_YIELD_PERCENT     = 0.10f;
+constexpr float  ADDITIONAL_SPREAD_PERCENT = 0.10f;
+constexpr float  SPREAD_FOR_HUGE_BID       = 0.50f;
+constexpr float  TRIPLE_PRICE_RAISE        = 1.00f;
+constexpr float  TRIPLE_SAFE_SPREAD        = 2.00f;
+constexpr int    ORDER_BOOK_DEPTH          = 50;
+constexpr int    HOURS_TO_TRIPLE_CHECK     = 5;
+constexpr int    STEP_FOR_TRIPLE_CHECK     = 60;
+constexpr qint64 MS_IN_SECOND              = 1000LL;
+constexpr qint64 SLEEP_DELAY               = 30LL * MS_IN_SECOND; // 30 seconds
+constexpr qint64 ORDER_CANCEL_DELAY        = 3LL * MS_IN_SECOND;  // 3 seconds
+constexpr qint64 ORDER_RETRY_DELAY         = 1LL * MS_IN_SECOND;  // 1 second
 
 
 
@@ -58,7 +59,6 @@ BiDirTradingThread::BiDirTradingThread(
     mInstrumentLot(),
     mMinPriceIncrement(),
     mMinSpread(),
-    mMinYield(),
     mNeedToCancelSell(true),
     mBuyOrderId(),
     mSellOrderId(),
@@ -262,12 +262,10 @@ void BiDirTradingThread::getInstrumentData()
         const BiDirInfo& biDirInfo = biDirInfos.value(mInstrumentId);
 
         mMinSpread = biDirInfo.spread;
-        mMinYield  = biDirInfo.minYield;
     }
     else
     {
         mMinSpread = SPREAD_FOR_HUGE_BID;
-        mMinYield  = MINIMUM_YIELD_PERCENT;
     }
 
     mBiDirInfosStorage->readUnlock();
@@ -548,7 +546,7 @@ Quotation BiDirTradingThread::calculateBuyPriceInternal(const tinkoff::GetOrderB
         spread = qMax(spread, TRIPLE_SAFE_SPREAD);
     }
 
-    const double maximumBuyPrice = basePrice * (1 - (spread / HUNDRED_PERCENT));
+    const double maximumBuyPrice = basePrice * (1 - ((spread + ADDITIONAL_SPREAD_PERCENT) / HUNDRED_PERCENT));
     double       res             = maximumBuyPrice;
 
     for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
@@ -609,7 +607,8 @@ Quotation BiDirTradingThread::calculateSellPrice(
 
     if (instrumentAvgPrice > 0)
     {
-        const double minimumSellPrice = instrumentAvgPrice * (1 + (mMinYield + (2 * commission)) / HUNDRED_PERCENT);
+        const double minimumSellPrice =
+            instrumentAvgPrice * (1 + (MINIMUM_YIELD_PERCENT + ADDITIONAL_SPREAD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
         res                           = minimumSellPrice;
 
         for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)
