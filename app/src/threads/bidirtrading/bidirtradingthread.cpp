@@ -609,7 +609,7 @@ Quotation BiDirTradingThread::calculateSellPrice(
     {
         const double minimumSellPrice =
             instrumentAvgPrice * (1 + (MINIMUM_YIELD_PERCENT + ADDITIONAL_GAP_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
-        res                           = minimumSellPrice;
+        res = minimumSellPrice;
 
         for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)
         {
