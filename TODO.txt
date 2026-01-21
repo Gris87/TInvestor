@@ -3,7 +3,6 @@ Make decision based on dividends
 https://api-invest.tbank.ru/invest-terminal/api-invest-gw/fireg-advisory/invest-calendar/v2/event/info?startDate=2026-01-01&endDate=2026-12-31&mySecuritiesFlag=false&qualFlag=false&eventTypes=dividends&limit=100
 Always check for buy decisions even if already keep some
 Bi-dir on non-working hours (weekend also)
-Try not to use biggest spread in bidir info
 Create script for buying/selling in parts
 Find best configs for different commission
 Improve coverage
