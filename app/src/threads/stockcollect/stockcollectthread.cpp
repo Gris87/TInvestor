@@ -476,8 +476,9 @@ bool StockCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
             stockMeta.instrumentTicker    = QString::fromStdString(tinkoffStock.ticker());
             stockMeta.instrumentName      = QString::fromStdString(tinkoffStock.name());
             stockMeta.forQualInvestorFlag = tinkoffStock.for_qual_investor_flag();
-            stockMeta.minPriceIncrement   = quotationToFloat(tinkoffStock.min_price_increment());
+            stockMeta.lot                 = tinkoffStock.lot();
             stockMeta.pricePrecision      = quotationPrecision(tinkoffStock.min_price_increment());
+            stockMeta.minPriceIncrement   = quotationToFloat(tinkoffStock.min_price_increment());
 
             stocksMeta.append(stockMeta);
         }

@@ -67,8 +67,9 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     stock1->meta.instrumentTicker    = "TEST";
     stock1->meta.instrumentName      = "abc";
     stock1->meta.forQualInvestorFlag = true;
-    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.lot                 = 1;
     stock1->meta.pricePrecision      = 1;
+    stock1->meta.minPriceIncrement   = 0.1f;
     stock1->meta.lastTradeTime       = QTime(18, 39);
     stock1->meta.turnover            = 2000;
 
@@ -76,8 +77,9 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     stock2->meta.instrumentTicker    = "MAGA";
     stock2->meta.instrumentName      = "def";
     stock2->meta.forQualInvestorFlag = false;
-    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.lot                 = 1;
     stock2->meta.pricePrecision      = 2;
+    stock2->meta.minPriceIncrement   = 0.01f;
     stock2->meta.lastTradeTime       = QTime(23, 49);
     stock2->meta.turnover            = 5000000;
 
@@ -85,8 +87,9 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     stock3->meta.instrumentTicker    = "HNYA";
     stock3->meta.instrumentName      = "aaaa";
     stock3->meta.forQualInvestorFlag = true;
-    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.lot                 = 1;
     stock3->meta.pricePrecision      = 3;
+    stock3->meta.minPriceIncrement   = 0.001f;
     stock3->meta.lastTradeTime       = QTime(9, 59);
     stock3->meta.turnover            = 9000000000;
 
@@ -128,8 +131,9 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  200);
@@ -152,8 +156,9 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  300);
@@ -176,8 +181,9 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  400);
@@ -241,8 +247,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stock1->meta.instrumentTicker    = "TEST";
     stock1->meta.instrumentName      = "abc";
     stock1->meta.forQualInvestorFlag = true;
-    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.lot                 = 1;
     stock1->meta.pricePrecision      = 1;
+    stock1->meta.minPriceIncrement   = 0.1f;
     stock1->meta.lastTradeTime       = QTime(18, 39);
     stock1->meta.turnover            = 2000;
 
@@ -250,8 +257,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stock2->meta.instrumentTicker    = "MAGA";
     stock2->meta.instrumentName      = "def";
     stock2->meta.forQualInvestorFlag = false;
-    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.lot                 = 1;
     stock2->meta.pricePrecision      = 2;
+    stock2->meta.minPriceIncrement   = 0.01f;
     stock2->meta.lastTradeTime       = QTime(23, 49);
     stock2->meta.turnover            = 5000000;
 
@@ -259,8 +267,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stock3->meta.instrumentTicker    = "HNYA";
     stock3->meta.instrumentName      = "aaaa";
     stock3->meta.forQualInvestorFlag = true;
-    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.lot                 = 1;
     stock3->meta.pricePrecision      = 3;
+    stock3->meta.minPriceIncrement   = 0.001f;
     stock3->meta.lastTradeTime       = QTime(9, 59);
     stock3->meta.turnover            = 9000000000;
 
@@ -302,8 +311,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  200);
@@ -326,8 +336,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  300);
@@ -350,8 +361,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  400);
@@ -380,8 +392,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stockMeta1.instrumentTicker    = "BEST";
     stockMeta1.instrumentName      = "cba";
     stockMeta1.forQualInvestorFlag = false;
-    stockMeta1.minPriceIncrement   = 0.01f;
+    stockMeta1.lot                 = 1;
     stockMeta1.pricePrecision      = 2;
+    stockMeta1.minPriceIncrement   = 0.01f;
     stockMeta1.lastTradeTime       = QTime(5, 29);
     stockMeta1.turnover            = 7000;
 
@@ -389,8 +402,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stockMeta2.instrumentTicker    = "ZARA";
     stockMeta2.instrumentName      = "Zaradunger";
     stockMeta2.forQualInvestorFlag = true;
-    stockMeta2.minPriceIncrement   = 0.001f;
+    stockMeta2.lot                 = 1;
     stockMeta2.pricePrecision      = 3;
+    stockMeta2.minPriceIncrement   = 0.001f;
     stockMeta2.lastTradeTime       = QTime(1, 59);
     stockMeta2.turnover            = 8888;
 
@@ -408,8 +422,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "BEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "cba");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(5, 29));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    7000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  200);
@@ -432,8 +447,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  300);
@@ -456,8 +472,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  400);
@@ -483,8 +500,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(3)->meta.instrumentTicker,            "ZARA");
     ASSERT_EQ(stocks.at(3)->meta.instrumentName,              "Zaradunger");
     ASSERT_EQ(stocks.at(3)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(3)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(3)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(3)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(3)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(3)->meta.lastTradeTime,               QTime(1, 59));
     ASSERT_EQ(stocks.at(3)->meta.turnover,                    8888);
     ASSERT_EQ(stocks.at(3)->operational.lastStoredTimestamp,  0);
@@ -525,8 +543,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     stock1->meta.instrumentTicker    = "TEST";
     stock1->meta.instrumentName      = "abc";
     stock1->meta.forQualInvestorFlag = true;
-    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.lot                 = 1;
     stock1->meta.pricePrecision      = 1;
+    stock1->meta.minPriceIncrement   = 0.1f;
     stock1->meta.lastTradeTime       = QTime(18, 39);
     stock1->meta.turnover            = 2000;
 
@@ -534,8 +553,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     stock2->meta.instrumentTicker    = "MAGA";
     stock2->meta.instrumentName      = "def";
     stock2->meta.forQualInvestorFlag = false;
-    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.lot                 = 1;
     stock2->meta.pricePrecision      = 2;
+    stock2->meta.minPriceIncrement   = 0.01f;
     stock2->meta.lastTradeTime       = QTime(23, 49);
     stock2->meta.turnover            = 5000000;
 
@@ -543,8 +563,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     stock3->meta.instrumentTicker    = "HNYA";
     stock3->meta.instrumentName      = "aaaa";
     stock3->meta.forQualInvestorFlag = true;
-    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.lot                 = 1;
     stock3->meta.pricePrecision      = 3;
+    stock3->meta.minPriceIncrement   = 0.001f;
     stock3->meta.lastTradeTime       = QTime(9, 59);
     stock3->meta.turnover            = 9000000000;
 
@@ -600,8 +621,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  300);
@@ -627,8 +649,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  650);
@@ -663,8 +686,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  520);
@@ -701,8 +725,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  300);
@@ -725,8 +750,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  650);
@@ -758,8 +784,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  520);
@@ -793,8 +820,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  300);
@@ -811,8 +839,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  650);
@@ -838,8 +867,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  520);
@@ -874,8 +904,9 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     stock1->meta.instrumentTicker    = "TEST";
     stock1->meta.instrumentName      = "abc";
     stock1->meta.forQualInvestorFlag = true;
-    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.lot                 = 1;
     stock1->meta.pricePrecision      = 1;
+    stock1->meta.minPriceIncrement   = 0.1f;
     stock1->meta.lastTradeTime       = QTime(18, 39);
     stock1->meta.turnover            = 2000;
 
@@ -883,8 +914,9 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     stock2->meta.instrumentTicker    = "MAGA";
     stock2->meta.instrumentName      = "def";
     stock2->meta.forQualInvestorFlag = false;
-    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.lot                 = 1;
     stock2->meta.pricePrecision      = 2;
+    stock2->meta.minPriceIncrement   = 0.01f;
     stock2->meta.lastTradeTime       = QTime(23, 49);
     stock2->meta.turnover            = 5000000;
 
@@ -892,8 +924,9 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     stock3->meta.instrumentTicker    = "HNYA";
     stock3->meta.instrumentName      = "aaaa";
     stock3->meta.forQualInvestorFlag = true;
-    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.lot                 = 1;
     stock3->meta.pricePrecision      = 3;
+    stock3->meta.minPriceIncrement   = 0.001f;
     stock3->meta.lastTradeTime       = QTime(9, 59);
     stock3->meta.turnover            = 9000000000;
 
@@ -940,8 +973,9 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  0);
@@ -964,8 +998,9 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  0);
@@ -994,8 +1029,9 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  0);
@@ -1025,8 +1061,9 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,                    "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,                      "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,                 true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,                 0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,                      1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,                 0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,                       QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                            2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,          0);
@@ -1051,8 +1088,9 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,                    "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,                      "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,                 false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,                      2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,                       QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,          0);
@@ -1087,8 +1125,9 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,                    "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,                      "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,                 true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,                      3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,                       QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,          0);
@@ -1129,8 +1168,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     stock1->meta.instrumentTicker    = "TEST";
     stock1->meta.instrumentName      = "abc";
     stock1->meta.forQualInvestorFlag = true;
-    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.lot                 = 1;
     stock1->meta.pricePrecision      = 1;
+    stock1->meta.minPriceIncrement   = 0.1f;
     stock1->meta.lastTradeTime       = QTime(18, 39);
     stock1->meta.turnover            = 2000;
 
@@ -1138,8 +1178,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     stock2->meta.instrumentTicker    = "MAGA";
     stock2->meta.instrumentName      = "def";
     stock2->meta.forQualInvestorFlag = false;
-    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.lot                 = 1;
     stock2->meta.pricePrecision      = 2;
+    stock2->meta.minPriceIncrement   = 0.01f;
     stock2->meta.lastTradeTime       = QTime(23, 49);
     stock2->meta.turnover            = 5000000;
 
@@ -1147,8 +1188,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     stock3->meta.instrumentTicker    = "HNYA";
     stock3->meta.instrumentName      = "aaaa";
     stock3->meta.forQualInvestorFlag = true;
-    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.lot                 = 1;
     stock3->meta.pricePrecision      = 3;
+    stock3->meta.minPriceIncrement   = 0.001f;
     stock3->meta.lastTradeTime       = QTime(9, 59);
     stock3->meta.turnover            = 9000000000;
 
@@ -1195,8 +1237,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,                    "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,                      "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,                 true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,                 0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,                      1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,                 0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,                       QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                            2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,          0);
@@ -1219,8 +1262,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,                    "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,                      "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,                 false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,                      2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,                       QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,          0);
@@ -1249,8 +1293,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,                    "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,                      "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,                 true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,                      3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,                       QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,          0);
@@ -1280,8 +1325,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,                    "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,                      "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,                 true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,                 0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,                      1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,                 0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,                       QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                            2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,          0);
@@ -1302,8 +1348,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,                    "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,                      "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,                 false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,                      2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,                       QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,          0);
@@ -1330,8 +1377,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,                    "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,                      "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,                 true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,                      3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,                       QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,          0);
@@ -1359,8 +1407,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  0);
@@ -1377,8 +1426,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,                    "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,                      "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,                 false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,                      2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,                       QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,          0);
@@ -1401,8 +1451,9 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,                    "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,                      "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,                 true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,                      3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,                       QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,          0);
@@ -1443,8 +1494,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stock1->meta.instrumentTicker    = "TEST";
     stock1->meta.instrumentName      = "abc";
     stock1->meta.forQualInvestorFlag = true;
-    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.lot                 = 1;
     stock1->meta.pricePrecision      = 1;
+    stock1->meta.minPriceIncrement   = 0.1f;
     stock1->meta.lastTradeTime       = QTime(18, 39);
     stock1->meta.turnover            = 2000;
 
@@ -1452,8 +1504,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stock2->meta.instrumentTicker    = "MAGA";
     stock2->meta.instrumentName      = "def";
     stock2->meta.forQualInvestorFlag = false;
-    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.lot                 = 1;
     stock2->meta.pricePrecision      = 2;
+    stock2->meta.minPriceIncrement   = 0.01f;
     stock2->meta.lastTradeTime       = QTime(23, 49);
     stock2->meta.turnover            = 5000000;
 
@@ -1461,8 +1514,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stock3->meta.instrumentTicker    = "HNYA";
     stock3->meta.instrumentName      = "aaaa";
     stock3->meta.forQualInvestorFlag = true;
-    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.lot                 = 1;
     stock3->meta.pricePrecision      = 3;
+    stock3->meta.minPriceIncrement   = 0.001f;
     stock3->meta.lastTradeTime       = QTime(9, 59);
     stock3->meta.turnover            = 9000000000;
 
@@ -1513,8 +1567,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
@@ -1540,8 +1595,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
@@ -1570,8 +1626,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
@@ -1603,8 +1660,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
@@ -1630,8 +1688,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
@@ -1660,8 +1719,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
@@ -1710,8 +1770,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stock1->meta.instrumentTicker    = "TEST";
     stock1->meta.instrumentName      = "abc";
     stock1->meta.forQualInvestorFlag = true;
-    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.lot                 = 1;
     stock1->meta.pricePrecision      = 1;
+    stock1->meta.minPriceIncrement   = 0.1f;
     stock1->meta.lastTradeTime       = QTime(18, 39);
     stock1->meta.turnover            = 2000;
 
@@ -1719,8 +1780,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stock2->meta.instrumentTicker    = "MAGA";
     stock2->meta.instrumentName      = "def";
     stock2->meta.forQualInvestorFlag = false;
-    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.lot                 = 1;
     stock2->meta.pricePrecision      = 2;
+    stock2->meta.minPriceIncrement   = 0.01f;
     stock2->meta.lastTradeTime       = QTime(23, 49);
     stock2->meta.turnover            = 5000000;
 
@@ -1728,8 +1790,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stock3->meta.instrumentTicker    = "HNYA";
     stock3->meta.instrumentName      = "aaaa";
     stock3->meta.forQualInvestorFlag = true;
-    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.lot                 = 1;
     stock3->meta.pricePrecision      = 3;
+    stock3->meta.minPriceIncrement   = 0.001f;
     stock3->meta.lastTradeTime       = QTime(9, 59);
     stock3->meta.turnover            = 9000000000;
 
@@ -1780,8 +1843,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
@@ -1807,8 +1871,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
@@ -1837,8 +1902,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
@@ -1870,8 +1936,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
@@ -1897,8 +1964,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
@@ -1927,8 +1995,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
@@ -1977,8 +2046,9 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     stock1->meta.instrumentTicker    = "TEST";
     stock1->meta.instrumentName      = "abc";
     stock1->meta.forQualInvestorFlag = true;
-    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.lot                 = 1;
     stock1->meta.pricePrecision      = 1;
+    stock1->meta.minPriceIncrement   = 0.1f;
     stock1->meta.lastTradeTime       = QTime(18, 39);
     stock1->meta.turnover            = 2000;
 
@@ -1986,8 +2056,9 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     stock2->meta.instrumentTicker    = "MAGA";
     stock2->meta.instrumentName      = "def";
     stock2->meta.forQualInvestorFlag = false;
-    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.lot                 = 1;
     stock2->meta.pricePrecision      = 2;
+    stock2->meta.minPriceIncrement   = 0.01f;
     stock2->meta.lastTradeTime       = QTime(23, 49);
     stock2->meta.turnover            = 5000000;
 
@@ -1995,8 +2066,9 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     stock3->meta.instrumentTicker    = "HNYA";
     stock3->meta.instrumentName      = "aaaa";
     stock3->meta.forQualInvestorFlag = true;
-    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.lot                 = 1;
     stock3->meta.pricePrecision      = 3;
+    stock3->meta.minPriceIncrement   = 0.001f;
     stock3->meta.lastTradeTime       = QTime(9, 59);
     stock3->meta.turnover            = 9000000000;
 
@@ -2047,8 +2119,9 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  1704452400000);
@@ -2074,8 +2147,9 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  1704632400000);
@@ -2104,8 +2178,9 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  1704452400000);
@@ -2137,8 +2212,9 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(11, 0));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  1704452400000);
@@ -2164,8 +2240,9 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(15, 0));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  1704632400000);
@@ -2194,8 +2271,9 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(13, 0));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  1704452400000);
@@ -2244,8 +2322,9 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     stock1->meta.instrumentTicker    = "TEST";
     stock1->meta.instrumentName      = "abc";
     stock1->meta.forQualInvestorFlag = true;
-    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.lot                 = 1;
     stock1->meta.pricePrecision      = 1;
+    stock1->meta.minPriceIncrement   = 0.1f;
     stock1->meta.lastTradeTime       = QTime(18, 39);
     stock1->meta.turnover            = 2000;
 
@@ -2253,8 +2332,9 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     stock2->meta.instrumentTicker    = "MAGA";
     stock2->meta.instrumentName      = "def";
     stock2->meta.forQualInvestorFlag = false;
-    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.lot                 = 1;
     stock2->meta.pricePrecision      = 2;
+    stock2->meta.minPriceIncrement   = 0.01f;
     stock2->meta.lastTradeTime       = QTime(23, 49);
     stock2->meta.turnover            = 5000000;
 
@@ -2262,8 +2342,9 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     stock3->meta.instrumentTicker    = "HNYA";
     stock3->meta.instrumentName      = "aaaa";
     stock3->meta.forQualInvestorFlag = true;
-    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.lot                 = 1;
     stock3->meta.pricePrecision      = 3;
+    stock3->meta.minPriceIncrement   = 0.001f;
     stock3->meta.lastTradeTime       = QTime(9, 59);
     stock3->meta.turnover            = 9000000000;
 
@@ -2314,8 +2395,9 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
@@ -2341,8 +2423,9 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
@@ -2371,8 +2454,9 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
@@ -2404,8 +2488,9 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    864000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
@@ -2431,8 +2516,9 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    1382400);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
@@ -2461,8 +2547,9 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    864000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
@@ -2511,8 +2598,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stock1->meta.instrumentTicker    = "TEST";
     stock1->meta.instrumentName      = "abc";
     stock1->meta.forQualInvestorFlag = true;
-    stock1->meta.minPriceIncrement   = 0.1f;
+    stock1->meta.lot                 = 1;
     stock1->meta.pricePrecision      = 1;
+    stock1->meta.minPriceIncrement   = 0.1f;
     stock1->meta.lastTradeTime       = QTime(18, 39);
     stock1->meta.turnover            = 2000;
 
@@ -2520,8 +2608,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stock2->meta.instrumentTicker    = "MAGA";
     stock2->meta.instrumentName      = "def";
     stock2->meta.forQualInvestorFlag = false;
-    stock2->meta.minPriceIncrement   = 0.01f;
+    stock2->meta.lot                 = 1;
     stock2->meta.pricePrecision      = 2;
+    stock2->meta.minPriceIncrement   = 0.01f;
     stock2->meta.lastTradeTime       = QTime(23, 49);
     stock2->meta.turnover            = 5000000;
 
@@ -2529,8 +2618,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stock3->meta.instrumentTicker    = "HNYA";
     stock3->meta.instrumentName      = "aaaa";
     stock3->meta.forQualInvestorFlag = true;
-    stock3->meta.minPriceIncrement   = 0.001f;
+    stock3->meta.lot                 = 1;
     stock3->meta.pricePrecision      = 3;
+    stock3->meta.minPriceIncrement   = 0.001f;
     stock3->meta.lastTradeTime       = QTime(9, 59);
     stock3->meta.turnover            = 9000000000;
 
@@ -2581,8 +2671,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
@@ -2608,8 +2699,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
@@ -2638,8 +2730,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
@@ -2675,8 +2768,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
+    ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
@@ -2702,8 +2796,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
-    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
+    ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
@@ -2732,8 +2827,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
-    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
+    ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);

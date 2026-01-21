@@ -53,8 +53,9 @@ TEST_F(Test_OrderWavesDialogFactory, Test_newInstance)
     stock.meta.instrumentTicker    = "SERG";
     stock.meta.instrumentName      = "Serezha stock";
     stock.meta.forQualInvestorFlag = false;
-    stock.meta.minPriceIncrement   = 1.5f;
+    stock.meta.lot                 = 1;
     stock.meta.pricePrecision      = 2;
+    stock.meta.minPriceIncrement   = 1.5f;
     stock.meta.lastTradeTime       = QTime(18, 39);
     stock.meta.turnover            = 9310000;
 

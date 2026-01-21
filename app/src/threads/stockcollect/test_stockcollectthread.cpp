@@ -235,8 +235,9 @@ TEST_F(Test_StockCollectThread, Test_run)
     stock.meta.instrumentTicker    = "WAGA";
     stock.meta.instrumentName      = "Wagadaka too";
     stock.meta.forQualInvestorFlag = true;
-    stock.meta.minPriceIncrement   = 0.001f;
+    stock.meta.lot                 = 1;
     stock.meta.pricePrecision      = 3;
+    stock.meta.minPriceIncrement   = 0.001f;
     stock.meta.lastTradeTime       = QTime(18, 39);
     stock.meta.turnover            = 5000;
 

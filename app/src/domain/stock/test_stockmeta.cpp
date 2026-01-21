@@ -33,8 +33,9 @@ TEST_F(Test_StockMeta, Test_constructor_and_destructor)
     ASSERT_EQ(stockMeta.instrumentTicker,    "");
     ASSERT_EQ(stockMeta.instrumentName,      "");
     ASSERT_EQ(stockMeta.forQualInvestorFlag, false);
-    ASSERT_NEAR(stockMeta.minPriceIncrement, 0.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.lot,                 0);
     ASSERT_EQ(stockMeta.pricePrecision,      0);
+    ASSERT_NEAR(stockMeta.minPriceIncrement, 0.0f, 0.0001f);
     ASSERT_EQ(stockMeta.lastTradeTime,       QTime(0, 0));
     ASSERT_EQ(stockMeta.turnover,            0);
     // clang-format on
@@ -48,10 +49,11 @@ TEST_F(Test_StockMeta, Test_copy_constructor)
     stockMeta.instrumentTicker    = "b";
     stockMeta.instrumentName      = "c";
     stockMeta.forQualInvestorFlag = true;
-    stockMeta.minPriceIncrement   = 1.0f;
+    stockMeta.lot                 = 1;
     stockMeta.pricePrecision      = 2;
-    stockMeta.lastTradeTime       = QTime(3, 4);
-    stockMeta.turnover            = 5;
+    stockMeta.minPriceIncrement   = 3.0f;
+    stockMeta.lastTradeTime       = QTime(4, 5);
+    stockMeta.turnover            = 6;
 
     const StockMeta stockMeta2(stockMeta);
 
@@ -61,10 +63,11 @@ TEST_F(Test_StockMeta, Test_copy_constructor)
     ASSERT_EQ(stockMeta2.instrumentTicker,    "b");
     ASSERT_EQ(stockMeta2.instrumentName,      "c");
     ASSERT_EQ(stockMeta2.forQualInvestorFlag, true);
-    ASSERT_NEAR(stockMeta2.minPriceIncrement, 1.0f, 0.0001f);
+    ASSERT_EQ(stockMeta2.lot,                 1);
     ASSERT_EQ(stockMeta2.pricePrecision,      2);
-    ASSERT_EQ(stockMeta2.lastTradeTime,       QTime(3, 4));
-    ASSERT_EQ(stockMeta2.turnover,            5);
+    ASSERT_NEAR(stockMeta2.minPriceIncrement, 3.0f, 0.0001f);
+    ASSERT_EQ(stockMeta2.lastTradeTime,       QTime(4, 5));
+    ASSERT_EQ(stockMeta2.turnover,            6);
     // clang-format on
 }
 
@@ -77,10 +80,11 @@ TEST_F(Test_StockMeta, Test_assign)
     stockMeta.instrumentTicker    = "b";
     stockMeta.instrumentName      = "c";
     stockMeta.forQualInvestorFlag = true;
-    stockMeta.minPriceIncrement   = 1.0f;
+    stockMeta.lot                 = 1;
     stockMeta.pricePrecision      = 2;
-    stockMeta.lastTradeTime       = QTime(3, 4);
-    stockMeta.turnover            = 5;
+    stockMeta.minPriceIncrement   = 3.0f;
+    stockMeta.lastTradeTime       = QTime(4, 5);
+    stockMeta.turnover            = 6;
 
     stockMeta2 = stockMeta;
 
@@ -90,10 +94,11 @@ TEST_F(Test_StockMeta, Test_assign)
     ASSERT_EQ(stockMeta2.instrumentTicker,    "b");
     ASSERT_EQ(stockMeta2.instrumentName,      "c");
     ASSERT_EQ(stockMeta2.forQualInvestorFlag, true);
-    ASSERT_NEAR(stockMeta2.minPriceIncrement, 1.0f, 0.0001f);
+    ASSERT_EQ(stockMeta2.lot,                 1);
     ASSERT_EQ(stockMeta2.pricePrecision,      2);
-    ASSERT_EQ(stockMeta2.lastTradeTime,       QTime(3, 4));
-    ASSERT_EQ(stockMeta2.turnover,            5);
+    ASSERT_NEAR(stockMeta2.minPriceIncrement, 3.0f, 0.0001f);
+    ASSERT_EQ(stockMeta2.lastTradeTime,       QTime(4, 5));
+    ASSERT_EQ(stockMeta2.turnover,            6);
     // clang-format on
 }
 
@@ -107,14 +112,15 @@ TEST_F(Test_StockMeta, Test_fromJsonObject)
     ASSERT_EQ(stockMeta.instrumentTicker,    "");
     ASSERT_EQ(stockMeta.instrumentName,      "");
     ASSERT_EQ(stockMeta.forQualInvestorFlag, false);
-    ASSERT_NEAR(stockMeta.minPriceIncrement, 0.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.lot,                 0);
     ASSERT_EQ(stockMeta.pricePrecision,      0);
+    ASSERT_NEAR(stockMeta.minPriceIncrement, 0.0f, 0.0001f);
     ASSERT_EQ(stockMeta.lastTradeTime,       QTime(0, 0));
     ASSERT_EQ(stockMeta.turnover,            0);
     // clang-format on
 
     const QString content =
-        R"({"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"03:04:00","minPriceIncrement":"1.00","pricePrecision":2,"turnover":5})";
+        R"({"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"04:05:00","lot":1,"minPriceIncrement":"3.00","pricePrecision":2,"turnover":6})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -129,10 +135,11 @@ TEST_F(Test_StockMeta, Test_fromJsonObject)
     ASSERT_EQ(stockMeta.instrumentTicker,    "b");
     ASSERT_EQ(stockMeta.instrumentName,      "c");
     ASSERT_EQ(stockMeta.forQualInvestorFlag, true);
-    ASSERT_NEAR(stockMeta.minPriceIncrement, 1.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.lot,                 1);
     ASSERT_EQ(stockMeta.pricePrecision,      2);
-    ASSERT_EQ(stockMeta.lastTradeTime,       QTime(3, 4));
-    ASSERT_EQ(stockMeta.turnover,            5);
+    ASSERT_NEAR(stockMeta.minPriceIncrement, 3.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.lastTradeTime,       QTime(4, 5));
+    ASSERT_EQ(stockMeta.turnover,            6);
     // clang-format on
 
     const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
@@ -151,17 +158,18 @@ TEST_F(Test_StockMeta, Test_toJsonObject)
     stockMeta.instrumentTicker    = "b";
     stockMeta.instrumentName      = "c";
     stockMeta.forQualInvestorFlag = true;
-    stockMeta.minPriceIncrement   = 1.0f;
+    stockMeta.lot                 = 1;
     stockMeta.pricePrecision      = 2;
-    stockMeta.lastTradeTime       = QTime(3, 4);
-    stockMeta.turnover            = 5;
+    stockMeta.minPriceIncrement   = 3.0f;
+    stockMeta.lastTradeTime       = QTime(4, 5);
+    stockMeta.turnover            = 6;
 
     const QJsonObject   jsonObject = stockMeta.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
 
     const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
-        R"({"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"03:04:00","minPriceIncrement":"1.00","pricePrecision":2,"turnover":5})";
+        R"({"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"04:05:00","lot":1,"minPriceIncrement":"3.00","pricePrecision":2,"turnover":6})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -175,19 +183,21 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta.instrumentTicker    = "b";
     stockMeta.instrumentName      = "c";
     stockMeta.forQualInvestorFlag = true;
-    stockMeta.minPriceIncrement   = 1.0f;
+    stockMeta.lot                 = 1;
     stockMeta.pricePrecision      = 2;
-    stockMeta.lastTradeTime       = QTime(3, 4);
-    stockMeta.turnover            = 5;
+    stockMeta.minPriceIncrement   = 3.0f;
+    stockMeta.lastTradeTime       = QTime(4, 5);
+    stockMeta.turnover            = 6;
 
     stockMeta2.instrumentId        = "a";
     stockMeta2.instrumentTicker    = "b";
     stockMeta2.instrumentName      = "c";
     stockMeta2.forQualInvestorFlag = true;
-    stockMeta2.minPriceIncrement   = 1.0f;
+    stockMeta2.lot                 = 1;
     stockMeta2.pricePrecision      = 2;
-    stockMeta2.lastTradeTime       = QTime(3, 4);
-    stockMeta2.turnover            = 5;
+    stockMeta2.minPriceIncrement   = 3.0f;
+    stockMeta2.lastTradeTime       = QTime(4, 5);
+    stockMeta2.turnover            = 6;
 
     ASSERT_EQ(stockMeta, stockMeta2);
 
@@ -211,9 +221,9 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta2.forQualInvestorFlag = true;
     ASSERT_EQ(stockMeta, stockMeta2);
 
-    stockMeta2.minPriceIncrement = 1000.0f;
+    stockMeta2.lot = -1;
     ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.minPriceIncrement = 1.0f;
+    stockMeta2.lot = 1;
     ASSERT_EQ(stockMeta, stockMeta2);
 
     stockMeta2.pricePrecision = -2;
@@ -221,14 +231,19 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta2.pricePrecision = 2;
     ASSERT_EQ(stockMeta, stockMeta2);
 
-    stockMeta2.lastTradeTime = QTime(4, 3);
+    stockMeta2.minPriceIncrement = 3000.0f;
     ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.lastTradeTime = QTime(3, 4);
+    stockMeta2.minPriceIncrement = 3.0f;
     ASSERT_EQ(stockMeta, stockMeta2);
 
-    stockMeta2.turnover = 1005;
+    stockMeta2.lastTradeTime = QTime(5, 4);
     ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.turnover = 5;
+    stockMeta2.lastTradeTime = QTime(4, 5);
+    ASSERT_EQ(stockMeta, stockMeta2);
+
+    stockMeta2.turnover = -6;
+    ASSERT_NE(stockMeta, stockMeta2);
+    stockMeta2.turnover = 6;
     ASSERT_EQ(stockMeta, stockMeta2);
 }
 // NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

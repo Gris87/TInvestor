@@ -16,8 +16,9 @@ StockMeta::StockMeta() :
     instrumentTicker(),
     instrumentName(),
     forQualInvestorFlag(),
-    minPriceIncrement(),
+    lot(),
     pricePrecision(),
+    minPriceIncrement(),
     lastTradeTime(0, 0),
     turnover()
 {
@@ -46,14 +47,19 @@ static void metaForQualInvestorFlagParse(StockMeta* meta, simdjson::ondemand::va
     meta->forQualInvestorFlag = value.get_bool().value();
 }
 
-static void metaMinPriceIncrementParse(StockMeta* meta, simdjson::ondemand::value value)
+static void metaLotParse(StockMeta* meta, simdjson::ondemand::value value)
 {
-    meta->minPriceIncrement = value.get_double_in_string().value();
+    meta->lot = value.get_int64();
 }
 
 static void metaPricePrecisionParse(StockMeta* meta, simdjson::ondemand::value value)
 {
     meta->pricePrecision = value.get_int64();
+}
+
+static void metaMinPriceIncrementParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    meta->minPriceIncrement = value.get_double_in_string().value();
 }
 
 static void metaLastTradeTimeParse(StockMeta* meta, simdjson::ondemand::value value)
@@ -82,8 +88,9 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
     {"instrumentTicker",    metaInstrumentTickerParse   },
     {"instrumentName",      metaInstrumentNameParse     },
     {"forQualInvestorFlag", metaForQualInvestorFlagParse},
-    {"minPriceIncrement",   metaMinPriceIncrementParse  },
+    {"lot",                 metaLotParse                },
     {"pricePrecision",      metaPricePrecisionParse     },
+    {"minPriceIncrement",   metaMinPriceIncrementParse  },
     {"lastTradeTime",       metaLastTradeTimeParse      },
     {"turnover",            metaTurnoverParse           }
 };
@@ -109,8 +116,9 @@ QJsonObject StockMeta::toJsonObject() const
     res.insert("instrumentTicker",    instrumentTicker);
     res.insert("instrumentName",      instrumentName);
     res.insert("forQualInvestorFlag", forQualInvestorFlag);
-    res.insert("minPriceIncrement",   QString::number(minPriceIncrement, 'f', pricePrecision));
+    res.insert("lot",                 lot);
     res.insert("pricePrecision",      pricePrecision);
+    res.insert("minPriceIncrement",   QString::number(minPriceIncrement, 'f', pricePrecision));
     res.insert("lastTradeTime",       lastTradeTime.toString(TIME_FORMAT));
     res.insert("turnover",            turnover);
     // clang-format on
@@ -120,8 +128,13 @@ QJsonObject StockMeta::toJsonObject() const
 
 bool operator==(const StockMeta& lhs, const StockMeta& rhs)
 {
-    return lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
-           lhs.instrumentName == rhs.instrumentName && lhs.forQualInvestorFlag == rhs.forQualInvestorFlag &&
-           qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < FLOAT_EPSILON && lhs.pricePrecision == rhs.pricePrecision &&
-           lhs.lastTradeTime == rhs.lastTradeTime && lhs.turnover == rhs.turnover;
+    return lhs.instrumentId == rhs.instrumentId &&
+           lhs.instrumentTicker == rhs.instrumentTicker &&
+           lhs.instrumentName == rhs.instrumentName &&
+           lhs.forQualInvestorFlag == rhs.forQualInvestorFlag &&
+           lhs.lot == rhs.lot &&
+           lhs.pricePrecision == rhs.pricePrecision &&
+           qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < FLOAT_EPSILON &&
+           lhs.lastTradeTime == rhs.lastTradeTime &&
+           lhs.turnover == rhs.turnover;
 }

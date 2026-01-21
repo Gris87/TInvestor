@@ -27,8 +27,9 @@ struct StockMeta
     QString instrumentTicker;
     QString instrumentName;
     bool    forQualInvestorFlag;
-    float   minPriceIncrement;
+    qint32  lot;
     qint8   pricePrecision;
+    float   minPriceIncrement;
     QTime   lastTradeTime;
     qint64  turnover;
 };

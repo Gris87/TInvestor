@@ -1,5 +1,6 @@
 Is turnover can be resetted?
 Is turnover calculates correct (Check FEES)
+Use stock instead of instrument if possible
 Additional gap for bi-dir
 Do not sell bi-dir with nice yield
 Buy if shorts disabled during last 5 minutes
