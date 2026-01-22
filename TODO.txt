@@ -5,6 +5,7 @@ Always check for buy decisions even if already keep some
 Bi-dir on non-working hours (weekend also)
 Create script for buying/selling in parts
 Find best configs for different commission
+Change config defaults
 Improve coverage
 Create release
 

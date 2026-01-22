@@ -259,20 +259,7 @@ static grpc::Status getCandlesAction(
     grpc::ClientContext context;
     context.set_credentials(creds);
 
-    // TODO: Remove it
-    grpc::Status s = rawGrpcClient->getCandles(service, &context, req, resp.get());
-
-    if (!s.ok() && s.error_code() == grpc::StatusCode::NOT_FOUND)
-    {
-        std::string        json_output;
-        const absl::Status status = google::protobuf::util::MessageToJsonString(req, &json_output);
-
-        qInfo() << status.ok() << json_output;
-    }
-
-    return s;
-
-    // return rawGrpcClient->getCandles(service, &context, req, resp.get());
+    return rawGrpcClient->getCandles(service, &context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::GetCandlesResponse>
