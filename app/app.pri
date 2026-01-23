@@ -114,6 +114,8 @@ SOURCES += \
     src/threads/bidirtrading/bidirtradingthreadfactory.cpp \
     src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp \
     src/threads/cleanup/cleanupthread.cpp \
+    src/threads/detectdividends/detectdividendsthread.cpp \
+    src/threads/detectshorts/detectshortsthread.cpp \
     src/threads/follow/followthread.cpp \
     src/threads/highliquidity/highliquiditythread.cpp \
     src/threads/lastprice/lastpricethread.cpp \
@@ -373,6 +375,10 @@ HEADERS += \
     src/threads/bidirtradingcontrol/ibidirtradingcontrolthread.h \
     src/threads/cleanup/cleanupthread.h \
     src/threads/cleanup/icleanupthread.h \
+    src/threads/detectdividends/detectdividendsthread.h \
+    src/threads/detectdividends/idetectdividendsthread.h \
+    src/threads/detectshorts/detectshortsthread.h \
+    src/threads/detectshorts/idetectshortsthread.h \
     src/threads/follow/followthread.h \
     src/threads/follow/ifollowthread.h \
     src/threads/highliquidity/highliquiditythread.h \
