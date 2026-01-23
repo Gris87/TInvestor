@@ -22,6 +22,8 @@ struct StockMeta
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 
+    bool compareForMerge(const StockMeta& another);
+
     QString instrumentId;
     Logo*   instrumentLogo;
     QString instrumentTicker;

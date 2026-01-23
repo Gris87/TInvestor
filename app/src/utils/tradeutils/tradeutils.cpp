@@ -103,12 +103,5 @@ qint64 TradeUtils::calculateAmountOfLotsToBuy(
         res = money / lotPriceWithCommission;
     }
 
-    // TODO: Remove it
-    if (res == 1)
-    {
-        qInfo() << "AAAAAAAAAAAAAAA" << limitStockPurchase << limitStockPurchasePart << limitByTurnover << limitByTurnoverPercent
-                << money << totalCost << turnover << lotPrice << lotPriceWithCommission;
-    }
-
     return res;
 }

@@ -126,6 +126,13 @@ QJsonObject StockMeta::toJsonObject() const
     return res;
 }
 
+bool StockMeta::compareForMerge(const StockMeta& another)
+{
+    return instrumentId == another.instrumentId && instrumentTicker == another.instrumentTicker &&
+           instrumentName == another.instrumentName && forQualInvestorFlag == another.forQualInvestorFlag && lot == another.lot &&
+           pricePrecision == another.pricePrecision && qAbs(minPriceIncrement - another.minPriceIncrement) < FLOAT_EPSILON;
+}
+
 bool operator==(const StockMeta& lhs, const StockMeta& rhs)
 {
     return lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&

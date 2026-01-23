@@ -101,11 +101,17 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
             Stock* stock = existingStocks[newMeta.instrumentId];
             stock->writeLock();
 
-            if (stock->meta != newMeta)
+            if (!stock->meta.compareForMerge(newMeta))
             {
                 changed = true;
 
+                QTime  lastTradeTimeBackup = stock->meta.lastTradeTime;
+                qint64 turnoverBackup      = stock->meta.turnover;
+
                 stock->meta = newMeta;
+
+                stock->meta.lastTradeTime = lastTradeTimeBackup;
+                stock->meta.turnover      = turnoverBackup;
             }
 
             stock->writeUnlock();
