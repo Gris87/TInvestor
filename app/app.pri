@@ -92,8 +92,10 @@ SOURCES += \
     src/domain/quantityandcost/quantityandcost.cpp \
     src/domain/quotation/quotation.cpp \
     src/domain/stock/stock.cpp \
+    src/domain/stock/stockdividendsmeta.cpp \
     src/domain/stock/stockmeta.cpp \
     src/domain/stock/stockoperational.cpp \
+    src/domain/stock/stockshortsmeta.cpp \
     src/domain/stock/stocktableentry.cpp \
     src/domain/trading/bidirtradinginfo.cpp \
     src/domain/trading/tradinginfo.cpp \
@@ -339,8 +341,10 @@ HEADERS += \
     src/domain/quotation/quotation.h \
     src/domain/stock/stock.h \
     src/domain/stock/stockdata.h \
+    src/domain/stock/stockdividendsmeta.h \
     src/domain/stock/stockmeta.h \
     src/domain/stock/stockoperational.h \
+    src/domain/stock/stockshortsmeta.h \
     src/domain/stock/stocktableentry.h \
     src/domain/trading/bidirtradinginfo.h \
     src/domain/trading/tradinginfo.h \

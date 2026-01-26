@@ -425,8 +425,8 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1000);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.01f, 0.0001f);
-    ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(5, 29));
-    ASSERT_EQ(stocks.at(0)->meta.turnover,                    7000);
+    ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
+    ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  200);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);

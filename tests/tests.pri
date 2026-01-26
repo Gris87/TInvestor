@@ -88,8 +88,10 @@ SOURCES += \
     src/domain/quantityandcost/test_quantityandcost.cpp \
     src/domain/quotation/test_quotation.cpp \
     src/domain/stock/test_stock.cpp \
+    src/domain/stock/test_stockdividendsmeta.cpp \
     src/domain/stock/test_stockmeta.cpp \
     src/domain/stock/test_stockoperational.cpp \
+    src/domain/stock/test_stockshortsmeta.cpp \
     src/domain/stock/test_stocktableentry.cpp \
     src/domain/trading/test_bidirtradinginfo.cpp \
     src/domain/trading/test_tradinginfo.cpp \

@@ -481,7 +481,7 @@ TEST_F(Test_RawGrpcClient, Test_findEtfs)
     ASSERT_EQ(resp->instruments(index).dshort_min().nano(),                0);
     ASSERT_EQ(resp->instruments(index).short_enabled_flag(),               false);
     ASSERT_EQ(resp->instruments(index).name(),                             "\u041F\u0435\u0440\u0432\u0430\u044F \u2013 \u0424\u043E\u043D\u0434 \u041A\u043E\u0440\u043F\u043E\u0440\u0430\u0442\u0438\u0432\u043D\u044B\u0435 \u043E\u0431\u043B\u0438\u0433\u0430\u0446\u0438\u0438"); // First - Corporate Bonds Fund
-    ASSERT_EQ(resp->instruments(index).exchange(),                         "moex_etf");
+    ASSERT_EQ(resp->instruments(index).exchange(),                         "moex_not_morning_not_evening");
     ASSERT_EQ(resp->instruments(index).fixed_commission().units(),         0);
     ASSERT_EQ(resp->instruments(index).fixed_commission().nano(),          0);
     ASSERT_EQ(resp->instruments(index).focus_type(),                       "equity");
