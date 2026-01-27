@@ -34,6 +34,11 @@ TEST_F(Test_Stock, Test_constructor_and_destructor)
     ASSERT_NEAR(stock.meta.minPriceIncrement,         0.0f, 0.0001f);
     ASSERT_EQ(stock.meta.lastTradeTime,               QTime(0, 0));
     ASSERT_EQ(stock.meta.turnover,                    0);
+    ASSERT_EQ(stock.meta.dividends.createTimestamp,   0);
+    ASSERT_EQ(stock.meta.dividends.paymentTimestamp,  0);
+    ASSERT_NEAR(stock.meta.dividends.yield,           0.0f, 0.0001f);
+    ASSERT_EQ(stock.meta.shorts.enabled,              false);
+    ASSERT_EQ(stock.meta.shorts.lastEnabledTimestamp, 0);
     ASSERT_EQ(stock.operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stock.operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stock.operational.specifiedDatePrice, -1.0f, 0.0001f);
@@ -50,25 +55,30 @@ TEST_F(Test_Stock, Test_copy_constructor)
     StockOperationalData stockData1;
     StockData            stockData2;
 
-    stockData1.timestamp = 11;
-    stockData1.price     = 12.0f;
-    stockData2.timestamp = 13;
-    stockData2.quantity  = 14;
-    stockData2.price     = 15.0f;
+    stockData1.timestamp = 15;
+    stockData1.price     = 16.0f;
+    stockData2.timestamp = 17;
+    stockData2.quantity  = 18;
+    stockData2.price     = 19.0f;
 
-    stock.meta.instrumentId               = "a";
-    stock.meta.instrumentTicker           = "b";
-    stock.meta.instrumentName             = "c";
-    stock.meta.forQualInvestorFlag        = true;
-    stock.meta.lot                        = 1;
-    stock.meta.pricePrecision             = 2;
-    stock.meta.minPriceIncrement          = 3.0f;
-    stock.meta.lastTradeTime              = QTime(4, 5);
-    stock.meta.turnover                   = 6;
-    stock.operational.lastStoredTimestamp = 7;
-    stock.operational.dayStartPrice       = 8.0f;
-    stock.operational.specifiedDatePrice  = 9.0f;
-    stock.operational.payback             = 10.0f;
+    stock.meta.instrumentId                = "a";
+    stock.meta.instrumentTicker            = "b";
+    stock.meta.instrumentName              = "c";
+    stock.meta.forQualInvestorFlag         = true;
+    stock.meta.lot                         = 1;
+    stock.meta.pricePrecision              = 2;
+    stock.meta.minPriceIncrement           = 3.0f;
+    stock.meta.lastTradeTime               = QTime(4, 5);
+    stock.meta.turnover                    = 6;
+    stock.meta.dividends.createTimestamp   = 7;
+    stock.meta.dividends.paymentTimestamp  = 8;
+    stock.meta.dividends.yield             = 9;
+    stock.meta.shorts.enabled              = true;
+    stock.meta.shorts.lastEnabledTimestamp = 10;
+    stock.operational.lastStoredTimestamp  = 11;
+    stock.operational.dayStartPrice        = 12.0f;
+    stock.operational.specifiedDatePrice   = 13.0f;
+    stock.operational.payback              = 14.0f;
     stock.operational.detailedData << stockData1;
     stock.data << stockData2;
 
@@ -85,17 +95,22 @@ TEST_F(Test_Stock, Test_copy_constructor)
     ASSERT_NEAR(stock2.meta.minPriceIncrement,                 3.0f, 0.0001f);
     ASSERT_EQ(stock2.meta.lastTradeTime,                       QTime(4, 5));
     ASSERT_EQ(stock2.meta.turnover,                            6);
-    ASSERT_EQ(stock2.operational.lastStoredTimestamp,          7);
-    ASSERT_NEAR(stock2.operational.dayStartPrice,              8.0f, 0.0001f);
-    ASSERT_NEAR(stock2.operational.specifiedDatePrice,         9.0f, 0.0001f);
-    ASSERT_NEAR(stock2.operational.payback,                    10.0f, 0.0001f);
+    ASSERT_EQ(stock2.meta.dividends.createTimestamp,           7);
+    ASSERT_EQ(stock2.meta.dividends.paymentTimestamp,          8);
+    ASSERT_NEAR(stock2.meta.dividends.yield,                   9.0f, 0.0001f);
+    ASSERT_EQ(stock2.meta.shorts.enabled,                      true);
+    ASSERT_EQ(stock2.meta.shorts.lastEnabledTimestamp,         10);
+    ASSERT_EQ(stock2.operational.lastStoredTimestamp,          11);
+    ASSERT_NEAR(stock2.operational.dayStartPrice,              12.0f, 0.0001f);
+    ASSERT_NEAR(stock2.operational.specifiedDatePrice,         13.0f, 0.0001f);
+    ASSERT_NEAR(stock2.operational.payback,                    14.0f, 0.0001f);
     ASSERT_EQ(stock2.operational.detailedData.size(),          1);
-    ASSERT_EQ(stock2.operational.detailedData.at(0).timestamp, 11);
-    ASSERT_NEAR(stock2.operational.detailedData.at(0).price,   12.0f, 0.0001f);
+    ASSERT_EQ(stock2.operational.detailedData.at(0).timestamp, 15);
+    ASSERT_NEAR(stock2.operational.detailedData.at(0).price,   16.0f, 0.0001f);
     ASSERT_EQ(stock2.data.size(),                              1);
-    ASSERT_EQ(stock2.data.at(0).timestamp,                     13);
-    ASSERT_EQ(stock2.data.at(0).quantity,                      14);
-    ASSERT_NEAR(stock2.data.at(0).price,                       15.0f, 0.0001f);
+    ASSERT_EQ(stock2.data.at(0).timestamp,                     17);
+    ASSERT_EQ(stock2.data.at(0).quantity,                      18);
+    ASSERT_NEAR(stock2.data.at(0).price,                       19.0f, 0.0001f);
     // clang-format on
 }
 
@@ -107,25 +122,30 @@ TEST_F(Test_Stock, Test_assign)
     StockOperationalData stockData1;
     StockData            stockData2;
 
-    stockData1.timestamp = 11;
-    stockData1.price     = 12.0f;
-    stockData2.timestamp = 13;
-    stockData2.quantity  = 14;
-    stockData2.price     = 15.0f;
+    stockData1.timestamp = 15;
+    stockData1.price     = 16.0f;
+    stockData2.timestamp = 17;
+    stockData2.quantity  = 18;
+    stockData2.price     = 19.0f;
 
-    stock.meta.instrumentId               = "a";
-    stock.meta.instrumentTicker           = "b";
-    stock.meta.instrumentName             = "c";
-    stock.meta.forQualInvestorFlag        = true;
-    stock.meta.lot                        = 1;
-    stock.meta.pricePrecision             = 2;
-    stock.meta.minPriceIncrement          = 3.0f;
-    stock.meta.lastTradeTime              = QTime(4, 5);
-    stock.meta.turnover                   = 6;
-    stock.operational.lastStoredTimestamp = 7;
-    stock.operational.dayStartPrice       = 8.0f;
-    stock.operational.specifiedDatePrice  = 9.0f;
-    stock.operational.payback             = 10.0f;
+    stock.meta.instrumentId                = "a";
+    stock.meta.instrumentTicker            = "b";
+    stock.meta.instrumentName              = "c";
+    stock.meta.forQualInvestorFlag         = true;
+    stock.meta.lot                         = 1;
+    stock.meta.pricePrecision              = 2;
+    stock.meta.minPriceIncrement           = 3.0f;
+    stock.meta.lastTradeTime               = QTime(4, 5);
+    stock.meta.turnover                    = 6;
+    stock.meta.dividends.createTimestamp   = 7;
+    stock.meta.dividends.paymentTimestamp  = 8;
+    stock.meta.dividends.yield             = 9;
+    stock.meta.shorts.enabled              = true;
+    stock.meta.shorts.lastEnabledTimestamp = 10;
+    stock.operational.lastStoredTimestamp  = 11;
+    stock.operational.dayStartPrice        = 12.0f;
+    stock.operational.specifiedDatePrice   = 13.0f;
+    stock.operational.payback              = 14.0f;
     stock.operational.detailedData << stockData1;
     stock.data << stockData2;
 
@@ -142,17 +162,22 @@ TEST_F(Test_Stock, Test_assign)
     ASSERT_NEAR(stock2.meta.minPriceIncrement,                 3.0f, 0.0001f);
     ASSERT_EQ(stock2.meta.lastTradeTime,                       QTime(4, 5));
     ASSERT_EQ(stock2.meta.turnover,                            6);
-    ASSERT_EQ(stock2.operational.lastStoredTimestamp,          7);
-    ASSERT_NEAR(stock2.operational.dayStartPrice,              8.0f, 0.0001f);
-    ASSERT_NEAR(stock2.operational.specifiedDatePrice,         9.0f, 0.0001f);
-    ASSERT_NEAR(stock2.operational.payback,                    10.0f, 0.0001f);
+    ASSERT_EQ(stock2.meta.dividends.createTimestamp,           7);
+    ASSERT_EQ(stock2.meta.dividends.paymentTimestamp,          8);
+    ASSERT_NEAR(stock2.meta.dividends.yield,                   9.0f, 0.0001f);
+    ASSERT_EQ(stock2.meta.shorts.enabled,                      true);
+    ASSERT_EQ(stock2.meta.shorts.lastEnabledTimestamp,         10);
+    ASSERT_EQ(stock2.operational.lastStoredTimestamp,          11);
+    ASSERT_NEAR(stock2.operational.dayStartPrice,              12.0f, 0.0001f);
+    ASSERT_NEAR(stock2.operational.specifiedDatePrice,         13.0f, 0.0001f);
+    ASSERT_NEAR(stock2.operational.payback,                    14.0f, 0.0001f);
     ASSERT_EQ(stock2.operational.detailedData.size(),          1);
-    ASSERT_EQ(stock2.operational.detailedData.at(0).timestamp, 11);
-    ASSERT_NEAR(stock2.operational.detailedData.at(0).price,   12.0f, 0.0001f);
+    ASSERT_EQ(stock2.operational.detailedData.at(0).timestamp, 15);
+    ASSERT_NEAR(stock2.operational.detailedData.at(0).price,   16.0f, 0.0001f);
     ASSERT_EQ(stock2.data.size(),                              1);
-    ASSERT_EQ(stock2.data.at(0).timestamp,                     13);
-    ASSERT_EQ(stock2.data.at(0).quantity,                      14);
-    ASSERT_NEAR(stock2.data.at(0).price,                       15.0f, 0.0001f);
+    ASSERT_EQ(stock2.data.at(0).timestamp,                     17);
+    ASSERT_EQ(stock2.data.at(0).quantity,                      18);
+    ASSERT_NEAR(stock2.data.at(0).price,                       19.0f, 0.0001f);
     // clang-format on
 }
 

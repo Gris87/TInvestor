@@ -50,14 +50,19 @@ TEST_F(Test_OrderWavesDialogFactory, Test_newInstance)
     StrictMock<OrderWavesWidgetMock>* orderWavesWidgetMock =
         new StrictMock<OrderWavesWidgetMock>(); // Will be deleted in OrderWavesDialog constructor
 
-    stock.meta.instrumentTicker    = "SERG";
-    stock.meta.instrumentName      = "Serezha stock";
-    stock.meta.forQualInvestorFlag = false;
-    stock.meta.lot                 = 1;
-    stock.meta.pricePrecision      = 2;
-    stock.meta.minPriceIncrement   = 1.5f;
-    stock.meta.lastTradeTime       = QTime(18, 39);
-    stock.meta.turnover            = 9310000;
+    stock.meta.instrumentTicker            = "SERG";
+    stock.meta.instrumentName              = "Serezha stock";
+    stock.meta.forQualInvestorFlag         = false;
+    stock.meta.lot                         = 1;
+    stock.meta.pricePrecision              = 2;
+    stock.meta.minPriceIncrement           = 1.5f;
+    stock.meta.lastTradeTime               = QTime(18, 39);
+    stock.meta.turnover                    = 9310000;
+    stock.meta.dividends.createTimestamp   = 1735678800000;
+    stock.meta.dividends.paymentTimestamp  = 1738357200000;
+    stock.meta.dividends.yield             = 10.0f;
+    stock.meta.shorts.enabled              = true;
+    stock.meta.shorts.lastEnabledTimestamp = 1735678800000;
 
     EXPECT_CALL(orderWavesWidgetFactoryMock, newInstance(2, FloatEq(1.5f), NotNull())).WillOnce(Return(orderWavesWidgetMock));
     EXPECT_CALL(orderBookThreadMock, setStock(&stock));

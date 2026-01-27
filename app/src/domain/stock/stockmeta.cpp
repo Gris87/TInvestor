@@ -20,7 +20,9 @@ StockMeta::StockMeta() :
     pricePrecision(),
     minPriceIncrement(),
     lastTradeTime(0, 0),
-    turnover()
+    turnover(),
+    dividends(),
+    shorts()
 {
 }
 
@@ -73,6 +75,16 @@ static void metaTurnoverParse(StockMeta* meta, simdjson::ondemand::value value)
     meta->turnover = value.get_int64();
 }
 
+static void metaDividendsParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    meta->dividends.fromJsonObject(value.get_object());
+}
+
+static void metaShortsParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    meta->shorts.fromJsonObject(value.get_object());
+}
+
 static void metaThrowParseException(
     StockMeta* /*meta*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
@@ -92,7 +104,9 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
     {"pricePrecision",      metaPricePrecisionParse     },
     {"minPriceIncrement",   metaMinPriceIncrementParse  },
     {"lastTradeTime",       metaLastTradeTimeParse      },
-    {"turnover",            metaTurnoverParse           }
+    {"turnover",            metaTurnoverParse           },
+    {"dividends",           metaDividendsParse          },
+    {"shorts",              metaShortsParse             }
 };
 // clang-format on
 
@@ -121,6 +135,8 @@ QJsonObject StockMeta::toJsonObject() const
     res.insert("minPriceIncrement",   QString::number(minPriceIncrement, 'f', pricePrecision));
     res.insert("lastTradeTime",       lastTradeTime.toString(TIME_FORMAT));
     res.insert("turnover",            turnover);
+    res.insert("dividends",           dividends.toJsonObject());
+    res.insert("shorts",              shorts.toJsonObject());
     // clang-format on
 
     return res;
@@ -138,5 +154,6 @@ bool operator==(const StockMeta& lhs, const StockMeta& rhs)
     return lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
            lhs.instrumentName == rhs.instrumentName && lhs.forQualInvestorFlag == rhs.forQualInvestorFlag && lhs.lot == rhs.lot &&
            lhs.pricePrecision == rhs.pricePrecision && qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < FLOAT_EPSILON &&
-           lhs.lastTradeTime == rhs.lastTradeTime && lhs.turnover == rhs.turnover;
+           lhs.lastTradeTime == rhs.lastTradeTime && lhs.turnover == rhs.turnover && lhs.dividends == rhs.dividends &&
+           lhs.shorts == rhs.shorts;
 }

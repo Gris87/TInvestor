@@ -5,6 +5,8 @@
 #include <QJsonObject>
 
 #include "src/domain/logo/logo.h"
+#include "src/domain/stock/stockdividendsmeta.h"
+#include "src/domain/stock/stockshortsmeta.h"
 #include "src/simdjson/simdjson_wrapped.h"
 
 
@@ -24,16 +26,18 @@ struct StockMeta
 
     bool compareForMerge(const StockMeta& another);
 
-    QString instrumentId;
-    Logo*   instrumentLogo;
-    QString instrumentTicker;
-    QString instrumentName;
-    bool    forQualInvestorFlag;
-    qint32  lot;
-    qint8   pricePrecision;
-    float   minPriceIncrement;
-    QTime   lastTradeTime;
-    qint64  turnover;
+    QString            instrumentId;
+    Logo*              instrumentLogo;
+    QString            instrumentTicker;
+    QString            instrumentName;
+    bool               forQualInvestorFlag;
+    qint32             lot;
+    qint8              pricePrecision;
+    float              minPriceIncrement;
+    QTime              lastTradeTime;
+    qint64             turnover;
+    StockDividendsMeta dividends;
+    StockShortsMeta    shorts;
 };
 
 

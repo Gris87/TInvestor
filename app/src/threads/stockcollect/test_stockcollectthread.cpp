@@ -231,15 +231,20 @@ TEST_F(Test_StockCollectThread, Test_run)
     Stock         stock;
     QList<Stock*> stocks;
 
-    stock.meta.instrumentId        = "aaaaa";
-    stock.meta.instrumentTicker    = "WAGA";
-    stock.meta.instrumentName      = "Wagadaka too";
-    stock.meta.forQualInvestorFlag = true;
-    stock.meta.lot                 = 1;
-    stock.meta.pricePrecision      = 3;
-    stock.meta.minPriceIncrement   = 0.001f;
-    stock.meta.lastTradeTime       = QTime(18, 39);
-    stock.meta.turnover            = 5000;
+    stock.meta.instrumentId                = "aaaaa";
+    stock.meta.instrumentTicker            = "WAGA";
+    stock.meta.instrumentName              = "Wagadaka too";
+    stock.meta.forQualInvestorFlag         = true;
+    stock.meta.lot                         = 1;
+    stock.meta.pricePrecision              = 3;
+    stock.meta.minPriceIncrement           = 0.001f;
+    stock.meta.lastTradeTime               = QTime(18, 39);
+    stock.meta.turnover                    = 5000;
+    stock.meta.dividends.createTimestamp   = 1735678800000;
+    stock.meta.dividends.paymentTimestamp  = 1738357200000;
+    stock.meta.dividends.yield             = 10.0f;
+    stock.meta.shorts.enabled              = true;
+    stock.meta.shorts.lastEnabledTimestamp = 1735678800000;
 
     stocks << &stock;
 

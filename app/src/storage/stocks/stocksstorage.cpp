@@ -105,13 +105,17 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
             {
                 changed = true;
 
-                QTime  lastTradeTimeBackup = stock->meta.lastTradeTime;
-                qint64 turnoverBackup      = stock->meta.turnover;
+                const QTime              lastTradeTimeBackup = stock->meta.lastTradeTime;
+                const qint64             turnoverBackup      = stock->meta.turnover;
+                const StockDividendsMeta dividendsBackup     = stock->meta.dividends;
+                const StockShortsMeta    shortsBackup        = stock->meta.shorts;
 
                 stock->meta = newMeta;
 
                 stock->meta.lastTradeTime = lastTradeTimeBackup;
                 stock->meta.turnover      = turnoverBackup;
+                stock->meta.dividends     = dividendsBackup;
+                stock->meta.shorts        = shortsBackup;
             }
 
             stock->writeUnlock();
