@@ -73,6 +73,8 @@
 #include "src/threads/bidirtrading/bidirtradingthreadfactory.h"
 #include "src/threads/bidirtradingcontrol/bidirtradingcontrolthread.h"
 #include "src/threads/cleanup/cleanupthread.h"
+#include "src/threads/detectdividends/detectdividendsthread.h"
+#include "src/threads/detectshorts/detectshortsthread.h"
 #include "src/threads/follow/followthread.h"
 #include "src/threads/highliquidity/highliquiditythread.h"
 #include "src/threads/lastprice//lastpricethread.h"
@@ -505,6 +507,8 @@ static int runApplication(QApplication* app)
         &httpClient,
         &grpcClient
     );
+    DetectDividendsThread    detectDividendsThread(&stocksStorage);
+    DetectShortsThread       detectShortsThread(&stocksStorage);
     LastPriceThread          lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     PortfolioLastPriceThread simulatorPortfolioLastPriceThread(&timeUtils, &grpcClient);
     OperationsThread         operationsThread(
@@ -600,6 +604,8 @@ static int runApplication(QApplication* app)
         &cleanupThread,
         &userUpdateThread,
         &stockCollectThread,
+        &detectDividendsThread,
+        &detectShortsThread,
         &lastPriceThread,
         &simulatorPortfolioLastPriceThread,
         &operationsThread,

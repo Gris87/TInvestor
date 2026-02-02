@@ -23,6 +23,8 @@
 #include "src/threads/bidirtrading/ibidirtradingthreadfactory.h"
 #include "src/threads/bidirtradingcontrol/ibidirtradingcontrolthread.h"
 #include "src/threads/cleanup/icleanupthread.h"
+#include "src/threads/detectdividends/idetectdividendsthread.h"
+#include "src/threads/detectshorts/idetectshortsthread.h"
 #include "src/threads/follow/ifollowthread.h"
 #include "src/threads/highliquidity/ihighliquiditythread.h"
 #include "src/threads/lastprice/ilastpricethread.h"
@@ -111,6 +113,8 @@ public:
         ICleanupThread*                         cleanupThread,
         IUserUpdateThread*                      userUpdateThread,
         IStockCollectThread*                    stockCollectThread,
+        IDetectDividendsThread*                 detectDividendsThread,
+        IDetectShortsThread*                    detectShortsThread,
         ILastPriceThread*                       lastPriceThread,
         IPortfolioLastPriceThread*              simulatorPortfolioLastPriceThread,
         IOperationsThread*                      operationsThread,
@@ -151,6 +155,8 @@ public:
     QTimer                              cleanupTimer;
     QTimer                              userUpdateTimer;
     QTimer                              stockCollectTimer;
+    QTimer                              detectDividendsTimer;
+    QTimer                              detectShortsTimer;
     QTimer                              makeDecisionTimer;
     QTimer                              stocksTableUpdateAllTimer;
     QTimer                              stocksTableUpdateLastPricesTimer;
@@ -203,6 +209,8 @@ private:
     ICleanupThread*                         mCleanupThread;
     IUserUpdateThread*                      mUserUpdateThread;
     IStockCollectThread*                    mStockCollectThread;
+    IDetectDividendsThread*                 mDetectDividendsThread;
+    IDetectShortsThread*                    mDetectShortsThread;
     ILastPriceThread*                       mLastPriceThread;
     IPortfolioLastPriceThread*              mSimulatorPortfolioLastPriceThread;
     IOperationsThread*                      mOperationsThread;
@@ -236,6 +244,8 @@ public slots:
     void cleanupTimerTicked();
     void userUpdateTimerTicked();
     void stockCollectTimerTicked();
+    void detectDividendsTimerTicked();
+    void detectShortsTimerTicked();
     void makeDecisionTimerTicked();
     void stocksTableUpdateAllTimerTicked();
     void stocksTableUpdateLastPricesTimerTicked();

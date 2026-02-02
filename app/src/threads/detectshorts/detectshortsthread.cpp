@@ -18,11 +18,15 @@ DetectShortsThread::~DetectShortsThread()
 
 void DetectShortsThread::run()
 {
+    /*
     qDebug() << "Running DetectShortsThread";
 
     blockSignals(false);
 
+    qInfo() << "DetectShortsThread";
+
     qDebug() << "Finish DetectShortsThread";
+    */
 }
 
 void DetectShortsThread::terminateThread()

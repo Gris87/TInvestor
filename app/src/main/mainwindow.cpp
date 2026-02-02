@@ -22,6 +22,8 @@ constexpr qint64  ONE_HOUR                                 = 60LL * ONE_MINUTE;
 constexpr qint64  ONE_DAY                                  = 24LL * ONE_HOUR;
 constexpr qint64  USER_UPDATE_INTERVAL                     = 15LL * ONE_MINUTE; // 15 minutes
 constexpr qint64  PRICE_COLLECT_INTERVAL                   = ONE_HOUR;          // 1 hour
+constexpr qint64  DETECT_DIVIDENDS_INTERVAL                = ONE_MINUTE;        // 1 minute
+constexpr qint64  DETECT_SHORTS_INTERVAL                   = ONE_MINUTE;        // 1 minute
 constexpr qint64  MAKE_DECISION_INTERVAL                   = ONE_MINUTE;        // 1 minute
 constexpr qint64  CLEANUP_INTERVAL                         = ONE_DAY;           // 1 day
 constexpr qint64  STOCKS_TABLE_UPDATE_ALL_INTERVAL         = ONE_DAY;           // 1 day
@@ -85,6 +87,8 @@ MainWindow::MainWindow(
     ICleanupThread*                         cleanupThread,
     IUserUpdateThread*                      userUpdateThread,
     IStockCollectThread*                    stockCollectThread,
+    IDetectDividendsThread*                 detectDividendsThread,
+    IDetectShortsThread*                    detectShortsThread,
     ILastPriceThread*                       lastPriceThread,
     IPortfolioLastPriceThread*              simulatorPortfolioLastPriceThread,
     IOperationsThread*                      operationsThread,
@@ -147,6 +151,8 @@ MainWindow::MainWindow(
     mCleanupThread(cleanupThread),
     mUserUpdateThread(userUpdateThread),
     mStockCollectThread(stockCollectThread),
+    mDetectDividendsThread(detectDividendsThread),
+    mDetectShortsThread(detectShortsThread),
     mLastPriceThread(lastPriceThread),
     mSimulatorPortfolioLastPriceThread(simulatorPortfolioLastPriceThread),
     mOperationsThread(operationsThread),
@@ -291,6 +297,8 @@ MainWindow::MainWindow(
     connect(&cleanupTimer,                            SIGNAL(timeout()),                                           this, SLOT(cleanupTimerTicked()));
     connect(&userUpdateTimer,                         SIGNAL(timeout()),                                           this, SLOT(userUpdateTimerTicked()));
     connect(&stockCollectTimer,                       SIGNAL(timeout()),                                           this, SLOT(stockCollectTimerTicked()));
+    connect(&detectDividendsTimer,                    SIGNAL(timeout()),                                           this, SLOT(detectDividendsTimerTicked()));
+    connect(&detectShortsTimer,                       SIGNAL(timeout()),                                           this, SLOT(detectShortsTimerTicked()));
     connect(&makeDecisionTimer,                       SIGNAL(timeout()),                                           this, SLOT(makeDecisionTimerTicked()));
     connect(&stocksTableUpdateAllTimer,               SIGNAL(timeout()),                                           this, SLOT(stocksTableUpdateAllTimerTicked()));
     connect(&stocksTableUpdateLastPricesTimer,        SIGNAL(timeout()),                                           this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
@@ -347,6 +355,8 @@ MainWindow::~MainWindow()
     mCleanupThread->terminateThread();
     mUserUpdateThread->terminateThread();
     mStockCollectThread->terminateThread();
+    mDetectDividendsThread->terminateThread();
+    mDetectShortsThread->terminateThread();
     mLastPriceThread->terminateThread();
     mSimulatorPortfolioLastPriceThread->terminateThread();
     mOperationsThread->terminateThread();
@@ -373,6 +383,8 @@ MainWindow::~MainWindow()
     mCleanupThread->wait();
     mUserUpdateThread->wait();
     mStockCollectThread->wait();
+    mDetectDividendsThread->wait();
+    mDetectShortsThread->wait();
     mLastPriceThread->wait();
     mSimulatorPortfolioLastPriceThread->wait();
     mOperationsThread->wait();
@@ -463,10 +475,14 @@ void MainWindow::authFailed(const QString& errorCodeString)
 
     mUserUpdateThread->terminateThread();
     mStockCollectThread->terminateThread();
+    mDetectDividendsThread->terminateThread();
+    mDetectShortsThread->terminateThread();
     mLastPriceThread->terminateThread();
 
     userUpdateTimer.stop();
     stockCollectTimer.stop();
+    detectDividendsTimer.stop();
+    detectShortsTimer.stop();
     makeDecisionTimer.stop();
     stocksTableUpdateAllTimer.stop();
     stocksTableUpdateLastPricesTimer.stop();
@@ -480,6 +496,8 @@ void MainWindow::authFailed(const QString& errorCodeString)
 
     mUserUpdateThread->wait();
     mStockCollectThread->wait();
+    mDetectDividendsThread->wait();
+    mDetectShortsThread->wait();
     mLastPriceThread->wait();
 
     ui->actionAuth->setEnabled(true);
@@ -521,6 +539,20 @@ void MainWindow::stockCollectTimerTicked()
     qDebug() << "Price collect timer ticked";
 
     mStockCollectThread->start();
+}
+
+void MainWindow::detectDividendsTimerTicked()
+{
+    qDebug() << "Detect dividends timer ticked";
+
+    mDetectDividendsThread->start();
+}
+
+void MainWindow::detectShortsTimerTicked()
+{
+    qDebug() << "Detect shorts timer ticked";
+
+    mDetectShortsThread->start();
 }
 
 void MainWindow::makeDecisionTimerTicked()
@@ -1136,11 +1168,15 @@ void MainWindow::on_actionAuth_triggered()
 
     userUpdateTimerTicked();
     stockCollectTimerTicked();
+    detectDividendsTimerTicked();
+    detectShortsTimerTicked();
 
     mLastPriceThread->start();
 
     userUpdateTimer.start();
     stockCollectTimer.start();
+    detectDividendsTimer.start();
+    detectShortsTimer.start();
     makeDecisionTimer.start();
     stocksTableUpdateAllTimer.start();
     stocksTableUpdateLastPricesTimer.start();
@@ -1394,6 +1430,8 @@ void MainWindow::init()
 
     userUpdateTimer.setInterval(USER_UPDATE_INTERVAL);
     stockCollectTimer.setInterval(PRICE_COLLECT_INTERVAL);
+    detectDividendsTimer.setInterval(DETECT_DIVIDENDS_INTERVAL);
+    detectShortsTimer.setInterval(DETECT_SHORTS_INTERVAL);
     makeDecisionTimer.setInterval(MAKE_DECISION_INTERVAL);
     stocksTableUpdateAllTimer.setInterval(STOCKS_TABLE_UPDATE_ALL_INTERVAL);
     stocksTableUpdateLastPricesTimer.setInterval(STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL);

@@ -18,11 +18,15 @@ DetectDividendsThread::~DetectDividendsThread()
 
 void DetectDividendsThread::run()
 {
+    /*
     qDebug() << "Running DetectDividendsThread";
 
     blockSignals(false);
 
+    qInfo() << "DetectDividendsThread";
+
     qDebug() << "Finish DetectDividendsThread";
+    */
 }
 
 void DetectDividendsThread::terminateThread()
