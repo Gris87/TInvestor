@@ -977,11 +977,11 @@ TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
     askPrice1->set_nano(0);
     askPrice2->set_units(901);
     askPrice2->set_nano(0);
-    askPrice3->set_units(902);
+    askPrice3->set_units(904);
     askPrice3->set_nano(0);
-    askPrice4->set_units(903);
+    askPrice4->set_units(905);
     askPrice4->set_nano(0);
-    lastPrice->set_units(905);
+    lastPrice->set_units(907);
     lastPrice->set_nano(0);
 
     bid1->set_quantity(100);
@@ -1001,5 +1001,5 @@ TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
 
     ASSERT_EQ(thread->calculateSellPrice(getOrderBookResponse, 870.0, 0.04f), Quotation(900, 0));
 
-    ASSERT_EQ(thread->calculateSellPrice(getOrderBookResponse, 899.0, 0.04f), Quotation(902, 0));
+    ASSERT_EQ(thread->calculateSellPrice(getOrderBookResponse, 899.0, 0.04f), Quotation(904, 0));
 }
