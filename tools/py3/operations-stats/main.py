@@ -54,6 +54,7 @@ def _collect_statistics(args, operations, logs):
     entries = []
 
     from_date = datetime.strptime(args.from_date, "%Y-%m-%d").timestamp() * 1000
+    to_date = datetime.strptime(args.to_date, "%Y-%m-%d").timestamp() * 1000
 
     for operation in operations:
         operation_description = operation["description"]
@@ -63,7 +64,7 @@ def _collect_statistics(args, operations, logs):
             operation_instrumentId = operation["instrumentId"]
             operation_instrumentTicker = operation["instrumentTicker"]
 
-            if operation_timestamp < from_date:
+            if operation_timestamp < from_date or operation_timestamp > to_date:
                 continue
 
             if args.filter_instrument != "" and args.filter_instrument != operation_instrumentTicker:
@@ -923,6 +924,13 @@ def main():
         dest="from_date",
         type=str,
         default="2000-01-01",
+        help="Filter operations by date"
+    )
+    parser.add_argument(
+        "--to-date",
+        dest="to_date",
+        type=str,
+        default="2100-01-01",
         help="Filter operations by date"
     )
     parser.add_argument(
