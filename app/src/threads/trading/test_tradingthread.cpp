@@ -609,7 +609,7 @@ TEST_F(Test_TradingThread, Test_sell)
     askPrice1->set_units(10);
     askPrice1->set_nano(30000000);
     askPrice2->set_units(10);
-    askPrice2->set_nano(40000000);
+    askPrice2->set_nano(60000000);
 
     bid1->set_quantity(10);
     bid1->set_allocated_price(bidPrice1);
@@ -621,7 +621,7 @@ TEST_F(Test_TradingThread, Test_sell)
     ask2->set_allocated_price(askPrice2);
 
     Quotation priceForBid(10, 20000000);
-    Quotation priceForAsk(10, 40000000);
+    Quotation priceForAsk(10, 60000000);
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
@@ -670,7 +670,7 @@ TEST_F(Test_TradingThread, Test_sell)
         .WillOnce(Return(nullptr));
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_WARNING, QString("aaaaa"), QString("Failed to create order to sell 50 with a price 10.040 \u20BD"))
+        addLog(LOG_LEVEL_WARNING, QString("aaaaa"), QString("Failed to create order to sell 50 with a price 10.060 \u20BD"))
     );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForAsk))
@@ -684,7 +684,7 @@ TEST_F(Test_TradingThread, Test_sell)
         .WillOnce(Return(nullptr));
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_WARNING, QString("aaaaa"), QString("Failed to create order to sell 50 with a price 10.040 \u20BD"))
+        addLog(LOG_LEVEL_WARNING, QString("aaaaa"), QString("Failed to create order to sell 50 with a price 10.060 \u20BD"))
     );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
 
@@ -712,7 +712,7 @@ TEST_F(Test_TradingThread, Test_sell)
     EXPECT_CALL(
         *logsThreadMock,
         addLog(
-            LOG_LEVEL_DEBUG, QString("aaaaa"), QString("Order to sell 50 rejected with a price 10.040 \u20BD. Let's try again")
+            LOG_LEVEL_DEBUG, QString("aaaaa"), QString("Order to sell 50 rejected with a price 10.060 \u20BD. Let's try again")
         )
     );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
@@ -741,7 +741,7 @@ TEST_F(Test_TradingThread, Test_sell)
     EXPECT_CALL(
         *logsThreadMock,
         addLog(
-            LOG_LEVEL_DEBUG, QString("aaaaa"), QString("Order to sell 50 rejected with a price 10.040 \u20BD. Let's try again")
+            LOG_LEVEL_DEBUG, QString("aaaaa"), QString("Order to sell 50 rejected with a price 10.060 \u20BD. Let's try again")
         )
     );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(false));
@@ -759,7 +759,7 @@ TEST_F(Test_TradingThread, Test_sell)
         addLog(
             LOG_LEVEL_VERBOSE,
             QString("aaaaa"),
-            QString("Order to sell 50 created with a price 10.040 \u20BD while market price 10.020 \u20BD")
+            QString("Order to sell 50 created with a price 10.060 \u20BD while market price 10.020 \u20BD")
         )
     );
 
@@ -770,7 +770,7 @@ TEST_F(Test_TradingThread, Test_sell)
     tinkoff::MoneyValue* orderPrice = new tinkoff::MoneyValue(); // orderState will take ownership
 
     orderPrice->set_units(10);
-    orderPrice->set_nano(40000000);
+    orderPrice->set_nano(60000000);
 
     orderState->set_direction(tinkoff::ORDER_DIRECTION_SELL);
     orderState->set_lots_executed(5);
@@ -787,7 +787,7 @@ TEST_F(Test_TradingThread, Test_sell)
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 sold with a price 10.040 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 sold with a price 10.060 \u20BD"))
     );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(3000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForAsk))
@@ -804,7 +804,7 @@ TEST_F(Test_TradingThread, Test_sell)
         addLog(
             LOG_LEVEL_VERBOSE,
             QString("aaaaa"),
-            QString("Order to sell 50 created with a price 10.040 \u20BD while market price 10.020 \u20BD")
+            QString("Order to sell 50 created with a price 10.060 \u20BD while market price 10.020 \u20BD")
         )
     );
 
@@ -823,7 +823,7 @@ TEST_F(Test_TradingThread, Test_sell)
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order partially completed. 50/50 sold with a price 10.040 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order partially completed. 50/50 sold with a price 10.060 \u20BD"))
     );
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order cancelled")));
     EXPECT_CALL(*grpcClientMock, cancelOrder(QThread::currentThread(), QString("account-id"), QString("order-id")))
@@ -851,7 +851,7 @@ TEST_F(Test_TradingThread, Test_sell)
         addLog(
             LOG_LEVEL_VERBOSE,
             QString("aaaaa"),
-            QString("Order to sell 50 created with a price 10.040 \u20BD while market price 10.020 \u20BD")
+            QString("Order to sell 50 created with a price 10.060 \u20BD while market price 10.020 \u20BD")
         )
     );
 
@@ -868,7 +868,7 @@ TEST_F(Test_TradingThread, Test_sell)
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 sold with a price 10.040 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 sold with a price 10.060 \u20BD"))
     );
 
     ASSERT_EQ(thread->sell(50000, 10000, 40000), true);
@@ -884,7 +884,7 @@ TEST_F(Test_TradingThread, Test_sell)
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
         *logsThreadMock,
-        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order rejected. 50/50 sold with a price 10.040 \u20BD"))
+        addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order rejected. 50/50 sold with a price 10.060 \u20BD"))
     );
 
     ASSERT_EQ(thread->sell(50000, 10000, 40000), false);
@@ -908,7 +908,7 @@ TEST_F(Test_TradingThread, Test_sell)
         addLog(
             LOG_LEVEL_VERBOSE,
             QString("aaaaa"),
-            QString("Order to sell 50 created with a price 10.040 \u20BD while market price 10.020 \u20BD")
+            QString("Order to sell 50 created with a price 10.060 \u20BD while market price 10.020 \u20BD")
         )
     );
 
@@ -1009,7 +1009,7 @@ TEST_F(Test_TradingThread, Test_calculateBuyPrice)
     askPrice41->set_units(10);
     askPrice41->set_nano(30000000);
     askPrice42->set_units(10);
-    askPrice42->set_nano(40000000);
+    askPrice42->set_nano(60000000);
 
     bid41->set_quantity(10);
     bid41->set_allocated_price(bidPrice41);
@@ -1115,7 +1115,7 @@ TEST_F(Test_TradingThread, Test_calculateSellPrice)
     askPrice41->set_units(10);
     askPrice41->set_nano(30000000);
     askPrice42->set_units(10);
-    askPrice42->set_nano(40000000);
+    askPrice42->set_nano(60000000);
 
     bid41->set_quantity(10);
     bid41->set_allocated_price(bidPrice41);
@@ -1131,7 +1131,7 @@ TEST_F(Test_TradingThread, Test_calculateSellPrice)
     EXPECT_CALL(*userStorageMock, readUnlock());
 
     // clang-format off
-    ASSERT_EQ(thread->calculateSellPrice(tinkoffOrderBook4, ASAP_MODE_NONE),              Quotation(10, 40000000));
+    ASSERT_EQ(thread->calculateSellPrice(tinkoffOrderBook4, ASAP_MODE_NONE),              Quotation(10, 60000000));
     ASSERT_EQ(thread->calculateSellPrice(tinkoffOrderBook4, ASAP_MODE_FOLLOW_PRICE),      Quotation(10, 30000000));
     ASSERT_EQ(thread->calculateSellPrice(tinkoffOrderBook4, ASAP_MODE_IMMEDIATELY_TRADE), Quotation(10, 20000000));
     // clang-format on

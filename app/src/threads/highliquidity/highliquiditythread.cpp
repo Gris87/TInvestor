@@ -16,7 +16,7 @@ constexpr int   NORMAL_SESSION_START_MINUTE = 5;
 constexpr int   NORMAL_SESSION_END_HOUR     = 18;
 constexpr int   NORMAL_SESSION_END_MINUTE   = 35;
 constexpr int   EXTRA_SESSION_END_HOUR      = 23;
-constexpr int   EXTRA_SESSION_END_MINUTE    = 45;
+constexpr int   EXTRA_SESSION_END_MINUTE    = 30;
 
 
 

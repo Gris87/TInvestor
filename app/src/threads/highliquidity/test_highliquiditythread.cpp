@@ -170,7 +170,7 @@ TEST_F(Test_HighLiquidityThread, Test_makeDecisionBaseOnTimestamp)
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
 
-    thread->makeDecisionBaseOnTimestamp(1704141840000); // 23:44 MSK
+    thread->makeDecisionBaseOnTimestamp(1704140940000); // 23:29 MSK
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
@@ -178,7 +178,7 @@ TEST_F(Test_HighLiquidityThread, Test_makeDecisionBaseOnTimestamp)
         .WillOnce(Return(portfolioResponse));
     EXPECT_CALL(*configMock, getLiquidityEtfRemainedPartNightly()).WillOnce(Return(1.0f));
 
-    thread->makeDecisionBaseOnTimestamp(1704141900000); // 23:45 MSK
+    thread->makeDecisionBaseOnTimestamp(1704141000000); // 23:30 MSK
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704123240000)).WillOnce(Return(true));

@@ -8,7 +8,7 @@
 
 constexpr float  HUNDRED_PERCENT             = 100.0f;
 constexpr float  MAXIMUM_PRICE_RAISE_PERCENT = 0.50f;
-constexpr float  MINIMUM_YIELD_PERCENT       = 0.30f;
+constexpr float  MINIMUM_YIELD_PERCENT       = 0.40f;
 constexpr int    ORDER_BOOK_DEPTH            = 20;
 constexpr qint64 MS_IN_SECOND                = 1000LL;
 constexpr qint64 SLEEP_DELAY                 = 30LL * MS_IN_SECOND; // 30 seconds

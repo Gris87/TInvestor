@@ -1,7 +1,4 @@
-Exclude LNZL from trading/simulation
 Restart streams each hour
-Do not buy TMON at the morning
-Set minimal yield to 0.48% for normal trading
 Double check for cancelling buy orders in bidir trading
 Something strange with daily yield chart
 Limit buy lots to 1 in safe mode (4% safe gap)

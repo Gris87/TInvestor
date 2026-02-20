@@ -106,15 +106,6 @@ void OperationsThread::run()
 
                         requestOperations();
                     }
-                    else if (portfolioStreamResponse->has_subscriptions())
-                    {
-                        // TODO: Remove it
-                        std::string json_output;
-
-                        absl::Status status = google::protobuf::util::MessageToJsonString(*portfolioStreamResponse, &json_output);
-
-                        qInfo() << status.ok() << json_output;
-                    }
                 }
             }
             else
@@ -135,9 +126,6 @@ void OperationsThread::run()
             }
         }
     }
-
-    // TODO: Remove it
-    qInfo() << "Finish OperationsThread";
 
     qDebug() << "Finish OperationsThread";
 }
