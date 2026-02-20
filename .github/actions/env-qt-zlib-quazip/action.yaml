@@ -48,7 +48,7 @@ runs:
           set(qt_package_arch_suffix "linux_gcc_64")
           set(qt6_with_dotless_and_arch "${qt6_with_dotless}")
           set(qt_dir_prefix "${qt_version}/gcc_64")
-          set(qt_package_suffix "-Linux-RHEL_9_4-GCC-Linux-RHEL_9_4-X86_64")
+          set(qt_package_suffix "-Linux-RHEL_9_6-GCC-Linux-RHEL_9_6-X86_64")
         elseif ("${{ runner.os }}" STREQUAL "macOS")
           set(url_os "mac_x64")
           set(qt_package_arch_suffix "clang_64")

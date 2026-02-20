@@ -1,14 +1,12 @@
 Double check for cancelling buy orders in bidir trading
 Something strange with daily yield chart
-Limit buy lots to 1 in safe mode (4% safe gap)
+Limit buy lots to 1 in safe mode (4% safe gap) (Do not buy at all)
 Let configure safe gap for bi-dir trading
-Let bi-dir script to trade without nice yield for TMON
 Buy if shorts disabled during last 5 minutes
 Make decision based on dividends
 https://api-invest.tbank.ru/invest-terminal/api-invest-gw/fireg-advisory/invest-calendar/v2/event/info?startDate=2026-01-01&endDate=2026-12-31&mySecuritiesFlag=false&qualFlag=false&eventTypes=dividends&limit=100
 Always check for buy decisions even if already keep some
 Bi-dir on non-working hours (weekend also)
-Check why operations stop refreshing
 Create script for buying/selling in parts
 Find best configs for different commission
 Change config defaults
