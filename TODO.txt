@@ -1,5 +1,12 @@
+Exclude LNZL from trading/simulation
 Restart streams each hour
+Do not buy TMON at the morning
+Set minimal yield to 0.48% for normal trading
+Double check for cancelling buy orders in bidir trading
 Something strange with daily yield chart
+Limit buy lots to 1 in safe mode (4% safe gap)
+Let configure safe gap for bi-dir trading
+Let bi-dir script to trade without nice yield for TMON
 Buy if shorts disabled during last 5 minutes
 Make decision based on dividends
 https://api-invest.tbank.ru/invest-terminal/api-invest-gw/fireg-advisory/invest-calendar/v2/event/info?startDate=2026-01-01&endDate=2026-12-31&mySecuritiesFlag=false&qualFlag=false&eventTypes=dividends&limit=100

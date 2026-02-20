@@ -238,6 +238,7 @@ TEST_F(Test_StockCollectThread, Test_run)
     stock.meta.lot                         = 1;
     stock.meta.pricePrecision              = 3;
     stock.meta.minPriceIncrement           = 0.001f;
+    stock.meta.ignore                      = false;
     stock.meta.lastTradeTime               = QTime(18, 39);
     stock.meta.turnover                    = 5000;
     stock.meta.dividends.createTimestamp   = 1735678800000;

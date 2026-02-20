@@ -24,6 +24,7 @@ struct StockMeta
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 
+    void merge(const StockMeta& another);
     bool compareForMerge(const StockMeta& another);
 
     QString            instrumentId;
@@ -34,6 +35,7 @@ struct StockMeta
     qint32             lot;
     qint8              pricePrecision;
     float              minPriceIncrement;
+    bool               ignore;
     QTime              lastTradeTime;
     qint64             turnover;
     StockDividendsMeta dividends;

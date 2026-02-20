@@ -37,6 +37,7 @@ protected:
         stock->meta.lot                         = 1;
         stock->meta.pricePrecision              = 2;
         stock->meta.minPriceIncrement           = 1.5f;
+        stock->meta.ignore                      = false;
         stock->meta.lastTradeTime               = QTime(18, 39);
         stock->meta.turnover                    = 9310000;
         stock->meta.dividends.createTimestamp   = 1735678800000;

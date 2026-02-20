@@ -574,7 +574,7 @@ TEST_F(Test_RawGrpcClient, Test_findFutures)
     ASSERT_EQ(resp->instruments(index).last_trade_date().seconds(),          1788192300);
     ASSERT_EQ(resp->instruments(index).futures_type(),                       "DELIVERY_TYPE_CASH_SETTLEMENT");
     ASSERT_EQ(resp->instruments(index).asset_type(),                         "TYPE_COMMODITY");
-    ASSERT_EQ(resp->instruments(index).basic_asset(),                        "WHCPT");
+    ASSERT_EQ(resp->instruments(index).basic_asset(),                        "\u041F\u0448\u0435\u043D\u0438\u0446\u0430"); // Wheat
     ASSERT_EQ(resp->instruments(index).basic_asset_size().units(),           1);
     ASSERT_EQ(resp->instruments(index).basic_asset_size().nano(),            0);
     ASSERT_EQ(resp->instruments(index).country_of_risk(),                    "RU");

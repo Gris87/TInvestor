@@ -32,6 +32,7 @@ TEST_F(Test_Stock, Test_constructor_and_destructor)
     ASSERT_EQ(stock.meta.lot,                         0);
     ASSERT_EQ(stock.meta.pricePrecision,              0);
     ASSERT_NEAR(stock.meta.minPriceIncrement,         0.0f, 0.0001f);
+    ASSERT_EQ(stock.meta.ignore,                      false);
     ASSERT_EQ(stock.meta.lastTradeTime,               QTime(0, 0));
     ASSERT_EQ(stock.meta.turnover,                    0);
     ASSERT_EQ(stock.meta.dividends.createTimestamp,   0);
@@ -68,6 +69,7 @@ TEST_F(Test_Stock, Test_copy_constructor)
     stock.meta.lot                         = 1;
     stock.meta.pricePrecision              = 2;
     stock.meta.minPriceIncrement           = 3.0f;
+    stock.meta.ignore                      = true;
     stock.meta.lastTradeTime               = QTime(4, 5);
     stock.meta.turnover                    = 6;
     stock.meta.dividends.createTimestamp   = 7;
@@ -93,6 +95,7 @@ TEST_F(Test_Stock, Test_copy_constructor)
     ASSERT_EQ(stock2.meta.lot,                                 1);
     ASSERT_EQ(stock2.meta.pricePrecision,                      2);
     ASSERT_NEAR(stock2.meta.minPriceIncrement,                 3.0f, 0.0001f);
+    ASSERT_EQ(stock2.meta.ignore,                              true);
     ASSERT_EQ(stock2.meta.lastTradeTime,                       QTime(4, 5));
     ASSERT_EQ(stock2.meta.turnover,                            6);
     ASSERT_EQ(stock2.meta.dividends.createTimestamp,           7);
@@ -135,6 +138,7 @@ TEST_F(Test_Stock, Test_assign)
     stock.meta.lot                         = 1;
     stock.meta.pricePrecision              = 2;
     stock.meta.minPriceIncrement           = 3.0f;
+    stock.meta.ignore                      = true;
     stock.meta.lastTradeTime               = QTime(4, 5);
     stock.meta.turnover                    = 6;
     stock.meta.dividends.createTimestamp   = 7;
@@ -160,6 +164,7 @@ TEST_F(Test_Stock, Test_assign)
     ASSERT_EQ(stock2.meta.lot,                                 1);
     ASSERT_EQ(stock2.meta.pricePrecision,                      2);
     ASSERT_NEAR(stock2.meta.minPriceIncrement,                 3.0f, 0.0001f);
+    ASSERT_EQ(stock2.meta.ignore,                              true);
     ASSERT_EQ(stock2.meta.lastTradeTime,                       QTime(4, 5));
     ASSERT_EQ(stock2.meta.turnover,                            6);
     ASSERT_EQ(stock2.meta.dividends.createTimestamp,           7);

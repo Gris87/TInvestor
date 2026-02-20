@@ -19,6 +19,7 @@ StockMeta::StockMeta() :
     lot(),
     pricePrecision(),
     minPriceIncrement(),
+    ignore(),
     lastTradeTime(0, 0),
     turnover(),
     dividends(),
@@ -64,6 +65,11 @@ static void metaMinPriceIncrementParse(StockMeta* meta, simdjson::ondemand::valu
     meta->minPriceIncrement = value.get_double_in_string().value();
 }
 
+static void metaIgnoreParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    meta->ignore = value.get_bool().value();
+}
+
 static void metaLastTradeTimeParse(StockMeta* meta, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
@@ -103,6 +109,7 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
     {"lot",                 metaLotParse                },
     {"pricePrecision",      metaPricePrecisionParse     },
     {"minPriceIncrement",   metaMinPriceIncrementParse  },
+    {"ignore",              metaIgnoreParse             },
     {"lastTradeTime",       metaLastTradeTimeParse      },
     {"turnover",            metaTurnoverParse           },
     {"dividends",           metaDividendsParse          },
@@ -133,6 +140,7 @@ QJsonObject StockMeta::toJsonObject() const
     res.insert("lot",                 lot);
     res.insert("pricePrecision",      pricePrecision);
     res.insert("minPriceIncrement",   QString::number(minPriceIncrement, 'f', pricePrecision));
+    res.insert("ignore",              ignore);
     res.insert("lastTradeTime",       lastTradeTime.toString(TIME_FORMAT));
     res.insert("turnover",            turnover);
     res.insert("dividends",           dividends.toJsonObject());
@@ -140,6 +148,17 @@ QJsonObject StockMeta::toJsonObject() const
     // clang-format on
 
     return res;
+}
+
+void StockMeta::merge(const StockMeta& another)
+{
+    instrumentId        = another.instrumentId;
+    instrumentTicker    = another.instrumentTicker;
+    instrumentName      = another.instrumentName;
+    forQualInvestorFlag = another.forQualInvestorFlag;
+    lot                 = another.lot;
+    pricePrecision      = another.pricePrecision;
+    minPriceIncrement   = another.minPriceIncrement;
 }
 
 bool StockMeta::compareForMerge(const StockMeta& another)
@@ -154,6 +173,6 @@ bool operator==(const StockMeta& lhs, const StockMeta& rhs)
     return lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
            lhs.instrumentName == rhs.instrumentName && lhs.forQualInvestorFlag == rhs.forQualInvestorFlag && lhs.lot == rhs.lot &&
            lhs.pricePrecision == rhs.pricePrecision && qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < FLOAT_EPSILON &&
-           lhs.lastTradeTime == rhs.lastTradeTime && lhs.turnover == rhs.turnover && lhs.dividends == rhs.dividends &&
-           lhs.shorts == rhs.shorts;
+           lhs.ignore == rhs.ignore && lhs.lastTradeTime == rhs.lastTradeTime && lhs.turnover == rhs.turnover &&
+           lhs.dividends == rhs.dividends && lhs.shorts == rhs.shorts;
 }

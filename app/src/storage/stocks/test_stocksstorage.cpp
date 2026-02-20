@@ -70,6 +70,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 1;
     stock1->meta.minPriceIncrement           = 0.1f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -85,6 +86,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     stock2->meta.lot                         = 10;
     stock2->meta.pricePrecision              = 2;
     stock2->meta.minPriceIncrement           = 0.01f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -100,6 +102,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     stock3->meta.lot                         = 100;
     stock3->meta.pricePrecision              = 3;
     stock3->meta.minPriceIncrement           = 0.001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -149,6 +152,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -179,6 +183,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -209,6 +214,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -280,6 +286,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 1;
     stock1->meta.minPriceIncrement           = 0.1f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -295,6 +302,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stock2->meta.lot                         = 10;
     stock2->meta.pricePrecision              = 2;
     stock2->meta.minPriceIncrement           = 0.01f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -310,6 +318,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stock3->meta.lot                         = 100;
     stock3->meta.pricePrecision              = 3;
     stock3->meta.minPriceIncrement           = 0.001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -359,6 +368,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -389,6 +399,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -419,6 +430,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -455,6 +467,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stockMeta1.lot                         = 1000;
     stockMeta1.pricePrecision              = 2;
     stockMeta1.minPriceIncrement           = 0.01f;
+    stockMeta1.ignore                      = false;
     stockMeta1.lastTradeTime               = QTime(5, 29);
     stockMeta1.turnover                    = 7000;
     stockMeta1.dividends.createTimestamp   = 1740776460000;
@@ -470,6 +483,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stockMeta2.lot                         = 10000;
     stockMeta2.pricePrecision              = 3;
     stockMeta2.minPriceIncrement           = 0.001f;
+    stockMeta2.ignore                      = false;
     stockMeta2.lastTradeTime               = QTime(1, 59);
     stockMeta2.turnover                    = 8888;
     stockMeta2.dividends.createTimestamp   = 1740776430000;
@@ -495,6 +509,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1000);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -525,6 +540,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -555,6 +571,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -588,6 +605,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(3)->meta.lot,                         10000);
     ASSERT_EQ(stocks.at(3)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(3)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(3)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(3)->meta.lastTradeTime,               QTime(1, 59));
     ASSERT_EQ(stocks.at(3)->meta.turnover,                    8888);
     ASSERT_EQ(stocks.at(3)->meta.dividends.createTimestamp,   1740776430000);
@@ -636,6 +654,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 1;
     stock1->meta.minPriceIncrement           = 0.1f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -651,6 +670,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     stock2->meta.lot                         = 10;
     stock2->meta.pricePrecision              = 2;
     stock2->meta.minPriceIncrement           = 0.01f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -666,6 +686,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     stock3->meta.lot                         = 100;
     stock3->meta.pricePrecision              = 3;
     stock3->meta.minPriceIncrement           = 0.001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -729,6 +750,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -762,6 +784,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -804,6 +827,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -848,6 +872,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -878,6 +903,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -917,6 +943,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -958,6 +985,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -982,6 +1010,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -1015,6 +1044,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -1057,6 +1087,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 1;
     stock1->meta.minPriceIncrement           = 0.1f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -1072,6 +1103,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     stock2->meta.lot                         = 10;
     stock2->meta.pricePrecision              = 2;
     stock2->meta.minPriceIncrement           = 0.01f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -1087,6 +1119,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     stock3->meta.lot                         = 100;
     stock3->meta.pricePrecision              = 3;
     stock3->meta.minPriceIncrement           = 0.001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -1141,6 +1174,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -1171,6 +1205,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -1207,6 +1242,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -1244,6 +1280,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(0)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,                      1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,                 0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,                       QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                            2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,           1735678800000);
@@ -1276,6 +1313,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(1)->meta.lot,                                 10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,                      2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,                       QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,           1738357200000);
@@ -1318,6 +1356,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(2)->meta.lot,                                 100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,                      3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,                       QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,           1740776400000);
@@ -1366,6 +1405,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 1;
     stock1->meta.minPriceIncrement           = 0.1f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -1381,6 +1421,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     stock2->meta.lot                         = 10;
     stock2->meta.pricePrecision              = 2;
     stock2->meta.minPriceIncrement           = 0.01f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -1396,6 +1437,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     stock3->meta.lot                         = 100;
     stock3->meta.pricePrecision              = 3;
     stock3->meta.minPriceIncrement           = 0.001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -1450,6 +1492,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,                      1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,                 0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,                       QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                            2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,           1735678800000);
@@ -1480,6 +1523,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->meta.lot,                                 10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,                      2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,                       QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,           1738357200000);
@@ -1516,6 +1560,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->meta.lot,                                 100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,                      3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,                       QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,           1740776400000);
@@ -1553,6 +1598,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->meta.lot,                                 1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,                      1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,                 0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,                       QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                            2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,           1735678800000);
@@ -1581,6 +1627,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->meta.lot,                                 10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,                      2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,                       QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,           1738357200000);
@@ -1615,6 +1662,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->meta.lot,                                 100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,                      3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,                       QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,           1740776400000);
@@ -1650,6 +1698,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -1674,6 +1723,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->meta.lot,                                 10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,                      2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,                 0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,                       QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,           1738357200000);
@@ -1704,6 +1754,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->meta.lot,                                 100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,                      3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,                 0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                              false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,                       QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,           1740776400000);
@@ -1752,6 +1803,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 1;
     stock1->meta.minPriceIncrement           = 0.1f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -1767,6 +1819,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stock2->meta.lot                         = 10;
     stock2->meta.pricePrecision              = 2;
     stock2->meta.minPriceIncrement           = 0.01f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -1782,6 +1835,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stock3->meta.lot                         = 100;
     stock3->meta.pricePrecision              = 3;
     stock3->meta.minPriceIncrement           = 0.001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -1840,6 +1894,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -1873,6 +1928,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -1909,6 +1965,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -1948,6 +2005,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -1981,6 +2039,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -2017,6 +2076,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -2073,6 +2133,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 1;
     stock1->meta.minPriceIncrement           = 0.1f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -2088,6 +2149,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stock2->meta.lot                         = 10;
     stock2->meta.pricePrecision              = 2;
     stock2->meta.minPriceIncrement           = 0.01f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -2103,6 +2165,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stock3->meta.lot                         = 100;
     stock3->meta.pricePrecision              = 3;
     stock3->meta.minPriceIncrement           = 0.001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -2161,6 +2224,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -2194,6 +2258,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -2230,6 +2295,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -2269,6 +2335,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -2302,6 +2369,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -2338,6 +2406,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -2394,6 +2463,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 1;
     stock1->meta.minPriceIncrement           = 0.1f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -2409,6 +2479,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     stock2->meta.lot                         = 10;
     stock2->meta.pricePrecision              = 2;
     stock2->meta.minPriceIncrement           = 0.01f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -2424,6 +2495,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     stock3->meta.lot                         = 100;
     stock3->meta.pricePrecision              = 3;
     stock3->meta.minPriceIncrement           = 0.001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -2482,6 +2554,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -2515,6 +2588,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -2551,6 +2625,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -2590,6 +2665,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(11, 0));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -2623,6 +2699,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(15, 0));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -2659,6 +2736,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(13, 0));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -2715,6 +2793,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 1;
     stock1->meta.minPriceIncrement           = 0.1f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -2730,6 +2809,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     stock2->meta.lot                         = 10;
     stock2->meta.pricePrecision              = 2;
     stock2->meta.minPriceIncrement           = 0.01f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -2745,6 +2825,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     stock3->meta.lot                         = 100;
     stock3->meta.pricePrecision              = 3;
     stock3->meta.minPriceIncrement           = 0.001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -2803,6 +2884,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -2836,6 +2918,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -2872,6 +2955,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -2911,6 +2995,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    864000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -2944,6 +3029,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    12096000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -2980,6 +3066,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    77760000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -3036,6 +3123,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 1;
     stock1->meta.minPriceIncrement           = 0.1f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -3051,6 +3139,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stock2->meta.lot                         = 10;
     stock2->meta.pricePrecision              = 2;
     stock2->meta.minPriceIncrement           = 0.01f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -3066,6 +3155,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stock3->meta.lot                         = 100;
     stock3->meta.pricePrecision              = 3;
     stock3->meta.minPriceIncrement           = 0.001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -3124,6 +3214,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -3157,6 +3248,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -3193,6 +3285,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
@@ -3236,6 +3329,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
     ASSERT_EQ(stocks.at(0)->meta.pricePrecision,              1);
     ASSERT_NEAR(stocks.at(0)->meta.minPriceIncrement,         0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(0)->meta.lastTradeTime,               QTime(18, 39));
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
@@ -3269,6 +3363,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
     ASSERT_EQ(stocks.at(1)->meta.pricePrecision,              2);
     ASSERT_NEAR(stocks.at(1)->meta.minPriceIncrement,         0.01f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(1)->meta.lastTradeTime,               QTime(23, 49));
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
@@ -3305,6 +3400,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
     ASSERT_EQ(stocks.at(2)->meta.pricePrecision,              3);
     ASSERT_NEAR(stocks.at(2)->meta.minPriceIncrement,         0.001f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->meta.ignore,                      false);
     ASSERT_EQ(stocks.at(2)->meta.lastTradeTime,               QTime(9, 59));
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);

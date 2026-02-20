@@ -138,6 +138,7 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 2;
     stock1->meta.minPriceIncrement           = 0.01f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -161,6 +162,7 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock2->meta.lot                         = 1;
     stock2->meta.pricePrecision              = 3;
     stock2->meta.minPriceIncrement           = 0.001f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -184,6 +186,7 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock3->meta.lot                         = 1;
     stock3->meta.pricePrecision              = 4;
     stock3->meta.minPriceIncrement           = 0.0001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -308,6 +311,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 2;
     stock1->meta.minPriceIncrement           = 0.01f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -331,6 +335,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock2->meta.lot                         = 1;
     stock2->meta.pricePrecision              = 3;
     stock2->meta.minPriceIncrement           = 0.001f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -354,6 +359,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock3->meta.lot                         = 1;
     stock3->meta.pricePrecision              = 4;
     stock3->meta.minPriceIncrement           = 0.0001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -543,6 +549,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 2;
     stock1->meta.minPriceIncrement           = 0.01f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -566,6 +573,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock2->meta.lot                         = 1;
     stock2->meta.pricePrecision              = 3;
     stock2->meta.minPriceIncrement           = 0.001f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -589,6 +597,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock3->meta.lot                         = 1;
     stock3->meta.pricePrecision              = 4;
     stock3->meta.minPriceIncrement           = 0.0001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -675,6 +684,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 2;
     stock1->meta.minPriceIncrement           = 0.01f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -698,6 +708,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.lot                         = 1;
     stock2->meta.pricePrecision              = 3;
     stock2->meta.minPriceIncrement           = 0.001f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -721,6 +732,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.lot                         = 1;
     stock3->meta.pricePrecision              = 4;
     stock3->meta.minPriceIncrement           = 0.0001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -802,6 +814,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 4;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 2120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -820,6 +833,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 2;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 4340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -838,6 +852,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 3;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 6560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -914,6 +929,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 3;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 3120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -932,6 +948,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 4;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 5340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -950,6 +967,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 2;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 7560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -1023,6 +1041,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 2;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 9310000;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -1041,6 +1060,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 4;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 7340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -1059,6 +1079,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 3;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 9560;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -1116,6 +1137,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 2;
     stock1->meta.minPriceIncrement           = 0.01f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -1139,6 +1161,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.lot                         = 1;
     stock2->meta.pricePrecision              = 3;
     stock2->meta.minPriceIncrement           = 0.001f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -1162,6 +1185,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.lot                         = 1;
     stock3->meta.pricePrecision              = 4;
     stock3->meta.minPriceIncrement           = 0.0001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -1243,6 +1267,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 4;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 2120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -1261,6 +1286,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 2;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 4340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -1279,6 +1305,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 3;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 6560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -1359,6 +1386,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 3;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 3120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -1377,6 +1405,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 4;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 5340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -1395,6 +1424,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 2;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 7560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -1470,6 +1500,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 2;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 9310000;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -1488,6 +1519,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 4;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 7340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -1506,6 +1538,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 3;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 9560;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -1567,6 +1600,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 2;
     stock1->meta.minPriceIncrement           = 0.01f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -1590,6 +1624,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.lot                         = 1;
     stock2->meta.pricePrecision              = 3;
     stock2->meta.minPriceIncrement           = 0.001f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -1613,6 +1648,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.lot                         = 1;
     stock3->meta.pricePrecision              = 4;
     stock3->meta.minPriceIncrement           = 0.0001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -1694,6 +1730,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 4;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 2120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -1712,6 +1749,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 2;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 4340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -1730,6 +1768,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 3;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 6560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -1802,6 +1841,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 3;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 3120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -1820,6 +1860,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 4;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 5340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -1838,6 +1879,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 2;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 7560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -1907,6 +1949,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 2;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 9310000;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -1925,6 +1968,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 4;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 7340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -1943,6 +1987,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 3;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 9560;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -1996,6 +2041,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 2;
     stock1->meta.minPriceIncrement           = 0.01f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -2019,6 +2065,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.lot                         = 1;
     stock2->meta.pricePrecision              = 3;
     stock2->meta.minPriceIncrement           = 0.001f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -2042,6 +2089,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.lot                         = 1;
     stock3->meta.pricePrecision              = 4;
     stock3->meta.minPriceIncrement           = 0.0001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
@@ -2123,6 +2171,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 4;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 2120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -2141,6 +2190,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 2;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 4340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -2159,6 +2209,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 3;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 6560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -2231,6 +2282,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 3;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 3120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -2249,6 +2301,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 4;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 5340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -2267,6 +2320,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 2;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 7560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -2336,6 +2390,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.lot                          = 1;
     stock1->meta.pricePrecision               = 2;
     stock1->meta.minPriceIncrement            = 0.01f;
+    stock1->meta.ignore                       = false;
     stock1->meta.lastTradeTime                = QTime(18, 39);
     stock1->meta.turnover                     = 9310000;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
@@ -2354,6 +2409,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.lot                          = 1;
     stock2->meta.pricePrecision               = 4;
     stock2->meta.minPriceIncrement            = 0.001f;
+    stock2->meta.ignore                       = false;
     stock2->meta.lastTradeTime                = QTime(23, 49);
     stock2->meta.turnover                     = 7340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
@@ -2372,6 +2428,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.lot                          = 1;
     stock3->meta.pricePrecision               = 3;
     stock3->meta.minPriceIncrement            = 0.0001f;
+    stock3->meta.ignore                       = false;
     stock3->meta.lastTradeTime                = QTime(9, 59);
     stock3->meta.turnover                     = 9560;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
@@ -2425,6 +2482,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock1->meta.lot                         = 1;
     stock1->meta.pricePrecision              = 2;
     stock1->meta.minPriceIncrement           = 0.01f;
+    stock1->meta.ignore                      = false;
     stock1->meta.lastTradeTime               = QTime(18, 39);
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
@@ -2448,6 +2506,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock2->meta.lot                         = 1;
     stock2->meta.pricePrecision              = 3;
     stock2->meta.minPriceIncrement           = 0.001f;
+    stock2->meta.ignore                      = false;
     stock2->meta.lastTradeTime               = QTime(23, 49);
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
@@ -2471,6 +2530,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock3->meta.lot                         = 1;
     stock3->meta.pricePrecision              = 4;
     stock3->meta.minPriceIncrement           = 0.0001f;
+    stock3->meta.ignore                      = false;
     stock3->meta.lastTradeTime               = QTime(9, 59);
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;

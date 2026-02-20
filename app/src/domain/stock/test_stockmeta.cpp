@@ -36,6 +36,7 @@ TEST_F(Test_StockMeta, Test_constructor_and_destructor)
     ASSERT_EQ(stockMeta.lot,                         0);
     ASSERT_EQ(stockMeta.pricePrecision,              0);
     ASSERT_NEAR(stockMeta.minPriceIncrement,         0.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.ignore,                      false);
     ASSERT_EQ(stockMeta.lastTradeTime,               QTime(0, 0));
     ASSERT_EQ(stockMeta.turnover,                    0);
     ASSERT_EQ(stockMeta.dividends.createTimestamp,   0);
@@ -57,6 +58,7 @@ TEST_F(Test_StockMeta, Test_copy_constructor)
     stockMeta.lot                         = 1;
     stockMeta.pricePrecision              = 2;
     stockMeta.minPriceIncrement           = 3.0f;
+    stockMeta.ignore                      = true;
     stockMeta.lastTradeTime               = QTime(4, 5);
     stockMeta.turnover                    = 6;
     stockMeta.dividends.createTimestamp   = 7;
@@ -76,6 +78,7 @@ TEST_F(Test_StockMeta, Test_copy_constructor)
     ASSERT_EQ(stockMeta2.lot,                         1);
     ASSERT_EQ(stockMeta2.pricePrecision,              2);
     ASSERT_NEAR(stockMeta2.minPriceIncrement,         3.0f, 0.0001f);
+    ASSERT_EQ(stockMeta2.ignore,                      true);
     ASSERT_EQ(stockMeta2.lastTradeTime,               QTime(4, 5));
     ASSERT_EQ(stockMeta2.turnover,                    6);
     ASSERT_EQ(stockMeta2.dividends.createTimestamp,   7);
@@ -98,6 +101,7 @@ TEST_F(Test_StockMeta, Test_assign)
     stockMeta.lot                         = 1;
     stockMeta.pricePrecision              = 2;
     stockMeta.minPriceIncrement           = 3.0f;
+    stockMeta.ignore                      = true;
     stockMeta.lastTradeTime               = QTime(4, 5);
     stockMeta.turnover                    = 6;
     stockMeta.dividends.createTimestamp   = 7;
@@ -117,6 +121,7 @@ TEST_F(Test_StockMeta, Test_assign)
     ASSERT_EQ(stockMeta2.lot,                         1);
     ASSERT_EQ(stockMeta2.pricePrecision,              2);
     ASSERT_NEAR(stockMeta2.minPriceIncrement,         3.0f, 0.0001f);
+    ASSERT_EQ(stockMeta2.ignore,                      true);
     ASSERT_EQ(stockMeta2.lastTradeTime,               QTime(4, 5));
     ASSERT_EQ(stockMeta2.turnover,                    6);
     ASSERT_EQ(stockMeta2.dividends.createTimestamp,   7);
@@ -140,6 +145,7 @@ TEST_F(Test_StockMeta, Test_fromJsonObject)
     ASSERT_EQ(stockMeta.lot,                         0);
     ASSERT_EQ(stockMeta.pricePrecision,              0);
     ASSERT_NEAR(stockMeta.minPriceIncrement,         0.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.ignore,                      false);
     ASSERT_EQ(stockMeta.lastTradeTime,               QTime(0, 0));
     ASSERT_EQ(stockMeta.turnover,                    0);
     ASSERT_EQ(stockMeta.dividends.createTimestamp,   0);
@@ -150,7 +156,7 @@ TEST_F(Test_StockMeta, Test_fromJsonObject)
     // clang-format on
 
     const QString content =
-        R"({"dividends":{"createTimestamp":7,"paymentTimestamp":8,"yield":"9.00"},"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"04:05:00","lot":1,"minPriceIncrement":"3.00","pricePrecision":2,"shorts":{"enabled":true,"lastEnabledTimestamp":10},"turnover":6})";
+        R"({"dividends":{"createTimestamp":7,"paymentTimestamp":8,"yield":"9.00"},"forQualInvestorFlag":true,"ignore":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"04:05:00","lot":1,"minPriceIncrement":"3.00","pricePrecision":2,"shorts":{"enabled":true,"lastEnabledTimestamp":10},"turnover":6})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -168,6 +174,7 @@ TEST_F(Test_StockMeta, Test_fromJsonObject)
     ASSERT_EQ(stockMeta.lot,                         1);
     ASSERT_EQ(stockMeta.pricePrecision,              2);
     ASSERT_NEAR(stockMeta.minPriceIncrement,         3.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.ignore,                      true);
     ASSERT_EQ(stockMeta.lastTradeTime,               QTime(4, 5));
     ASSERT_EQ(stockMeta.turnover,                    6);
     ASSERT_EQ(stockMeta.dividends.createTimestamp,   7);
@@ -196,6 +203,7 @@ TEST_F(Test_StockMeta, Test_toJsonObject)
     stockMeta.lot                         = 1;
     stockMeta.pricePrecision              = 2;
     stockMeta.minPriceIncrement           = 3.0f;
+    stockMeta.ignore                      = true;
     stockMeta.lastTradeTime               = QTime(4, 5);
     stockMeta.turnover                    = 6;
     stockMeta.dividends.createTimestamp   = 7;
@@ -209,7 +217,7 @@ TEST_F(Test_StockMeta, Test_toJsonObject)
 
     const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
-        R"({"dividends":{"createTimestamp":7,"paymentTimestamp":8,"yield":"9.00"},"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"04:05:00","lot":1,"minPriceIncrement":"3.00","pricePrecision":2,"shorts":{"enabled":true,"lastEnabledTimestamp":10},"turnover":6})";
+        R"({"dividends":{"createTimestamp":7,"paymentTimestamp":8,"yield":"9.00"},"forQualInvestorFlag":true,"ignore":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"04:05:00","lot":1,"minPriceIncrement":"3.00","pricePrecision":2,"shorts":{"enabled":true,"lastEnabledTimestamp":10},"turnover":6})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -226,6 +234,7 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta.lot                         = 1;
     stockMeta.pricePrecision              = 2;
     stockMeta.minPriceIncrement           = 3.0f;
+    stockMeta.ignore                      = true;
     stockMeta.lastTradeTime               = QTime(4, 5);
     stockMeta.turnover                    = 6;
     stockMeta.dividends.createTimestamp   = 7;
@@ -241,6 +250,7 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta2.lot                         = 1;
     stockMeta2.pricePrecision              = 2;
     stockMeta2.minPriceIncrement           = 3.0f;
+    stockMeta2.ignore                      = true;
     stockMeta2.lastTradeTime               = QTime(4, 5);
     stockMeta2.turnover                    = 6;
     stockMeta2.dividends.createTimestamp   = 7;
@@ -284,6 +294,11 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta2.minPriceIncrement = 3000.0f;
     ASSERT_NE(stockMeta, stockMeta2);
     stockMeta2.minPriceIncrement = 3.0f;
+    ASSERT_EQ(stockMeta, stockMeta2);
+
+    stockMeta2.ignore = false;
+    ASSERT_NE(stockMeta, stockMeta2);
+    stockMeta2.ignore = true;
     ASSERT_EQ(stockMeta, stockMeta2);
 
     stockMeta2.lastTradeTime = QTime(5, 4);

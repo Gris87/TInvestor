@@ -208,6 +208,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock1.meta.lot                         = 1;
     stock1.meta.pricePrecision              = 1;
     stock1.meta.minPriceIncrement           = 0.1f;
+    stock1.meta.ignore                      = false;
     stock1.meta.lastTradeTime               = QTime(23, 50);
     stock1.meta.turnover                    = 2000000;
     stock1.meta.dividends.createTimestamp   = 1735678800000;
@@ -225,6 +226,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock2.meta.lot                         = 1;
     stock2.meta.pricePrecision              = 2;
     stock2.meta.minPriceIncrement           = 0.01f;
+    stock2.meta.ignore                      = false;
     stock2.meta.lastTradeTime               = QTime(23, 50);
     stock2.meta.turnover                    = 5000000;
     stock2.meta.dividends.createTimestamp   = 1738357200000;
@@ -242,6 +244,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock3.meta.lot                         = 1;
     stock3.meta.pricePrecision              = 3;
     stock3.meta.minPriceIncrement           = 0.001f;
+    stock3.meta.ignore                      = false;
     stock3.meta.lastTradeTime               = QTime(23, 50);
     stock3.meta.turnover                    = 9000000000;
     stock3.meta.dividends.createTimestamp   = 1740776400000;

@@ -479,6 +479,7 @@ bool StockCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
             stockMeta.lot                 = tinkoffStock.lot();
             stockMeta.pricePrecision      = quotationPrecision(tinkoffStock.min_price_increment());
             stockMeta.minPriceIncrement   = quotationToFloat(tinkoffStock.min_price_increment());
+            stockMeta.ignore              = false;
 
             stocksMeta.append(stockMeta);
         }
