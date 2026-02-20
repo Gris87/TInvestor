@@ -497,7 +497,26 @@ static grpc::Status cancelOrderAction(
     grpc::ClientContext context;
     context.set_credentials(creds);
 
-    return rawGrpcClient->cancelOrder(service, &context, req, resp.get());
+    // TODO: Uncomment
+    //return rawGrpcClient->cancelOrder(service, &context, req, resp.get());
+    const grpc::Status status = rawGrpcClient->cancelOrder(service, &context, req, resp.get());
+
+    if (!status.ok())
+    {
+        const grpc::StatusCode errorCode = status.error_code();
+
+        std::string json_output;
+
+        absl::Status abslStatus = google::protobuf::util::MessageToJsonString(req, &json_output);
+
+        qInfo() << abslStatus.ok() << json_output;
+
+        qWarning() << "GRPC error with code:" << errorCode << GRPC_STATUS_CODE_TO_STRING.value(errorCode)
+                   << "message:" << QString::fromStdString(status.error_message())
+                   << "details:" << QString::fromStdString(status.error_details());
+    }
+
+    return status;
 }
 
 std::shared_ptr<tinkoff::CancelOrderResponse>
