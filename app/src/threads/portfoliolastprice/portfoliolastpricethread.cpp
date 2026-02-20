@@ -6,8 +6,11 @@
 
 
 
-constexpr qint64 MS_IN_SECOND = 1000LL;
-constexpr qint64 SLEEP_DELAY  = 5LL * MS_IN_SECOND; // 5 seconds
+constexpr qint64 MS_IN_SECOND       = 1000LL;
+constexpr qint64 ONE_MINUTE         = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR           = 60LL * ONE_MINUTE;
+constexpr qint64 RECONNECT_INTERVAL = 1LL * ONE_HOUR;     // 1 hour
+constexpr qint64 SLEEP_DELAY        = 5LL * MS_IN_SECOND; // 5 seconds
 
 
 
@@ -42,7 +45,9 @@ void PortfolioLastPriceThread::run()
         {
             if (createMarketDataStream())
             {
-                while (true)
+                const qint64 startStreamTimestamp = QDateTime::currentMSecsSinceEpoch();
+
+                while (QDateTime::currentMSecsSinceEpoch() - startStreamTimestamp < RECONNECT_INTERVAL)
                 {
                     const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse =
                         mGrpcClient->readMarketDataStream(mMarketDataStream);

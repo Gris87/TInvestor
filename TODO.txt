@@ -1,4 +1,3 @@
-Restart streams each hour
 Double check for cancelling buy orders in bidir trading
 Something strange with daily yield chart
 Limit buy lots to 1 in safe mode (4% safe gap)

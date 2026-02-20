@@ -16,6 +16,7 @@ constexpr qint64 MS_IN_SECOND           = 1000LL;
 constexpr qint64 ONE_MINUTE             = 60LL * MS_IN_SECOND;
 constexpr qint64 ONE_HOUR               = 60LL * ONE_MINUTE;
 constexpr qint64 ONE_DAY                = 24LL * ONE_HOUR;
+constexpr qint64 RECONNECT_INTERVAL     = 1LL * ONE_HOUR;      // 1 hour
 constexpr qint64 SLEEP_DELAY            = 5LL * MS_IN_SECOND;  // 5 seconds
 constexpr qint64 SLEEP_BEFORE_REQUEST   = 10LL * MS_IN_SECOND; // 10 seconds
 constexpr qint64 CLEAN_REFRESH_INTERVAL = 3LL * ONE_HOUR;      // 3 hours
@@ -83,7 +84,9 @@ void OperationsThread::run()
         {
             if (requestOperations())
             {
-                while (true)
+                const qint64 startStreamTimestamp = QDateTime::currentMSecsSinceEpoch();
+
+                while (QDateTime::currentMSecsSinceEpoch() - startStreamTimestamp < RECONNECT_INTERVAL)
                 {
                     optimize();
 
