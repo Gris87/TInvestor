@@ -155,7 +155,7 @@ DecisionMaker::getStocksWithAvgPrice(QThread* parentThread, const Portfolio& por
 
         if (avgPrice < 0)
         {
-            if (qualifiedUser || !stock->meta.forQualInvestorFlag)
+            if (!stock->meta.ignore && (qualifiedUser || !stock->meta.forQualInvestorFlag))
             {
                 res.append(StockWithAvgPrice(stock, avgPrice));
             }

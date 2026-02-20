@@ -213,7 +213,7 @@ static void detectStocksForBiDirTradingForParallel(
 
         stock->readLock();
 
-        if (qualifiedUser || !stock->meta.forQualInvestorFlag)
+        if (!stock->meta.ignore && (qualifiedUser || !stock->meta.forQualInvestorFlag))
         {
             const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
                 grpcClient->getOrderBook(parentThread, stock->meta.instrumentId, ORDER_BOOK_DEPTH);

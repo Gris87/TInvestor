@@ -11,6 +11,8 @@
 
 
 const char* const RUBLE_UID                          = "a92e2e25-a698-45cc-a781-167cf465257c";
+const char* const LNZL_UID                           = "4563f7a1-8245-4caf-aba5-ac49827ba775";
+const char* const LNZLP_UID                          = "28fdec79-fcf0-40cb-b53c-586179f024e5";
 constexpr qint64  MS_IN_SECOND                       = 1000LL;
 constexpr qint64  ONE_MINUTE                         = 60LL * MS_IN_SECOND;
 constexpr qint64  ONE_HOUR                           = 60LL * ONE_MINUTE;
@@ -23,6 +25,13 @@ constexpr qint64  MAX_GRPC_TIME_LIMIT                = ONE_MONTH;          // 1 
 constexpr int     LOGO_SIZE                          = 24;
 constexpr int     HTTP_STATUS_CODE_OK                = 200;
 constexpr int     HTTP_STATUS_CODE_TOO_MANY_REQUESTS = 429;
+
+// clang-format off
+static const QMap<QString, bool> IGNORE_STOCKS{ // clazy:exclude=non-pod-global-static
+    {LNZL_UID,  true},
+    {LNZLP_UID, true}
+};
+// clang-format on
 
 
 
@@ -479,7 +488,7 @@ bool StockCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
             stockMeta.lot                 = tinkoffStock.lot();
             stockMeta.pricePrecision      = quotationPrecision(tinkoffStock.min_price_increment());
             stockMeta.minPriceIncrement   = quotationToFloat(tinkoffStock.min_price_increment());
-            stockMeta.ignore              = false;
+            stockMeta.ignore              = IGNORE_STOCKS.value(stockMeta.instrumentId, false);
 
             stocksMeta.append(stockMeta);
         }

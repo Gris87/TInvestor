@@ -55,8 +55,8 @@ LNZL_UID  = "4563f7a1-8245-4caf-aba5-ac49827ba775"
 LNZLP_UID = "28fdec79-fcf0-40cb-b53c-586179f024e5"
 
 BAD_INSTRUMENTS = {
-    LNZL_UID: 2.50,
-    LNZLP_UID: 2.00
+    LNZL_UID: 10.50,
+    LNZLP_UID: 10.00
 }
 
 
