@@ -38,7 +38,7 @@ jobs:
 
       # Use local env-qt-zlib-quazip action
       - name: Use local env-qt-zlib-quazip action
-        uses: ./.github/actions/env-qt-zlib-quazip
+        uses: .github/actions/env-qt-zlib-quazip
 
   # Setup environment and upload artifacts
   env-vcpkg:
@@ -60,7 +60,7 @@ jobs:
 
       # Use local env-vcpkg action
       - name: Use local env-vcpkg action
-        uses: ./.github/actions/env-vcpkg
+        uses: .github/actions/env-vcpkg
 
   # Build project in debug
   build-debug:
@@ -78,7 +78,7 @@ jobs:
       # Free some space for a build
       - name: Maximize build space
         if: runner.os != 'Windows'
-        uses: ./.github/actions/3rd-party/easimon/maximize-build-space
+        uses: .github/actions/3rd-party/easimon/maximize-build-space
         with:
           root-reserve-mb: 8192
           remove-dotnet: "true"
@@ -95,7 +95,7 @@ jobs:
 
       # Use local build-debug action
       - name: Use local build-debug action
-        uses: ./.github/actions/build-debug
+        uses: .github/actions/build-debug
 
   # Run clang-tidy
   clang-tidy:
@@ -119,7 +119,7 @@ jobs:
 
       # Use local clang-tidy action
       - name: Use local clang-tidy action
-        uses: ./.github/actions/clang-tidy
+        uses: .github/actions/clang-tidy
 
   # Run clazy
   clazy:
@@ -143,4 +143,4 @@ jobs:
 
       # Use local clazy action
       - name: Use local clazy action
-        uses: ./.github/actions/clazy
+        uses: .github/actions/clazy
