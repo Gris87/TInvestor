@@ -75,16 +75,10 @@ jobs:
       fail-fast: false
 
     steps:
-      # Checkout actions from latest commit
-      - name: Checkout actions from latest commit
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: .github
-
       # Free some space for a build
       - name: Maximize build space
         if: runner.os != 'Windows'
-        uses: ./.github/actions/3rd-party/easimon/maximize-build-space
+        uses: easimon/maximize-build-space@master
         with:
           root-reserve-mb: 8192
           remove-dotnet: "true"
@@ -92,6 +86,12 @@ jobs:
           remove-haskell: "true"
           remove-codeql: "true"
           remove-docker-images: "true"
+
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github
 
       # Use local build-debug action
       - name: Use local build-debug action
