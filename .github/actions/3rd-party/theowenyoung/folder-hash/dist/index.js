@@ -1,50 +1,50 @@
 module.exports =
 /******/ (function(modules, runtime) { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
+/******/    "use strict";
+/******/    // The module cache
+/******/    var installedModules = {};
 /******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
+/******/    // The require function
+/******/    function __webpack_require__(moduleId) {
 /******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
+/******/        // Check if module is in cache
+/******/        if(installedModules[moduleId]) {
+/******/            return installedModules[moduleId].exports;
+/******/        }
+/******/        // Create a new module (and put it into the cache)
+/******/        var module = installedModules[moduleId] = {
+/******/            i: moduleId,
+/******/            l: false,
+/******/            exports: {}
+/******/        };
 /******/
-/******/ 		// Execute the module function
-/******/ 		var threw = true;
-/******/ 		try {
-/******/ 			modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 			threw = false;
-/******/ 		} finally {
-/******/ 			if(threw) delete installedModules[moduleId];
-/******/ 		}
+/******/        // Execute the module function
+/******/        var threw = true;
+/******/        try {
+/******/            modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/            threw = false;
+/******/        } finally {
+/******/            if(threw) delete installedModules[moduleId];
+/******/        }
 /******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
+/******/        // Flag the module as loaded
+/******/        module.l = true;
 /******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+/******/        // Return the exports of the module
+/******/        return module.exports;
+/******/    }
 /******/
 /******/
-/******/ 	__webpack_require__.ab = __dirname + "/";
+/******/    __webpack_require__.ab = __dirname + "/";
 /******/
-/******/ 	// the startup function
-/******/ 	function startup() {
-/******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(104);
-/******/ 	};
+/******/    // the startup function
+/******/    function startup() {
+/******/        // Load entry module and return exports
+/******/        return __webpack_require__(104);
+/******/    };
 /******/
-/******/ 	// run startup
-/******/ 	return startup();
+/******/    // run startup
+/******/    return startup();
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7499,8 +7499,8 @@ class OidcClient {
             const res = yield httpclient
                 .getJson(id_token_url)
                 .catch(error => {
-                throw new Error(`Failed to get ID Token. \n 
-        Error Code : ${error.statusCode}\n 
+                throw new Error(`Failed to get ID Token. \n
+        Error Code : ${error.statusCode}\n
         Error Message: ${error.result.message}`);
             });
             const id_token = (_a = res.result) === null || _a === void 0 ? void 0 : _a.value;

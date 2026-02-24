@@ -27,7 +27,7 @@ inputs:
       description: >
         A download URL for the artifact that was just uploaded. Empty if the artifact upload failed.
 
-        This download URL only works for requests Authenticated with GitHub. Anonymous downloads will be prompted to first login. 
+        This download URL only works for requests Authenticated with GitHub. Anonymous downloads will be prompted to first login.
         If an anonymous download URL is needed than a short time restricted URL can be generated using the download artifact API: https://docs.github.com/en/rest/actions/artifacts#download-an-artifact
 
         This URL will be valid for as long as the artifact exists and the workflow run and repository exists. Once an artifact has expired this URL will no longer work.
@@ -74,4 +74,3 @@ runs:
       run: |
         Write-Output "artifact-id=${{ steps.upload-artifact.outputs.artifact-id }}" >> $env:GITHUB_OUTPUT
         Write-Output "artifact-url=${{ steps.upload-artifact.outputs.artifact-url }}" >> $env:GITHUB_OUTPUT
-

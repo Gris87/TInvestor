@@ -75,6 +75,12 @@ jobs:
       fail-fast: false
 
     steps:
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github
+
       # Free some space for a build
       - name: Maximize build space
         if: runner.os != 'Windows'
@@ -86,12 +92,6 @@ jobs:
           remove-haskell: "true"
           remove-codeql: "true"
           remove-docker-images: "true"
-
-      # Checkout actions from latest commit
-      - name: Checkout actions from latest commit
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: .github
 
       # Use local build-debug action
       - name: Use local build-debug action
