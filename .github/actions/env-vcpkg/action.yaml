@@ -141,7 +141,7 @@ runs:
 
     # Upload environment artifacts
     - name: Upload environment artifacts
-      uses: uses: .github/actions/3rd-party/thebrowsercompany/gha-upload-tar-artifact
+      uses: ./.github/actions/3rd-party/thebrowsercompany/gha-upload-tar-artifact
       with:
         name: env-vcpkg-${{ matrix.config.name }}
         path: ./Qt

@@ -18,7 +18,7 @@ runs:
     # Calculate TInvestor hash on sources
     - name: Calculate TInvestor hash
       id: folders-hash
-      uses: .github/actions/3rd-party/theowenyoung/folder-hash
+      uses: ./.github/actions/3rd-party/theowenyoung/folder-hash
       with:
         path: |
           ./TInvestor-source/app
@@ -48,7 +48,7 @@ runs:
     # Download environment artifacts
     - name: Download environment artifacts (Qt/ZLib/Quazip)
       if: steps.cache-build.outputs.cache-hit != 'true'
-      uses: .github/actions/3rd-party/thebrowsercompany/gha-download-tar-artifact
+      uses: ./.github/actions/3rd-party/thebrowsercompany/gha-download-tar-artifact
       with:
         name: env-qt-zlib-quazip-${{ matrix.config.name }}
         path: ./Qt
@@ -56,7 +56,7 @@ runs:
     # Download environment artifacts
     - name: Download environment artifacts (vcpkg)
       if: steps.cache-build.outputs.cache-hit != 'true'
-      uses: .github/actions/3rd-party/thebrowsercompany/gha-download-tar-artifact
+      uses: ./.github/actions/3rd-party/thebrowsercompany/gha-download-tar-artifact
       with:
         name: env-vcpkg-${{ matrix.config.name }}
         path: ./Qt
@@ -158,7 +158,7 @@ runs:
 
     # Upload artifacts
     - name: Upload artifacts
-      uses: uses: .github/actions/3rd-party/thebrowsercompany/gha-upload-tar-artifact
+      uses: ./.github/actions/3rd-party/thebrowsercompany/gha-upload-tar-artifact
       with:
         name: build-release-${{ matrix.config.name }}
         path: ./artifacts
