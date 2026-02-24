@@ -32,7 +32,7 @@ jobs:
     steps:
       # Checkout actions from latest commit
       - name: Checkout actions from latest commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: .github
 
@@ -54,7 +54,7 @@ jobs:
     steps:
       # Checkout actions from latest commit
       - name: Checkout actions from latest commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: .github
 
@@ -78,7 +78,7 @@ jobs:
       # Free some space for a build
       - name: Maximize build space
         if: runner.os != 'Windows'
-        uses: easimon/maximize-build-space@master
+        uses: ./.github/actions/3rd-party/easimon/maximize-build-space
         with:
           root-reserve-mb: 8192
           remove-dotnet: "true"
@@ -89,7 +89,7 @@ jobs:
 
       # Checkout actions from latest commit
       - name: Checkout actions from latest commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: .github
 
@@ -113,7 +113,7 @@ jobs:
     steps:
       # Checkout actions from latest commit
       - name: Checkout actions from latest commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: .github
 
@@ -137,7 +137,7 @@ jobs:
     steps:
       # Checkout actions from latest commit
       - name: Checkout actions from latest commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: .github
 

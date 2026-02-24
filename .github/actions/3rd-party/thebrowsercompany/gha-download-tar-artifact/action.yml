@@ -1,0 +1,59 @@
+name: 'Download and untar an artifact, preserving permissions'
+description: 'Download a build artifact that was previously uploaded in the workflow by the gha-upload-tar-artifact action, with permissions preserved.'
+author: 'The Browser Company of New York'
+
+inputs:
+  name:
+    description: 'The name of the artifact to download.'
+    default: 'artifact'
+    required: true
+  path:
+    description: 'Destination path. Defaults to $GITHUB_WORKSPACE.'
+    default: ${{ github.workspace }}
+  github-token:
+    description: 'GitHub token used to download artifacts.'
+    default: ${{ github.token }}
+  run-id:
+    description: 'The id of the workflow run where the desired download artifact was uploaded from. If unspecified, the current run is used.'
+    default: ${{ github.run_id }}
+
+  outputs:
+    download-path:
+      description: 'Path of artifact download'
+
+runs:
+  using: composite
+
+  steps:
+    - name: Create Temporary Directory
+      shell: pwsh
+      id: create-temp-dir
+      run: |
+        $TempDir = New-TemporaryFile | % { Remove-Item $_; New-Item -ItemType Directory -Path $_ }
+        echo "temp-dir=$TempDir" >> $env:GITHUB_OUTPUT
+
+    - name: Download Artifact
+      uses: actions/download-artifact@v7
+      with:
+        name: ${{ inputs.name }}
+        path: ${{ steps.create-temp-dir.outputs.temp-dir }}
+        github-token: ${{ inputs.github-token }}
+        run-id: ${{ inputs.run-id }}
+
+    - name: Extract Tar Archive
+      shell: pwsh
+      id: extract-tar
+      run: |
+        New-Item -ItemType Directory -Path "${{ inputs.path }}" -Force | Out-Null
+        $TarFile = Join-Path "${{ steps.create-temp-dir.outputs.temp-dir }}" "${{ inputs.name }}.tar"
+        $tar = if ($IsWindows) { "${env:WINDIR}\System32\tar.exe" } else { "tar" }
+        & $tar xf $TarFile -C ${{ inputs.path }}
+
+    - name: Delete Temporary Directory
+      shell: pwsh
+      run: Remove-Item -Recurse ${{ steps.create-temp-dir.outputs.temp-dir }}
+
+    - name: Export Output
+      shell: pwsh
+      run: |
+        Write-Output "download-path=${{ inputs.path }}" >> $env:GITHUB_OUTPUT

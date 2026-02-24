@@ -1,0 +1,16 @@
+name: 'Folder Hash'
+description: 'Get Folder Unique Hash'
+author: Owen Young
+branding:
+  icon: hash
+  color: purple
+inputs:
+  path:
+    description: 'folder path to hash'
+    required: true
+outputs:
+  hash:
+    description: 'The hash of folder'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

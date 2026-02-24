@@ -11,14 +11,14 @@ runs:
 
     # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
     - name: Checkout TInvestor
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         path: TInvestor-source
 
     # Calculate TInvestor hash on sources
     - name: Calculate TInvestor hash
       id: folders-hash
-      uses: theowenyoung/folder-hash@v3
+      uses: ./.github/actions/3rd-party/theowenyoung/folder-hash
       with:
         path: |
           ./TInvestor-source/app
@@ -29,14 +29,14 @@ runs:
     # Download/upload cache
     - name: Caching
       id: cache-style
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: ./success
         key: ${{ runner.os }}-check-style-${{ steps.folders-hash.outputs.hash }}
 
     # Setup python
     - name: Setup python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: "3.13"
 
