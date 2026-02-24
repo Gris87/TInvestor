@@ -10,12 +10,6 @@ inputs:
   path:
     description: 'Destination path. Defaults to $GITHUB_WORKSPACE.'
     default: ${{ github.workspace }}
-  github-token:
-    description: 'GitHub token used to download artifacts.'
-    default: ${{ github.token }}
-  run-id:
-    description: 'The id of the workflow run where the desired download artifact was uploaded from. If unspecified, the current run is used.'
-    default: ${{ github.run_id }}
 
   outputs:
     download-path:
@@ -37,8 +31,6 @@ runs:
       with:
         name: ${{ inputs.name }}
         path: ${{ steps.create-temp-dir.outputs.temp-dir }}
-        github-token: ${{ inputs.github-token }}
-        run-id: ${{ inputs.run-id }}
 
     - name: Extract Tar Archive
       shell: pwsh
