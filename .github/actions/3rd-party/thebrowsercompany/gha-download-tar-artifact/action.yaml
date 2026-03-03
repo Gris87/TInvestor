@@ -25,7 +25,6 @@ runs:
       run: |
         $TempDir = New-TemporaryFile | % { Remove-Item $_; New-Item -ItemType Directory -Path $_ }
         echo "temp-dir=$TempDir" >> $env:GITHUB_OUTPUT
-        echo "temp-dir=$TempDir"
 
     - name: Download Artifact
       uses: actions/download-artifact@v7
