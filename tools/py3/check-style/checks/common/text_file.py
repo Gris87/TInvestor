@@ -252,6 +252,7 @@ def is_file_skipped(file_path):
         "/libs/simdjson/src/simdjson/" in file_path or
         "/tools/py3/tinkoff-accounts/tinkoff/" in file_path or
         "/tools/py3/tinkoff-asap-trading/tinkoff/" in file_path or
+        "/tools/py3/tinkoff-favorite-group/tinkoff/" in file_path or
         "/tools/py3/tinkoff-follower/tinkoff/" in file_path or
         "/TInvestor.pro.user" in file_path
     )
