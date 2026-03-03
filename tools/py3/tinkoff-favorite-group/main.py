@@ -15,6 +15,7 @@ from localization import *
 #logging.basicConfig(level=logging.DEBUG)
 
 
+HHRU_UID   = "cf9ed7ef-784d-4c2c-aabe-362891fcd80c"
 LNZL_UID   = "4563f7a1-8245-4caf-aba5-ac49827ba775"
 LNZLP_UID  = "28fdec79-fcf0-40cb-b53c-586179f024e5"
 GTRK_UID   = "9e69afb6-4561-4fc2-b63b-b181e3f9ecdc"
@@ -22,6 +23,7 @@ TMON_UID   = "498ec3ff-ef27-4729-9703-a5aac48d5789"
 IMOEXF_UID = "5bcff194-f10d-4314-b9ee-56b7fdb344fd"
 
 IGNORE_STOCKS = [
+    HHRU_UID,
     LNZL_UID,
     LNZLP_UID,
     GTRK_UID
@@ -85,7 +87,7 @@ async def _get_stocks(client):
     tinkoff_shares = await client.instruments.shares()
 
     for instrument in tinkoff_shares.instruments:
-        if instrument.currency == "rub" and instrument.api_trade_available_flag and instrument.uid not in IGNORE_STOCKS:
+        if instrument.currency == "rub" and instrument.api_trade_available_flag and not instrument.for_qual_investor_flag and instrument.uid not in IGNORE_STOCKS:
             res.append(instrument.uid)
 
     res.extend(EXTEND_STOCKS)
@@ -110,8 +112,6 @@ async def _create_favorite_group(client, groups, stocks):
             group_id=groupId
         )
         logger.info(f"{i+1} of {len(stocks)} added")
-
-        await asyncio.sleep(5)
 
 
 def main():
