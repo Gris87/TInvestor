@@ -1,6 +1,6 @@
+Try to investigate force short closure (11 days?) and notify about it
 Double check for cancelling buy orders in bidir trading
 Something strange with daily yield chart
-Create script for creating favorite group
 Limit buy lots to 1 in safe mode (4% safe gap) (Do not buy at all)
 Let configure safe gap for bi-dir trading
 Try to get dependencies between stocks. One price raise after another stock raise
