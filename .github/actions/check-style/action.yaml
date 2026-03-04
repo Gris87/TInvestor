@@ -18,7 +18,7 @@ runs:
     # Calculate TInvestor hash on sources
     - name: Calculate TInvestor hash
       id: folders-hash
-      uses: ./.github/actions/3rd-party/theowenyoung/folder-hash
+      uses: theowenyoung/folder-hash@v3
       with:
         path: |
           ./TInvestor-source/app

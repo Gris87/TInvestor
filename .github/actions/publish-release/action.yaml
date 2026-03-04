@@ -9,14 +9,14 @@ runs:
   steps:
     # Download build artifacts (release)
     - name: Download build artifacts (release)
-      uses: ./.github/actions/3rd-party/thebrowsercompany/gha-download-tar-artifact
+      uses: thebrowsercompany/gha-download-tar-artifact@main
       with:
         name: build-release-${{ matrix.config.name }}
         path: ./build-release
 
     # Download documentation artifacts
     - name: Download documentation artifacts
-      uses: ./.github/actions/3rd-party/thebrowsercompany/gha-download-tar-artifact
+      uses: thebrowsercompany/gha-download-tar-artifact@main
       with:
         name: doc-${{ matrix.config.name }}
         path: ./doc
@@ -58,7 +58,7 @@ runs:
 
     # Download release_upload_url.txt artifact
     - name: Download release url
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: release_upload_url.txt
         path: ./

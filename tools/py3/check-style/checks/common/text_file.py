@@ -246,7 +246,6 @@ def is_file_skipped(file_path):
 
     skip_files = (
         "/.git/" in file_path or
-        "/.github/actions/3rd-party/" in file_path or
         "/build/" in file_path or
         "/libs/investapi/messages/" in file_path or
         "/libs/simdjson/src/simdjson/" in file_path or

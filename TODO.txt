@@ -1,4 +1,3 @@
-Try to investigate force short closure (11 days?) and notify about it
 Double check for cancelling buy orders in bidir trading
 Something strange with daily yield chart
 Limit buy lots to 1 in safe mode (4% safe gap) (Do not buy at all)
