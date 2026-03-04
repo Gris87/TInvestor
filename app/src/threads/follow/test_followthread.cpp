@@ -292,6 +292,7 @@ TEST_F(Test_FollowThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*grpcClientMock, readPortfolioStream(portfolioStream)).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*grpcClientMock, cancelPortfolioStream(portfolioStream));
     EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"), QString("another-account-id")))
         .WillOnce(Return(portfolioStream));
@@ -300,6 +301,7 @@ TEST_F(Test_FollowThread, Test_run)
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("another-account-id")))
         .WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*grpcClientMock, cancelPortfolioStream(portfolioStream));
     EXPECT_CALL(*grpcClientMock, finishPortfolioStream(portfolioStream));
     EXPECT_CALL(*grpcClientMock, createPortfolioStream(QString("account-id"), QString("another-account-id")))
         .WillOnce(Return(nullptr));

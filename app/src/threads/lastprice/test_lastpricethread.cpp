@@ -113,6 +113,7 @@ TEST_F(Test_LastPriceThread, Test_run)
     EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(marketDataResponse2));
     EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*grpcClientMock, cancelMarketDataStream(marketDataStream));
     EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));

@@ -106,6 +106,7 @@ void FollowThread::run()
 
             const QWriteLocker lock(mRwMutex);
 
+            mGrpcClient->cancelPortfolioStream(mPortfolioStream);
             mGrpcClient->finishPortfolioStream(mPortfolioStream);
             mPortfolioStream = nullptr;
         }

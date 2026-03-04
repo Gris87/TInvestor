@@ -74,6 +74,7 @@ void LastPriceThread::run()
 
                 const QWriteLocker lock(mRwMutex);
 
+                mGrpcClient->cancelMarketDataStream(mMarketDataStream);
                 mGrpcClient->finishMarketDataStream(mMarketDataStream);
                 mMarketDataStream = nullptr;
             }
