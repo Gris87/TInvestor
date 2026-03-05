@@ -53,10 +53,14 @@ WORKDAY_END   = dt.time(18, 40, tzinfo=MOSCOW_TZ)
 
 LNZL_UID  = "4563f7a1-8245-4caf-aba5-ac49827ba775"
 LNZLP_UID = "28fdec79-fcf0-40cb-b53c-586179f024e5"
+GTRK_UID  = "9e69afb6-4561-4fc2-b63b-b181e3f9ecdc"
+JETL_UID  = "34f51a49-919b-4eb1-9ed0-59c26f4cdc1e"
 
 BAD_INSTRUMENTS = {
-    LNZL_UID: 10.50,
-    LNZLP_UID: 10.00
+    LNZL_UID: 10.00,
+    LNZLP_UID: 10.00,
+    GTRK_UID: 10.00,
+    JETL_UID: 10.00
 }
 
 
