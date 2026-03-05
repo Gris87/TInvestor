@@ -161,7 +161,7 @@ void StockMeta::merge(const StockMeta& another)
     minPriceIncrement   = another.minPriceIncrement;
 }
 
-bool StockMeta::compareForMerge(const StockMeta& another)
+bool StockMeta::compareForMerge(const StockMeta& another) const
 {
     return instrumentId == another.instrumentId && instrumentTicker == another.instrumentTicker &&
            instrumentName == another.instrumentName && forQualInvestorFlag == another.forQualInvestorFlag && lot == another.lot &&

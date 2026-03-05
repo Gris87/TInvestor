@@ -507,7 +507,7 @@ static grpc::Status cancelOrderAction(
 
         std::string json_output;
 
-        absl::Status abslStatus = google::protobuf::util::MessageToJsonString(req, &json_output);
+        const absl::Status abslStatus = google::protobuf::util::MessageToJsonString(req, &json_output);
 
         qInfo() << abslStatus.ok() << json_output;
 
