@@ -105,13 +105,13 @@ async def _create_favorite_group(client, groups, stocks):
     req = CreateFavoriteGroupRequest(group_name=favorite_group_name, group_color="FFFFFF")
     resp = await client.instruments.create_favorite_group(req)
 
-    groupId = resp.group_id
+    group_id = resp.group_id
 
     for i, instrumentId in enumerate(stocks):
         await client.instruments.edit_favorites(
             instruments=[EditFavoritesRequestInstrument(instrument_id=instrumentId)],
             action_type=EditFavoritesActionType.EDIT_FAVORITES_ACTION_TYPE_ADD,
-            group_id=groupId
+            group_id=group_id
         )
         logger.info(f"{i+1} of {len(stocks)} added")
 

@@ -8,11 +8,14 @@ import subprocess
 import sys
 import time
 
+from concurrent.futures import ThreadPoolExecutor
 from loguru import logger
 from pathlib import Path
 
 from localization import *
 
+
+PATH_TO_SCRIPT = Path(__file__).parent
 
 TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
 TELEGRAM_SEND_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
@@ -28,6 +31,9 @@ HUGE_SELL_STEP = 60
 
 
 def telegram_bot(args):
+    if args.dividends_only:
+        return _check_dividends(args)
+
     _check_operations_json(args)
     _check_core_file(args)
     _check_app_running(args)
@@ -36,6 +42,60 @@ def telegram_bot(args):
         _check_huge_sell(args)
 
     return True
+
+
+def _check_dividends(args):
+    with open(Path(args.path_to_stocks) / "stocks.json", "r", encoding="utf-8") as f:
+        content = f.read()
+        stocks_meta = json.loads(content)
+
+    commands = []
+
+    for stock_meta in stocks_meta:
+        commands.append(
+            [
+                "python",
+                str(Path(PATH_TO_SCRIPT) / "dividends_parallel.py"),
+                "--chat-id", args.chat_id,
+                "--ticker", stock_meta["instrumentTicker"]
+            ]
+        )
+
+    return _execute_commands(commands)
+
+
+def _execute_commands(commands):
+    res = True
+
+    with ThreadPoolExecutor(os.cpu_count()) as executor:
+        for result, lines in executor.map(_execute_command, commands):
+            res &= result
+
+            for line in lines:
+                print(line)
+
+    return res
+
+
+def _execute_command(command):
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+
+    lines = []
+
+    encoding = os.device_encoding(1)
+    if encoding is None:
+        encoding = "utf-8"
+
+    for line in iter(process.stdout.readline, b''):
+        lines.append(line.rstrip().decode(encoding))
+
+    process.wait()
+
+    return process.returncode == 0, lines
 
 
 def _check_operations_json(args):
@@ -176,6 +236,13 @@ def main():
         action="store_true",
         help="Send notifications about huge selling",
     )
+    parser.add_argument(
+        "--dividends-only",
+        dest="dividends_only",
+        default=False,
+        action="store_true",
+        help="Send notifications about dividends only",
+    )
     args = parser.parse_args()
 
     if args.chat_id == "":
@@ -183,12 +250,12 @@ def main():
 
         sys.exit(1)
 
-    if args.path_to_operations == "":
+    if not args.dividends_only and args.path_to_operations == "":
         logger.error("Please specify path to operations.json file with --path-to-operations")
 
         sys.exit(1)
 
-    if args.extra_huge_sell and args.path_to_stocks == "":
+    if (args.extra_huge_sell or args.dividends_only) and args.path_to_stocks == "":
         logger.error("Please specify path to stocks folder with --path-to-stocks")
 
         sys.exit(1)
