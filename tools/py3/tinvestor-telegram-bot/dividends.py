@@ -76,7 +76,7 @@ def _process_dividend_calendar(args, calendar):
 
         for instrument_id, dividend in dividends.items():
             if instrument_id not in old_dividends:
-                send_message(args.chat_id, msg_dividends.format(ticker=dividend["ticker"], name=dividend["name"]))
+                send_message(args.chat_id, msg_dividends.format(ticker=dividend["ticker"], name=dividend["name"], yield_value=dividend["yieldValue"]))
 
     with open(dividends_path, "w", encoding="utf-8") as f:
         json.dump(dividends, f, ensure_ascii=False)
