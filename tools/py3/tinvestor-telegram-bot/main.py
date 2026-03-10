@@ -2,23 +2,18 @@ import argparse
 import json
 import os
 import psutil
-import requests
 import struct
 import subprocess
 import sys
 import time
 
-from concurrent.futures import ThreadPoolExecutor
 from loguru import logger
 from pathlib import Path
 
+from dividends import check_dividends
 from localization import *
+from messaging import send_message
 
-
-PATH_TO_SCRIPT = Path(__file__).parent
-
-TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
-TELEGRAM_SEND_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
 
 HUGE_SELL = 45.0
 HUNDRED_PERCENT = 100.0
@@ -32,7 +27,7 @@ HUGE_SELL_STEP = 60
 
 def telegram_bot(args):
     if args.dividends_only:
-        return _check_dividends(args)
+        return check_dividends(args)
 
     _check_operations_json(args)
     _check_core_file(args)
@@ -42,60 +37,6 @@ def telegram_bot(args):
         _check_huge_sell(args)
 
     return True
-
-
-def _check_dividends(args):
-    with open(Path(args.path_to_stocks) / "stocks.json", "r", encoding="utf-8") as f:
-        content = f.read()
-        stocks_meta = json.loads(content)
-
-    commands = []
-
-    for stock_meta in stocks_meta:
-        commands.append(
-            [
-                "python",
-                str(Path(PATH_TO_SCRIPT) / "dividends_parallel.py"),
-                "--chat-id", args.chat_id,
-                "--ticker", stock_meta["instrumentTicker"]
-            ]
-        )
-
-    return _execute_commands(commands)
-
-
-def _execute_commands(commands):
-    res = True
-
-    with ThreadPoolExecutor(os.cpu_count()) as executor:
-        for result, lines in executor.map(_execute_command, commands):
-            res &= result
-
-            for line in lines:
-                print(line)
-
-    return res
-
-
-def _execute_command(command):
-    process = subprocess.Popen(
-        command,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
-
-    lines = []
-
-    encoding = os.device_encoding(1)
-    if encoding is None:
-        encoding = "utf-8"
-
-    for line in iter(process.stdout.readline, b''):
-        lines.append(line.rstrip().decode(encoding))
-
-    process.wait()
-
-    return process.returncode == 0, lines
 
 
 def _check_operations_json(args):
@@ -109,14 +50,14 @@ def _check_operations_json(args):
     delta = now - last_timestamp
 
     if delta > args.inactivity_days * ONE_DAY:
-        _send_message(args, msg_operations_inactivity)
+        send_message(args.chat_id, msg_operations_inactivity)
 
 
 def _check_core_file(args):
     core_file = Path(args.path_to_operations).parent.parent.parent.parent / "core"
 
     if core_file.exists():
-        _send_message(args, msg_core_file_found)
+        send_message(args.chat_id, msg_core_file_found)
 
         now = round(time.time() * MS_IN_SECOND)
         os.rename(core_file, f"{core_file}_{now}")
@@ -132,7 +73,7 @@ def _check_app_running(args):
             break
 
     if not found:
-        _send_message(args, msg_app_restart)
+        send_message(args.chat_id, msg_app_restart)
 
         home_directory = Path.home()
         subprocess.Popen(["xdg-open", f"{home_directory}/Desktop/TInvestor.desktop"], close_fds=True)
@@ -168,7 +109,7 @@ def _check_huge_sell(args):
         #         break
 
         if len(data) > 0 and _is_huge_sell_found(data, len(data) - 1):
-            _send_message(args, msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
+            send_message(args.chat_id, msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
 
 
 def _is_huge_sell_found(data, index):
@@ -193,12 +134,6 @@ def _is_huge_sell_found(data, index):
     return False
 
 
-def _send_message(args, msg):
-    logger.info(f"Send message: {msg}")
-
-    requests.post(TELEGRAM_SEND_URL, json={"chat_id": args.chat_id, "text": msg})
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -207,6 +142,13 @@ def main():
         type=str,
         default="",
         help="Telegram chat ID"
+    )
+    parser.add_argument(
+        "--cache",
+        dest="cache",
+        type=str,
+        default="",
+        help="Path to cache folder"
     )
     parser.add_argument(
         "--path-to-operations",
@@ -247,6 +189,11 @@ def main():
 
     if args.chat_id == "":
         logger.error("Please specify Telegram chat ID with --chat-id")
+
+        sys.exit(1)
+
+    if args.cache == "":
+        logger.error("Please specify path to cache folder with --cache")
 
         sys.exit(1)
 

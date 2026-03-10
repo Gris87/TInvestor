@@ -1,17 +1,17 @@
 import argparse
-import os
 import requests
 import sys
 import time
 
 from datetime import datetime
+from http import HTTPStatus
 from loguru import logger
 
 from localization import *
+from messaging import send_message
 
 
-TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
-TELEGRAM_SEND_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+PULSE_URL = "https://api-invest.tbank.ru/invest-terminal/api-invest-gw/social/post/feed/v1/post/instrument/{ticker}?limit=20&include=all"
 
 MS_IN_SECOND           = 1000
 ONE_MINUTE             = 60 * MS_IN_SECOND
@@ -26,19 +26,24 @@ def process_stock(args):
 
 
 def _get_pulse_posts(args):
-    url = f"https://api-invest.tbank.ru/invest-terminal/api-invest-gw/social/post/feed/v1/post/instrument/{args.ticker}?limit=20&include=all"
-    resp = requests.get(url)
+    while True:
+        resp = requests.get(PULSE_URL.format(ticker=args.ticker))
 
-    resp_json = resp.json()
+        if resp.status_code != HTTPStatus.OK:
+            time.sleep(1)
 
-    return resp_json["payload"]["items"]
+            continue
+
+        resp_json = resp.json()
+
+        return resp_json["payload"]["items"]
 
 
 def _process_posts(args, posts):
-    limit_timestamp = int(time.time() * 1000) - LAST_MESSAGES_INTERVAL
+    limit_timestamp = round(time.time() * MS_IN_SECOND) - LAST_MESSAGES_INTERVAL
 
     for post in posts:
-        post_inserted = int(datetime.fromisoformat(post["inserted"]).timestamp() * 1000)
+        post_inserted = round(datetime.fromisoformat(post["inserted"]).timestamp() * MS_IN_SECOND)
 
         if post_inserted < limit_timestamp:
             break
@@ -52,13 +57,7 @@ def _process_posts(args, posts):
         post_text_simplified = post_text.casefold()
 
         if dividends.casefold() in post_text_simplified and recommend.casefold() in post_text_simplified:
-            _send_message(args, post_text)
-
-
-def _send_message(args, msg):
-    logger.info(f"Send message: {msg}")
-
-    requests.post(TELEGRAM_SEND_URL, json={"chat_id": args.chat_id, "text": msg})
+            send_message(args.chat_id, post_text)
 
 
 if __name__ == "__main__":
