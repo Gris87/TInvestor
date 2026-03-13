@@ -116,8 +116,13 @@ def _execute_commands(commands):
 
 
 def _execute_command(command):
+    check = command[1].split("=")[1]
+    file_path = command[-1]
+
+    print(f"Analyzing {file_path} with {check}")
+
     my_env = os.environ.copy()
-    my_env["CLAZY_CHECKS_AS_ERRORS"] = command[1].split("=")[1]
+    my_env["CLAZY_CHECKS_AS_ERRORS"] = check
 
     process = subprocess.Popen(
         command,
@@ -137,7 +142,7 @@ def _execute_command(command):
 
     process.wait()
 
-    return command[1].split("=")[1], command[-1], process.returncode == 0, lines
+    return check, file_path, process.returncode == 0, lines
 
 
 def _get_checks():
