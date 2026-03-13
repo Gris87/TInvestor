@@ -33,6 +33,6 @@ public:
     IHttpClient(const IHttpClient& another)            = delete;
     IHttpClient& operator=(const IHttpClient& another) = delete;
 
-    virtual HttpResult download(const QUrl& url, const Headers& headers) = 0;
-    virtual bool       openInBrowser(const QUrl& url)                    = 0;
+    virtual HttpResult get(const QUrl& url, const Headers& headers) = 0;
+    virtual bool       openInBrowser(const QUrl& url)               = 0;
 };

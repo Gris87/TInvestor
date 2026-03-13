@@ -338,7 +338,7 @@ static void obtainInstrumentsForParallel(
 void StockCollectThread::downloadLogo(const QString& instrumentId, const QUrl& url)
 {
     const IHttpClient::Headers headers;
-    const HttpResult           httpResult = mHttpClient->download(url, headers);
+    const HttpResult           httpResult = mHttpClient->get(url, headers);
 
     QPixmap logo;
     bool    good = false;
@@ -677,7 +677,7 @@ static void getCandlesWithHttp(
 
             while (true)
             {
-                const HttpResult httpResult = httpClient->download(url, headers);
+                const HttpResult httpResult = httpClient->get(url, headers);
 
                 if (parentThread->isInterruptionRequested() ||
                     (httpResult.statusCode != HTTP_STATUS_CODE_OK && httpResult.statusCode != HTTP_STATUS_CODE_TOO_MANY_REQUESTS))

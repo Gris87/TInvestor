@@ -3,6 +3,8 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/stocks/istocksstorage_mock.h"
+#include "src/utils/http/ihttpclient_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
 
 
 
@@ -20,18 +22,24 @@ protected:
     void SetUp() override
     {
         stocksStorageMock = new StrictMock<StocksStorageMock>();
+        timeUtilsMock     = new StrictMock<TimeUtilsMock>();
+        httpClientMock    = new StrictMock<HttpClientMock>();
 
-        thread = new DetectDividendsThread(stocksStorageMock);
+        thread = new DetectDividendsThread(stocksStorageMock, timeUtilsMock, httpClientMock);
     }
 
     void TearDown() override
     {
         delete thread;
         delete stocksStorageMock;
+        delete timeUtilsMock;
+        delete httpClientMock;
     }
 
     DetectDividendsThread*         thread;
     StrictMock<StocksStorageMock>* stocksStorageMock;
+    StrictMock<TimeUtilsMock>*     timeUtilsMock;
+    StrictMock<HttpClientMock>*    httpClientMock;
 };
 
 

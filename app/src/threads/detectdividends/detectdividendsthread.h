@@ -5,6 +5,8 @@
 #include "src/threads/detectdividends/idetectdividendsthread.h"
 
 #include "src/storage/stocks/istocksstorage.h"
+#include "src/utils/http/ihttpclient.h"
+#include "src/utils/timeutils/itimeutils.h"
 
 
 
@@ -13,7 +15,9 @@ class DetectDividendsThread : public IDetectDividendsThread
     Q_OBJECT
 
 public:
-    explicit DetectDividendsThread(IStocksStorage* stocksStorage, QObject* parent = nullptr);
+    explicit DetectDividendsThread(
+        IStocksStorage* stocksStorage, ITimeUtils* timeUtils, IHttpClient* httpClient, QObject* parent = nullptr
+    );
     ~DetectDividendsThread() override;
 
     DetectDividendsThread(const DetectDividendsThread& another)            = delete;
@@ -23,6 +27,12 @@ public:
 
     void terminateThread() override;
 
+    void processDividendsResponse(const QByteArray& resp);
+
 private:
+    QMap<QString, QJsonObject> convertDividendsResponseToMap(const QByteArray& resp);
+
     IStocksStorage* mStocksStorage;
+    ITimeUtils*     mTimeUtils;
+    IHttpClient*    mHttpClient;
 };

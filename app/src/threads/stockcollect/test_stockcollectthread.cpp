@@ -303,9 +303,7 @@ TEST_F(Test_StockCollectThread, Test_run)
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/bbbbb.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock1)));
-    EXPECT_CALL(
-        *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/ZARAx160.png")), IHttpClient::Headers())
-    )
+    EXPECT_CALL(*httpClientMock, get(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/ZARAx160.png")), IHttpClient::Headers()))
         .WillOnce(Return(httpResult));
     EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, setLogo(QString("bbbbb"), _));
@@ -313,9 +311,7 @@ TEST_F(Test_StockCollectThread, Test_run)
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/ccccc.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock2)));
-    EXPECT_CALL(
-        *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/LOTOx160.png")), IHttpClient::Headers())
-    )
+    EXPECT_CALL(*httpClientMock, get(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/LOTOx160.png")), IHttpClient::Headers()))
         .WillOnce(Return(httpResult));
     EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, setLogo(QString("ccccc"), _));
@@ -323,9 +319,7 @@ TEST_F(Test_StockCollectThread, Test_run)
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/ddddd.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock3)));
-    EXPECT_CALL(
-        *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/USDx160.png")), IHttpClient::Headers())
-    )
+    EXPECT_CALL(*httpClientMock, get(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/USDx160.png")), IHttpClient::Headers()))
         .WillOnce(Return(httpResult));
     EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, setLogo(QString("ddddd"), _));
@@ -333,9 +327,7 @@ TEST_F(Test_StockCollectThread, Test_run)
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/eeeee.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock4)));
-    EXPECT_CALL(
-        *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/DOGSx160.png")), IHttpClient::Headers())
-    )
+    EXPECT_CALL(*httpClientMock, get(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/DOGSx160.png")), IHttpClient::Headers()))
         .WillOnce(Return(httpResult));
     EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, setLogo(QString("eeeee"), _));
@@ -343,9 +335,7 @@ TEST_F(Test_StockCollectThread, Test_run)
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/fffff.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock5)));
-    EXPECT_CALL(
-        *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/GOLDx160.png")), IHttpClient::Headers())
-    )
+    EXPECT_CALL(*httpClientMock, get(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/GOLDx160.png")), IHttpClient::Headers()))
         .WillOnce(Return(internalServerErrorHttpResult));
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(":/assets/images/no_image.png")))
         .WillOnce(Return(std::shared_ptr<IFile>(noImageFileMock)));
@@ -386,12 +376,12 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *httpClientMock, download(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), headers)
+        *httpClientMock, get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), headers)
     )
         .WillOnce(Return(tooManyRequestsHttpResult));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(
-        *httpClientMock, download(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), headers)
+        *httpClientMock, get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), headers)
     )
         .WillOnce(Return(httpResult));
     EXPECT_CALL(*zipFileMock1, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
@@ -420,7 +410,7 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *httpClientMock, download(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2025"), headers)
+        *httpClientMock, get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2025"), headers)
     )
         .WillOnce(Return(internalServerErrorHttpResult));
     EXPECT_CALL(*zipFileMock2, getDevice()).WillOnce(Return(&zipBuffer));
@@ -433,7 +423,7 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *httpClientMock, download(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2026"), headers)
+        *httpClientMock, get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2026"), headers)
     )
         .WillOnce(Return(tooManyRequestsHttpResult));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));

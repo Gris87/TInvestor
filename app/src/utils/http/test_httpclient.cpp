@@ -30,7 +30,7 @@ TEST_F(Test_HttpClient, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_HttpClient, Test_download)
+TEST_F(Test_HttpClient, Test_get)
 {
     QUrl url = QUrl("https://httpbin.org/anything");
 
@@ -43,7 +43,7 @@ TEST_F(Test_HttpClient, Test_download)
 
     for (int attempts = 0; attempts < 10; ++attempts)
     {
-        const HttpResult result = client->download(url, headers);
+        const HttpResult result = client->get(url, headers);
 
         if (result.statusCode == 200)
         {

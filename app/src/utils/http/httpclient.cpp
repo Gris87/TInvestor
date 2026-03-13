@@ -24,9 +24,9 @@ HttpClient::~HttpClient()
     qDebug() << "Destroy HttpClient";
 }
 
-HttpResult HttpClient::download(const QUrl& url, const Headers& headers)
+HttpResult HttpClient::get(const QUrl& url, const Headers& headers)
 {
-    qDebug() << "Downloading file:" << url;
+    qDebug() << "Perform HTTP GET:" << url;
 
     QNetworkAccessManager manager;
     QNetworkRequest       request(url);
@@ -50,6 +50,8 @@ HttpResult HttpClient::download(const QUrl& url, const Headers& headers)
     {
         res.body = reply->readAll();
     }
+
+    // TODO: Do we need to delete reply?
 
     return res;
 }
