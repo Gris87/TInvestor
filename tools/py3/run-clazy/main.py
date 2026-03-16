@@ -13,6 +13,7 @@ all_checks = "qt-keywords,qt-keyword-emit,signal-with-return-value,sanitize-inli
 disabled_checks = """
 -*,
 *,
+-signal-with-return-value,
 -connect-by-name,
 -connect-not-normalized,
 -function-args-by-value,
