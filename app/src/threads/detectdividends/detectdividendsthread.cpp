@@ -171,6 +171,7 @@ static void updateDividendsForParallel(
 
         qint64 createTimestamp  = 0;
         qint64 paymentTimestamp = 0;
+        float  price            = 0;
         float  yield            = 0;
 
         if (dividendsMap->contains(stock->meta.instrumentId))
@@ -181,6 +182,7 @@ static void updateDividendsForParallel(
 
             createTimestamp  = timestamp;
             paymentTimestamp = QDateTime::fromString(date, DATE_FORMAT).toMSecsSinceEpoch();
+            price            = stock->lastPrice();
             yield            = dividendObject.value("yieldValue").toDouble();
         }
 
@@ -188,6 +190,7 @@ static void updateDividendsForParallel(
         {
             stock->meta.dividends.createTimestamp  = createTimestamp;
             stock->meta.dividends.paymentTimestamp = paymentTimestamp;
+            stock->meta.dividends.price            = price;
             stock->meta.dividends.yield            = yield;
 
             updateDividendsInfo->changed = true;

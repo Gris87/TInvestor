@@ -11,6 +11,7 @@ constexpr float FLOAT_EPSILON = 0.0001f;
 StockDividendsMeta::StockDividendsMeta() :
     createTimestamp(),
     paymentTimestamp(),
+    price(),
     yield()
 {
 }
@@ -23,6 +24,11 @@ static void metaCreateTimestampParse(StockDividendsMeta* meta, simdjson::ondeman
 static void metaPaymentTimestampParse(StockDividendsMeta* meta, simdjson::ondemand::value value)
 {
     meta->paymentTimestamp = value.get_int64();
+}
+
+static void metaPriceParse(StockDividendsMeta* meta, simdjson::ondemand::value value)
+{
+    meta->price = value.get_double_in_string();
 }
 
 static void metaYieldParse(StockDividendsMeta* meta, simdjson::ondemand::value value)
@@ -43,6 +49,7 @@ using ParseHandler = void (*)(StockDividendsMeta* meta, simdjson::ondemand::valu
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"createTimestamp",  metaCreateTimestampParse },
     {"paymentTimestamp", metaPaymentTimestampParse},
+    {"price",            metaPriceParse           },
     {"yield",            metaYieldParse           }
 };
 // clang-format on
@@ -65,6 +72,7 @@ QJsonObject StockDividendsMeta::toJsonObject() const
     // clang-format off
     res.insert("createTimestamp",  createTimestamp);
     res.insert("paymentTimestamp", paymentTimestamp);
+    res.insert("price",            QString::number(price, 'f', 2));
     res.insert("yield",            QString::number(yield, 'f', 2));
     // clang-format on
 
@@ -74,5 +82,5 @@ QJsonObject StockDividendsMeta::toJsonObject() const
 bool operator==(const StockDividendsMeta& lhs, const StockDividendsMeta& rhs)
 {
     return lhs.createTimestamp == rhs.createTimestamp && lhs.paymentTimestamp == rhs.paymentTimestamp &&
-           qAbs(lhs.yield - rhs.yield) < FLOAT_EPSILON;
+           qAbs(lhs.price - rhs.price) < FLOAT_EPSILON && qAbs(lhs.yield - rhs.yield) < FLOAT_EPSILON;
 }

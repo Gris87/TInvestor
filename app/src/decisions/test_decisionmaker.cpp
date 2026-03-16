@@ -213,6 +213,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock1.meta.turnover                    = 2000000;
     stock1.meta.dividends.createTimestamp   = 1735678800000;
     stock1.meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1.meta.dividends.price             = 100.0f;
     stock1.meta.dividends.yield             = 10.0f;
     stock1.meta.shorts.enabled              = true;
     stock1.meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -231,6 +232,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock2.meta.turnover                    = 5000000;
     stock2.meta.dividends.createTimestamp   = 1738357200000;
     stock2.meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2.meta.dividends.price             = 150.0f;
     stock2.meta.dividends.yield             = 15.0f;
     stock2.meta.shorts.enabled              = true;
     stock2.meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -249,6 +251,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     stock3.meta.turnover                    = 9000000000;
     stock3.meta.dividends.createTimestamp   = 1740776400000;
     stock3.meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3.meta.dividends.price             = 200.0f;
     stock3.meta.dividends.yield             = 20.0f;
     stock3.meta.shorts.enabled              = true;
     stock3.meta.shorts.lastEnabledTimestamp = 1740776400000;

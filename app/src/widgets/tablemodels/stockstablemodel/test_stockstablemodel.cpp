@@ -143,6 +143,7 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -167,6 +168,7 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -191,6 +193,7 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -316,6 +319,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -340,6 +344,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -364,6 +369,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -554,6 +560,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -578,6 +585,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -602,6 +610,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -689,6 +698,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -713,6 +723,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -737,6 +748,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -819,6 +831,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.turnover                     = 2120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -838,6 +851,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.turnover                     = 4340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -857,6 +871,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.turnover                     = 6560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -934,6 +949,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.turnover                     = 3120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -953,6 +969,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.turnover                     = 5340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -972,6 +989,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.turnover                     = 7560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -1046,6 +1064,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.turnover                     = 9310000;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -1065,6 +1084,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.turnover                     = 7340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -1084,6 +1104,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.turnover                     = 9560;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -1142,6 +1163,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -1166,6 +1188,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -1190,6 +1213,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -1272,6 +1296,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.turnover                     = 2120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -1291,6 +1316,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.turnover                     = 4340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -1310,6 +1336,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.turnover                     = 6560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -1391,6 +1418,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.turnover                     = 3120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -1410,6 +1438,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.turnover                     = 5340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -1429,6 +1458,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.turnover                     = 7560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -1505,6 +1535,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.turnover                     = 9310000;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -1524,6 +1555,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.turnover                     = 7340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -1543,6 +1575,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.turnover                     = 9560;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -1605,6 +1638,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -1629,6 +1663,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -1653,6 +1688,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -1735,6 +1771,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.turnover                     = 2120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -1754,6 +1791,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.turnover                     = 4340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -1773,6 +1811,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.turnover                     = 6560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -1846,6 +1885,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.turnover                     = 3120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -1865,6 +1905,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.turnover                     = 5340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -1884,6 +1925,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.turnover                     = 7560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -1954,6 +1996,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.turnover                     = 9310000;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -1973,6 +2016,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.turnover                     = 7340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -1992,6 +2036,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.turnover                     = 9560;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -2046,6 +2091,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -2070,6 +2116,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -2094,6 +2141,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -2176,6 +2224,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.turnover                     = 2120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -2195,6 +2244,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.turnover                     = 4340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -2214,6 +2264,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.turnover                     = 6560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -2287,6 +2338,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.turnover                     = 3120;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -2306,6 +2358,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.turnover                     = 5340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -2325,6 +2378,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.turnover                     = 7560000000;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -2395,6 +2449,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.turnover                     = 9310000;
     stock1->meta.dividends.createTimestamp    = 1735678800000;
     stock1->meta.dividends.paymentTimestamp   = 1738357200000;
+    stock1->meta.dividends.price              = 100.0f;
     stock1->meta.dividends.yield              = 10.0f;
     stock1->meta.shorts.enabled               = true;
     stock1->meta.shorts.lastEnabledTimestamp  = 1735678800000;
@@ -2414,6 +2469,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.turnover                     = 7340000;
     stock2->meta.dividends.createTimestamp    = 1738357200000;
     stock2->meta.dividends.paymentTimestamp   = 1740776400000;
+    stock2->meta.dividends.price              = 150.0f;
     stock2->meta.dividends.yield              = 15.0f;
     stock2->meta.shorts.enabled               = true;
     stock2->meta.shorts.lastEnabledTimestamp  = 1738357200000;
@@ -2433,6 +2489,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.turnover                     = 9560;
     stock3->meta.dividends.createTimestamp    = 1740776400000;
     stock3->meta.dividends.paymentTimestamp   = 1743454800000;
+    stock3->meta.dividends.price              = 200.0f;
     stock3->meta.dividends.yield              = 20.0f;
     stock3->meta.shorts.enabled               = true;
     stock3->meta.shorts.lastEnabledTimestamp  = 1740776400000;
@@ -2487,6 +2544,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock1->meta.turnover                    = 1120;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -2511,6 +2569,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock2->meta.turnover                    = 2340000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -2535,6 +2594,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock3->meta.turnover                    = 5560000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;

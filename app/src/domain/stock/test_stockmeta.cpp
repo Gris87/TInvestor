@@ -41,6 +41,7 @@ TEST_F(Test_StockMeta, Test_constructor_and_destructor)
     ASSERT_EQ(stockMeta.turnover,                    0);
     ASSERT_EQ(stockMeta.dividends.createTimestamp,   0);
     ASSERT_EQ(stockMeta.dividends.paymentTimestamp,  0);
+    ASSERT_EQ(stockMeta.dividends.price,             0);
     ASSERT_EQ(stockMeta.dividends.yield,             0);
     ASSERT_EQ(stockMeta.shorts.enabled,              0);
     ASSERT_EQ(stockMeta.shorts.lastEnabledTimestamp, 0);
@@ -63,9 +64,10 @@ TEST_F(Test_StockMeta, Test_copy_constructor)
     stockMeta.turnover                    = 6;
     stockMeta.dividends.createTimestamp   = 7;
     stockMeta.dividends.paymentTimestamp  = 8;
-    stockMeta.dividends.yield             = 9.0f;
+    stockMeta.dividends.price             = 9.0f;
+    stockMeta.dividends.yield             = 10.0f;
     stockMeta.shorts.enabled              = true;
-    stockMeta.shorts.lastEnabledTimestamp = 10;
+    stockMeta.shorts.lastEnabledTimestamp = 11;
 
     const StockMeta stockMeta2(stockMeta);
 
@@ -83,9 +85,10 @@ TEST_F(Test_StockMeta, Test_copy_constructor)
     ASSERT_EQ(stockMeta2.turnover,                    6);
     ASSERT_EQ(stockMeta2.dividends.createTimestamp,   7);
     ASSERT_EQ(stockMeta2.dividends.paymentTimestamp,  8);
-    ASSERT_NEAR(stockMeta2.dividends.yield,           9.0f, 0.0001f);
+    ASSERT_NEAR(stockMeta2.dividends.price,           9.0f, 0.0001f);
+    ASSERT_NEAR(stockMeta2.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stockMeta2.shorts.enabled,              true);
-    ASSERT_EQ(stockMeta2.shorts.lastEnabledTimestamp, 10);
+    ASSERT_EQ(stockMeta2.shorts.lastEnabledTimestamp, 11);
     // clang-format on
 }
 
@@ -106,9 +109,10 @@ TEST_F(Test_StockMeta, Test_assign)
     stockMeta.turnover                    = 6;
     stockMeta.dividends.createTimestamp   = 7;
     stockMeta.dividends.paymentTimestamp  = 8;
-    stockMeta.dividends.yield             = 9.0f;
+    stockMeta.dividends.price             = 9.0f;
+    stockMeta.dividends.yield             = 10.0f;
     stockMeta.shorts.enabled              = true;
-    stockMeta.shorts.lastEnabledTimestamp = 10;
+    stockMeta.shorts.lastEnabledTimestamp = 11;
 
     stockMeta2 = stockMeta;
 
@@ -126,9 +130,10 @@ TEST_F(Test_StockMeta, Test_assign)
     ASSERT_EQ(stockMeta2.turnover,                    6);
     ASSERT_EQ(stockMeta2.dividends.createTimestamp,   7);
     ASSERT_EQ(stockMeta2.dividends.paymentTimestamp,  8);
-    ASSERT_NEAR(stockMeta2.dividends.yield,           9.0f, 0.0001f);
+    ASSERT_NEAR(stockMeta2.dividends.price,           9.0f, 0.0001f);
+    ASSERT_NEAR(stockMeta2.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stockMeta2.shorts.enabled,              true);
-    ASSERT_EQ(stockMeta2.shorts.lastEnabledTimestamp, 10);
+    ASSERT_EQ(stockMeta2.shorts.lastEnabledTimestamp, 11);
     // clang-format on
 }
 
@@ -150,13 +155,14 @@ TEST_F(Test_StockMeta, Test_fromJsonObject)
     ASSERT_EQ(stockMeta.turnover,                    0);
     ASSERT_EQ(stockMeta.dividends.createTimestamp,   0);
     ASSERT_EQ(stockMeta.dividends.paymentTimestamp,  0);
+    ASSERT_EQ(stockMeta.dividends.price,             0);
     ASSERT_EQ(stockMeta.dividends.yield,             0);
     ASSERT_EQ(stockMeta.shorts.enabled,              0);
     ASSERT_EQ(stockMeta.shorts.lastEnabledTimestamp, 0);
     // clang-format on
 
     const QString content =
-        R"({"dividends":{"createTimestamp":7,"paymentTimestamp":8,"yield":"9.00"},"forQualInvestorFlag":true,"ignore":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"04:05:00","lot":1,"minPriceIncrement":"3.00","pricePrecision":2,"shorts":{"enabled":true,"lastEnabledTimestamp":10},"turnover":6})";
+        R"({"dividends":{"createTimestamp":7,"paymentTimestamp":8,"price":"9.00","yield":"10.00"},"forQualInvestorFlag":true,"ignore":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"04:05:00","lot":1,"minPriceIncrement":"3.00","pricePrecision":2,"shorts":{"enabled":true,"lastEnabledTimestamp":11},"turnover":6})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -179,9 +185,10 @@ TEST_F(Test_StockMeta, Test_fromJsonObject)
     ASSERT_EQ(stockMeta.turnover,                    6);
     ASSERT_EQ(stockMeta.dividends.createTimestamp,   7);
     ASSERT_EQ(stockMeta.dividends.paymentTimestamp,  8);
-    ASSERT_NEAR(stockMeta.dividends.yield,           9.0f, 0.0001f);
+    ASSERT_NEAR(stockMeta.dividends.price,           9.0f, 0.0001f);
+    ASSERT_NEAR(stockMeta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stockMeta.shorts.enabled,              true);
-    ASSERT_EQ(stockMeta.shorts.lastEnabledTimestamp, 10);
+    ASSERT_EQ(stockMeta.shorts.lastEnabledTimestamp, 11);
     // clang-format on
 
     const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
@@ -208,16 +215,17 @@ TEST_F(Test_StockMeta, Test_toJsonObject)
     stockMeta.turnover                    = 6;
     stockMeta.dividends.createTimestamp   = 7;
     stockMeta.dividends.paymentTimestamp  = 8;
-    stockMeta.dividends.yield             = 9.0f;
+    stockMeta.dividends.price             = 9.0f;
+    stockMeta.dividends.yield             = 10.0f;
     stockMeta.shorts.enabled              = true;
-    stockMeta.shorts.lastEnabledTimestamp = 10;
+    stockMeta.shorts.lastEnabledTimestamp = 11;
 
     const QJsonObject   jsonObject = stockMeta.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
 
     const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
-        R"({"dividends":{"createTimestamp":7,"paymentTimestamp":8,"yield":"9.00"},"forQualInvestorFlag":true,"ignore":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"04:05:00","lot":1,"minPriceIncrement":"3.00","pricePrecision":2,"shorts":{"enabled":true,"lastEnabledTimestamp":10},"turnover":6})";
+        R"({"dividends":{"createTimestamp":7,"paymentTimestamp":8,"price":"9.00","yield":"10.00"},"forQualInvestorFlag":true,"ignore":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","lastTradeTime":"04:05:00","lot":1,"minPriceIncrement":"3.00","pricePrecision":2,"shorts":{"enabled":true,"lastEnabledTimestamp":11},"turnover":6})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -239,9 +247,10 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta.turnover                    = 6;
     stockMeta.dividends.createTimestamp   = 7;
     stockMeta.dividends.paymentTimestamp  = 8;
-    stockMeta.dividends.yield             = 9.0f;
+    stockMeta.dividends.price             = 9.0f;
+    stockMeta.dividends.yield             = 10.0f;
     stockMeta.shorts.enabled              = true;
-    stockMeta.shorts.lastEnabledTimestamp = 10;
+    stockMeta.shorts.lastEnabledTimestamp = 11;
 
     stockMeta2.instrumentId                = "a";
     stockMeta2.instrumentTicker            = "b";
@@ -255,9 +264,10 @@ TEST_F(Test_StockMeta, Test_equals)
     stockMeta2.turnover                    = 6;
     stockMeta2.dividends.createTimestamp   = 7;
     stockMeta2.dividends.paymentTimestamp  = 8;
-    stockMeta2.dividends.yield             = 9.0f;
+    stockMeta2.dividends.price             = 9.0f;
+    stockMeta2.dividends.yield             = 10.0f;
     stockMeta2.shorts.enabled              = true;
-    stockMeta2.shorts.lastEnabledTimestamp = 10;
+    stockMeta2.shorts.lastEnabledTimestamp = 11;
 
     ASSERT_EQ(stockMeta, stockMeta2);
 

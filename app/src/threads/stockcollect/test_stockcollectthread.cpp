@@ -243,6 +243,7 @@ TEST_F(Test_StockCollectThread, Test_run)
     stock.meta.turnover                    = 5000;
     stock.meta.dividends.createTimestamp   = 1735678800000;
     stock.meta.dividends.paymentTimestamp  = 1738357200000;
+    stock.meta.dividends.price             = 100.0f;
     stock.meta.dividends.yield             = 10.0f;
     stock.meta.shorts.enabled              = true;
     stock.meta.shorts.lastEnabledTimestamp = 1735678800000;

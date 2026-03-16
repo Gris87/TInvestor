@@ -75,6 +75,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -91,6 +92,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -107,6 +109,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -157,6 +160,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -188,6 +192,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -219,6 +224,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -291,6 +297,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -307,6 +314,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -323,6 +331,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -373,6 +382,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -404,6 +414,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -435,6 +446,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -472,6 +484,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stockMeta1.turnover                    = 7000;
     stockMeta1.dividends.createTimestamp   = 1740776460000;
     stockMeta1.dividends.paymentTimestamp  = 1743454860000;
+    stockMeta1.dividends.price             = 700.0f;
     stockMeta1.dividends.yield             = 7.0f;
     stockMeta1.shorts.enabled              = true;
     stockMeta1.shorts.lastEnabledTimestamp = 1740776460000;
@@ -488,6 +501,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stockMeta2.turnover                    = 8888;
     stockMeta2.dividends.createTimestamp   = 1740776430000;
     stockMeta2.dividends.paymentTimestamp  = 1743454830000;
+    stockMeta2.dividends.price             = 1700.0f;
     stockMeta2.dividends.yield             = 17.0f;
     stockMeta2.shorts.enabled              = true;
     stockMeta2.shorts.lastEnabledTimestamp = 1740776430000;
@@ -514,6 +528,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -545,6 +560,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -576,6 +592,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -610,6 +627,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(3)->meta.turnover,                    8888);
     ASSERT_EQ(stocks.at(3)->meta.dividends.createTimestamp,   1740776430000);
     ASSERT_EQ(stocks.at(3)->meta.dividends.paymentTimestamp,  1743454830000);
+    ASSERT_NEAR(stocks.at(3)->meta.dividends.price,           1700.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(3)->meta.dividends.yield,           17.0f, 0.0001f);
     ASSERT_EQ(stocks.at(3)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(3)->meta.shorts.lastEnabledTimestamp, 1740776430000);
@@ -659,6 +677,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -675,6 +694,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -691,6 +711,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -755,6 +776,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -789,6 +811,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -832,6 +855,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -877,6 +901,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -908,6 +933,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -948,6 +974,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -990,6 +1017,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -1015,6 +1043,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -1049,6 +1078,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -1092,6 +1122,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -1108,6 +1139,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -1124,6 +1156,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -1179,6 +1212,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -1210,6 +1244,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -1247,6 +1282,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -1285,6 +1321,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                            2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,           1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,          1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,                   100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,                   10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp,         1735678800000);
@@ -1318,6 +1355,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,           1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,          1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,                   150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,                   15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp,         1738357200000);
@@ -1361,6 +1399,7 @@ TEST_F(Test_StocksStorage, Test_copyDataToOperational)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,           1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,          1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,                   200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,                   20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp,         1740776400000);
@@ -1410,6 +1449,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -1426,6 +1466,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -1442,6 +1483,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -1497,6 +1539,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                            2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,           1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,          1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,                   100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,                   10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp,         1735678800000);
@@ -1528,6 +1571,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,           1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,          1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,                   150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,                   15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp,         1738357200000);
@@ -1565,6 +1609,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,           1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,          1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,                   200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,                   20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp,         1740776400000);
@@ -1603,6 +1648,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                            2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,           1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,          1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,                   100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,                   10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp,         1735678800000);
@@ -1632,6 +1678,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,           1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,          1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,                   150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,                   15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp,         1738357200000);
@@ -1667,6 +1714,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,           1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,          1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,                   200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,                   20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp,         1740776400000);
@@ -1703,6 +1751,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -1728,6 +1777,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                            5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,           1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,          1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,                   150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,                   15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp,         1738357200000);
@@ -1759,6 +1809,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                            9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,           1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,          1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,                   200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,                   20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,                      true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp,         1740776400000);
@@ -1808,6 +1859,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -1824,6 +1876,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -1840,6 +1893,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -1899,6 +1953,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -1933,6 +1988,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -1970,6 +2026,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -2010,6 +2067,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -2044,6 +2102,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -2081,6 +2140,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -2138,6 +2198,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -2154,6 +2215,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -2170,6 +2232,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -2229,6 +2292,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -2263,6 +2327,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -2300,6 +2365,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -2340,6 +2406,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -2374,6 +2441,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -2411,6 +2479,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -2468,6 +2537,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -2484,6 +2554,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -2500,6 +2571,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -2559,6 +2631,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -2593,6 +2666,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -2630,6 +2704,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -2670,6 +2745,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -2704,6 +2780,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -2741,6 +2818,7 @@ TEST_F(Test_StocksStorage, Test_obtainLastTradeTime)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -2798,6 +2876,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -2814,6 +2893,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -2830,6 +2910,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -2889,6 +2970,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -2923,6 +3005,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -2960,6 +3043,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -3000,6 +3084,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    864000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -3034,6 +3119,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    12096000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -3071,6 +3157,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    77760000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -3128,6 +3215,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stock1->meta.turnover                    = 2000;
     stock1->meta.dividends.createTimestamp   = 1735678800000;
     stock1->meta.dividends.paymentTimestamp  = 1738357200000;
+    stock1->meta.dividends.price             = 100.0f;
     stock1->meta.dividends.yield             = 10.0f;
     stock1->meta.shorts.enabled              = true;
     stock1->meta.shorts.lastEnabledTimestamp = 1735678800000;
@@ -3144,6 +3232,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stock2->meta.turnover                    = 5000000;
     stock2->meta.dividends.createTimestamp   = 1738357200000;
     stock2->meta.dividends.paymentTimestamp  = 1740776400000;
+    stock2->meta.dividends.price             = 150.0f;
     stock2->meta.dividends.yield             = 15.0f;
     stock2->meta.shorts.enabled              = true;
     stock2->meta.shorts.lastEnabledTimestamp = 1738357200000;
@@ -3160,6 +3249,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stock3->meta.turnover                    = 9000000000;
     stock3->meta.dividends.createTimestamp   = 1740776400000;
     stock3->meta.dividends.paymentTimestamp  = 1743454800000;
+    stock3->meta.dividends.price             = 200.0f;
     stock3->meta.dividends.yield             = 20.0f;
     stock3->meta.shorts.enabled              = true;
     stock3->meta.shorts.lastEnabledTimestamp = 1740776400000;
@@ -3219,6 +3309,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -3253,6 +3344,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -3290,6 +3382,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);
@@ -3334,6 +3427,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(0)->meta.turnover,                    2000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.createTimestamp,   1735678800000);
     ASSERT_EQ(stocks.at(0)->meta.dividends.paymentTimestamp,  1738357200000);
+    ASSERT_NEAR(stocks.at(0)->meta.dividends.price,           100.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->meta.dividends.yield,           10.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(0)->meta.shorts.lastEnabledTimestamp, 1735678800000);
@@ -3368,6 +3462,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(1)->meta.turnover,                    5000000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.createTimestamp,   1738357200000);
     ASSERT_EQ(stocks.at(1)->meta.dividends.paymentTimestamp,  1740776400000);
+    ASSERT_NEAR(stocks.at(1)->meta.dividends.price,           150.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->meta.dividends.yield,           15.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(1)->meta.shorts.lastEnabledTimestamp, 1738357200000);
@@ -3405,6 +3500,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(2)->meta.turnover,                    9000000000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.createTimestamp,   1740776400000);
     ASSERT_EQ(stocks.at(2)->meta.dividends.paymentTimestamp,  1743454800000);
+    ASSERT_NEAR(stocks.at(2)->meta.dividends.price,           200.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->meta.dividends.yield,           20.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->meta.shorts.enabled,              true);
     ASSERT_EQ(stocks.at(2)->meta.shorts.lastEnabledTimestamp, 1740776400000);

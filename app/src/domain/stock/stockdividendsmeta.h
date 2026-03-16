@@ -23,6 +23,7 @@ struct StockDividendsMeta
 
     qint64 createTimestamp;
     qint64 paymentTimestamp;
+    float  price;
     float  yield;
 };
 
