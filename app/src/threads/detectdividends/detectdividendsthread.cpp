@@ -5,6 +5,8 @@
 #include <QJsonValue>
 #include <QUrlQuery>
 
+#include "src/threads/parallelhelper/parallelhelperthread.h"
+
 
 
 const char* const DATE_FORMAT = "yyyy-MM-dd";
@@ -93,17 +95,19 @@ void DetectDividendsThread::terminateThread()
 
 void DetectDividendsThread::processDividendsResponse(const QByteArray& resp)
 {
-    QMap<QString, QJsonObject> dividendsMap = convertDividendsResponseToMap(resp);
+    const QMap<QString, QJsonObject> dividendsMap = convertDividendsResponseToMap(resp);
 
-    qInfo() << dividendsMap.keys();
+    mStocksStorage->readLock();
+    updateDividendsMeta(mStocksStorage->getStocks(), dividendsMap);
+    mStocksStorage->readUnlock();
 }
 
 QMap<QString, QJsonObject> DetectDividendsThread::convertDividendsResponseToMap(const QByteArray& resp)
 {
     QMap<QString, QJsonObject> res;
 
-    QJsonParseError error;
-    QJsonDocument   doc = QJsonDocument::fromJson(resp, &error);
+    QJsonParseError     error;
+    const QJsonDocument doc = QJsonDocument::fromJson(resp, &error);
 
     if (error.error != QJsonParseError::NoError)
     {
@@ -112,17 +116,17 @@ QMap<QString, QJsonObject> DetectDividendsThread::convertDividendsResponseToMap(
         return res;
     }
 
-    QJsonObject rootObject = doc.object();
-    QJsonArray  datesArray = rootObject.value("dates").toArray();
+    const QJsonObject rootObject = doc.object();
+    const QJsonArray  datesArray = rootObject.value("dates").toArray();
 
-    for (const QJsonValue& dateValue : datesArray)
+    for (const QJsonValueConstRef& dateValue : std::as_const(datesArray))
     {
-        QJsonObject dateObject = dateValue.toObject();
+        const QJsonObject dateObject = dateValue.toObject();
 
-        const QString date           = dateObject.value("date").toString();
-        QJsonArray    dividendsArray = dateObject.value("dividends").toArray();
+        const QString    date           = dateObject.value("date").toString();
+        const QJsonArray dividendsArray = dateObject.value("dividends").toArray();
 
-        for (const QJsonValue& dividendValue : dividendsArray)
+        for (const QJsonValueConstRef& dividendValue : std::as_const(dividendsArray))
         {
             QJsonObject dividendObject = dividendValue.toObject();
 
@@ -134,4 +138,72 @@ QMap<QString, QJsonObject> DetectDividendsThread::convertDividendsResponseToMap(
     }
 
     return res;
+}
+
+struct UpdateDividendsInfo
+{
+    explicit UpdateDividendsInfo(const QMap<QString, QJsonObject>* _dividendsMap, qint64 _timestamp) :
+        dividendsMap(_dividendsMap),
+        timestamp(_timestamp),
+        changed()
+    {
+    }
+
+    const QMap<QString, QJsonObject>* dividendsMap;
+    qint64                            timestamp;
+    bool                              changed;
+};
+
+static void updateDividendsForParallel(
+    QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
+)
+{
+    UpdateDividendsInfo* updateDividendsInfo = reinterpret_cast<UpdateDividendsInfo*>(additionalArgs);
+
+    const QMap<QString, QJsonObject>* dividendsMap = updateDividendsInfo->dividendsMap;
+    const qint64                      timestamp    = updateDividendsInfo->timestamp;
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock* stock = stocks[i];
+
+        stock->writeLock();
+
+        qint64 createTimestamp  = 0;
+        qint64 paymentTimestamp = 0;
+        float  yield            = 0;
+
+        if (dividendsMap->contains(stock->meta.instrumentId))
+        {
+            const QJsonObject dividendObject = dividendsMap->value(stock->meta.instrumentId);
+
+            const QString date = dividendObject.value("date").toString();
+
+            createTimestamp  = timestamp;
+            paymentTimestamp = QDateTime::fromString(date, DATE_FORMAT).toMSecsSinceEpoch();
+            yield            = dividendObject.value("yieldValue").toDouble();
+        }
+
+        if (stock->meta.dividends.paymentTimestamp != paymentTimestamp)
+        {
+            stock->meta.dividends.createTimestamp  = createTimestamp;
+            stock->meta.dividends.paymentTimestamp = paymentTimestamp;
+            stock->meta.dividends.yield            = yield;
+
+            updateDividendsInfo->changed = true;
+        }
+
+        stock->writeUnlock();
+    }
+}
+
+void DetectDividendsThread::updateDividendsMeta(QList<Stock*> stocks, const QMap<QString, QJsonObject>& dividendsMap)
+{
+    UpdateDividendsInfo updateDividendsInfo(&dividendsMap, QDateTime::currentMSecsSinceEpoch());
+    processInParallel(QThread::currentThread(), stocks, updateDividendsForParallel, &updateDividendsInfo);
+
+    if (updateDividendsInfo.changed)
+    {
+        mStocksStorage->writeStocksMeta();
+    }
 }

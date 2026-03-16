@@ -8,6 +8,7 @@ Buy stocks with dependency check between stocks
 Buy if shorts disabled during last 5 minutes
 Make decision based on dividends
 https://api-invest.tbank.ru/invest-terminal/api-invest-gw/fireg-advisory/invest-calendar/v2/event/info?startDate=2026-01-01&endDate=2026-12-31&mySecuritiesFlag=false&qualFlag=false&eventTypes=dividends&limit=100
+Try to get report at the publish day and make decision to buy
 Always check for buy decisions even if already keep some
 Bi-dir on non-working hours (weekend also)
 Create script for buying/selling in parts

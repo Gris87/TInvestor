@@ -31,6 +31,7 @@ public:
 
 private:
     QMap<QString, QJsonObject> convertDividendsResponseToMap(const QByteArray& resp);
+    void                       updateDividendsMeta(QList<Stock*> stocks, const QMap<QString, QJsonObject>& dividendsMap);
 
     IStocksStorage* mStocksStorage;
     ITimeUtils*     mTimeUtils;
