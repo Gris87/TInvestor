@@ -1,9 +1,6 @@
 import json
-import os
 import requests
-import subprocess
 
-from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from http import HTTPStatus
@@ -14,32 +11,30 @@ from localization import *
 from messaging import send_message
 
 
-PATH_TO_SCRIPT = Path(__file__).parent
-
 DIVIDENDS_URL="https://api-invest.tbank.ru/invest-terminal/api-invest-gw/fireg-advisory/invest-calendar/v2/event/info?startDate={start_date}&endDate={end_date}&mySecuritiesFlag=false&qualFlag=false&eventTypes=dividends&limit=100"
 
 
 def check_dividends(args):
     calendar = _get_dividend_calendar()
-    _process_dividend_calendar(args, calendar)
+    dividends = _convert_calendar_to_dividends(calendar)
 
-    with open(Path(args.path_to_stocks) / "stocks.json", "r", encoding="utf-8") as f:
-        content = f.read()
-        stocks_meta = json.loads(content)
+    cache_folder_path = Path(args.cache) / "dividends"
+    cache_folder_path.mkdir(parents=True, exist_ok=True)
 
-    commands = []
+    dividends_path = cache_folder_path / "dividends.json"
 
-    for stock_meta in stocks_meta:
-        commands.append(
-            [
-                "python",
-                str(Path(PATH_TO_SCRIPT) / "dividends_parallel.py"),
-                "--chat-id", args.chat_id,
-                "--ticker", stock_meta["instrumentTicker"]
-            ]
-        )
+    if dividends_path.exists():
+        with open(dividends_path, "r", encoding="utf-8") as f:
+            old_dividends = json.loads(f.read())
 
-    return _execute_commands(commands)
+        for instrument_id, dividend in dividends.items():
+            if instrument_id not in old_dividends:
+                send_message(args.chat_id, msg_recommend_to_buy + "\n" + msg_dividends.format(ticker=dividend["ticker"], name=dividend["name"], yield_value=dividend["yieldValue"]))
+
+    with open(dividends_path, "w", encoding="utf-8") as f:
+        json.dump(dividends, f, ensure_ascii=False)
+
+    return True
 
 
 def _get_dividend_calendar():
@@ -62,26 +57,6 @@ def _get_dividend_calendar():
         return resp_json["dates"]
 
 
-def _process_dividend_calendar(args, calendar):
-    dividends = _convert_calendar_to_dividends(calendar)
-
-    cache_folder_path = Path(args.cache) / "dividends"
-    cache_folder_path.mkdir(parents=True, exist_ok=True)
-
-    dividends_path = cache_folder_path / "dividends.json"
-
-    if dividends_path.exists():
-        with open(dividends_path, "r", encoding="utf-8") as f:
-            old_dividends = json.loads(f.read())
-
-        for instrument_id, dividend in dividends.items():
-            if instrument_id not in old_dividends:
-                send_message(args.chat_id, msg_dividends.format(ticker=dividend["ticker"], name=dividend["name"], yield_value=dividend["yieldValue"]))
-
-    with open(dividends_path, "w", encoding="utf-8") as f:
-        json.dump(dividends, f, ensure_ascii=False)
-
-
 def _convert_calendar_to_dividends(calendar):
     res = {}
 
@@ -96,37 +71,3 @@ def _convert_calendar_to_dividends(calendar):
             res[instrument_id] = dividend
 
     return res
-
-
-def _execute_commands(commands):
-    res = True
-
-    with ThreadPoolExecutor(os.cpu_count()) as executor:
-        for result, lines in executor.map(_execute_command, commands):
-            res &= result
-
-            for line in lines:
-                print(line)
-
-    return res
-
-
-def _execute_command(command):
-    process = subprocess.Popen(
-        command,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
-
-    lines = []
-
-    encoding = os.device_encoding(1)
-    if encoding is None:
-        encoding = "utf-8"
-
-    for line in iter(process.stdout.readline, b''):
-        lines.append(line.rstrip().decode(encoding))
-
-    process.wait()
-
-    return process.returncode == 0, lines

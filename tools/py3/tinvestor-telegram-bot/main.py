@@ -11,6 +11,7 @@ from loguru import logger
 from pathlib import Path
 
 from dividends import check_dividends
+from pulse import check_pulse
 from localization import *
 from messaging import send_message
 
@@ -28,6 +29,9 @@ HUGE_SELL_STEP = 60
 def telegram_bot(args):
     if args.dividends_only:
         return check_dividends(args)
+
+    if args.pulse_only:
+        return check_pulse(args)
 
     _check_operations_json(args)
     _check_core_file(args)
@@ -109,7 +113,7 @@ def _check_huge_sell(args):
         #         break
 
         if len(data) > 0 and _is_huge_sell_found(data, len(data) - 1):
-            send_message(args.chat_id, msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
+            send_message(args.chat_id, msg_recommend_to_buy + "\n" + msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
 
 
 def _is_huge_sell_found(data, index):
@@ -142,6 +146,20 @@ def main():
         type=str,
         default="",
         help="Telegram chat ID"
+    )
+    parser.add_argument(
+        "--token",
+        dest="token",
+        type=str,
+        default="",
+        help="Token for Tinkoff API",
+    )
+    parser.add_argument(
+        "--token-file",
+        dest="token_file",
+        type=str,
+        default="",
+        help="Path to file with token for Tinkoff API",
     )
     parser.add_argument(
         "--cache",
@@ -185,6 +203,20 @@ def main():
         action="store_true",
         help="Send notifications about dividends only",
     )
+    parser.add_argument(
+        "--pulse-only",
+        dest="pulse_only",
+        default=False,
+        action="store_true",
+        help="Send notifications about interesting pulse posts",
+    )
+    parser.add_argument(
+        "--last-operations-only",
+        dest="last_operations_only",
+        default=False,
+        action="store_true",
+        help="Send notifications about interesting pulse posts if operation happens last 15 minutes",
+    )
     args = parser.parse_args()
 
     if args.chat_id == "":
@@ -197,13 +229,18 @@ def main():
 
         sys.exit(1)
 
-    if not args.dividends_only and args.path_to_operations == "":
+    if not args.dividends_only and not args.pulse_only and not args.last_operations_only and args.path_to_operations == "":
         logger.error("Please specify path to operations.json file with --path-to-operations")
 
         sys.exit(1)
 
-    if (args.extra_huge_sell or args.dividends_only) and args.path_to_stocks == "":
+    if (args.extra_huge_sell or args.pulse_only) and args.path_to_stocks == "":
         logger.error("Please specify path to stocks folder with --path-to-stocks")
+
+        sys.exit(1)
+
+    if args.last_operations_only and ((args.token == "" and args.token_file == "") or (args.token != "" and args.token_file != "")):
+        logger.error("Please specify path to operations.json file with --path-to-operations")
 
         sys.exit(1)
 
