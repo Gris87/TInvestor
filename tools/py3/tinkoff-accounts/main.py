@@ -1,8 +1,8 @@
 import argparse
 import json
 import sys
-from loguru import logger
 
+from loguru import logger
 from pathlib import Path
 
 from tinkoff.invest import Client, GetOperationsByCursorRequest

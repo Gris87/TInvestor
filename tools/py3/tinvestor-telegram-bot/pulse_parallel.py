@@ -61,25 +61,18 @@ def _process_posts(args, posts):
         if match is not None:
             found_text = match.group(1).strip()
 
-            send_message(args.chat_id, msg_recommend_to_buy + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
+            send_message(msg_recommend_to_buy + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
 
         match = recommend_to_short_regexp.match(post_text_simplified)
 
         if match is not None:
             found_text = match.group(1).strip()
 
-            send_message(args.chat_id, msg_recommend_to_short + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
+            send_message(msg_recommend_to_short + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--chat-id",
-        dest="chat_id",
-        type=str,
-        default="",
-        help="Telegram chat ID"
-    )
     parser.add_argument(
         "--ticker",
         dest="ticker",

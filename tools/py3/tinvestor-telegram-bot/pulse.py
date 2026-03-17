@@ -22,7 +22,6 @@ def check_pulse(args):
             [
                 "python",
                 str(Path(PATH_TO_SCRIPT) / "pulse_parallel.py"),
-                "--chat-id", args.chat_id,
                 "--ticker", stock_meta["instrumentTicker"]
             ]
         )

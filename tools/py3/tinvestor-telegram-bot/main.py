@@ -11,9 +11,10 @@ from loguru import logger
 from pathlib import Path
 
 from dividends import check_dividends
-from pulse import check_pulse
 from localization import *
 from messaging import send_message
+from portfolio import check_portfolio
+from pulse import check_pulse
 
 
 HUGE_SELL = 45.0
@@ -32,6 +33,9 @@ def telegram_bot(args):
 
     if args.pulse_only:
         return check_pulse(args)
+
+    if args.portfolio_only:
+        return check_portfolio(args)
 
     _check_operations_json(args)
     _check_core_file(args)
@@ -54,14 +58,14 @@ def _check_operations_json(args):
     delta = now - last_timestamp
 
     if delta > args.inactivity_days * ONE_DAY:
-        send_message(args.chat_id, msg_operations_inactivity)
+        send_message(msg_operations_inactivity)
 
 
 def _check_core_file(args):
     core_file = Path(args.path_to_operations).parent.parent.parent.parent / "core"
 
     if core_file.exists():
-        send_message(args.chat_id, msg_core_file_found)
+        send_message(msg_core_file_found)
 
         now = round(time.time() * MS_IN_SECOND)
         os.rename(core_file, f"{core_file}_{now}")
@@ -77,7 +81,7 @@ def _check_app_running(args):
             break
 
     if not found:
-        send_message(args.chat_id, msg_app_restart)
+        send_message(msg_app_restart)
 
         home_directory = Path.home()
         subprocess.Popen(["xdg-open", f"{home_directory}/Desktop/TInvestor.desktop"], close_fds=True)
@@ -113,7 +117,7 @@ def _check_huge_sell(args):
         #         break
 
         if len(data) > 0 and _is_huge_sell_found(data, len(data) - 1):
-            send_message(args.chat_id, msg_recommend_to_buy + "\n" + msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
+            send_message(msg_recommend_to_buy + "\n" + msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
 
 
 def _is_huge_sell_found(data, index):
@@ -141,13 +145,6 @@ def _is_huge_sell_found(data, index):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--chat-id",
-        dest="chat_id",
-        type=str,
-        default="",
-        help="Telegram chat ID"
-    )
-    parser.add_argument(
         "--token",
         dest="token",
         type=str,
@@ -160,6 +157,13 @@ def main():
         type=str,
         default="",
         help="Path to file with token for Tinkoff API",
+    )
+    parser.add_argument(
+        "--account",
+        dest="account",
+        type=str,
+        default="",
+        help="Account ID",
     )
     parser.add_argument(
         "--cache",
@@ -211,17 +215,28 @@ def main():
         help="Send notifications about interesting pulse posts",
     )
     parser.add_argument(
-        "--last-operations-only",
-        dest="last_operations_only",
+        "--portfolio-only",
+        dest="portfolio_only",
         default=False,
         action="store_true",
-        help="Send notifications about interesting pulse posts if operation happens last 15 minutes",
+        help="Send notifications about interesting pulse posts for stocks in portfolio",
     )
     args = parser.parse_args()
 
-    if args.chat_id == "":
-        logger.error("Please specify Telegram chat ID with --chat-id")
+    expected_env_vars = [
+        "DISPLAY",
+        "TELEGRAM_TOKEN",
+        "TELEGRAM_CHAT_ID"
+    ]
+    good = True
 
+    for var in expected_env_vars:
+        if var not in os.environ:
+            logger.error(f"Environment variable {var} is not set properly")
+
+            good = False
+
+    if not good:
         sys.exit(1)
 
     if args.cache == "":
@@ -229,7 +244,7 @@ def main():
 
         sys.exit(1)
 
-    if not args.dividends_only and not args.pulse_only and not args.last_operations_only and args.path_to_operations == "":
+    if not args.dividends_only and not args.pulse_only and not args.portfolio_only and args.path_to_operations == "":
         logger.error("Please specify path to operations.json file with --path-to-operations")
 
         sys.exit(1)
@@ -239,9 +254,15 @@ def main():
 
         sys.exit(1)
 
-    if args.last_operations_only and ((args.token == "" and args.token_file == "") or (args.token != "" and args.token_file != "")):
-        logger.error("Please specify path to operations.json file with --path-to-operations")
+    if args.portfolio_only:
+        if (args.token == "" and args.token_file == "") or (args.token != "" and args.token_file != ""):
+            logger.error("Please specify token with --token or --token-file")
 
-        sys.exit(1)
+            sys.exit(1)
+
+        if args.account == "":
+            logger.error("Please specify account ID with --account")
+
+            sys.exit(1)
 
     sys.exit(0 if telegram_bot(args) else 1)
