@@ -7,6 +7,8 @@ from concurrent.futures import ThreadPoolExecutor
 from loguru import logger
 from pathlib import Path
 
+from localization import *
+from messaging import send_message
 from tinkoff.invest import Client, GetOperationsByCursorRequest
 from tinkoff.invest.constants import INVEST_GRPC_API
 from tinkoff.invest.schemas import OperationState
@@ -19,6 +21,12 @@ RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
 
 def check_portfolio(args):
     commands = []
+    positions = {}
+
+    cache_folder_path = Path(args.cache) / "positions"
+    cache_folder_path.mkdir(parents=True, exist_ok=True)
+
+    positions_path = cache_folder_path / "positions.json"
 
     logger.info("Connecting to server")
 
@@ -35,6 +43,8 @@ def check_portfolio(args):
         portfolio = _get_portfolio(client, args.account)
 
         for position in portfolio.positions:
+            positions[position.instrument_uid] = position.quantity.__dict__
+
             if position.instrument_type=='currency':
                 continue
 
@@ -45,6 +55,16 @@ def check_portfolio(args):
                     "--ticker", position.ticker
                 ]
             )
+
+    if positions_path.exists():
+        with open(positions_path, "r", encoding="utf-8") as f:
+            old_positions = json.loads(f.read())
+
+        if positions != old_positions:
+            send_message(msg_positions_changed)
+
+    with open(positions_path, "w", encoding="utf-8") as f:
+        json.dump(positions, f, ensure_ascii=False)
 
     return _execute_commands(commands)
 
