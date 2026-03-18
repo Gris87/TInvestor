@@ -427,7 +427,8 @@ std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
     const QString&          instrumentId,
     tinkoff::OrderDirection direction,
     qint64                  quantity,
-    const Quotation&        price
+    const Quotation&        price,
+    bool                    confirmMarginTrade
 )
 {
     tinkoff::PostOrderRequest                         req;
@@ -446,6 +447,7 @@ std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
     req.set_order_type(tinkoff::ORDER_TYPE_LIMIT);
     req.set_time_in_force(tinkoff::TIME_IN_FORCE_DAY);
     req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
+    req.set_confirm_margin_trade(confirmMarginTrade);
 
     return repeatRequest(
         parentThread,

@@ -313,12 +313,12 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
             return;
         }
 
-        const qint64 amountToBuy = qMin(amountOfLots, tinkoffMaxLots->buy_limits().buy_max_lots());
+        const qint64 amountToBuy = qMin(amountOfLots, tinkoffMaxLots->buy_margin_limits().buy_max_lots());
 
         if (amountToBuy > 0)
         {
             const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
-                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price
+                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price, true
             );
 
             if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
@@ -367,7 +367,7 @@ void BiDirTradingThread::sellWithPrice(const Quotation& price)
         if (amountToSell > 0)
         {
             const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
-                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price
+                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price, false
             );
 
             if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)

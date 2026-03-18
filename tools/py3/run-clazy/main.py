@@ -13,7 +13,6 @@ all_checks = "qt-keywords,qt-keyword-emit,signal-with-return-value,sanitize-inli
 disabled_checks = """
 -*,
 *,
--qt-keyword-emit,
 -connect-by-name,
 -connect-not-normalized,
 -function-args-by-value,
@@ -25,6 +24,7 @@ disabled_checks = """
 -qt6-qhash-signature,
 -reserve-candidates,
 -returning-void-expression,
+-sanitize-inline-keyword,
 -unused-result-check
 """.replace("\n", "").replace(" ", "").split(",")
 

@@ -315,7 +315,7 @@ TradingThread::buyWithPriceOptimalAmount(double cost, double expected, double de
         if (amountToBuy > 0)
         {
             const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
-                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price
+                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price, false
             );
 
             if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
@@ -493,7 +493,7 @@ TradingThread::sellWithPriceOptimalAmount(double cost, double expected, double d
         if (amountToSell > 0)
         {
             const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
-                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price
+                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price, false
             );
 
             if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)

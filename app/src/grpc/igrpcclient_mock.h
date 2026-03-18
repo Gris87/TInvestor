@@ -69,7 +69,8 @@ public:
          const QString&          instrumentId,
          tinkoff::OrderDirection direction,
          qint64                  quantity,
-         const Quotation&        price),
+         const Quotation&        price,
+         bool                    confirmMarginTrade),
         (override)
     );
     MOCK_METHOD(

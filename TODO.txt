@@ -1,3 +1,9 @@
+Bi-dir trying to sell with huge part size
+Bi-dir on non-working hours (weekend also)
+Double check for cancelling buy orders in bidir trading
+Improve coverage
+Create release
+
 Decision to buy in short if price raise more then 3%
 Last operation with stock for limitation (not sell only)
 Double check sell decisions to let them "sell" shorts
@@ -9,14 +15,11 @@ Maybe need to take profile into account for operations thread
 Improve coverage
 Create release
 
-Bi-dir trying to sell with huge part size
-Double check for cancelling buy orders in bidir trading
 Something strange with daily yield chart
 Limit buy lots to 1 in safe mode (4% safe gap) (Do not buy at all)
 Buy if shorts disabled during last 5 minutes
 Make decision based on dividends
 Try to get report at the publish day and make decision to buy
-Bi-dir on non-working hours (weekend also)
 Create script for buying/selling in parts
 Find best configs for different commission
 Change config defaults

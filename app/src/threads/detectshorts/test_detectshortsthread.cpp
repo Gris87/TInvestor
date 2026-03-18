@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 
 
@@ -20,18 +21,21 @@ protected:
     void SetUp() override
     {
         stocksStorageMock = new StrictMock<StocksStorageMock>();
+        grpcClientMock    = new StrictMock<GrpcClientMock>();
 
-        thread = new DetectShortsThread(stocksStorageMock);
+        thread = new DetectShortsThread(stocksStorageMock, grpcClientMock);
     }
 
     void TearDown() override
     {
         delete thread;
         delete stocksStorageMock;
+        delete grpcClientMock;
     }
 
     DetectShortsThread*            thread;
     StrictMock<StocksStorageMock>* stocksStorageMock;
+    StrictMock<GrpcClientMock>*    grpcClientMock;
 };
 
 

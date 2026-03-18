@@ -508,7 +508,7 @@ static int runApplication(QApplication* app)
         &grpcClient
     );
     DetectDividendsThread    detectDividendsThread(&stocksStorage, &timeUtils, &httpClient);
-    DetectShortsThread       detectShortsThread(&stocksStorage);
+    DetectShortsThread       detectShortsThread(&stocksStorage, &grpcClient);
     LastPriceThread          lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     PortfolioLastPriceThread simulatorPortfolioLastPriceThread(&timeUtils, &grpcClient);
     OperationsThread         operationsThread(

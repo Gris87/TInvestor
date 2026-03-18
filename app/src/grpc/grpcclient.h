@@ -112,7 +112,8 @@ public:
         const QString&          instrumentId,
         tinkoff::OrderDirection direction,
         qint64                  quantity,
-        const Quotation&        price
+        const Quotation&        price,
+        bool                    confirmMarginTrade
     ) override;
     std::shared_ptr<tinkoff::OrderState>
     getOrderState(QThread* parentThread, const QString& accountId, const QString& orderId) override;
