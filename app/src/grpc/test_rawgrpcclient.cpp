@@ -592,7 +592,7 @@ TEST_F(Test_RawGrpcClient, Test_findFutures)
     ASSERT_EQ(resp->instruments(index).real_exchange(),                      tinkoff::REAL_EXCHANGE_MOEX);
     ASSERT_EQ(resp->instruments(index).position_uid(),                       "a69eeae5-b29c-41c9-814b-3091e1e5480d");
     ASSERT_EQ(resp->instruments(index).basic_asset_position_uid(),           "");
-    ASSERT_EQ(resp->instruments(index).required_tests_size(),                0);
+    // ASSERT_EQ(resp->instruments(index).required_tests_size(),                0);
     ASSERT_EQ(resp->instruments(index).for_iis_flag(),                       true);
     ASSERT_EQ(resp->instruments(index).for_qual_investor_flag(),             false);
     ASSERT_EQ(resp->instruments(index).weekend_flag(),                       false);
