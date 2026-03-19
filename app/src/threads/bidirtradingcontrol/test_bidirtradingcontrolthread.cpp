@@ -63,7 +63,8 @@ TEST_F(Test_BiDirTradingControlThread, Test_run)
 
     EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
-    EXPECT_CALL(*timeUtilsMock, isWorkingHours(Ge(1704056400000))).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isNormalOrEveningSession(Ge(1704056400000))).WillOnce(Return(false));
 
     thread->run();
 }
@@ -97,6 +98,7 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectStocksForBiDirTrading)
     ask->set_quantity(50);
     ask->set_allocated_price(askPrice);
 
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*timeUtilsMock, isWorkingHours(Ge(1704092400000))).WillOnce(Return(true));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(true));
@@ -116,6 +118,7 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectStocksForBiDirTrading)
 
     for (int i = 0; i < 5; ++i)
     {
+        EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
         EXPECT_CALL(*timeUtilsMock, isWorkingHours(Ge(1704092400000))).WillOnce(Return(true));
         EXPECT_CALL(*userStorageMock, readLock());
         EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(true));

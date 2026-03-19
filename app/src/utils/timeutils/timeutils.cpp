@@ -9,6 +9,8 @@ constexpr int NORMAL_SESSION_START_HOUR   = 10;
 constexpr int NORMAL_SESSION_START_MINUTE = 0;
 constexpr int NORMAL_SESSION_END_HOUR     = 18;
 constexpr int NORMAL_SESSION_END_MINUTE   = 40;
+constexpr int EXTRA_SESSION_END_HOUR      = 23;
+constexpr int EXTRA_SESSION_END_MINUTE    = 0;
 
 
 
@@ -59,13 +61,15 @@ bool TimeUtils::isWorkingHours(qint64 timestamp)
     return time >= startTime && time < endTime;
 }
 
-bool TimeUtils::isMorningSession(qint64 timestamp)
+bool TimeUtils::isNormalOrEveningSession(qint64 timestamp)
 {
-    const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
-    const QTime     time      = dateTime.time();
-    const QTime     startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
+    const QDateTime dateTime = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
 
-    return time < startTime;
+    const QTime time      = dateTime.time();
+    const QTime startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
+    const QTime endTime   = QTime(EXTRA_SESSION_END_HOUR, EXTRA_SESSION_END_MINUTE);
+
+    return time >= startTime && time < endTime;
 }
 
 bool TimeUtils::isTimeBetween(QTime time, QTime startTime, QTime endTime)

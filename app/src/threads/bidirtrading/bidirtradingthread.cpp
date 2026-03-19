@@ -313,7 +313,9 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
             return;
         }
 
-        const qint64 amountToBuy = qMin(amountOfLots, tinkoffMaxLots->buy_margin_limits().buy_max_lots());
+        const qint64 amountToBuy = qMin(
+            amountOfLots, qMax(tinkoffMaxLots->buy_limits().buy_max_lots(), tinkoffMaxLots->buy_margin_limits().buy_max_lots())
+        );
 
         if (amountToBuy > 0)
         {

@@ -350,10 +350,14 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
 
     tinkoff::GetMaxLotsResponse_BuyLimitsView* buyLimits =
         new tinkoff::GetMaxLotsResponse_BuyLimitsView(); // getMaxLotsResponse will take ownership
+    tinkoff::GetMaxLotsResponse_BuyLimitsView* buyMarginLimits =
+        new tinkoff::GetMaxLotsResponse_BuyLimitsView(); // getMaxLotsResponse will take ownership
 
     buyLimits->set_buy_max_lots(5);
+    buyMarginLimits->set_buy_max_lots(5);
 
-    getMaxLotsResponse->set_allocated_buy_margin_limits(buyLimits);
+    getMaxLotsResponse->set_allocated_buy_limits(buyLimits);
+    getMaxLotsResponse->set_allocated_buy_margin_limits(buyMarginLimits);
 
     tinkoff::GetMaxLotsResponse_SellLimitsView* sellLimits =
         new tinkoff::GetMaxLotsResponse_SellLimitsView(); // getMaxLotsResponse will take ownership
@@ -571,10 +575,14 @@ TEST_F(Test_BiDirTradingThread, Test_buyWithPrice)
 
     tinkoff::GetMaxLotsResponse_BuyLimitsView* buyLimits =
         new tinkoff::GetMaxLotsResponse_BuyLimitsView(); // getMaxLotsResponse will take ownership
+    tinkoff::GetMaxLotsResponse_BuyLimitsView* buyMarginLimits =
+        new tinkoff::GetMaxLotsResponse_BuyLimitsView(); // getMaxLotsResponse will take ownership
 
     buyLimits->set_buy_max_lots(0);
+    buyMarginLimits->set_buy_max_lots(0);
 
-    getMaxLotsResponse->set_allocated_buy_margin_limits(buyLimits);
+    getMaxLotsResponse->set_allocated_buy_limits(buyLimits);
+    getMaxLotsResponse->set_allocated_buy_margin_limits(buyMarginLimits);
 
     const std::shared_ptr<tinkoff::PostOrderResponse> postOrderResponse(new tinkoff::PostOrderResponse());
 

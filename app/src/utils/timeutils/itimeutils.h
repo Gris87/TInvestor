@@ -18,6 +18,6 @@ public:
 
     virtual bool interruptibleSleep(int ms, QThread* parentThread)         = 0;
     virtual bool isWorkingHours(qint64 timestamp)                          = 0;
-    virtual bool isMorningSession(qint64 timestamp)                        = 0;
+    virtual bool isNormalOrEveningSession(qint64 timestamp)                = 0;
     virtual bool isTimeBetween(QTime time, QTime startTime, QTime endTime) = 0;
 };

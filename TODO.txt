@@ -1,5 +1,4 @@
 Bi-dir trying to sell with huge part size
-Bi-dir on non-working hours (weekend also)
 Double check for cancelling buy orders in bidir trading
 Improve coverage
 Create release

@@ -38,19 +38,24 @@ TEST_F(Test_TimeUtils, Test_isWorkingHours)
     ASSERT_EQ(timeUtils->isWorkingHours(1704092400000), true);  // 10:00 MSK
     ASSERT_EQ(timeUtils->isWorkingHours(1704123540000), true);  // 18:39 MSK
     ASSERT_EQ(timeUtils->isWorkingHours(1704123600000), false); // 18:40 MSK
+    ASSERT_EQ(timeUtils->isWorkingHours(1704123660000), false); // 18:41 MSK
     ASSERT_EQ(timeUtils->isWorkingHours(1704542400000), false); // 15:00 MSK Sat
     ASSERT_EQ(timeUtils->isWorkingHours(1704628800000), false); // 15:00 MSK Sun
 }
 
-TEST_F(Test_TimeUtils, Test_isMorningSession)
+TEST_F(Test_TimeUtils, Test_isNormalOrEveningSession)
 {
-    ASSERT_EQ(timeUtils->isMorningSession(1704056400000), true);  // 00:00 MSK
-    ASSERT_EQ(timeUtils->isMorningSession(1704092340000), true);  // 09:59 MSK
-    ASSERT_EQ(timeUtils->isMorningSession(1704092400000), false); // 10:00 MSK
-    ASSERT_EQ(timeUtils->isMorningSession(1704123540000), false); // 18:39 MSK
-    ASSERT_EQ(timeUtils->isMorningSession(1704123600000), false); // 18:40 MSK
-    ASSERT_EQ(timeUtils->isMorningSession(1704542400000), false); // 15:00 MSK Sat
-    ASSERT_EQ(timeUtils->isMorningSession(1704628800000), false); // 15:00 MSK Sun
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704056400000), false); // 00:00 MSK
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704092340000), false); // 09:59 MSK
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704092400000), true);  // 10:00 MSK
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704123540000), true);  // 18:39 MSK
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704123600000), true);  // 18:40 MSK
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704123660000), true);  // 18:41 MSK
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704139140000), true);  // 22:59 MSK
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704139200000), false); // 23:00 MSK
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704139260000), false); // 23:01 MSK
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704542400000), true);  // 15:00 MSK Sat
+    ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704628800000), true);  // 15:00 MSK Sun
 }
 
 TEST_F(Test_TimeUtils, Test_isTimeBetween)

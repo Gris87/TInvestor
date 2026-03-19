@@ -242,7 +242,8 @@ void BiDirTradingControlThread::detectStocksForBiDirTrading(qint64 timestamp, bo
 {
     InstrumentsForBiDirTrading instrumentsForTrading;
 
-    if (mTimeUtils->isWorkingHours(timestamp))
+    if (mConfig->isTradeInNonWorkingHours() ? mTimeUtils->isNormalOrEveningSession(timestamp)
+                                            : mTimeUtils->isWorkingHours(timestamp))
     {
         mUserStorage->readLock();
         const bool  qualifiedUser = mUserStorage->isQualified();
