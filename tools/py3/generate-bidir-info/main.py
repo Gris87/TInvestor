@@ -34,6 +34,7 @@ ONE_MONTH    = 31 * ONE_DAY
 
 MINIMUM_STEP_DELTA = 2 * ONE_HOUR
 MINIMUM_SPREAD = 0.5
+MAXIMUM_SPREAD = 2.0
 MINIMUM_YIELD_VARIANTS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
 
 CSV_FIELD_FIGI = 0
@@ -280,7 +281,7 @@ def _preprocess_stock(stock, data):
                         "spread": spread
                     })
 
-                    max_spread = max(max_spread, spread)
+                    max_spread = min(max(max_spread, spread), MAXIMUM_SPREAD)
 
     return {
         "minPriceIncrement": float(stock["minPriceIncrement"]),
