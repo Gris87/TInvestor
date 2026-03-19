@@ -9,8 +9,8 @@
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 constexpr float  HUNDRED_PERCENT        = 100.0f;
-constexpr float  MINIMUM_YIELD_PERCENT  = 0.10f;
-constexpr float  ADDITIONAL_GAP_PERCENT = 0.30f;
+constexpr float  MINIMUM_YIELD_PERCENT  = 0.40f;
+constexpr float  ADDITIONAL_GAP_PERCENT = 0.60f;
 constexpr float  SPREAD_FOR_HUGE_BID    = 0.50f;
 constexpr float  TRIPLE_PRICE_RAISE     = 1.00f;
 constexpr float  TRIPLE_SAFE_SPREAD     = 4.00f;
@@ -609,8 +609,7 @@ Quotation BiDirTradingThread::calculateSellPrice(
 
     if (instrumentAvgPrice > 0)
     {
-        const double minimumSellPrice =
-            instrumentAvgPrice * (1 + (MINIMUM_YIELD_PERCENT + ADDITIONAL_GAP_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
+        const double minimumSellPrice = instrumentAvgPrice * (1 + (MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
         res = minimumSellPrice;
 
         for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)

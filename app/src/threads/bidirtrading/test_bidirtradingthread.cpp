@@ -909,7 +909,7 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
 
     bidPrice1->set_units(895);
     bidPrice1->set_nano(0);
-    bidPrice2->set_units(890);
+    bidPrice2->set_units(870);
     bidPrice2->set_nano(0);
     bidPrice3->set_units(855);
     bidPrice3->set_nano(0);
@@ -937,11 +937,11 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
 
     getOrderBookResponse.set_allocated_last_price(lastPrice);
 
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID), Quotation(890, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID), Quotation(870, 0));
 
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.7f));
 
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD), Quotation(890, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD), Quotation(870, 0));
 
     fillWithData({
         100.0f,
