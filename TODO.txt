@@ -1,4 +1,5 @@
-Bi-dir trying to sell with huge part size
+Adapt operations thread for shorts
+Maybe need to take profile into account for operations thread
 Double check for cancelling buy orders in bidir trading
 Notify about instant price raise (huge volume)
 Improve coverage
@@ -10,13 +11,9 @@ Double check sell decisions to let them "sell" shorts
 Make decisions for shorts
 Make trading thread to trade with shorts
 Make bi-dir trading thread to trade with shorts
-Adapt operations thread for shorts
-Maybe need to take profile into account for operations thread
 Improve coverage
 Create release
 
-Something strange with daily yield chart
-Limit buy lots to 1 in safe mode (4% safe gap) (Do not buy at all)
 Buy if shorts disabled during last 5 minutes
 Make decision based on dividends
 Try to get report at the publish day and make decision to buy
