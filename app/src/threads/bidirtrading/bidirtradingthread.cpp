@@ -10,8 +10,8 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 constexpr float  HUNDRED_PERCENT        = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT  = 0.40f;
-constexpr float  ADDITIONAL_GAP_PERCENT = 0.60f;
-constexpr float  SPREAD_FOR_HUGE_BID    = 0.50f;
+constexpr float  ADDITIONAL_GAP_PERCENT = 0.10f;
+constexpr float  SPREAD_FOR_HUGE_BID    = 0.80f;
 constexpr float  TRIPLE_PRICE_RAISE     = 1.00f;
 constexpr float  TRIPLE_SAFE_SPREAD     = 4.00f;
 constexpr int    ORDER_BOOK_DEPTH       = 50;

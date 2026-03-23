@@ -1,5 +1,6 @@
 Bi-dir trying to sell with huge part size
 Double check for cancelling buy orders in bidir trading
+Notify about instant price raise (huge volume)
 Improve coverage
 Create release
 
@@ -19,6 +20,7 @@ Limit buy lots to 1 in safe mode (4% safe gap) (Do not buy at all)
 Buy if shorts disabled during last 5 minutes
 Make decision based on dividends
 Try to get report at the publish day and make decision to buy
+Notify if stavka CB raise/fall and what is the best to buy/short
 Create script for buying/selling in parts
 Find best configs for different commission
 Change config defaults
