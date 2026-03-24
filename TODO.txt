@@ -1,6 +1,7 @@
 Adapt operations thread for shorts
 Maybe need to take profile into account for operations thread
 Double check for cancelling buy orders in bidir trading
+Notify to buy in short at the dividends day (Try to check history data)
 Notify about instant price raise (huge volume)
 Improve coverage
 Create release
@@ -10,7 +11,6 @@ Last operation with stock for limitation (not sell only)
 Double check sell decisions to let them "sell" shorts
 Make decisions for shorts
 Make trading thread to trade with shorts
-Make bi-dir trading thread to trade with shorts
 Improve coverage
 Create release
 

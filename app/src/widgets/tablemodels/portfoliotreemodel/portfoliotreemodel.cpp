@@ -342,7 +342,8 @@ static QVariant itemYieldPercentTooltipRole(const PortfolioItem& item)
         return QVariant();
     }
 
-    return QObject::tr("From: %1").arg(item.avgPriceFifo, 0, 'f', item.pricePrecision) + " \u20BD";
+    return QObject::tr("From: %1").arg(item.available > 0 ? item.avgPriceFifo : item.price, 0, 'f', item.pricePrecision) +
+           " \u20BD";
 }
 
 static QVariant itemDailyYieldTooltipRole(const PortfolioItem& item)
@@ -896,9 +897,12 @@ void PortfolioTreeModel::updatePriceInCategory(PortfolioCategoryItem* category, 
             const double currentCost = item.available * item.price;
 
             item.yield             = currentCost - item.cost;
-            item.yieldPercent      = (item.yield / item.cost) * HUNDRED_PERCENT;
+            item.yieldPercent      = item.available > 0 ? ((item.price / item.avgPriceFifo) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                                        : ((item.avgPriceFifo / item.price) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
             item.dailyYield        = currentCost - item.costForDailyYield;
-            item.dailyYieldPercent = (item.dailyYield / item.costForDailyYield) * HUNDRED_PERCENT;
+            item.dailyYieldPercent = item.available > 0
+                                         ? ((item.price / item.priceForDailyYield) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                         : ((item.priceForDailyYield / item.price) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
             if (updateAllowed)
             {

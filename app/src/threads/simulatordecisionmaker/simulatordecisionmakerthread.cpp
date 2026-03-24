@@ -370,9 +370,12 @@ void SimulatorDecisionMakerThread::updatePrice()
             const double currentCost = item.available * item.price;
 
             item.yield             = currentCost - item.cost;
-            item.yieldPercent      = (item.yield / item.cost) * HUNDRED_PERCENT;
+            item.yieldPercent      = item.available > 0 ? ((item.price / item.avgPriceFifo) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                                        : ((item.avgPriceFifo / item.price) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
             item.dailyYield        = currentCost - item.costForDailyYield;
-            item.dailyYieldPercent = (item.dailyYield / item.costForDailyYield) * HUNDRED_PERCENT;
+            item.dailyYieldPercent = item.available > 0
+                                         ? ((item.price / item.priceForDailyYield) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                         : ((item.priceForDailyYield / item.price) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
         }
     }
 }
