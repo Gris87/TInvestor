@@ -4,6 +4,7 @@ import subprocess
 import time
 
 from concurrent.futures import ThreadPoolExecutor
+from decimal import Decimal
 from loguru import logger
 from pathlib import Path
 
@@ -12,11 +13,10 @@ from messaging import send_message
 from tinkoff.invest import Client, GetOperationsByCursorRequest
 from tinkoff.invest.constants import INVEST_GRPC_API
 from tinkoff.invest.schemas import OperationState
+from tinkoff.invest.utils import quotation_to_decimal
 
 
 PATH_TO_SCRIPT = Path(__file__).parent
-
-RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
 
 
 def check_portfolio(args):
@@ -61,7 +61,7 @@ def check_portfolio(args):
             old_positions = json.loads(f.read())
 
         if positions != old_positions:
-            send_message(msg_positions_changed)
+            send_message(msg_positions_changed + "\n\n" + _describe_portfolio(portfolio.positions))
 
     with open(positions_path, "w", encoding="utf-8") as f:
         json.dump(positions, f, ensure_ascii=False)
@@ -98,6 +98,26 @@ def _validate_account(client, account_id):
 
 def _get_portfolio(client, account_id):
     return client.operations.get_portfolio(account_id=account_id)
+
+
+def _describe_portfolio(positions):
+    total_cost = Decimal("0.10")
+    currency_info = ""
+    stocks_info = ""
+
+    for position in positions:
+        if position.instrument_type=='currency':
+            currency_info += "\n" + msg_currency_cost.format(currency=position.current_price.currency.upper(), cost=quotation_to_decimal(position.quantity))
+            total_cost += quotation_to_decimal(position.quantity)
+        else:
+            cost = quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price_fifo)
+
+            stocks_info += "\n" + msg_stock_cost.format(ticker=position.ticker, quantity=quotation_to_decimal(position.quantity), cost=cost)
+            total_cost += cost
+
+    cost_info = msg_total_cost.format(total_cost=total_cost)
+
+    return cost_info + "\n------------------------------------" + currency_info + stocks_info
 
 
 def _execute_commands(commands):

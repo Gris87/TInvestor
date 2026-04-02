@@ -1,3 +1,5 @@
+Split bi-dir info for workdays and weekends
+Eye button to show/hide money
 Adapt operations thread for shorts
 Maybe need to take profile into account for operations thread
 Double check for cancelling buy orders in bidir trading

@@ -56,6 +56,13 @@ def _process_posts(args, posts):
         post_text = post["content"]["text"]
         post_text_simplified = post_text.casefold()
 
+        match = recommend_to_investigate_regexp.match(post_text_simplified)
+
+        if match is not None:
+            found_text = match.group(1).strip()
+
+            send_message(msg_recommend_to_investigate + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
+
         match = recommend_to_buy_regexp.match(post_text_simplified)
 
         if match is not None:
