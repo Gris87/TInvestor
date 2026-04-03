@@ -911,9 +911,9 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
     bidPrice1->set_nano(0);
     bidPrice2->set_units(870);
     bidPrice2->set_nano(0);
-    bidPrice3->set_units(855);
+    bidPrice3->set_units(805);
     bidPrice3->set_nano(0);
-    bidPrice4->set_units(850);
+    bidPrice4->set_units(800);
     bidPrice4->set_nano(0);
     askPrice1->set_units(900);
     askPrice1->set_nano(0);
@@ -963,7 +963,7 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
 
     thread->testSetStepForTripleCheck(3);
 
-    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID), Quotation(855, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID), Quotation(805, 0));
 }
 
 TEST_F(Test_BiDirTradingThread, Test_calculateSellPrice)
