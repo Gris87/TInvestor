@@ -200,7 +200,7 @@ void OperationsThread::cleanRefreshOperations()
         const Operation& lastOperation = operations.constFirst(); // Since it reversed
 
         mLastRequestTimestamp     = lastOperation.timestamp;
-        mLastOperationTimestamp   = lastOperation.timestamp;
+        mLastOperationTimestamp   = lastOperation.originalTimestamp;
         mInputMoney               = lastOperation.inputMoney;
         mTotalYieldWithCommission = lastOperation.totalYieldWithCommission;
         mRemainedMoney            = lastOperation.remainedMoney;
@@ -230,7 +230,7 @@ void OperationsThread::cleanRefreshOperations()
             QString("%1_%2_%3").arg(QString::number(operation.originalTimestamp), operation.instrumentId, operation.description)
         );
 
-        if (operation.remainedQuantity > 0)
+        if (operation.remainedQuantity != 0)
         {
             QuantityAndCost& quantityAndCost = mInstruments[operation.instrumentId]; // clazy:exclude=detaching-member
 
@@ -369,7 +369,7 @@ bool OperationsThread::requestOperations()
             }
         }
 
-        alignRemainedAndTotalMoneyFromPortfolio(&operations.first()); // Since it reversed
+        alignWithPortfolio(&operations.first()); // Since it reversed
 
         if (mLastRequestTimestamp == 0)
         {
@@ -512,7 +512,7 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
     {
         avgCostFifo = quotationToDouble(quantityAndCost.costFifo);
 
-        if (quantityAndCost.quantity > 0)
+        if (quantityAndCost.quantity != 0)
         {
             avgPriceFifo = avgCostFifo / quantityAndCost.quantity;
             avgPriceWavg = quotationToDouble(quantityAndCost.costWavg) / quantityAndCost.quantity;
@@ -529,7 +529,7 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
 
         yieldWithCommission = quotationSum(yield, tinkoffOperation.commission());
 
-        if (avgCostFifo > 0)
+        if (avgCostFifo != 0)
         {
             yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCostFifo * HUNDRED_PERCENT;
         }
@@ -625,14 +625,14 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
     res->paymentPrecision                = quotationPrecision(tinkoffOperation.payment());
     res->commissionPrecision             = quotationPrecision(tinkoffOperation.commission());
 
-    if (quantityAndCost.quantity <= 0)
+    if (quantityAndCost.quantity == 0)
     {
         mInstruments.remove(instrumentId);
     }
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
-void OperationsThread::alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation)
+void OperationsThread::alignWithPortfolio(Operation* lastOperation)
 {
     const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
         mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);

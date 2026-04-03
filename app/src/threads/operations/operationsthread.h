@@ -47,7 +47,7 @@ public:
 
     bool requestOperations();
     void handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
-    void alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation);
+    void alignWithPortfolio(Operation* lastOperation);
 
 #ifdef TESTING_MODE
     void testSetLimitOperations(int limitOperations)

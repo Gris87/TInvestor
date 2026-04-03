@@ -442,13 +442,13 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     operation3.yieldWithCommission        = 265.6f;
     operation3.yieldWithCommissionPercent = 10.4856f;
     operation3.inputMoney                 = Quotation(200000, 0);
-    // Instead of Quotation(265, -666500000) after alignRemainedAndTotalMoneyFromPortfolio
+    // Instead of Quotation(265, -666500000) after alignWithPortfolio
     operation3.totalYieldWithCommission = Quotation(300, 0);
-    // Instead of 0.1321667f after alignRemainedAndTotalMoneyFromPortfolio
+    // Instead of 0.1321667f after alignWithPortfolio
     operation3.totalYieldWithCommissionPercent = 0.15f;
-    // Instead of Quotation(200265, -666500000) after alignRemainedAndTotalMoneyFromPortfolio
+    // Instead of Quotation(200265, -666500000) after alignWithPortfolio
     operation3.remainedMoney = Quotation(200300, 0);
-    // Instead of Quotation(200265, -666500000) after alignRemainedAndTotalMoneyFromPortfolio
+    // Instead of Quotation(200265, -666500000) after alignWithPortfolio
     operation3.totalMoney          = Quotation(200300, 0);
     operation3.pricePrecision      = 2;
     operation3.paymentPrecision    = 2;
@@ -1149,7 +1149,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     // clang-format on
 }
 
-TEST_F(Test_OperationsThread, Test_alignRemainedAndTotalMoneyFromPortfolio)
+TEST_F(Test_OperationsThread, Test_alignWithPortfolio)
 {
     const InSequence seq;
 
@@ -1180,7 +1180,7 @@ TEST_F(Test_OperationsThread, Test_alignRemainedAndTotalMoneyFromPortfolio)
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
 
-    thread->alignRemainedAndTotalMoneyFromPortfolio(&operation);
+    thread->alignWithPortfolio(&operation);
 
     // clang-format off
     ASSERT_EQ(operation.remainedMoney, Quotation(100000, 0));
@@ -1206,7 +1206,7 @@ TEST_F(Test_OperationsThread, Test_alignRemainedAndTotalMoneyFromPortfolio)
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
 
-    thread->alignRemainedAndTotalMoneyFromPortfolio(&operation);
+    thread->alignWithPortfolio(&operation);
 
     // clang-format off
     ASSERT_EQ(operation.remainedMoney, Quotation(100000, 0));
@@ -1232,7 +1232,7 @@ TEST_F(Test_OperationsThread, Test_alignRemainedAndTotalMoneyFromPortfolio)
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
 
-    thread->alignRemainedAndTotalMoneyFromPortfolio(&operation);
+    thread->alignWithPortfolio(&operation);
 
     // clang-format off
     ASSERT_EQ(operation.remainedMoney, Quotation(100000, 0));
