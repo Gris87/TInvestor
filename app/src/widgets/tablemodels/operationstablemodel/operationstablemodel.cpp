@@ -286,7 +286,7 @@ static const ForegroundRoleHandler FOREGROUND_ROLE_HANDLER[OPERATIONS_COLUMN_COU
 
 static QVariant operationsYieldWithCommissionPercentTooltipRole(const Operation& operation)
 {
-    if (operation.avgCostFifo <= 0)
+    if (operation.avgCostFifo == 0)
     {
         return QVariant();
     }

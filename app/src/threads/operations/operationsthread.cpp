@@ -421,92 +421,134 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
 
     QuantityAndCost& quantityAndCost = mInstruments[instrumentId]; // clazy:exclude=detaching-member
 
-    if (operationType == tinkoff::OPERATION_TYPE_BUY)
+    if (operationType == tinkoff::OPERATION_TYPE_BUY || operationType == tinkoff::OPERATION_TYPE_SELL)
     {
-        OperationFifoItem fifoItem;
+        const int direction = operationType == tinkoff::OPERATION_TYPE_BUY ? 1 : -1;
 
-        fifoItem.quantity = tinkoffOperation.quantity_done();
-        fifoItem.cost     = quotationNegative(tinkoffOperation.payment());
-
-        quantityAndCost.fifoItems.append(fifoItem);
-
-        quantityAndCost.quantity += fifoItem.quantity;
-        quantityAndCost.costFifo  = quotationSum(quantityAndCost.costFifo, fifoItem.cost);
-        quantityAndCost.costWavg  = quotationSum(quantityAndCost.costWavg, fifoItem.cost);
-
-        avgPriceFifo = quotationToDouble(quantityAndCost.costFifo) / quantityAndCost.quantity;
-        avgPriceWavg = quotationToDouble(quantityAndCost.costWavg) / quantityAndCost.quantity;
-        avgCostFifo  = -payment;
-
-        yieldWithCommission        = quotationConvert(tinkoffOperation.commission());
-        yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCostFifo * HUNDRED_PERCENT;
-
-        mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
-    }
-    else if (operationType == tinkoff::OPERATION_TYPE_SELL)
-    {
-        avgPriceWavg = quotationToDouble(quantityAndCost.costWavg) / quantityAndCost.quantity;
-
-        Quotation avgCostFifoQuotation;
-
-        if (quantityAndCost.quantity > tinkoffOperation.quantity_done())
+        if ((direction > 0 && quantityAndCost.quantity >= 0) || (direction < 0 && quantityAndCost.quantity <= 0))
         {
-            const double avgCostWavg = avgPriceWavg * tinkoffOperation.quantity_done();
+            OperationFifoItem fifoItem;
 
-            qint64 quantityForCalculation = tinkoffOperation.quantity_done();
-            int    fifoIndex              = 0;
+            fifoItem.quantity = direction * tinkoffOperation.quantity_done();
+            fifoItem.cost     = quotationNegative(tinkoffOperation.payment());
 
-            while (quantityForCalculation > 0)
-            {
-                OperationFifoItem& fifoItem = quantityAndCost.fifoItems[fifoIndex]; // clazy:exclude=detaching-member
+            quantityAndCost.fifoItems.append(fifoItem);
 
-                if (quantityForCalculation >= fifoItem.quantity)
-                {
-                    avgCostFifoQuotation    = quotationSum(avgCostFifoQuotation, fifoItem.cost);
-                    quantityForCalculation -= fifoItem.quantity;
-
-                    ++fifoIndex;
-                }
-                else
-                {
-                    const Quotation deltaCost =
-                        quotationDivide(quotationMultiply(fifoItem.cost, quantityForCalculation), fifoItem.quantity);
-
-                    avgCostFifoQuotation = quotationSum(avgCostFifoQuotation, deltaCost);
-                    fifoItem.cost        = quotationDiff(fifoItem.cost, deltaCost);
-
-                    fifoItem.quantity -= quantityForCalculation;
-
-                    break;
-                }
-            }
-
-            quantityAndCost.fifoItems.remove(0, fifoIndex);
-
-            quantityAndCost.quantity -= tinkoffOperation.quantity_done();
-            quantityAndCost.costFifo  = quotationDiff(quantityAndCost.costFifo, avgCostFifoQuotation);
-            quantityAndCost.costWavg  = quotationDiff(quantityAndCost.costWavg, quotationFromDouble(avgCostWavg));
+            quantityAndCost.quantity += fifoItem.quantity;
+            quantityAndCost.costFifo  = quotationSum(quantityAndCost.costFifo, fifoItem.cost);
+            quantityAndCost.costWavg  = quotationSum(quantityAndCost.costWavg, fifoItem.cost);
 
             avgPriceFifo = quotationToDouble(quantityAndCost.costFifo) / quantityAndCost.quantity;
+            avgPriceWavg = quotationToDouble(quantityAndCost.costWavg) / quantityAndCost.quantity;
+            avgCostFifo  = -payment;
+
+            yieldWithCommission        = quotationConvert(tinkoffOperation.commission());
+            yieldWithCommissionPercent = direction * quotationToDouble(yieldWithCommission) / avgCostFifo * HUNDRED_PERCENT;
+
+            mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
         }
         else
         {
-            avgPriceFifo         = quotationToDouble(quantityAndCost.costFifo) / quantityAndCost.quantity;
-            avgCostFifoQuotation = quantityAndCost.costFifo;
+            if (tinkoffOperation.quantity_done() < qAbs(quantityAndCost.quantity))
+            {
+                Quotation avgCostFifoQuotation;
 
-            quantityAndCost.quantity = 0;
-            quantityAndCost.fifoItems.clear();
-            quantityAndCost.costFifo = Quotation();
-            quantityAndCost.costWavg = Quotation();
+                avgPriceWavg             = quotationToDouble(quantityAndCost.costWavg) / quantityAndCost.quantity;
+                const double avgCostWavg = -direction * avgPriceWavg * tinkoffOperation.quantity_done();
+
+                qint64 quantityForCalculation = tinkoffOperation.quantity_done();
+                int    fifoIndex              = 0;
+
+                while (quantityForCalculation > 0)
+                {
+                    OperationFifoItem& fifoItem = quantityAndCost.fifoItems[fifoIndex]; // clazy:exclude=detaching-member
+
+                    if (quantityForCalculation >= qAbs(fifoItem.quantity))
+                    {
+                        avgCostFifoQuotation    = quotationSum(avgCostFifoQuotation, fifoItem.cost);
+                        quantityForCalculation -= qAbs(fifoItem.quantity);
+
+                        ++fifoIndex;
+                    }
+                    else
+                    {
+                        const Quotation deltaCost = quotationDivide(
+                            quotationMultiply(fifoItem.cost, quantityForCalculation), -direction * fifoItem.quantity
+                        );
+
+                        avgCostFifoQuotation = quotationSum(avgCostFifoQuotation, deltaCost);
+                        fifoItem.cost        = quotationDiff(fifoItem.cost, deltaCost);
+
+                        fifoItem.quantity += direction * quantityForCalculation;
+
+                        break;
+                    }
+                }
+
+                quantityAndCost.fifoItems.remove(0, fifoIndex);
+
+                quantityAndCost.quantity += direction * tinkoffOperation.quantity_done();
+                quantityAndCost.costFifo  = quotationDiff(quantityAndCost.costFifo, avgCostFifoQuotation);
+                quantityAndCost.costWavg  = quotationDiff(quantityAndCost.costWavg, quotationFromDouble(avgCostWavg));
+
+                avgPriceFifo = quotationToDouble(quantityAndCost.costFifo) / quantityAndCost.quantity;
+                avgCostFifo  = quotationToDouble(avgCostFifoQuotation);
+
+                yield                      = quotationDiff(tinkoffOperation.payment(), avgCostFifoQuotation);
+                yieldWithCommission        = quotationSum(yield, tinkoffOperation.commission());
+                yieldWithCommissionPercent = -direction * quotationToDouble(yieldWithCommission) / avgCostFifo * HUNDRED_PERCENT;
+
+                mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
+            }
+            else if (tinkoffOperation.quantity_done() > qAbs(quantityAndCost.quantity))
+            {
+                yield = quotationDiff(
+                    quotationMultiply(tinkoffOperation.price(), quantityAndCost.quantity), quantityAndCost.costFifo
+                );
+
+                const Quotation avgCostFifoQuotation = quantityAndCost.costFifo;
+                avgCostFifo                          = quotationToDouble(avgCostFifoQuotation);
+
+                OperationFifoItem fifoItem;
+
+                fifoItem.quantity = -direction * (qAbs(quantityAndCost.quantity) - tinkoffOperation.quantity_done());
+                fifoItem.cost     = quotationSum(quotationDiff(quantityAndCost.costFifo, tinkoffOperation.payment()), yield);
+
+                quantityAndCost.fifoItems.clear();
+                quantityAndCost.fifoItems.append(fifoItem);
+
+                quantityAndCost.quantity = fifoItem.quantity;
+                quantityAndCost.costFifo = fifoItem.cost;
+                quantityAndCost.costWavg = fifoItem.cost;
+
+                avgPriceFifo = quotationToDouble(quantityAndCost.costFifo) / quantityAndCost.quantity;
+                avgPriceWavg = quotationToDouble(quantityAndCost.costWavg) / quantityAndCost.quantity;
+
+                yieldWithCommission        = quotationSum(yield, tinkoffOperation.commission());
+                yieldWithCommissionPercent = -direction * quotationToDouble(yieldWithCommission) / avgCostFifo * HUNDRED_PERCENT;
+
+                mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
+            }
+            else
+            {
+                const Quotation avgCostFifoQuotation = quantityAndCost.costFifo;
+
+                avgPriceFifo = quotationToDouble(quantityAndCost.costFifo) / quantityAndCost.quantity;
+                avgPriceWavg = quotationToDouble(quantityAndCost.costWavg) / quantityAndCost.quantity;
+                avgCostFifo  = quotationToDouble(avgCostFifoQuotation);
+
+                quantityAndCost.quantity = 0;
+                quantityAndCost.fifoItems.clear();
+                quantityAndCost.costFifo = Quotation();
+                quantityAndCost.costWavg = Quotation();
+
+                yield                      = quotationDiff(tinkoffOperation.payment(), avgCostFifoQuotation);
+                yieldWithCommission        = quotationSum(yield, tinkoffOperation.commission());
+                yieldWithCommissionPercent = -direction * quotationToDouble(yieldWithCommission) / avgCostFifo * HUNDRED_PERCENT;
+
+                mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
+            }
         }
-
-        avgCostFifo = quotationToDouble(avgCostFifoQuotation);
-
-        yield                      = quotationDiff(tinkoffOperation.payment(), avgCostFifoQuotation);
-        yieldWithCommission        = quotationSum(yield, tinkoffOperation.commission());
-        yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCostFifo * HUNDRED_PERCENT;
-
-        mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
     }
     else if (operationType != tinkoff::OPERATION_TYPE_INPUT && operationType != tinkoff::OPERATION_TYPE_OUTPUT)
     {
