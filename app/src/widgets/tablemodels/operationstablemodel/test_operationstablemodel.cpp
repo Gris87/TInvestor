@@ -373,7 +373,7 @@ TEST_F(Test_OperationsTableModel, Test_data)
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_COMMISSION_COLUMN),                          Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_YIELD_COLUMN),                               Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN),               Qt::ToolTipRole),           QVariant());
-    ASSERT_EQ(model->data(model->index(0, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN),       Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN),       Qt::ToolTipRole),           QVariant("From: -106.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN),         Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN), Qt::ToolTipRole),           QVariant("From: 115.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(0, OPERATIONS_REMAINED_MONEY_COLUMN),                      Qt::ToolTipRole),           QVariant());
