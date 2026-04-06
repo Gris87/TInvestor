@@ -681,20 +681,27 @@ void OperationsThread::alignWithPortfolio(Operation* lastOperation)
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
+        QStringList   cachedInstrumentsKeys = mInstruments.keys();
+        QSet<QString> cachedInstruments(cachedInstrumentsKeys.begin(), cachedInstrumentsKeys.end());
+        QSet<QString> portfolioInstruments;
+
         mRemainedMoney = Quotation();
         mTotalMoney    = Quotation();
 
         for (int i = 0; i < tinkoffPortfolio->positions_size(); ++i)
         {
-            const tinkoff::PortfolioPosition& position = tinkoffPortfolio->positions(i);
+            const tinkoff::PortfolioPosition& position     = tinkoffPortfolio->positions(i);
+            const QString                     instrumentId = QString::fromStdString(position.instrument_uid());
 
-            if (QString::fromStdString(position.instrument_uid()) == RUBLE_UID)
+            if (instrumentId == RUBLE_UID)
             {
                 mRemainedMoney = quotationConvert(position.quantity());
                 mTotalMoney    = quotationSum(mTotalMoney, mRemainedMoney);
             }
             else
             {
+                portfolioInstruments.insert(instrumentId);
+
                 const Quotation avgCostFifo =
                     quotationMultiply(position.average_position_price_fifo(), position.quantity().units());
 
@@ -716,6 +723,13 @@ void OperationsThread::alignWithPortfolio(Operation* lastOperation)
         lastOperation->totalMoney                      = mTotalMoney;
         lastOperation->totalYieldWithCommission        = mTotalYieldWithCommission;
         lastOperation->totalYieldWithCommissionPercent = totalYieldWithCommissionPercent;
+
+        const QSet<QString> instrumentsToRemoveFromCache = cachedInstruments - portfolioInstruments;
+
+        for (auto it = instrumentsToRemoveFromCache.constBegin(), end = instrumentsToRemoveFromCache.constEnd(); it != end; ++it)
+        {
+            mInstruments.remove(*it);
+        }
     }
 }
 

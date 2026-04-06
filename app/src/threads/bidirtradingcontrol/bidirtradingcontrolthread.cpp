@@ -324,5 +324,7 @@ void BiDirTradingControlThread::terminateThread()
 {
     blockSignals(true);
 
+    mLastDetectionTimestamp = 0;
+
     requestInterruption();
 }
