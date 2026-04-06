@@ -292,5 +292,7 @@ private slots:
     void on_actionAutoPilotPage_toggled(bool checked);
     void on_actionSettings_triggered();
     void on_startSimulationButton_clicked();
+    void on_simulationEyeButton_clicked();
     void on_startAutoPilotButton_clicked();
+    void on_autoPilotEyeButton_clicked();
 };

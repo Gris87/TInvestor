@@ -310,6 +310,18 @@ protected:
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, loadWindowState(QString("MainWindow/Simulator")));
         EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, loadWindowState(QString("MainWindow/AutoPilot")));
 
+        EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/ShowMoney"), QVariant(true)))
+            .WillOnce(Return(QVariant(false)));
+        EXPECT_CALL(*simulatorDecisionMakerWidgetMock, isShowMoney()).WillOnce(Return(true));
+        EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/ShowMoney"), QVariant(false)));
+        EXPECT_CALL(*simulatorDecisionMakerWidgetMock, setShowMoney(false));
+
+        EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/ShowMoney"), QVariant(true)))
+            .WillOnce(Return(QVariant(false)));
+        EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, isShowMoney()).WillOnce(Return(true));
+        EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/ShowMoney"), QVariant(false)));
+        EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setShowMoney(false));
+
         mainWindow = new MainWindow(
             configMock,
             configForSettingsDialogMock,

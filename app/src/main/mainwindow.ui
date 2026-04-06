@@ -234,6 +234,20 @@
                 </property>
                </spacer>
               </item>
+              <item>
+               <widget class="QPushButton" name="simulationEyeButton">
+                <property name="maximumSize">
+                 <size>
+                  <width>24</width>
+                  <height>24</height>
+                 </size>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../Resources.qrc">
+                  <normaloff>:/assets/images/eye.png</normaloff>:/assets/images/eye.png</iconset>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -601,6 +615,20 @@
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="autoPilotEyeButton">
+                <property name="maximumSize">
+                 <size>
+                  <width>24</width>
+                  <height>24</height>
+                 </size>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../Resources.qrc">
+                  <normaloff>:/assets/images/eye.png</normaloff>:/assets/images/eye.png</iconset>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>

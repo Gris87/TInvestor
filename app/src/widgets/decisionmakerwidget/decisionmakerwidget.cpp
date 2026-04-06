@@ -48,7 +48,8 @@ DecisionMakerWidget::DecisionMakerWidget(
     ui(new Ui::DecisionMakerWidget),
     mConfig(config),
     mConfigForSimulation(configForSimulation),
-    mSettingsEditor(settingsEditor)
+    mSettingsEditor(settingsEditor),
+    mShowMoney(true)
 {
     qDebug() << "Create DecisionMakerWidget";
 
@@ -127,6 +128,16 @@ DecisionMakerWidget::~DecisionMakerWidget()
 void DecisionMakerWidget::setAccountName(const QString& name)
 {
     mPortfolioTreeWidget->setAccountName(name);
+}
+
+bool DecisionMakerWidget::isShowMoney() const
+{
+    return mShowMoney;
+}
+
+void DecisionMakerWidget::setShowMoney(bool value)
+{
+    mShowMoney = value;
 }
 
 void DecisionMakerWidget::showSpinners()

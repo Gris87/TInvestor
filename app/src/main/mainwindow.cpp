@@ -1295,6 +1295,24 @@ void MainWindow::on_startSimulationButton_clicked()
     }
 }
 
+void MainWindow::on_simulationEyeButton_clicked()
+{
+    if (mSimulatorDecisionMakerWidget->isShowMoney())
+    {
+        mSimulatorSettingsEditor->setValue("General/ShowMoney", false);
+        ui->simulationEyeButton->setIcon(QIcon(":/assets/images/eye_closed.png"));
+
+        mSimulatorDecisionMakerWidget->setShowMoney(false);
+    }
+    else
+    {
+        mSimulatorSettingsEditor->setValue("General/ShowMoney", true);
+        ui->simulationEyeButton->setIcon(QIcon(":/assets/images/eye.png"));
+
+        mSimulatorDecisionMakerWidget->setShowMoney(true);
+    }
+}
+
 void MainWindow::on_startAutoPilotButton_clicked()
 {
     if (!ui->autoPilotActiveSpinnerWidget->isSpinning())
@@ -1323,6 +1341,24 @@ void MainWindow::on_startAutoPilotButton_clicked()
 
             stopAutoPilot();
         }
+    }
+}
+
+void MainWindow::on_autoPilotEyeButton_clicked()
+{
+    if (mAutoPilotDecisionMakerWidget->isShowMoney())
+    {
+        mAutoPilotSettingsEditor->setValue("General/ShowMoney", false);
+        ui->autoPilotEyeButton->setIcon(QIcon(":/assets/images/eye_closed.png"));
+
+        mAutoPilotDecisionMakerWidget->setShowMoney(false);
+    }
+    else
+    {
+        mAutoPilotSettingsEditor->setValue("General/ShowMoney", true);
+        ui->autoPilotEyeButton->setIcon(QIcon(":/assets/images/eye.png"));
+
+        mAutoPilotDecisionMakerWidget->setShowMoney(true);
     }
 }
 
@@ -1533,6 +1569,16 @@ void MainWindow::loadWindowState()
     mStocksTableWidget->loadWindowState("MainWindow/StocksTableWidget");
     mSimulatorDecisionMakerWidget->loadWindowState("MainWindow/Simulator");
     mAutoPilotDecisionMakerWidget->loadWindowState("MainWindow/AutoPilot");
+
+    if (!mSimulatorSettingsEditor->value("General/ShowMoney", true).toBool())
+    {
+        on_simulationEyeButton_clicked();
+    }
+
+    if (!mAutoPilotSettingsEditor->value("General/ShowMoney", true).toBool())
+    {
+        on_autoPilotEyeButton_clicked();
+    }
 
     updateStackWidgetToolbar();
 }

@@ -68,6 +68,10 @@ public:
 
     void setAccountName(const QString& name) override;
 
+    [[nodiscard]]
+    bool isShowMoney() const override;
+    void setShowMoney(bool value) override;
+
     void showSpinners() override;
     void bestConfigFound() override;
     void operationsRead(const QList<Operation>& operations) override;
@@ -96,6 +100,7 @@ private:
     ISettingsEditor*            mSettingsEditor;
     QGraphicsOpacityEffect      mCopiedOpacityEffect;
     QPropertyAnimation          mCopiedOpacityAnimation;
+    bool                        mShowMoney;
 
 public slots:
     void logFilterChanged(const LogFilter& filter);

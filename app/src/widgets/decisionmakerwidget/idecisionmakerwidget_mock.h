@@ -24,6 +24,9 @@ public:
 
     MOCK_METHOD(void, setAccountName, (const QString& name), (override));
 
+    MOCK_METHOD(bool, isShowMoney, (), (const, override));
+    MOCK_METHOD(void, setShowMoney, (bool value), (override));
+
     MOCK_METHOD(void, showSpinners, (), (override));
     MOCK_METHOD(void, bestConfigFound, (), (override));
     MOCK_METHOD(void, operationsRead, (const QList<Operation>& operations), (override));
