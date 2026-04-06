@@ -132,7 +132,11 @@ void HighLiquidityThread::sellEtf()
                 InstrumentsForTrading instrumentsForTrading;
 
                 instrumentsForTrading[instrumentId] = TradingInfo(
-                    ASAP_MODE_IMMEDIATELY_TRADE, -1.0f, -1.0f, 0.0, tr("Decided to sell because it had been a night since buying")
+                    ASAP_MODE_IMMEDIATELY_WITH_TINY_YIELD,
+                    -1.0f,
+                    -1.0f,
+                    0.0,
+                    tr("Decided to sell because it had been a night since buying")
                 );
                 emit tradeInstruments(instrumentsForTrading);
 

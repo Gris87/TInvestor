@@ -1,6 +1,4 @@
-Split bi-dir info for workdays and weekends
 Eye button to show/hide money
-Special sell for TMON
 Double check for cancelling buy orders in bidir trading
 Improve coverage
 Create release
@@ -13,7 +11,6 @@ Make trading thread to trade with shorts
 Improve coverage
 Create release
 
-Buy if shorts disabled during last 5 minutes
 Make decision based on dividends
 Try to get report at the publish day and make decision to buy
 Notify if stavka CB raise/fall and what is the best to buy/short

@@ -674,10 +674,16 @@ Quotation TradingThread::calculateSellPrice(const tinkoff::GetOrderBookResponse&
     Quotation limitPrice;
     double    price = -1;
 
-    if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook.bids_size() > 0)
+    if ((mode == ASAP_MODE_IMMEDIATELY_WITH_TINY_YIELD || mode == ASAP_MODE_IMMEDIATELY_TRADE) &&
+        tinkoffOrderBook.bids_size() > 0)
     {
         limitPrice = quotationConvert(tinkoffOrderBook.bids(0).price());
-        price      = quotationToDouble(limitPrice);
+        const double topBidPrice = quotationToDouble(limitPrice);
+
+        if (mode == ASAP_MODE_IMMEDIATELY_TRADE || topBidPrice > avgPrice())
+        {
+            price = topBidPrice;
+        }
     }
 
     if (tinkoffOrderBook.asks_size() > 0 && price < 0)
@@ -688,7 +694,7 @@ Quotation TradingThread::calculateSellPrice(const tinkoff::GetOrderBookResponse&
         );
         price = quotationToDouble(limitPrice);
 
-        if (mode == ASAP_MODE_NONE)
+        if (mode == ASAP_MODE_NONE || mode == ASAP_MODE_IMMEDIATELY_WITH_TINY_YIELD)
         {
             mUserStorage->readLock();
             const float commission = mUserStorage->getCommission();
