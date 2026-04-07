@@ -140,6 +140,7 @@ void DecisionMakerWidget::setShowMoney(bool value)
     mShowMoney = value;
 
     mOperationsTableWidget->setShowMoney(value);
+    mAccountChartWidget->setShowMoney(value);
     mPortfolioTreeWidget->setShowMoney(value);
 }
 

@@ -22,6 +22,8 @@ public:
     AccountChartWidgetMock(const AccountChartWidgetMock& another)            = delete;
     AccountChartWidgetMock& operator=(const AccountChartWidgetMock& another) = delete;
 
+    MOCK_METHOD(void, setShowMoney, (bool value), (override));
+
     MOCK_METHOD(void, switchChart, (ChartType chartType), (override));
     MOCK_METHOD(void, setTimeRange, (TimeRange range), (override));
 

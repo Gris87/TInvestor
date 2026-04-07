@@ -89,6 +89,7 @@ AccountChartWidget::AccountChartWidget(IFileDialogFactory* fileDialogFactory, IS
     mTotalMoneyAxisX(),
     mTotalMoneyAxisY(),
     mMonthNames(),
+    mShowMoney(true),
     mLastMonthLimitsStart(),
     mLastMonthLimitsEnd(),
     mLastMonthlyYield(),
@@ -304,6 +305,24 @@ void AccountChartWidget::initChartStyle(QChart* chart, QAbstractAxis* axisX, QAb
 
     axisX->setTitleBrush(QBrush(TITLE_COLOR));
     axisY->setTitleBrush(QBrush(TITLE_COLOR));
+}
+
+void AccountChartWidget::setShowMoney(bool value)
+{
+    mShowMoney = value;
+
+    if (mShowMoney)
+    {
+        mDailyYieldAxisY.setLabelFormat("%.2f");
+        mDailyYieldSeries.setLabelsFormat("@value \u20BD");
+        mTotalMoneyAxisY.setLabelFormat("%.2f");
+    }
+    else
+    {
+        mDailyYieldAxisY.setLabelFormat("***");
+        mDailyYieldSeries.setLabelsFormat("*** \u20BD");
+        mTotalMoneyAxisY.setLabelFormat("***");
+    }
 }
 
 void AccountChartWidget::switchChart(ChartType chartType)
@@ -880,15 +899,20 @@ void AccountChartWidget::lineSeriesHovered(QPointF point, bool state)
         const QPointF nearestPoint = findNearestPoint(point, series->points());
 
         const QString prefix =
-            (mChartType == CHART_TYPE_YIELD || mChartType == CHART_TYPE_MONTHLY_YIELD || mChartType == CHART_TYPE_DAILY_YIELD) &&
-                    nearestPoint.y() > 0
-                ? "+"
+            (mChartType == CHART_TYPE_YIELD || mChartType == CHART_TYPE_MONTHLY_YIELD || mChartType == CHART_TYPE_DAILY_YIELD)
+                ? (nearestPoint.y() > 0 ? "+" : (nearestPoint.y() < 0 ? "-" : ""))
                 : "";
         const QString suffix = mChartType == CHART_TYPE_YIELD || mChartType == CHART_TYPE_MONTHLY_YIELD ? "%" : " \u20BD";
         const QString xDescription =
             QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(nearestPoint.x())).toString(DATETIME_FORMAT);
 
-        tooltip->setText(QString("%1\n%2%3%4").arg(xDescription, prefix, QString::number(nearestPoint.y(), 'f', 2), suffix));
+        tooltip->setText(QString("%1\n%2%3%4")
+                             .arg(
+                                 xDescription,
+                                 prefix,
+                                 mShowMoney || suffix == "%" ? QString::number(qAbs(nearestPoint.y()), 'f', 2) : "***",
+                                 suffix
+                             ));
         tooltip->setAnchor(nearestPoint);
         tooltip->updateGeometry();
         tooltip->show();
@@ -914,12 +938,15 @@ void AccountChartWidget::barSeriesHovered(bool status, int index, QBarSet* barSe
         const qreal   value        = barSet->at(index);
         const QPointF nearestPoint = QPointF(index, qMax(value, 0.0f));
 
-        const QString prefix = value > 0 ? "+" : "";
+        const QString prefix = value > 0 ? "+" : (value < 0 ? "-" : "");
         const QString suffix = mChartType == CHART_TYPE_MONTHLY_YIELD ? "%" : " \u20BD";
         const QString xDescription =
             mChartType == CHART_TYPE_MONTHLY_YIELD ? mMonthlyYieldAxisX.at(index) : mDailyYieldAxisX.at(index);
 
-        tooltip->setText(QString("%1\n%2%3 %4").arg(xDescription, prefix, QString::number(value, 'f', 2), suffix));
+        tooltip->setText(
+            QString("%1\n%2%3 %4")
+                .arg(xDescription, prefix, mShowMoney || suffix == "%" ? QString::number(qAbs(value), 'f', 2) : "***", suffix)
+        );
         tooltip->setAnchor(nearestPoint);
         tooltip->updateGeometry();
         tooltip->show();

@@ -42,6 +42,8 @@ public:
     IAccountChartWidget(const IAccountChartWidget& another)            = delete;
     IAccountChartWidget& operator=(const IAccountChartWidget& another) = delete;
 
+    virtual void setShowMoney(bool value) = 0;
+
     virtual void switchChart(ChartType chartType) = 0;
     virtual void setTimeRange(TimeRange range)    = 0;
 

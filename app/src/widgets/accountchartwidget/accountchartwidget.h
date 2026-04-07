@@ -39,6 +39,8 @@ public:
 
     bool eventFilter(QObject* object, QEvent* event) override;
 
+    void setShowMoney(bool value) override;
+
     void switchChart(ChartType chartType) override;
     void setTimeRange(TimeRange range) override;
 
@@ -96,6 +98,7 @@ private:
     QDateTimeAxis       mTotalMoneyAxisX;
     QValueAxis          mTotalMoneyAxisY;
     QStringList         mMonthNames;
+    bool                mShowMoney;
     qint64              mLastMonthLimitsStart;
     qint64              mLastMonthLimitsEnd;
     float               mLastMonthlyYield;
