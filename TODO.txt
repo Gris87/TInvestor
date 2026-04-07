@@ -1,18 +1,13 @@
+Display shorts and dividends on stocks page
 Double check for cancelling buy orders in bidir trading
 Improve coverage
 Create release
 
-Decision to buy in short if price raise more then 3%
-Last operation with stock for limitation (not sell only)
 Double check sell decisions to let them "sell" shorts
-Make decisions for shorts
 Make trading thread to trade with shorts
 Improve coverage
 Create release
 
-Make decision based on dividends
-Try to get report at the publish day and make decision to buy
-Notify if stavka CB raise/fall and what is the best to buy/short
 Create script for buying/selling in parts
 Find best configs for different commission
 Change config defaults

@@ -90,6 +90,25 @@ TEST_F(Test_PortfolioTreeWidget, Test_setAccountName)
     ASSERT_EQ(portfolioTreeWidget->ui->accountNameLabel->text(), "Bro");
 }
 
+TEST_F(Test_PortfolioTreeWidget, Test_setShowMoney)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*portfolioTreeModelMock, setShowMoney(true));
+    EXPECT_CALL(*portfolioTreeModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
+    EXPECT_CALL(*portfolioTreeModelMock, totalYield()).WillOnce(Return(10000.0));
+    EXPECT_CALL(*portfolioTreeModelMock, totalDailyYield()).WillOnce(Return(5000.0));
+
+    portfolioTreeWidget->setShowMoney(true);
+
+    EXPECT_CALL(*portfolioTreeModelMock, setShowMoney(false));
+    EXPECT_CALL(*portfolioTreeModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
+    EXPECT_CALL(*portfolioTreeModelMock, totalYield()).WillOnce(Return(10000.0));
+    EXPECT_CALL(*portfolioTreeModelMock, totalDailyYield()).WillOnce(Return(5000.0));
+
+    portfolioTreeWidget->setShowMoney(false);
+}
+
 TEST_F(Test_PortfolioTreeWidget, Test_portfolioChanged)
 {
     const InSequence seq;

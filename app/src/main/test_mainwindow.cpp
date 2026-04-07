@@ -1855,6 +1855,23 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     // clang-format on
 }
 
+TEST_F(Test_MainWindow, Test_on_simulationEyeButton_clicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, isShowMoney()).WillOnce(Return(true));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/ShowMoney"), QVariant(false)));
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, setShowMoney(false));
+
+    mainWindow->ui->simulationEyeButton->click();
+
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, isShowMoney()).WillOnce(Return(false));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/ShowMoney"), QVariant(true)));
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, setShowMoney(true));
+
+    mainWindow->ui->simulationEyeButton->click();
+}
+
 TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
 {
     // const InSequence seq;
@@ -2229,6 +2246,23 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), false);
     ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
     // clang-format on
+}
+
+TEST_F(Test_MainWindow, Test_on_autoPilotEyeButton_clicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, isShowMoney()).WillOnce(Return(true));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/ShowMoney"), QVariant(false)));
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setShowMoney(false));
+
+    mainWindow->ui->autoPilotEyeButton->click();
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, isShowMoney()).WillOnce(Return(false));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/ShowMoney"), QVariant(true)));
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setShowMoney(true));
+
+    mainWindow->ui->autoPilotEyeButton->click();
 }
 
 TEST_F(Test_MainWindow, Test_init)

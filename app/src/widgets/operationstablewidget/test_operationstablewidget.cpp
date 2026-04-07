@@ -77,6 +77,19 @@ TEST_F(Test_OperationsTableWidget, Test_constructor_and_destructor)
 {
 }
 
+TEST_F(Test_OperationsTableWidget, Test_setShowMoney)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*operationsTableModelMock, setShowMoney(true));
+
+    operationsTableWidget->setShowMoney(true);
+
+    EXPECT_CALL(*operationsTableModelMock, setShowMoney(false));
+
+    operationsTableWidget->setShowMoney(false);
+}
+
 TEST_F(Test_OperationsTableWidget, Test_operationsRead)
 {
     const InSequence seq;

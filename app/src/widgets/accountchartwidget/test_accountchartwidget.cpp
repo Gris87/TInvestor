@@ -80,6 +80,12 @@ TEST_F(Test_AccountChartWidget, Test_eventFilter)
     ASSERT_EQ(accountChartWidget->eventFilter(accountChartWidget->viewport(), &keyEvent), false);
 }
 
+TEST_F(Test_AccountChartWidget, Test_setShowMoney)
+{
+    accountChartWidget->setShowMoney(false);
+    accountChartWidget->setShowMoney(true);
+}
+
 TEST_F(Test_AccountChartWidget, Test_switchChart)
 {
     accountChartWidget->switchChart(CHART_TYPE_YIELD);

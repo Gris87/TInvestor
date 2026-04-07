@@ -269,6 +269,29 @@ TEST_F(Test_DecisionMakerWidget, Test_setAccountName)
     decisionMakerWidget->setAccountName("Hello, friend");
 }
 
+TEST_F(Test_DecisionMakerWidget, Test_setShowMoney_and_isShowMoney)
+{
+    const InSequence seq;
+
+    ASSERT_EQ(decisionMakerWidget->isShowMoney(), true);
+
+    EXPECT_CALL(*operationsTableWidgetMock, setShowMoney(true));
+    EXPECT_CALL(*accountChartWidgetMock, setShowMoney(true));
+    EXPECT_CALL(*portfolioTreeWidgetMock, setShowMoney(true));
+
+    decisionMakerWidget->setShowMoney(true);
+
+    ASSERT_EQ(decisionMakerWidget->isShowMoney(), true);
+
+    EXPECT_CALL(*operationsTableWidgetMock, setShowMoney(false));
+    EXPECT_CALL(*accountChartWidgetMock, setShowMoney(false));
+    EXPECT_CALL(*portfolioTreeWidgetMock, setShowMoney(false));
+
+    decisionMakerWidget->setShowMoney(false);
+
+    ASSERT_EQ(decisionMakerWidget->isShowMoney(), false);
+}
+
 TEST_F(Test_DecisionMakerWidget, Test_showSpinners)
 {
     ASSERT_EQ(decisionMakerWidget->ui->operationsWaitingSpinnerWidget->isSpinning(), false);
