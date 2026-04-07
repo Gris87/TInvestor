@@ -1,6 +1,6 @@
 cd app
 
-lrelease TInvestor.pro
+lrelease app.pro
 pause
 
 cd ..

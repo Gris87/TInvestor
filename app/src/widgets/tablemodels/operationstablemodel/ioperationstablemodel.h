@@ -47,6 +47,8 @@ public:
     IOperationsTableModel(const IOperationsTableModel& another)            = delete;
     IOperationsTableModel& operator=(const IOperationsTableModel& another) = delete;
 
+    virtual void setShowMoney(bool value) = 0;
+
     virtual void operationsRead(const QList<Operation>& operations)  = 0;
     virtual void operationsAdded(const QList<Operation>& operations) = 0;
     virtual void refreshBackground()                                 = 0;

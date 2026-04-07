@@ -26,6 +26,8 @@ public:
     MOCK_METHOD(int, columnCount, (const QModelIndex& parent), (const, override));
     MOCK_METHOD(QVariant, data, (const QModelIndex& index, int role), (const, override));
 
+    MOCK_METHOD(void, setShowMoney, (bool value), (override));
+
     MOCK_METHOD(void, operationsRead, (const QList<Operation>& operations), (override));
     MOCK_METHOD(void, operationsAdded, (const QList<Operation>& operations), (override));
     MOCK_METHOD(void, refreshBackground, (), (override));

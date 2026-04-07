@@ -33,6 +33,8 @@ public:
 
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
 
+    void setShowMoney(bool value) override;
+
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
     void refreshBackground() override;
@@ -55,4 +57,5 @@ private:
     std::shared_ptr<QList<Operation>> mEntries;
     int                               mSortColumn;
     Qt::SortOrder                     mSortOrder;
+    bool                              mShowMoney;
 };

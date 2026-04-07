@@ -467,7 +467,6 @@ TEST_F(Test_DecisionMakerWidget, Test_on_yieldButton_clicked)
     ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         true);
     ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
     ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
     ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
     ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   true);
     // clang-format on
@@ -485,7 +484,6 @@ TEST_F(Test_DecisionMakerWidget, Test_on_monthlyYieldButton_clicked)
     ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
     ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  true);
     ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
     ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
     ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   false);
     // clang-format on
@@ -503,27 +501,8 @@ TEST_F(Test_DecisionMakerWidget, Test_on_dailyYieldButton_clicked)
     ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
     ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
     ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    true);
-    ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
     ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
     ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   false);
-    // clang-format on
-}
-
-TEST_F(Test_DecisionMakerWidget, Test_on_remainedMoneyButton_clicked)
-{
-    const InSequence seq;
-
-    EXPECT_CALL(*accountChartWidgetMock, switchChart(CHART_TYPE_REMAINED_MONEY));
-
-    decisionMakerWidget->ui->remainedMoneyButton->click();
-
-    // clang-format off
-    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
-    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
-    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), true);
-    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   true);
     // clang-format on
 }
 
@@ -539,7 +518,6 @@ TEST_F(Test_DecisionMakerWidget, Test_on_totalMoneyButton_clicked)
     ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
     ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
     ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
     ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    true);
     ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   true);
     // clang-format on

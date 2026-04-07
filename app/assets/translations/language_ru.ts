@@ -4,76 +4,70 @@
 <context>
     <name>AccountChartWidget</name>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="262"/>
-        <source>Remained money on account</source>
-        <translation>Остаток денег на счёте</translation>
-    </message>
-    <message>
         <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="188"/>
         <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="205"/>
         <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="235"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="266"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="284"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="267"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
         <source>Jan</source>
         <translation>Янв</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
         <source>Feb</source>
         <translation>Фев</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
         <source>Mar</source>
         <translation>Мар</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
         <source>Apr</source>
         <translation>Апр</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
         <source>May</source>
         <translation>Май</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
         <source>Jun</source>
         <translation>Июн</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
         <source>Jul</source>
         <translation>Июл</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="111"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
         <source>Aug</source>
         <translation>Авг</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="112"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Sep</source>
         <translation>Сен</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="112"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Oct</source>
         <translation>Окт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="112"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Nov</source>
         <translation>Ноя</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="112"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Dec</source>
         <translation>Дек</translation>
     </message>
@@ -93,29 +87,28 @@
         <translation>Доход по дням</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="237"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="268"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="286"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="238"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="269"/>
         <source>Money</source>
         <translation>Денег</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="280"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="263"/>
         <source>Total money on account</source>
         <translation>Всего денег на счёте</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="774"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="689"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="784"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="699"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="784"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="699"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
@@ -174,12 +167,12 @@
 <context>
     <name>BiDirTradingThread</name>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="103"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="94"/>
         <source>Reselling completed successfully</source>
         <translation>Перепродажа успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="166"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="160"/>
         <source>Impossible to continue reselling</source>
         <translation>Невозможно продолжать перепродажу</translation>
     </message>
@@ -370,73 +363,68 @@
     </message>
     <message>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="185"/>
-        <source>Remained money</source>
-        <translation>Остаток денег</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="198"/>
         <source>Total money</source>
         <translation>Всего денег</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="225"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="212"/>
         <source>for all time</source>
         <translation>за всё время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="230"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="217"/>
         <source>over the last day</source>
         <translation>за последний день</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="235"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="222"/>
         <source>over the last week</source>
         <translation>за последнюю неделю</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="240"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="227"/>
         <source>over the last month</source>
         <translation>за последний месяц</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="245"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="232"/>
         <source>over the last 3 months</source>
         <translation>за последние 3 месяца</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="256"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="243"/>
         <source>Logs</source>
         <translation>Логи</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="292"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="150"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="279"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="164"/>
         <source>Best config</source>
         <translation>Лучшая конфигурация</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="322"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="309"/>
         <source>Copy to simulator config</source>
         <translation>Копировать в конфиг симулятора</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="329"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="316"/>
         <source>Copy to auto-pilot config</source>
         <translation>Копировать в конфиг авто-пилота</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="336"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="323"/>
         <source>Copy to both configs</source>
         <translation>Копировать в оба конфига</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="343"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="330"/>
         <source>Copied</source>
         <translation>Скопировано</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="61"/>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="62"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="63"/>
         <source>Loading</source>
         <translation>Загрузка</translation>
     </message>
@@ -444,14 +432,14 @@
 <context>
     <name>FollowThread</name>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="274"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="302"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="280"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="308"/>
         <source>Decided to sell up to cost %1 due to following account &quot;%2&quot;</source>
         <translation>Решено продать до стоимости %1 из-за следования за аккаунтом &quot;%2&quot;</translation>
     </message>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="254"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="285"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="260"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="291"/>
         <source>Decided to buy up to cost %1 due to following account &quot;%2&quot;</source>
         <translation>Решено покупать до стоимости %1 из-за следования за аккаунтом &quot;%2&quot;</translation>
     </message>
@@ -464,7 +452,7 @@
         <translation>Решено покупать, потому что торговый день окончен</translation>
     </message>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="135"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="139"/>
         <source>Decided to sell because it had been a night since buying</source>
         <translation>Решено продать, потому что прошла ночь с момента покупки</translation>
     </message>
@@ -522,13 +510,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="413"/>
+        <location filename="../../src/main/mainwindow.cpp" line="430"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="683"/>
+        <location filename="../../src/main/mainwindow.cpp" line="720"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -538,137 +526,137 @@
         <translation>Симулятор активен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="300"/>
+        <location filename="../../src/main/mainwindow.ui" line="314"/>
         <source>Date range:</source>
         <translation>Временной диапазон:</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="334"/>
+        <location filename="../../src/main/mainwindow.ui" line="348"/>
         <source>Remaining time:</source>
         <translation>Осталось времени:</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="402"/>
+        <location filename="../../src/main/mainwindow.ui" line="416"/>
         <source>Best result:</source>
         <translation>Лучший результат:</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="520"/>
-        <location filename="../../src/main/mainwindow.cpp" line="784"/>
+        <location filename="../../src/main/mainwindow.ui" line="534"/>
+        <location filename="../../src/main/mainwindow.cpp" line="821"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="585"/>
+        <location filename="../../src/main/mainwindow.ui" line="599"/>
         <source>Auto-pilot active</source>
         <translation>Авто-пилот активен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="649"/>
+        <location filename="../../src/main/mainwindow.ui" line="677"/>
         <source>Authorization</source>
         <translation>Авторизация</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="652"/>
+        <location filename="../../src/main/mainwindow.ui" line="680"/>
         <source>Authorize user (Ctrl+L)</source>
         <translation>Авторизовать пользователя (Ctrl+L)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="673"/>
+        <location filename="../../src/main/mainwindow.ui" line="701"/>
         <source>Stocks (Ctrl+1)</source>
         <translation>Акции (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="676"/>
+        <location filename="../../src/main/mainwindow.ui" line="704"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation>Показать страницу с акциями (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="694"/>
+        <location filename="../../src/main/mainwindow.ui" line="722"/>
         <source>Simulation (Ctrl+2)</source>
         <translation>Симуляция (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="697"/>
+        <location filename="../../src/main/mainwindow.ui" line="725"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation>Показать страницу с режимом симулаяции (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="715"/>
+        <location filename="../../src/main/mainwindow.ui" line="743"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation>Авто-пилот (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="718"/>
+        <location filename="../../src/main/mainwindow.ui" line="746"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation>Показать страницу с режимом авто-пилота (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="733"/>
-        <location filename="../../src/main/mainwindow.ui" line="736"/>
+        <location filename="../../src/main/mainwindow.ui" line="761"/>
+        <location filename="../../src/main/mainwindow.ui" line="764"/>
         <source>Settings (F6)</source>
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="414"/>
+        <location filename="../../src/main/mainwindow.cpp" line="431"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="457"/>
+        <location filename="../../src/main/mainwindow.cpp" line="474"/>
         <source>GRPC error happened with code %1</source>
         <translation>Возникла ошибка GRPC с кодом %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="481"/>
+        <location filename="../../src/main/mainwindow.cpp" line="504"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="618"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1377"/>
+        <location filename="../../src/main/mainwindow.cpp" line="655"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1490"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="635"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1225"/>
+        <location filename="../../src/main/mainwindow.cpp" line="672"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1288"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="772"/>
+        <location filename="../../src/main/mainwindow.cpp" line="809"/>
         <source>Auto-pilot started</source>
         <translation>Авто-пилот запущен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="778"/>
+        <location filename="../../src/main/mainwindow.cpp" line="815"/>
         <source>Auto-pilot stopped</source>
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1225"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1288"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="727"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1256"/>
+        <location filename="../../src/main/mainwindow.cpp" line="764"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1337"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="269"/>
+        <location filename="../../src/main/mainwindow.cpp" line="280"/>
         <source>Simulator</source>
         <translation>Симулятор</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="270"/>
+        <location filename="../../src/main/mainwindow.cpp" line="281"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1256"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1337"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -676,87 +664,87 @@
 <context>
     <name>OperationsTableModel</name>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="39"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="39"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="39"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
         <source>Description</source>
         <translation>Описание</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="39"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="39"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
         <source>Avg price (FIFO)</source>
         <translation>Средняя цена (FIFO)</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="39"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
         <source>Avg price (WAVG)</source>
         <translation>Средняя цена (WAVG)</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="41"/>
         <source>Quantity</source>
         <translation>Количество</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="41"/>
         <source>Remained quantity</source>
         <translation>Оставшееся количество</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="41"/>
         <source>Payment</source>
         <translation>Стоимость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="41"/>
         <source>Commission</source>
         <translation>Комиссия</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="40"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="41"/>
         <source>Yield</source>
         <translation>Доход</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="41"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="42"/>
         <source>Yield with commission</source>
         <translation>Доход с комиссией</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="41"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="42"/>
         <source>Yield with commission (%)</source>
         <translation>Доход с комиссией (%)</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="41"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="42"/>
         <source>Total yield</source>
         <translation>Общий доход</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="41"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="42"/>
         <source>Total yield (%)</source>
         <translation>Общий доход (%)</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="42"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="43"/>
         <source>Remained money</source>
         <translation>Остаток денег</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="42"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="43"/>
         <source>Total money</source>
         <translation>Всего денег</translation>
     </message>
@@ -764,22 +752,22 @@
 <context>
     <name>OperationsTableWidget</name>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="77"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="82"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="87"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="92"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="87"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="92"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="106"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="111"/>
         <source>Operations</source>
         <translation>Операции</translation>
     </message>
@@ -800,32 +788,32 @@
 <context>
     <name>PortfolioThread</name>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="41"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="44"/>
         <source>Currency and metals</source>
         <translation>Валюта и металлы</translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="42"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="45"/>
         <source>Share</source>
         <translation>Акции</translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="43"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="46"/>
         <source>ETF</source>
         <translation>Фонды</translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="44"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="47"/>
         <source>Bond</source>
         <translation>Облигации</translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="45"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="48"/>
         <source>Futures</source>
         <translation>Фьючерсы</translation>
     </message>
     <message>
-        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="46"/>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="49"/>
         <source>Options</source>
         <translation>Опционы</translation>
     </message>
@@ -833,52 +821,52 @@
 <context>
     <name>PortfolioTreeModel</name>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="39"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="39"/>
         <source>Available</source>
         <translation>Доступно</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="39"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="39"/>
         <source>Avg price</source>
         <translation>Средняя цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="39"/>
         <source>Cost</source>
         <translation>Стоимость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="39"/>
         <source>Part</source>
         <translation>Доля</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="39"/>
         <source>Yield</source>
         <translation>Доход</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="39"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="40"/>
         <source>Yield, %</source>
         <translation>Доход, %</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="39"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="40"/>
         <source>Daily yield, %</source>
         <translation>За день, %</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="110"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="111"/>
         <source>Average price by FIFO</source>
         <translation>Средняя цена по FIFO</translation>
     </message>
@@ -901,61 +889,61 @@
         <translation>За сегодня</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="114"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="140"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="145"/>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="189"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="171"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="215"/>
         <source>Sell</source>
         <translation>Продать</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="148"/>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="169"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="174"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="195"/>
         <source>ASAP</source>
         <translation>немедленно</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="149"/>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="174"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="175"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="200"/>
         <source>with following sell price</source>
         <translation>со следованием за ценой продажи</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="150"/>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="179"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="176"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="205"/>
         <source>with positive yield</source>
         <translation>с положительным доходом</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="162"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="188"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="190"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="216"/>
         <source>Do you really want to sell %1 (%2) %3?</source>
         <translation>Вы действительно хотите продать %1 (%2) %3?</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="195"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="221"/>
         <source>Manual sell requested %1</source>
         <translation>Запрошена ручная продажа %1</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="206"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="232"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="206"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="232"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="225"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="251"/>
         <source>Portfolio</source>
         <translation>Портфолио</translation>
     </message>
@@ -963,37 +951,37 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="185"/>
+        <location filename="../../src/main.cpp" line="189"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="185"/>
+        <location filename="../../src/main.cpp" line="189"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="211"/>
+        <location filename="../../src/main.cpp" line="215"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="211"/>
+        <location filename="../../src/main.cpp" line="215"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="294"/>
-        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="299"/>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="345"/>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="355"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="297"/>
+        <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="303"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="347"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="361"/>
         <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="268"/>
         <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="278"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="335"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="336"/>
         <source>Average price by WAVG: %1</source>
         <translation>Средняя цена по WAVG: %1</translation>
     </message>
@@ -1015,14 +1003,14 @@
         <translation>Решено продать, потому что цена упала до %1 с доходностью %2 от цены %3</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="131"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="188"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="130"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="187"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the fall is %5</source>
         <translation>Решено покупать, потому что цена упала до %1 от %2 в %3 за последние %4 минут и падение составило %5</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="145"/>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="225"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="144"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="224"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 and lost yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8</source>
         <translation>Решено покупать, потому что цена упала до %1 от %2 в %3 и потеряла доход в %4 от минимальной цены %5 в %6 за последние %7 минут и падение составило %8</translation>
     </message>
@@ -1042,58 +1030,58 @@
         <translation>Пополнение счета</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="122"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="114"/>
         <source>Currency and metals</source>
         <translation>Валюта и металлы</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="128"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="120"/>
         <source>Share</source>
         <translation>Акции</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="168"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="160"/>
         <source>Sale of shares</source>
         <translation>Продажа ЦБ</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="226"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="213"/>
         <source>Order to sell %1 created with a price %2</source>
         <translation>Заявка создана на продажу %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="234"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="221"/>
         <source>Order completed. %1/%1 sold with a price %2</source>
         <translation>Заявка выполнена. %1/%1 продано по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="242"/>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="446"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="229"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="430"/>
         <source>Trade completed successfully</source>
         <translation>Торговля успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="374"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="361"/>
         <source>Purchase of shares</source>
         <translation>Покупка ЦБ</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="430"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="414"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation>Заявка создана на покупку %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="438"/>
+        <location filename="../../src/utils/tradesimulation/tradesimulation.cpp" line="422"/>
         <source>Order completed. %1/%1 bought with a price %2</source>
         <translation>Заявка выполнена. %1/%1 куплено по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="109"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="99"/>
         <source>Decided to start reselling because amount of asks more than amount of bids in %1 times</source>
         <translation>Решено начать перепродажу, потому что количество продавцов больше в %1 раза</translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="133"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="123"/>
         <source>Decided to start reselling because spread is %1</source>
         <translation>Решено начать перепродажу, потому что спред %1</translation>
     </message>
@@ -1235,146 +1223,136 @@
         <translation>Максимально</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="391"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="351"/>
         <source>Trade stocks with spread more than</source>
         <translation>Торговать акциями со спредом больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="317"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="505"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="699"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="277"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="465"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="659"/>
         <source>of average daily turnover</source>
         <translation>от среднего дневного оборота</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="199"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="159"/>
         <source>Trade stocks when amount of asks more than amount of bids in</source>
         <translation>Торговать акциями, когда количество продавцов больше в</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="243"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="203"/>
         <source>times</source>
         <translation>раза</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="361"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="549"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="321"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="509"/>
         <source>T-Bank Premium only</source>
         <translation>только Premium Т-Банка</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="809"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="769"/>
         <source>of average daily turnover in non-wokring hours</source>
         <translation>от среднего дневного оборота в нерабочее время</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="840"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="800"/>
         <source>Store stocks data for</source>
         <translation>Хранить данные об акциях</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="847"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="807"/>
         <source> months</source>
         <translation> месяцев</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="892"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="852"/>
         <source>View</source>
         <translation>Вид</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="918"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="878"/>
         <source>Highlight operations in green color with yield more than</source>
         <translation>Подсвечивать операции зелёным цветом, если доход больше</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="964"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="924"/>
         <source>Highlight operations in red color with lose more than</source>
         <translation>Подсвечивать операции красным цветом, если убыток больше</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1093"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1187"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1053"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1147"/>
         <source>non-default values</source>
         <translation>отличается от конфигурации по умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1113"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="400"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="424"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1073"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="394"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="418"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1271"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1231"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1042"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1136"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1002"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1096"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="129"/>
-        <source>Make decision each</source>
-        <translation>Принимать решение каждые</translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="136"/>
-        <source> minutes</source>
-        <translation> минут</translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="169"/>
         <source>Trade stocks in non-wokring hours</source>
         <translation>Торговать акциями в нерабочее время</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="579"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="539"/>
         <source>Trade high liquidity ETF (e.g. TMON@) at night with keeping</source>
         <translation>Торговать высоколиквидными фондами (например, TMON@) ночью, сохраняя</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="605"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="565"/>
         <source>of money from total portfolio cost</source>
         <translation>денежных средств от общей стоимости портфеля</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="632"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="742"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="592"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="702"/>
         <source>Limit stock purchase part less than</source>
         <translation>Не покупать акции с долей больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="294"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="482"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="676"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="786"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="254"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="442"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="636"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="746"/>
         <source>and less than</source>
         <translation>и больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="250"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="438"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="210"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="398"/>
         <source>and limit stock purchase part less than</source>
         <translation>и не покупать акции с долей больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1019"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="401"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="423"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="979"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="395"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="417"/>
         <source>Simulation</source>
         <translation>Симуляция</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1228"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1188"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1251"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1211"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -1384,8 +1362,8 @@
         <translation>Автозапускать при запуске %1</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="395"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="418"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="389"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="412"/>
         <source>Decision maker</source>
         <translation>Принятие решений</translation>
     </message>
@@ -1475,19 +1453,19 @@
 <context>
     <name>StockCollectThread</name>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="85"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="100"/>
         <source>Downloading metadata</source>
         <translation>Скачивание метаданных</translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="439"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="467"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="418"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="446"/>
         <source>Downloading logos</source>
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="786"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="794"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="812"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="820"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>
@@ -1649,84 +1627,84 @@
 <context>
     <name>TradingThread</name>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="79"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="81"/>
         <source>Trade completed successfully</source>
         <translation>Торговля успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="652"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="703"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="760"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="810"/>
         <source>Order cancelled</source>
         <translation>Заявка отменена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="375"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="524"/>
         <source>Order to sell %1 created with a price %2</source>
         <translation>Заявка создана на продажу %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="355"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="504"/>
         <source>Failed to create order to sell %1 with a price %2</source>
         <translation>Не удалось создать заявку на продажу %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="382"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="588"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="353"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="531"/>
         <source>while market price %1</source>
         <translation>пока рыночная цена %1</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="396"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="546"/>
         <source>Order to sell %1 rejected with a price %2. Let&apos;s try again</source>
         <translation>Заявка отклонена на продажу %1 по цене %2. Попробуем ещё раз</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="452"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="635"/>
         <source>Trade interrupted because the price reached %1 with raise %2 from the price %3</source>
         <translation>Торговля прервана, потому что цена достигла %1 с ростом %2 от цены %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="561"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="326"/>
         <source>Failed to create order to buy %1 with a price %2</source>
         <translation>Не удалось создать заявку на покупку %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="581"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="346"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation>Заявка создана на покупку %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="602"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="368"/>
         <source>Order to buy %1 rejected with a price %2. Let&apos;s try again</source>
         <translation>Заявка отклонена на покупку %1 по цене %2. Попробуем ещё раз</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="669"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="776"/>
         <source>%1/%2 bought with a price %3</source>
         <translation>%1/%2 куплено по цене %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="679"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="786"/>
         <source>%1/%2 sold with a price %3</source>
         <translation>%1/%2 продано по цене %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="691"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="798"/>
         <source>Order completed</source>
         <translation>Заявка выполнена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="695"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="802"/>
         <source>Order partially completed</source>
         <translation>Заявка частично выполнена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="699"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="806"/>
         <source>Order rejected</source>
         <translation>Заявка отклонена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="707"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="814"/>
         <source>Order is still waiting</source>
         <translation>Заявка ещё ожидает</translation>
     </message>

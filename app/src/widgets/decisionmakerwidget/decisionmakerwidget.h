@@ -110,7 +110,6 @@ private slots:
     void on_yieldButton_clicked();
     void on_monthlyYieldButton_clicked();
     void on_dailyYieldButton_clicked();
-    void on_remainedMoneyButton_clicked();
     void on_totalMoneyButton_clicked();
     void on_copyToSimulatorConfigButton_clicked();
     void on_copyToAutoPilotConfigButton_clicked();

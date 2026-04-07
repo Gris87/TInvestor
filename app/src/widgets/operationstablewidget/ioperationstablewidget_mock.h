@@ -22,6 +22,8 @@ public:
     OperationsTableWidgetMock(const OperationsTableWidgetMock& another)            = delete;
     OperationsTableWidgetMock& operator=(const OperationsTableWidgetMock& another) = delete;
 
+    MOCK_METHOD(void, setShowMoney, (bool value), (override));
+
     MOCK_METHOD(void, operationsRead, (const QList<Operation>& operations), (override));
     MOCK_METHOD(void, operationsAdded, (const QList<Operation>& operations), (override));
     MOCK_METHOD(void, refreshBackground, (), (override));

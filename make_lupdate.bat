@@ -1,6 +1,6 @@
 cd app
 
-lupdate -no-obsolete TInvestor.pro
+lupdate -no-obsolete app.pro
 pause
 
 cd ..

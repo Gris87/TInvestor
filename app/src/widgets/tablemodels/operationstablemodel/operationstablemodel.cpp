@@ -32,7 +32,8 @@ OperationsTableModel::OperationsTableModel(IConfig* config, QObject* parent) :
     mHeader(),
     mEntries(std::make_shared<QList<Operation>>()),
     mSortColumn(OPERATIONS_TIME_COLUMN),
-    mSortOrder(Qt::DescendingOrder)
+    mSortOrder(Qt::DescendingOrder),
+    mShowMoney(true)
 {
     qDebug() << "Create OperationsTableModel";
 
@@ -73,107 +74,109 @@ QVariant OperationsTableModel::headerData(int section, Qt::Orientation orientati
     return QVariant();
 }
 
-static QVariant operationsTimeDisplayRole(const Operation& operation)
+static QVariant operationsTimeDisplayRole(bool /*showMoney*/, const Operation& operation)
 {
     return QDateTime::fromMSecsSinceEpoch(operation.timestamp).toString(DATETIME_FORMAT);
 }
 
-static QVariant operationsNameDisplayRole(const Operation& operation)
+static QVariant operationsNameDisplayRole(bool /*showMoney*/, const Operation& operation)
 {
     return operation.instrumentTicker;
 }
 
-static QVariant operationsDescriptionDisplayRole(const Operation& operation)
+static QVariant operationsDescriptionDisplayRole(bool /*showMoney*/, const Operation& operation)
 {
     return operation.description;
 }
 
-static QVariant operationsPriceDisplayRole(const Operation& operation)
+static QVariant operationsPriceDisplayRole(bool showMoney, const Operation& operation)
 {
-    return QString::number(operation.price, 'f', operation.pricePrecision) + " \u20BD";
+    return showMoney ? QString::number(operation.price, 'f', operation.pricePrecision) + " \u20BD" : "*** \u20BD";
 }
 
-static QVariant operationsAvgPriceFifoDisplayRole(const Operation& operation)
+static QVariant operationsAvgPriceFifoDisplayRole(bool showMoney, const Operation& operation)
 {
-    return QString::number(operation.avgPriceFifo, 'f', operation.pricePrecision) + " \u20BD";
+    return showMoney ? QString::number(operation.avgPriceFifo, 'f', operation.pricePrecision) + " \u20BD" : "*** \u20BD";
 }
 
-static QVariant operationsAvgPriceWavgDisplayRole(const Operation& operation)
+static QVariant operationsAvgPriceWavgDisplayRole(bool showMoney, const Operation& operation)
 {
-    return QString::number(operation.avgPriceWavg, 'f', operation.pricePrecision) + " \u20BD";
+    return showMoney ? QString::number(operation.avgPriceWavg, 'f', operation.pricePrecision) + " \u20BD" : "*** \u20BD";
 }
 
-static QVariant operationsQuantityDisplayRole(const Operation& operation)
+static QVariant operationsQuantityDisplayRole(bool /*showMoney*/, const Operation& operation)
 {
     return operation.quantity;
 }
 
-static QVariant operationsRemainedQuantityDisplayRole(const Operation& operation)
+static QVariant operationsRemainedQuantityDisplayRole(bool /*showMoney*/, const Operation& operation)
 {
     return operation.remainedQuantity;
 }
 
-static QVariant operationsPaymentDisplayRole(const Operation& operation)
+static QVariant operationsPaymentDisplayRole(bool showMoney, const Operation& operation)
 {
-    const QString prefix = operation.payment > 0 ? "+" : "";
+    const QString prefix = operation.payment > 0 ? "+" : (operation.payment < 0 ? "-" : "");
 
-    return prefix + QString::number(operation.payment, 'f', operation.paymentPrecision) + " \u20BD";
+    return prefix +
+           (showMoney ? QString::number(qAbs(operation.payment), 'f', operation.paymentPrecision) + " \u20BD" : "*** \u20BD");
 }
 
-static QVariant operationsCommissionDisplayRole(const Operation& operation)
+static QVariant operationsCommissionDisplayRole(bool showMoney, const Operation& operation)
 {
-    const QString prefix = operation.commission > 0 ? "+" : "";
+    const QString prefix = operation.commission > 0 ? "+" : (operation.commission < 0 ? "-" : "");
 
-    return prefix + QString::number(operation.commission, 'f', operation.commissionPrecision) + " \u20BD";
+    return prefix + (showMoney ? QString::number(qAbs(operation.commission), 'f', operation.commissionPrecision) + " \u20BD"
+                               : "*** \u20BD");
 }
 
-static QVariant operationsYieldDisplayRole(const Operation& operation)
+static QVariant operationsYieldDisplayRole(bool showMoney, const Operation& operation)
 {
-    const QString prefix = operation.yield > 0 ? "+" : "";
+    const QString prefix = operation.yield > 0 ? "+" : (operation.yield < 0 ? "-" : "");
 
-    return prefix + QString::number(operation.yield, 'f', 2) + " \u20BD";
+    return prefix + (showMoney ? QString::number(qAbs(operation.yield), 'f', 2) + " \u20BD" : "*** \u20BD");
 }
 
-static QVariant operationsYieldWithCommissionDisplayRole(const Operation& operation)
+static QVariant operationsYieldWithCommissionDisplayRole(bool showMoney, const Operation& operation)
 {
-    const QString prefix = operation.yieldWithCommission > 0 ? "+" : "";
+    const QString prefix = operation.yieldWithCommission > 0 ? "+" : (operation.yieldWithCommission < 0 ? "-" : "");
 
-    return prefix + QString::number(operation.yieldWithCommission, 'f', 2) + " \u20BD";
+    return prefix + (showMoney ? QString::number(qAbs(operation.yieldWithCommission), 'f', 2) + " \u20BD" : "*** \u20BD");
 }
 
-static QVariant operationsYieldWithCommissionPercentDisplayRole(const Operation& operation)
+static QVariant operationsYieldWithCommissionPercentDisplayRole(bool /*showMoney*/, const Operation& operation)
 {
     const QString prefix = operation.yieldWithCommissionPercent > 0 ? "+" : "";
 
     return prefix + QString::number(operation.yieldWithCommissionPercent, 'f', 2) + "%";
 }
 
-static QVariant operationsTotalYieldWithCommissionDisplayRole(const Operation& operation)
+static QVariant operationsTotalYieldWithCommissionDisplayRole(bool showMoney, const Operation& operation)
 {
     const float   value  = quotationToFloat(operation.totalYieldWithCommission);
-    const QString prefix = value > 0 ? "+" : "";
+    const QString prefix = value > 0 ? "+" : (value < 0 ? "-" : "");
 
-    return prefix + QString::number(value, 'f', 2) + " \u20BD";
+    return prefix + (showMoney ? QString::number(qAbs(value), 'f', 2) + " \u20BD" : "*** \u20BD");
 }
 
-static QVariant operationsTotalYieldWithCommissionPercentDisplayRole(const Operation& operation)
+static QVariant operationsTotalYieldWithCommissionPercentDisplayRole(bool /*showMoney*/, const Operation& operation)
 {
     const QString prefix = operation.totalYieldWithCommissionPercent > 0 ? "+" : "";
 
     return prefix + QString::number(operation.totalYieldWithCommissionPercent, 'f', 2) + "%";
 }
 
-static QVariant operationsRemainedMoneyDisplayRole(const Operation& operation)
+static QVariant operationsRemainedMoneyDisplayRole(bool showMoney, const Operation& operation)
 {
-    return QString::number(quotationToFloat(operation.remainedMoney), 'f', 2) + " \u20BD";
+    return showMoney ? QString::number(quotationToFloat(operation.remainedMoney), 'f', 2) + " \u20BD" : "*** \u20BD";
 }
 
-static QVariant operationsTotalMoneyDisplayRole(const Operation& operation)
+static QVariant operationsTotalMoneyDisplayRole(bool showMoney, const Operation& operation)
 {
-    return QString::number(quotationToFloat(operation.totalMoney), 'f', 2) + " \u20BD";
+    return showMoney ? QString::number(quotationToFloat(operation.totalMoney), 'f', 2) + " \u20BD" : "*** \u20BD";
 }
 
-using DisplayRoleHandler = QVariant (*)(const Operation& operation);
+using DisplayRoleHandler = QVariant (*)(bool showMoney, const Operation& operation);
 
 static const DisplayRoleHandler DISPLAY_ROLE_HANDLER[OPERATIONS_COLUMN_COUNT]{
     operationsTimeDisplayRole,
@@ -284,27 +287,29 @@ static const ForegroundRoleHandler FOREGROUND_ROLE_HANDLER[OPERATIONS_COLUMN_COU
     operationsNothingForegroundRole
 };
 
-static QVariant operationsYieldWithCommissionPercentTooltipRole(const Operation& operation)
+static QVariant operationsYieldWithCommissionPercentTooltipRole(bool showMoney, const Operation& operation)
 {
     if (operation.avgCostFifo == 0)
     {
         return QVariant();
     }
 
-    return QObject::tr("From: %1").arg(operation.avgCostFifo, 0, 'f', operation.pricePrecision) + " \u20BD";
+    return QObject::tr("From: %1")
+        .arg(showMoney ? QString::number(operation.avgCostFifo, 'f', operation.pricePrecision) + " \u20BD" : "*** \u20BD");
 }
 
-static QVariant operationsTotalYieldWithCommissionPercentTooltipRole(const Operation& operation)
+static QVariant operationsTotalYieldWithCommissionPercentTooltipRole(bool showMoney, const Operation& operation)
 {
-    return QObject::tr("From: %1").arg(quotationToFloat(operation.inputMoney), 0, 'f', 2) + " \u20BD";
+    return QObject::tr("From: %1")
+        .arg(showMoney ? QString::number(quotationToFloat(operation.inputMoney), 'f', 2) + " \u20BD" : "*** \u20BD");
 }
 
-static QVariant operationsNothingTooltipRole(const Operation& /*operation*/)
+static QVariant operationsNothingTooltipRole(bool /*showMoney*/, const Operation& /*operation*/)
 {
     return QVariant();
 }
 
-using TooltipRoleHandler = QVariant (*)(const Operation& operation);
+using TooltipRoleHandler = QVariant (*)(bool showMoney, const Operation& operation);
 
 static const TooltipRoleHandler TOOLTIP_ROLE_HANDLER[OPERATIONS_COLUMN_COUNT]{
     operationsNothingTooltipRole,
@@ -333,7 +338,7 @@ QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
         const int row    = index.row();
         const int column = index.column();
 
-        return DISPLAY_ROLE_HANDLER[column](mEntries->at(row));
+        return DISPLAY_ROLE_HANDLER[column](mShowMoney, mEntries->at(row));
     }
 
     if (role == Qt::BackgroundRole)
@@ -369,7 +374,7 @@ QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
         const int row    = index.row();
         const int column = index.column();
 
-        return TOOLTIP_ROLE_HANDLER[column](mEntries->at(row));
+        return TOOLTIP_ROLE_HANDLER[column](mShowMoney, mEntries->at(row));
     }
 
     if (role == ROLE_INSTRUMENT_LOGO)
@@ -415,6 +420,13 @@ void OperationsTableModel::sort(int column, Qt::SortOrder order)
 
         emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
     }
+}
+
+void OperationsTableModel::setShowMoney(bool value)
+{
+    beginResetModel();
+    mShowMoney = value;
+    endResetModel();
 }
 
 void OperationsTableModel::operationsRead(const QList<Operation>& operations)

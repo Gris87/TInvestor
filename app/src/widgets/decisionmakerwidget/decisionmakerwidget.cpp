@@ -139,6 +139,7 @@ void DecisionMakerWidget::setShowMoney(bool value)
 {
     mShowMoney = value;
 
+    mOperationsTableWidget->setShowMoney(value);
     mPortfolioTreeWidget->setShowMoney(value);
 }
 
@@ -231,7 +232,6 @@ void DecisionMakerWidget::on_yieldButton_clicked()
     ui->yieldButton->setChecked(true);
     ui->monthlyYieldButton->setChecked(false);
     ui->dailyYieldButton->setChecked(false);
-    ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(false);
 
     ui->timeRangeComboBox->setEnabled(true);
@@ -244,7 +244,6 @@ void DecisionMakerWidget::on_monthlyYieldButton_clicked()
     ui->yieldButton->setChecked(false);
     ui->monthlyYieldButton->setChecked(true);
     ui->dailyYieldButton->setChecked(false);
-    ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(false);
 
     ui->timeRangeComboBox->setEnabled(false);
@@ -257,23 +256,9 @@ void DecisionMakerWidget::on_dailyYieldButton_clicked()
     ui->yieldButton->setChecked(false);
     ui->monthlyYieldButton->setChecked(false);
     ui->dailyYieldButton->setChecked(true);
-    ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(false);
 
     ui->timeRangeComboBox->setEnabled(false);
-}
-
-void DecisionMakerWidget::on_remainedMoneyButton_clicked()
-{
-    mAccountChartWidget->switchChart(CHART_TYPE_REMAINED_MONEY);
-
-    ui->yieldButton->setChecked(false);
-    ui->monthlyYieldButton->setChecked(false);
-    ui->dailyYieldButton->setChecked(false);
-    ui->remainedMoneyButton->setChecked(true);
-    ui->totalMoneyButton->setChecked(false);
-
-    ui->timeRangeComboBox->setEnabled(true);
 }
 
 void DecisionMakerWidget::on_totalMoneyButton_clicked()
@@ -283,7 +268,6 @@ void DecisionMakerWidget::on_totalMoneyButton_clicked()
     ui->yieldButton->setChecked(false);
     ui->monthlyYieldButton->setChecked(false);
     ui->dailyYieldButton->setChecked(false);
-    ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(true);
 
     ui->timeRangeComboBox->setEnabled(true);

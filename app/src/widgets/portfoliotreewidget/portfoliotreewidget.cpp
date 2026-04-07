@@ -130,12 +130,8 @@ void PortfolioTreeWidget::updateYieldLabel(QLabel* label, double yield, double c
     const float   percent = cost > 0 ? (yield / cost) * HUNDRED_PERCENT : 0.0f;
 
     label->setText(
-        prefix1 +
-        (mShowMoney ? QString::number(qAbs(yield), 'f', 2) + " \u20BD" : "*** \u20BD") +
-        "(" +
-        prefix2 +
-        QString::number(percent, 'f', 2) +
-        "%)"
+        prefix1 + (mShowMoney ? QString::number(qAbs(yield), 'f', 2) + " \u20BD" : "*** \u20BD") + "(" + prefix2 +
+        QString::number(percent, 'f', 2) + "%)"
     );
     label->setToolTip(cost > 0 ? tr("From: %1").arg(mShowMoney ? QString::number(cost, 'f', 2) + " \u20BD" : "*** \u20BD") : "");
 

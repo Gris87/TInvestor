@@ -681,9 +681,9 @@ void OperationsThread::alignWithPortfolio(Operation* lastOperation)
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
-        QStringList   cachedInstrumentsKeys = mInstruments.keys();
-        QSet<QString> cachedInstruments(cachedInstrumentsKeys.begin(), cachedInstrumentsKeys.end());
-        QSet<QString> portfolioInstruments;
+        const QStringList   cachedInstrumentsKeys = mInstruments.keys();
+        const QSet<QString> cachedInstruments(cachedInstrumentsKeys.constBegin(), cachedInstrumentsKeys.constEnd());
+        QSet<QString>       portfolioInstruments;
 
         mRemainedMoney = Quotation();
         mTotalMoney    = Quotation();

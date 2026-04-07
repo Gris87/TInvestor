@@ -54,6 +54,11 @@ OperationsTableWidget::~OperationsTableWidget()
     delete ui;
 }
 
+void OperationsTableWidget::setShowMoney(bool value)
+{
+    mOperationsTableModel->setShowMoney(value);
+}
+
 void OperationsTableWidget::operationsRead(const QList<Operation>& operations)
 {
     mOperationsTableModel->operationsRead(operations);

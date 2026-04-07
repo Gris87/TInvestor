@@ -85,7 +85,6 @@ TEST_F(Test_AccountChartWidget, Test_switchChart)
     accountChartWidget->switchChart(CHART_TYPE_YIELD);
     accountChartWidget->switchChart(CHART_TYPE_MONTHLY_YIELD);
     accountChartWidget->switchChart(CHART_TYPE_DAILY_YIELD);
-    accountChartWidget->switchChart(CHART_TYPE_REMAINED_MONEY);
     accountChartWidget->switchChart(CHART_TYPE_TOTAL_MONEY);
 
     // clang-format off
@@ -312,14 +311,6 @@ TEST_F(Test_AccountChartWidget, Test_lineSeriesHovered)
     // clang-format off
     ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
     ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:01:00\n-3.00%");
-    // clang-format on
-
-    accountChartWidget->switchChart(CHART_TYPE_REMAINED_MONEY);
-    accountChartWidget->lineSeriesHovered(QPointF(1704056400000, 0), true);
-
-    // clang-format off
-    ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
-    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:00\n5000.00 \u20BD");
     // clang-format on
 
     accountChartWidget->switchChart(CHART_TYPE_TOTAL_MONEY);

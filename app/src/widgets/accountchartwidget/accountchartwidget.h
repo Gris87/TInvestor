@@ -47,7 +47,6 @@ public:
 
     void syncTimeRangeSeries();
     void syncYieldTimeRangeSeries(TimeRange timeRange);
-    void syncRemainedMoneyTimeRangeSeries(TimeRange timeRange);
     void syncTotalMoneyTimeRangeSeries(TimeRange timeRange);
 
 public slots:
@@ -58,18 +57,12 @@ public slots:
     void tooltipHideTimerTicked();
 
 private:
-    void initYieldChart();
-    void initMonthlyYieldChart();
-    void initDailyYieldChart();
-    void initRemainedMoneyChart();
-    void initTotalMoneyChart();
-    void initChartStyle(QChart* chart, QAbstractAxis* axisX, QAbstractAxis* axisY);
-    void handleOperation(
-        const Operation& operation,
-        QList<QPointF>&  yieldPoints,
-        QList<QPointF>&  remainedMoneyPoints,
-        QList<QPointF>&  totalMoneyPoints
-    );
+    void    initYieldChart();
+    void    initMonthlyYieldChart();
+    void    initDailyYieldChart();
+    void    initTotalMoneyChart();
+    void    initChartStyle(QChart* chart, QAbstractAxis* axisX, QAbstractAxis* axisY);
+    void    handleOperation(const Operation& operation, QList<QPointF>& yieldPoints, QList<QPointF>& totalMoneyPoints);
     void    syncBarSetFromPoints(QBarSet* barSet, const QList<qreal>& points);
     void    exportToExcel(const QString& path) const;
     QPointF findNearestPoint(const QPointF& point, const QList<QPointF>& seriesPoints);
@@ -98,10 +91,6 @@ private:
     QList<qreal>        mDailyYieldNegativePoints;
     QBarCategoryAxis    mDailyYieldAxisX;
     QValueAxis          mDailyYieldAxisY;
-    QChart              mRemainedMoneyChart;
-    QLineSeries         mRemainedMoneySeries;
-    QDateTimeAxis       mRemainedMoneyAxisX;
-    QValueAxis          mRemainedMoneyAxisY;
     QChart              mTotalMoneyChart;
     QLineSeries         mTotalMoneySeries;
     QDateTimeAxis       mTotalMoneyAxisX;
@@ -121,8 +110,6 @@ private:
     float               mMonthlyYieldAxisYMax;
     float               mDailyYieldAxisYMin;
     float               mDailyYieldAxisYMax;
-    float               mRemainedMoneyAxisYMin[TIME_RANGE_COUNT];
-    float               mRemainedMoneyAxisYMax[TIME_RANGE_COUNT];
     float               mTotalMoneyAxisYMin[TIME_RANGE_COUNT];
     float               mTotalMoneyAxisYMax[TIME_RANGE_COUNT];
     QPointF             mTargetScenePos;

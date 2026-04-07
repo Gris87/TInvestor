@@ -38,6 +38,8 @@ public:
 
     Ui::OperationsTableWidget* ui;
 
+    void setShowMoney(bool value) override;
+
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
     void refreshBackground() override;
