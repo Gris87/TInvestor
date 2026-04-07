@@ -138,6 +138,8 @@ bool DecisionMakerWidget::isShowMoney() const
 void DecisionMakerWidget::setShowMoney(bool value)
 {
     mShowMoney = value;
+
+    mPortfolioTreeWidget->setShowMoney(value);
 }
 
 void DecisionMakerWidget::showSpinners()

@@ -25,6 +25,8 @@ public:
 
     virtual void setAccountName(const QString& name) = 0;
 
+    virtual void setShowMoney(bool value) = 0;
+
     virtual void portfolioChanged(const Portfolio& portfolio)               = 0;
     virtual void lastPriceChanged(const QString& instrumentId, float price) = 0;
     virtual void updateLastPrices()                                         = 0;

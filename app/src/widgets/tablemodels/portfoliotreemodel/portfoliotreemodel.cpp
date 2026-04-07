@@ -31,6 +31,7 @@ PortfolioTreeModel::PortfolioTreeModel(QObject* parent) :
     mPortfolio(),
     mSortColumn(PORTFOLIO_NAME_COLUMN),
     mSortOrder(Qt::AscendingOrder),
+    mShowMoney(true),
     mLastPricesUpdates()
 {
     qDebug() << "Create PortfolioTreeModel";
@@ -130,27 +131,27 @@ QVariant PortfolioTreeModel::headerData(int section, Qt::Orientation orientation
     return QVariant();
 }
 
-static QVariant categoryNameDisplayRole(const PortfolioCategoryItem& category)
+static QVariant categoryNameDisplayRole(bool /*showMoney*/, const PortfolioCategoryItem& category)
 {
     return category.name;
 }
 
-static QVariant categoryCostDisplayRole(const PortfolioCategoryItem& category)
+static QVariant categoryCostDisplayRole(bool showMoney, const PortfolioCategoryItem& category)
 {
-    return QString::number(category.cost, 'f', 2) + " \u20BD";
+    return showMoney ? QString::number(category.cost, 'f', 2) + " \u20BD" : "*** \u20BD";
 }
 
-static QVariant categoryPartDisplayRole(const PortfolioCategoryItem& category)
+static QVariant categoryPartDisplayRole(bool /*showMoney*/, const PortfolioCategoryItem& category)
 {
     return QString::number(category.part, 'f', 2) + "%";
 }
 
-static QVariant categoryNothingDisplayRole(const PortfolioCategoryItem& /*category*/)
+static QVariant categoryNothingDisplayRole(bool /*showMoney*/, const PortfolioCategoryItem& /*category*/)
 {
     return QVariant();
 }
 
-using CategoryDisplayRoleHandler = QVariant (*)(const PortfolioCategoryItem& category);
+using CategoryDisplayRoleHandler = QVariant (*)(bool showMoney, const PortfolioCategoryItem& category);
 
 static const CategoryDisplayRoleHandler CATEGORY_DISPLAY_ROLE_HANDLER[PORTFOLIO_COLUMN_COUNT]{
     categoryNameDisplayRole,
@@ -164,66 +165,66 @@ static const CategoryDisplayRoleHandler CATEGORY_DISPLAY_ROLE_HANDLER[PORTFOLIO_
     categoryNothingDisplayRole
 };
 
-static QVariant itemNameDisplayRole(const PortfolioItem& item)
+static QVariant itemNameDisplayRole(bool /*showMoney*/, const PortfolioItem& item)
 {
     return item.instrumentTicker;
 }
 
-static QVariant itemAvailableDisplayRole(const PortfolioItem& item)
+static QVariant itemAvailableDisplayRole(bool showMoney, const PortfolioItem& item)
 {
     const double value = item.available;
 
     if (static_cast<qint64>(value) * 1000 == static_cast<qint64>(value * 1000)) // NOLINT(readability-magic-numbers)
     {
-        return QString::number(static_cast<qint64>(value));
+        return showMoney || item.showPrices ? QString::number(static_cast<qint64>(value)) : "***";
     }
 
-    return QString::number(value, 'f', 2);
+    return showMoney || item.showPrices ? QString::number(value, 'f', 2) : "***";
 }
 
-static QVariant itemPriceDisplayRole(const PortfolioItem& item)
+static QVariant itemPriceDisplayRole(bool showMoney, const PortfolioItem& item)
 {
     if (!item.showPrices)
     {
         return QVariant();
     }
 
-    return QString::number(item.price, 'f', item.pricePrecision) + " \u20BD";
+    return showMoney ? QString::number(item.price, 'f', item.pricePrecision) + " \u20BD" : "*** \u20BD";
 }
 
-static QVariant itemAvgPriceDisplayRole(const PortfolioItem& item)
+static QVariant itemAvgPriceDisplayRole(bool showMoney, const PortfolioItem& item)
 {
     if (!item.showPrices)
     {
         return QVariant();
     }
 
-    return QString::number(item.avgPriceFifo, 'f', item.pricePrecision) + " \u20BD";
+    return showMoney ? QString::number(item.avgPriceFifo, 'f', item.pricePrecision) + " \u20BD" : "*** \u20BD";
 }
 
-static QVariant itemCostDisplayRole(const PortfolioItem& item)
+static QVariant itemCostDisplayRole(bool showMoney, const PortfolioItem& item)
 {
-    return QString::number(item.cost, 'f', 2) + " \u20BD";
+    return showMoney ? QString::number(item.cost, 'f', 2) + " \u20BD" : "*** \u20BD";
 }
 
-static QVariant itemPartDisplayRole(const PortfolioItem& item)
+static QVariant itemPartDisplayRole(bool /*showMoney*/, const PortfolioItem& item)
 {
     return QString::number(item.part, 'f', 2) + "%";
 }
 
-static QVariant itemYieldDisplayRole(const PortfolioItem& item)
+static QVariant itemYieldDisplayRole(bool showMoney, const PortfolioItem& item)
 {
     if (!item.showPrices)
     {
         return QVariant();
     }
 
-    const QString prefix = item.yield > 0 ? "+" : "";
+    const QString prefix = item.yield > 0 ? "+" : (item.yield < 0 ? "-" : "");
 
-    return prefix + QString::number(item.yield, 'f', 2) + " \u20BD";
+    return prefix + (showMoney ? QString::number(qAbs(item.yield), 'f', 2) + " \u20BD" : "*** \u20BD");
 }
 
-static QVariant itemYieldPercentDisplayRole(const PortfolioItem& item)
+static QVariant itemYieldPercentDisplayRole(bool /*showMoney*/, const PortfolioItem& item)
 {
     if (!item.showPrices)
     {
@@ -235,7 +236,7 @@ static QVariant itemYieldPercentDisplayRole(const PortfolioItem& item)
     return prefix + QString::number(item.yieldPercent, 'f', 2) + "%";
 }
 
-static QVariant itemDailyYieldDisplayRole(const PortfolioItem& item)
+static QVariant itemDailyYieldDisplayRole(bool /*showMoney*/, const PortfolioItem& item)
 {
     if (!item.showPrices)
     {
@@ -247,7 +248,7 @@ static QVariant itemDailyYieldDisplayRole(const PortfolioItem& item)
     return prefix + QString::number(item.dailyYieldPercent, 'f', 2) + "%";
 }
 
-using ItemDisplayRoleHandler = QVariant (*)(const PortfolioItem& item);
+using ItemDisplayRoleHandler = QVariant (*)(bool showMoney, const PortfolioItem& item);
 
 static const ItemDisplayRoleHandler ITEM_DISPLAY_ROLE_HANDLER[PORTFOLIO_COLUMN_COUNT]{
     itemNameDisplayRole,
@@ -325,43 +326,48 @@ static const ItemForegroundRoleHandler ITEM_FOREGROUND_ROLE_HANDLER[PORTFOLIO_CO
     itemDailyYieldForegroundRole
 };
 
-static QVariant itemAvgPriceTooltipRole(const PortfolioItem& item)
+static QVariant itemAvgPriceTooltipRole(bool showMoney, const PortfolioItem& item)
 {
     if (!item.showPrices)
     {
         return QVariant();
     }
 
-    return QObject::tr("Average price by WAVG: %1").arg(item.avgPriceWavg, 0, 'f', item.pricePrecision) + " \u20BD";
+    return QObject::tr("Average price by WAVG: %1")
+        .arg(showMoney ? QString::number(item.avgPriceWavg, 'f', item.pricePrecision) + " \u20BD" : "*** \u20BD");
 }
 
-static QVariant itemYieldPercentTooltipRole(const PortfolioItem& item)
+static QVariant itemYieldPercentTooltipRole(bool showMoney, const PortfolioItem& item)
 {
     if (!item.showPrices)
     {
         return QVariant();
     }
 
-    return QObject::tr("From: %1").arg(item.available > 0 ? item.avgPriceFifo : item.price, 0, 'f', item.pricePrecision) +
-           " \u20BD";
+    return QObject::tr("From: %1")
+        .arg(
+            showMoney ? QString::number(item.available > 0 ? item.avgPriceFifo : item.price, 'f', item.pricePrecision) + " \u20BD"
+                      : "*** \u20BD"
+        );
 }
 
-static QVariant itemDailyYieldTooltipRole(const PortfolioItem& item)
+static QVariant itemDailyYieldTooltipRole(bool showMoney, const PortfolioItem& item)
 {
     if (!item.showPrices)
     {
         return QVariant();
     }
 
-    return QObject::tr("From: %1").arg(item.priceForDailyYield, 0, 'f', item.pricePrecision) + " \u20BD";
+    return QObject::tr("From: %1")
+        .arg(showMoney ? QString::number(item.priceForDailyYield, 'f', item.pricePrecision) + " \u20BD" : "*** \u20BD");
 }
 
-static QVariant itemNothingTooltipRole(const PortfolioItem& /*item*/)
+static QVariant itemNothingTooltipRole(bool /*showMoney*/, const PortfolioItem& /*item*/)
 {
     return QVariant();
 }
 
-using ItemTooltipRoleHandler = QVariant (*)(const PortfolioItem& item);
+using ItemTooltipRoleHandler = QVariant (*)(bool showMoney, const PortfolioItem& item);
 
 static const ItemTooltipRoleHandler ITEM_TOOLTIP_ROLE_HANDLER[PORTFOLIO_COLUMN_COUNT]{
     itemNothingTooltipRole,
@@ -386,10 +392,10 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
 
         if (category == nullptr)
         {
-            return CATEGORY_DISPLAY_ROLE_HANDLER[column](mPortfolio.positions.at(row));
+            return CATEGORY_DISPLAY_ROLE_HANDLER[column](mShowMoney, mPortfolio.positions.at(row));
         }
 
-        return ITEM_DISPLAY_ROLE_HANDLER[column](mPortfolio.positions.at(category->id).items.at(row));
+        return ITEM_DISPLAY_ROLE_HANDLER[column](mShowMoney, mPortfolio.positions.at(category->id).items.at(row));
     }
 
     if (role == Qt::ForegroundRole)
@@ -419,7 +425,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
         const int row    = index.row();
         const int column = index.column();
 
-        return ITEM_TOOLTIP_ROLE_HANDLER[column](mPortfolio.positions.at(category->id).items.at(row));
+        return ITEM_TOOLTIP_ROLE_HANDLER[column](mShowMoney, mPortfolio.positions.at(category->id).items.at(row));
     }
 
     if (role == ROLE_INSTRUMENT_LOGO)
@@ -499,6 +505,13 @@ void PortfolioTreeModel::sort(int column, Qt::SortOrder order)
 
         emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
     }
+}
+
+void PortfolioTreeModel::setShowMoney(bool value)
+{
+    beginResetModel();
+    mShowMoney = value;
+    endResetModel();
 }
 
 void PortfolioTreeModel::portfolioChanged(const Portfolio& portfolio)

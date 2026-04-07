@@ -43,6 +43,8 @@ public:
 
     void setAccountName(const QString& name) override;
 
+    void setShowMoney(bool value) override;
+
     void portfolioChanged(const Portfolio& portfolio) override;
     void lastPriceChanged(const QString& instrumentId, float price) override;
     void updateLastPrices() override;
@@ -51,6 +53,7 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
+    void updateCostLabel();
     void updateAllTimeLabel();
     void updateForTodayLabel();
     void updateYieldLabel(QLabel* label, double yield, double cost);
@@ -62,6 +65,7 @@ private:
     ISettingsEditor*     mSettingsEditor;
     IPortfolioTreeModel* mPortfolioTreeModel;
     bool                 mAutoPilot;
+    bool                 mShowMoney;
     double               mTotalCost;
     double               mTotalDailyCost;
 

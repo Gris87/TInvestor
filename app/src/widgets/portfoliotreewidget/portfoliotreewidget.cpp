@@ -42,6 +42,7 @@ PortfolioTreeWidget::PortfolioTreeWidget(
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mAutoPilot(autoPilot),
+    mShowMoney(true),
     mTotalCost(),
     mTotalDailyCost()
 {
@@ -68,6 +69,18 @@ void PortfolioTreeWidget::setAccountName(const QString& name)
     ui->accountNameLabel->setText(name);
 }
 
+void PortfolioTreeWidget::setShowMoney(bool value)
+{
+    mShowMoney = value;
+
+    mPortfolioTreeModel->setShowMoney(value);
+    ui->treeView->expandAll();
+
+    updateCostLabel();
+    updateAllTimeLabel();
+    updateForTodayLabel();
+}
+
 void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 {
     mPortfolioTreeModel->portfolioChanged(portfolio);
@@ -76,7 +89,7 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
     mTotalCost      = mPortfolioTreeModel->totalCost();
     mTotalDailyCost = mPortfolioTreeModel->totalDailyCost();
 
-    ui->costLabel->setText(QString::number(mTotalCost, 'f', 2) + " \u20BD");
+    updateCostLabel();
     updateAllTimeLabel();
     updateForTodayLabel();
 }
@@ -95,6 +108,11 @@ void PortfolioTreeWidget::updateLastPrices()
     }
 }
 
+void PortfolioTreeWidget::updateCostLabel()
+{
+    ui->costLabel->setText(mShowMoney ? QString::number(mTotalCost, 'f', 2) + " \u20BD" : "*** \u20BD");
+}
+
 void PortfolioTreeWidget::updateAllTimeLabel()
 {
     updateYieldLabel(ui->allTimeLabel, mPortfolioTreeModel->totalYield(), mTotalCost);
@@ -107,11 +125,19 @@ void PortfolioTreeWidget::updateForTodayLabel()
 
 void PortfolioTreeWidget::updateYieldLabel(QLabel* label, double yield, double cost)
 {
-    const QString prefix  = yield > 0 ? "+" : "";
+    const QString prefix1 = yield > 0 ? "+" : (yield < 0 ? "-" : "");
+    const QString prefix2 = yield > 0 ? "+" : "";
     const float   percent = cost > 0 ? (yield / cost) * HUNDRED_PERCENT : 0.0f;
 
-    label->setText(prefix + QString::number(yield, 'f', 2) + " \u20BD" + "(" + prefix + QString::number(percent, 'f', 2) + "%)");
-    label->setToolTip(cost > 0 ? tr("From: %1").arg(cost, 0, 'f', 2) + " \u20BD" : "");
+    label->setText(
+        prefix1 +
+        (mShowMoney ? QString::number(qAbs(yield), 'f', 2) + " \u20BD" : "*** \u20BD") +
+        "(" +
+        prefix2 +
+        QString::number(percent, 'f', 2) +
+        "%)"
+    );
+    label->setToolTip(cost > 0 ? tr("From: %1").arg(mShowMoney ? QString::number(cost, 'f', 2) + " \u20BD" : "*** \u20BD") : "");
 
     QColor color;
 

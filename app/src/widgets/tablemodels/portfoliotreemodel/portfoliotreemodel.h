@@ -39,6 +39,8 @@ public:
 
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
 
+    void setShowMoney(bool value) override;
+
     void portfolioChanged(const Portfolio& portfolio) override;
     void lastPriceChanged(const QString& instrumentId, float price) override;
     bool updateLastPrices() override;
@@ -72,5 +74,6 @@ private:
     Portfolio            mPortfolio;
     int                  mSortColumn;
     Qt::SortOrder        mSortOrder;
+    bool                 mShowMoney;
     QMap<QString, float> mLastPricesUpdates; // Instrument ID => Price
 };
