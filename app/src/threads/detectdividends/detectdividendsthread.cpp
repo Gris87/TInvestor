@@ -63,24 +63,25 @@ void DetectDividendsThread::run()
     url.setQuery(query.query());
 
     const IHttpClient::Headers headers;
+    bool                       success = false;
 
-    while (!QThread::currentThread()->isInterruptionRequested())
+    while (!QThread::currentThread()->isInterruptionRequested() && !success)
     {
         const HttpResult httpResult = mHttpClient->get(url, headers);
 
-        if (httpResult.statusCode != HTTP_STATUS_CODE_OK)
+        if (httpResult.statusCode == HTTP_STATUS_CODE_OK)
+        {
+            processDividendsResponse(httpResult.body);
+
+            success = true;
+        }
+        else
         {
             if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
             {
                 break;
             }
-
-            continue;
         }
-
-        processDividendsResponse(httpResult.body);
-
-        break;
     }
 
     qDebug() << "Finish DetectDividendsThread";

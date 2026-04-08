@@ -1092,10 +1092,68 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_EQ(operation.commissionPrecision,               2);
     // clang-format on
 
+    price->set_units(60);
+    price->set_nano(0);
+
+    payment->set_units(72000);
+    payment->set_nano(0);
+
+    commission->set_units(-30);
+    commission->set_nano(0);
+
+    operationItem.set_type(tinkoff::OPERATION_TYPE_SELL);
+    operationItem.set_instrument_uid("aaaaa");
+    operationItem.set_position_uid("position-id");
+    operationItem.set_description("Sell 1200 mega bonds");
+    operationItem.set_quantity_done(1200);
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+
+    thread->handleOperationItem(operationItem, &operation);
+
+    // clang-format off
+    ASSERT_EQ(operation.timestamp,                         1704056400010);
+    ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
+    ASSERT_EQ(operation.instrumentId,                      "aaaaa");
+    ASSERT_EQ(operation.instrumentLogo,                    &logo);
+    ASSERT_EQ(operation.instrumentTicker,                  "LETO");
+    ASSERT_EQ(operation.instrumentName,                    "Leto & arbalety");
+    ASSERT_EQ(operation.description,                       "Sell 1200 mega bonds");
+    ASSERT_NEAR(operation.price,                           60.0f, 0.0001f);
+    ASSERT_EQ(operation.fifoItems.size(),                  1);
+    ASSERT_EQ(operation.fifoItems.at(0).quantity,          -600);
+    ASSERT_EQ(operation.fifoItems.at(0).cost,              Quotation(-36000, 0));
+    ASSERT_NEAR(operation.avgPriceFifo,                    60.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgPriceWavg,                    60.0f, 0.0001f);
+    ASSERT_EQ(operation.quantity,                          1200);
+    ASSERT_EQ(operation.remainedQuantity,                  -600);
+    ASSERT_NEAR(operation.payment,                         72000.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgCostFifo,                     30000.0f, 0.0001f);
+    ASSERT_EQ(operation.costFifo,                          Quotation(-36000, 0));
+    ASSERT_EQ(operation.costWavg,                          Quotation(-36000, 0));
+    ASSERT_NEAR(operation.commission,                      -30.0f, 0.0001f);
+    ASSERT_NEAR(operation.yield,                           6000.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommission,             5970.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommissionPercent,      19.9f, 0.0001f);
+    ASSERT_EQ(operation.inputMoney,                        Quotation(-50000, 0));
+    ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(92829, -766500000));
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 0.0f, 0.0001f);
+    ASSERT_EQ(operation.remainedMoney,                     Quotation(74329, -766500000));
+    ASSERT_EQ(operation.totalMoney,                        Quotation(38329, -766500000));
+    ASSERT_EQ(operation.pricePrecision,                    4);
+    ASSERT_EQ(operation.paymentPrecision,                  2);
+    ASSERT_EQ(operation.commissionPrecision,               2);
+    // clang-format on
+
     price->set_units(0);
     price->set_nano(0);
 
-    payment->set_units(28000);
+    payment->set_units(-28000);
     payment->set_nano(0);
 
     commission->set_units(0);
@@ -1117,7 +1175,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     thread->handleOperationItem(operationItem, &operation);
 
     // clang-format off
-    ASSERT_EQ(operation.timestamp,                         1704056400010);
+    ASSERT_EQ(operation.timestamp,                         1704056400011);
     ASSERT_EQ(operation.originalTimestamp,                 1704056400000);
     ASSERT_EQ(operation.instrumentId,                      "aaaaa");
     ASSERT_EQ(operation.instrumentLogo,                    &logo);
@@ -1126,23 +1184,23 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_EQ(operation.description,                       "Abandon ship");
     ASSERT_NEAR(operation.price,                           0.0f, 0.0001f);
     ASSERT_EQ(operation.fifoItems.size(),                  0);
-    ASSERT_NEAR(operation.avgPriceFifo,                    50.0f, 0.0001f);
-    ASSERT_NEAR(operation.avgPriceWavg,                    50.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgPriceFifo,                    60.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgPriceWavg,                    60.0f, 0.0001f);
     ASSERT_EQ(operation.quantity,                          0);
     ASSERT_EQ(operation.remainedQuantity,                  0);
-    ASSERT_NEAR(operation.payment,                         28000.0f, 0.0001f);
-    ASSERT_NEAR(operation.avgCostFifo,                     30000.0f, 0.0001f);
+    ASSERT_NEAR(operation.payment,                         -28000.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgCostFifo,                     -36000.0f, 0.0001f);
     ASSERT_EQ(operation.costFifo,                          Quotation(0, 0));
     ASSERT_EQ(operation.costWavg,                          Quotation(0, 0));
     ASSERT_NEAR(operation.commission,                      0.0f, 0.0001f);
-    ASSERT_NEAR(operation.yield,                           -2000.0f, 0.0001f);
-    ASSERT_NEAR(operation.yieldWithCommission,             -2000.0f, 0.0001f);
-    ASSERT_NEAR(operation.yieldWithCommissionPercent,      -6.6666f, 0.0001f);
+    ASSERT_NEAR(operation.yield,                           8000.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommission,             8000.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommissionPercent,      22.2222f, 0.0001f);
     ASSERT_EQ(operation.inputMoney,                        Quotation(-50000, 0));
-    ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(84859, -766500000));
+    ASSERT_EQ(operation.totalYieldWithCommission,          Quotation(100829, -766500000));
     ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 0.0f, 0.0001f);
-    ASSERT_EQ(operation.remainedMoney,                     Quotation(30359, -766500000));
-    ASSERT_EQ(operation.totalMoney,                        Quotation(30359, -766500000));
+    ASSERT_EQ(operation.remainedMoney,                     Quotation(46329, -766500000));
+    ASSERT_EQ(operation.totalMoney,                        Quotation(46329, -766500000));
     ASSERT_EQ(operation.pricePrecision,                    4);
     ASSERT_EQ(operation.paymentPrecision,                  2);
     ASSERT_EQ(operation.commissionPrecision,               2);

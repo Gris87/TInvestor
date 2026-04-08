@@ -573,7 +573,7 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
 
         if (avgCostFifo != 0)
         {
-            yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCostFifo * HUNDRED_PERCENT;
+            yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / qAbs(avgCostFifo) * HUNDRED_PERCENT;
         }
 
         mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
