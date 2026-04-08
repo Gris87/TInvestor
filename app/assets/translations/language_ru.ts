@@ -4,111 +4,111 @@
 <context>
     <name>AccountChartWidget</name>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="188"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="205"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="235"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="267"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="189"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="206"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="236"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="268"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Jan</source>
         <translation>Янв</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Feb</source>
         <translation>Фев</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Mar</source>
         <translation>Мар</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Apr</source>
         <translation>Апр</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>May</source>
         <translation>Май</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Jun</source>
         <translation>Июн</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Jul</source>
         <translation>Июл</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="113"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
         <source>Aug</source>
         <translation>Авг</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Sep</source>
         <translation>Сен</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Oct</source>
         <translation>Окт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Nov</source>
         <translation>Ноя</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Dec</source>
         <translation>Дек</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="184"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="185"/>
         <source>Yield</source>
         <translation>Доход</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="202"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="203"/>
         <source>Yield per month</source>
         <translation>Доход по месяцам</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="232"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="233"/>
         <source>Yield per day</source>
         <translation>Доход по дням</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="238"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="269"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="239"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="270"/>
         <source>Money</source>
         <translation>Денег</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="263"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="264"/>
         <source>Total money on account</source>
         <translation>Всего денег на счёте</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="689"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="708"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="699"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="718"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="699"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="718"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
@@ -398,7 +398,7 @@
     </message>
     <message>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="279"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="164"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="165"/>
         <source>Best config</source>
         <translation>Лучшая конфигурация</translation>
     </message>
@@ -889,61 +889,61 @@
         <translation>За сегодня</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="140"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="136"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="171"/>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="215"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="167"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="211"/>
         <source>Sell</source>
         <translation>Продать</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="174"/>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="195"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="170"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="191"/>
         <source>ASAP</source>
         <translation>немедленно</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="175"/>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="200"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="171"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="196"/>
         <source>with following sell price</source>
         <translation>со следованием за ценой продажи</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="176"/>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="205"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="172"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="201"/>
         <source>with positive yield</source>
         <translation>с положительным доходом</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="188"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="184"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="216"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="212"/>
         <source>Do you really want to sell %1 (%2) %3?</source>
         <translation>Вы действительно хотите продать %1 (%2) %3?</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="221"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="217"/>
         <source>Manual sell requested %1</source>
         <translation>Запрошена ручная продажа %1</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="232"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="228"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="232"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="228"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="251"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="247"/>
         <source>Portfolio</source>
         <translation>Портфолио</translation>
     </message>
@@ -975,8 +975,8 @@
         <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="303"/>
         <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="347"/>
         <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="361"/>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="268"/>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="278"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="285"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="295"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
@@ -1111,6 +1111,26 @@
         <location filename="../../src/decisions/buy/buydecision6/buydecision6.cpp" line="107"/>
         <source>Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes</source>
         <translation>Решено покупать, потому что цена %1 выше SMA %2 и EMA %3 и RSI %4 меньше, чем %5 за последние %6 минут</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="305"/>
+        <source>Detection time: %1</source>
+        <translation>Время обнаружения: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="308"/>
+        <source>Payment date: %1</source>
+        <translation>Дата выплаты: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="311"/>
+        <source>Price at detection time: %1</source>
+        <translation>Цена на момент обнаружения: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="317"/>
+        <source>Last enabled time: %1</source>
+        <translation>Время последнего включения: %1</translation>
     </message>
 </context>
 <context>
@@ -1551,47 +1571,57 @@
 <context>
     <name>StocksTableModel</name>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="47"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="50"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="47"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="50"/>
         <source>Change from day start</source>
         <translation>Изменение за день</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="47"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="50"/>
         <source>Change from some date</source>
         <translation>Изменение от даты</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="47"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="50"/>
         <source>Turnover</source>
         <translation>Оборот</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="47"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="50"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="48"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="51"/>
         <source>Payback</source>
         <translation>Окупаемость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="48"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="51"/>
         <source>Actions</source>
         <translation>Действия</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="90"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="51"/>
+        <source>Dividends</source>
+        <translation>Дивиденды</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="51"/>
+        <source>Shorts</source>
+        <translation>Шорты</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="93"/>
         <source>Average daily turnover in the last 31 days</source>
         <translation>Средний ежедневный оборот за последний 31 день</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="95"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="98"/>
         <source>Opportunity to get money back (with commission) based on the last 24 hours</source>
         <translation>Возможность вернуть потраченную стоимость (с учётом комиссии) на основании последних 24 часов</translation>
     </message>
@@ -1599,27 +1629,27 @@
 <context>
     <name>StocksTableWidget</name>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="115"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="116"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="125"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="126"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="125"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="126"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="144"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="145"/>
         <source>Stocks</source>
         <translation>Акции</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="164"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="165"/>
         <source>Qual investor</source>
         <translation>Квал инвестор</translation>
     </message>

@@ -3,6 +3,8 @@
 
 
 #include "src/domain/logo/logo.h"
+#include "src/domain/stock/stockdividendsmeta.h"
+#include "src/domain/stock/stockshortsmeta.h"
 
 
 
@@ -14,20 +16,22 @@ struct StockTableEntry
 
     StockTableEntry& operator=(const StockTableEntry& another) = default;
 
-    QString instrumentId;
-    Logo*   instrumentLogo;
-    QString instrumentTicker;
-    QString instrumentName;
-    bool    forQualInvestorFlag;
-    bool    locked;
-    float   price;
-    float   dayChange;
-    float   dateChange;
-    qint64  turnover;
-    float   payback;
-    float   dayStartPrice;
-    float   specifiedDatePrice;
-    qint8   pricePrecision;
+    QString            instrumentId;
+    Logo*              instrumentLogo;
+    QString            instrumentTicker;
+    QString            instrumentName;
+    bool               forQualInvestorFlag;
+    bool               locked;
+    float              price;
+    float              dayChange;
+    float              dateChange;
+    qint64             turnover;
+    float              payback;
+    StockDividendsMeta dividends;
+    StockShortsMeta    shorts;
+    float              dayStartPrice;
+    float              specifiedDatePrice;
+    qint8              pricePrecision;
 };
 
 

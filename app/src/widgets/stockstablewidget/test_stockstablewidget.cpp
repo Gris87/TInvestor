@@ -269,6 +269,8 @@ TEST_F(Test_StocksTableWidget, Test_saveWindowState)
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_DateChange"), _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Turnover"),   _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Payback"),    _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Dividends"),  _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Shorts"),     _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Actions"),    _));
     // clang-format on
 
@@ -286,6 +288,8 @@ TEST_F(Test_StocksTableWidget, Test_loadWindowState)
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DateChange"), _)).WillOnce(Return(QVariant(157)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Turnover"),   _)).WillOnce(Return(QVariant(86)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Payback"),    _)).WillOnce(Return(QVariant(120)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Dividends"),  _)).WillOnce(Return(QVariant(96)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Shorts"),     _)).WillOnce(Return(QVariant(67)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Actions"),    _)).WillOnce(Return(QVariant(83)));
     // clang-format on
 

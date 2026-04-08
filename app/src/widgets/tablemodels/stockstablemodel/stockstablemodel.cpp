@@ -11,6 +11,9 @@
 
 
 
+const char* const DATE_FORMAT     = "yyyy-MM-dd";
+const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+
 constexpr float  ZERO_LIMIT            = 0.0001f;
 constexpr qint64 TURNOVER_GREEN_LIMIT  = 1000000000LL;
 constexpr qint64 TURNOVER_NORMAL_LIMIT = 1000000LL;
@@ -45,7 +48,7 @@ StocksTableModel::StocksTableModel(IUserStorage* userStorage, QObject* parent) :
     qDebug() << "Create StocksTableModel";
 
     mHeader << tr("Name") << tr("Price") << tr("Change from day start") << tr("Change from some date") << tr("Turnover")
-            << tr("Payback") << tr("Actions");
+            << tr("Payback") << tr("Dividends") << tr("Shorts") << tr("Actions");
     Q_ASSERT_X(mHeader.size() == STOCKS_COLUMN_COUNT, __FUNCTION__, "Header is incorrect");
 }
 
@@ -164,6 +167,16 @@ static QVariant stocksPaybackDisplayRole(const StockTableEntry& entry)
     return QString::number(entry.payback, 'f', 2) + "%";
 }
 
+static QVariant stocksDividendsDisplayRole(const StockTableEntry& entry)
+{
+    return QString::number(entry.dividends.yield, 'f', 2) + "%";
+}
+
+static QVariant stocksShortsDisplayRole(const StockTableEntry& entry)
+{
+    return entry.shorts.enabled ? "V" : "";
+}
+
 static QVariant stocksActionsDisplayRole(const StockTableEntry& /*entry*/)
 {
     return QVariant();
@@ -178,6 +191,8 @@ static const DisplayRoleHandler DISPLAY_ROLE_HANDLER[STOCKS_COLUMN_COUNT]{
     stocksDateChangeDisplayRole,
     stocksTurnoverDisplayRole,
     stocksPaybackDisplayRole,
+    stocksDividendsDisplayRole,
+    stocksShortsDisplayRole,
     stocksActionsDisplayRole,
 };
 
@@ -241,6 +256,16 @@ static QVariant stocksPaybackForegroundRole(const StockTableEntry& entry)
     return RED_COLOR;
 }
 
+static QVariant stocksDividendsForegroundRole(const StockTableEntry& entry)
+{
+    if (entry.dividends.yield > 0)
+    {
+        return GREEN_COLOR;
+    }
+
+    return NORMAL_COLOR;
+}
+
 static QVariant stocksNothingForegroundRole(const StockTableEntry& /*entry*/)
 {
     return QVariant();
@@ -255,6 +280,8 @@ static const ForegroundRoleHandler FOREGROUND_ROLE_HANDLER[STOCKS_COLUMN_COUNT]{
     stocksDateChangeForegroundRole,
     stocksTurnoverForegroundRole,
     stocksPaybackForegroundRole,
+    stocksDividendsForegroundRole,
+    stocksNothingForegroundRole,
     stocksNothingForegroundRole,
 };
 
@@ -278,6 +305,27 @@ static QVariant stocksDateChangeTooltipRole(const StockTableEntry& entry)
     return QObject::tr("From: %1").arg(entry.specifiedDatePrice, 0, 'f', entry.pricePrecision) + " \u20BD";
 }
 
+static QVariant stocksDividendsTooltipRole(const StockTableEntry& entry)
+{
+    if (entry.dividends.paymentTimestamp == 0)
+    {
+        return QVariant();
+    }
+
+    return QObject::tr("Detection time: %1")
+               .arg(QDateTime::fromMSecsSinceEpoch(entry.dividends.createTimestamp).toString(DATETIME_FORMAT)) +
+           "\n" +
+           QObject::tr("Payment date: %1")
+               .arg(QDateTime::fromMSecsSinceEpoch(entry.dividends.paymentTimestamp).toString(DATE_FORMAT)) +
+           "\n" + QObject::tr("Price at detection time: %1").arg(entry.dividends.price, 0, 'f', entry.pricePrecision) + " \u20BD";
+}
+
+static QVariant stocksShortsTooltipRole(const StockTableEntry& entry)
+{
+    return QObject::tr("Last enabled time: %1")
+        .arg(QDateTime::fromMSecsSinceEpoch(entry.shorts.lastEnabledTimestamp).toString(DATETIME_FORMAT));
+}
+
 static QVariant stocksNothingTooltipRole(const StockTableEntry& /*entry*/)
 {
     return QVariant();
@@ -292,7 +340,33 @@ static const TooltipRoleHandler TOOLTIP_ROLE_HANDLER[STOCKS_COLUMN_COUNT]{
     stocksDateChangeTooltipRole,
     stocksNothingTooltipRole,
     stocksNothingTooltipRole,
+    stocksDividendsTooltipRole,
+    stocksShortsTooltipRole,
     stocksNothingTooltipRole,
+};
+
+static QVariant stocksShortsTextAlignRole(const StockTableEntry& /*entry*/)
+{
+    return Qt::AlignCenter;
+}
+
+static QVariant stocksNothingTextAlignRole(const StockTableEntry& /*entry*/)
+{
+    return QVariant();
+}
+
+using TextAlignRoleHandler = QVariant (*)(const StockTableEntry& entry);
+
+static const TextAlignRoleHandler TEXT_ALIGN_ROLE_HANDLER[STOCKS_COLUMN_COUNT]{
+    stocksNothingTextAlignRole,
+    stocksNothingTextAlignRole,
+    stocksNothingTextAlignRole,
+    stocksNothingTextAlignRole,
+    stocksNothingTextAlignRole,
+    stocksNothingTextAlignRole,
+    stocksNothingTextAlignRole,
+    stocksShortsTextAlignRole,
+    stocksNothingTextAlignRole,
 };
 
 QVariant StocksTableModel::data(const QModelIndex& index, int role) const
@@ -319,6 +393,14 @@ QVariant StocksTableModel::data(const QModelIndex& index, int role) const
         const int column = index.column();
 
         return TOOLTIP_ROLE_HANDLER[column](mEntries->at(row));
+    }
+
+    if (role == Qt::TextAlignmentRole)
+    {
+        const int row    = index.row();
+        const int column = index.column();
+
+        return TEXT_ALIGN_ROLE_HANDLER[column](mEntries->at(row));
     }
 
     if (role == ROLE_INSTRUMENT_LOGO)
@@ -442,6 +524,8 @@ static void fillEntriesForParallel(
                                         : 0;
         entry.turnover            = stock->meta.turnover;
         entry.payback             = stock->operational.payback;
+        entry.dividends           = stock->meta.dividends;
+        entry.shorts              = stock->meta.shorts;
         entry.dayStartPrice       = stock->operational.dayStartPrice;
         entry.specifiedDatePrice  = stock->operational.specifiedDatePrice;
         entry.pricePrecision      = stock->meta.pricePrecision;
@@ -531,6 +615,8 @@ static void updateAllForParallel(
                                         : 0;
         entry.turnover            = stock->meta.turnover;
         entry.payback             = stock->operational.payback;
+        entry.dividends           = stock->meta.dividends;
+        entry.shorts              = stock->meta.shorts;
         entry.dayStartPrice       = stock->operational.dayStartPrice;
         entry.specifiedDatePrice  = stock->operational.specifiedDatePrice;
         entry.pricePrecision      = stock->meta.pricePrecision;
@@ -539,7 +625,7 @@ static void updateAllForParallel(
 
         if (updateAllowed)
         {
-            emit model->dataChanged(model->index(i, STOCKS_NAME_COLUMN), model->index(i, STOCKS_PAYBACK_COLUMN));
+            emit model->dataChanged(model->index(i, STOCKS_NAME_COLUMN), model->index(i, STOCKS_SHORTS_COLUMN));
         }
     }
 }
@@ -800,21 +886,24 @@ static void updatePeriodicDataForParallel(
 
         stock->readLock();
 
-        entry.turnover = stock->meta.turnover;
-        entry.payback  = stock->operational.payback;
+        entry.turnover  = stock->meta.turnover;
+        entry.payback   = stock->operational.payback;
+        entry.dividends = stock->meta.dividends;
+        entry.shorts    = stock->meta.shorts;
 
         stock->readUnlock();
 
         if (updateAllowed)
         {
-            emit model->dataChanged(model->index(i, STOCKS_TURNOVER_COLUMN), model->index(i, STOCKS_PAYBACK_COLUMN));
+            emit model->dataChanged(model->index(i, STOCKS_TURNOVER_COLUMN), model->index(i, STOCKS_SHORTS_COLUMN));
         }
     }
 }
 
 void StocksTableModel::updatePeriodicData()
 {
-    const bool needToSort = mSortColumn == STOCKS_TURNOVER_COLUMN || mSortColumn == STOCKS_PAYBACK_COLUMN;
+    const bool needToSort = mSortColumn == STOCKS_TURNOVER_COLUMN || mSortColumn == STOCKS_PAYBACK_COLUMN ||
+                            mSortColumn == STOCKS_DIVIDENDS_COLUMN || mSortColumn == STOCKS_SHORTS_COLUMN;
 
     if (mFilter.isActive())
     {
@@ -858,13 +947,15 @@ void StocksTableModel::exportToExcel(QXlsx::Document& doc) const
         const StockTableEntry& entry = mEntries->at(i);
 
         // clang-format off
-        doc.write(row, STOCKS_NAME_COLUMN + 1,        entry.instrumentName, cellStyle);
-        doc.write(row, STOCKS_NAME_COLUMN + 2,        entry.forQualInvestorFlag, cellStyle);
-        doc.write(row, STOCKS_PRICE_COLUMN + 2,       entry.price, createRubleFormat(CELL_FONT_COLOR, entry.pricePrecision));
-        doc.write(row, STOCKS_DAY_CHANGE_COLUMN + 2,  entry.dayChange / HUNDRED_PERCENT, createPercentFormat(stocksDayChangeForegroundRole(entry).value<QBrush>().color(), true));
-        doc.write(row, STOCKS_DATE_CHANGE_COLUMN + 2, entry.dateChange / HUNDRED_PERCENT, createPercentFormat(stocksDateChangeForegroundRole(entry).value<QBrush>().color(), true));
-        doc.write(row, STOCKS_TURNOVER_COLUMN + 2,    entry.turnover, createRubleFormat(stocksTurnoverForegroundRole(entry).value<QBrush>().color(), 0));
-        doc.write(row, STOCKS_PAYBACK_COLUMN + 2,     entry.payback / HUNDRED_PERCENT, createPercentFormat(stocksPaybackForegroundRole(entry).value<QBrush>().color(), false));
+        doc.write(row, STOCKS_NAME_COLUMN + 1,        entry.instrumentName,                    cellStyle);
+        doc.write(row, STOCKS_NAME_COLUMN + 2,        entry.forQualInvestorFlag,               cellStyle);
+        doc.write(row, STOCKS_PRICE_COLUMN + 2,       entry.price,                             createRubleFormat(CELL_FONT_COLOR, entry.pricePrecision));
+        doc.write(row, STOCKS_DAY_CHANGE_COLUMN + 2,  entry.dayChange / HUNDRED_PERCENT,       createPercentFormat(stocksDayChangeForegroundRole(entry).value<QBrush>().color(), true));
+        doc.write(row, STOCKS_DATE_CHANGE_COLUMN + 2, entry.dateChange / HUNDRED_PERCENT,      createPercentFormat(stocksDateChangeForegroundRole(entry).value<QBrush>().color(), true));
+        doc.write(row, STOCKS_TURNOVER_COLUMN + 2,    entry.turnover,                          createRubleFormat(stocksTurnoverForegroundRole(entry).value<QBrush>().color(), 0));
+        doc.write(row, STOCKS_PAYBACK_COLUMN + 2,     entry.payback / HUNDRED_PERCENT,         createPercentFormat(stocksPaybackForegroundRole(entry).value<QBrush>().color(), false));
+        doc.write(row, STOCKS_DIVIDENDS_COLUMN + 2,   entry.dividends.yield / HUNDRED_PERCENT, createPercentFormat(stocksDividendsForegroundRole(entry).value<QBrush>().color(), false));
+        doc.write(row, STOCKS_SHORTS_COLUMN + 2,      entry.shorts.enabled,                    cellStyle);
         // clang-format on
     }
 }
@@ -997,6 +1088,18 @@ void StocksTableModel::sortEntries()
 
             std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
         }
+        else if (mSortColumn == STOCKS_DIVIDENDS_COLUMN)
+        {
+            const StocksTableDividendsLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_SHORTS_COLUMN)
+        {
+            const StocksTableShortsLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
     }
     else
     {
@@ -1033,6 +1136,18 @@ void StocksTableModel::sortEntries()
         else if (mSortColumn == STOCKS_PAYBACK_COLUMN)
         {
             const StocksTablePaybackGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_DIVIDENDS_COLUMN)
+        {
+            const StocksTableDividendsGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_SHORTS_COLUMN)
+        {
+            const StocksTableShortsGreaterThan cmp(mEntriesUnfiltered.get());
 
             std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
         }

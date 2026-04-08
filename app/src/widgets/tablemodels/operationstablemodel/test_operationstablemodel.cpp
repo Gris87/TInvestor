@@ -1469,7 +1469,7 @@ TEST_F(Test_OperationsTableModel, Test_operationsAdded)
     ASSERT_EQ(model->data(model->index(2, OPERATIONS_TIME_COLUMN), Qt::DisplayRole), QVariant("2024-01-01 00:01:00"));
     ASSERT_EQ(model->data(model->index(3, OPERATIONS_TIME_COLUMN), Qt::DisplayRole), QVariant("2024-01-01 00:00:00"));
 
-    model->operationsRead(operations);    
+    model->operationsRead(operations);
     ASSERT_EQ(model->rowCount(), 3);
 
     model->sort(OPERATIONS_TIME_COLUMN, Qt::AscendingOrder);

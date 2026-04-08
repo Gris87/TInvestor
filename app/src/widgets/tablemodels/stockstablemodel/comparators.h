@@ -102,6 +102,38 @@ public:
     }
 };
 
+class StocksTableDividendsLessThan
+{
+public:
+    explicit StocksTableDividendsLessThan(QList<StockTableEntry>* _entries) :
+        entries(_entries)
+    {
+    }
+
+    QList<StockTableEntry>* entries;
+
+    bool operator()(int l, int r) const
+    {
+        return entries->at(l).dividends.yield < entries->at(r).dividends.yield;
+    }
+};
+
+class StocksTableShortsLessThan
+{
+public:
+    explicit StocksTableShortsLessThan(QList<StockTableEntry>* _entries) :
+        entries(_entries)
+    {
+    }
+
+    QList<StockTableEntry>* entries;
+
+    bool operator()(int l, int r) const
+    {
+        return static_cast<int>(entries->at(l).shorts.enabled) < static_cast<int>(entries->at(r).shorts.enabled);
+    }
+};
+
 class StocksTableNameGreaterThan
 {
 public:
@@ -195,5 +227,37 @@ public:
     bool operator()(int l, int r) const
     {
         return entries->at(l).payback > entries->at(r).payback;
+    }
+};
+
+class StocksTableDividendsGreaterThan
+{
+public:
+    explicit StocksTableDividendsGreaterThan(QList<StockTableEntry>* _entries) :
+        entries(_entries)
+    {
+    }
+
+    QList<StockTableEntry>* entries;
+
+    bool operator()(int l, int r) const
+    {
+        return entries->at(l).dividends.yield > entries->at(r).dividends.yield;
+    }
+};
+
+class StocksTableShortsGreaterThan
+{
+public:
+    explicit StocksTableShortsGreaterThan(QList<StockTableEntry>* _entries) :
+        entries(_entries)
+    {
+    }
+
+    QList<StockTableEntry>* entries;
+
+    bool operator()(int l, int r) const
+    {
+        return static_cast<int>(entries->at(l).shorts.enabled) > static_cast<int>(entries->at(r).shorts.enabled);
     }
 };

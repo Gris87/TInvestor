@@ -1,4 +1,5 @@
-Display shorts and dividends on stocks page
+Filter for dividends and shorts
+Tests for dividends and shorts on stocks model
 Double check for cancelling buy orders in bidir trading
 Improve coverage
 Create release

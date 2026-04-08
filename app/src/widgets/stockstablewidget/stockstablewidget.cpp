@@ -10,9 +10,9 @@
 
 
 #ifdef Q_OS_WINDOWS
-const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {103, 61, 139, 157, 86, 120, 83};
+const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {103, 61, 139, 157, 86, 120, 96, 67, 83};
 #else
-const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {113, 82, 171, 191, 99, 142, 97};
+const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {113, 82, 171, 191, 99, 142, 109, 88, 97};
 #endif
 
 const QColor HEADER_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static
@@ -170,13 +170,13 @@ void StocksTableWidget::exportToExcel(const QString& path) const
 
     doc.write(
         1,
-        STOCKS_PAYBACK_COLUMN + 4,
+        STOCKS_SHORTS_COLUMN + 4,
         mStocksTableModel->headerData(STOCKS_DATE_CHANGE_COLUMN, Qt::Horizontal).toString(),
         headerStyle
     );
     doc.write(
         2,
-        STOCKS_PAYBACK_COLUMN + 4,
+        STOCKS_SHORTS_COLUMN + 4,
         mStocksTableModel->headerData(STOCKS_DATE_CHANGE_COLUMN, Qt::Horizontal, Qt::ToolTipRole).toString(),
         cellStyle
     );
@@ -192,7 +192,9 @@ void StocksTableWidget::exportToExcel(const QString& path) const
     doc.setColumnWidth(STOCKS_DATE_CHANGE_COLUMN + 2, 18.86 + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_TURNOVER_COLUMN + 2,    11.86 + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_PAYBACK_COLUMN + 2,     12.57 + COLUMN_GAP);
-    doc.setColumnWidth(STOCKS_PAYBACK_COLUMN + 4,     21    + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_DIVIDENDS_COLUMN + 2,   11.43 + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_SHORTS_COLUMN + 2,      7.86  + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_SHORTS_COLUMN + 4,      21    + COLUMN_GAP);
     // clang-format on
     // NOLINTEND(readability-magic-numbers)
 
@@ -220,6 +222,8 @@ void StocksTableWidget::saveWindowState(const QString& type)
     mSettingsEditor->setValue(type + "/columnWidth_DateChange", ui->tableView->columnWidth(STOCKS_DATE_CHANGE_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Turnover",   ui->tableView->columnWidth(STOCKS_TURNOVER_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Payback",    ui->tableView->columnWidth(STOCKS_PAYBACK_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Dividends",  ui->tableView->columnWidth(STOCKS_DIVIDENDS_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Shorts",     ui->tableView->columnWidth(STOCKS_SHORTS_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Actions",    ui->tableView->columnWidth(STOCKS_ACTIONS_COLUMN));
     // clang-format on
 }
@@ -233,6 +237,8 @@ void StocksTableWidget::loadWindowState(const QString& type)
     ui->tableView->setColumnWidth(STOCKS_DATE_CHANGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_DateChange", COLUMN_WIDTHS[STOCKS_DATE_CHANGE_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_TURNOVER_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Turnover",   COLUMN_WIDTHS[STOCKS_TURNOVER_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_PAYBACK_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Payback",    COLUMN_WIDTHS[STOCKS_PAYBACK_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(STOCKS_DIVIDENDS_COLUMN,   mSettingsEditor->value(type + "/columnWidth_Dividends",  COLUMN_WIDTHS[STOCKS_DIVIDENDS_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(STOCKS_SHORTS_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Shorts",     COLUMN_WIDTHS[STOCKS_SHORTS_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_ACTIONS_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Actions",    COLUMN_WIDTHS[STOCKS_ACTIONS_COLUMN]).toInt());
     // clang-format on
 }
