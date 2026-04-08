@@ -449,6 +449,91 @@
                 </item>
                </layout>
               </item>
+              <item>
+               <widget class="QCheckBox" name="dividendsCheckBox">
+                <property name="text">
+                 <string>Dividends</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QDoubleSpinBox" name="dividendsFromDoubleSpinBox">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="maximum">
+                   <double>100.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_7">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string notr="true">-</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="dividendsToDoubleSpinBox">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="maximum">
+                   <double>100.000000000000000</double>
+                  </property>
+                  <property name="value">
+                   <double>100.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="shortsCheckBox">
+                <property name="text">
+                 <string>Shorts</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="shortsComboBox">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Show all</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Only with enabled</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Only with disabled</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>

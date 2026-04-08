@@ -84,6 +84,11 @@ TEST_F(Test_StocksControlsWidget, Test_getFilter)
     ASSERT_EQ(filter.usePayback,           false);
     ASSERT_NEAR(filter.paybackFrom,        0.0f, 0.0001f);
     ASSERT_NEAR(filter.paybackTo,          100.0f, 0.0001f);
+    ASSERT_EQ(filter.useDividends,         false);
+    ASSERT_NEAR(filter.dividendsFrom,      0.0f, 0.0001f);
+    ASSERT_NEAR(filter.dividendsTo,        100.0f, 0.0001f);
+    ASSERT_EQ(filter.useShorts,            false);
+    ASSERT_EQ(filter.shorts,               SHORTS_SHOW_ALL);
     // clang-format on
 }
 
@@ -580,6 +585,123 @@ TEST_F(Test_StocksControlsWidget, Test_on_paybackToDoubleSpinBox_valueChanged)
     ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), true);
 }
 
+TEST_F(Test_StocksControlsWidget, Test_on_dividendsCheckBox_checkStateChanged)
+{
+    ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), false);
+
+    stocksControlsWidget->ui->dividendsCheckBox->blockSignals(true);
+    stocksControlsWidget->ui->dividendsCheckBox->setChecked(false);
+    stocksControlsWidget->ui->dividendsCheckBox->blockSignals(false);
+
+    stocksControlsWidget->ui->dividendsCheckBox->setChecked(true);
+    StockFilter filter = stocksControlsWidget->getFilter();
+
+    ASSERT_EQ(stocksControlsWidget->ui->dividendsFromDoubleSpinBox->isEnabled(), true);
+    ASSERT_EQ(stocksControlsWidget->ui->dividendsToDoubleSpinBox->isEnabled(), true);
+    ASSERT_EQ(filter.useDividends, true);
+
+    stocksControlsWidget->ui->dividendsCheckBox->setChecked(false);
+    filter = stocksControlsWidget->getFilter();
+
+    ASSERT_EQ(stocksControlsWidget->ui->dividendsFromDoubleSpinBox->isEnabled(), false);
+    ASSERT_EQ(stocksControlsWidget->ui->dividendsToDoubleSpinBox->isEnabled(), false);
+    ASSERT_EQ(filter.useDividends, false);
+
+    ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), true);
+}
+
+TEST_F(Test_StocksControlsWidget, Test_on_dividendsFromDoubleSpinBox_valueChanged)
+{
+    ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), false);
+
+    stocksControlsWidget->ui->dividendsFromDoubleSpinBox->setValue(2.0);
+    stocksControlsWidget->ui->dividendsToDoubleSpinBox->setValue(4.0);
+
+    stocksControlsWidget->ui->dividendsFromDoubleSpinBox->setValue(3.0);
+    StockFilter filter = stocksControlsWidget->getFilter();
+
+    ASSERT_NEAR(stocksControlsWidget->ui->dividendsToDoubleSpinBox->value(), 4.0f, 0.0001f);
+    ASSERT_NEAR(filter.dividendsFrom, 3.0f, 0.0001f);
+    ASSERT_NEAR(filter.dividendsTo, 4.0f, 0.0001f);
+
+    stocksControlsWidget->ui->dividendsFromDoubleSpinBox->setValue(5.0);
+    filter = stocksControlsWidget->getFilter();
+
+    ASSERT_NEAR(stocksControlsWidget->ui->dividendsToDoubleSpinBox->value(), 5.0f, 0.0001f);
+    ASSERT_NEAR(filter.dividendsFrom, 5.0f, 0.0001f);
+    ASSERT_NEAR(filter.dividendsTo, 5.0f, 0.0001f);
+
+    ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), true);
+}
+
+TEST_F(Test_StocksControlsWidget, Test_on_dividendsToDoubleSpinBox_valueChanged)
+{
+    ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), false);
+
+    stocksControlsWidget->ui->dividendsFromDoubleSpinBox->setValue(2.0);
+    stocksControlsWidget->ui->dividendsToDoubleSpinBox->setValue(4.0);
+
+    stocksControlsWidget->ui->dividendsToDoubleSpinBox->setValue(3.0);
+    StockFilter filter = stocksControlsWidget->getFilter();
+
+    ASSERT_NEAR(stocksControlsWidget->ui->dividendsFromDoubleSpinBox->value(), 2.0f, 0.0001f);
+    ASSERT_NEAR(filter.dividendsFrom, 2.0f, 0.0001f);
+    ASSERT_NEAR(filter.dividendsTo, 3.0f, 0.0001f);
+
+    stocksControlsWidget->ui->dividendsToDoubleSpinBox->setValue(1.0);
+    filter = stocksControlsWidget->getFilter();
+
+    ASSERT_NEAR(stocksControlsWidget->ui->dividendsFromDoubleSpinBox->value(), 1.0f, 0.0001f);
+    ASSERT_NEAR(filter.dividendsFrom, 1.0f, 0.0001f);
+    ASSERT_NEAR(filter.dividendsTo, 1.0f, 0.0001f);
+
+    ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), true);
+}
+
+TEST_F(Test_StocksControlsWidget, Test_on_shortsCheckBox_checkStateChanged)
+{
+    ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), false);
+
+    stocksControlsWidget->ui->shortsCheckBox->blockSignals(true);
+    stocksControlsWidget->ui->shortsCheckBox->setChecked(false);
+    stocksControlsWidget->ui->shortsCheckBox->blockSignals(false);
+
+    stocksControlsWidget->ui->shortsCheckBox->setChecked(true);
+    StockFilter filter = stocksControlsWidget->getFilter();
+
+    ASSERT_EQ(stocksControlsWidget->ui->shortsComboBox->isEnabled(), true);
+    ASSERT_EQ(filter.useShorts, true);
+
+    stocksControlsWidget->ui->shortsCheckBox->setChecked(false);
+    filter = stocksControlsWidget->getFilter();
+
+    ASSERT_EQ(stocksControlsWidget->ui->shortsComboBox->isEnabled(), false);
+    ASSERT_EQ(filter.useShorts, false);
+
+    ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), true);
+}
+
+TEST_F(Test_StocksControlsWidget, Test_on_shortsComboBox_currentIndexChanged)
+{
+    ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), false);
+
+    stocksControlsWidget->ui->shortsComboBox->blockSignals(true);
+    stocksControlsWidget->ui->shortsComboBox->setCurrentIndex(0);
+    stocksControlsWidget->ui->shortsComboBox->blockSignals(false);
+
+    stocksControlsWidget->ui->shortsComboBox->setCurrentIndex(1);
+    StockFilter filter = stocksControlsWidget->getFilter();
+
+    ASSERT_EQ(filter.shorts, SHORTS_ONLY_WITH_ENABLED);
+
+    stocksControlsWidget->ui->shortsComboBox->setCurrentIndex(2);
+    filter = stocksControlsWidget->getFilter();
+
+    ASSERT_EQ(filter.shorts, SHORTS_ONLY_WITH_DISABLED);
+
+    ASSERT_EQ(stocksControlsWidget->filterChangeDelayTimer.isActive(), true);
+}
+
 TEST_F(Test_StocksControlsWidget, Test_on_hideButton_clicked)
 {
     ASSERT_EQ(stocksControlsWidget->maximumSize(), DEFAULT_MAXIMUM_SIZE);
@@ -635,6 +757,11 @@ TEST_F(Test_StocksControlsWidget, Test_saveWindowState)
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/usePayback"),         QVariant(false)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/paybackFrom"),        QVariant(0.0f)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/paybackTo"),          QVariant(100.0f)));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/useDividends"),       QVariant(false)));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/dividendsFrom"),      QVariant(0.0f)));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/dividendsTo"),        QVariant(100.0f)));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/useShorts"),          QVariant(false)));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/shorts"),             QVariant(SHORTS_SHOW_ALL)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/visible"),            QVariant(true)));
     // clang-format on
 
@@ -669,6 +796,11 @@ TEST_F(Test_StocksControlsWidget, Test_loadWindowState)
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/usePayback"),         QVariant(false))).WillOnce(Return(QVariant(false)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/paybackFrom"),        QVariant(0.0))).WillOnce(Return(QVariant(0.0)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/paybackTo"),          QVariant(100.0))).WillOnce(Return(QVariant(100.0)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/useDividends"),       QVariant(false))).WillOnce(Return(QVariant(false)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/dividendsFrom"),      QVariant(0.0))).WillOnce(Return(QVariant(0.0)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/dividendsTo"),        QVariant(100.0))).WillOnce(Return(QVariant(100.0)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/useShorts"),          QVariant(false))).WillOnce(Return(QVariant(false)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/shorts"),             QVariant(SHORTS_SHOW_ALL))).WillOnce(Return(QVariant(SHORTS_SHOW_ALL)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/visible"),            QVariant(true))).WillOnce(Return(QVariant(false)));
     // clang-format on
 

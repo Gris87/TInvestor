@@ -13,6 +13,13 @@ enum QualInvestorFilter : quint8
     QUAL_INVESTOR_ONLY_WITHOUT_STATUS
 };
 
+enum ShortsFilter : quint8
+{
+    SHORTS_SHOW_ALL,
+    SHORTS_ONLY_WITH_ENABLED,
+    SHORTS_ONLY_WITH_DISABLED
+};
+
 
 
 struct StockFilter
@@ -48,6 +55,11 @@ struct StockFilter
     bool               usePayback;
     float              paybackFrom;
     float              paybackTo;
+    bool               useDividends;
+    float              dividendsFrom;
+    float              dividendsTo;
+    bool               useShorts;
+    ShortsFilter       shorts;
 };
 
 

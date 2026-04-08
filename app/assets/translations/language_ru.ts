@@ -975,8 +975,8 @@
         <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="303"/>
         <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="347"/>
         <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="361"/>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="285"/>
         <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="295"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="305"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
@@ -1113,22 +1113,22 @@
         <translation>Решено покупать, потому что цена %1 выше SMA %2 и EMA %3 и RSI %4 меньше, чем %5 за последние %6 минут</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="305"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="315"/>
         <source>Detection time: %1</source>
         <translation>Время обнаружения: %1</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="308"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="318"/>
         <source>Payment date: %1</source>
         <translation>Дата выплаты: %1</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="311"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="320"/>
         <source>Price at detection time: %1</source>
         <translation>Цена на момент обнаружения: %1</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="317"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="325"/>
         <source>Last enabled time: %1</source>
         <translation>Время последнего включения: %1</translation>
     </message>
@@ -1514,6 +1514,7 @@
     </message>
     <message>
         <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="166"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="522"/>
         <source>Show all</source>
         <translation>Показывать всё</translation>
     </message>
@@ -1558,12 +1559,32 @@
         <translation>Окупаемость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="313"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="455"/>
+        <source>Dividends</source>
+        <translation>Дивиденды</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="508"/>
+        <source>Shorts</source>
+        <translation>Шорты</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="527"/>
+        <source>Only with enabled</source>
+        <translation>Только с включенными</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="532"/>
+        <source>Only with disabled</source>
+        <translation>Только с выключенными</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="367"/>
         <source>Filter active</source>
         <translation>Фильтр активен</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="318"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="372"/>
         <source>Filter inactive</source>
         <translation>Фильтр неактивен</translation>
     </message>
@@ -1629,27 +1650,27 @@
 <context>
     <name>StocksTableWidget</name>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="116"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="115"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="126"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="125"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="126"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="125"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="145"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="144"/>
         <source>Stocks</source>
         <translation>Акции</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="165"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="164"/>
         <source>Qual investor</source>
         <translation>Квал инвестор</translation>
     </message>

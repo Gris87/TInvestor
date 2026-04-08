@@ -68,5 +68,10 @@ private slots:
     void on_paybackCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_paybackFromDoubleSpinBox_valueChanged(double value);
     void on_paybackToDoubleSpinBox_valueChanged(double value);
+    void on_dividendsCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_dividendsFromDoubleSpinBox_valueChanged(double value);
+    void on_dividendsToDoubleSpinBox_valueChanged(double value);
+    void on_shortsCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_shortsComboBox_currentIndexChanged(int index);
     void on_hideButton_clicked();
 };

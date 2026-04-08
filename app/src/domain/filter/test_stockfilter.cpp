@@ -43,6 +43,11 @@ TEST_F(Test_StockFilter, Test_constructor_and_destructor)
     ASSERT_EQ(filter.usePayback,           false);
     ASSERT_NEAR(filter.paybackFrom,        0.0f, 0.0001f);
     ASSERT_NEAR(filter.paybackTo,          100.0f, 0.0001f);
+    ASSERT_EQ(filter.useDividends,         false);
+    ASSERT_NEAR(filter.dividendsFrom,      0.0f, 0.0001f);
+    ASSERT_NEAR(filter.dividendsTo,        100.0f, 0.0001f);
+    ASSERT_EQ(filter.useShorts,            false);
+    ASSERT_EQ(filter.shorts,               SHORTS_SHOW_ALL);
     // clang-format on
 }
 
@@ -69,6 +74,11 @@ TEST_F(Test_StockFilter, Test_copy_constructor)
     filter.usePayback         = true;
     filter.paybackFrom        = 9.0f;
     filter.paybackTo          = 10.0f;
+    filter.useDividends       = true;
+    filter.dividendsFrom      = 11.0f;
+    filter.dividendsTo        = 12.0f;
+    filter.useShorts          = true;
+    filter.shorts             = SHORTS_ONLY_WITH_ENABLED;
 
     const StockFilter filter2(filter);
 
@@ -92,6 +102,11 @@ TEST_F(Test_StockFilter, Test_copy_constructor)
     ASSERT_EQ(filter2.usePayback,           true);
     ASSERT_NEAR(filter2.paybackFrom,        9.0f, 0.0001f);
     ASSERT_NEAR(filter2.paybackTo,          10.0f, 0.0001f);
+    ASSERT_EQ(filter2.useDividends,         true);
+    ASSERT_NEAR(filter2.dividendsFrom,      11.0f, 0.0001f);
+    ASSERT_NEAR(filter2.dividendsTo,        12.0f, 0.0001f);
+    ASSERT_EQ(filter2.useShorts,            true);
+    ASSERT_EQ(filter2.shorts,               SHORTS_ONLY_WITH_ENABLED);
     // clang-format on
 }
 
@@ -119,6 +134,11 @@ TEST_F(Test_StockFilter, Test_assign)
     filter.usePayback         = true;
     filter.paybackFrom        = 9.0f;
     filter.paybackTo          = 10.0f;
+    filter.useDividends       = true;
+    filter.dividendsFrom      = 11.0f;
+    filter.dividendsTo        = 12.0f;
+    filter.useShorts          = true;
+    filter.shorts             = SHORTS_ONLY_WITH_ENABLED;
 
     filter2 = filter;
 
@@ -142,6 +162,11 @@ TEST_F(Test_StockFilter, Test_assign)
     ASSERT_EQ(filter2.usePayback,           true);
     ASSERT_NEAR(filter2.paybackFrom,        9.0f, 0.0001f);
     ASSERT_NEAR(filter2.paybackTo,          10.0f, 0.0001f);
+    ASSERT_EQ(filter2.useDividends,         true);
+    ASSERT_NEAR(filter2.dividendsFrom,      11.0f, 0.0001f);
+    ASSERT_NEAR(filter2.dividendsTo,        12.0f, 0.0001f);
+    ASSERT_EQ(filter2.useShorts,            true);
+    ASSERT_EQ(filter2.shorts,               SHORTS_ONLY_WITH_ENABLED);
     // clang-format on
 }
 
@@ -193,6 +218,20 @@ TEST_F(Test_StockFilter, Test_isActive)
     ASSERT_EQ(filter.isActive(), true);
     filter.usePayback = false;
     ASSERT_EQ(filter.isActive(), false);
+
+    filter.useDividends = true;
+    ASSERT_EQ(filter.isActive(), true);
+    filter.useDividends = false;
+    ASSERT_EQ(filter.isActive(), false);
+
+    filter.useShorts = true;
+    ASSERT_EQ(filter.isActive(), false);
+    filter.shorts = SHORTS_ONLY_WITH_ENABLED;
+    ASSERT_EQ(filter.isActive(), true);
+    filter.useShorts = false;
+    ASSERT_EQ(filter.isActive(), false);
+    filter.shorts = SHORTS_SHOW_ALL;
+    ASSERT_EQ(filter.isActive(), false);
 }
 
 TEST_F(Test_StockFilter, Test_isFiltered)
@@ -219,6 +258,11 @@ TEST_F(Test_StockFilter, Test_isFiltered)
     filter.usePayback         = true;
     filter.paybackFrom        = 70.0f;
     filter.paybackTo          = 95.0f;
+    filter.useDividends       = true;
+    filter.dividendsFrom      = 3.0f;
+    filter.dividendsTo        = 7.0f;
+    filter.useShorts          = true;
+    filter.shorts             = SHORTS_ONLY_WITH_DISABLED;
 
     entry.instrumentTicker    = "SPBE";
     entry.instrumentName      = "SPB Market";
@@ -228,6 +272,8 @@ TEST_F(Test_StockFilter, Test_isFiltered)
     entry.dateChange          = 75.0f;
     entry.turnover            = 170;
     entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
 
     ASSERT_EQ(filter.isFiltered(entry), true);
 
@@ -239,6 +285,8 @@ TEST_F(Test_StockFilter, Test_isFiltered)
     entry.dateChange          = 75.0f;
     entry.turnover            = 170;
     entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
 
     ASSERT_EQ(filter.isFiltered(entry), true);
 
@@ -250,116 +298,21 @@ TEST_F(Test_StockFilter, Test_isFiltered)
     entry.dateChange          = 75.0f;
     entry.turnover            = 170;
     entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
 
     ASSERT_EQ(filter.isFiltered(entry), true);
 
-    entry.instrumentTicker    = "SPBE";
-    entry.instrumentName      = "SPB Market";
+    entry.instrumentTicker    = "SEPB";
+    entry.instrumentName      = "SEB Market";
     entry.forQualInvestorFlag = false;
     entry.price               = 300.0f;
     entry.dayChange           = 3.5f;
     entry.dateChange          = 75.0f;
     entry.turnover            = 170;
-    entry.payback             = 99.0f;
-
-    ASSERT_EQ(filter.isFiltered(entry), false);
-
-    entry.instrumentTicker    = "SPBE";
-    entry.instrumentName      = "SPB Market";
-    entry.forQualInvestorFlag = false;
-    entry.price               = 300.0f;
-    entry.dayChange           = 3.5f;
-    entry.dateChange          = 75.0f;
-    entry.turnover            = 170;
-    entry.payback             = 60.0f;
-
-    ASSERT_EQ(filter.isFiltered(entry), false);
-
-    entry.instrumentTicker    = "SPBE";
-    entry.instrumentName      = "SPB Market";
-    entry.forQualInvestorFlag = false;
-    entry.price               = 300.0f;
-    entry.dayChange           = 3.5f;
-    entry.dateChange          = 75.0f;
-    entry.turnover            = 250;
     entry.payback             = 90.0f;
-
-    ASSERT_EQ(filter.isFiltered(entry), false);
-
-    entry.instrumentTicker    = "SPBE";
-    entry.instrumentName      = "SPB Market";
-    entry.forQualInvestorFlag = false;
-    entry.price               = 300.0f;
-    entry.dayChange           = 3.5f;
-    entry.dateChange          = 75.0f;
-    entry.turnover            = 100;
-    entry.payback             = 90.0f;
-
-    ASSERT_EQ(filter.isFiltered(entry), false);
-
-    entry.instrumentTicker    = "SPBE";
-    entry.instrumentName      = "SPB Market";
-    entry.forQualInvestorFlag = false;
-    entry.price               = 300.0f;
-    entry.dayChange           = 3.5f;
-    entry.dateChange          = 90.0f;
-    entry.turnover            = 170;
-    entry.payback             = 90.0f;
-
-    ASSERT_EQ(filter.isFiltered(entry), false);
-
-    entry.instrumentTicker    = "SPBE";
-    entry.instrumentName      = "SPB Market";
-    entry.forQualInvestorFlag = false;
-    entry.price               = 300.0f;
-    entry.dayChange           = 3.5f;
-    entry.dateChange          = 40.0f;
-    entry.turnover            = 170;
-    entry.payback             = 90.0f;
-
-    ASSERT_EQ(filter.isFiltered(entry), false);
-
-    entry.instrumentTicker    = "SPBE";
-    entry.instrumentName      = "SPB Market";
-    entry.forQualInvestorFlag = false;
-    entry.price               = 300.0f;
-    entry.dayChange           = 8.0f;
-    entry.dateChange          = 75.0f;
-    entry.turnover            = 170;
-    entry.payback             = 90.0f;
-
-    ASSERT_EQ(filter.isFiltered(entry), false);
-
-    entry.instrumentTicker    = "SPBE";
-    entry.instrumentName      = "SPB Market";
-    entry.forQualInvestorFlag = false;
-    entry.price               = 300.0f;
-    entry.dayChange           = 1.0f;
-    entry.dateChange          = 75.0f;
-    entry.turnover            = 170;
-    entry.payback             = 90.0f;
-
-    ASSERT_EQ(filter.isFiltered(entry), false);
-
-    entry.instrumentTicker    = "SPBE";
-    entry.instrumentName      = "SPB Market";
-    entry.forQualInvestorFlag = false;
-    entry.price               = 400.0f;
-    entry.dayChange           = 3.5f;
-    entry.dateChange          = 75.0f;
-    entry.turnover            = 170;
-    entry.payback             = 90.0f;
-
-    ASSERT_EQ(filter.isFiltered(entry), false);
-
-    entry.instrumentTicker    = "SPBE";
-    entry.instrumentName      = "SPB Market";
-    entry.forQualInvestorFlag = false;
-    entry.price               = 200.0f;
-    entry.dayChange           = 3.5f;
-    entry.dateChange          = 75.0f;
-    entry.turnover            = 170;
-    entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
 
     ASSERT_EQ(filter.isFiltered(entry), false);
 
@@ -371,17 +324,177 @@ TEST_F(Test_StockFilter, Test_isFiltered)
     entry.dateChange          = 75.0f;
     entry.turnover            = 170;
     entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
 
     ASSERT_EQ(filter.isFiltered(entry), false);
 
-    entry.instrumentTicker    = "SEPB";
-    entry.instrumentName      = "SEB Market";
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 400.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 200.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 8.0f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 1.0f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 90.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 40.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 250;
+    entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 100;
+    entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 99.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 60.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
     entry.forQualInvestorFlag = false;
     entry.price               = 300.0f;
     entry.dayChange           = 3.5f;
     entry.dateChange          = 75.0f;
     entry.turnover            = 170;
     entry.payback             = 90.0f;
+    entry.dividends.yield     = 1.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+    entry.dividends.yield     = 9.0f;
+    entry.shorts.enabled      = false;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+    entry.dividends.yield     = 5.0f;
+    entry.shorts.enabled      = true;
 
     ASSERT_EQ(filter.isFiltered(entry), false);
 }
@@ -410,6 +523,11 @@ TEST_F(Test_StockFilter, Test_equals)
     filter.usePayback         = true;
     filter.paybackFrom        = 9.0f;
     filter.paybackTo          = 10.0f;
+    filter.useDividends       = true;
+    filter.dividendsFrom      = 11.0f;
+    filter.dividendsTo        = 12.0f;
+    filter.useShorts          = true;
+    filter.shorts             = SHORTS_ONLY_WITH_ENABLED;
 
     filter2.useTicker          = true;
     filter2.ticker             = "BLAH";
@@ -430,6 +548,11 @@ TEST_F(Test_StockFilter, Test_equals)
     filter2.usePayback         = true;
     filter2.paybackFrom        = 9.0f;
     filter2.paybackTo          = 10.0f;
+    filter2.useDividends       = true;
+    filter2.dividendsFrom      = 11.0f;
+    filter2.dividendsTo        = 12.0f;
+    filter2.useShorts          = true;
+    filter2.shorts             = SHORTS_ONLY_WITH_ENABLED;
 
     ASSERT_EQ(filter, filter2);
 
@@ -526,6 +649,31 @@ TEST_F(Test_StockFilter, Test_equals)
     filter2.paybackTo = 100.0f;
     ASSERT_NE(filter, filter2);
     filter2.paybackTo = 10.0f;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.useDividends = false;
+    ASSERT_NE(filter, filter2);
+    filter2.useDividends = true;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.dividendsFrom = 100.0f;
+    ASSERT_NE(filter, filter2);
+    filter2.dividendsFrom = 11.0f;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.dividendsTo = 100.0f;
+    ASSERT_NE(filter, filter2);
+    filter2.dividendsTo = 12.0f;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.useShorts = false;
+    ASSERT_NE(filter, filter2);
+    filter2.useShorts = true;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.shorts = SHORTS_ONLY_WITH_DISABLED;
+    ASSERT_NE(filter, filter2);
+    filter2.shorts = SHORTS_ONLY_WITH_ENABLED;
     ASSERT_EQ(filter, filter2);
 }
 // NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

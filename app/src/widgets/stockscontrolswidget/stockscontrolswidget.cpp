@@ -299,6 +299,60 @@ void StocksControlsWidget::on_paybackToDoubleSpinBox_valueChanged(double value)
     filterChangeDelayTimer.start();
 }
 
+void StocksControlsWidget::on_dividendsCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mFilter.useDividends = checked;
+    ui->dividendsFromDoubleSpinBox->setEnabled(checked);
+    ui->dividendsToDoubleSpinBox->setEnabled(checked);
+
+    filterChangeDelayTimer.start();
+}
+
+void StocksControlsWidget::on_dividendsFromDoubleSpinBox_valueChanged(double value)
+{
+    mFilter.dividendsFrom = value;
+
+    if (mFilter.dividendsFrom > mFilter.dividendsTo)
+    {
+        mFilter.dividendsTo = mFilter.dividendsFrom;
+        ui->dividendsToDoubleSpinBox->setValue(mFilter.dividendsTo);
+    }
+
+    filterChangeDelayTimer.start();
+}
+
+void StocksControlsWidget::on_dividendsToDoubleSpinBox_valueChanged(double value)
+{
+    mFilter.dividendsTo = value;
+
+    if (mFilter.dividendsTo < mFilter.dividendsFrom)
+    {
+        mFilter.dividendsFrom = mFilter.dividendsTo;
+        ui->dividendsFromDoubleSpinBox->setValue(mFilter.dividendsFrom);
+    }
+
+    filterChangeDelayTimer.start();
+}
+
+void StocksControlsWidget::on_shortsCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mFilter.useShorts = checked;
+    ui->shortsComboBox->setEnabled(checked);
+
+    filterChangeDelayTimer.start();
+}
+
+void StocksControlsWidget::on_shortsComboBox_currentIndexChanged(int index)
+{
+    mFilter.shorts = ShortsFilter(index);
+
+    filterChangeDelayTimer.start();
+}
+
 void StocksControlsWidget::on_hideButton_clicked()
 {
     if (ui->stackedWidget->currentWidget() == ui->controlsVisiblePage)
@@ -349,6 +403,11 @@ void StocksControlsWidget::saveWindowState(const QString& type)
     mSettingsEditor->setValue(type + "/usePayback",         ui->paybackCheckBox->isChecked());
     mSettingsEditor->setValue(type + "/paybackFrom",        ui->paybackFromDoubleSpinBox->value());
     mSettingsEditor->setValue(type + "/paybackTo",          ui->paybackToDoubleSpinBox->value());
+    mSettingsEditor->setValue(type + "/useDividends",       ui->dividendsCheckBox->isChecked());
+    mSettingsEditor->setValue(type + "/dividendsFrom",      ui->dividendsFromDoubleSpinBox->value());
+    mSettingsEditor->setValue(type + "/dividendsTo",        ui->dividendsToDoubleSpinBox->value());
+    mSettingsEditor->setValue(type + "/useShorts",          ui->shortsCheckBox->isChecked());
+    mSettingsEditor->setValue(type + "/shorts",             ui->shortsComboBox->currentIndex());
     // clang-format on
 
     mSettingsEditor->setValue(type + "/visible", ui->stackedWidget->currentWidget() == ui->controlsVisiblePage);
@@ -382,6 +441,11 @@ void StocksControlsWidget::loadWindowState(const QString& type)
     ui->paybackCheckBox->setChecked(mSettingsEditor->value(type + "/usePayback",                               false).toBool());
     ui->paybackFromDoubleSpinBox->setValue(mSettingsEditor->value(type + "/paybackFrom",                       0.0).toDouble());
     ui->paybackToDoubleSpinBox->setValue(mSettingsEditor->value(type + "/paybackTo",                           100.0).toDouble());
+    ui->dividendsCheckBox->setChecked(mSettingsEditor->value(type + "/useDividends",                           false).toBool());
+    ui->dividendsFromDoubleSpinBox->setValue(mSettingsEditor->value(type + "/dividendsFrom",                   0.0).toDouble());
+    ui->dividendsToDoubleSpinBox->setValue(mSettingsEditor->value(type + "/dividendsTo",                       100.0).toDouble());
+    ui->shortsCheckBox->setChecked(mSettingsEditor->value(type + "/useShorts",                                 false).toBool());
+    ui->shortsComboBox->setCurrentIndex(mSettingsEditor->value(type + "/shorts",                               SHORTS_SHOW_ALL).toInt());
     // clang-format on
 
     if (!mSettingsEditor->value(type + "/visible", true).toBool())
