@@ -2,10 +2,10 @@
 
 
 
-constexpr qint64 TURNOVER_TO_DEFAULT = 1000000000000;
-constexpr float  PAYBACK_TO_DEFAULT  = 100;
+constexpr qint64 TURNOVER_TO_DEFAULT  = 1000000000000;
+constexpr float  PAYBACK_TO_DEFAULT   = 100;
 constexpr float  DIVIDENDS_TO_DEFAULT = 100;
-constexpr float  FLOAT_EPSILON       = 0.0001f;
+constexpr float  FLOAT_EPSILON        = 0.0001f;
 
 
 
@@ -39,14 +39,8 @@ StockFilter::StockFilter() :
 
 bool StockFilter::isActive() const
 {
-    return (useTicker && ticker != "") ||
-           (useQualInvestor && qualInvestor != QUAL_INVESTOR_SHOW_ALL) ||
-           usePrice ||
-           useDayStartChange ||
-           useDateChange ||
-           useTurnover ||
-           usePayback ||
-           useDividends ||
+    return (useTicker && ticker != "") || (useQualInvestor && qualInvestor != QUAL_INVESTOR_SHOW_ALL) || usePrice ||
+           useDayStartChange || useDateChange || useTurnover || usePayback || useDividends ||
            (useShorts && shorts != SHORTS_SHOW_ALL);
 }
 
@@ -104,28 +98,16 @@ bool StockFilter::isFiltered(const StockTableEntry& entry) const
 
 bool operator==(const StockFilter& lhs, const StockFilter& rhs)
 {
-    return lhs.useTicker == rhs.useTicker &&
-           lhs.ticker == rhs.ticker &&
-           lhs.useQualInvestor == rhs.useQualInvestor &&
-           lhs.qualInvestor == rhs.qualInvestor &&
-           lhs.usePrice == rhs.usePrice &&
-           qAbs(lhs.priceFrom - rhs.priceFrom) < FLOAT_EPSILON &&
-           qAbs(lhs.priceTo - rhs.priceTo) < FLOAT_EPSILON &&
+    return lhs.useTicker == rhs.useTicker && lhs.ticker == rhs.ticker && lhs.useQualInvestor == rhs.useQualInvestor &&
+           lhs.qualInvestor == rhs.qualInvestor && lhs.usePrice == rhs.usePrice &&
+           qAbs(lhs.priceFrom - rhs.priceFrom) < FLOAT_EPSILON && qAbs(lhs.priceTo - rhs.priceTo) < FLOAT_EPSILON &&
            lhs.useDayStartChange == rhs.useDayStartChange &&
            qAbs(lhs.dayStartChangeFrom - rhs.dayStartChangeFrom) < FLOAT_EPSILON &&
-           qAbs(lhs.dayStartChangeTo - rhs.dayStartChangeTo) < FLOAT_EPSILON &&
-           lhs.useDateChange == rhs.useDateChange &&
+           qAbs(lhs.dayStartChangeTo - rhs.dayStartChangeTo) < FLOAT_EPSILON && lhs.useDateChange == rhs.useDateChange &&
            qAbs(lhs.dateChangeFrom - rhs.dateChangeFrom) < FLOAT_EPSILON &&
-           qAbs(lhs.dateChangeTo - rhs.dateChangeTo) < FLOAT_EPSILON &&
-           lhs.useTurnover == rhs.useTurnover &&
-           lhs.turnoverFrom == rhs.turnoverFrom &&
-           lhs.turnoverTo == rhs.turnoverTo &&
-           lhs.usePayback == rhs.usePayback &&
-           qAbs(lhs.paybackFrom - rhs.paybackFrom) < FLOAT_EPSILON &&
-           qAbs(lhs.paybackTo - rhs.paybackTo) < FLOAT_EPSILON &&
-           lhs.useDividends == rhs.useDividends &&
-           qAbs(lhs.dividendsFrom - rhs.dividendsFrom) < FLOAT_EPSILON &&
-           qAbs(lhs.dividendsTo - rhs.dividendsTo) < FLOAT_EPSILON &&
-           lhs.useShorts == rhs.useShorts &&
-           lhs.shorts == rhs.shorts;
+           qAbs(lhs.dateChangeTo - rhs.dateChangeTo) < FLOAT_EPSILON && lhs.useTurnover == rhs.useTurnover &&
+           lhs.turnoverFrom == rhs.turnoverFrom && lhs.turnoverTo == rhs.turnoverTo && lhs.usePayback == rhs.usePayback &&
+           qAbs(lhs.paybackFrom - rhs.paybackFrom) < FLOAT_EPSILON && qAbs(lhs.paybackTo - rhs.paybackTo) < FLOAT_EPSILON &&
+           lhs.useDividends == rhs.useDividends && qAbs(lhs.dividendsFrom - rhs.dividendsFrom) < FLOAT_EPSILON &&
+           qAbs(lhs.dividendsTo - rhs.dividendsTo) < FLOAT_EPSILON && lhs.useShorts == rhs.useShorts && lhs.shorts == rhs.shorts;
 }
