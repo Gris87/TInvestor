@@ -108,22 +108,22 @@ void PortfolioTreeWidget::updateLastPrices()
     }
 }
 
-void PortfolioTreeWidget::updateCostLabel()
+void PortfolioTreeWidget::updateCostLabel() const
 {
     ui->costLabel->setText(mShowMoney ? QString::number(mTotalCost, 'f', 2) + " \u20BD" : "*** \u20BD");
 }
 
-void PortfolioTreeWidget::updateAllTimeLabel()
+void PortfolioTreeWidget::updateAllTimeLabel() const
 {
     updateYieldLabel(ui->allTimeLabel, mPortfolioTreeModel->totalYield(), mTotalCost);
 }
 
-void PortfolioTreeWidget::updateForTodayLabel()
+void PortfolioTreeWidget::updateForTodayLabel() const
 {
     updateYieldLabel(ui->forTodayLabel, mPortfolioTreeModel->totalDailyYield(), mTotalDailyCost);
 }
 
-void PortfolioTreeWidget::updateYieldLabel(QLabel* label, double yield, double cost)
+void PortfolioTreeWidget::updateYieldLabel(QLabel* label, double yield, double cost) const
 {
     const QString prefix1 = yield > 0 ? "+" : (yield < 0 ? "-" : "");
     const QString prefix2 = yield > 0 ? "+" : "";

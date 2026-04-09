@@ -53,10 +53,10 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
-    void updateCostLabel();
-    void updateAllTimeLabel();
-    void updateForTodayLabel();
-    void updateYieldLabel(QLabel* label, double yield, double cost);
+    void updateCostLabel() const;
+    void updateAllTimeLabel() const;
+    void updateForTodayLabel() const;
+    void updateYieldLabel(QLabel* label, double yield, double cost) const;
     void sellInstrument(AsapMode mode, const QString& modeText);
     void exportToExcel(const QString& path) const;
 
