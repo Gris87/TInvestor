@@ -1,6 +1,3 @@
-Tests for dividends and shorts on stocks model
-Double check for cancelling buy orders in bidir trading
-Improve coverage
 Create release
 
 Double check sell decisions to let them "sell" shorts
