@@ -1,7 +1,6 @@
-Create release
-
 Double check sell decisions to let them "sell" shorts
 Make trading thread to trade with shorts
+Adapt bi-dir trading thread for shorts
 Improve coverage
 Create release
 
