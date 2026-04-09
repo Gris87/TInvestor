@@ -322,6 +322,11 @@ static QVariant stocksDividendsTooltipRole(const StockTableEntry& entry)
 
 static QVariant stocksShortsTooltipRole(const StockTableEntry& entry)
 {
+    if (entry.shorts.lastEnabledTimestamp == 0)
+    {
+        return QVariant();
+    }
+
     return QObject::tr("Last enabled time: %1")
         .arg(QDateTime::fromMSecsSinceEpoch(entry.shorts.lastEnabledTimestamp).toString(DATETIME_FORMAT));
 }
