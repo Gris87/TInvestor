@@ -1,9 +1,14 @@
+Move telegram notifications to dedicated script
+Make telegram bot to read notifications from cache folder
+Fix telegram bot
+Cleanup cache folder with notifications
+Notifier app
+Force set quantity to zero if instrument missing in operations thread
+Option for additional gap of bi-dir trading
 Double check sell decisions to let them "sell" shorts
 Make trading thread to trade with shorts
 Adapt bi-dir trading thread for shorts
-Improve coverage
-Create release
-
+Create script for collecting the most frequent bi-dir tradings and give them more preferences (10% part?)
 Create script for buying/selling in parts
 Find best configs for different commission
 Change config defaults
