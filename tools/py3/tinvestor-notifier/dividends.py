@@ -8,7 +8,7 @@ from loguru import logger
 from pathlib import Path
 
 from localization import *
-from messaging import send_message
+from messaging import store_message
 
 
 DIVIDENDS_URL="https://api-invest.tbank.ru/invest-terminal/api-invest-gw/fireg-advisory/invest-calendar/v2/event/info?startDate={start_date}&endDate={end_date}&mySecuritiesFlag=false&qualFlag=false&eventTypes=dividends&limit=100"
@@ -29,7 +29,7 @@ def check_dividends(args):
 
         for instrument_id, dividend in dividends.items():
             if instrument_id not in old_dividends:
-                send_message(msg_recommend_to_buy + "\n" + msg_dividends.format(ticker=dividend["ticker"], name=dividend["name"], yield_value=dividend["yieldValue"]))
+                store_message(args, msg_recommend_to_buy + "\n" + msg_dividends.format(ticker=dividend["ticker"], name=dividend["name"], yield_value=dividend["yieldValue"]))
 
     with open(dividends_path, "w", encoding="utf-8") as f:
         json.dump(dividends, f, ensure_ascii=False)

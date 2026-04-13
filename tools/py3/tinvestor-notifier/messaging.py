@@ -1,15 +1,29 @@
-import os
-import requests
+import json
+import time
+import uuid
 
 from loguru import logger
+from pathlib import Path
 
 
-TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
-TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
-TELEGRAM_SEND_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+MS_IN_SECOND = 1000
 
 
-def send_message(msg):
-    logger.info(f"Send message: {msg}")
+def store_message(args, msg):
+    logger.info(f"Store message: {msg}")
 
-    requests.post(TELEGRAM_SEND_URL, json={"chat_id": TELEGRAM_CHAT_ID, "text": msg})
+    timestamp = int(time.time() * MS_IN_SECOND)
+    record_uuid = uuid.uuid4()
+
+    record = {
+        "timestamp": timestamp,
+        "text": msg
+    }
+
+    output_path = Path(args.output)
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    record_path = output_path / f"{timestamp}_{record_uuid}.json"
+
+    with open(record_path, "w", encoding="utf-8") as f:
+        json.dump(record, f, ensure_ascii=False)

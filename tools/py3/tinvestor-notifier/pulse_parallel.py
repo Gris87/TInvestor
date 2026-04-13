@@ -8,7 +8,7 @@ from http import HTTPStatus
 from loguru import logger
 
 from localization import *
-from messaging import send_message
+from messaging import store_message
 
 
 PULSE_URL = "https://api-invest.tbank.ru/invest-terminal/api-invest-gw/social/post/feed/v1/post/instrument/{ticker}?limit=20&include=all"
@@ -61,21 +61,21 @@ def _process_posts(args, posts):
         if match is not None:
             found_text = match.group(1).strip()
 
-            send_message(msg_recommend_to_investigate + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
+            store_message(args, msg_recommend_to_investigate + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
 
         match = recommend_to_buy_regexp.match(post_text_simplified)
 
         if match is not None:
             found_text = match.group(1).strip()
 
-            send_message(msg_recommend_to_buy + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
+            store_message(args, msg_recommend_to_buy + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
 
         match = recommend_to_short_regexp.match(post_text_simplified)
 
         if match is not None:
             found_text = match.group(1).strip()
 
-            send_message(msg_recommend_to_short + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
+            store_message(args, msg_recommend_to_short + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
 
 
 if __name__ == "__main__":
@@ -86,6 +86,13 @@ if __name__ == "__main__":
         type=str,
         default="",
         help="Instrument ticker",
+    )
+    parser.add_argument(
+        "--output",
+        dest="output",
+        type=str,
+        default="",
+        help="Output folder"
     )
     args = parser.parse_args()
 

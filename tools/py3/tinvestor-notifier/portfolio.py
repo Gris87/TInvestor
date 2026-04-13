@@ -9,7 +9,7 @@ from loguru import logger
 from pathlib import Path
 
 from localization import *
-from messaging import send_message
+from messaging import store_message
 from tinkoff.invest import Client, GetOperationsByCursorRequest
 from tinkoff.invest.constants import INVEST_GRPC_API
 from tinkoff.invest.schemas import OperationState
@@ -52,7 +52,8 @@ def check_portfolio(args):
                 [
                     "python",
                     str(Path(PATH_TO_SCRIPT) / "pulse_parallel.py"),
-                    "--ticker", position.ticker
+                    "--ticker", position.ticker,
+                    "--output", args.output
                 ]
             )
 
@@ -61,7 +62,7 @@ def check_portfolio(args):
             old_positions = json.loads(f.read())
 
         if positions != old_positions:
-            send_message(msg_positions_changed + "\n\n" + _describe_portfolio(portfolio.positions))
+            store_message(args, msg_positions_changed + "\n\n" + _describe_portfolio(portfolio.positions))
 
     with open(positions_path, "w", encoding="utf-8") as f:
         json.dump(positions, f, ensure_ascii=False)

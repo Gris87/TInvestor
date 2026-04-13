@@ -12,19 +12,19 @@ from pathlib import Path
 
 from dividends import check_dividends
 from localization import *
-from messaging import send_message
+from messaging import store_message
 from portfolio import check_portfolio
 from pulse import check_pulse
 
 
-HUGE_SELL = 45.0
-HUNDRED_PERCENT = 100.0
-MS_IN_SECOND = 1000
-ONE_MINUTE = 60 * MS_IN_SECOND
-ONE_HOUR = 60 * ONE_MINUTE
-ONE_DAY = 24 * ONE_HOUR
+HUGE_SELL          = 45.0
+HUNDRED_PERCENT    = 100.0
+MS_IN_SECOND       = 1000
+ONE_MINUTE         = 60 * MS_IN_SECOND
+ONE_HOUR           = 60 * ONE_MINUTE
+ONE_DAY            = 24 * ONE_HOUR
 HUGE_SELL_INTERVAL = 5 * ONE_DAY
-HUGE_SELL_STEP = 60
+HUGE_SELL_STEP     = 60
 
 
 def telegram_bot(args):
@@ -58,14 +58,14 @@ def _check_operations_json(args):
     delta = now - last_timestamp
 
     if delta > args.inactivity_days * ONE_DAY:
-        send_message(msg_operations_inactivity)
+        store_message(args, msg_operations_inactivity)
 
 
 def _check_core_file(args):
     core_file = Path(args.path_to_operations).parent.parent.parent.parent / "core"
 
     if core_file.exists():
-        send_message(msg_core_file_found)
+        store_message(args, msg_core_file_found)
 
         now = round(time.time() * MS_IN_SECOND)
         os.rename(core_file, f"{core_file}_{now}")
@@ -81,7 +81,7 @@ def _check_app_running(args):
             break
 
     if not found:
-        send_message(msg_app_restart)
+        store_message(args, msg_app_restart)
 
         home_directory = Path.home()
         subprocess.Popen(["xdg-open", f"{home_directory}/Desktop/TInvestor.desktop"], close_fds=True)
@@ -117,7 +117,7 @@ def _check_huge_sell(args):
         #         break
 
         if len(data) > 0 and _is_huge_sell_found(data, len(data) - 1):
-            send_message(msg_recommend_to_buy + "\n" + msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
+            store_message(args, msg_recommend_to_buy + "\n" + msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
 
 
 def _is_huge_sell_found(data, index):
@@ -221,12 +221,17 @@ def main():
         action="store_true",
         help="Send notifications about interesting pulse posts for stocks in portfolio",
     )
+    parser.add_argument(
+        "--output",
+        dest="output",
+        type=str,
+        default="",
+        help="Output folder"
+    )
     args = parser.parse_args()
 
     expected_env_vars = [
-        "DISPLAY",
-        "TELEGRAM_TOKEN",
-        "TELEGRAM_CHAT_ID"
+        "DISPLAY"
     ]
     good = True
 
@@ -264,5 +269,10 @@ def main():
             logger.error("Please specify account ID with --account")
 
             sys.exit(1)
+
+    if args.output == "":
+        logger.error("Please specify path to output folder with --output")
+
+        sys.exit(1)
 
     sys.exit(0 if telegram_bot(args) else 1)
