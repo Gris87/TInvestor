@@ -27,7 +27,7 @@ HUGE_SELL_INTERVAL = 5 * ONE_DAY
 HUGE_SELL_STEP     = 60
 
 
-def telegram_bot(args):
+def notifier(args):
     if args.dividends_only:
         return check_dividends(args)
 
@@ -275,4 +275,4 @@ def main():
 
         sys.exit(1)
 
-    sys.exit(0 if telegram_bot(args) else 1)
+    sys.exit(0 if notifier(args) else 1)
