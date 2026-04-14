@@ -49,8 +49,6 @@ async def asap_trading(args):
         await _start_orderbook_streaming(client, args.account, args.instrument_id, args.spread, args.max_buy_price, args.min_sell_price, args.limit_lots, args.limit_by_time)
         await _cancel_orders(client, args.account)
 
-    return
-
 
 def _get_token(token, token_file):
     if token != "":

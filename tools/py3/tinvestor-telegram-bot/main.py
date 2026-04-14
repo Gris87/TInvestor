@@ -1,13 +1,35 @@
+import asyncio
 import argparse
 import json
+import logging
 import os
 import sys
 
+from telethon import TelegramClient, connection
 from loguru import logger
 from pathlib import Path
 
 
+#logging.basicConfig(level=logging.DEBUG)
+
+
 def telegram_bot(args):
+    api_id = os.environ["TELEGRAM_API_ID"]
+    api_hash = os.environ["TELEGRAM_API_HASH"]
+    mtproxy_server = os.environ["TELEGRAM_MTPROXY_SERVER"]
+    mtproxy_port = int(os.environ["TELEGRAM_MTPROXY_PORT"])
+    mtproxy_secret = os.environ["TELEGRAM_MTPROXY_SECRET"]
+    bot_token = os.environ["TELEGRAM_TOKEN"]
+
+    client = TelegramClient('bot', api_id, api_hash, connection=connection.ConnectionTcpMTProxyRandomizedIntermediate, proxy=(mtproxy_server, mtproxy_port, mtproxy_secret)).start(bot_token=bot_token)
+
+    with client:
+        client.loop.run_until_complete(_process_files(args, client))
+
+    return True
+
+
+async def _process_files(args, client):
     cache_folder_path = Path(args.cache) / "telegram"
     cache_folder_path.mkdir(parents=True, exist_ok=True)
 
@@ -27,7 +49,7 @@ def telegram_bot(args):
         if record_path.stat().st_mtime >= last_timestamp:
             last_timestamp = record_path.stat().st_mtime
 
-            _process_file(record_path)
+            await _process_file(client, record_path)
 
     state = {
         "last_timestamp": last_timestamp + 1
@@ -36,18 +58,20 @@ def telegram_bot(args):
     with open(state_path, "w", encoding="utf-8") as f:
         json.dump(state, f, ensure_ascii=False)
 
-    return True
 
-
-def _process_file(record_path):
+async def _process_file(client, record_path):
     with open(record_path, "r", encoding="utf-8") as f:
         record = json.loads(f.read())
 
-    _send_message(record["text"])
+    await _send_message(client, record["text"])
 
 
-def _send_message(msg):
+async def _send_message(client, msg):
     logger.info(f"Send message: {msg}")
+
+    target_username = os.environ["TELEGRAM_TARGET_USERNAME"]
+
+    await client.send_message(target_username, msg)
 
 
 def main():
@@ -69,8 +93,13 @@ def main():
     args = parser.parse_args()
 
     expected_env_vars = [
+        "TELEGRAM_API_ID",
+        "TELEGRAM_API_HASH",
+        "TELEGRAM_MTPROXY_SERVER",
+        "TELEGRAM_MTPROXY_PORT",
+        "TELEGRAM_MTPROXY_SECRET",
         "TELEGRAM_TOKEN",
-        "TELEGRAM_CHAT_ID"
+        "TELEGRAM_TARGET_USERNAME"
     ]
     good = True
 
