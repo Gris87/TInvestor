@@ -369,7 +369,7 @@ bool OperationsThread::requestOperations()
             }
         }
 
-        alignWithPortfolio(&operations.first()); // Since it reversed
+        alignWithPortfolio(operations);
 
         if (mLastRequestTimestamp == 0)
         {
@@ -674,8 +674,10 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
-void OperationsThread::alignWithPortfolio(Operation* lastOperation)
+void OperationsThread::alignWithPortfolio(QList<Operation>& lastOperations)
 {
+    Operation& lastOperation = lastOperations.first(); // Since it reversed
+
     const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
         mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);
 
@@ -719,16 +721,59 @@ void OperationsThread::alignWithPortfolio(Operation* lastOperation)
                 quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mInputMoney) * HUNDRED_PERCENT;
         }
 
-        lastOperation->remainedMoney                   = mRemainedMoney;
-        lastOperation->totalMoney                      = mTotalMoney;
-        lastOperation->totalYieldWithCommission        = mTotalYieldWithCommission;
-        lastOperation->totalYieldWithCommissionPercent = totalYieldWithCommissionPercent;
+        lastOperation.remainedMoney                   = mRemainedMoney;
+        lastOperation.totalMoney                      = mTotalMoney;
+        lastOperation.totalYieldWithCommission        = mTotalYieldWithCommission;
+        lastOperation.totalYieldWithCommissionPercent = totalYieldWithCommissionPercent;
 
         const QSet<QString> instrumentsToRemoveFromCache = cachedInstruments - portfolioInstruments;
 
-        for (auto it = instrumentsToRemoveFromCache.constBegin(), end = instrumentsToRemoveFromCache.constEnd(); it != end; ++it)
+        if (!instrumentsToRemoveFromCache.isEmpty())
         {
-            mInstruments.remove(*it);
+            bool needToOverwrite = false;
+
+            QList<Operation> oldOperations = mOperationsDatabase->readOperations();
+
+            for (auto it = instrumentsToRemoveFromCache.constBegin(), end = instrumentsToRemoveFromCache.constEnd(); it != end;
+                 ++it)
+            {
+                const QString& instrumentId = *it;
+
+                bool found = false;
+
+                for (int i = 0; i < lastOperations.size(); ++i)
+                {
+                    if (lastOperations.at(i).instrumentId == instrumentId)
+                    {
+                        found                              = true;
+                        lastOperations[i].remainedQuantity = 0;
+
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    for (int i = 0; i < oldOperations.size(); ++i)
+                    {
+                        if (oldOperations.at(i).instrumentId == instrumentId)
+                        {
+                            needToOverwrite                   = true;
+                            oldOperations[i].remainedQuantity = 0;
+
+                            break;
+                        }
+                    }
+                }
+
+                mInstruments.remove(instrumentId);
+            }
+
+            if (needToOverwrite)
+            {
+                emit operationsRead(oldOperations);
+                mOperationsDatabase->writeOperations(oldOperations);
+            }
         }
     }
 }

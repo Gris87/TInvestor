@@ -47,7 +47,7 @@ public:
 
     bool requestOperations();
     void handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
-    void alignWithPortfolio(Operation* lastOperation);
+    void alignWithPortfolio(QList<Operation>& lastOperations);
 
 #ifdef TESTING_MODE
     void testSetLimitOperations(int limitOperations)
