@@ -1051,6 +1051,7 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
             tradingThread = mTradingThreadFactory->newInstance(
                 mInstrumentsStorage,
                 mUserStorage,
+                mConfig,
                 mTimeUtils,
                 mGrpcClientForOrders,
                 mGrpcRetryClient,

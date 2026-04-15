@@ -21,6 +21,7 @@ constexpr double DOUBLE_EPSILON              = 0.0001;
 TradingThread::TradingThread(
     IInstrumentsStorage* instrumentsStorage,
     IUserStorage*        userStorage,
+    IConfig*             config,
     ITimeUtils*          timeUtils,
     IGrpcClient*         grpcClient,
     IGrpcRetryClient*    grpcRetryClient,
@@ -38,6 +39,7 @@ TradingThread::TradingThread(
     mRwMutex(new QReadWriteLock()),
     mInstrumentsStorage(instrumentsStorage),
     mUserStorage(userStorage),
+    mConfig(config),
     mTimeUtils(timeUtils),
     mGrpcClient(grpcClient),
     mGrpcRetryClient(grpcRetryClient),
@@ -625,6 +627,9 @@ Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& 
 
         if (mode == ASAP_MODE_NONE)
         {
+            const float additionalGap = mConfig->isAdditionalGap() ? mConfig->getAdditionalGapPercent() : 0;
+            price                     = price * (1 - (additionalGap / HUNDRED_PERCENT));
+
             const double priceRaise = ((price / mPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
             if (priceRaise > MAXIMUM_PRICE_RAISE_PERCENT)

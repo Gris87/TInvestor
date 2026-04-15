@@ -1262,6 +1262,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
         newInstance(
             instrumentsStorageMock,
             userStorageMock,
+            configMock,
             timeUtilsMock,
             grpcClientForOrdersMock,
             grpcRetryClientMock,
@@ -1283,6 +1284,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
         newInstance(
             instrumentsStorageMock,
             userStorageMock,
+            configMock,
             timeUtilsMock,
             grpcClientForOrdersMock,
             grpcRetryClientMock,
@@ -1374,6 +1376,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
         newInstance(
             instrumentsStorageMock,
             userStorageMock,
+            configMock,
             timeUtilsMock,
             grpcClientForOrdersMock,
             grpcRetryClientMock,
@@ -1986,6 +1989,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         newInstance(
             instrumentsStorageMock,
             userStorageMock,
+            configMock,
             timeUtilsMock,
             grpcClientForOrdersMock,
             grpcRetryClientMock,
@@ -2154,6 +2158,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         newInstance(
             instrumentsStorageMock,
             userStorageMock,
+            configMock,
             timeUtilsMock,
             grpcClientForOrdersMock,
             grpcRetryClientMock,

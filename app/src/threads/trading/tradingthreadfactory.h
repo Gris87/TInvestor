@@ -18,6 +18,7 @@ public:
     ITradingThread* newInstance(
         IInstrumentsStorage* instrumentsStorage,
         IUserStorage*        userStorage,
+        IConfig*             config,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
         IGrpcRetryClient*    grpcRetryClient,

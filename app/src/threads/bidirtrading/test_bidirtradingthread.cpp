@@ -399,6 +399,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.1f));
     EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
@@ -457,6 +459,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(orderState));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.1f));
     EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
@@ -497,6 +501,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.1f));
     EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
@@ -937,9 +943,14 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
 
     getOrderBookResponse.set_allocated_last_price(lastPrice);
 
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.1f));
+
     ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID), Quotation(870, 0));
 
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.7f));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.1f));
 
     ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_SPREAD), Quotation(870, 0));
 
@@ -962,6 +973,9 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
     });
 
     thread->testSetStepForTripleCheck(3);
+
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.1f));
 
     ASSERT_EQ(thread->calculateBuyPrice(getOrderBookResponse, BIDIR_MODE_HUGE_BID), Quotation(805, 0));
 }

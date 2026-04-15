@@ -6,6 +6,7 @@
 
 #include <QReadWriteLock>
 
+#include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
@@ -23,6 +24,7 @@ public:
     explicit TradingThread(
         IInstrumentsStorage* instrumentsStorage,
         IUserStorage*        userStorage,
+        IConfig*             config,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
         IGrpcRetryClient*    grpcRetryClient,
@@ -96,6 +98,7 @@ private:
     QReadWriteLock*      mRwMutex;
     IInstrumentsStorage* mInstrumentsStorage;
     IUserStorage*        mUserStorage;
+    IConfig*             mConfig;
     ITimeUtils*          mTimeUtils;
     IGrpcClient*         mGrpcClient;
     IGrpcRetryClient*    mGrpcRetryClient;

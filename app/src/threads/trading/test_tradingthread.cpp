@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/grpc/igrpcretryclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
@@ -27,6 +28,7 @@ protected:
 
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         userStorageMock        = new StrictMock<UserStorageMock>();
+        configMock             = new StrictMock<ConfigMock>();
         timeUtilsMock          = new StrictMock<TimeUtilsMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
         grpcRetryClientMock    = new StrictMock<GrpcRetryClientMock>();
@@ -37,6 +39,7 @@ protected:
         thread = new TradingThread(
             instrumentsStorageMock,
             userStorageMock,
+            configMock,
             timeUtilsMock,
             grpcClientMock,
             grpcRetryClientMock,
@@ -56,6 +59,7 @@ protected:
         delete thread;
         delete instrumentsStorageMock;
         delete userStorageMock;
+        delete configMock;
         delete timeUtilsMock;
         delete grpcClientMock;
         delete grpcRetryClientMock;
@@ -65,6 +69,7 @@ protected:
     TradingThread*                      thread;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
     StrictMock<UserStorageMock>*        userStorageMock;
+    StrictMock<ConfigMock>*             configMock;
     StrictMock<TimeUtilsMock>*          timeUtilsMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
     StrictMock<GrpcRetryClientMock>*    grpcRetryClientMock;
@@ -177,6 +182,8 @@ TEST_F(Test_TradingThread, Test_run)
         .WillOnce(Return(portfolioResponse2));
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), price))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Trade completed successfully")));
@@ -276,6 +283,8 @@ TEST_F(Test_TradingThread, Test_buy)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(nullptr));
 
@@ -292,6 +301,8 @@ TEST_F(Test_TradingThread, Test_buy)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
 
@@ -301,6 +312,8 @@ TEST_F(Test_TradingThread, Test_buy)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(
@@ -339,6 +352,8 @@ TEST_F(Test_TradingThread, Test_buy)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(
@@ -363,6 +378,8 @@ TEST_F(Test_TradingThread, Test_buy)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(
@@ -414,6 +431,8 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(
         *logsThreadMock,
         addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 bought with a price 10.030 \u20BD"))
@@ -447,6 +466,8 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(
         *logsThreadMock,
         addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order is still waiting. 50/50 bought with a price 10.030 \u20BD"))
@@ -460,6 +481,8 @@ TEST_F(Test_TradingThread, Test_buy)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(
@@ -486,6 +509,8 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(
         *logsThreadMock,
         addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order completed. 50/50 bought with a price 10.030 \u20BD"))
@@ -499,6 +524,8 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(orderState));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(
         *logsThreadMock,
         addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Order cancelled. 50/50 bought with a price 10.030 \u20BD"))
@@ -508,6 +535,8 @@ TEST_F(Test_TradingThread, Test_buy)
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(
@@ -532,11 +561,15 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(nullptr));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
 
     ASSERT_EQ(thread->buy(30000, 10000, 40000), false);
 
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBid))
         .WillOnce(Return(getMaxLotsResponse));
     EXPECT_CALL(
@@ -564,6 +597,8 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(nullptr));
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(
         *logsThreadMock,
         addLog(
@@ -1014,6 +1049,9 @@ TEST_F(Test_TradingThread, Test_calculateBuyPrice)
 
     tinkoff::GetOrderBookResponse tinkoffOrderBook1;
 
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
+
     // clang-format off
     ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook1, ASAP_MODE_NONE),              Quotation(0, 0));
     ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook1, ASAP_MODE_FOLLOW_PRICE),      Quotation(0, 0));
@@ -1031,6 +1069,9 @@ TEST_F(Test_TradingThread, Test_calculateBuyPrice)
 
     bid2->set_quantity(10);
     bid2->set_allocated_price(bidPrice2);
+
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
 
     // clang-format off
     ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook2, ASAP_MODE_NONE),              Quotation(10, 10000000));

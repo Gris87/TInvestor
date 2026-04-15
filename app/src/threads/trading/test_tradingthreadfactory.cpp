@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/grpc/igrpcretryclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
@@ -44,6 +45,7 @@ TEST_F(Test_TradingThreadFactory, Test_newInstance)
 
     StrictMock<InstrumentsStorageMock> instrumentsStorageMock;
     StrictMock<UserStorageMock>        userStorageMock;
+    StrictMock<ConfigMock>             configMock;
     StrictMock<TimeUtilsMock>          timeUtilsMock;
     StrictMock<GrpcClientMock>         grpcClientMock;
     StrictMock<GrpcRetryClientMock>    grpcRetryClientMock;
@@ -54,6 +56,7 @@ TEST_F(Test_TradingThreadFactory, Test_newInstance)
     const ITradingThread* thread = factory->newInstance(
         &instrumentsStorageMock,
         &userStorageMock,
+        &configMock,
         &timeUtilsMock,
         &grpcClientMock,
         &grpcRetryClientMock,

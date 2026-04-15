@@ -2,6 +2,7 @@
 
 
 
+#include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/grpc/igrpcretryclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
@@ -24,6 +25,7 @@ public:
     virtual ITradingThread* newInstance(
         IInstrumentsStorage* instrumentsStorage,
         IUserStorage*        userStorage,
+        IConfig*             config,
         ITimeUtils*          timeUtils,
         IGrpcClient*         grpcClient,
         IGrpcRetryClient*    grpcRetryClient,

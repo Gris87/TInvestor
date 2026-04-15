@@ -20,6 +20,7 @@ TradingThreadFactory::~TradingThreadFactory()
 ITradingThread* TradingThreadFactory::newInstance(
     IInstrumentsStorage* instrumentsStorage,
     IUserStorage*        userStorage,
+    IConfig*             config,
     ITimeUtils*          timeUtils,
     IGrpcClient*         grpcClient,
     IGrpcRetryClient*    grpcRetryClient,
@@ -37,6 +38,7 @@ ITradingThread* TradingThreadFactory::newInstance(
     return new TradingThread(
         instrumentsStorage,
         userStorage,
+        config,
         timeUtils,
         grpcClient,
         grpcRetryClient,
