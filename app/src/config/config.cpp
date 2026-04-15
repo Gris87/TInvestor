@@ -30,6 +30,8 @@ constexpr bool  LIMIT_STOCK_PURCHASE_NON_WORKING_HOURS_DEFAULT      = false;
 constexpr float LIMIT_STOCK_PURCHASE_PART_NON_WORKING_HOURS_DEFAULT = 1.0f;
 constexpr bool  LIMIT_BY_TURNOVER_NON_WORKING_HOURS_DEFAULT         = true;
 constexpr float LIMIT_BY_TURNOVER_PERCENT_NON_WORKING_HOURS_DEFAULT = 1.0f;
+constexpr bool  ADDITIONAL_GAP_DEFAULT                              = true;
+constexpr float ADDITIONAL_GAP_PERCENT_DEFAULT                      = 0.1f;
 constexpr int   STORAGE_MONTH_LIMIT_DEFAULT                         = 12;
 constexpr bool  HIGHLIGHT_GOOD_OPERATIONS_DEFAULT                   = true;
 constexpr float HIGHLIGHT_GOOD_OPERATIONS_YIELD_DEFAULT             = 1.0f;
@@ -70,6 +72,8 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mLimitStockPurchasePartNonWorkingHours(),
     mLimitByTurnoverNonWorkingHours(),
     mLimitByTurnoverPercentNonWorkingHours(),
+    mAdditionalGap(),
+    mAdditionalGapPercent(),
     mStorageMonthLimit(),
     mHighlightGoodOperations(),
     mHighlightGoodOperationsYield(),
@@ -144,6 +148,8 @@ void Config::assign(IConfig* another)
     mLimitStockPurchasePartNonWorkingHours = config.mLimitStockPurchasePartNonWorkingHours;
     mLimitByTurnoverNonWorkingHours        = config.mLimitByTurnoverNonWorkingHours;
     mLimitByTurnoverPercentNonWorkingHours = config.mLimitByTurnoverPercentNonWorkingHours;
+    mAdditionalGap                         = config.mAdditionalGap;
+    mAdditionalGapPercent                  = config.mAdditionalGapPercent;
     mStorageMonthLimit                     = config.mStorageMonthLimit;
     mHighlightGoodOperations               = config.mHighlightGoodOperations;
     mHighlightGoodOperationsYield          = config.mHighlightGoodOperationsYield;
@@ -187,6 +193,8 @@ void Config::makeDefault(float commission)
     mLimitStockPurchasePartNonWorkingHours = LIMIT_STOCK_PURCHASE_PART_NON_WORKING_HOURS_DEFAULT;
     mLimitByTurnoverNonWorkingHours        = LIMIT_BY_TURNOVER_NON_WORKING_HOURS_DEFAULT;
     mLimitByTurnoverPercentNonWorkingHours = LIMIT_BY_TURNOVER_PERCENT_NON_WORKING_HOURS_DEFAULT;
+    mAdditionalGap                         = ADDITIONAL_GAP_DEFAULT;
+    mAdditionalGapPercent                  = ADDITIONAL_GAP_PERCENT_DEFAULT;
     mStorageMonthLimit                     = STORAGE_MONTH_LIMIT_DEFAULT;
     mHighlightGoodOperations               = HIGHLIGHT_GOOD_OPERATIONS_DEFAULT;
     mHighlightGoodOperationsYield          = HIGHLIGHT_GOOD_OPERATIONS_YIELD_DEFAULT;
@@ -231,6 +239,8 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/LimitStockPurchasePartNonWorkingHours", mLimitStockPurchasePartNonWorkingHours);
     settingsEditor->setValue("Config/LimitByTurnoverNonWorkingHours",        mLimitByTurnoverNonWorkingHours);
     settingsEditor->setValue("Config/LimitByTurnoverPercentNonWorkingHours", mLimitByTurnoverPercentNonWorkingHours);
+    settingsEditor->setValue("Config/AdditionalGap",                         mAdditionalGap);
+    settingsEditor->setValue("Config/AdditionalGapPercent",                  mAdditionalGapPercent);
     settingsEditor->setValue("Config/StorageMonthLimit",                     mStorageMonthLimit);
     settingsEditor->setValue("Config/HighlightGoodOperations",               mHighlightGoodOperations);
     settingsEditor->setValue("Config/HighlightGoodOperationsYield",          mHighlightGoodOperationsYield);
@@ -276,6 +286,8 @@ void Config::load(ISettingsEditor* settingsEditor)
     mLimitStockPurchasePartNonWorkingHours = settingsEditor->value("Config/LimitStockPurchasePartNonWorkingHours", mLimitStockPurchasePartNonWorkingHours).toFloat();
     mLimitByTurnoverNonWorkingHours        = settingsEditor->value("Config/LimitByTurnoverNonWorkingHours",        mLimitByTurnoverNonWorkingHours).toBool();
     mLimitByTurnoverPercentNonWorkingHours = settingsEditor->value("Config/LimitByTurnoverPercentNonWorkingHours", mLimitByTurnoverPercentNonWorkingHours).toFloat();
+    mAdditionalGap                         = settingsEditor->value("Config/AdditionalGap",                         mAdditionalGap).toBool();
+    mAdditionalGapPercent                  = settingsEditor->value("Config/AdditionalGapPercent",                  mAdditionalGapPercent).toFloat();
     mStorageMonthLimit                     = settingsEditor->value("Config/StorageMonthLimit",                     mStorageMonthLimit).toInt();
     mHighlightGoodOperations               = settingsEditor->value("Config/HighlightGoodOperations",               mHighlightGoodOperations).toBool();
     mHighlightGoodOperationsYield          = settingsEditor->value("Config/HighlightGoodOperationsYield",          mHighlightGoodOperationsYield).toFloat();
@@ -644,6 +656,34 @@ float Config::getLimitByTurnoverPercentNonWorkingHours()
     const QReadLocker lock(mRwMutex);
 
     return mLimitByTurnoverPercentNonWorkingHours;
+}
+
+void Config::setAdditionalGap(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mAdditionalGap = value;
+}
+
+bool Config::isAdditionalGap()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mAdditionalGap;
+}
+
+void Config::setAdditionalGapPercent(float value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mAdditionalGapPercent = value;
+}
+
+float Config::getAdditionalGapPercent()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mAdditionalGapPercent;
 }
 
 void Config::setStorageMonthLimit(int value)

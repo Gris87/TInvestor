@@ -106,6 +106,12 @@ public:
     MOCK_METHOD(void, setLimitByTurnoverPercentNonWorkingHours, (float value), (override));
     MOCK_METHOD(float, getLimitByTurnoverPercentNonWorkingHours, (), (override));
 
+    MOCK_METHOD(void, setAdditionalGap, (bool value), (override));
+    MOCK_METHOD(bool, isAdditionalGap, (), (override));
+
+    MOCK_METHOD(void, setAdditionalGapPercent, (float value), (override));
+    MOCK_METHOD(float, getAdditionalGapPercent, (), (override));
+
     MOCK_METHOD(void, setStorageMonthLimit, (int value), (override));
     MOCK_METHOD(int, getStorageMonthLimit, (), (override));
 

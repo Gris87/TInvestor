@@ -102,6 +102,12 @@ public:
     virtual void  setLimitByTurnoverPercentNonWorkingHours(float value) = 0;
     virtual float getLimitByTurnoverPercentNonWorkingHours()            = 0;
 
+    virtual void setAdditionalGap(bool value) = 0;
+    virtual bool isAdditionalGap()            = 0;
+
+    virtual void  setAdditionalGapPercent(float value) = 0;
+    virtual float getAdditionalGapPercent()            = 0;
+
     virtual void setStorageMonthLimit(int value) = 0;
     virtual int  getStorageMonthLimit()          = 0;
 

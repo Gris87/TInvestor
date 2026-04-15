@@ -83,6 +83,8 @@ private slots:
     void on_limitStockPurchasePartNonWorkingHoursDoubleSpinBox_valueChanged(double value);
     void on_limitByTurnoverNonWorkingHoursCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_limitByTurnoverPercentNonWorkingHoursDoubleSpinBox_valueChanged(double value);
+    void on_additionalGapCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_additionalGapDoubleSpinBox_valueChanged(double value);
     void on_storageMonthLimitSpinBox_valueChanged(int value);
     void on_highlightGoodOperationsCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_highlightGoodOperationsYieldDoubleSpinBox_valueChanged(double value);

@@ -156,6 +156,8 @@ void SettingsDialog::updateUiFromConfig()
     ui->limitStockPurchasePartNonWorkingHoursDoubleSpinBox->setValue(mConfig->getLimitStockPurchasePartNonWorkingHours());
     ui->limitByTurnoverNonWorkingHoursCheckBox->setChecked(mConfig->isLimitByTurnoverNonWorkingHours());
     ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->setValue(mConfig->getLimitByTurnoverPercentNonWorkingHours());
+    ui->additionalGapCheckBox->setChecked(mConfig->isAdditionalGap());
+    ui->additionalGapDoubleSpinBox->setValue(mConfig->getAdditionalGapPercent());
     ui->storageMonthLimitSpinBox->setValue(mConfig->getStorageMonthLimit());
     ui->highlightGoodOperationsCheckBox->setChecked(mConfig->isHighlightGoodOperations());
     ui->highlightGoodOperationsYieldDoubleSpinBox->setValue(mConfig->getHighlightGoodOperationsYield());
@@ -338,6 +340,20 @@ void SettingsDialog::on_limitByTurnoverNonWorkingHoursCheckBox_checkStateChanged
 void SettingsDialog::on_limitByTurnoverPercentNonWorkingHoursDoubleSpinBox_valueChanged(double value)
 {
     mConfig->setLimitByTurnoverPercentNonWorkingHours(value);
+}
+
+void SettingsDialog::on_additionalGapCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setAdditionalGap(checked);
+
+    ui->additionalGapDoubleSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_additionalGapDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setAdditionalGapPercent(value);
 }
 
 void SettingsDialog::on_storageMonthLimitSpinBox_valueChanged(int value)

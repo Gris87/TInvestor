@@ -75,6 +75,8 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     config->setLimitStockPurchasePartNonWorkingHours(15.0f);
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
+    config->setAdditionalGap(false);
+    config->setAdditionalGapPercent(3.0f);
     config->setStorageMonthLimit(36);
     config->setHighlightGoodOperations(false);
     config->setHighlightGoodOperationsYield(2.0f);
@@ -109,6 +111,8 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->isAdditionalGap(),                            false);
+    ASSERT_NEAR(config->getAdditionalGapPercent(),                  3.0f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
     ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
     ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
@@ -151,6 +155,8 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->isAdditionalGap(),                            false);
+    ASSERT_NEAR(config->getAdditionalGapPercent(),                  3.0f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
     ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
     ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
@@ -186,6 +192,8 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_NEAR(config2->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config2->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config2->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config2->isAdditionalGap(),                            false);
+    ASSERT_NEAR(config2->getAdditionalGapPercent(),                  3.0f, 0.0001f);
     ASSERT_EQ(config2->getStorageMonthLimit(),                       36);
     ASSERT_EQ(config2->isHighlightGoodOperations(),                  false);
     ASSERT_NEAR(config2->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
@@ -235,6 +243,8 @@ TEST_F(Test_Config, Test_assign)
     config->setLimitStockPurchasePartNonWorkingHours(15.0f);
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
+    config->setAdditionalGap(false);
+    config->setAdditionalGapPercent(3.0f);
     config->setStorageMonthLimit(36);
     config->setHighlightGoodOperations(false);
     config->setHighlightGoodOperationsYield(2.0f);
@@ -269,6 +279,8 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->isAdditionalGap(),                            false);
+    ASSERT_NEAR(config->getAdditionalGapPercent(),                  3.0f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
     ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
     ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
@@ -303,6 +315,8 @@ TEST_F(Test_Config, Test_assign)
     config2.setLimitStockPurchasePartNonWorkingHours(35.0f);
     config2.setLimitByTurnoverNonWorkingHours(true);
     config2.setLimitByTurnoverPercentNonWorkingHours(37.5f);
+    config2.setAdditionalGap(true);
+    config2.setAdditionalGapPercent(13.0f);
     config2.setStorageMonthLimit(12);
     config2.setHighlightGoodOperations(true);
     config2.setHighlightGoodOperationsYield(7.0f);
@@ -337,6 +351,8 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_NEAR(config2.getLimitStockPurchasePartNonWorkingHours(), 35.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config2.getLimitByTurnoverPercentNonWorkingHours(), 37.5f, 0.0001f);
+    ASSERT_EQ(config2.isAdditionalGap(),                            true);
+    ASSERT_NEAR(config2.getAdditionalGapPercent(),                  13.0f, 0.0001f);
     ASSERT_EQ(config2.getStorageMonthLimit(),                       12);
     ASSERT_EQ(config2.isHighlightGoodOperations(),                  true);
     ASSERT_NEAR(config2.getHighlightGoodOperationsYield(),          7.0f, 0.0001f);
@@ -377,6 +393,8 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 35.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 37.5f, 0.0001f);
+    ASSERT_EQ(config->isAdditionalGap(),                            true);
+    ASSERT_NEAR(config->getAdditionalGapPercent(),                  13.0f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       12);
     ASSERT_EQ(config->isHighlightGoodOperations(),                  true);
     ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          7.0f, 0.0001f);
@@ -412,6 +430,8 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_NEAR(config2.getLimitStockPurchasePartNonWorkingHours(), 35.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config2.getLimitByTurnoverPercentNonWorkingHours(), 37.5f, 0.0001f);
+    ASSERT_EQ(config2.isAdditionalGap(),                            true);
+    ASSERT_NEAR(config2.getAdditionalGapPercent(),                  13.0f, 0.0001f);
     ASSERT_EQ(config2.getStorageMonthLimit(),                       12);
     ASSERT_EQ(config2.isHighlightGoodOperations(),                  true);
     ASSERT_NEAR(config2.getHighlightGoodOperationsYield(),          7.0f, 0.0001f);
@@ -451,6 +471,8 @@ TEST_F(Test_Config, Test_makeDefault)
     config->setLimitStockPurchasePartNonWorkingHours(15.0f);
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
+    config->setAdditionalGap(false);
+    config->setAdditionalGapPercent(3.0f);
     config->setStorageMonthLimit(36);
     config->setHighlightGoodOperations(false);
     config->setHighlightGoodOperationsYield(2.0f);
@@ -485,6 +507,8 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->isAdditionalGap(),                            false);
+    ASSERT_NEAR(config->getAdditionalGapPercent(),                  3.0f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
     ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
     ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
@@ -525,6 +549,8 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 1.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 1.0f, 0.0001f);
+    ASSERT_EQ(config->isAdditionalGap(),                            true);
+    ASSERT_NEAR(config->getAdditionalGapPercent(),                  0.1f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       12);
     ASSERT_EQ(config->isHighlightGoodOperations(),                  true);
     ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          1.0f, 0.0001f);
@@ -564,6 +590,8 @@ TEST_F(Test_Config, Test_save)
     config->setLimitStockPurchasePartNonWorkingHours(15.0f);
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
+    config->setAdditionalGap(false);
+    config->setAdditionalGapPercent(3.0f);
     config->setStorageMonthLimit(36);
     config->setHighlightGoodOperations(false);
     config->setHighlightGoodOperationsYield(2.0f);
@@ -598,6 +626,8 @@ TEST_F(Test_Config, Test_save)
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->isAdditionalGap(),                            false);
+    ASSERT_NEAR(config->getAdditionalGapPercent(),                  3.0f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
     ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
     ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
@@ -638,6 +668,8 @@ TEST_F(Test_Config, Test_save)
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePartNonWorkingHours"), QVariant(15.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverNonWorkingHours"),        QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverPercentNonWorkingHours"), QVariant(2.5f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AdditionalGap"),                         QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AdditionalGapPercent"),                  QVariant(3.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/StorageMonthLimit"),                     QVariant(36)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HighlightGoodOperations"),               QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HighlightGoodOperationsYield"),          QVariant(2.0f)));
@@ -679,6 +711,8 @@ TEST_F(Test_Config, Test_load)
     config->setLimitStockPurchasePartNonWorkingHours(15.0f);
     config->setLimitByTurnoverNonWorkingHours(false);
     config->setLimitByTurnoverPercentNonWorkingHours(2.5f);
+    config->setAdditionalGap(false);
+    config->setAdditionalGapPercent(3.0f);
     config->setStorageMonthLimit(36);
     config->setHighlightGoodOperations(false);
     config->setHighlightGoodOperationsYield(2.0f);
@@ -713,6 +747,8 @@ TEST_F(Test_Config, Test_load)
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 15.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           false);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 2.5f, 0.0001f);
+    ASSERT_EQ(config->isAdditionalGap(),                            false);
+    ASSERT_NEAR(config->getAdditionalGapPercent(),                  3.0f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       36);
     ASSERT_EQ(config->isHighlightGoodOperations(),                  false);
     ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          2.0f, 0.0001f);
@@ -753,6 +789,8 @@ TEST_F(Test_Config, Test_load)
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePartNonWorkingHours"), QVariant(15.0f))).WillOnce(Return(QVariant(35.0f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverNonWorkingHours"),        QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverPercentNonWorkingHours"), QVariant(2.5f))).WillOnce(Return(QVariant(17.5f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/AdditionalGap"),                         QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/AdditionalGapPercent"),                  QVariant(3.0f))).WillOnce(Return(QVariant(1.5f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/StorageMonthLimit"),                     QVariant(36))).WillOnce(Return(QVariant(12)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/HighlightGoodOperations"),               QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/HighlightGoodOperationsYield"),          QVariant(2.0f))).WillOnce(Return(QVariant(7.0f)));
@@ -790,6 +828,8 @@ TEST_F(Test_Config, Test_load)
     ASSERT_NEAR(config->getLimitStockPurchasePartNonWorkingHours(), 35.0f, 0.0001f);
     ASSERT_EQ(config->isLimitByTurnoverNonWorkingHours(),           true);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 17.5f, 0.0001f);
+    ASSERT_EQ(config->isAdditionalGap(),                            true);
+    ASSERT_NEAR(config->getAdditionalGapPercent(),                  1.5f, 0.0001f);
     ASSERT_EQ(config->getStorageMonthLimit(),                       12);
     ASSERT_EQ(config->isHighlightGoodOperations(),                  true);
     ASSERT_NEAR(config->getHighlightGoodOperationsYield(),          7.0f, 0.0001f);
@@ -1033,6 +1073,24 @@ TEST_F(Test_Config, Test_setLimitByTurnoverPercentNonWorkingHours_and_getLimitBy
 
     config->setLimitByTurnoverPercentNonWorkingHours(50.0f);
     ASSERT_NEAR(config->getLimitByTurnoverPercentNonWorkingHours(), 50.0f, 0.0001f);
+}
+
+TEST_F(Test_Config, Test_setAdditionalGap_and_isAdditionalGap)
+{
+    config->setAdditionalGap(false);
+    ASSERT_EQ(config->isAdditionalGap(), false);
+
+    config->setAdditionalGap(true);
+    ASSERT_EQ(config->isAdditionalGap(), true);
+}
+
+TEST_F(Test_Config, Test_setAdditionalGapPercent_and_getAdditionalGapPercent)
+{
+    config->setAdditionalGapPercent(10.0f);
+    ASSERT_NEAR(config->getAdditionalGapPercent(), 10.0f, 0.0001f);
+
+    config->setAdditionalGapPercent(50.0f);
+    ASSERT_NEAR(config->getAdditionalGapPercent(), 50.0f, 0.0001f);
 }
 
 TEST_F(Test_Config, Test_setStorageMonthLimit_and_getStorageMonthLimit)

@@ -103,6 +103,12 @@ public:
     void  setLimitByTurnoverPercentNonWorkingHours(float value) override;
     float getLimitByTurnoverPercentNonWorkingHours() override;
 
+    void setAdditionalGap(bool value) override;
+    bool isAdditionalGap() override;
+
+    void  setAdditionalGapPercent(float value) override;
+    float getAdditionalGapPercent() override;
+
     void setStorageMonthLimit(int value) override;
     int  getStorageMonthLimit() override;
 
@@ -155,6 +161,8 @@ private:
     float   mLimitStockPurchasePartNonWorkingHours;
     bool    mLimitByTurnoverNonWorkingHours;
     float   mLimitByTurnoverPercentNonWorkingHours;
+    bool    mAdditionalGap;
+    float   mAdditionalGapPercent;
     int     mStorageMonthLimit;
     bool    mHighlightGoodOperations;
     float   mHighlightGoodOperationsYield;

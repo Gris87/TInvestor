@@ -1128,7 +1128,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="325"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="330"/>
         <source>Last enabled time: %1</source>
         <translation></translation>
     </message>
@@ -1312,67 +1312,72 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="800"/>
+        <source>Try to buy stocks with additional gap in</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="849"/>
         <source>Store stocks data for</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="807"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="856"/>
         <source> months</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="852"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="901"/>
         <source>View</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="878"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="927"/>
         <source>Highlight operations in green color with yield more than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="924"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="973"/>
         <source>Highlight operations in red color with lose more than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="979"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="395"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="417"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1028"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="411"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="433"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1002"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1096"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1051"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1145"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1053"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1147"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1102"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1196"/>
         <source>non-default values</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1073"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="394"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="418"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1122"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="410"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="434"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1188"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1237"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1211"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1260"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1231"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1280"/>
         <source>Default</source>
         <translation></translation>
     </message>
@@ -1382,8 +1387,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="389"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="412"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="405"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="428"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>
