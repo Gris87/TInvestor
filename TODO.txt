@@ -1,7 +1,7 @@
-Notifier app
 Double check sell decisions to let them "sell" shorts
 Make trading thread to trade with shorts
 Adapt bi-dir trading thread for shorts
+Notifier app
 Calculate priority for bi-dir tradings
 Create script for collecting the most frequent bi-dir tradings and give them more preferences (10% part?)
 Create script for buying/selling in parts
