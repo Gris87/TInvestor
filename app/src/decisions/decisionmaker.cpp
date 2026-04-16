@@ -291,7 +291,16 @@ static void makeDecisionsForParallel(
                         buyDecision = buyDecisionsArray[j];
 
                         cause = buyDecision->makeDecision(
-                            parentThread, decisionConfig, limitTimestamp, stock, dateRange, dataIndex, price, avgPrice, commission
+                            parentThread,
+                            decisionConfig,
+                            limitTimestamp,
+                            stock,
+                            dateRange,
+                            dataIndex,
+                            false,
+                            price,
+                            avgPrice,
+                            commission
                         );
                     }
 
@@ -311,7 +320,7 @@ static void makeDecisionsForParallel(
                     sellDecision = sellDecisionsArray[j];
 
                     cause = sellDecision->makeDecision(
-                        parentThread, decisionConfig, 0, stock, dateRange, dataIndex, price, avgPrice, commission
+                        parentThread, decisionConfig, 0, stock, dateRange, dataIndex, false, price, avgPrice, commission
                     );
                 }
 

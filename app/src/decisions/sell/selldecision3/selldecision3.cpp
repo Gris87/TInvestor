@@ -43,9 +43,10 @@ QString SellDecision3::makeDecision(
     Stock* stock,
     bool   dateRange,
     int    dataIndex,
-    float  price,
-    float  avgPrice,
-    float  commission
+    bool /*isShort*/,
+    float price,
+    float avgPrice,
+    float commission
 )
 {
     Q_ASSERT_X(parentThread != nullptr, __FUNCTION__, "parentThread is invalid");

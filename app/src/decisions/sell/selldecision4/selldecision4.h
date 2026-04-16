@@ -24,6 +24,7 @@ public:
         Stock*                stock,
         bool                  dateRange,
         int                   dataIndex,
+        bool                  isShort,
         float                 price,
         float                 avgPrice,
         float                 commission

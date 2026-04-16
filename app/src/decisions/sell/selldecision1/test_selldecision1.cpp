@@ -54,7 +54,7 @@ TEST_F(Test_SellDecision1, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(false));
 
     QString cause =
-        sellDecision1->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, 100.0f, 0.04f);
+        sellDecision1->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, false, 100.0f, 100.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -69,7 +69,8 @@ TEST_F(Test_SellDecision1, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2));
 
-    cause = sellDecision1->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 100.0f, 100.0f, 0.04f);
+    cause =
+        sellDecision1->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, false, 100.0f, 100.0f, 0.04f);
 
     ASSERT_EQ(cause, "");
 
@@ -88,7 +89,8 @@ TEST_F(Test_SellDecision1, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getYieldAbove()).WillOnce(Return(2));
 
-    cause = sellDecision1->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, 120.0f, 100.0f, 0.04f);
+    cause =
+        sellDecision1->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, false, 120.0f, 100.0f, 0.04f);
 
     ASSERT_EQ(cause, "Decided to sell because the price reached 120.00 \u20BD with yield +20.00% from the price 100.00 \u20BD");
 }

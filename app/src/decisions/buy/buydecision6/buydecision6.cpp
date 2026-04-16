@@ -47,7 +47,8 @@ QString BuyDecision6::makeDecision(
     Stock*                stock,
     bool                  dateRange,
     int                   dataIndex,
-    float                 price,
+    bool /*isShort*/,
+    float price,
     float /*avgPrice*/,
     float /*commission*/
 )

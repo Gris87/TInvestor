@@ -38,6 +38,7 @@ QString SellDecision1::makeDecision(
     Stock* stock,
     bool /*dateRange*/,
     int /*dataIndex*/,
+    bool  isShort,
     float price,
     float avgPrice,
     float commission
@@ -53,7 +54,7 @@ QString SellDecision1::makeDecision(
 
     if (sellConfig->isEnabled())
     {
-        const float coef = price / avgPrice;
+        const float coef = !isShort ? price / avgPrice : avgPrice / price;
 
         if (coef < INCREDIBLE_SELL_COEF)
         {
