@@ -62,7 +62,8 @@ InstrumentsForTrading DecisionMaker::makeDecision(
     IDecisionMakerConfig* decisionConfig = chooseDecisionConfig(config, autoPilot);
 
     updateStocksMap(parentThread, stocks);
-    QList<StockWithAvgPrice> stocksWithAvgPrice = getStocksWithAvgPrice(parentThread, portfolio, stocks);
+    QList<StockWithQuantityAndAvgPrice> stocksWithQuantityAndAvgPrice =
+        getStocksWithQuantityAndAvgPrice(parentThread, portfolio, stocks);
 
     makeDecisions(
         parentThread,
@@ -71,7 +72,7 @@ InstrumentsForTrading DecisionMaker::makeDecision(
         timestamp,
         instrumentSells,
         portfolio,
-        stocksWithAvgPrice,
+        stocksWithQuantityAndAvgPrice,
         dateRange,
         useParallel,
         res
@@ -118,17 +119,17 @@ void DecisionMaker::updateStocksMap(QThread* parentThread, const QList<Stock*>& 
     }
 }
 
-QList<StockWithAvgPrice>
-DecisionMaker::getStocksWithAvgPrice(QThread* parentThread, const Portfolio& portfolio, const QList<Stock*>& stocks)
+QList<StockWithQuantityAndAvgPrice>
+DecisionMaker::getStocksWithQuantityAndAvgPrice(QThread* parentThread, const Portfolio& portfolio, const QList<Stock*>& stocks)
 {
-    QList<StockWithAvgPrice> res;
+    QList<StockWithQuantityAndAvgPrice> res;
 
     mUserStorage->readLock();
     const bool qualifiedUser = mUserStorage->isQualified();
     mUserStorage->readUnlock();
 
     mRwMutex->lockForRead();
-    QMap<QString, float> existingStocks; // Instrument UID => Average price
+    QMap<QString, StockWithQuantityAndAvgPrice> existingStocks; // Instrument UID => StockWithQuantityAndAvgPrice
 
     for (int i = 0; i < portfolio.positions.size() && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -140,7 +141,8 @@ DecisionMaker::getStocksWithAvgPrice(QThread* parentThread, const Portfolio& por
 
             if (mStocksMap.contains(item.instrumentId))
             {
-                existingStocks[item.instrumentId] = item.avgPriceWavg;
+                existingStocks[item.instrumentId] =
+                    StockWithQuantityAndAvgPrice(mStocksMap.value(item.instrumentId), item.available, item.avgPriceWavg);
             }
         }
     }
@@ -151,18 +153,16 @@ DecisionMaker::getStocksWithAvgPrice(QThread* parentThread, const Portfolio& por
         Stock* stock = stocks.at(i);
         stock->readLock();
 
-        const float avgPrice = existingStocks.value(stock->meta.instrumentId, -1);
-
-        if (avgPrice < 0)
+        if (!existingStocks.contains(stock->meta.instrumentId))
         {
             if (!stock->meta.ignore && (qualifiedUser || !stock->meta.forQualInvestorFlag))
             {
-                res.append(StockWithAvgPrice(stock, avgPrice));
+                res.append(StockWithQuantityAndAvgPrice(stock, 0, 0));
             }
         }
         else
         {
-            res.append(StockWithAvgPrice(stock, avgPrice));
+            res.append(existingStocks.value(stock->meta.instrumentId));
         }
 
         stock->readUnlock();
@@ -221,7 +221,13 @@ struct MakeDecisionsInfo
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 static void makeDecisionsForParallel(
-    QThread* parentThread, int threadId, StockWithAvgPrice* stocks, int /*size*/, int start, int end, void* additionalArgs
+    QThread*                      parentThread,
+    int                           threadId,
+    StockWithQuantityAndAvgPrice* stocks,
+    int /*size*/,
+    int   start,
+    int   end,
+    void* additionalArgs
 )
 {
     const MakeDecisionsInfo* makeDecisionsInfo = reinterpret_cast<MakeDecisionsInfo*>(additionalArgs);
@@ -245,6 +251,7 @@ static void makeDecisionsForParallel(
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock*      stock    = stocks[i].stock;
+        const double quantity = stocks[i].quantity;
         const float avgPrice = stocks[i].avgPrice;
 
         stock->readLock();
@@ -279,7 +286,7 @@ static void makeDecisionsForParallel(
 
         if (price > 0)
         {
-            if (avgPrice < 0)
+            if (quantity == 0)
             {
                 if (money >= price)
                 {
@@ -313,6 +320,8 @@ static void makeDecisionsForParallel(
             }
             else
             {
+                const bool isShort = quantity < 0;
+
                 IActionDecision* sellDecision = nullptr;
 
                 for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
@@ -320,7 +329,7 @@ static void makeDecisionsForParallel(
                     sellDecision = sellDecisionsArray[j];
 
                     cause = sellDecision->makeDecision(
-                        parentThread, decisionConfig, 0, stock, dateRange, dataIndex, false, price, avgPrice, commission
+                        parentThread, decisionConfig, 0, stock, dateRange, dataIndex, isShort, price, avgPrice, commission
                     );
                 }
 
@@ -338,16 +347,16 @@ static void makeDecisionsForParallel(
 // NOLINTEND(readability-function-cognitive-complexity)
 
 void DecisionMaker::makeDecisions(
-    QThread*                  parentThread,
-    IConfig*                  config,
-    IDecisionMakerConfig*     decisionConfig,
-    qint64                    timestamp,
-    const InstrumentSells&    instrumentSells,
-    const Portfolio&          portfolio,
-    QList<StockWithAvgPrice>& stocksWithAvgPrice,
-    bool                      dateRange,
-    bool                      useParallel,
-    InstrumentsForTrading&    res
+    QThread*                             parentThread,
+    IConfig*                             config,
+    IDecisionMakerConfig*                decisionConfig,
+    qint64                               timestamp,
+    const InstrumentSells&               instrumentSells,
+    const Portfolio&                     portfolio,
+    QList<StockWithQuantityAndAvgPrice>& stocksWithQuantityAndAvgPrice,
+    bool                                 dateRange,
+    bool                                 useParallel,
+    InstrumentsForTrading&               res
 )
 {
     double money     = 0.0;
@@ -373,17 +382,17 @@ void DecisionMaker::makeDecisions(
 
     if (useParallel)
     {
-        processInParallel(parentThread, stocksWithAvgPrice, makeDecisionsForParallel, &makeDecisionsInfo);
+        processInParallel(parentThread, stocksWithQuantityAndAvgPrice, makeDecisionsForParallel, &makeDecisionsInfo);
     }
     else
     {
         makeDecisionsForParallel(
             parentThread,
             0,
-            stocksWithAvgPrice.data(),
-            stocksWithAvgPrice.size(),
+            stocksWithQuantityAndAvgPrice.data(),
+            stocksWithQuantityAndAvgPrice.size(),
             0,
-            stocksWithAvgPrice.size(),
+            stocksWithQuantityAndAvgPrice.size(),
             &makeDecisionsInfo
         );
     }

@@ -15,15 +15,24 @@
 
 
 
-struct StockWithAvgPrice
+struct StockWithQuantityAndAvgPrice
 {
-    explicit StockWithAvgPrice(Stock* _stock, float _avgPrice) :
+    explicit StockWithQuantityAndAvgPrice() :
+        stock(),
+        quantity(),
+        avgPrice()
+    {
+    }
+
+    explicit StockWithQuantityAndAvgPrice(Stock* _stock, double _quantity, float _avgPrice) :
         stock(_stock),
+        quantity(_quantity),
         avgPrice(_avgPrice)
     {
     }
 
     Stock* stock;
+    double quantity;
     float  avgPrice;
 };
 
@@ -60,19 +69,19 @@ public:
 private:
     IDecisionMakerConfig* chooseDecisionConfig(IConfig* config, bool autoPilot);
     void                  updateStocksMap(QThread* parentThread, const QList<Stock*>& stocks);
-    QList<StockWithAvgPrice>
-         getStocksWithAvgPrice(QThread* parentThread, const Portfolio& portfolio, const QList<Stock*>& stocks);
+    QList<StockWithQuantityAndAvgPrice>
+         getStocksWithQuantityAndAvgPrice(QThread* parentThread, const Portfolio& portfolio, const QList<Stock*>& stocks);
     void makeDecisions(
-        QThread*                  parentThread,
-        IConfig*                  config,
-        IDecisionMakerConfig*     decisionConfig,
-        qint64                    timestamp,
-        const InstrumentSells&    instrumentSells,
-        const Portfolio&          portfolio,
-        QList<StockWithAvgPrice>& stocksWithAvgPrice,
-        bool                      dateRange,
-        bool                      useParallel,
-        InstrumentsForTrading&    res
+        QThread*                             parentThread,
+        IConfig*                             config,
+        IDecisionMakerConfig*                decisionConfig,
+        qint64                               timestamp,
+        const InstrumentSells&               instrumentSells,
+        const Portfolio&                     portfolio,
+        QList<StockWithQuantityAndAvgPrice>& stocksWithQuantityAndAvgPrice,
+        bool                                 dateRange,
+        bool                                 useParallel,
+        InstrumentsForTrading&               res
     );
     void calculateMoneyAndTotalCost(QThread* parentThread, const Portfolio& portfolio, double& money, double& totalCost);
 

@@ -341,7 +341,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
             -1,
             false,
             FloatEq(0.3f),
-            FloatEq(-1.0f),
+            FloatEq(0.0f),
             FloatEq(0.04f)
         )
     )
@@ -372,7 +372,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
     ASSERT_EQ(result["ccccc"].asapMode,       ASAP_MODE_NONE);
-    ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
+    ASSERT_NEAR(result["ccccc"].avgPrice,     0.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 45000.00286, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
@@ -447,7 +447,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
             -1,
             false,
             FloatEq(0.3f),
-            FloatEq(-1.0f),
+            FloatEq(0.0f),
             FloatEq(0.04f)
         )
     )
@@ -478,7 +478,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
     ASSERT_EQ(result["ccccc"].asapMode,       ASAP_MODE_NONE);
-    ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
+    ASSERT_NEAR(result["ccccc"].avgPrice,     0.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 69990.00445, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
@@ -544,7 +544,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
             -1,
             false,
             FloatEq(0.3f),
-            FloatEq(-1.0f),
+            FloatEq(0.0f),
             FloatEq(0.04f)
         )
     )
@@ -575,7 +575,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
     ASSERT_EQ(result["ccccc"].asapMode,       ASAP_MODE_NONE);
-    ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
+    ASSERT_NEAR(result["ccccc"].avgPrice,     0.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 99960.00635, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
@@ -641,7 +641,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
             -1,
             false,
             FloatEq(0.3f),
-            FloatEq(-1.0f),
+            FloatEq(0.0f),
             FloatEq(0.04f)
         )
     )
@@ -715,7 +715,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
             0,
             false,
             FloatEq(0.3f),
-            FloatEq(-1.0f),
+            FloatEq(0.0f),
             FloatEq(0.04f)
         )
     )
@@ -746,7 +746,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     ASSERT_EQ(result.size(),                  2);
     ASSERT_EQ(result.contains("ccccc"),       true);
     ASSERT_EQ(result["ccccc"].asapMode,       ASAP_MODE_NONE);
-    ASSERT_NEAR(result["ccccc"].avgPrice,     -1.0f, 0.0001f);
+    ASSERT_NEAR(result["ccccc"].avgPrice,     0.0f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].price,        0.3f, 0.0001f);
     ASSERT_NEAR(result["ccccc"].expectedCost, 99960.00635, 0.0001);
     ASSERT_EQ(result["ccccc"].cause,          "I want to buy");
