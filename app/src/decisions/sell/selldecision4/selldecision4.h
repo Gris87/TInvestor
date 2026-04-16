@@ -41,6 +41,7 @@ private:
         qint64                limitTimestamp,
         Stock*                stock,
         int                   dataIndex,
+        bool                  isShort,
         float                 price,
         float                 avgPrice,
         float                 commission
@@ -52,6 +53,7 @@ private:
         ISellDecision4Config* sellConfig,
         qint64                limitTimestamp,
         Stock*                stock,
+        bool                  isShort,
         float                 price,
         float                 avgPrice,
         float                 commission

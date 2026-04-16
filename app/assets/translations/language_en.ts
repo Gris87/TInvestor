@@ -992,12 +992,6 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="106"/>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="137"/>
-        <source>Decided to sell because the price fall to %1 with yield %2 from the price %3</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="131"/>
         <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="188"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the fall is %5</source>
@@ -1097,12 +1091,6 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="133"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="193"/>
-        <source>Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../../src/decisions/buy/buydecision6/buydecision6.cpp" line="108"/>
         <source>Decided to buy because the price %1 is above SMA %2 and EMA %3 and RSI %4 is less than %5 for last %6 minutes</source>
         <translation></translation>
@@ -1136,6 +1124,10 @@
         <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="68"/>
         <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="130"/>
         <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="192"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="110"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="150"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="146"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="226"/>
         <source>sell</source>
         <translation></translation>
     </message>
@@ -1143,7 +1135,47 @@
         <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="68"/>
         <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="130"/>
         <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="192"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="110"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="150"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="146"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="226"/>
         <source>buy</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="108"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="148"/>
+        <source>Decided to %1 because the price %2 to %3 with yield %4 from the price %5</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="111"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="151"/>
+        <source>fall</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="111"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="151"/>
+        <source>raise</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="144"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="224"/>
+        <source>Decided to %1 because the price %2 exceeds %3 Bollindger edge price %4 at %5</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="148"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="232"/>
+        <source>top</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="148"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="232"/>
+        <source>bottom</source>
         <translation></translation>
     </message>
 </context>

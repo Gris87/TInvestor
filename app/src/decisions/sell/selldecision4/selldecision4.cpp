@@ -47,10 +47,10 @@ QString SellDecision4::makeDecision(
     Stock*                stock,
     bool                  dateRange,
     int                   dataIndex,
-    bool /*isShort*/,
-    float price,
-    float avgPrice,
-    float commission
+    bool                  isShort,
+    float                 price,
+    float                 avgPrice,
+    float                 commission
 )
 {
     Q_ASSERT_X(parentThread != nullptr, __FUNCTION__, "parentThread is invalid");
@@ -73,12 +73,12 @@ QString SellDecision4::makeDecision(
         if (dateRange)
         {
             return makeDecisionBasedOnStockData(
-                parentThread, sellConfig, limitTimestamp, stock, dataIndex, price, avgPrice, commission
+                parentThread, sellConfig, limitTimestamp, stock, dataIndex, isShort, price, avgPrice, commission
             );
         }
 
         return makeDecisionBasedOnStockOperationalData(
-            parentThread, sellConfig, limitTimestamp, stock, price, avgPrice, commission
+            parentThread, sellConfig, limitTimestamp, stock, isShort, price, avgPrice, commission
         );
     }
 
@@ -96,12 +96,13 @@ QString SellDecision4::makeDecisionBasedOnStockData(
     qint64                limitTimestamp,
     Stock*                stock,
     int                   dataIndex,
+    bool                  isShort,
     float                 price,
     float                 avgPrice,
     float                 commission
 ) const
 {
-    const float coef = price / avgPrice;
+    const float coef = !isShort ? price / avgPrice : avgPrice / price;
 
     if (coef < INCREDIBLE_SELL_COEF)
     {
@@ -123,16 +124,24 @@ QString SellDecision4::makeDecisionBasedOnStockData(
                 {
                     const int startIndex = i - 2;
 
-                    const double currentTopEdge        = mBollindger->getTopEdge(stock, startIndex + 2, dataIndex + 1);
-                    const double previousTopEdge       = mBollindger->getTopEdge(stock, startIndex + 1, dataIndex);
-                    const double beforePreviousTopEdge = mBollindger->getTopEdge(stock, startIndex, dataIndex - 1);
+                    const double currentTopEdge        = !isShort ? mBollindger->getTopEdge(stock, startIndex + 2, dataIndex + 1)
+                                                                  : mBollindger->getBottomEdge(stock, startIndex + 2, dataIndex + 1);
+                    const double previousTopEdge       = !isShort ? mBollindger->getTopEdge(stock, startIndex + 1, dataIndex)
+                                                                  : mBollindger->getBottomEdge(stock, startIndex + 1, dataIndex);
+                    const double beforePreviousTopEdge = !isShort ? mBollindger->getTopEdge(stock, startIndex, dataIndex - 1)
+                                                                  : mBollindger->getBottomEdge(stock, startIndex, dataIndex - 1);
 
-                    if (stockData[dataIndex].price < currentTopEdge && stockData[dataIndex - 1].price < previousTopEdge &&
-                        stockData[dataIndex - 2].price > beforePreviousTopEdge)
+                    if (!isShort
+                            ? stockData[dataIndex].price < currentTopEdge && stockData[dataIndex - 1].price < previousTopEdge &&
+                                  stockData[dataIndex - 2].price > beforePreviousTopEdge
+                            : stockData[dataIndex].price > currentTopEdge && stockData[dataIndex - 1].price > previousTopEdge &&
+                                  stockData[dataIndex - 2].price < beforePreviousTopEdge)
                     {
-                        return QObject::tr("Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3")
+                        return QObject::tr("Decided to %1 because the price %2 exceeds %3 Bollindger edge price %4 at %5")
                             .arg(
+                                !isShort ? QObject::tr("sell") : QObject::tr("buy"),
                                 QString::number(stockData[dataIndex - 2].price, 'f', stock->meta.pricePrecision) + " \u20BD",
+                                !isShort ? QObject::tr("top") : QObject::tr("bottom"),
                                 QString::number(beforePreviousTopEdge, 'f', stock->meta.pricePrecision) + " \u20BD",
                                 QDateTime::fromMSecsSinceEpoch(stockData[dataIndex - 2].timestamp).toString(DATETIME_FORMAT)
                             );
@@ -152,12 +161,13 @@ QString SellDecision4::makeDecisionBasedOnStockOperationalData(
     ISellDecision4Config* sellConfig,
     qint64                limitTimestamp,
     Stock*                stock,
+    bool                  isShort,
     float                 price,
     float                 avgPrice,
     float                 commission
 ) const
 {
-    const float coef = price / avgPrice;
+    const float coef = !isShort ? price / avgPrice : avgPrice / price;
 
     if (coef < INCREDIBLE_SELL_COEF)
     {
@@ -180,23 +190,42 @@ QString SellDecision4::makeDecisionBasedOnStockOperationalData(
                     const int startIndex = i - 2;
 
                     const double currentTopEdge =
-                        mBollindger->getTopEdgeOperational(stock, startIndex + 2, stock->operational.detailedData.size());
-                    const double previousTopEdge =
-                        mBollindger->getTopEdgeOperational(stock, startIndex + 1, stock->operational.detailedData.size() - 1);
+                        !isShort
+                            ? mBollindger->getTopEdgeOperational(stock, startIndex + 2, stock->operational.detailedData.size())
+                            : mBollindger->getBottomEdgeOperational(
+                                  stock, startIndex + 2, stock->operational.detailedData.size()
+                              );
+                    const double previousTopEdge = !isShort
+                                                       ? mBollindger->getTopEdgeOperational(
+                                                             stock, startIndex + 1, stock->operational.detailedData.size() - 1
+                                                         )
+                                                       : mBollindger->getBottomEdgeOperational(
+                                                             stock, startIndex + 1, stock->operational.detailedData.size() - 1
+                                                         );
                     const double beforePreviousTopEdge =
-                        mBollindger->getTopEdgeOperational(stock, startIndex, stock->operational.detailedData.size() - 2);
+                        !isShort
+                            ? mBollindger->getTopEdgeOperational(stock, startIndex, stock->operational.detailedData.size() - 2)
+                            : mBollindger->getBottomEdgeOperational(
+                                  stock, startIndex, stock->operational.detailedData.size() - 2
+                              );
 
-                    if (stockOperationalData[stock->operational.detailedData.size() - 1].price < currentTopEdge &&
-                        stockOperationalData[stock->operational.detailedData.size() - 2].price < previousTopEdge &&
-                        stockOperationalData[stock->operational.detailedData.size() - 3].price > beforePreviousTopEdge)
+                    if (!isShort
+                            ? stockOperationalData[stock->operational.detailedData.size() - 1].price < currentTopEdge &&
+                                  stockOperationalData[stock->operational.detailedData.size() - 2].price < previousTopEdge &&
+                                  stockOperationalData[stock->operational.detailedData.size() - 3].price > beforePreviousTopEdge
+                            : stockOperationalData[stock->operational.detailedData.size() - 1].price > currentTopEdge &&
+                                  stockOperationalData[stock->operational.detailedData.size() - 2].price > previousTopEdge &&
+                                  stockOperationalData[stock->operational.detailedData.size() - 3].price < beforePreviousTopEdge)
                     {
-                        return QObject::tr("Decided to sell because the price %1 exceeds top Bollindger edge price %2 at %3")
+                        return QObject::tr("Decided to %1 because the price %2 exceeds %3 Bollindger edge price %4 at %5")
                             .arg(
+                                !isShort ? QObject::tr("sell") : QObject::tr("buy"),
                                 QString::number(
                                     stockOperationalData[stock->operational.detailedData.size() - 3].price,
                                     'f',
                                     stock->meta.pricePrecision
                                 ) + " \u20BD",
+                                !isShort ? QObject::tr("top") : QObject::tr("bottom"),
                                 QString::number(beforePreviousTopEdge, 'f', stock->meta.pricePrecision) + " \u20BD",
                                 QDateTime::fromMSecsSinceEpoch(
                                     stockOperationalData[stock->operational.detailedData.size() - 3].timestamp

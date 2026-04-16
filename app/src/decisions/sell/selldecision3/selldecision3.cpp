@@ -43,10 +43,10 @@ QString SellDecision3::makeDecision(
     Stock* stock,
     bool   dateRange,
     int    dataIndex,
-    bool /*isShort*/,
-    float price,
-    float avgPrice,
-    float commission
+    bool   isShort,
+    float  price,
+    float  avgPrice,
+    float  commission
 )
 {
     Q_ASSERT_X(parentThread != nullptr, __FUNCTION__, "parentThread is invalid");
@@ -67,10 +67,10 @@ QString SellDecision3::makeDecision(
     {
         if (dateRange)
         {
-            return makeDecisionBasedOnStockData(parentThread, sellConfig, stock, dataIndex, price, avgPrice, commission);
+            return makeDecisionBasedOnStockData(parentThread, sellConfig, stock, dataIndex, isShort, price, avgPrice, commission);
         }
 
-        return makeDecisionBasedOnStockOperationalData(parentThread, sellConfig, stock, price, avgPrice, commission);
+        return makeDecisionBasedOnStockOperationalData(parentThread, sellConfig, stock, isShort, price, avgPrice, commission);
     }
 
     return "";
@@ -87,24 +87,28 @@ QString SellDecision3::makeDecisionBasedOnStockData(
     ISellDecision3Config* sellConfig,
     Stock*                stock,
     int                   dataIndex,
+    bool                  isShort,
     float                 price,
     float                 avgPrice,
     float                 commission
 ) const
 {
-    const float yield     = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+    const float yield     = ((!isShort ? price / avgPrice : avgPrice / price) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
     const float loseYield = -sellConfig->getLoseYield() + (2 * commission);
 
     if (yield <= loseYield)
     {
         const StockData* stockData = stock->data.constData();
 
-        const float minimumPrice = avgPrice * (1 + (loseYield / HUNDRED_PERCENT));
+        const float minimumPrice =
+            !isShort ? avgPrice * (1 + (loseYield / HUNDRED_PERCENT)) : avgPrice / (1 + (loseYield / HUNDRED_PERCENT));
 
-        if (doubleCheckBasedOnStockData(parentThread, stockData, dataIndex, minimumPrice))
+        if (doubleCheckBasedOnStockData(parentThread, stockData, dataIndex, isShort, minimumPrice))
         {
-            return QObject::tr("Decided to sell because the price fall to %1 with yield %2 from the price %3")
+            return QObject::tr("Decided to %1 because the price %2 to %3 with yield %4 from the price %5")
                 .arg(
+                    !isShort ? QObject::tr("sell") : QObject::tr("buy"),
+                    !isShort ? QObject::tr("fall") : QObject::tr("raise"),
                     QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
                     QString::number(yield, 'f', 2) + "%",
                     QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
@@ -116,10 +120,16 @@ QString SellDecision3::makeDecisionBasedOnStockData(
 }
 
 QString SellDecision3::makeDecisionBasedOnStockOperationalData(
-    QThread* parentThread, ISellDecision3Config* sellConfig, Stock* stock, float price, float avgPrice, float commission
+    QThread*              parentThread,
+    ISellDecision3Config* sellConfig,
+    Stock*                stock,
+    bool                  isShort,
+    float                 price,
+    float                 avgPrice,
+    float                 commission
 ) const
 {
-    const float yield     = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+    const float yield     = ((!isShort ? price / avgPrice : avgPrice / price) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
     const float loseYield = -sellConfig->getLoseYield() + (2 * commission);
 
     if (yield <= loseYield)
@@ -128,14 +138,17 @@ QString SellDecision3::makeDecisionBasedOnStockOperationalData(
         {
             const StockOperationalData* stockOperationalData = stock->operational.detailedData.constData();
 
-            const float minimumPrice = avgPrice * (1 + (loseYield / HUNDRED_PERCENT));
+            const float minimumPrice =
+                !isShort ? avgPrice * (1 + (loseYield / HUNDRED_PERCENT)) : avgPrice / (1 + (loseYield / HUNDRED_PERCENT));
 
             if (doubleCheckBasedOnStockOperationalData(
-                    parentThread, stockOperationalData, stock->operational.detailedData.size() - 1, minimumPrice
+                    parentThread, stockOperationalData, stock->operational.detailedData.size() - 1, isShort, minimumPrice
                 ))
             {
-                return QObject::tr("Decided to sell because the price fall to %1 with yield %2 from the price %3")
+                return QObject::tr("Decided to %1 because the price %2 to %3 with yield %4 from the price %5")
                     .arg(
+                        !isShort ? QObject::tr("sell") : QObject::tr("buy"),
+                        !isShort ? QObject::tr("fall") : QObject::tr("raise"),
                         QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
                         QString::number(yield, 'f', 2) + "%",
                         QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD"
@@ -147,8 +160,9 @@ QString SellDecision3::makeDecisionBasedOnStockOperationalData(
     return "";
 }
 
-bool
-SellDecision3::doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float minimumPrice) const
+bool SellDecision3::doubleCheckBasedOnStockData(
+    QThread* parentThread, const StockData* stockData, int index, bool isShort, float minimumPrice
+) const
 {
     bool res = false;
 
@@ -161,7 +175,7 @@ SellDecision3::doubleCheckBasedOnStockData(QThread* parentThread, const StockDat
 
         while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
         {
-            if (stockData[j].price > minimumPrice)
+            if (!isShort ? stockData[j].price > minimumPrice : stockData[j].price < minimumPrice)
             {
                 res = false;
 
@@ -177,7 +191,7 @@ SellDecision3::doubleCheckBasedOnStockData(QThread* parentThread, const StockDat
 }
 
 bool SellDecision3::doubleCheckBasedOnStockOperationalData(
-    QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float minimumPrice
+    QThread* parentThread, const StockOperationalData* stockOperationalData, int index, bool isShort, float minimumPrice
 ) const
 {
     bool res = false;
@@ -191,7 +205,7 @@ bool SellDecision3::doubleCheckBasedOnStockOperationalData(
 
         while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
         {
-            if (stockOperationalData[j].price > minimumPrice)
+            if (!isShort ? stockOperationalData[j].price > minimumPrice : stockOperationalData[j].price < minimumPrice)
             {
                 res = false;
 

@@ -38,6 +38,7 @@ private:
         ISellDecision3Config* sellConfig,
         Stock*                stock,
         int                   dataIndex,
+        bool                  isShort,
         float                 price,
         float                 avgPrice,
         float                 commission
@@ -45,14 +46,22 @@ private:
 
     [[nodiscard]]
     QString makeDecisionBasedOnStockOperationalData(
-        QThread* parentThread, ISellDecision3Config* sellConfig, Stock* stock, float price, float avgPrice, float commission
+        QThread*              parentThread,
+        ISellDecision3Config* sellConfig,
+        Stock*                stock,
+        bool                  isShort,
+        float                 price,
+        float                 avgPrice,
+        float                 commission
     ) const;
 
     [[nodiscard]]
-    bool doubleCheckBasedOnStockData(QThread* parentThread, const StockData* stockData, int index, float minimumPrice) const;
+    bool doubleCheckBasedOnStockData(
+        QThread* parentThread, const StockData* stockData, int index, bool isShort, float minimumPrice
+    ) const;
 
     [[nodiscard]]
     bool doubleCheckBasedOnStockOperationalData(
-        QThread* parentThread, const StockOperationalData* stockOperationalData, int index, float minimumPrice
+        QThread* parentThread, const StockOperationalData* stockOperationalData, int index, bool isShort, float minimumPrice
     ) const;
 };
