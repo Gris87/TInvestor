@@ -38,6 +38,7 @@ private:
         ISellDecision2Config* sellConfig,
         Stock*                stock,
         int                   dataIndex,
+        bool                  isShort,
         float                 price,
         float                 avgPrice,
         float                 commission
@@ -45,6 +46,12 @@ private:
 
     [[nodiscard]]
     QString makeDecisionBasedOnStockOperationalData(
-        QThread* parentThread, ISellDecision2Config* sellConfig, Stock* stock, float price, float avgPrice, float commission
+        QThread*              parentThread,
+        ISellDecision2Config* sellConfig,
+        Stock*                stock,
+        bool                  isShort,
+        float                 price,
+        float                 avgPrice,
+        float                 commission
     ) const;
 };
