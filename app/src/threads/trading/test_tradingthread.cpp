@@ -1053,9 +1053,9 @@ TEST_F(Test_TradingThread, Test_calculateBuyPrice)
     EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
 
     // clang-format off
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook1, ASAP_MODE_NONE),              Quotation(0, 0));
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook1, ASAP_MODE_FOLLOW_PRICE),      Quotation(0, 0));
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook1, ASAP_MODE_IMMEDIATELY_TRADE), Quotation(0, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook1, ASAP_MODE_NONE, false),              Quotation(0, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook1, ASAP_MODE_FOLLOW_PRICE, false),      Quotation(0, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook1, ASAP_MODE_IMMEDIATELY_TRADE, false), Quotation(0, 0));
     // clang-format on
 
     tinkoff::GetOrderBookResponse tinkoffOrderBook2;
@@ -1074,9 +1074,9 @@ TEST_F(Test_TradingThread, Test_calculateBuyPrice)
     EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
 
     // clang-format off
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook2, ASAP_MODE_NONE),              Quotation(10, 10000000));
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook2, ASAP_MODE_FOLLOW_PRICE),      Quotation(10, 10000000));
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook2, ASAP_MODE_IMMEDIATELY_TRADE), Quotation(10, 10000000));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook2, ASAP_MODE_NONE, false),              Quotation(10, 10000000));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook2, ASAP_MODE_FOLLOW_PRICE, false),      Quotation(10, 10000000));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook2, ASAP_MODE_IMMEDIATELY_TRADE, false), Quotation(10, 10000000));
     // clang-format on
 
     tinkoff::GetOrderBookResponse tinkoffOrderBook3;
@@ -1092,9 +1092,9 @@ TEST_F(Test_TradingThread, Test_calculateBuyPrice)
     ask3->set_allocated_price(askPrice3);
 
     // clang-format off
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook3, ASAP_MODE_NONE),              Quotation(0, 0));
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook3, ASAP_MODE_FOLLOW_PRICE),      Quotation(0, 0));
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook3, ASAP_MODE_IMMEDIATELY_TRADE), Quotation(10, 20000000));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook3, ASAP_MODE_NONE, false),              Quotation(0, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook3, ASAP_MODE_FOLLOW_PRICE, false),      Quotation(0, 0));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook3, ASAP_MODE_IMMEDIATELY_TRADE, false), Quotation(10, 20000000));
     // clang-format on
 
     tinkoff::GetOrderBookResponse tinkoffOrderBook4;
@@ -1128,9 +1128,9 @@ TEST_F(Test_TradingThread, Test_calculateBuyPrice)
     ask42->set_allocated_price(askPrice42);
 
     // clang-format off
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_NONE),              Quotation(10, 20000000));
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_FOLLOW_PRICE),      Quotation(10, 20000000));
-    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_IMMEDIATELY_TRADE), Quotation(10, 30000000));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_NONE, false),              Quotation(10, 20000000));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_FOLLOW_PRICE, false),      Quotation(10, 20000000));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_IMMEDIATELY_TRADE, false), Quotation(10, 30000000));
     // clang-format on
 }
 

@@ -250,9 +250,9 @@ static void makeDecisionsForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*      stock    = stocks[i].stock;
+        Stock*       stock    = stocks[i].stock;
         const double quantity = stocks[i].quantity;
-        const float avgPrice = stocks[i].avgPrice;
+        const float  avgPrice = stocks[i].avgPrice;
 
         stock->readLock();
 

@@ -986,12 +986,6 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="125"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="187"/>
-        <source>Decided to %1 because the price reached %2 with yield %3 from the price %4 and lost yield %5 from the maximum price %6 at %7</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="131"/>
         <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="188"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the fall is %5</source>
@@ -1123,22 +1117,22 @@
     <message>
         <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="68"/>
         <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="130"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="192"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="193"/>
         <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="110"/>
         <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="150"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="146"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="226"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="142"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="222"/>
         <source>sell</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="68"/>
         <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="130"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="192"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="193"/>
         <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="110"/>
         <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="150"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="146"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="226"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="142"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="222"/>
         <source>buy</source>
         <translation></translation>
     </message>
@@ -1161,21 +1155,39 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="144"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="224"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="140"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="220"/>
         <source>Decided to %1 because the price %2 exceeds %3 Bollindger edge price %4 at %5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="148"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="232"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="144"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="228"/>
         <source>top</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="148"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="232"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="144"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="228"/>
         <source>bottom</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="125"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="188"/>
+        <source>Decided to %1 because the price reached %2 with yield %3 from the price %4 and lost yield %5 from the %6 price %7 at %8</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="135"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="198"/>
+        <source>maximum</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="135"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="198"/>
+        <source>minimum</source>
         <translation></translation>
     </message>
 </context>
@@ -1734,79 +1746,79 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="765"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="815"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="808"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="858"/>
         <source>Order cancelled</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="526"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="542"/>
         <source>Order to sell %1 created with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="506"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="522"/>
         <source>Failed to create order to sell %1 with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="355"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="533"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="369"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="549"/>
         <source>while market price %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="548"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="564"/>
         <source>Order to sell %1 rejected with a price %2. Let&apos;s try again</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="640"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="658"/>
         <source>Trade interrupted because the price reached %1 with raise %2 from the price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="328"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="342"/>
         <source>Failed to create order to buy %1 with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="348"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="362"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="370"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="384"/>
         <source>Order to buy %1 rejected with a price %2. Let&apos;s try again</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="781"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="824"/>
         <source>%1/%2 bought with a price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="791"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="834"/>
         <source>%1/%2 sold with a price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="803"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="846"/>
         <source>Order completed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="807"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="850"/>
         <source>Order partially completed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="811"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="854"/>
         <source>Order rejected</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="819"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="862"/>
         <source>Order is still waiting</source>
         <translation></translation>
     </message>

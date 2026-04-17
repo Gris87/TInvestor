@@ -124,7 +124,7 @@ QString SellDecision2::makeDecisionBasedOnStockData(
 
                     return QObject::tr(
                                "Decided to %1 because the price reached %2 with yield %3 from the price %4 and lost "
-                               "yield %5 from the maximum price %6 at %7"
+                               "yield %5 from the %6 price %7 at %8"
                     )
                         .arg(
                             !isShort ? QObject::tr("sell") : QObject::tr("buy"),
@@ -132,6 +132,7 @@ QString SellDecision2::makeDecisionBasedOnStockData(
                             "+" + QString::number(yield, 'f', 2) + "%",
                             QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
                             QString::number(lostYield, 'f', 2) + "%",
+                            !isShort ? QObject::tr("maximum") : QObject::tr("minimum"),
                             QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
                             QDateTime::fromMSecsSinceEpoch(stockData[i].timestamp).toString(DATETIME_FORMAT)
                         );
@@ -186,7 +187,7 @@ QString SellDecision2::makeDecisionBasedOnStockOperationalData(
 
                     return QObject::tr(
                                "Decided to %1 because the price reached %2 with yield %3 from the price %4 and lost "
-                               "yield %5 from the maximum price %6 at %7"
+                               "yield %5 from the %6 price %7 at %8"
                     )
                         .arg(
                             !isShort ? QObject::tr("sell") : QObject::tr("buy"),
@@ -194,6 +195,7 @@ QString SellDecision2::makeDecisionBasedOnStockOperationalData(
                             "+" + QString::number(yield, 'f', 2) + "%",
                             QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
                             QString::number(lostYield, 'f', 2) + "%",
+                            !isShort ? QObject::tr("maximum") : QObject::tr("minimum"),
                             QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
                             QDateTime::fromMSecsSinceEpoch(stockOperationalData[i].timestamp).toString(DATETIME_FORMAT)
                         );

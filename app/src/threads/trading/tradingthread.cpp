@@ -230,7 +230,7 @@ bool TradingThread::buy(double cost, double expected, double delta)
 
     removeOwnOrdersFromOrderBook(*tinkoffOrderBook, tinkoffOrder);
 
-    const Quotation price = calculateBuyPrice(*tinkoffOrderBook, asapMode());
+    const Quotation price = calculateBuyPrice(*tinkoffOrderBook, asapMode(), cost < 0);
 
     if (price.units < 0)
     {
@@ -309,10 +309,22 @@ TradingThread::buyWithPriceOptimalAmount(double cost, double expected, double de
             return false;
         }
 
-        const double lotPrice      = mInstrumentLot * quotationToDouble(price);
-        const qint64 deltaQuantity = qRound64(delta / lotPrice);
+        qint64 amountToBuy = tinkoffMaxLots->buy_limits().buy_max_lots();
 
-        const qint64 amountToBuy = qMin(deltaQuantity, tinkoffMaxLots->buy_limits().buy_max_lots());
+        if (expected != 0)
+        {
+            const double lotPrice      = mInstrumentLot * quotationToDouble(price);
+            const qint64 deltaQuantity = qRound64(delta / lotPrice);
+
+            amountToBuy = qMin(deltaQuantity, amountToBuy);
+        }
+        else
+        {
+            const double lotPrice      = mInstrumentLot * avgPrice();
+            const qint64 deltaQuantity = qRound64(-cost / lotPrice);
+
+            amountToBuy = qMin(deltaQuantity, amountToBuy);
+        }
 
         if (amountToBuy > 0)
         {
@@ -484,7 +496,7 @@ TradingThread::sellWithPriceOptimalAmount(double cost, double expected, double d
 
         qint64 amountToSell = tinkoffMaxLots->sell_limits().sell_max_lots();
 
-        if (expected > 0)
+        if (expected != 0)
         {
             const double lotPrice      = mInstrumentLot * quotationToDouble(price);
             const qint64 deltaQuantity = qRound64(delta / lotPrice);
@@ -604,7 +616,7 @@ void TradingThread::removeOwnOrdersFromOrderBook(
     }
 }
 
-Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode)
+Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode, bool isShort)
 {
     Quotation res;
 
@@ -627,35 +639,62 @@ Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& 
 
         if (mode == ASAP_MODE_NONE)
         {
-            const float additionalGap = mConfig->isAdditionalGap() ? mConfig->getAdditionalGapPercent() : 0;
-            price                     = price * (1 - (additionalGap / HUNDRED_PERCENT));
-
-            const double priceRaise = ((price / mPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
-
-            if (priceRaise > MAXIMUM_PRICE_RAISE_PERCENT)
+            if (!isShort)
             {
-                mLogsThread->addLog(
-                    LOG_LEVEL_DEBUG,
-                    mInstrumentId,
-                    tr("Trade interrupted because the price reached %1 with raise %2 from the price %3")
-                        .arg(
-                            QString::number(price, 'f', mPricePrecision) + " \u20BD",
-                            "+" + QString::number(priceRaise, 'f', 2) + "%",
-                            QString::number(mPrice, 'f', mPricePrecision) + " \u20BD"
-                        )
-                );
+                const float additionalGap = mConfig->isAdditionalGap() ? mConfig->getAdditionalGapPercent() : 0;
+                price                     = price * (1 - (additionalGap / HUNDRED_PERCENT));
 
-                cancelOrder();
-                res.units = -1;
+                const double priceRaise = ((price / mPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
-                return res;
+                if (priceRaise > MAXIMUM_PRICE_RAISE_PERCENT)
+                {
+                    mLogsThread->addLog(
+                        LOG_LEVEL_DEBUG,
+                        mInstrumentId,
+                        tr("Trade interrupted because the price reached %1 with raise %2 from the price %3")
+                            .arg(
+                                QString::number(price, 'f', mPricePrecision) + " \u20BD",
+                                "+" + QString::number(priceRaise, 'f', 2) + "%",
+                                QString::number(mPrice, 'f', mPricePrecision) + " \u20BD"
+                            )
+                    );
+
+                    cancelOrder();
+                    res.units = -1;
+
+                    return res;
+                }
+            }
+            else
+            {
+                mUserStorage->readLock();
+                const float commission = mUserStorage->getCommission();
+                mUserStorage->readUnlock();
+
+                const double maximumBuyPrice = avgPrice() / (1 + (MINIMUM_YIELD_PERCENT + (2 * commission)) / HUNDRED_PERCENT);
+                price                        = maximumBuyPrice;
+
+                for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
+                {
+                    if (tinkoffOrderBook.bids(i).quantity() > 0)
+                    {
+                        const double curPrice = quotationToDouble(tinkoffOrderBook.bids(i).price());
+
+                        if (curPrice <= maximumBuyPrice)
+                        {
+                            price = curPrice;
+
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
 
     if (price > 0)
     {
-        const qint64 coef = static_cast<qint64>(std::floor(price / quotationToDouble(mMinPriceIncrement)));
+        const qint64 coef = qRound64(price / quotationToDouble(mMinPriceIncrement));
         res               = quotationMultiply(mMinPriceIncrement, coef);
 
         if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook.asks_size() > 0)
@@ -727,7 +766,7 @@ Quotation TradingThread::calculateSellPrice(const tinkoff::GetOrderBookResponse&
 
     if (price > 0)
     {
-        const qint64 coef = static_cast<qint64>(std::ceil(price / quotationToDouble(mMinPriceIncrement)));
+        const qint64 coef = qRound64(price / quotationToDouble(mMinPriceIncrement));
         res               = quotationMultiply(mMinPriceIncrement, coef);
 
         if (mode == ASAP_MODE_IMMEDIATELY_TRADE && tinkoffOrderBook.bids_size() > 0)
