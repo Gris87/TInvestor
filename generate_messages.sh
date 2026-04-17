@@ -25,11 +25,13 @@ rm -rf /tmp/investAPI
 
 rm -rf tools/py3/tinkoff-accounts/tinkoff
 rm -rf tools/py3/tinkoff-asap-trading/tinkoff
+rm -rf tools/py3/tinkoff-bidir-trading/tinkoff
 rm -rf tools/py3/tinkoff-favorite-group/tinkoff
 rm -rf tools/py3/tinkoff-follower/tinkoff
 rm -rf tools/py3/tinvestor-notifier/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-accounts/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-asap-trading/tinkoff
+cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-bidir-trading/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-favorite-group/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-follower/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinvestor-notifier/tinkoff
