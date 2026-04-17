@@ -1,4 +1,3 @@
-Adapt bi-dir trading thread for shorts
 Notifier app
 Create script for buying/selling in parts
 Calculate priority for bi-dir tradings

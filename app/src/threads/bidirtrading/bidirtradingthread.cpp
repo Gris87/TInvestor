@@ -503,6 +503,11 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
 
     calculateTotalCostAndInstrumentCost(tinkoffPortfolio, totalCost, instrumentCost, instrumentLots, instrumentAvgPrice);
 
+    if (instrumentCost < 0) // is short
+    {
+        return;
+    }
+
     qint64 maxQuantity = 0;
 
     for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
