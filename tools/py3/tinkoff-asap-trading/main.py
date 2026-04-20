@@ -30,6 +30,8 @@ async def asap_trading(args):
         if not await _validate_account(client, args.account):
             return
 
+        await _do_processing(client, args.account)
+
 
 def _get_token(token, token_file):
     if token != "":
@@ -56,6 +58,23 @@ async def _validate_account(client, account_id):
         return False
 
     return True
+
+
+async def _do_processing(client, account_id):
+    while True:
+        portfolio = await client.operations.get_portfolio(account_id=account_id)
+
+        for position in portfolio.positions:
+            if position.instrument_type=='currency':
+                continue
+
+            _start_instrument_processing(account_id, position.instrument_uid)
+
+        await asyncio.sleep(1000) # TODO: 1
+
+
+def _start_instrument_processing(account_id, instrument_id):
+    print(instrument_id)
 
 
 def main():
