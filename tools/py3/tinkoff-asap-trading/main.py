@@ -1,8 +1,14 @@
 import asyncio
 import argparse
 import logging
+import os
+import psutil
+import signal
+import subprocess
 import sys
+
 from loguru import logger
+from pathlib import Path
 
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
@@ -12,12 +18,20 @@ from tinkoff.invest.retrying.settings import RetryClientSettings
 #logging.basicConfig(level=logging.DEBUG)
 
 
+PATH_TO_SCRIPT = Path(__file__).parent
+
+
+terminated = False
+
+
 async def asap_trading(args):
     if args.official and not args.confirm:
         answer = input("Are you sure to use official account? [Y/n]")
 
         if answer != "" and answer != "Y" and answer != "y":
             return
+
+    _terminate_all_children_processes(args.account)
 
     logger.info("Connecting to server")
 
@@ -30,7 +44,9 @@ async def asap_trading(args):
         if not await _validate_account(client, args.account):
             return
 
-        await _do_processing(client, args.account)
+        await _do_processing(args, token, client, args.account)
+
+    _terminate_all_children_processes(args.account)
 
 
 def _get_token(token, token_file):
@@ -60,21 +76,84 @@ async def _validate_account(client, account_id):
     return True
 
 
-async def _do_processing(client, account_id):
-    while True:
+async def _do_processing(args, token, client, account_id):
+    global terminated
+
+    signal.signal(signal.SIGINT, _exit_gracefully)
+    signal.signal(signal.SIGTERM, _exit_gracefully)
+
+    while not terminated:
         portfolio = await client.operations.get_portfolio(account_id=account_id)
 
         for position in portfolio.positions:
-            if position.instrument_type=='currency':
+            if position.instrument_type=="currency":
                 continue
 
-            _start_instrument_processing(account_id, position.instrument_uid)
+            _start_instrument_processing(args, token, account_id, position.instrument_uid, position.ticker)
 
-        await asyncio.sleep(1000) # TODO: 1
+        await asyncio.sleep(1)
 
 
-def _start_instrument_processing(account_id, instrument_id):
-    print(instrument_id)
+def _start_instrument_processing(args, token, account_id, instrument_id, ticker):
+    found = False
+
+    for p in psutil.process_iter(["name", "cmdline"]):
+        if "python" in p.info["name"]:
+            cmdline = p.info["cmdline"]
+
+            if len(cmdline) > 1 and "tools/py3/tinkoff-asap-trading/parallel.py" in cmdline[1] and account_id in cmdline and instrument_id in cmdline:
+                found = True
+
+    if found:
+        return
+
+    logger.info(f"Starting child process for instrument {instrument_id} ({ticker})")
+
+    cmd = [
+        "python",
+        str(Path(PATH_TO_SCRIPT) / "parallel.py"),
+        "--account", account_id,
+        "--instrument-id", instrument_id
+    ]
+
+    if args.official:
+        cmd.append("--official")
+
+    my_env = os.environ.copy()
+    my_env["TINVEST_TOKEN"] = token
+
+    subprocess.Popen(
+        cmd,
+        start_new_session=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        stdin=subprocess.DEVNULL,
+        close_fds=True,
+        env=my_env
+    )
+
+
+def _terminate_all_children_processes(account_id):
+    pids = []
+
+    for p in psutil.process_iter(["name", "cmdline"]):
+        if "python" in p.info["name"]:
+            cmdline = p.info["cmdline"]
+
+            if len(cmdline) > 1 and "tools/py3/tinkoff-asap-trading/parallel.py" in cmdline[1] and account_id in cmdline:
+                pids.append(p.pid)
+
+    if len(pids) > 0:
+        logger.info("Terminating children processes")
+
+        for pid in pids:
+            logger.info(f"Terminating child process with PID {pid}")
+            os.kill(pid, signal.SIGTERM)
+
+
+def _exit_gracefully(signum, frame):
+    global terminated
+    terminated = True
 
 
 def main():

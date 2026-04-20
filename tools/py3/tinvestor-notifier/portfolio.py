@@ -45,7 +45,7 @@ def check_portfolio(args):
         for position in portfolio.positions:
             positions[position.instrument_uid] = position.quantity.__dict__
 
-            if position.instrument_type=='currency':
+            if position.instrument_type=="currency":
                 continue
 
             commands.append(
@@ -107,7 +107,7 @@ def _describe_portfolio(positions):
     stocks_info = ""
 
     for position in positions:
-        if position.instrument_type=='currency':
+        if position.instrument_type=="currency":
             currency_info += "\n" + msg_currency_cost.format(currency=position.current_price.currency.upper(), cost=quotation_to_decimal(position.quantity))
             total_cost += quotation_to_decimal(position.quantity)
         else:
@@ -147,7 +147,7 @@ def _execute_command(command):
     if encoding is None:
         encoding = "utf-8"
 
-    for line in iter(process.stdout.readline, b''):
+    for line in iter(process.stdout.readline, b""):
         lines.append(line.rstrip().decode(encoding))
 
     process.wait()

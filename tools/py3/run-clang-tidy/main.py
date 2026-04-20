@@ -111,7 +111,7 @@ def _execute_command(command):
     if encoding is None:
         encoding = "utf-8"
 
-    for line in iter(process.stdout.readline, b''):
+    for line in iter(process.stdout.readline, b""):
         decoded_line = line.rstrip().decode(encoding)
 
         good = True

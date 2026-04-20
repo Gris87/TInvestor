@@ -74,8 +74,8 @@ def _check_core_file(args):
 def _check_app_running(args):
     found = False
 
-    for proc in psutil.process_iter(['name']):
-        if proc.info['name'] == "TInvestor":
+    for proc in psutil.process_iter(["name"]):
+        if proc.info["name"] == "TInvestor":
             found = True
 
             break

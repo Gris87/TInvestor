@@ -9,9 +9,9 @@ from loguru import logger
 from pathlib import Path
 
 
-test_regexp = re.compile(r'TEST(?:_F)?\((\w+), *\w+\)')
+test_regexp = re.compile(r"TEST(?:_F)?\((\w+), *\w+\)")
 
-is_windows = os.name == 'nt'
+is_windows = os.name == "nt"
 
 
 def module_coverage():
@@ -48,7 +48,7 @@ def _get_files():
             continue
 
         if not Path(path.parent / f"test_{path.name}").exists():
-            logger.error(f'{file_path}: Test file not found')
+            logger.error(f"{file_path}: Test file not found")
             sys.exit(1)
 
             continue
@@ -167,7 +167,7 @@ def _execute_commands(commands):
 
             print(f"{cur:4} {module_path:120}: {coverage:5.2f}%")
 
-        logger.error(f'Some modules not fully covered')
+        logger.error("Some modules not fully covered")
 
     return res
 
@@ -213,7 +213,7 @@ def _execute_command(command):
             if encoding is None:
                 encoding = "utf-8"
 
-            for line in iter(process.stdout.readline, b''):
+            for line in iter(process.stdout.readline, b""):
                 lines.append(line.rstrip().decode(encoding))
 
         process.wait()

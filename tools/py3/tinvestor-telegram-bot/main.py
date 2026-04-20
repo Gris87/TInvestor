@@ -21,7 +21,7 @@ def telegram_bot(args):
     mtproxy_secret = os.environ["TELEGRAM_MTPROXY_SECRET"]
     bot_token = os.environ["TELEGRAM_TOKEN"]
 
-    client = TelegramClient('bot', api_id, api_hash, connection=connection.ConnectionTcpMTProxyRandomizedIntermediate, proxy=(mtproxy_server, mtproxy_port, mtproxy_secret)).start(bot_token=bot_token)
+    client = TelegramClient("bot", api_id, api_hash, connection=connection.ConnectionTcpMTProxyRandomizedIntermediate, proxy=(mtproxy_server, mtproxy_port, mtproxy_secret)).start(bot_token=bot_token)
 
     with client:
         client.loop.run_until_complete(_process_files(args, client))

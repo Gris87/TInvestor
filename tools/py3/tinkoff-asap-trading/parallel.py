@@ -3,6 +3,7 @@ import argparse
 import logging
 import os
 import sys
+
 from loguru import logger
 
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX

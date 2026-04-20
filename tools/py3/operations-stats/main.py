@@ -100,7 +100,7 @@ def _collect_statistics(args, operations, logs):
     daily = {}
 
     for entry in entries:
-        date = datetime.fromtimestamp(entry["timestamp"] / 1000.0).strftime('%Y-%m-%d')
+        date = datetime.fromtimestamp(entry["timestamp"] / 1000.0).strftime("%Y-%m-%d")
 
         if date in daily:
             date_info = daily[date]
@@ -243,7 +243,7 @@ def _create_stats_sheet(workbook, stats):
     for entry in stats["entries"]:
         data.append(
             [
-                datetime.fromtimestamp(entry["timestamp"] / 1000.0).strftime('%Y-%m-%d %H:%M:%S'),
+                datetime.fromtimestamp(entry["timestamp"] / 1000.0).strftime("%Y-%m-%d %H:%M:%S"),
                 entry["instrumentId"],
                 entry["instrumentTicker"],
                 entry["instrumentName"],

@@ -24,19 +24,19 @@ def collect_tinkoff_data(args):
         accounts, portfolios, operations = _collect_data(client)
         results = _handle_accounts(accounts, portfolios, operations)
 
-        with open(f"{args.output}/accounts.json", "w", encoding='utf-8') as f:
+        with open(f"{args.output}/accounts.json", "w", encoding="utf-8") as f:
             f.write(json.dumps(accounts, indent=4, ensure_ascii=False))
 
         for i, portfolio_by_account in enumerate(portfolios):
-            with open(f"{args.output}/portfolio_{i}.json", "w", encoding='utf-8') as f:
+            with open(f"{args.output}/portfolio_{i}.json", "w", encoding="utf-8") as f:
                 f.write(json.dumps(portfolio_by_account, indent=4, ensure_ascii=False))
 
         for i, operations_by_account in enumerate(operations):
-            with open(f"{args.output}/operations_{i}.json", "w", encoding='utf-8') as f:
+            with open(f"{args.output}/operations_{i}.json", "w", encoding="utf-8") as f:
                 f.write(json.dumps(operations_by_account, indent=4, ensure_ascii=False))
 
         for i, result_by_account in enumerate(results):
-            with open(f"{args.output}/result_{i}.json", "w", encoding='utf-8') as f:
+            with open(f"{args.output}/result_{i}.json", "w", encoding="utf-8") as f:
                 f.write(json.dumps(result_by_account, indent=4, ensure_ascii=False))
 
 
