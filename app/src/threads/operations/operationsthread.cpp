@@ -674,6 +674,7 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void OperationsThread::alignWithPortfolio(QList<Operation>& lastOperations)
 {
     Operation& lastOperation = lastOperations.first(); // Since it reversed
@@ -741,12 +742,12 @@ void OperationsThread::alignWithPortfolio(QList<Operation>& lastOperations)
 
                 bool found = false;
 
-                for (int i = 0; i < lastOperations.size(); ++i)
+                for (Operation& lastOperation : lastOperations)
                 {
-                    if (lastOperations.at(i).instrumentId == instrumentId)
+                    if (lastOperation.instrumentId == instrumentId)
                     {
-                        found                              = true;
-                        lastOperations[i].remainedQuantity = 0;
+                        found                          = true;
+                        lastOperation.remainedQuantity = 0;
 
                         break;
                     }
@@ -754,12 +755,12 @@ void OperationsThread::alignWithPortfolio(QList<Operation>& lastOperations)
 
                 if (!found)
                 {
-                    for (int i = 0; i < oldOperations.size(); ++i)
+                    for (Operation& oldOperation : oldOperations)
                     {
-                        if (oldOperations.at(i).instrumentId == instrumentId)
+                        if (oldOperation.instrumentId == instrumentId)
                         {
-                            needToOverwrite                   = true;
-                            oldOperations[i].remainedQuantity = 0;
+                            needToOverwrite               = true;
+                            oldOperation.remainedQuantity = 0;
 
                             break;
                         }
@@ -777,6 +778,7 @@ void OperationsThread::alignWithPortfolio(QList<Operation>& lastOperations)
         }
     }
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void OperationsThread::optimize()
 {

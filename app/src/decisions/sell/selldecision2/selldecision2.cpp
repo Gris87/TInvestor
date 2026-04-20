@@ -80,6 +80,7 @@ AsapMode SellDecision2::asapMode() const
     return ASAP_MODE_NONE;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString SellDecision2::makeDecisionBasedOnStockData(
     QThread*              parentThread,
     ISellDecision2Config* sellConfig,
@@ -143,7 +144,9 @@ QString SellDecision2::makeDecisionBasedOnStockData(
 
     return "";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString SellDecision2::makeDecisionBasedOnStockOperationalData(
     QThread*              parentThread,
     ISellDecision2Config* sellConfig,
@@ -206,3 +209,4 @@ QString SellDecision2::makeDecisionBasedOnStockOperationalData(
 
     return "";
 }
+// NOLINTEND(readability-function-cognitive-complexity)

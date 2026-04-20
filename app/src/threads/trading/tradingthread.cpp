@@ -296,6 +296,7 @@ bool TradingThread::buyWithPrice(
     return false;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 bool
 TradingThread::buyWithPriceOptimalAmount(double cost, double expected, double delta, const Quotation& price, float marketPrice)
 {
@@ -399,6 +400,7 @@ TradingThread::buyWithPriceOptimalAmount(double cost, double expected, double de
 
     return false;
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 bool TradingThread::sell(double cost, double expected, double delta)
 {
@@ -616,6 +618,7 @@ void TradingThread::removeOwnOrdersFromOrderBook(
     }
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode, bool isShort)
 {
     Quotation res;
@@ -709,6 +712,7 @@ Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& 
 
     return res;
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 Quotation TradingThread::calculateSellPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, AsapMode mode)
