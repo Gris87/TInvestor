@@ -31,7 +31,7 @@ async def asap_trading(args):
         if answer != "" and answer != "Y" and answer != "y":
             return
 
-    _terminate_all_children_processes(args.account)
+    _terminate_all_children_processes(args)
 
     logger.info("Connecting to server")
 
@@ -44,9 +44,9 @@ async def asap_trading(args):
         if not await _validate_account(client, args.account):
             return
 
-        await _do_processing(args, token, client, args.account)
+        await _do_processing(args, token, client)
 
-    _terminate_all_children_processes(args.account)
+    _terminate_all_children_processes(args)
 
 
 def _get_token(token, token_file):
@@ -76,32 +76,32 @@ async def _validate_account(client, account_id):
     return True
 
 
-async def _do_processing(args, token, client, account_id):
+async def _do_processing(args, token, client):
     global terminated
 
     signal.signal(signal.SIGINT, _exit_gracefully)
     signal.signal(signal.SIGTERM, _exit_gracefully)
 
     while not terminated:
-        portfolio = await client.operations.get_portfolio(account_id=account_id)
+        portfolio = await client.operations.get_portfolio(account_id=args.account)
 
         for position in portfolio.positions:
             if position.instrument_type=="currency":
                 continue
 
-            _start_instrument_processing(args, token, account_id, position.instrument_uid, position.ticker)
+            _start_instrument_processing(args, token, position.instrument_uid, position.ticker)
 
         await asyncio.sleep(1)
 
 
-def _start_instrument_processing(args, token, account_id, instrument_id, ticker):
+def _start_instrument_processing(args, token, instrument_id, ticker):
     found = False
 
     for p in psutil.process_iter(["name", "cmdline"]):
         if "python" in p.info["name"]:
             cmdline = p.info["cmdline"]
 
-            if len(cmdline) > 1 and "tools/py3/tinkoff-asap-trading/parallel.py" in cmdline[1] and account_id in cmdline and instrument_id in cmdline:
+            if cmdline is not None and len(cmdline) > 1 and "tools/py3/tinkoff-asap-trading/parallel.py" in cmdline[1] and args.account in cmdline and instrument_id in cmdline:
                 found = True
 
     if found:
@@ -112,8 +112,10 @@ def _start_instrument_processing(args, token, account_id, instrument_id, ticker)
     cmd = [
         "python",
         str(Path(PATH_TO_SCRIPT) / "parallel.py"),
-        "--account", account_id,
-        "--instrument-id", instrument_id
+        "--account", args.account,
+        "--instrument-id", instrument_id,
+        "--yield", str(args.yield_value),
+        "--part", str(args.part)
     ]
 
     if args.official:
@@ -133,14 +135,14 @@ def _start_instrument_processing(args, token, account_id, instrument_id, ticker)
     )
 
 
-def _terminate_all_children_processes(account_id):
+def _terminate_all_children_processes(args):
     pids = []
 
     for p in psutil.process_iter(["name", "cmdline"]):
         if "python" in p.info["name"]:
             cmdline = p.info["cmdline"]
 
-            if len(cmdline) > 1 and "tools/py3/tinkoff-asap-trading/parallel.py" in cmdline[1] and account_id in cmdline:
+            if cmdline is not None and len(cmdline) > 1 and "tools/py3/tinkoff-asap-trading/parallel.py" in cmdline[1] and args.account in cmdline:
                 pids.append(p.pid)
 
     if len(pids) > 0:
@@ -192,6 +194,20 @@ def main():
         type=str,
         default="",
         help="Account ID",
+    )
+    parser.add_argument(
+        "--yield",
+        dest="yield_value",
+        type=float,
+        default=0.7,
+        help="Trade instrument when good yield reached",
+    )
+    parser.add_argument(
+        "--part",
+        dest="part",
+        type=float,
+        default=25.0,
+        help="Allow to trade partially",
     )
     args = parser.parse_args()
 

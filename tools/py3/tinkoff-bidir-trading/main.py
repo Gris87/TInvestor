@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 import time
+
 from aiostream import stream
 from datetime import datetime, timedelta
 from decimal import Decimal
