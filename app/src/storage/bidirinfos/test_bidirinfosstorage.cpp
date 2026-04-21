@@ -84,7 +84,7 @@ TEST_F(Test_BiDirInfosStorage, Test_readFromDatabase_and_getBiDirInfos)
     std::shared_ptr<IFile> filePtr1  = std::shared_ptr<IFile>(fileMock1);
     std::shared_ptr<IFile> filePtr2  = std::shared_ptr<IFile>(fileMock2);
 
-    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/bidirinfo/bidirinfo.json"))).WillOnce(Return(filePtr1));
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/bidirinfo/bidir_info.json"))).WillOnce(Return(filePtr1));
     EXPECT_CALL(*fileMock1, lastModified()).WillOnce(Return(0));
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(":/assets/bidir_info.json"))).WillOnce(Return(filePtr2));
     EXPECT_CALL(*biDirInfosDatabaseMock, readBiDirInfos(filePtr2)).WillOnce(Return(biDirInfos));
