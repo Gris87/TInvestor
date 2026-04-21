@@ -38,19 +38,20 @@ async def _do_processing(args, client):
         portfolio = await client.operations.get_portfolio(account_id=args.account)
 
         amount_of_lots = 0
-        avg_price = Decimal(0)
 
         for position in portfolio.positions:
             if position.instrument_uid==args.instrument_id:
                 amount_of_lots = int(quotation_to_decimal(position.quantity_lots))
-                avg_price = quotation_to_decimal(position.average_position_price)
+
+                if position.average_position_price.units > 0 or position.average_position_price.nano > 0:
+                    avg_price = quotation_to_decimal(position.average_position_price)
+
+                    await _do_instrument_processing(args, client, amount_of_lots, avg_price)
 
                 break
 
         if amount_of_lots == 0:
             break
-
-        await _do_instrument_processing(args, client, amount_of_lots, avg_price)
 
         await asyncio.sleep(1)
 

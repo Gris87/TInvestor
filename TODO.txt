@@ -1,7 +1,5 @@
-Notifier app
-Create script for buying/selling in parts
-Calculate priority for bi-dir tradings
 Create script for collecting the most frequent bi-dir tradings and give them more preferences (10% part?)
+Notifier app
 Find best configs for different commission
 Change config defaults
 Improve coverage
