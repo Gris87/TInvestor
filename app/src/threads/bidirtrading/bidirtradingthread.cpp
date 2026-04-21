@@ -58,6 +58,7 @@ BiDirTradingThread::BiDirTradingThread(
     mInstrumentLot(),
     mMinPriceIncrement(),
     mMinSpread(),
+    mPriority(),
     mNeedToCancelSell(true),
     mBuyOrderId(),
     mSellOrderId(),
@@ -261,10 +262,12 @@ void BiDirTradingThread::getInstrumentData()
         const BiDirInfo& biDirInfo = biDirInfos.value(mInstrumentId);
 
         mMinSpread = biDirInfo.spread;
+        mPriority  = biDirInfo.priority;
     }
     else
     {
         mMinSpread = SPREAD_FOR_HUGE_BID;
+        mPriority  = BIDIR_PRIORITY_LOW;
     }
 
     mBiDirInfosStorage->readUnlock();
@@ -519,7 +522,7 @@ void BiDirTradingThread::calculateBuySellPriceAndLots(
     sellPrice               = calculateSellPrice(tinkoffOrderBook, instrumentAvgPrice, commission);
     const qint64 lotsToKeep = calculateLotsToKeep(mode, totalCost, quotationToDouble(buyPrice));
 
-    lotsToBuy  = qMax(qMin(lotsToKeep - instrumentLots, maxQuantity), 0);
+    lotsToBuy  = qMin(qMax(lotsToKeep - instrumentLots, 0), maxQuantity);
     lotsToSell = instrumentLots;
 }
 
@@ -641,6 +644,11 @@ Quotation BiDirTradingThread::calculateSellPrice(
 
 qint64 BiDirTradingThread::calculateLotsToKeep(BiDirMode mode, double totalCost, double buyPrice)
 {
+    if (mPriority == BIDIR_PRIORITY_LOW)
+    {
+        return 1;
+    }
+
     const double lotPrice = mInstrumentLot * buyPrice;
 
     const bool limitStockPurchase =
