@@ -197,6 +197,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     biDirInfo.spread     = 0.5f;
     biDirInfo.minYield   = 0.1f;
     biDirInfo.totalYield = 10.0f;
+    biDirInfo.priority   = BIDIR_PRIORITY_NORMAL;
 
     biDirInfos["aaa-aaa"] = biDirInfo;
 

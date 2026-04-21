@@ -16,8 +16,6 @@ from localization import *
 
 
 HHRU_UID   = "cf9ed7ef-784d-4c2c-aabe-362891fcd80c"
-LNZL_UID   = "4563f7a1-8245-4caf-aba5-ac49827ba775"
-LNZLP_UID  = "28fdec79-fcf0-40cb-b53c-586179f024e5"
 GTRK_UID   = "9e69afb6-4561-4fc2-b63b-b181e3f9ecdc"
 JETL_UID   = "34f51a49-919b-4eb1-9ed0-59c26f4cdc1e"
 TMON_UID   = "498ec3ff-ef27-4729-9703-a5aac48d5789"
@@ -25,8 +23,6 @@ IMOEXF_UID = "5bcff194-f10d-4314-b9ee-56b7fdb344fd"
 
 IGNORE_STOCKS = [
     HHRU_UID,
-    LNZL_UID,
-    LNZLP_UID,
     GTRK_UID,
     JETL_UID
 ]

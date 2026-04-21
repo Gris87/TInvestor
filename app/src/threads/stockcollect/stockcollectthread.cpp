@@ -11,8 +11,6 @@
 
 
 const char* const RUBLE_UID                          = "a92e2e25-a698-45cc-a781-167cf465257c";
-const char* const LNZL_UID                           = "4563f7a1-8245-4caf-aba5-ac49827ba775";
-const char* const LNZLP_UID                          = "28fdec79-fcf0-40cb-b53c-586179f024e5";
 const char* const GTRK_UID                           = "9e69afb6-4561-4fc2-b63b-b181e3f9ecdc";
 const char* const JETL_UID                           = "34f51a49-919b-4eb1-9ed0-59c26f4cdc1e";
 constexpr qint64  MS_IN_SECOND                       = 1000LL;
@@ -30,8 +28,6 @@ constexpr int     HTTP_STATUS_CODE_TOO_MANY_REQUESTS = 429;
 
 // clang-format off
 static const QSet<QString> IGNORE_STOCKS{ // clazy:exclude=non-pod-global-static
-    LNZL_UID,
-    LNZLP_UID,
     GTRK_UID,
     JETL_UID
 };

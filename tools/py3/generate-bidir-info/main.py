@@ -65,14 +65,10 @@ MOSCOW_TZ = ZoneInfo("Europe/Moscow")
 WORKDAY_START = dt.time(10, 5, tzinfo=MOSCOW_TZ)
 WORKDAY_END   = dt.time(18, 40, tzinfo=MOSCOW_TZ)
 
-LNZL_UID  = "4563f7a1-8245-4caf-aba5-ac49827ba775"
-LNZLP_UID = "28fdec79-fcf0-40cb-b53c-586179f024e5"
-GTRK_UID  = "9e69afb6-4561-4fc2-b63b-b181e3f9ecdc"
-JETL_UID  = "34f51a49-919b-4eb1-9ed0-59c26f4cdc1e"
+GTRK_UID = "9e69afb6-4561-4fc2-b63b-b181e3f9ecdc"
+JETL_UID = "34f51a49-919b-4eb1-9ed0-59c26f4cdc1e"
 
 BAD_INSTRUMENTS = {
-    LNZL_UID: 10.00,
-    LNZLP_UID: 10.00,
     GTRK_UID: 10.00,
     JETL_UID: 10.00
 }
@@ -198,7 +194,7 @@ def _calculate_stocks_priorities(args, operations, logs):
         if instrument_id in instruments:
             instrument_info = instruments[instrument_id]
 
-        if entry["sellTimestamp"] - entry["buyTimestamp"] < GOOD_SELL_TIME and entry["yieldWithCommissionPercent"] > GOOD_SELL_YIELD:
+        if entry["sellTimestamp"] - entry["buyTimestamp"] <= GOOD_SELL_TIME and entry["yieldWithCommissionPercent"] >= GOOD_SELL_YIELD:
             instrument_info["success"] += 1
 
         instrument_info["total"] += 1
@@ -206,7 +202,7 @@ def _calculate_stocks_priorities(args, operations, logs):
         instruments[instrument_id] = instrument_info
 
     for instrument_id, instrument_info in instruments.items():
-        if instrument_info["total"] > GOOD_TOTAL_TRADES and (instrument_info["success"] * HUNDRED_PERCENT / instrument_info["total"]) >= GOOD_SUCCESS_RATE:
+        if instrument_info["total"] >= GOOD_TOTAL_TRADES and (instrument_info["success"] * HUNDRED_PERCENT / instrument_info["total"]) >= GOOD_SUCCESS_RATE:
             res[instrument_id] = "high"
         else:
             res[instrument_id] = "normal"

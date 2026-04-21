@@ -29,6 +29,7 @@ TEST_F(Test_BiDirInfo, Test_constructor_and_destructor)
     ASSERT_NEAR(biDirInfo.spread,     0.0f, 0.0001f);
     ASSERT_NEAR(biDirInfo.minYield,   0.0f, 0.0001f);
     ASSERT_NEAR(biDirInfo.totalYield, 0.0f, 0.0001f);
+    ASSERT_EQ(biDirInfo.priority,     BIDIR_PRIORITY_LOW);
     // clang-format on
 }
 
@@ -39,6 +40,7 @@ TEST_F(Test_BiDirInfo, Test_copy_constructor)
     biDirInfo.spread     = 1.0f;
     biDirInfo.minYield   = 2.0f;
     biDirInfo.totalYield = 3.0f;
+    biDirInfo.priority   = BIDIR_PRIORITY_HIGH;
 
     const BiDirInfo biDirInfo2(biDirInfo);
 
@@ -46,6 +48,7 @@ TEST_F(Test_BiDirInfo, Test_copy_constructor)
     ASSERT_NEAR(biDirInfo2.spread,     1.0f, 0.0001f);
     ASSERT_NEAR(biDirInfo2.minYield,   2.0f, 0.0001f);
     ASSERT_NEAR(biDirInfo2.totalYield, 3.0f, 0.0001f);
+    ASSERT_EQ(biDirInfo2.priority,     BIDIR_PRIORITY_HIGH);
     // clang-format on
 }
 
@@ -57,6 +60,7 @@ TEST_F(Test_BiDirInfo, Test_assign)
     biDirInfo.spread     = 1.0f;
     biDirInfo.minYield   = 2.0f;
     biDirInfo.totalYield = 3.0f;
+    biDirInfo.priority   = BIDIR_PRIORITY_HIGH;
 
     biDirInfo2 = biDirInfo;
 
@@ -64,6 +68,7 @@ TEST_F(Test_BiDirInfo, Test_assign)
     ASSERT_NEAR(biDirInfo2.spread,     1.0f, 0.0001f);
     ASSERT_NEAR(biDirInfo2.minYield,   2.0f, 0.0001f);
     ASSERT_NEAR(biDirInfo2.totalYield, 3.0f, 0.0001f);
+    ASSERT_EQ(biDirInfo2.priority,     BIDIR_PRIORITY_HIGH);
     // clang-format on
 }
 
@@ -75,9 +80,10 @@ TEST_F(Test_BiDirInfo, Test_fromJsonObject)
     ASSERT_NEAR(biDirInfo.spread,     0.0f, 0.0001f);
     ASSERT_NEAR(biDirInfo.minYield,   0.0f, 0.0001f);
     ASSERT_NEAR(biDirInfo.totalYield, 0.0f, 0.0001f);
+    ASSERT_EQ(biDirInfo.priority,     BIDIR_PRIORITY_LOW);
     // clang-format on
 
-    const QString content = R"({"minYield":2,"spread":1,"totalYield":3})";
+    const QString content = R"({"minYield":2,"priority":"high","spread":1,"totalYield":3})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -90,6 +96,7 @@ TEST_F(Test_BiDirInfo, Test_fromJsonObject)
     ASSERT_NEAR(biDirInfo.spread,     1.0f, 0.0001f);
     ASSERT_NEAR(biDirInfo.minYield,   2.0f, 0.0001f);
     ASSERT_NEAR(biDirInfo.totalYield, 3.0f, 0.0001f);
+    ASSERT_EQ(biDirInfo.priority,     BIDIR_PRIORITY_HIGH);
     // clang-format on
 
     const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
@@ -107,12 +114,13 @@ TEST_F(Test_BiDirInfo, Test_toJsonObject)
     biDirInfo.spread     = 1.0f;
     biDirInfo.minYield   = 2.0f;
     biDirInfo.totalYield = 3.0f;
+    biDirInfo.priority   = BIDIR_PRIORITY_HIGH;
 
     const QJsonObject   jsonObject = biDirInfo.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
 
     const QString content         = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
-    const QString expectedContent = R"({"minYield":2,"spread":1,"totalYield":3})";
+    const QString expectedContent = R"({"minYield":2,"priority":"high","spread":1,"totalYield":3})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -125,10 +133,12 @@ TEST_F(Test_BiDirInfo, Test_equals)
     biDirInfo.spread     = 1.0f;
     biDirInfo.minYield   = 2.0f;
     biDirInfo.totalYield = 3.0f;
+    biDirInfo.priority   = BIDIR_PRIORITY_HIGH;
 
     biDirInfo2.spread     = 1.0f;
     biDirInfo2.minYield   = 2.0f;
     biDirInfo2.totalYield = 3.0f;
+    biDirInfo2.priority   = BIDIR_PRIORITY_HIGH;
 
     ASSERT_EQ(biDirInfo, biDirInfo2);
 
@@ -145,5 +155,10 @@ TEST_F(Test_BiDirInfo, Test_equals)
     biDirInfo2.totalYield = -3.0f;
     ASSERT_NE(biDirInfo, biDirInfo2);
     biDirInfo2.totalYield = 3.0f;
+    ASSERT_EQ(biDirInfo, biDirInfo2);
+
+    biDirInfo2.priority = BIDIR_PRIORITY_NORMAL;
+    ASSERT_NE(biDirInfo, biDirInfo2);
+    biDirInfo2.priority = BIDIR_PRIORITY_HIGH;
     ASSERT_EQ(biDirInfo, biDirInfo2);
 }

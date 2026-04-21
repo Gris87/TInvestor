@@ -8,6 +8,15 @@
 
 
 
+enum BiDirPriority : quint8
+{
+    BIDIR_PRIORITY_LOW,
+    BIDIR_PRIORITY_NORMAL,
+    BIDIR_PRIORITY_HIGH
+};
+
+
+
 struct BiDirInfo
 {
     explicit BiDirInfo();
@@ -21,9 +30,10 @@ struct BiDirInfo
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 
-    float spread;
-    float minYield;
-    float totalYield;
+    float         spread;
+    float         minYield;
+    float         totalYield;
+    BiDirPriority priority;
 };
 
 using BiDirInfos = QMap<QString, BiDirInfo>; // UID => BiDirInfo

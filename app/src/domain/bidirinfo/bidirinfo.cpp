@@ -11,7 +11,8 @@ constexpr float FLOAT_EPSILON = 0.0001f;
 BiDirInfo::BiDirInfo() :
     spread(),
     minYield(),
-    totalYield()
+    totalYield(),
+    priority()
 {
 }
 
@@ -30,6 +31,16 @@ static void biDirInfoTotalYieldParse(BiDirInfo* biDirInfo, simdjson::ondemand::v
     biDirInfo->totalYield = value.get_double();
 }
 
+static void biDirInfoPriorityParse(BiDirInfo* biDirInfo, simdjson::ondemand::value value)
+{
+    const std::string_view valueStr    = value.get_string();
+    const QString          priorityStr = QString::fromUtf8(valueStr.data(), valueStr.size());
+
+    biDirInfo->priority = priorityStr == "high"     ? BIDIR_PRIORITY_HIGH
+                          : priorityStr == "normal" ? BIDIR_PRIORITY_NORMAL
+                                                    : BIDIR_PRIORITY_LOW;
+}
+
 static void biDirInfoThrowParseException(
     BiDirInfo* /*biDirInfo*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
@@ -43,7 +54,8 @@ using ParseHandler = void (*)(BiDirInfo* biDirInfo, simdjson::ondemand::value va
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"spread",     biDirInfoSpreadParse    },
     {"minYield",   biDirInfoMinYieldParse  },
-    {"totalYield", biDirInfoTotalYieldParse}
+    {"totalYield", biDirInfoTotalYieldParse},
+    {"priority",   biDirInfoPriorityParse  }
 };
 // clang-format on
 
@@ -66,6 +78,7 @@ QJsonObject BiDirInfo::toJsonObject() const
     res.insert("spread",     spread);
     res.insert("minYield",   minYield);
     res.insert("totalYield", totalYield);
+    res.insert("priority",   priority == BIDIR_PRIORITY_HIGH ? "high" : priority == BIDIR_PRIORITY_NORMAL ? "normal" : "low");
     // clang-format on
 
     return res;
@@ -74,5 +87,5 @@ QJsonObject BiDirInfo::toJsonObject() const
 bool operator==(const BiDirInfo& lhs, const BiDirInfo& rhs)
 {
     return qAbs(lhs.spread - rhs.spread) < FLOAT_EPSILON && qAbs(lhs.minYield - rhs.minYield) < FLOAT_EPSILON &&
-           qAbs(lhs.totalYield - rhs.totalYield) < FLOAT_EPSILON;
+           qAbs(lhs.totalYield - rhs.totalYield) < FLOAT_EPSILON && lhs.priority == rhs.priority;
 }
