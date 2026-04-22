@@ -4,8 +4,9 @@
 
 PATH_TO_INVEST_API_PRI="libs/investapi/investapi.pri"
 PATH_TO_APP_PRI="app/app.pri"
-PATH_TO_TESTS_PRI="tests/tests.pri"
+PATH_TO_APP_TESTS_PRI="tests/app_tests/app_tests.pri"
 PATH_TO_NOTIFIER_PRI="tools/qt/notifier/notifier.pri"
+PATH_TO_NOTIFIER_TESTS_PRI="tests/notifier_tests/notifier_tests.pri"
 
 
 
@@ -51,17 +52,17 @@ find app/ -name \*.ui | sort | sed "s/app\//    /g" | sed "s/\.ui/\.ui \\\/g" >>
 
 ########################################################################################################################
 
-echo "# Generated with generate_sources.sh" > ${PATH_TO_TESTS_PRI}
-echo "# find app/ -name test_\\*.cpp | sort | sed \"s/app\\///g\" | sed \"s/\\.cpp/\\.cpp \\\\\\/g\"" >> ${PATH_TO_TESTS_PRI}
+echo "# Generated with generate_sources.sh" > ${PATH_TO_APP_TESTS_PRI}
+echo "# find app/ -name test_\\*.cpp | sort | sed \"s/app\\///g\" | sed \"s/\\.cpp/\\.cpp \\\\\\/g\"" >> ${PATH_TO_APP_TESTS_PRI}
 
-echo "SOURCES += \\" >> ${PATH_TO_TESTS_PRI}
-find app/ -name test_\*.cpp | sort | sed "s/app\//    /g" | sed "s/\.cpp/\.cpp \\\/g" >> ${PATH_TO_TESTS_PRI}
+echo "SOURCES += \\" >> ${PATH_TO_APP_TESTS_PRI}
+find app/ -name test_\*.cpp | sort | sed "s/app\//    /g" | sed "s/\.cpp/\.cpp \\\/g" >> ${PATH_TO_APP_TESTS_PRI}
 
-echo "" >> ${PATH_TO_TESTS_PRI}
-echo "# find app/ -name \\*_mock.h | sort | sed \"s/app\\///g\" | sed \"s/\\.h/\\.h \\\\\\/g\"" >> ${PATH_TO_TESTS_PRI}
+echo "" >> ${PATH_TO_APP_TESTS_PRI}
+echo "# find app/ -name \\*_mock.h | sort | sed \"s/app\\///g\" | sed \"s/\\.h/\\.h \\\\\\/g\"" >> ${PATH_TO_APP_TESTS_PRI}
 
-echo "HEADERS += \\" >> ${PATH_TO_TESTS_PRI}
-find app/ -name \*_mock.h | sort | sed "s/app\//    /g" | sed "s/\.h/\.h \\\/g" >> ${PATH_TO_TESTS_PRI}
+echo "HEADERS += \\" >> ${PATH_TO_APP_TESTS_PRI}
+find app/ -name \*_mock.h | sort | sed "s/app\//    /g" | sed "s/\.h/\.h \\\/g" >> ${PATH_TO_APP_TESTS_PRI}
 
 ########################################################################################################################
 
@@ -88,3 +89,17 @@ echo "# find tools/qt/notifier/ -name \\*.ui | sort | sed \"s/tools\\/qt\\/notif
 
 echo "FORMS += \\" >> ${PATH_TO_NOTIFIER_PRI}
 find tools/qt/notifier/ -name \*.ui | sort | sed "s/tools\/qt\/notifier\//    /g" | sed "s/\.ui/\.ui \\\/g" >> ${PATH_TO_NOTIFIER_PRI}
+
+########################################################################################################################
+
+echo "# Generated with generate_sources.sh" > ${PATH_TO_NOTIFIER_TESTS_PRI}
+echo "# find tools/qt/notifier/ -name test_\\*.cpp | sort | sed \"s/tools\\/qt\\/notifier\\///g\" | sed \"s/\\.cpp/\\.cpp \\\\\\/g\"" >> ${PATH_TO_NOTIFIER_TESTS_PRI}
+
+echo "SOURCES += \\" >> ${PATH_TO_NOTIFIER_TESTS_PRI}
+find tools/qt/notifier/ -name test_\*.cpp | sort | sed "s/tools\/qt\/notifier\//    /g" | sed "s/\.cpp/\.cpp \\\/g" >> ${PATH_TO_NOTIFIER_TESTS_PRI}
+
+echo "" >> ${PATH_TO_NOTIFIER_TESTS_PRI}
+echo "# find tools/qt/notifier/ -name \\*_mock.h | sort | sed \"s/tools\\/qt\\/notifier\\///g\" | sed \"s/\\.h/\\.h \\\\\\/g\"" >> ${PATH_TO_NOTIFIER_TESTS_PRI}
+
+echo "HEADERS += \\" >> ${PATH_TO_NOTIFIER_TESTS_PRI}
+find tools/qt/notifier/ -name \*_mock.h | sort | sed "s/tools\/qt\/notifier\//    /g" | sed "s/\.h/\.h \\\/g" >> ${PATH_TO_NOTIFIER_TESTS_PRI}

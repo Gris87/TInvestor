@@ -5,5 +5,5 @@ INCLUDEPATH += \
     $${PWD}/../libs/waitingspinner
 
 LIBS += \
-    -L$${OUT_PWD}/../libs/waitingspinner/build \
+    -L$${OUT_PWD}/$${PROJECT_ROOT_PATH}/libs/waitingspinner/build \
     -lwaitingspinner

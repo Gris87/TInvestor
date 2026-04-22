@@ -37,5 +37,7 @@ INCLUDEPATH += \
 
 
 
-include(../../libs/grpc.pri)
-include(../../libs/investapi/investapi.pri)
+PROJECT_ROOT_PATH = ../..
+
+include($${PROJECT_ROOT_PATH}/libs/grpc.pri)
+include($${PROJECT_ROOT_PATH}/libs/investapi/investapi.pri)

@@ -1,13 +1,13 @@
-cd build\Desktop-Debug\tests\build
+cd build\Desktop-Debug\tests\app_tests\build
 
-tests.exe > output.txt 2>&1
+app_tests.exe > output.txt 2>&1
 set RESULT_CODE=%ERRORLEVEL%
 
 if %RESULT_CODE% NEQ 0 (
     type output.txt
     del output.txt
 
-    cd ..\..\..\..
+    cd ..\..\..\..\..
 
     if not "%1" == "--ci" pause
 
@@ -16,13 +16,43 @@ if %RESULT_CODE% NEQ 0 (
 
 del output.txt
 
+cd ..\..\..\..\..
+
+
+
+cd build\Desktop-Debug\tests\notifier_tests\build
+
+notifier_tests.exe > output.txt 2>&1
+set RESULT_CODE=%ERRORLEVEL%
+
+if %RESULT_CODE% NEQ 0 (
+    type output.txt
+    del output.txt
+
+    cd ..\..\..\..\..
+
+    if not "%1" == "--ci" pause
+
+    exit /b %RESULT_CODE%
+)
+
+del output.txt
+
+cd ..\..\..\..\..
+
+
+
 CALL :try
 set RESULT_CODE=%ERRORLEVEL%
 
-if not "%1" == "--ci" ..\..\..\CoverageReport\index.html
-cd ..\..\..\..
+if %RESULT_CODE% EQU 0 (
+    if not "%1" == "--ci" build\CoverageReport\app_tests\index.html
+    if not "%1" == "--ci" build\CoverageReport\notifier_tests\index.html
+)
 
 exit /b %RESULT_CODE%
+
+
 
 :try
 SET /A tries=5
@@ -31,7 +61,12 @@ SET /A tries=5
 IF %tries% LEQ 0 EXIT /B 1
 SET /A tries-=1
 
-if exist ..\..\..\CoverageReport rmdir ..\..\..\CoverageReport /q /s
+if exist build\CoverageReport rmdir build\CoverageReport /q /s
+
+
+
+cd build\Desktop-Debug\tests\app_tests\build
+
 OpenCppCoverage ^
     --sources app\src\ ^
     --excluded_sources test_* ^
@@ -39,7 +74,28 @@ OpenCppCoverage ^
     --excluded_sources filedialog.cpp ^
     --excluded_sources messageboxutils.cpp ^
     --excluded_sources httpclient.cpp ^
-    --export_type html:..\..\..\CoverageReport ^
-    --export_type cobertura:..\..\..\CoverageReport\cobertura.xml ^
+    --export_type html:..\..\..\..\CoverageReport\app_tests ^
+    --export_type cobertura:..\..\..\..\CoverageReport\app_tests\cobertura.xml ^
     -- ^
-    tests.exe && (EXIT /B 0) || (GOTO loop)
+    app_tests.exe || (cd ..\..\..\..\.. && GOTO loop)
+
+cd ..\..\..\..\..
+
+
+
+cd build\Desktop-Debug\tests\notifier_tests\build
+
+OpenCppCoverage ^
+    --sources notifier\src\ ^
+    --excluded_sources test_* ^
+    --excluded_sources *_mock.h ^
+    --export_type html:..\..\..\..\CoverageReport\notifier_tests ^
+    --export_type cobertura:..\..\..\..\CoverageReport\notifier_tests\cobertura.xml ^
+    -- ^
+    notifier_tests.exe || (cd ..\..\..\..\.. && GOTO loop)
+
+cd ..\..\..\..\..
+
+
+
+EXIT /B 0

@@ -1,14 +1,14 @@
-QT += core gui widgets network sql
+QT += core gui widgets network sql gui-private
 
 CONFIG += c++20
 
-TARGET = Notifier
+TARGET = notifier_tests
 TEMPLATE = app
 
 
 
-RC_FILE = Resources.rc
-RESOURCES += Resources.qrc
+DEFINES += \
+    TESTING_MODE
 
 
 
@@ -26,6 +26,15 @@ win32-msvc* {
 }
 # Extend number of sections - END
 
+# Compile with coverage - BEGIN
+linux-g++* {
+    CONFIG (debug, debug|release) {
+        QMAKE_CXXFLAGS += "-fprofile-arcs -ftest-coverage -fno-elide-constructors -fno-default-inline"
+        LIBS           += "-lgcov"
+    }
+}
+# Compile with coverage - END
+
 # Target dirs - BEGIN
 DESTDIR     = build/
 OBJECTS_DIR = build/gen/$${TARGET}/objs
@@ -36,16 +45,14 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 
-PROJECT_ROOT_PATH = ../../..
+PROJECT_ROOT_PATH = ../..
 
 include($${PROJECT_ROOT_PATH}/tools/qt/notifier/notifier.pri)
+include($${PROJECT_ROOT_PATH}/libs/gtest.pri)
 include($${PROJECT_ROOT_PATH}/libs/libs.pri)
+include($${PROJECT_ROOT_PATH}/tests/notifier_tests/notifier_tests.pri)
 
 
 
 SOURCES += \
-    src/main.cpp
-
-TRANSLATIONS += \
-    assets/translations/language_en.ts \
-    assets/translations/language_ru.ts
+    main.cpp

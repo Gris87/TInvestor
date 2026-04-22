@@ -5,5 +5,5 @@ INCLUDEPATH += \
     $${PWD}/../libs/verticallabel
 
 LIBS += \
-    -L$${OUT_PWD}/../libs/verticallabel/build \
+    -L$${OUT_PWD}/$${PROJECT_ROOT_PATH}/libs/verticallabel/build \
     -lverticallabel

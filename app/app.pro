@@ -66,8 +66,10 @@ copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinve
 
 
 
-include(../app/app.pri)
-include(../libs/libs.pri)
+PROJECT_ROOT_PATH = ..
+
+include($${PROJECT_ROOT_PATH}/app/app.pri)
+include($${PROJECT_ROOT_PATH}/libs/libs.pri)
 
 
 

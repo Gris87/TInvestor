@@ -154,7 +154,7 @@ def _check_for_non_ascii(file_path, lines):
     file_path_simplified = file_path.replace("\\", "/")
 
     skip_files = (
-        "/app/assets/translations/language_ru.ts" in file_path_simplified or
+        "/assets/translations/" in file_path_simplified or
         "/localization.py" in file_path_simplified
     )
 

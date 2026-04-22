@@ -5,5 +5,5 @@ INCLUDEPATH += \
     $${PWD}/../libs/simplecrypt
 
 LIBS += \
-    -L$${OUT_PWD}/../libs/simplecrypt/build \
+    -L$${OUT_PWD}/$${PROJECT_ROOT_PATH}/libs/simplecrypt/build \
     -lsimplecrypt
