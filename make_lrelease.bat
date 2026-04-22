@@ -1,6 +1,17 @@
 cd app
 
 lrelease app.pro
-pause
 
 cd ..
+
+
+
+cd tools\qt\notifier
+
+lrelease notifier.pro
+
+cd ..\..\..
+
+
+
+pause

@@ -37,9 +37,13 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 include(../notifier/notifier.pri)
-include(../libs/libs.pri)
+include(../../../libs/libs.pri)
 
 
 
 SOURCES += \
     src/main.cpp
+
+TRANSLATIONS += \
+    assets/translations/language_en.ts \
+    assets/translations/language_ru.ts

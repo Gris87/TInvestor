@@ -167,12 +167,12 @@
 <context>
     <name>BiDirTradingThread</name>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="93"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="94"/>
         <source>Reselling completed successfully</source>
         <translation>Перепродажа успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="159"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="160"/>
         <source>Impossible to continue reselling</source>
         <translation>Невозможно продолжать перепродажу</translation>
     </message>
@@ -1116,23 +1116,23 @@
     </message>
     <message>
         <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="68"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="130"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="193"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="131"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="196"/>
         <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="110"/>
         <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="150"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="142"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="222"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="143"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="225"/>
         <source>sell</source>
         <translation>продать</translation>
     </message>
     <message>
         <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="68"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="130"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="193"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="131"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="196"/>
         <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="110"/>
         <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="150"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="142"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="222"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="143"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="225"/>
         <source>buy</source>
         <translation>покупать</translation>
     </message>
@@ -1155,38 +1155,38 @@
         <translation>выросла</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="140"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="220"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="141"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="223"/>
         <source>Decided to %1 because the price %2 exceeds %3 Bollindger edge price %4 at %5</source>
         <translation>Решено %1, потому что цена %2 перескочила %3 границу Боллинджера %4 в %5</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="144"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="228"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="145"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="231"/>
         <source>top</source>
         <translation>верхнюю</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="144"/>
-        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="228"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="145"/>
+        <location filename="../../src/decisions/sell/selldecision4/selldecision4.cpp" line="231"/>
         <source>bottom</source>
         <translation>нижнюю</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="125"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="188"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="126"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="191"/>
         <source>Decided to %1 because the price reached %2 with yield %3 from the price %4 and lost yield %5 from the %6 price %7 at %8</source>
         <translation>Решено %1, потому что цена достигла %2 с доходностью %3 от цены %4 и потеряла доход в %5 от %6 цены %7 в %8</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="135"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="198"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="136"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="201"/>
         <source>maximum</source>
         <translation>максимальной</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="135"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="198"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="136"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="201"/>
         <source>minimum</source>
         <translation>минимальной</translation>
     </message>
@@ -1536,19 +1536,19 @@
 <context>
     <name>StockCollectThread</name>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="100"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="96"/>
         <source>Downloading metadata</source>
         <translation>Скачивание метаданных</translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="418"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="446"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="414"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="442"/>
         <source>Downloading logos</source>
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="812"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="820"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="808"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="816"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>
@@ -1752,43 +1752,43 @@
         <translation>Заявка отменена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="542"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="540"/>
         <source>Order to sell %1 created with a price %2</source>
         <translation>Заявка создана на продажу %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="522"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="520"/>
         <source>Failed to create order to sell %1 with a price %2</source>
         <translation>Не удалось создать заявку на продажу %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="369"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="549"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="368"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="547"/>
         <source>while market price %1</source>
         <translation>пока рыночная цена %1</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="564"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="562"/>
         <source>Order to sell %1 rejected with a price %2. Let&apos;s try again</source>
         <translation>Заявка отклонена на продажу %1 по цене %2. Попробуем ещё раз</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="658"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="657"/>
         <source>Trade interrupted because the price reached %1 with raise %2 from the price %3</source>
         <translation>Торговля прервана, потому что цена достигла %1 с ростом %2 от цены %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="342"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="341"/>
         <source>Failed to create order to buy %1 with a price %2</source>
         <translation>Не удалось создать заявку на покупку %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="362"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="361"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation>Заявка создана на покупку %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="384"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="383"/>
         <source>Order to buy %1 rejected with a price %2. Let&apos;s try again</source>
         <translation>Заявка отклонена на покупку %1 по цене %2. Попробуем ещё раз</translation>
     </message>

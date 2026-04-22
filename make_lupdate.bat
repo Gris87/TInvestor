@@ -1,6 +1,17 @@
 cd app
 
 lupdate -no-obsolete app.pro
-pause
 
 cd ..
+
+
+
+cd tools\qt\notifier
+
+lupdate -no-obsolete notifier.pro
+
+cd ..\..\..
+
+
+
+pause
