@@ -9,6 +9,7 @@ if [[ ! "${VERSION}" =~ ^v[0-9]+\.[0-9]+.[0-9]+$ ]]; then
 fi
 
 sed -i "s/VERSION *= *\".*\"/VERSION  = \"${VERSION}\"/g" app/src/main.cpp
+sed -i "s/VERSION *= *\".*\"/VERSION  = \"${VERSION}\"/g" tools/qt/notifier/src/main.cpp
 
 git add .
 git commit -m "Release ${VERSION}"

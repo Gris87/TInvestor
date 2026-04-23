@@ -100,7 +100,8 @@ runs:
         New-Item -Path "TInvestor-source/build/Desktop-Release" -ItemType "directory" -Force
         Set-Location -Path "TInvestor-source/build/Desktop-Release"
 
-        (Get-Content "${Env:GITHUB_WORKSPACE}/TInvestor-source/app/src/main.cpp") -replace 'DEV_BUILD', ${Env:GITHUB_SHA} | Set-Content "${Env:GITHUB_WORKSPACE}/TInvestor-source/app/src/main.cpp"
+        (Get-Content "${Env:GITHUB_WORKSPACE}/TInvestor-source/app/src/main.cpp")               -replace 'DEV_BUILD', ${Env:GITHUB_SHA} | Set-Content "${Env:GITHUB_WORKSPACE}/TInvestor-source/app/src/main.cpp"
+        (Get-Content "${Env:GITHUB_WORKSPACE}/TInvestor-source/tools/qt/notifier/src/main.cpp") -replace 'DEV_BUILD', ${Env:GITHUB_SHA} | Set-Content "${Env:GITHUB_WORKSPACE}/TInvestor-source/tools/qt/notifier/src/main.cpp"
 
         switch ("${{ runner.os }}")
         {
