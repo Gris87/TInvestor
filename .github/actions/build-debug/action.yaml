@@ -159,7 +159,7 @@ runs:
                 Remove-Item "artifacts/tools/Makefile" -Force
                 Remove-Item "artifacts/tests/Makefile" -Force
                 Remove-Item "artifacts/.qmake.stash" -Force
-                ReCopy-Item "artifacts/Makefile" -Force
+                Remove-Item "artifacts/Makefile" -Force
 
                 New-Item -Path "artifacts/libs" -ItemType "directory" -Force
                 Copy-Item -Path artifacts/app/build/platforms -Destination artifacts/libs -Recurse -Force

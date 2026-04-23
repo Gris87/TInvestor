@@ -11,7 +11,7 @@ runs:
     - name: Download build artifacts (release)
       uses: thebrowsercompany/gha-download-tar-artifact@main
       with:
-        name: build-release-${{ matrix.config.name }}
+        name: build-release-tidy-${{ matrix.config.name }}
         path: ./build-release
 
     # Download documentation artifacts
