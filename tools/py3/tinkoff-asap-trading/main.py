@@ -91,7 +91,7 @@ async def _do_processing(args, token, client):
 
             _start_instrument_processing(args, token, position.instrument_uid, position.ticker)
 
-        await asyncio.sleep(1)
+        await asyncio.sleep(10)
 
 
 def _start_instrument_processing(args, token, instrument_id, ticker):

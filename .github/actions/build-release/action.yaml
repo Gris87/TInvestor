@@ -162,21 +162,21 @@ runs:
                 Remove-Item "artifacts/Makefile" -Force
 
                 New-Item -Path "artifacts/libs" -ItemType "directory" -Force
-                Move-Item -Path artifacts/app/build/platforms -Destination artifacts/libs/platforms -Force
-                Move-Item -Path artifacts/app/build/sqldrivers -Destination artifacts/libs/sqldrivers -Force
-                Move-Item -Path artifacts/app/build/tls -Destination artifacts/libs/tls -Force
+                Move-Item -Path artifacts/app/build/platforms -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/app/build/sqldrivers -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/app/build/tls -Destination artifacts/libs -Force
                 Move-Item -Path artifacts/app/build/*.dll* -Destination artifacts/libs/ -Force
-                Move-Item -Path artifacts/tests/app_tests/build/platforms -Destination artifacts/libs/platforms -Force
-                Move-Item -Path artifacts/tests/app_tests/build/sqldrivers -Destination artifacts/libs/sqldrivers -Force
-                Move-Item -Path artifacts/tests/app_tests/build/tls -Destination artifacts/libs/tls -Force
+                Move-Item -Path artifacts/tests/app_tests/build/platforms -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tests/app_tests/build/sqldrivers -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tests/app_tests/build/tls -Destination artifacts/libs -Force
                 Move-Item -Path artifacts/tests/app_tests/build/*.dll* -Destination artifacts/libs/ -Force
-                Move-Item -Path artifacts/tests/notifier_tests/build/platforms -Destination artifacts/libs/platforms -Force
-                Move-Item -Path artifacts/tests/notifier_tests/build/sqldrivers -Destination artifacts/libs/sqldrivers -Force
-                Move-Item -Path artifacts/tests/notifier_tests/build/tls -Destination artifacts/libs/tls -Force
+                Move-Item -Path artifacts/tests/notifier_tests/build/platforms -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tests/notifier_tests/build/sqldrivers -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tests/notifier_tests/build/tls -Destination artifacts/libs -Force
                 Move-Item -Path artifacts/tests/notifier_tests/build/*.dll* -Destination artifacts/libs/ -Force
-                Move-Item -Path artifacts/tools/qt/notifier/build/platforms -Destination artifacts/libs/platforms -Force
-                Move-Item -Path artifacts/tools/qt/notifier/build/sqldrivers -Destination artifacts/libs/sqldrivers -Force
-                Move-Item -Path artifacts/tools/qt/notifier/build/tls -Destination artifacts/libs/tls -Force
+                Move-Item -Path artifacts/tools/qt/notifier/build/platforms -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tools/qt/notifier/build/sqldrivers -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tools/qt/notifier/build/tls -Destination artifacts/libs -Force
                 Move-Item -Path artifacts/tools/qt/notifier/build/*.dll* -Destination artifacts/libs/ -Force
             }
             "Linux" {
@@ -196,21 +196,21 @@ runs:
                 Remove-Item "artifacts/Makefile" -Force
 
                 New-Item -Path "artifacts/libs" -ItemType "directory" -Force
-                Move-Item -Path artifacts/app/build/platforms -Destination artifacts/libs/platforms -Force
-                Move-Item -Path artifacts/app/build/sqldrivers -Destination artifacts/libs/sqldrivers -Force
-                Move-Item -Path artifacts/app/build/tls -Destination artifacts/libs/tls -Force
+                Move-Item -Path artifacts/app/build/platforms -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/app/build/sqldrivers -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/app/build/tls -Destination artifacts/libs -Force
                 Move-Item -Path artifacts/app/build/*.so* -Destination artifacts/libs/ -Force
-                Move-Item -Path artifacts/tests/app_tests/build/platforms -Destination artifacts/libs/platforms -Force
-                Move-Item -Path artifacts/tests/app_tests/build/sqldrivers -Destination artifacts/libs/sqldrivers -Force
-                Move-Item -Path artifacts/tests/app_tests/build/tls -Destination artifacts/libs/tls -Force
+                Move-Item -Path artifacts/tests/app_tests/build/platforms -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tests/app_tests/build/sqldrivers -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tests/app_tests/build/tls -Destination artifacts/libs -Force
                 Move-Item -Path artifacts/tests/app_tests/build/*.so* -Destination artifacts/libs/ -Force
-                Move-Item -Path artifacts/tests/notifier_tests/build/platforms -Destination artifacts/libs/platforms -Force
-                Move-Item -Path artifacts/tests/notifier_tests/build/sqldrivers -Destination artifacts/libs/sqldrivers -Force
-                Move-Item -Path artifacts/tests/notifier_tests/build/tls -Destination artifacts/libs/tls -Force
+                Move-Item -Path artifacts/tests/notifier_tests/build/platforms -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tests/notifier_tests/build/sqldrivers -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tests/notifier_tests/build/tls -Destination artifacts/libs -Force
                 Move-Item -Path artifacts/tests/notifier_tests/build/*.so* -Destination artifacts/libs/ -Force
-                Move-Item -Path artifacts/tools/qt/notifier/build/platforms -Destination artifacts/libs/platforms -Force
-                Move-Item -Path artifacts/tools/qt/notifier/build/sqldrivers -Destination artifacts/libs/sqldrivers -Force
-                Move-Item -Path artifacts/tools/qt/notifier/build/tls -Destination artifacts/libs/tls -Force
+                Move-Item -Path artifacts/tools/qt/notifier/build/platforms -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tools/qt/notifier/build/sqldrivers -Destination artifacts/libs -Force
+                Move-Item -Path artifacts/tools/qt/notifier/build/tls -Destination artifacts/libs -Force
                 Move-Item -Path artifacts/tools/qt/notifier/build/*.so* -Destination artifacts/libs/ -Force
             }
         }
