@@ -159,25 +159,41 @@ runs:
                 Remove-Item "artifacts/tools/Makefile" -Force
                 Remove-Item "artifacts/tests/Makefile" -Force
                 Remove-Item "artifacts/.qmake.stash" -Force
-                Remove-Item "artifacts/Makefile" -Force
+                ReCopy-Item "artifacts/Makefile" -Force
 
                 New-Item -Path "artifacts/libs" -ItemType "directory" -Force
-                Move-Item -Path artifacts/app/build/platforms -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/app/build/sqldrivers -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/app/build/tls -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/app/build/*.dll* -Destination artifacts/libs/ -Force
-                Move-Item -Path artifacts/tests/app_tests/build/platforms -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/tests/app_tests/build/sqldrivers -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/tests/app_tests/build/tls -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/tests/app_tests/build/*.dll* -Destination artifacts/libs/ -Force
-                Move-Item -Path artifacts/tests/notifier_tests/build/platforms -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/tests/notifier_tests/build/sqldrivers -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/tests/notifier_tests/build/tls -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/tests/notifier_tests/build/*.dll* -Destination artifacts/libs/ -Force
-                Move-Item -Path artifacts/tools/qt/notifier/build/platforms -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/tools/qt/notifier/build/sqldrivers -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/tools/qt/notifier/build/tls -Destination artifacts/libs -Force
-                Move-Item -Path artifacts/tools/qt/notifier/build/*.dll* -Destination artifacts/libs/ -Force
+                Copy-Item -Path artifacts/app/build/platforms -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/app/build/sqldrivers -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/app/build/tls -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/app/build/*.dll* -Destination artifacts/libs/ -Force
+                Copy-Item -Path artifacts/tests/app_tests/build/platforms -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/tests/app_tests/build/sqldrivers -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/tests/app_tests/build/tls -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/tests/app_tests/build/*.dll* -Destination artifacts/libs/ -Force
+                Copy-Item -Path artifacts/tests/notifier_tests/build/platforms -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/tests/notifier_tests/build/sqldrivers -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/tests/notifier_tests/build/tls -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/tests/notifier_tests/build/*.dll* -Destination artifacts/libs/ -Force
+                Copy-Item -Path artifacts/tools/qt/notifier/build/platforms -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/tools/qt/notifier/build/sqldrivers -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/tools/qt/notifier/build/tls -Destination artifacts/libs -Recurse -Force
+                Copy-Item -Path artifacts/tools/qt/notifier/build/*.dll* -Destination artifacts/libs/ -Force
+                Remove-Item -Path artifacts/app/build/platforms -Recurse -Force
+                Remove-Item -Path artifacts/app/build/sqldrivers -Recurse -Force
+                Remove-Item -Path artifacts/app/build/tls -Recurse -Force
+                Remove-Item -Path artifacts/app/build/*.dll* -Force
+                Remove-Item -Path artifacts/tests/app_tests/build/platforms -Recurse -Force
+                Remove-Item -Path artifacts/tests/app_tests/build/sqldrivers -Recurse -Force
+                Remove-Item -Path artifacts/tests/app_tests/build/tls -Recurse -Force
+                Remove-Item -Path artifacts/tests/app_tests/build/*.dll* -Force
+                Remove-Item -Path artifacts/tests/notifier_tests/build/platforms -Recurse -Force
+                Remove-Item -Path artifacts/tests/notifier_tests/build/sqldrivers -Recurse -Force
+                Remove-Item -Path artifacts/tests/notifier_tests/build/tls -Recurse -Force
+                Remove-Item -Path artifacts/tests/notifier_tests/build/*.dll* -Force
+                Remove-Item -Path artifacts/tools/qt/notifier/build/platforms -Recurse -Force
+                Remove-Item -Path artifacts/tools/qt/notifier/build/sqldrivers -Recurse -Force
+                Remove-Item -Path artifacts/tools/qt/notifier/build/tls -Recurse -Force
+                Remove-Item -Path artifacts/tools/qt/notifier/build/*.dll* -Force
             }
             "Linux" {
                 # Remove-Item "artifacts/app/build/gen" -Recurse -Force # Do not delete. Needed for clang-tidy
