@@ -26,5 +26,7 @@ public:
     MainWindow(const MainWindow& another)            = delete;
     MainWindow& operator=(const MainWindow& another) = delete;
 
+    void init();
+
     Ui::MainWindow* ui;
 };

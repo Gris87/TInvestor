@@ -20,3 +20,8 @@ MainWindow::~MainWindow()
 
     delete ui;
 }
+
+void MainWindow::init()
+{
+    qInfo() << "Start main initialization";
+}

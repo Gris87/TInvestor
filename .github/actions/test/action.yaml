@@ -96,14 +96,12 @@ runs:
             "Windows" {
                 & tzutil /s "Russian Standard Time"
 
-                & ./app_tests.exe
-                Start-Sleep -Seconds 10
+                Start-Process -FilePath "app_tests.exe" -Wait
 
                 # Enter to TInvestor-source/build/Desktop-Release/tests/notifier_tests/build folder
                 Set-Location -Path "../../notifier_tests/build"
 
-                & ./notifier_tests.exe
-                Start-Sleep -Seconds 10
+                Start-Process -FilePath "notifier_tests.exe" -Wait
             }
             "Linux" {
                 & sudo timedatectl set-timezone Europe/Moscow
