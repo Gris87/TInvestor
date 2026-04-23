@@ -131,31 +131,63 @@ runs:
         {
             "Windows" {
                 # Remove-Item "artifacts/app/build/gen" -Recurse -Force # Do not delete. Needed for clang-tidy
-                # Remove-Item "artifacts/app/debug" -Recurse -Force
-                # Remove-Item "artifacts/app/release" -Recurse -Force
-                # Remove-Item "artifacts/app/Makefile" -Force
-                # Remove-Item "artifacts/app/Makefile.Debug" -Force
-                # Remove-Item "artifacts/app/Makefile.Release" -Force
+                Remove-Item "artifacts/app/debug" -Recurse -Force
+                Remove-Item "artifacts/app/release" -Recurse -Force
+                Remove-Item "artifacts/app/Makefile" -Force
+                Remove-Item "artifacts/app/Makefile.Debug" -Force
+                Remove-Item "artifacts/app/Makefile.Release" -Force
                 Remove-Item "artifacts/libs" -Recurse -Force
-                # Remove-Item "artifacts/tests/build/gen" -Recurse -Force # Do not delete. Needed for clang-tidy
-                # Remove-Item "artifacts/tests/debug" -Recurse -Force
-                # Remove-Item "artifacts/tests/release" -Recurse -Force
-                # Remove-Item "artifacts/tests/Makefile" -Force
-                # Remove-Item "artifacts/tests/Makefile.Debug" -Force
-                # Remove-Item "artifacts/tests/Makefile.Release" -Force
-                # Remove-Item "artifacts/.qmake.stash" -Force
-                # Remove-Item "artifacts/Makefile" -Force
+                # Remove-Item "artifacts/tests/app_tests/build/gen" -Recurse -Force # Do not delete. Needed for clang-tidy
+                Remove-Item "artifacts/tests/app_tests/debug" -Recurse -Force
+                Remove-Item "artifacts/tests/app_tests/release" -Recurse -Force
+                Remove-Item "artifacts/tests/app_tests/Makefile" -Force
+                Remove-Item "artifacts/tests/app_tests/Makefile.Debug" -Force
+                Remove-Item "artifacts/tests/app_tests/Makefile.Release" -Force
+                # Remove-Item "artifacts/tests/notifier_tests/build/gen" -Recurse -Force # Do not delete. Needed for clang-tidy
+                Remove-Item "artifacts/tests/notifier_tests/debug" -Recurse -Force
+                Remove-Item "artifacts/tests/notifier_tests/release" -Recurse -Force
+                Remove-Item "artifacts/tests/notifier_tests/Makefile" -Force
+                Remove-Item "artifacts/tests/notifier_tests/Makefile.Debug" -Force
+                Remove-Item "artifacts/tests/notifier_tests/Makefile.Release" -Force
+                # Remove-Item "artifacts/tools/qt/notifier/build/gen" -Recurse -Force # Do not delete. Needed for clang-tidy
+                Remove-Item "artifacts/tools/qt/notifier/debug" -Recurse -Force
+                Remove-Item "artifacts/tools/qt/notifier/release" -Recurse -Force
+                Remove-Item "artifacts/tools/qt/notifier/Makefile" -Force
+                Remove-Item "artifacts/tools/qt/notifier/Makefile.Debug" -Force
+                Remove-Item "artifacts/tools/qt/notifier/Makefile.Release" -Force
+                Remove-Item "artifacts/tools/qt/Makefile" -Force
+                Remove-Item "artifacts/tools/Makefile" -Force
+                Remove-Item "artifacts/tests/Makefile" -Force
+                Remove-Item "artifacts/.qmake.stash" -Force
+                Remove-Item "artifacts/Makefile" -Force
             }
             "Linux" {
                 # Remove-Item "artifacts/app/build/gen" -Recurse -Force # Do not delete. Needed for clang-tidy
-                # Remove-Item "artifacts/app/Makefile" -Force
+                Remove-Item "artifacts/app/Makefile" -Force
                 Remove-Item "artifacts/libs" -Recurse -Force
-                # Remove-Item "artifacts/tests/build/gen" -Recurse -Force # Do not delete. Needed for coverage and clang-tidy
-                # Remove-Item "artifacts/tests/Makefile" -Force
-                # Remove-Item "artifacts/.qmake.stash" -Force
-                # Remove-Item "artifacts/Makefile" -Force
+                # Remove-Item "artifacts/tests/app_tests/build/gen" -Recurse -Force # Do not delete. Needed for coverage and clang-tidy
+                Remove-Item "artifacts/tests/app_tests/Makefile" -Force
+                # Remove-Item "artifacts/tests/notifier_tests/build/gen" -Recurse -Force # Do not delete. Needed for coverage and clang-tidy
+                Remove-Item "artifacts/tests/notifier_tests/Makefile" -Force
+                Remove-Item "artifacts/tests/Makefile" -Force
+                # Remove-Item "artifacts/tools/qt/notifier/build/gen" -Recurse -Force # Do not delete. Needed for clang-tidy
+                Remove-Item "artifacts/tools/qt/notifier/Makefile" -Force
+                Remove-Item "artifacts/tools/qt/Makefile" -Force
+                Remove-Item "artifacts/tools/Makefile" -Force
+                Remove-Item "artifacts/.qmake.stash" -Force
+                Remove-Item "artifacts/Makefile" -Force
             }
         }
+
+    # Prepare artifacts (tidy)
+    - name: Prepare artifacts (tidy)
+      shell: pwsh
+      run: |
+        Copy-Item artifacts -Destination artifacts-tidy -Recurse
+        
+        Remove-Item "artifacts-tidy/app/build/gen" -Recurse -Force
+        Remove-Item "artifacts-tidy/tests" -Recurse -Force
+        Remove-Item "artifacts-tidy/tools" -Recurse -Force
 
     # Upload artifacts
     - name: Upload artifacts
@@ -163,4 +195,12 @@ runs:
       with:
         name: build-debug-${{ matrix.config.name }}
         path: ./artifacts
+        retention-days: 1
+
+    # Upload artifacts (tidy)
+    - name: Upload artifacts (tidy)
+      uses: thebrowsercompany/gha-upload-tar-artifact@main
+      with:
+        name: build-debug-tidy-${{ matrix.config.name }}
+        path: ./artifacts-tidy
         retention-days: 1

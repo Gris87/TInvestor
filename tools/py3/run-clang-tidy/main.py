@@ -29,6 +29,7 @@ def run_clang_tidy(args):
     paths = []
     for pattern in files_pattern:
         paths.extend(Path("app").rglob(pattern))
+        paths.extend(Path("tools/qt/notifier").rglob(pattern))
 
     matched_files = sorted([str(path.absolute()) for path in paths if path.is_file() and not path.name.startswith("test_")])
 

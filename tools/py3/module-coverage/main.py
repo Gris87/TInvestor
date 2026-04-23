@@ -31,6 +31,7 @@ def module_coverage():
 def _get_files():
     res = []
 
+    # TODO: Adapt for notifier
     for path in sorted(Path("app").rglob("*.cpp")):
         if path.name.startswith("test_"):
             continue

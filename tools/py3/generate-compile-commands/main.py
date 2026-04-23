@@ -18,6 +18,7 @@ def generate(args):
     return _store_compile_commands(args, commands)
 
 
+# TODO: Adapt for notifier
 def _generate_compile_commands(args):
     res = []
 
