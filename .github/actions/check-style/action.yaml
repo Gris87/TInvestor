@@ -24,7 +24,7 @@ runs:
           ./TInvestor-source/app
           ./TInvestor-source/libs
           ./TInvestor-source/tests
-          ./TInvestor-source/tools/py3/check-style
+          ./TInvestor-source/tools
 
     # Download/upload cache
     - name: Caching

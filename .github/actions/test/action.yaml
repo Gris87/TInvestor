@@ -28,6 +28,7 @@ runs:
           ./TInvestor-source/app
           ./TInvestor-source/libs
           ./TInvestor-source/tests
+          ./TInvestor-source/tools
 
     # Download/upload cache
     - name: Caching
