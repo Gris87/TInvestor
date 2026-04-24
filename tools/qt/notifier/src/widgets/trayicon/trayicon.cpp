@@ -21,7 +21,7 @@ TrayIcon::TrayIcon(QObject* parent) :
 
     setIcon(QIcon(":/assets/images/icon.png"));
     setContextMenu(trayIconMenu);
-    setToolTip(tr("TInvestor"));
+    setToolTip(tr("TInvestor notifier"));
 }
 
 TrayIcon::~TrayIcon()

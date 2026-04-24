@@ -41,6 +41,6 @@ TEST_F(Test_TrayIcon, Test_constructor_and_destructor)
 
     ASSERT_EQ(trayIconMenu->defaultAction(), actions.at(0));
 
-    ASSERT_EQ(trayIcon->toolTip(), "TInvestor");
+    ASSERT_EQ(trayIcon->toolTip(), "TInvestor notifier");
 }
 // NOLINTEND(readability-function-cognitive-complexity)

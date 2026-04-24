@@ -11,6 +11,7 @@
 #include "src/main/mainwindow.h"
 #include "src/utils/logger/logger.h"
 #include "src/utils/style/darkpalette.h"
+#include "src/widgets/trayicon/trayiconfactory.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
 #error "QSystemTrayIcon is not supported on this platform"
@@ -113,7 +114,9 @@ static int runApplication(QApplication* app)
 
     QApplication::setQuitOnLastWindowClosed(false);
 
-    MainWindow mainWindow;
+    TrayIconFactory trayIconFactory;
+
+    MainWindow mainWindow(&trayIconFactory);
     mainWindow.init();
 
     qInfo() << "UP and Running";

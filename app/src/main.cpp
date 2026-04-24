@@ -5,6 +5,7 @@
 #include <QStyleFactory>
 #include <QSystemTrayIcon>
 #include <QTextStream>
+#include <QThread>
 #include <QTranslator>
 
 #include "src/config/config.h"
