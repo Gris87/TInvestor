@@ -36,7 +36,7 @@ private:
 private slots:
     void on_autorunCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_serverAddressLineEdit_textChanged(const QString& value);
-    void on_serverPortLimitSpinBox_valueChanged(int value);
+    void on_serverPortSpinBox_valueChanged(int value);
     void on_okButton_clicked();
     void on_cancelButton_clicked();
     void on_defaultButton_clicked();

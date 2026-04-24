@@ -95,5 +95,4 @@ private slots:
     void on_okButton_clicked();
     void on_cancelButton_clicked();
     void on_defaultButton_clicked();
-    void on_serverAddressLineEdit_textChanged(const QString& arg1);
 };

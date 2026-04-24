@@ -7,6 +7,8 @@ INCLUDEPATH += $${PWD}
 # find tools/qt/notifier/ -name \*.cpp | sort | grep -ve test_ -ve tools/qt/notifier/src/main.cpp | sed "s/tools\/qt\/notifier\///g" | sed "s/\.cpp/\.cpp \\\/g"
 SOURCES += \
     src/config/config.cpp \
+    src/dialogs/settingsdialog/settingsdialog.cpp \
+    src/dialogs/settingsdialog/settingsdialogfactory.cpp \
     src/main/mainwindow.cpp \
     src/utils/logger/logger.cpp \
     src/utils/settingseditor/settingseditor.cpp \
@@ -18,6 +20,10 @@ SOURCES += \
 HEADERS += \
     src/config/config.h \
     src/config/iconfig.h \
+    src/dialogs/settingsdialog/isettingsdialog.h \
+    src/dialogs/settingsdialog/isettingsdialogfactory.h \
+    src/dialogs/settingsdialog/settingsdialog.h \
+    src/dialogs/settingsdialog/settingsdialogfactory.h \
     src/main/mainwindow.h \
     src/utils/logger/logger.h \
     src/utils/settingseditor/isettingseditor.h \
@@ -30,4 +36,5 @@ HEADERS += \
 
 # find tools/qt/notifier/ -name \*.ui | sort | sed "s/tools\/qt\/notifier\///g" | sed "s/\.ui/\.ui \\\/g"
 FORMS += \
+    src/dialogs/settingsdialog/settingsdialog.ui \
     src/main/mainwindow.ui \
