@@ -37,8 +37,6 @@ TEST_F(Test_Config, Test_constructor_and_destructor)
 
 TEST_F(Test_Config, Test_assign)
 {
-    const InSequence seq;
-
     Config config2;
 
     config->setAutorun(false);
@@ -78,8 +76,6 @@ TEST_F(Test_Config, Test_assign)
 
 TEST_F(Test_Config, Test_makeDefault)
 {
-    const InSequence seq;
-
     config->setAutorun(false);
     config->setServerAddress("yandex.ru");
     config->setServerPort(80);

@@ -17,8 +17,8 @@ public:
     Config(const Config& another)            = delete;
     Config& operator=(const Config& another) = delete;
 
-    void     assign(IConfig* another) override;
-    void     makeDefault() override;
+    void assign(IConfig* another) override;
+    void makeDefault() override;
 
     void save(ISettingsEditor* settingsEditor) override;
     void load(ISettingsEditor* settingsEditor) override;

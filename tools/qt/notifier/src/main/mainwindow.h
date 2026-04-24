@@ -6,6 +6,7 @@
 
 #include <QCloseEvent>
 
+#include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
@@ -25,7 +26,14 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(ITrayIconFactory* trayIconFactory, ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
+    MainWindow(
+        IConfig*                config,
+        IConfig*                configForSettingsDialog,
+        ISettingsDialogFactory* settingsDialogFactory,
+        ITrayIconFactory*       trayIconFactory,
+        ISettingsEditor*        settingsEditor,
+        QWidget*                parent = nullptr
+    );
     ~MainWindow() override;
 
     MainWindow(const MainWindow& another)            = delete;
@@ -41,11 +49,17 @@ private:
     void saveWindowState();
     void loadWindowState();
 
-    ITrayIcon*       mTrayIcon;
-    ISettingsEditor* mSettingsEditor;
+    IConfig*                mConfig;
+    IConfig*                mConfigForSettingsDialog;
+    ISettingsDialogFactory* mSettingsDialogFactory;
+    ITrayIcon*              mTrayIcon;
+    ISettingsEditor*        mSettingsEditor;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
     void trayIconShowClicked();
     void trayIconExitClicked();
+
+private slots:
+    void on_actionSettings_triggered();
 };

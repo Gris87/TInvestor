@@ -13,9 +13,19 @@ constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIco
 
 
 
-MainWindow::MainWindow(ITrayIconFactory* trayIconFactory, ISettingsEditor* settingsEditor, QWidget* parent) :
+MainWindow::MainWindow(
+    IConfig*                config,
+    IConfig*                configForSettingsDialog,
+    ISettingsDialogFactory* settingsDialogFactory,
+    ITrayIconFactory*       trayIconFactory,
+    ISettingsEditor*        settingsEditor,
+    QWidget*                parent
+) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    mConfig(config),
+    mConfigForSettingsDialog(configForSettingsDialog),
+    mSettingsDialogFactory(settingsDialogFactory),
     mSettingsEditor(settingsEditor)
 {
     qDebug() << "Create MainWindow";
@@ -32,6 +42,8 @@ MainWindow::MainWindow(ITrayIconFactory* trayIconFactory, ISettingsEditor* setti
 
     mTrayIcon->show();
 
+    mConfig->makeDefault();
+    mConfig->load(mSettingsEditor);
     applyConfig();
 
     loadWindowState();
@@ -83,6 +95,25 @@ void MainWindow::trayIconShowClicked()
 void MainWindow::trayIconExitClicked()
 {
     QCoreApplication::quit();
+}
+
+void MainWindow::on_actionSettings_triggered()
+{
+    mConfigForSettingsDialog->assign(mConfig);
+
+    const std::shared_ptr<ISettingsDialog> dialog = mSettingsDialogFactory->newInstance(mConfigForSettingsDialog, this);
+
+    dialog->updateUiFromConfig();
+
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        qInfo() << "Settings applied";
+
+        mConfig->assign(mConfigForSettingsDialog);
+        mConfig->save(mSettingsEditor);
+
+        applyConfig();
+    }
 }
 
 void MainWindow::init()

@@ -37,8 +37,6 @@ TEST_F(Test_SettingsDialogFactory, Test_constructor_and_destructor)
 
 TEST_F(Test_SettingsDialogFactory, Test_newInstance)
 {
-    const InSequence seq;
-
     StrictMock<ConfigMock> configMock;
 
     const std::shared_ptr<ISettingsDialog> dialog = factory->newInstance(&configMock, nullptr);

@@ -8,6 +8,8 @@
 #include <QThread>
 #include <QTranslator>
 
+#include "src/config/config.h"
+#include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 #include "src/main/mainwindow.h"
 #include "src/utils/logger/logger.h"
 #include "src/utils/settingseditor/settingseditor.h"
@@ -115,11 +117,16 @@ static int runApplication(QApplication* app)
 
     QApplication::setQuitOnLastWindowClosed(false);
 
+    SettingsDialogFactory settingsDialogFactory;
+
     TrayIconFactory trayIconFactory;
 
     SettingsEditor settingsEditor("GrisCom", "TInvestorNotifier");
 
-    MainWindow mainWindow(&trayIconFactory, &settingsEditor);
+    Config config;
+    Config configForSettingsDialog;
+
+    MainWindow mainWindow(&config, &configForSettingsDialog, &settingsDialogFactory, &trayIconFactory, &settingsEditor);
     mainWindow.init();
 
     qInfo() << "UP and Running";

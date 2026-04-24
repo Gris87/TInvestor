@@ -20,8 +20,6 @@ class Test_SettingsDialog : public ::testing::Test
 protected:
     void SetUp() override
     {
-        const InSequence seq;
-
         configMock = new StrictMock<ConfigMock>();
 
         dialog = new SettingsDialog(configMock);
