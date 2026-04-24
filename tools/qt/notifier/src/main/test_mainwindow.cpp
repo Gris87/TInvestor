@@ -4,6 +4,7 @@
 #include <QtCore/private/qcoreapplication_p.h>
 #include <gtest/gtest.h>
 
+#include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
 
@@ -36,22 +37,37 @@ protected:
         const InSequence seq;
 
         trayIconFactoryMock = new StrictMock<TrayIconFactoryMock>();
+        settingsEditorMock  = new StrictMock<SettingsEditorMock>();
         trayIconMock        = new StrictMock<TrayIconMock>();
 
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
-        mainWindow = new MainWindow(trayIconFactoryMock);
+        // clang-format off
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/windowState"), QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
+        // clang-format on
+
+        mainWindow = new MainWindow(trayIconFactoryMock, settingsEditorMock);
     }
 
     void TearDown() override
     {
+        const InSequence seq;
+
+        // clang-format off
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/geometry"),    _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/windowState"), _));
+        // clang-format on
+
         delete mainWindow;
         delete trayIconFactoryMock;
+        delete settingsEditorMock;
         delete trayIconMock;
     }
 
     MainWindow*                      mainWindow;
     StrictMock<TrayIconFactoryMock>* trayIconFactoryMock;
+    StrictMock<SettingsEditorMock>*  settingsEditorMock;
     StrictMock<TrayIconMock>*        trayIconMock;
 };
 

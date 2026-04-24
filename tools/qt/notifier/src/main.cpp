@@ -10,6 +10,7 @@
 
 #include "src/main/mainwindow.h"
 #include "src/utils/logger/logger.h"
+#include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
@@ -116,7 +117,9 @@ static int runApplication(QApplication* app)
 
     TrayIconFactory trayIconFactory;
 
-    MainWindow mainWindow(&trayIconFactory);
+    SettingsEditor settingsEditor("GrisCom", "TInvestorNotifier");
+
+    MainWindow mainWindow(&trayIconFactory, &settingsEditor);
     mainWindow.init();
 
     qInfo() << "UP and Running";

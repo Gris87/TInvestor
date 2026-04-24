@@ -13,9 +13,10 @@ constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIco
 
 
 
-MainWindow::MainWindow(ITrayIconFactory* trayIconFactory, QWidget* parent) :
+MainWindow::MainWindow(ITrayIconFactory* trayIconFactory, ISettingsEditor* settingsEditor, QWidget* parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    mSettingsEditor(settingsEditor)
 {
     qDebug() << "Create MainWindow";
 
@@ -30,11 +31,17 @@ MainWindow::MainWindow(ITrayIconFactory* trayIconFactory, QWidget* parent) :
     // clang-format on
 
     mTrayIcon->show();
+
+    applyConfig();
+
+    loadWindowState();
 }
 
 MainWindow::~MainWindow()
 {
     qDebug() << "Destroy MainWindow";
+
+    saveWindowState();
 
     delete ui;
 }
@@ -81,4 +88,26 @@ void MainWindow::trayIconExitClicked()
 void MainWindow::init()
 {
     qInfo() << "Start main initialization";
+}
+
+void MainWindow::applyConfig()
+{
+}
+
+void MainWindow::saveWindowState()
+{
+    qDebug() << "Saving window state";
+
+    // clang-format off
+    mSettingsEditor->setValue("MainWindow/geometry",    saveGeometry());
+    mSettingsEditor->setValue("MainWindow/windowState", saveState());
+    // clang-format on
+}
+
+void MainWindow::loadWindowState()
+{
+    qDebug() << "Loading window state";
+
+    restoreGeometry(mSettingsEditor->value("MainWindow/geometry", QByteArray()).toByteArray());
+    restoreState(mSettingsEditor->value("MainWindow/windowState", QByteArray()).toByteArray());
 }

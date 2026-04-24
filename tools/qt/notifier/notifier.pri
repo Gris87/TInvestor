@@ -8,6 +8,7 @@ INCLUDEPATH += $${PWD}
 SOURCES += \
     src/main/mainwindow.cpp \
     src/utils/logger/logger.cpp \
+    src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp \
@@ -16,6 +17,8 @@ SOURCES += \
 HEADERS += \
     src/main/mainwindow.h \
     src/utils/logger/logger.h \
+    src/utils/settingseditor/isettingseditor.h \
+    src/utils/settingseditor/settingseditor.h \
     src/utils/style/darkpalette.h \
     src/widgets/trayicon/itrayicon.h \
     src/widgets/trayicon/itrayiconfactory.h \
