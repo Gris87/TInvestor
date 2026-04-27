@@ -19,6 +19,7 @@ MainWindow::MainWindow(
     ISettingsDialogFactory* settingsDialogFactory,
     ITrayIconFactory*       trayIconFactory,
     ISettingsEditor*        settingsEditor,
+    IAutorunEnabler*        autorunEnabler,
     QWidget*                parent
 ) :
     QMainWindow(parent),
@@ -26,7 +27,8 @@ MainWindow::MainWindow(
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mSettingsDialogFactory(settingsDialogFactory),
-    mSettingsEditor(settingsEditor)
+    mSettingsEditor(settingsEditor),
+    mAutorunEnabler(autorunEnabler)
 {
     qDebug() << "Create MainWindow";
 
@@ -123,6 +125,7 @@ void MainWindow::init()
 
 void MainWindow::applyConfig()
 {
+    mAutorunEnabler->setEnabled(mConfig->isAutorun());
 }
 
 void MainWindow::saveWindowState()

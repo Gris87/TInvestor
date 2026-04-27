@@ -7,6 +7,7 @@
 #include <QCloseEvent>
 
 #include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
+#include "src/utils/autorunenabler/iautorunenabler.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
@@ -32,6 +33,7 @@ public:
         ISettingsDialogFactory* settingsDialogFactory,
         ITrayIconFactory*       trayIconFactory,
         ISettingsEditor*        settingsEditor,
+        IAutorunEnabler*        autorunEnabler,
         QWidget*                parent = nullptr
     );
     ~MainWindow() override;
@@ -54,6 +56,7 @@ private:
     ISettingsDialogFactory* mSettingsDialogFactory;
     ITrayIcon*              mTrayIcon;
     ISettingsEditor*        mSettingsEditor;
+    IAutorunEnabler*        mAutorunEnabler;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

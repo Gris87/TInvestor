@@ -10,6 +10,11 @@ SOURCES += \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
     src/main/mainwindow.cpp \
+    src/utils/autorunenabler/autorunenabler.cpp \
+    src/utils/fs/dir/dir.cpp \
+    src/utils/fs/dir/dirfactory.cpp \
+    src/utils/fs/file/file.cpp \
+    src/utils/fs/file/filefactory.cpp \
     src/utils/logger/logger.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
@@ -25,6 +30,16 @@ HEADERS += \
     src/dialogs/settingsdialog/settingsdialog.h \
     src/dialogs/settingsdialog/settingsdialogfactory.h \
     src/main/mainwindow.h \
+    src/utils/autorunenabler/autorunenabler.h \
+    src/utils/autorunenabler/iautorunenabler.h \
+    src/utils/fs/dir/dir.h \
+    src/utils/fs/dir/dirfactory.h \
+    src/utils/fs/dir/idir.h \
+    src/utils/fs/dir/idirfactory.h \
+    src/utils/fs/file/file.h \
+    src/utils/fs/file/filefactory.h \
+    src/utils/fs/file/ifile.h \
+    src/utils/fs/file/ifilefactory.h \
     src/utils/logger/logger.h \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \

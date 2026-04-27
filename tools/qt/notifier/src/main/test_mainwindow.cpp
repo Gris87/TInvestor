@@ -7,6 +7,7 @@
 #include "src/config/iconfig_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialog_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory_mock.h"
+#include "src/utils/autorunenabler/iautorunenabler_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
@@ -44,12 +45,15 @@ protected:
         settingsDialogFactoryMock   = new StrictMock<SettingsDialogFactoryMock>();
         trayIconFactoryMock         = new StrictMock<TrayIconFactoryMock>();
         settingsEditorMock          = new StrictMock<SettingsEditorMock>();
+        autorunEnablerMock          = new StrictMock<AutorunEnablerMock>();
         trayIconMock                = new StrictMock<TrayIconMock>();
 
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
         EXPECT_CALL(*configMock, makeDefault());
         EXPECT_CALL(*configMock, load(settingsEditorMock));
+        EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
+        EXPECT_CALL(*autorunEnablerMock, setEnabled(true));
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
@@ -57,7 +61,12 @@ protected:
         // clang-format on
 
         mainWindow = new MainWindow(
-            configMock, configForSettingsDialogMock, settingsDialogFactoryMock, trayIconFactoryMock, settingsEditorMock
+            configMock,
+            configForSettingsDialogMock,
+            settingsDialogFactoryMock,
+            trayIconFactoryMock,
+            settingsEditorMock,
+            autorunEnablerMock
         );
     }
 
@@ -76,6 +85,7 @@ protected:
         delete settingsDialogFactoryMock;
         delete trayIconFactoryMock;
         delete settingsEditorMock;
+        delete autorunEnablerMock;
         delete trayIconMock;
     }
 
@@ -85,6 +95,7 @@ protected:
     StrictMock<SettingsDialogFactoryMock>* settingsDialogFactoryMock;
     StrictMock<TrayIconFactoryMock>*       trayIconFactoryMock;
     StrictMock<SettingsEditorMock>*        settingsEditorMock;
+    StrictMock<AutorunEnablerMock>*        autorunEnablerMock;
     StrictMock<TrayIconMock>*              trayIconMock;
 };
 
@@ -140,6 +151,9 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*settingsDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*configMock, assign(configForSettingsDialogMock));
     EXPECT_CALL(*configMock, save(settingsEditorMock));
+
+    EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
+    EXPECT_CALL(*autorunEnablerMock, setEnabled(false));
 
     mainWindow->ui->actionSettings->trigger();
 }

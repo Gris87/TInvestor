@@ -11,6 +11,9 @@
 #include "src/config/config.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 #include "src/main/mainwindow.h"
+#include "src/utils/autorunenabler/autorunenabler.h"
+#include "src/utils/fs/dir/dirfactory.h"
+#include "src/utils/fs/file/filefactory.h"
 #include "src/utils/logger/logger.h"
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
@@ -120,13 +123,19 @@ static int runApplication(QApplication* app)
     SettingsDialogFactory settingsDialogFactory;
 
     TrayIconFactory trayIconFactory;
+    DirFactory      dirFactory;
+    FileFactory     fileFactory;
 
     SettingsEditor settingsEditor("GrisCom", "TInvestorNotifier");
+    SettingsEditor autorunSettingsEditor("Microsoft", "Windows");
+    AutorunEnabler autorunEnabler(&autorunSettingsEditor, &dirFactory, &fileFactory);
 
     Config config;
     Config configForSettingsDialog;
 
-    MainWindow mainWindow(&config, &configForSettingsDialog, &settingsDialogFactory, &trayIconFactory, &settingsEditor);
+    MainWindow mainWindow(
+        &config, &configForSettingsDialog, &settingsDialogFactory, &trayIconFactory, &settingsEditor, &autorunEnabler
+    );
     mainWindow.init();
 
     qInfo() << "UP and Running";
