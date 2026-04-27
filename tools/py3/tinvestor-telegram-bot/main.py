@@ -43,9 +43,7 @@ async def _process_files(args, client):
 
         last_timestamp = old_state["last_timestamp"]
 
-    notifications_path = Path(args.path_to_notifications)
-
-    for record_path in sorted(notifications_path.rglob("*.json"), key=lambda x: x.stat().st_mtime):
+    for record_path in sorted(Path(args.path_to_notifications).rglob("*.json"), key=lambda x: x.stat().st_mtime):
         if record_path.stat().st_mtime >= last_timestamp:
             last_timestamp = record_path.stat().st_mtime
 
