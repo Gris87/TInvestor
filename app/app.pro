@@ -62,6 +62,7 @@ copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinko
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-bidir-trading)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-bidir-trading)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-follower)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-follower)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinvestor-notifier)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinvestor-notifier)" &&
+copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinvestor-notifier-server)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinvestor-notifier-server)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinvestor-telegram-bot)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinvestor-telegram-bot)"
 
 
