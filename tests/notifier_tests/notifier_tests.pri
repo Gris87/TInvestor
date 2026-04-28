@@ -4,6 +4,7 @@ SOURCES += \
     src/config/test_config.cpp \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
+    src/domain/notification/test_notificationinfo.cpp \
     src/main/test_mainwindow.cpp \
     src/threads/request/test_requestthread.cpp \
     src/utils/autorunenabler/test_autorunenabler.cpp \

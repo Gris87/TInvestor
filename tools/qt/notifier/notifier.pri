@@ -9,6 +9,7 @@ SOURCES += \
     src/config/config.cpp \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
+    src/domain/notification/notificationinfo.cpp \
     src/main/mainwindow.cpp \
     src/threads/request/requestthread.cpp \
     src/utils/autorunenabler/autorunenabler.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     src/dialogs/settingsdialog/isettingsdialogfactory.h \
     src/dialogs/settingsdialog/settingsdialog.h \
     src/dialogs/settingsdialog/settingsdialogfactory.h \
+    src/domain/notification/notificationinfo.h \
     src/main/mainwindow.h \
     src/threads/request/irequestthread.h \
     src/threads/request/requestthread.h \

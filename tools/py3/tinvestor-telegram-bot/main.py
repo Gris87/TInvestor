@@ -13,7 +13,7 @@ from pathlib import Path
 #logging.basicConfig(level=logging.DEBUG)
 
 
-def telegram_bot(args):
+def telegram_bot(args, filter):
     api_id = os.environ["TELEGRAM_API_ID"]
     api_hash = os.environ["TELEGRAM_API_HASH"]
     mtproxy_server = os.environ["TELEGRAM_MTPROXY_SERVER"]
@@ -24,12 +24,12 @@ def telegram_bot(args):
     client = TelegramClient("bot", api_id, api_hash, connection=connection.ConnectionTcpMTProxyRandomizedIntermediate, proxy=(mtproxy_server, mtproxy_port, mtproxy_secret)).start(bot_token=bot_token)
 
     with client:
-        client.loop.run_until_complete(_process_files(args, client))
+        client.loop.run_until_complete(_process_files(args, client, filter))
 
     return True
 
 
-async def _process_files(args, client):
+async def _process_files(args, client, filter):
     cache_folder_path = Path(args.cache) / "telegram"
     cache_folder_path.mkdir(parents=True, exist_ok=True)
 
@@ -47,7 +47,7 @@ async def _process_files(args, client):
         if record_path.stat().st_mtime >= last_timestamp:
             last_timestamp = record_path.stat().st_mtime
 
-            await _process_file(client, record_path)
+            await _process_file(args, client, filter, record_path)
 
     state = {
         "last_timestamp": last_timestamp + 1
@@ -57,11 +57,12 @@ async def _process_files(args, client):
         json.dump(state, f, ensure_ascii=False)
 
 
-async def _process_file(client, record_path):
+async def _process_file(args, client, filter, record_path):
     with open(record_path, "r", encoding="utf-8") as f:
         record = json.loads(f.read())
 
-    await _send_message(client, record["text"])
+    if args.filter == "all" or record["type"] in filter:
+        await _send_message(client, record["text"])
 
 
 async def _send_message(client, msg):
@@ -87,6 +88,13 @@ def main():
         type=str,
         default="",
         help="Path to notifications folder"
+    )
+    parser.add_argument(
+        "--filter",
+        dest="filter",
+        type=str,
+        default="all",
+        help="Comma separated list of filters: system,portfolio,huge_sell,dividends,pulse (default: all)"
     )
     args = parser.parse_args()
 
@@ -120,4 +128,12 @@ def main():
 
         sys.exit(1)
 
-    sys.exit(0 if telegram_bot(args) else 1)
+    filter = args.filter.split(",")
+
+    for f in filter:
+        if f not in ["system", "portfolio", "huge_sell", "dividends", "pulse", "all"]:
+            logger.error("Please specify valid filter")
+
+            sys.exit(1)
+
+    sys.exit(0 if telegram_bot(args, filter) else 1)
