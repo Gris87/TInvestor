@@ -15,6 +15,7 @@
 #include "src/utils/autorunenabler/autorunenabler.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
+#include "src/utils/http/httpclient.h"
 #include "src/utils/logger/logger.h"
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
@@ -134,7 +135,9 @@ static int runApplication(QApplication* app)
     Config config;
     Config configForSettingsDialog;
 
-    RequestThread requestThread(&config);
+    HttpClient httpClient;
+
+    RequestThread requestThread(&config, &httpClient);
 
     MainWindow mainWindow(
         &config,

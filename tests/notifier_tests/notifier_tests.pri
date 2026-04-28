@@ -11,6 +11,7 @@ SOURCES += \
     src/utils/fs/dir/test_dirfactory.cpp \
     src/utils/fs/file/test_file.cpp \
     src/utils/fs/file/test_filefactory.cpp \
+    src/utils/http/test_httpclient.cpp \
     src/utils/logger/test_logger.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
     src/utils/style/test_darkpalette.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     src/utils/fs/dir/idirfactory_mock.h \
     src/utils/fs/file/ifile_mock.h \
     src/utils/fs/file/ifilefactory_mock.h \
+    src/utils/http/ihttpclient_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \

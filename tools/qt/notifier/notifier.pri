@@ -16,6 +16,7 @@ SOURCES += \
     src/utils/fs/dir/dirfactory.cpp \
     src/utils/fs/file/file.cpp \
     src/utils/fs/file/filefactory.cpp \
+    src/utils/http/httpclient.cpp \
     src/utils/logger/logger.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
@@ -43,6 +44,8 @@ HEADERS += \
     src/utils/fs/file/filefactory.h \
     src/utils/fs/file/ifile.h \
     src/utils/fs/file/ifilefactory.h \
+    src/utils/http/httpclient.h \
+    src/utils/http/ihttpclient.h \
     src/utils/logger/logger.h \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \

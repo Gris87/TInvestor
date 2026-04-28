@@ -5,6 +5,7 @@
 #include "src/threads/request/irequestthread.h"
 
 #include "src/config/iconfig.h"
+#include "src/utils/http/ihttpclient.h"
 
 
 
@@ -13,7 +14,7 @@ class RequestThread : public IRequestThread
     Q_OBJECT
 
 public:
-    explicit RequestThread(IConfig* config, QObject* parent = nullptr);
+    explicit RequestThread(IConfig* config, IHttpClient* httpClient, QObject* parent = nullptr);
     ~RequestThread() override;
 
     RequestThread(const RequestThread& another)            = delete;
@@ -25,4 +26,5 @@ public:
 
 private:
     IConfig* mConfig;
+    IHttpClient* mHttpClient;
 };

@@ -1,0 +1,19 @@
+#pragma once
+
+
+
+#include "src/utils/http/ihttpclient.h"
+
+
+
+class HttpClient : public IHttpClient
+{
+public:
+    HttpClient();
+    ~HttpClient() override;
+
+    HttpClient(const HttpClient& another)            = delete;
+    HttpClient& operator=(const HttpClient& another) = delete;
+
+    HttpResult get(const QUrl& url, const Headers& headers) override;
+};

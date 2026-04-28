@@ -55,10 +55,3 @@ HttpResult HttpClient::get(const QUrl& url, const Headers& headers)
 
     return res;
 }
-
-bool HttpClient::openInBrowser(const QUrl& url)
-{
-    qDebug() << "Openning web page in browser:" << url;
-
-    return QDesktopServices::openUrl(url);
-}

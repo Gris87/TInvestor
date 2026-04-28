@@ -5,9 +5,10 @@
 
 
 
-RequestThread::RequestThread(IConfig* config, QObject* parent) :
+RequestThread::RequestThread(IConfig* config, IHttpClient* httpClient, QObject* parent) :
     IRequestThread(parent),
-    mConfig(config)
+    mConfig(config),
+    mHttpClient(httpClient)
 {
     qDebug() << "Create RequestThread";
 }

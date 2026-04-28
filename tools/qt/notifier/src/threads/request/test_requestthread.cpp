@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/config/iconfig_mock.h"
+#include "src/utils/http/ihttpclient_mock.h"
 
 
 
@@ -20,18 +21,21 @@ protected:
     void SetUp() override
     {
         configMock = new StrictMock<ConfigMock>();
+        httpClientMock = new StrictMock<HttpClientMock>();
 
-        thread = new RequestThread(configMock);
+        thread = new RequestThread(configMock, httpClientMock);
     }
 
     void TearDown() override
     {
         delete thread;
         delete configMock;
+        delete httpClientMock;
     }
 
     RequestThread*          thread;
     StrictMock<ConfigMock>* configMock;
+    StrictMock<HttpClientMock>* httpClientMock;
 };
 
 
