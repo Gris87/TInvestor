@@ -5,8 +5,10 @@
 #include <QMainWindow>
 
 #include <QCloseEvent>
+#include <QTimer>
 
 #include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
+#include "src/threads/request/irequestthread.h"
 #include "src/utils/autorunenabler/iautorunenabler.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
@@ -32,6 +34,7 @@ public:
         IConfig*                configForSettingsDialog,
         ISettingsDialogFactory* settingsDialogFactory,
         ITrayIconFactory*       trayIconFactory,
+        IRequestThread*         requestThread,
         ISettingsEditor*        settingsEditor,
         IAutorunEnabler*        autorunEnabler,
         QWidget*                parent = nullptr
@@ -46,6 +49,8 @@ public:
 
     Ui::MainWindow* ui;
 
+    QTimer requestTimer;
+
 private:
     void applyConfig();
     void saveWindowState();
@@ -55,6 +60,7 @@ private:
     IConfig*                mConfigForSettingsDialog;
     ISettingsDialogFactory* mSettingsDialogFactory;
     ITrayIcon*              mTrayIcon;
+    IRequestThread*         mRequestThread;
     ISettingsEditor*        mSettingsEditor;
     IAutorunEnabler*        mAutorunEnabler;
 
@@ -62,6 +68,7 @@ public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
     void trayIconShowClicked();
     void trayIconExitClicked();
+    void requestTimerTicked();
 
 private slots:
     void on_actionSettings_triggered();

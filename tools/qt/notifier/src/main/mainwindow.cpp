@@ -5,6 +5,10 @@
 
 
 
+constexpr qint64 MS_IN_SECOND     = 1000LL;
+constexpr qint64 ONE_MINUTE       = 60LL * MS_IN_SECOND;
+constexpr qint64 REQUEST_INTERVAL = ONE_MINUTE; // 1 minute
+
 #ifdef Q_OS_WINDOWS
 constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIcon::DoubleClick;
 #else
@@ -18,6 +22,7 @@ MainWindow::MainWindow(
     IConfig*                configForSettingsDialog,
     ISettingsDialogFactory* settingsDialogFactory,
     ITrayIconFactory*       trayIconFactory,
+    IRequestThread*         requestThread,
     ISettingsEditor*        settingsEditor,
     IAutorunEnabler*        autorunEnabler,
     QWidget*                parent
@@ -27,6 +32,7 @@ MainWindow::MainWindow(
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mSettingsDialogFactory(settingsDialogFactory),
+    mRequestThread(requestThread),
     mSettingsEditor(settingsEditor),
     mAutorunEnabler(autorunEnabler)
 {
@@ -37,9 +43,10 @@ MainWindow::MainWindow(
     mTrayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(mTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(mTrayIcon, SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
-    connect(mTrayIcon, SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
+    connect(mTrayIcon,     SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(mTrayIcon,     SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
+    connect(mTrayIcon,     SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
+    connect(&requestTimer, SIGNAL(timeout()),                                    this, SLOT(requestTimerTicked()));
     // clang-format on
 
     mTrayIcon->show();
@@ -54,6 +61,9 @@ MainWindow::MainWindow(
 MainWindow::~MainWindow()
 {
     qDebug() << "Destroy MainWindow";
+
+    mRequestThread->terminateThread();
+    mRequestThread->wait();
 
     saveWindowState();
 
@@ -99,6 +109,11 @@ void MainWindow::trayIconExitClicked()
     QCoreApplication::quit();
 }
 
+void MainWindow::requestTimerTicked()
+{
+    mRequestThread->start();
+}
+
 void MainWindow::on_actionSettings_triggered()
 {
     mConfigForSettingsDialog->assign(mConfig);
@@ -121,6 +136,9 @@ void MainWindow::on_actionSettings_triggered()
 void MainWindow::init()
 {
     qInfo() << "Start main initialization";
+
+    requestTimer.start(REQUEST_INTERVAL);
+    requestTimerTicked();
 }
 
 void MainWindow::applyConfig()

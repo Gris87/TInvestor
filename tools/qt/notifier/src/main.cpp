@@ -11,6 +11,7 @@
 #include "src/config/config.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 #include "src/main/mainwindow.h"
+#include "src/threads/request/requestthread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
@@ -133,8 +134,16 @@ static int runApplication(QApplication* app)
     Config config;
     Config configForSettingsDialog;
 
+    RequestThread requestThread(&config);
+
     MainWindow mainWindow(
-        &config, &configForSettingsDialog, &settingsDialogFactory, &trayIconFactory, &settingsEditor, &autorunEnabler
+        &config,
+        &configForSettingsDialog,
+        &settingsDialogFactory,
+        &trayIconFactory,
+        &requestThread,
+        &settingsEditor,
+        &autorunEnabler
     );
     mainWindow.init();
 

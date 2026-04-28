@@ -522,8 +522,6 @@ void MainWindow::authFailed(const QString& errorCodeString)
 
 void MainWindow::cleanupTimerTicked()
 {
-    qInfo() << "Cleanup timer ticked";
-
     mCleanupThread->start();
 }
 

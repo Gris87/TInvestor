@@ -5,6 +5,7 @@ SOURCES += \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
     src/main/test_mainwindow.cpp \
+    src/threads/request/test_requestthread.cpp \
     src/utils/autorunenabler/test_autorunenabler.cpp \
     src/utils/fs/dir/test_dir.cpp \
     src/utils/fs/dir/test_dirfactory.cpp \
@@ -21,6 +22,7 @@ HEADERS += \
     src/config/iconfig_mock.h \
     src/dialogs/settingsdialog/isettingsdialog_mock.h \
     src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
+    src/threads/request/irequestthread_mock.h \
     src/utils/autorunenabler/iautorunenabler_mock.h \
     src/utils/fs/dir/idir_mock.h \
     src/utils/fs/dir/idirfactory_mock.h \

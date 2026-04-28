@@ -7,6 +7,7 @@
 #include "src/config/iconfig_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialog_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory_mock.h"
+#include "src/threads/request/irequestthread_mock.h"
 #include "src/utils/autorunenabler/iautorunenabler_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
@@ -44,6 +45,7 @@ protected:
         configForSettingsDialogMock = new StrictMock<ConfigMock>();
         settingsDialogFactoryMock   = new StrictMock<SettingsDialogFactoryMock>();
         trayIconFactoryMock         = new StrictMock<TrayIconFactoryMock>();
+        requestThreadMock           = new StrictMock<RequestThreadMock>();
         settingsEditorMock          = new StrictMock<SettingsEditorMock>();
         autorunEnablerMock          = new StrictMock<AutorunEnablerMock>();
         trayIconMock                = new StrictMock<TrayIconMock>();
@@ -65,6 +67,7 @@ protected:
             configForSettingsDialogMock,
             settingsDialogFactoryMock,
             trayIconFactoryMock,
+            requestThreadMock,
             settingsEditorMock,
             autorunEnablerMock
         );
@@ -73,6 +76,8 @@ protected:
     void TearDown() override
     {
         const InSequence seq;
+
+        EXPECT_CALL(*requestThreadMock, terminateThread());
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/geometry"),    _));
@@ -84,6 +89,7 @@ protected:
         delete configForSettingsDialogMock;
         delete settingsDialogFactoryMock;
         delete trayIconFactoryMock;
+        delete requestThreadMock;
         delete settingsEditorMock;
         delete autorunEnablerMock;
         delete trayIconMock;
@@ -94,6 +100,7 @@ protected:
     StrictMock<ConfigMock>*                configForSettingsDialogMock;
     StrictMock<SettingsDialogFactoryMock>* settingsDialogFactoryMock;
     StrictMock<TrayIconFactoryMock>*       trayIconFactoryMock;
+    StrictMock<RequestThreadMock>*         requestThreadMock;
     StrictMock<SettingsEditorMock>*        settingsEditorMock;
     StrictMock<AutorunEnablerMock>*        autorunEnablerMock;
     StrictMock<TrayIconMock>*              trayIconMock;
@@ -103,6 +110,10 @@ protected:
 
 TEST_F(Test_MainWindow, Test_constructor_and_destructor)
 {
+    // clang-format off
+    ASSERT_EQ(mainWindow->requestTimer.interval(), 0);
+    ASSERT_EQ(mainWindow->requestTimer.isActive(), false);
+    // clang-format on
 }
 
 TEST_F(Test_MainWindow, Test_closeEvent)
@@ -136,6 +147,22 @@ TEST_F(Test_MainWindow, Test_trayIconExitClicked)
     mainWindow->trayIconExitClicked();
 }
 
+TEST_F(Test_MainWindow, Test_requestTimerTicked)
+{
+    const InSequence seq;
+
+    mainWindow->requestTimer.start(100000);
+    ASSERT_EQ(mainWindow->requestTimer.isActive(), true);
+
+    EXPECT_CALL(*requestThreadMock, run());
+
+    mainWindow->requestTimerTicked();
+
+    ASSERT_EQ(mainWindow->requestTimer.isActive(), true);
+
+    requestThreadMock->wait();
+}
+
 TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 {
     const InSequence seq;
@@ -156,4 +183,25 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*autorunEnablerMock, setEnabled(false));
 
     mainWindow->ui->actionSettings->trigger();
+}
+
+TEST_F(Test_MainWindow, Test_init)
+{
+    // const InSequence seq;
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->requestTimer.interval(), 0);
+    ASSERT_EQ(mainWindow->requestTimer.isActive(), false);
+    // clang-format on
+
+    EXPECT_CALL(*requestThreadMock, run());
+
+    mainWindow->init();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->requestTimer.interval(), 60 * 1000);
+    ASSERT_EQ(mainWindow->requestTimer.isActive(), true);
+    // clang-format on
+
+    requestThreadMock->wait();
 }

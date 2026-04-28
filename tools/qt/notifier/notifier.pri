@@ -10,6 +10,7 @@ SOURCES += \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
     src/main/mainwindow.cpp \
+    src/threads/request/requestthread.cpp \
     src/utils/autorunenabler/autorunenabler.cpp \
     src/utils/fs/dir/dir.cpp \
     src/utils/fs/dir/dirfactory.cpp \
@@ -30,6 +31,8 @@ HEADERS += \
     src/dialogs/settingsdialog/settingsdialog.h \
     src/dialogs/settingsdialog/settingsdialogfactory.h \
     src/main/mainwindow.h \
+    src/threads/request/irequestthread.h \
+    src/threads/request/requestthread.h \
     src/utils/autorunenabler/autorunenabler.h \
     src/utils/autorunenabler/iautorunenabler.h \
     src/utils/fs/dir/dir.h \
