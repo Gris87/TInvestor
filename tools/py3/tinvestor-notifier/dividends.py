@@ -29,7 +29,7 @@ def check_dividends(args):
 
         for instrument_id, dividend in dividends.items():
             if instrument_id not in old_dividends:
-                store_message(args, msg_recommend_to_buy + "\n" + msg_dividends.format(ticker=dividend["ticker"], name=dividend["name"], yield_value=dividend["yieldValue"]))
+                store_message(args, "dividends", msg_recommend_to_buy + "\n" + msg_dividends.format(ticker=dividend["ticker"], name=dividend["name"], yield_value=dividend["yieldValue"]))
 
     with open(dividends_path, "w", encoding="utf-8") as f:
         json.dump(dividends, f, ensure_ascii=False)

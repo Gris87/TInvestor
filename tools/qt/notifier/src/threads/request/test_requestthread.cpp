@@ -20,7 +20,7 @@ class Test_RequestThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        configMock = new StrictMock<ConfigMock>();
+        configMock     = new StrictMock<ConfigMock>();
         httpClientMock = new StrictMock<HttpClientMock>();
 
         thread = new RequestThread(configMock, httpClientMock);
@@ -33,8 +33,8 @@ protected:
         delete httpClientMock;
     }
 
-    RequestThread*          thread;
-    StrictMock<ConfigMock>* configMock;
+    RequestThread*              thread;
+    StrictMock<ConfigMock>*     configMock;
     StrictMock<HttpClientMock>* httpClientMock;
 };
 

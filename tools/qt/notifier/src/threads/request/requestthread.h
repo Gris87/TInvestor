@@ -24,7 +24,9 @@ public:
 
     void terminateThread() override;
 
+    void processNotificationsResponse(const QByteArray& resp);
+
 private:
-    IConfig* mConfig;
+    IConfig*     mConfig;
     IHttpClient* mHttpClient;
 };

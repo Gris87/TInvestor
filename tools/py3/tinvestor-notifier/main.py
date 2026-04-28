@@ -58,14 +58,14 @@ def _check_operations_json(args):
     delta = now - last_timestamp
 
     if delta > args.inactivity_days * ONE_DAY:
-        store_message(args, msg_operations_inactivity)
+        store_message(args, "system", msg_operations_inactivity)
 
 
 def _check_core_file(args):
     core_file = Path(args.path_to_operations).parent.parent.parent.parent / "core"
 
     if core_file.exists():
-        store_message(args, msg_core_file_found)
+        store_message(args, "system", msg_core_file_found)
 
         now = round(time.time() * MS_IN_SECOND)
         os.rename(core_file, f"{core_file}_{now}")
@@ -81,7 +81,7 @@ def _check_app_running(args):
             break
 
     if not found:
-        store_message(args, msg_app_restart)
+        store_message(args, "system", msg_app_restart)
 
         home_directory = Path.home()
         subprocess.Popen(["xdg-open", f"{home_directory}/Desktop/TInvestor.desktop"], close_fds=True)
@@ -117,7 +117,7 @@ def _check_huge_sell(args):
         #         break
 
         if len(data) > 0 and _is_huge_sell_found(data, len(data) - 1):
-            store_message(args, msg_recommend_to_buy + "\n" + msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
+            store_message(args, "huge_sell", msg_recommend_to_buy + "\n" + msg_huge_sell.format(ticker=stock_meta["instrumentTicker"], name=stock_meta["instrumentName"]))
 
 
 def _is_huge_sell_found(data, index):
