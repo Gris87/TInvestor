@@ -9,8 +9,10 @@
 #include <QTranslator>
 
 #include "src/config/config.h"
+#include "src/db/notifications/notificationsdatabase.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 #include "src/main/mainwindow.h"
+#include "src/storage/notifications/notificationsstorage.h"
 #include "src/threads/request/requestthread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
 #include "src/utils/fs/dir/dirfactory.h"
@@ -135,15 +137,19 @@ static int runApplication(QApplication* app)
     Config config;
     Config configForSettingsDialog;
 
+    NotificationsDatabase notificationsDatabase(&dirFactory, &fileFactory);
+    NotificationsStorage  notificationsStorage(&notificationsDatabase);
+
     HttpClient httpClient;
 
-    RequestThread requestThread(&config, &httpClient);
+    RequestThread requestThread(&config, &notificationsStorage, &httpClient);
 
     MainWindow mainWindow(
         &config,
         &configForSettingsDialog,
         &settingsDialogFactory,
         &trayIconFactory,
+        &notificationsStorage,
         &requestThread,
         &settingsEditor,
         &autorunEnabler

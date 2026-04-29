@@ -9,9 +9,12 @@ constexpr int HTTP_STATUS_CODE_OK = 200;
 
 
 
-RequestThread::RequestThread(IConfig* config, IHttpClient* httpClient, QObject* parent) :
+RequestThread::RequestThread(
+    IConfig* config, INotificationsStorage* notificationsStorage, IHttpClient* httpClient, QObject* parent
+) :
     IRequestThread(parent),
     mConfig(config),
+    mNotificationsStorage(notificationsStorage),
     mHttpClient(httpClient)
 {
     qDebug() << "Create RequestThread";

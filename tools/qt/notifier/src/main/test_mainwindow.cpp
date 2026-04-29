@@ -7,6 +7,7 @@
 #include "src/config/iconfig_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialog_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory_mock.h"
+#include "src/storage/notifications/inotificationsstorage_mock.h"
 #include "src/threads/request/irequestthread_mock.h"
 #include "src/utils/autorunenabler/iautorunenabler_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -45,6 +46,7 @@ protected:
         configForSettingsDialogMock = new StrictMock<ConfigMock>();
         settingsDialogFactoryMock   = new StrictMock<SettingsDialogFactoryMock>();
         trayIconFactoryMock         = new StrictMock<TrayIconFactoryMock>();
+        notificationsStorageMock    = new StrictMock<NotificationsStorageMock>();
         requestThreadMock           = new StrictMock<RequestThreadMock>();
         settingsEditorMock          = new StrictMock<SettingsEditorMock>();
         autorunEnablerMock          = new StrictMock<AutorunEnablerMock>();
@@ -67,6 +69,7 @@ protected:
             configForSettingsDialogMock,
             settingsDialogFactoryMock,
             trayIconFactoryMock,
+            notificationsStorageMock,
             requestThreadMock,
             settingsEditorMock,
             autorunEnablerMock
@@ -89,6 +92,7 @@ protected:
         delete configForSettingsDialogMock;
         delete settingsDialogFactoryMock;
         delete trayIconFactoryMock;
+        delete notificationsStorageMock;
         delete requestThreadMock;
         delete settingsEditorMock;
         delete autorunEnablerMock;
@@ -100,6 +104,7 @@ protected:
     StrictMock<ConfigMock>*                configForSettingsDialogMock;
     StrictMock<SettingsDialogFactoryMock>* settingsDialogFactoryMock;
     StrictMock<TrayIconFactoryMock>*       trayIconFactoryMock;
+    StrictMock<NotificationsStorageMock>*  notificationsStorageMock;
     StrictMock<RequestThreadMock>*         requestThreadMock;
     StrictMock<SettingsEditorMock>*        settingsEditorMock;
     StrictMock<AutorunEnablerMock>*        autorunEnablerMock;
@@ -193,6 +198,10 @@ TEST_F(Test_MainWindow, Test_init)
     ASSERT_EQ(mainWindow->requestTimer.interval(), 0);
     ASSERT_EQ(mainWindow->requestTimer.isActive(), false);
     // clang-format on
+
+    EXPECT_CALL(*notificationsStorageMock, writeLock());
+    EXPECT_CALL(*notificationsStorageMock, readFromDatabase());
+    EXPECT_CALL(*notificationsStorageMock, writeUnlock());
 
     EXPECT_CALL(*requestThreadMock, run());
 

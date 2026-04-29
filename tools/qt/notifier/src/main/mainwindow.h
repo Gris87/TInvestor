@@ -8,6 +8,7 @@
 #include <QTimer>
 
 #include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
+#include "src/storage/notifications/inotificationsstorage.h"
 #include "src/threads/request/irequestthread.h"
 #include "src/utils/autorunenabler/iautorunenabler.h"
 #include "src/utils/settingseditor/isettingseditor.h"
@@ -34,6 +35,7 @@ public:
         IConfig*                configForSettingsDialog,
         ISettingsDialogFactory* settingsDialogFactory,
         ITrayIconFactory*       trayIconFactory,
+        INotificationsStorage*  notificationsStorage,
         IRequestThread*         requestThread,
         ISettingsEditor*        settingsEditor,
         IAutorunEnabler*        autorunEnabler,
@@ -60,6 +62,7 @@ private:
     IConfig*                mConfigForSettingsDialog;
     ISettingsDialogFactory* mSettingsDialogFactory;
     ITrayIcon*              mTrayIcon;
+    INotificationsStorage*  mNotificationsStorage;
     IRequestThread*         mRequestThread;
     ISettingsEditor*        mSettingsEditor;
     IAutorunEnabler*        mAutorunEnabler;

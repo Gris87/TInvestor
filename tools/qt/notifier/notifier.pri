@@ -12,6 +12,7 @@ SOURCES += \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
     src/domain/notification/notificationinfo.cpp \
     src/main/mainwindow.cpp \
+    src/storage/notifications/notificationsstorage.cpp \
     src/threads/parallelhelper/parallelhelperthread.cpp \
     src/threads/request/requestthread.cpp \
     src/utils/autorunenabler/autorunenabler.cpp \
@@ -39,6 +40,8 @@ HEADERS += \
     src/dialogs/settingsdialog/settingsdialogfactory.h \
     src/domain/notification/notificationinfo.h \
     src/main/mainwindow.h \
+    src/storage/notifications/inotificationsstorage.h \
+    src/storage/notifications/notificationsstorage.h \
     src/threads/parallelhelper/parallelhelperthread.h \
     src/threads/request/irequestthread.h \
     src/threads/request/requestthread.h \

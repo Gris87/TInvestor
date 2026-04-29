@@ -254,7 +254,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isLimitByTurnoverNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLimitByTurnoverPercentNonWorkingHours()).WillOnce(Return(8.0f));
     EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(3.0f));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.3f));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
     EXPECT_CALL(*configMock, isHighlightGoodOperations()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHighlightGoodOperationsYield()).WillOnce(Return(2.0f));
@@ -292,7 +292,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->limitByTurnoverNonWorkingHoursCheckBox->isChecked(),           true);
     ASSERT_NEAR(dialog->ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->value(), 8.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->additionalGapCheckBox->isChecked(),                            true);
-    ASSERT_NEAR(dialog->ui->additionalGapDoubleSpinBox->value(),                         3.0f, 0.0001f);
+    ASSERT_NEAR(dialog->ui->additionalGapDoubleSpinBox->value(),                         0.3f, 0.0001f);
     ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),                             36);
     ASSERT_EQ(dialog->ui->highlightGoodOperationsCheckBox->isChecked(),                  true);
     ASSERT_NEAR(dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->value(),          2.0f, 0.0001f);
@@ -331,7 +331,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isLimitByTurnoverNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getLimitByTurnoverPercentNonWorkingHours()).WillOnce(Return(2.5f));
     EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(1.5f));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.5f));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
     EXPECT_CALL(*configMock, isHighlightGoodOperations()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getHighlightGoodOperationsYield()).WillOnce(Return(7.0f));
@@ -369,7 +369,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->limitByTurnoverNonWorkingHoursCheckBox->isChecked(),           false);
     ASSERT_NEAR(dialog->ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->value(), 2.5f, 0.0001f);
     ASSERT_EQ(dialog->ui->additionalGapCheckBox->isChecked(),                            false);
-    ASSERT_NEAR(dialog->ui->additionalGapDoubleSpinBox->value(),                         1.5f, 0.0001f);
+    ASSERT_NEAR(dialog->ui->additionalGapDoubleSpinBox->value(),                         0.5f, 0.0001f);
     ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),                             12);
     ASSERT_EQ(dialog->ui->highlightGoodOperationsCheckBox->isChecked(),                  false);
     ASSERT_NEAR(dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->value(),          7.0f, 0.0001f);
@@ -801,14 +801,14 @@ TEST_F(Test_SettingsDialog, Test_on_additionalGapDoubleSpinBox_valueChanged)
     const InSequence seq;
 
     dialog->ui->additionalGapDoubleSpinBox->blockSignals(true);
-    dialog->ui->additionalGapDoubleSpinBox->setValue(5);
+    dialog->ui->additionalGapDoubleSpinBox->setValue(0.5f);
     dialog->ui->additionalGapDoubleSpinBox->blockSignals(false);
 
-    EXPECT_CALL(*configMock, setAdditionalGapPercent(2.0f));
-    dialog->ui->additionalGapDoubleSpinBox->setValue(2.0f);
+    EXPECT_CALL(*configMock, setAdditionalGapPercent(0.2f));
+    dialog->ui->additionalGapDoubleSpinBox->setValue(0.2f);
 
-    EXPECT_CALL(*configMock, setAdditionalGapPercent(3.0f));
-    dialog->ui->additionalGapDoubleSpinBox->setValue(3.0f);
+    EXPECT_CALL(*configMock, setAdditionalGapPercent(0.3f));
+    dialog->ui->additionalGapDoubleSpinBox->setValue(0.3f);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_storageMonthLimitSpinBox_valueChanged)
@@ -1101,7 +1101,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*configMock, isLimitByTurnoverNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLimitByTurnoverPercentNonWorkingHours()).WillOnce(Return(3.0f));
     EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(5.0f));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.5f));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
     EXPECT_CALL(*configMock, isHighlightGoodOperations()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHighlightGoodOperationsYield()).WillOnce(Return(2.0f));
@@ -1139,7 +1139,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     ASSERT_EQ(dialog->ui->limitByTurnoverNonWorkingHoursCheckBox->isChecked(),           true);
     ASSERT_NEAR(dialog->ui->limitByTurnoverPercentNonWorkingHoursDoubleSpinBox->value(), 3.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->additionalGapCheckBox->isChecked(),                            true);
-    ASSERT_NEAR(dialog->ui->additionalGapDoubleSpinBox->value(),                         5.0f, 0.0001f);
+    ASSERT_NEAR(dialog->ui->additionalGapDoubleSpinBox->value(),                         0.5f, 0.0001f);
     ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),                             36);
     ASSERT_EQ(dialog->ui->highlightGoodOperationsCheckBox->isChecked(),                  true);
     ASSERT_NEAR(dialog->ui->highlightGoodOperationsYieldDoubleSpinBox->value(),          2.0f, 0.0001f);

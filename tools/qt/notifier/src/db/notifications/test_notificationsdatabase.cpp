@@ -24,8 +24,8 @@ protected:
     {
         appDir = qApp->applicationDirPath();
 
-        dirFactoryMock   = new StrictMock<DirFactoryMock>();
-        fileFactoryMock  = new StrictMock<FileFactoryMock>();
+        dirFactoryMock  = new StrictMock<DirFactoryMock>();
+        fileFactoryMock = new StrictMock<FileFactoryMock>();
 
         database = new NotificationsDatabase(dirFactoryMock, fileFactoryMock);
     }
