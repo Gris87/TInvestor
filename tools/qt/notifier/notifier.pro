@@ -39,6 +39,7 @@ UI_DIR      = build/gen/$${TARGET}/ui
 PROJECT_ROOT_PATH = ../../..
 
 include($${PROJECT_ROOT_PATH}/tools/qt/notifier/notifier.pri)
+include($${PROJECT_ROOT_PATH}/libs/libs.pri)
 
 
 

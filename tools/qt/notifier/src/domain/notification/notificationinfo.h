@@ -2,7 +2,9 @@
 
 
 
-#include <QString>
+#include <QJsonObject>
+
+#include "src/simdjson/simdjson_wrapped.h"
 
 
 
@@ -21,13 +23,21 @@ enum MessageType : quint8
 struct NotificationInfo
 {
     explicit NotificationInfo();
-    explicit NotificationInfo(qint64 _timestamp, MessageType _messageType, const QString& _text);
     NotificationInfo(const NotificationInfo& another) = default;
     ~NotificationInfo()                               = default;
 
     NotificationInfo& operator=(const NotificationInfo& another) = default;
 
+    void fromJsonObject(simdjson::ondemand::object jsonObject); // clazy:exclude=function-args-by-ref
+
+    [[nodiscard]]
+    QJsonObject toJsonObject() const;
+
     qint64      timestamp;
     MessageType messageType;
     QString     text;
 };
+
+
+
+bool operator==(const NotificationInfo& lhs, const NotificationInfo& rhs);

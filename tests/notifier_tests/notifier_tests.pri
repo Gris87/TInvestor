@@ -8,6 +8,7 @@ SOURCES += \
     src/main/test_mainwindow.cpp \
     src/threads/request/test_requestthread.cpp \
     src/utils/autorunenabler/test_autorunenabler.cpp \
+    src/utils/exception/test_exception.cpp \
     src/utils/fs/dir/test_dir.cpp \
     src/utils/fs/dir/test_dirfactory.cpp \
     src/utils/fs/file/test_file.cpp \

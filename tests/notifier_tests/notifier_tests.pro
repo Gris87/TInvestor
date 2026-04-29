@@ -49,6 +49,7 @@ PROJECT_ROOT_PATH = ../..
 
 include($${PROJECT_ROOT_PATH}/tools/qt/notifier/notifier.pri)
 include($${PROJECT_ROOT_PATH}/libs/gtest.pri)
+include($${PROJECT_ROOT_PATH}/libs/libs.pri)
 include($${PROJECT_ROOT_PATH}/tests/notifier_tests/notifier_tests.pri)
 
 

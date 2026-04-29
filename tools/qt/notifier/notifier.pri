@@ -13,6 +13,7 @@ SOURCES += \
     src/main/mainwindow.cpp \
     src/threads/request/requestthread.cpp \
     src/utils/autorunenabler/autorunenabler.cpp \
+    src/utils/exception/exception.cpp \
     src/utils/fs/dir/dir.cpp \
     src/utils/fs/dir/dirfactory.cpp \
     src/utils/fs/file/file.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     src/threads/request/requestthread.h \
     src/utils/autorunenabler/autorunenabler.h \
     src/utils/autorunenabler/iautorunenabler.h \
+    src/utils/exception/exception.h \
     src/utils/fs/dir/dir.h \
     src/utils/fs/dir/dirfactory.h \
     src/utils/fs/dir/idir.h \

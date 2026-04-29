@@ -4,6 +4,22 @@
 
 
 
+// clang-format off
+static const QMap<QString, BiDirPriority> STRING_TO_BIDIR_PRIORITY{ // clazy:exclude=non-pod-global-static
+    {"high",   BIDIR_PRIORITY_HIGH},
+    {"normal", BIDIR_PRIORITY_NORMAL},
+    {"low",    BIDIR_PRIORITY_LOW}
+};
+
+static const QMap<BiDirPriority, QString> BIDIR_PRIORITY_TO_STRING{ // clazy:exclude=non-pod-global-static
+    {BIDIR_PRIORITY_HIGH,   "high"},
+    {BIDIR_PRIORITY_NORMAL, "normal"},
+    {BIDIR_PRIORITY_LOW,    "low"}
+};
+// clang-format on
+
+
+
 constexpr float FLOAT_EPSILON = 0.0001f;
 
 
@@ -36,9 +52,7 @@ static void biDirInfoPriorityParse(BiDirInfo* biDirInfo, simdjson::ondemand::val
     const std::string_view valueStr    = value.get_string();
     const QString          priorityStr = QString::fromUtf8(valueStr.data(), valueStr.size());
 
-    biDirInfo->priority = priorityStr == "high"     ? BIDIR_PRIORITY_HIGH
-                          : priorityStr == "normal" ? BIDIR_PRIORITY_NORMAL
-                                                    : BIDIR_PRIORITY_LOW;
+    biDirInfo->priority = STRING_TO_BIDIR_PRIORITY.value(priorityStr, BIDIR_PRIORITY_LOW);
 }
 
 static void biDirInfoThrowParseException(
@@ -78,7 +92,7 @@ QJsonObject BiDirInfo::toJsonObject() const
     res.insert("spread",     spread);
     res.insert("minYield",   minYield);
     res.insert("totalYield", totalYield);
-    res.insert("priority",   priority == BIDIR_PRIORITY_HIGH ? "high" : priority == BIDIR_PRIORITY_NORMAL ? "normal" : "low");
+    res.insert("priority",   BIDIR_PRIORITY_TO_STRING.value(priority, "low"));
     // clang-format on
 
     return res;
