@@ -10,12 +10,14 @@ constexpr int HTTP_STATUS_CODE_OK = 200;
 
 
 RequestThread::RequestThread(
-    IConfig* config, INotificationsStorage* notificationsStorage, IHttpClient* httpClient, QObject* parent
+    IConfig* config, INotificationsDatabase* notificationsDatabase, IHttpClient* httpClient, QObject* parent
 ) :
     IRequestThread(parent),
     mConfig(config),
-    mNotificationsStorage(notificationsStorage),
-    mHttpClient(httpClient)
+    mNotificationsDatabase(notificationsDatabase),
+    mHttpClient(httpClient),
+    mLastNotificationTimestamp(),
+    mAmountOfEntries()
 {
     qDebug() << "Create RequestThread";
 }
@@ -31,30 +33,8 @@ void RequestThread::run()
 
     blockSignals(false);
 
-    const qint64 fromTimestamp = 0;
-
-    QUrl url =
-        QUrl(QString("http://%1:%2/notifications").arg(mConfig->getServerAddress(), QString::number(mConfig->getServerPort())));
-
-    QUrlQuery query;
-    query.addQueryItem("from", QString::number(fromTimestamp));
-
-    url.setQuery(query.query());
-
-    const IHttpClient::Headers headers;
-    bool                       success = false;
-
-    while (!QThread::currentThread()->isInterruptionRequested() && !success)
-    {
-        const HttpResult httpResult = mHttpClient->get(url, headers);
-
-        if (httpResult.statusCode == HTTP_STATUS_CODE_OK)
-        {
-            processNotificationsResponse(httpResult.body);
-
-            success = true;
-        }
-    }
+    readNotificationsAtFirstRun();
+    requestNotifications();
 
     qDebug() << "Finish RequestThread";
 }
@@ -66,7 +46,89 @@ void RequestThread::terminateThread()
     requestInterruption();
 }
 
+void RequestThread::readNotificationsAtFirstRun()
+{
+    if (mAmountOfEntries == 0)
+    {
+        QList<NotificationInfo> notifications = mNotificationsDatabase->readNotifications();
+        mAmountOfEntries                      = notifications.size();
+
+        if (mAmountOfEntries > 0)
+        {
+            const NotificationInfo& lastNotification = notifications.constFirst(); // Since it reversed
+
+            mLastNotificationTimestamp = lastNotification.timestamp;
+        }
+
+        emit notificationsRead(notifications);
+    }
+}
+
+void RequestThread::requestNotifications()
+{
+    QUrl url =
+        QUrl(QString("http://%1:%2/notifications").arg(mConfig->getServerAddress(), QString::number(mConfig->getServerPort())));
+
+    QUrlQuery query;
+    query.addQueryItem("from", QString::number(mLastNotificationTimestamp + 1));
+
+    url.setQuery(query.query());
+
+    const IHttpClient::Headers headers;
+    const HttpResult           httpResult = mHttpClient->get(url, headers);
+
+    if (httpResult.statusCode == HTTP_STATUS_CODE_OK)
+    {
+        processNotificationsResponse(httpResult.body);
+    }
+}
+
 void RequestThread::processNotificationsResponse(const QByteArray& resp)
 {
-    qInfo() << QString::fromUtf8(resp);
+    const simdjson::padded_string jsonData(resp.toStdString());
+
+    simdjson::ondemand::parser parser;
+
+    try
+    {
+        simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+        simdjson::ondemand::object jsonObject        = doc.get_object();
+        simdjson::ondemand::array  jsonNotifications = jsonObject["notifications"].get_array();
+
+        QList<NotificationInfo> notifications;
+        notifications.resizeForOverwrite(jsonNotifications.count_elements());
+
+        if (!notifications.isEmpty())
+        {
+            int i = notifications.size() - 1;
+
+            for (const simdjson::ondemand::object jsonObject : jsonNotifications)
+            {
+                NotificationInfo& notification = notifications[i];
+
+                notification.fromJsonObject(jsonObject);
+
+                --i;
+            }
+
+            if (mLastNotificationTimestamp == 0)
+            {
+                emit notificationsRead(notifications);
+                mNotificationsDatabase->writeNotifications(notifications);
+            }
+            else
+            {
+                emit notificationsAdded(notifications);
+                mNotificationsDatabase->appendNotifications(notifications);
+            }
+
+            mLastNotificationTimestamp  = notifications.constFirst().timestamp; // Since it reversed
+            mAmountOfEntries           += notifications.size();
+        }
+    }
+    catch (...)
+    {
+        qWarning() << "Failed to parse notifications";
+    }
 }

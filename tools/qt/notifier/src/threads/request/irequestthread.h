@@ -4,6 +4,8 @@
 
 #include <QThread>
 
+#include "src/domain/notification/notificationinfo.h"
+
 
 
 class IRequestThread : public QThread
@@ -21,4 +23,8 @@ public:
     IRequestThread& operator=(const IRequestThread& another) = delete;
 
     virtual void terminateThread() = 0;
+
+signals:
+    void notificationsRead(const QList<NotificationInfo>& notifications);
+    void notificationsAdded(const QList<NotificationInfo>& notifications);
 };

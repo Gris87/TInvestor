@@ -7,7 +7,6 @@ SOURCES += \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
     src/domain/notification/test_notificationinfo.cpp \
     src/main/test_mainwindow.cpp \
-    src/storage/notifications/test_notificationsstorage.cpp \
     src/threads/parallelhelper/test_parallelhelperthread.cpp \
     src/threads/request/test_requestthread.cpp \
     src/utils/autorunenabler/test_autorunenabler.cpp \
@@ -29,7 +28,6 @@ HEADERS += \
     src/db/notifications/inotificationsdatabase_mock.h \
     src/dialogs/settingsdialog/isettingsdialog_mock.h \
     src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
-    src/storage/notifications/inotificationsstorage_mock.h \
     src/threads/request/irequestthread_mock.h \
     src/utils/autorunenabler/iautorunenabler_mock.h \
     src/utils/fs/dir/idir_mock.h \

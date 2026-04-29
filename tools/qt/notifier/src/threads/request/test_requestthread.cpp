@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/config/iconfig_mock.h"
-#include "src/storage/notifications/inotificationsstorage_mock.h"
+#include "src/db/notifications/inotificationsdatabase_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 
 
@@ -21,25 +21,25 @@ class Test_RequestThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        configMock               = new StrictMock<ConfigMock>();
-        notificationsStorageMock = new StrictMock<NotificationsStorageMock>();
-        httpClientMock           = new StrictMock<HttpClientMock>();
+        configMock                = new StrictMock<ConfigMock>();
+        notificationsDatabaseMock = new StrictMock<NotificationsDatabaseMock>();
+        httpClientMock            = new StrictMock<HttpClientMock>();
 
-        thread = new RequestThread(configMock, notificationsStorageMock, httpClientMock);
+        thread = new RequestThread(configMock, notificationsDatabaseMock, httpClientMock);
     }
 
     void TearDown() override
     {
         delete thread;
         delete configMock;
-        delete notificationsStorageMock;
+        delete notificationsDatabaseMock;
         delete httpClientMock;
     }
 
-    RequestThread*                        thread;
-    StrictMock<ConfigMock>*               configMock;
-    StrictMock<NotificationsStorageMock>* notificationsStorageMock;
-    StrictMock<HttpClientMock>*           httpClientMock;
+    RequestThread*                         thread;
+    StrictMock<ConfigMock>*                configMock;
+    StrictMock<NotificationsDatabaseMock>* notificationsDatabaseMock;
+    StrictMock<HttpClientMock>*            httpClientMock;
 };
 
 

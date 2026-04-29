@@ -5,7 +5,7 @@
 #include "src/threads/request/irequestthread.h"
 
 #include "src/config/iconfig.h"
-#include "src/storage/notifications/inotificationsstorage.h"
+#include "src/db/notifications/inotificationsdatabase.h"
 #include "src/utils/http/ihttpclient.h"
 
 
@@ -16,7 +16,7 @@ class RequestThread : public IRequestThread
 
 public:
     explicit RequestThread(
-        IConfig* config, INotificationsStorage* notificationsStorage, IHttpClient* httpClient, QObject* parent = nullptr
+        IConfig* config, INotificationsDatabase* notificationsDatabase, IHttpClient* httpClient, QObject* parent = nullptr
     );
     ~RequestThread() override;
 
@@ -27,10 +27,14 @@ public:
 
     void terminateThread() override;
 
+    void readNotificationsAtFirstRun();
+    void requestNotifications();
     void processNotificationsResponse(const QByteArray& resp);
 
 private:
-    IConfig*               mConfig;
-    INotificationsStorage* mNotificationsStorage;
-    IHttpClient*           mHttpClient;
+    IConfig*                mConfig;
+    INotificationsDatabase* mNotificationsDatabase;
+    IHttpClient*            mHttpClient;
+    qint64                  mLastNotificationTimestamp;
+    int                     mAmountOfEntries;
 };

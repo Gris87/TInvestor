@@ -22,7 +22,6 @@ MainWindow::MainWindow(
     IConfig*                configForSettingsDialog,
     ISettingsDialogFactory* settingsDialogFactory,
     ITrayIconFactory*       trayIconFactory,
-    INotificationsStorage*  notificationsStorage,
     IRequestThread*         requestThread,
     ISettingsEditor*        settingsEditor,
     IAutorunEnabler*        autorunEnabler,
@@ -33,7 +32,6 @@ MainWindow::MainWindow(
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mSettingsDialogFactory(settingsDialogFactory),
-    mNotificationsStorage(notificationsStorage),
     mRequestThread(requestThread),
     mSettingsEditor(settingsEditor),
     mAutorunEnabler(autorunEnabler)
@@ -138,10 +136,6 @@ void MainWindow::on_actionSettings_triggered()
 void MainWindow::init()
 {
     qInfo() << "Start main initialization";
-
-    mNotificationsStorage->writeLock();
-    mNotificationsStorage->readFromDatabase();
-    mNotificationsStorage->writeUnlock();
 
     requestTimer.start(REQUEST_INTERVAL);
     requestTimerTicked();
