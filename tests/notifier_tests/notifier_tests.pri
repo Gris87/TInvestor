@@ -2,10 +2,12 @@
 # find tools/qt/notifier/ -name test_\*.cpp | sort | sed "s/tools\/qt\/notifier\///g" | sed "s/\.cpp/\.cpp \\\/g"
 SOURCES += \
     src/config/test_config.cpp \
+    src/db/notifications/test_notificationsdatabase.cpp \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
     src/domain/notification/test_notificationinfo.cpp \
     src/main/test_mainwindow.cpp \
+    src/threads/parallelhelper/test_parallelhelperthread.cpp \
     src/threads/request/test_requestthread.cpp \
     src/utils/autorunenabler/test_autorunenabler.cpp \
     src/utils/exception/test_exception.cpp \
@@ -23,6 +25,7 @@ SOURCES += \
 # find tools/qt/notifier/ -name \*_mock.h | sort | sed "s/tools\/qt\/notifier\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
     src/config/iconfig_mock.h \
+    src/db/notifications/inotificationsdatabase_mock.h \
     src/dialogs/settingsdialog/isettingsdialog_mock.h \
     src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
     src/threads/request/irequestthread_mock.h \
