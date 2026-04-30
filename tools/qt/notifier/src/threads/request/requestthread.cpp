@@ -76,7 +76,7 @@ void RequestThread::readNotificationsAtFirstRun()
 void RequestThread::requestNotifications()
 {
     QUrl url =
-        QUrl(QString("http://%1:%2/notifications").arg(mConfig->getServerAddress(), QString::number(mConfig->getServerPort())));
+        QUrl(QString("https://%1:%2/notifications").arg(mConfig->getServerAddress(), QString::number(mConfig->getServerPort())));
 
     QUrlQuery query;
     query.addQueryItem("from", QString::number(mLastNotificationTimestamp + 1));

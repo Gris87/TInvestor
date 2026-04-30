@@ -1,9 +1,10 @@
 import argparse
 import json
+import http.server
+import ssl
 import sys
 
 from functools import partial
-from http.server import HTTPServer, BaseHTTPRequestHandler
 from loguru import logger
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
@@ -14,7 +15,7 @@ DEFAULT_PORT = 8041
 MS_IN_SECOND = 1000
 
 
-class MyHandler(BaseHTTPRequestHandler):
+class MyHandler(http.server.BaseHTTPRequestHandler):
     def __init__(self, path_to_notifications, *args, **kwargs):
         self.path_to_notifications = path_to_notifications
 
@@ -82,7 +83,13 @@ class MyHandler(BaseHTTPRequestHandler):
 def notifier(args):
     server_address = ("", args.port)
 
-    httpd = HTTPServer(server_address, partial(MyHandler, args.path_to_notifications))
+    httpd = http.server.HTTPServer(server_address, partial(MyHandler, args.path_to_notifications))
+
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain(certfile="cert.pem", keyfile="key.pem")
+
+    httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
+
     logger.info(f"Listening at port {args.port}")
     httpd.serve_forever()
 

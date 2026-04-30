@@ -140,7 +140,7 @@ static int runApplication(QApplication* app)
     NotificationsDatabase notificationsDatabase(&dirFactory, &fileFactory);
 
     HttpClient httpClient;
-    Optimizer         optimizer;
+    Optimizer  optimizer;
 
     RequestThread requestThread(&config, &notificationsDatabase, &httpClient, &optimizer);
 

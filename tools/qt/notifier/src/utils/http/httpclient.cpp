@@ -40,6 +40,7 @@ HttpResult HttpClient::get(const QUrl& url, const Headers& headers)
 
     QEventLoop eventLoop;
     QObject::connect(reply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+    QObject::connect(reply, &QNetworkReply::sslErrors, [reply](const QList<QSslError>& /*errors*/) { reply->ignoreSslErrors(); });
     eventLoop.exec();
 
     HttpResult res;
