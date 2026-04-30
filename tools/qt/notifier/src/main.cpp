@@ -18,6 +18,7 @@
 #include "src/utils/fs/file/filefactory.h"
 #include "src/utils/http/httpclient.h"
 #include "src/utils/logger/logger.h"
+#include "src/utils/optimizer/optimizer.h"
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
@@ -139,8 +140,9 @@ static int runApplication(QApplication* app)
     NotificationsDatabase notificationsDatabase(&dirFactory, &fileFactory);
 
     HttpClient httpClient;
+    Optimizer         optimizer;
 
-    RequestThread requestThread(&config, &notificationsDatabase, &httpClient);
+    RequestThread requestThread(&config, &notificationsDatabase, &httpClient, &optimizer);
 
     MainWindow mainWindow(
         &config,

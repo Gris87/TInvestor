@@ -5,6 +5,7 @@
 #include "src/config/iconfig_mock.h"
 #include "src/db/notifications/inotificationsdatabase_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
+#include "src/utils/optimizer/ioptimizer_mock.h"
 
 
 
@@ -24,8 +25,9 @@ protected:
         configMock                = new StrictMock<ConfigMock>();
         notificationsDatabaseMock = new StrictMock<NotificationsDatabaseMock>();
         httpClientMock            = new StrictMock<HttpClientMock>();
+        optimizerMock             = new StrictMock<OptimizerMock>();
 
-        thread = new RequestThread(configMock, notificationsDatabaseMock, httpClientMock);
+        thread = new RequestThread(configMock, notificationsDatabaseMock, httpClientMock, optimizerMock);
     }
 
     void TearDown() override
@@ -34,12 +36,14 @@ protected:
         delete configMock;
         delete notificationsDatabaseMock;
         delete httpClientMock;
+        delete optimizerMock;
     }
 
     RequestThread*                         thread;
     StrictMock<ConfigMock>*                configMock;
     StrictMock<NotificationsDatabaseMock>* notificationsDatabaseMock;
     StrictMock<HttpClientMock>*            httpClientMock;
+    StrictMock<OptimizerMock>*             optimizerMock;
 };
 
 

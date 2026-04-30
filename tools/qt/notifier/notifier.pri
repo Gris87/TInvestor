@@ -22,6 +22,7 @@ SOURCES += \
     src/utils/fs/file/filefactory.cpp \
     src/utils/http/httpclient.cpp \
     src/utils/logger/logger.cpp \
+    src/utils/optimizer/optimizer.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
     src/widgets/trayicon/trayicon.cpp \
@@ -56,6 +57,8 @@ HEADERS += \
     src/utils/http/httpclient.h \
     src/utils/http/ihttpclient.h \
     src/utils/logger/logger.h \
+    src/utils/optimizer/ioptimizer.h \
+    src/utils/optimizer/optimizer.h \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \
     src/utils/style/darkpalette.h \

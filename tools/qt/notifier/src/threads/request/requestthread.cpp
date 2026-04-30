@@ -5,19 +5,28 @@
 
 
 
+constexpr int LIMIT_NOTIFICATIONS = 1000000;
+constexpr int OPTIMIZE_SIZE       = 100000;
 constexpr int HTTP_STATUS_CODE_OK = 200;
 
 
 
 RequestThread::RequestThread(
-    IConfig* config, INotificationsDatabase* notificationsDatabase, IHttpClient* httpClient, QObject* parent
+    IConfig*                config,
+    INotificationsDatabase* notificationsDatabase,
+    IHttpClient*            httpClient,
+    IOptimizer*             optimizer,
+    QObject*                parent
 ) :
     IRequestThread(parent),
     mConfig(config),
     mNotificationsDatabase(notificationsDatabase),
     mHttpClient(httpClient),
+    mOptimizer(optimizer),
     mLastNotificationTimestamp(),
-    mAmountOfEntries()
+    mAmountOfEntries(),
+    mLimitNotifications(LIMIT_NOTIFICATIONS),
+    mOptimizeSize(OPTIMIZE_SIZE)
 {
     qDebug() << "Create RequestThread";
 }
@@ -79,6 +88,7 @@ void RequestThread::requestNotifications()
 
     if (httpResult.statusCode == HTTP_STATUS_CODE_OK)
     {
+        optimize();
         processNotificationsResponse(httpResult.body);
     }
 }
@@ -130,5 +140,18 @@ void RequestThread::processNotificationsResponse(const QByteArray& resp)
     catch (...)
     {
         qWarning() << "Failed to parse notifications";
+    }
+}
+
+void RequestThread::optimize()
+{
+    if (mAmountOfEntries > mLimitNotifications)
+    {
+        QList<NotificationInfo> newNotifications =
+            mOptimizer->optimizeNotifications(mNotificationsDatabase->readNotifications(), mOptimizeSize);
+        mAmountOfEntries = newNotifications.size();
+
+        emit notificationsRead(newNotifications);
+        mNotificationsDatabase->writeNotifications(newNotifications);
     }
 }
