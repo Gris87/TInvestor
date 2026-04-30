@@ -1,5 +1,6 @@
 Notifier app
 Perform own calculation of yield for daily yield instead of just calculate difference between total money
+Make bi-dir script to work for fast with TMON trading (without canceling orders)
 High priority for bi-dir tradings
 Find best configs for different commission
 Change config defaults

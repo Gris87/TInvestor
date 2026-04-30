@@ -10,6 +10,7 @@ SOURCES += \
     src/db/notifications/notificationsdatabase.cpp \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
+    src/domain/filter/filter.cpp \
     src/domain/notification/notificationinfo.cpp \
     src/main/mainwindow.cpp \
     src/threads/parallelhelper/parallelhelperthread.cpp \
@@ -25,6 +26,8 @@ SOURCES += \
     src/utils/optimizer/optimizer.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
+    src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp \
+    src/widgets/tablemodels/notificationstablemodel/notificationstablemodelfactory.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp \
 
@@ -38,6 +41,7 @@ HEADERS += \
     src/dialogs/settingsdialog/isettingsdialogfactory.h \
     src/dialogs/settingsdialog/settingsdialog.h \
     src/dialogs/settingsdialog/settingsdialogfactory.h \
+    src/domain/filter/filter.h \
     src/domain/notification/notificationinfo.h \
     src/main/mainwindow.h \
     src/threads/parallelhelper/parallelhelperthread.h \
@@ -62,6 +66,11 @@ HEADERS += \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \
     src/utils/style/darkpalette.h \
+    src/widgets/tablemodels/notificationstablemodel/comparators.h \
+    src/widgets/tablemodels/notificationstablemodel/inotificationstablemodel.h \
+    src/widgets/tablemodels/notificationstablemodel/inotificationstablemodelfactory.h \
+    src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.h \
+    src/widgets/tablemodels/notificationstablemodel/notificationstablemodelfactory.h \
     src/widgets/trayicon/itrayicon.h \
     src/widgets/trayicon/itrayiconfactory.h \
     src/widgets/trayicon/trayicon.h \

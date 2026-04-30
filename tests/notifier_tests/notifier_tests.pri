@@ -5,6 +5,7 @@ SOURCES += \
     src/db/notifications/test_notificationsdatabase.cpp \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
+    src/domain/filter/test_filter.cpp \
     src/domain/notification/test_notificationinfo.cpp \
     src/main/test_mainwindow.cpp \
     src/threads/parallelhelper/test_parallelhelperthread.cpp \
@@ -20,6 +21,8 @@ SOURCES += \
     src/utils/optimizer/test_optimizer.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
     src/utils/style/test_darkpalette.cpp \
+    src/widgets/tablemodels/notificationstablemodel/test_notificationstablemodel.cpp \
+    src/widgets/tablemodels/notificationstablemodel/test_notificationstablemodelfactory.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp \
 
@@ -38,5 +41,7 @@ HEADERS += \
     src/utils/http/ihttpclient_mock.h \
     src/utils/optimizer/ioptimizer_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
+    src/widgets/tablemodels/notificationstablemodel/inotificationstablemodel_mock.h \
+    src/widgets/tablemodels/notificationstablemodel/inotificationstablemodelfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \

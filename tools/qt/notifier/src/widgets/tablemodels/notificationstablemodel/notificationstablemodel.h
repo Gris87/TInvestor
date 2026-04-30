@@ -1,0 +1,37 @@
+#pragma once
+
+
+
+#include "src/widgets/tablemodels/notificationstablemodel/inotificationstablemodel.h"
+
+
+
+class NotificationsTableModel : public INotificationsTableModel
+{
+    Q_OBJECT
+
+public:
+    explicit NotificationsTableModel(QObject* parent = nullptr);
+    ~NotificationsTableModel() override;
+
+    NotificationsTableModel(const NotificationsTableModel& another)            = delete;
+    NotificationsTableModel& operator=(const NotificationsTableModel& another) = delete;
+
+    [[nodiscard]]
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+
+    [[nodiscard]]
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+
+    [[nodiscard]]
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+
+    [[nodiscard]]
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+
+    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
+
+    void setFilter(const Filter& filter) override;
+    void notificationsRead(const QList<NotificationInfo>& notifications) override;
+    void notificationsAdded(const QList<NotificationInfo>& notifications) override;
+};
