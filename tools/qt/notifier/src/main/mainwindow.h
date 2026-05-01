@@ -59,14 +59,14 @@ private:
     void saveWindowState();
     void loadWindowState();
 
-    IConfig*                mConfig;
-    IConfig*                mConfigForSettingsDialog;
-    ISettingsDialogFactory* mSettingsDialogFactory;
+    IConfig*                   mConfig;
+    IConfig*                   mConfigForSettingsDialog;
+    ISettingsDialogFactory*    mSettingsDialogFactory;
     INotificationsTableWidget* mNotificationsTableWidget;
-    ITrayIcon*              mTrayIcon;
-    IRequestThread*         mRequestThread;
-    ISettingsEditor*        mSettingsEditor;
-    IAutorunEnabler*        mAutorunEnabler;
+    ITrayIcon*                 mTrayIcon;
+    IRequestThread*            mRequestThread;
+    ISettingsEditor*           mSettingsEditor;
+    IAutorunEnabler*           mAutorunEnabler;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

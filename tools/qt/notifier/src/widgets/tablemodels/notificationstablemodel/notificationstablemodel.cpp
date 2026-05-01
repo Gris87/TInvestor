@@ -13,6 +13,9 @@ NotificationsTableModel::NotificationsTableModel(QObject* parent) :
     INotificationsTableModel(parent)
 {
     qDebug() << "Create NotificationsTableModel";
+
+    mHeader << tr("Time") << tr("Type") << tr("Text");
+    Q_ASSERT_X(mHeader.size() == NOTIFICATIONS_COLUMN_COUNT, __FUNCTION__, "Header is incorrect");
 }
 
 NotificationsTableModel::~NotificationsTableModel()
@@ -30,8 +33,18 @@ int NotificationsTableModel::columnCount(const QModelIndex& /*parent*/) const
     return NOTIFICATIONS_COLUMN_COUNT;
 }
 
-QVariant NotificationsTableModel::headerData(int /*section*/, Qt::Orientation /*orientation*/, int /*role*/) const
+QVariant NotificationsTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
+    if (role == Qt::DisplayRole)
+    {
+        if (orientation == Qt::Horizontal)
+        {
+            return mHeader.at(section);
+        }
+
+        return section + 1;
+    }
+
     return QVariant();
 }
 

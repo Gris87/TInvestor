@@ -516,7 +516,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="720"/>
+        <location filename="../../src/main/mainwindow.cpp" line="718"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -542,7 +542,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="534"/>
-        <location filename="../../src/main/mainwindow.cpp" line="821"/>
+        <location filename="../../src/main/mainwindow.cpp" line="819"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -613,35 +613,35 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="655"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1491"/>
+        <location filename="../../src/main/mainwindow.cpp" line="653"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1489"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="672"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1289"/>
+        <location filename="../../src/main/mainwindow.cpp" line="670"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1287"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="809"/>
+        <location filename="../../src/main/mainwindow.cpp" line="807"/>
         <source>Auto-pilot started</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="815"/>
+        <location filename="../../src/main/mainwindow.cpp" line="813"/>
         <source>Auto-pilot stopped</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1289"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1287"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="764"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1338"/>
+        <location filename="../../src/main/mainwindow.cpp" line="762"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1336"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
@@ -656,7 +656,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1338"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1336"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -951,22 +951,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="189"/>
+        <location filename="../../src/main.cpp" line="190"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="189"/>
+        <location filename="../../src/main.cpp" line="190"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="215"/>
+        <location filename="../../src/main.cpp" line="216"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="215"/>
+        <location filename="../../src/main.cpp" line="216"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
@@ -1773,7 +1773,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="657"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="654"/>
         <source>Trade interrupted because the price reached %1 with raise %2 from the price %3</source>
         <translation></translation>
     </message>
@@ -1826,17 +1826,17 @@
 <context>
     <name>TrayIcon</name>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="17"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="16"/>
         <source>Show</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="19"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="18"/>
         <source>Exit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="25"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="24"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
