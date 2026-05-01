@@ -11,6 +11,7 @@
 #include "src/threads/request/irequestthread.h"
 #include "src/utils/autorunenabler/iautorunenabler.h"
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/notificationstablewidget/inotificationstablewidgetfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
 
@@ -30,14 +31,16 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(
-        IConfig*                config,
-        IConfig*                configForSettingsDialog,
-        ISettingsDialogFactory* settingsDialogFactory,
-        ITrayIconFactory*       trayIconFactory,
-        IRequestThread*         requestThread,
-        ISettingsEditor*        settingsEditor,
-        IAutorunEnabler*        autorunEnabler,
-        QWidget*                parent = nullptr
+        IConfig*                          config,
+        IConfig*                          configForSettingsDialog,
+        ISettingsDialogFactory*           settingsDialogFactory,
+        INotificationsTableWidgetFactory* notificationsTableWidgetFactory,
+        INotificationsTableModelFactory*  notificationsTableModelFactory,
+        ITrayIconFactory*                 trayIconFactory,
+        IRequestThread*                   requestThread,
+        ISettingsEditor*                  settingsEditor,
+        IAutorunEnabler*                  autorunEnabler,
+        QWidget*                          parent = nullptr
     );
     ~MainWindow() override;
 
@@ -59,6 +62,7 @@ private:
     IConfig*                mConfig;
     IConfig*                mConfigForSettingsDialog;
     ISettingsDialogFactory* mSettingsDialogFactory;
+    INotificationsTableWidget* mNotificationsTableWidget;
     ITrayIcon*              mTrayIcon;
     IRequestThread*         mRequestThread;
     ISettingsEditor*        mSettingsEditor;

@@ -18,14 +18,16 @@ constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIco
 
 
 MainWindow::MainWindow(
-    IConfig*                config,
-    IConfig*                configForSettingsDialog,
-    ISettingsDialogFactory* settingsDialogFactory,
-    ITrayIconFactory*       trayIconFactory,
-    IRequestThread*         requestThread,
-    ISettingsEditor*        settingsEditor,
-    IAutorunEnabler*        autorunEnabler,
-    QWidget*                parent
+    IConfig*                          config,
+    IConfig*                          configForSettingsDialog,
+    ISettingsDialogFactory*           settingsDialogFactory,
+    INotificationsTableWidgetFactory* notificationsTableWidgetFactory,
+    INotificationsTableModelFactory*  notificationsTableModelFactory,
+    ITrayIconFactory*                 trayIconFactory,
+    IRequestThread*                   requestThread,
+    ISettingsEditor*                  settingsEditor,
+    IAutorunEnabler*                  autorunEnabler,
+    QWidget*                          parent
 ) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -39,6 +41,10 @@ MainWindow::MainWindow(
     qDebug() << "Create MainWindow";
 
     ui->setupUi(this);
+
+    mNotificationsTableWidget =
+        notificationsTableWidgetFactory->newInstance(notificationsTableModelFactory, mSettingsEditor, this);
+    ui->layoutForNotificationsTableWidget->addWidget(mNotificationsTableWidget);
 
     mTrayIcon = trayIconFactory->newInstance(this);
 
@@ -154,6 +160,8 @@ void MainWindow::saveWindowState()
     mSettingsEditor->setValue("MainWindow/geometry",    saveGeometry());
     mSettingsEditor->setValue("MainWindow/windowState", saveState());
     // clang-format on
+
+    mNotificationsTableWidget->saveWindowState("MainWindow/NotificationsTableWidget");
 }
 
 void MainWindow::loadWindowState()
@@ -162,4 +170,6 @@ void MainWindow::loadWindowState()
 
     restoreGeometry(mSettingsEditor->value("MainWindow/geometry", QByteArray()).toByteArray());
     restoreState(mSettingsEditor->value("MainWindow/windowState", QByteArray()).toByteArray());
+
+    mNotificationsTableWidget->loadWindowState("MainWindow/NotificationsTableWidget");
 }

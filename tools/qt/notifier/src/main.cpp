@@ -21,6 +21,8 @@
 #include "src/utils/optimizer/optimizer.h"
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
+#include "src/widgets/notificationstablewidget/notificationstablewidgetfactory.h"
+#include "src/widgets/tablemodels/notificationstablemodel/notificationstablemodelfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
@@ -126,6 +128,10 @@ static int runApplication(QApplication* app)
 
     SettingsDialogFactory settingsDialogFactory;
 
+    NotificationsTableWidgetFactory notificationsTableWidgetFactory;
+
+    NotificationsTableModelFactory notificationsTableModelFactory;
+
     TrayIconFactory trayIconFactory;
     DirFactory      dirFactory;
     FileFactory     fileFactory;
@@ -148,6 +154,8 @@ static int runApplication(QApplication* app)
         &config,
         &configForSettingsDialog,
         &settingsDialogFactory,
+        &notificationsTableWidgetFactory,
+        &notificationsTableModelFactory,
         &trayIconFactory,
         &requestThread,
         &settingsEditor,
