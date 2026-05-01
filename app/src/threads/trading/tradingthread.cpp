@@ -644,9 +644,6 @@ Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& 
         {
             if (!isShort)
             {
-                const float additionalGap = mConfig->isAdditionalGap() ? mConfig->getAdditionalGapPercent() : 0;
-                price                     = price * (1 - (additionalGap / HUNDRED_PERCENT));
-
                 const double priceRaise = ((price / mPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
                 if (priceRaise > MAXIMUM_PRICE_RAISE_PERCENT)
@@ -667,6 +664,9 @@ Quotation TradingThread::calculateBuyPrice(const tinkoff::GetOrderBookResponse& 
 
                     return res;
                 }
+
+                const float additionalGap = mConfig->isAdditionalGap() ? mConfig->getAdditionalGapPercent() : 0;
+                price                     = price * (1 - (additionalGap / HUNDRED_PERCENT));
             }
             else
             {

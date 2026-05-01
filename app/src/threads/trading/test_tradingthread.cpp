@@ -597,8 +597,6 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(getOrderBookResponse));
     EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
         .WillOnce(Return(nullptr));
-    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.0f));
     EXPECT_CALL(
         *logsThreadMock,
         addLog(

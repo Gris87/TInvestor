@@ -26,6 +26,8 @@ SOURCES += \
     src/utils/optimizer/optimizer.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
+    src/widgets/notificationstablewidget/notificationstablewidget.cpp \
+    src/widgets/notificationstablewidget/notificationstablewidgetfactory.cpp \
     src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp \
     src/widgets/tablemodels/notificationstablemodel/notificationstablemodelfactory.cpp \
     src/widgets/trayicon/trayicon.cpp \
@@ -66,6 +68,10 @@ HEADERS += \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \
     src/utils/style/darkpalette.h \
+    src/widgets/notificationstablewidget/inotificationstablewidget.h \
+    src/widgets/notificationstablewidget/inotificationstablewidgetfactory.h \
+    src/widgets/notificationstablewidget/notificationstablewidget.h \
+    src/widgets/notificationstablewidget/notificationstablewidgetfactory.h \
     src/widgets/tablemodels/notificationstablemodel/comparators.h \
     src/widgets/tablemodels/notificationstablemodel/inotificationstablemodel.h \
     src/widgets/tablemodels/notificationstablemodel/inotificationstablemodelfactory.h \
@@ -80,3 +86,4 @@ HEADERS += \
 FORMS += \
     src/dialogs/settingsdialog/settingsdialog.ui \
     src/main/mainwindow.ui \
+    src/widgets/notificationstablewidget/notificationstablewidget.ui \
