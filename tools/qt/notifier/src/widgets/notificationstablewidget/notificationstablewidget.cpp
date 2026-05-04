@@ -29,6 +29,7 @@ NotificationsTableWidget::NotificationsTableWidget(
 
     ui->tableView->setModel(mNotificationsTableModel);
     ui->tableView->sortByColumn(NOTIFICATIONS_TIME_COLUMN, Qt::DescendingOrder);
+    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 NotificationsTableWidget::~NotificationsTableWidget()

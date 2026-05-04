@@ -18,19 +18,44 @@
 <context>
     <name>NotificationsTableModel</name>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="17"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="27"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="17"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="27"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="17"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="27"/>
         <source>Text</source>
         <translation>Текст</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <source>System</source>
+        <translation>Система</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <source>Portfolio</source>
+        <translation>Портфолио</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <source>Huge sell</source>
+        <translation>Большая продажа</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <source>Dividends</source>
+        <translation>Дивиденды</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <source>Pulse</source>
+        <translation>Пульс</translation>
     </message>
 </context>
 <context>

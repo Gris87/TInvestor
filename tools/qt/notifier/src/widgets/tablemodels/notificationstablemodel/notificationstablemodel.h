@@ -36,5 +36,17 @@ public:
     void notificationsAdded(const QList<NotificationInfo>& notifications) override;
 
 private:
-    QStringList mHeader;
+    void sortEntries();
+    void reverseEntries();
+    int  indexOfSortedInsert(QList<NotificationInfo>* entries, const NotificationInfo& entry);
+    void insertRow(QList<NotificationInfo>* entries, int row, const NotificationInfo& entry);
+    void filterAll();
+
+    QStringList                              mHeader;
+    QStringList                              mMessageTypes;
+    Filter                                   mFilter;
+    std::shared_ptr<QList<NotificationInfo>> mEntriesUnfiltered;
+    std::shared_ptr<QList<NotificationInfo>> mEntries;
+    int                                      mSortColumn;
+    Qt::SortOrder                            mSortOrder;
 };

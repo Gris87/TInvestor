@@ -18,18 +18,43 @@
 <context>
     <name>NotificationsTableModel</name>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="17"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="27"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="17"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="27"/>
         <source>Type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="17"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="27"/>
         <source>Text</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <source>System</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <source>Portfolio</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <source>Huge sell</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <source>Dividends</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <source>Pulse</source>
         <translation></translation>
     </message>
 </context>
