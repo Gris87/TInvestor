@@ -36,4 +36,5 @@ public:
     virtual void setFilter(const Filter& filter)                                  = 0;
     virtual void notificationsRead(const QList<NotificationInfo>& notifications)  = 0;
     virtual void notificationsAdded(const QList<NotificationInfo>& notifications) = 0;
+    virtual void refreshBackground()                                              = 0;
 };

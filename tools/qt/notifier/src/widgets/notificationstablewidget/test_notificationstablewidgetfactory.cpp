@@ -40,7 +40,7 @@ TEST_F(Test_NotificationsTableWidgetFactory, Test_constructor_and_destructor)
 
 TEST_F(Test_NotificationsTableWidgetFactory, Test_newInstance)
 {
-    const InSequence seq;
+    // const InSequence seq;
 
     StrictMock<NotificationsTableModelFactoryMock> notificationsTableModelFactoryMock;
     StrictMock<SettingsEditorMock>                 settingsEditorMock;

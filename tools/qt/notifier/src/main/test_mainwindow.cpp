@@ -136,8 +136,10 @@ protected:
 TEST_F(Test_MainWindow, Test_constructor_and_destructor)
 {
     // clang-format off
-    ASSERT_EQ(mainWindow->requestTimer.interval(), 0);
-    ASSERT_EQ(mainWindow->requestTimer.isActive(), false);
+    ASSERT_EQ(mainWindow->requestTimer.interval(),           0);
+    ASSERT_EQ(mainWindow->requestTimer.isActive(),           false);
+    ASSERT_EQ(mainWindow->refreshBackgroundTimer.interval(), 0);
+    ASSERT_EQ(mainWindow->refreshBackgroundTimer.isActive(), false);
     // clang-format on
 }
 
@@ -188,6 +190,20 @@ TEST_F(Test_MainWindow, Test_requestTimerTicked)
     requestThreadMock->wait();
 }
 
+TEST_F(Test_MainWindow, Test_refreshBackgroundTimerTicked)
+{
+    const InSequence seq;
+
+    mainWindow->refreshBackgroundTimer.start(100000);
+    ASSERT_EQ(mainWindow->refreshBackgroundTimer.isActive(), true);
+
+    EXPECT_CALL(*notificationsTableWidgetMock, refreshBackground());
+
+    mainWindow->refreshBackgroundTimerTicked();
+
+    ASSERT_EQ(mainWindow->refreshBackgroundTimer.isActive(), true);
+}
+
 TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 {
     const InSequence seq;
@@ -215,17 +231,22 @@ TEST_F(Test_MainWindow, Test_init)
     // const InSequence seq;
 
     // clang-format off
-    ASSERT_EQ(mainWindow->requestTimer.interval(), 0);
-    ASSERT_EQ(mainWindow->requestTimer.isActive(), false);
+    ASSERT_EQ(mainWindow->requestTimer.interval(),           0);
+    ASSERT_EQ(mainWindow->requestTimer.isActive(),           false);
+    ASSERT_EQ(mainWindow->refreshBackgroundTimer.interval(), 0);
+    ASSERT_EQ(mainWindow->refreshBackgroundTimer.isActive(), false);
     // clang-format on
 
     EXPECT_CALL(*requestThreadMock, run());
+    EXPECT_CALL(*notificationsTableWidgetMock, refreshBackground());
 
     mainWindow->init();
 
     // clang-format off
-    ASSERT_EQ(mainWindow->requestTimer.interval(), 60 * 1000);
-    ASSERT_EQ(mainWindow->requestTimer.isActive(), true);
+    ASSERT_EQ(mainWindow->requestTimer.interval(),           60 * 1000);
+    ASSERT_EQ(mainWindow->requestTimer.isActive(),           true);
+    ASSERT_EQ(mainWindow->refreshBackgroundTimer.interval(), 60 * 1000);
+    ASSERT_EQ(mainWindow->refreshBackgroundTimer.isActive(), true);
     // clang-format on
 
     requestThreadMock->wait();

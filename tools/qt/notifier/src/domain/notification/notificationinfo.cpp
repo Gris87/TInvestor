@@ -25,10 +25,16 @@ static const QMap<MessageType, QString> MESSAGE_TYPE_TO_STRING{ // clazy:exclude
 
 
 NotificationInfo::NotificationInfo() :
+    requestTimestamp(),
     timestamp(),
     messageType(),
     text()
 {
+}
+
+static void notificationInfoRequestTimestampParse(NotificationInfo* notificationInfo, simdjson::ondemand::value value)
+{
+    notificationInfo->requestTimestamp = value.get_int64();
 }
 
 static void notificationInfoTimestampParse(NotificationInfo* notificationInfo, simdjson::ondemand::value value)
@@ -61,9 +67,10 @@ using ParseHandler = void (*)(NotificationInfo* notificationInfo, simdjson::onde
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"timestamp", notificationInfoTimestampParse},
-    {"type",      notificationInfoTypeParse     },
-    {"text",      notificationInfoTextParse     }
+    {"requestTimestamp", notificationInfoRequestTimestampParse},
+    {"timestamp",        notificationInfoTimestampParse       },
+    {"type",             notificationInfoTypeParse            },
+    {"text",             notificationInfoTextParse            }
 };
 // clang-format on
 
@@ -83,9 +90,10 @@ QJsonObject NotificationInfo::toJsonObject() const
     QJsonObject res;
 
     // clang-format off
-    res.insert("timestamp", timestamp);
-    res.insert("type",      MESSAGE_TYPE_TO_STRING.value(messageType));
-    res.insert("text",      text);
+    res.insert("requestTimestamp", requestTimestamp);
+    res.insert("timestamp",        timestamp);
+    res.insert("type",             MESSAGE_TYPE_TO_STRING.value(messageType));
+    res.insert("text",             text);
     // clang-format on
 
     return res;
@@ -93,5 +101,6 @@ QJsonObject NotificationInfo::toJsonObject() const
 
 bool operator==(const NotificationInfo& lhs, const NotificationInfo& rhs)
 {
-    return lhs.timestamp == rhs.timestamp && lhs.messageType == rhs.messageType && lhs.text == rhs.text;
+    return lhs.requestTimestamp == rhs.requestTimestamp && lhs.timestamp == rhs.timestamp && lhs.messageType == rhs.messageType &&
+           lhs.text == rhs.text;
 }

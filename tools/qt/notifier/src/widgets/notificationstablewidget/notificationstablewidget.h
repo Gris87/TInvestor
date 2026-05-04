@@ -36,6 +36,7 @@ public:
     void setFilter(const Filter& filter) override;
     void notificationsRead(const QList<NotificationInfo>& notifications) override;
     void notificationsAdded(const QList<NotificationInfo>& notifications) override;
+    void refreshBackground() override;
 
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;

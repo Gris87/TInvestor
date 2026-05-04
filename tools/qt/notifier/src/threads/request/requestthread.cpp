@@ -111,6 +111,8 @@ void RequestThread::processNotificationsResponse(const QByteArray& resp)
 
         if (!notifications.isEmpty())
         {
+            const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+
             int i = notifications.size() - 1;
 
             for (const simdjson::ondemand::object jsonObject : jsonNotifications)
@@ -118,6 +120,7 @@ void RequestThread::processNotificationsResponse(const QByteArray& resp)
                 NotificationInfo& notification = notifications[i];
 
                 notification.fromJsonObject(jsonObject);
+                notification.requestTimestamp = timestamp;
 
                 --i;
             }

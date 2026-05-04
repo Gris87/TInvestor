@@ -34,6 +34,7 @@ struct NotificationInfo
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 
+    qint64      requestTimestamp;
     qint64      timestamp;
     MessageType messageType;
     QString     text;

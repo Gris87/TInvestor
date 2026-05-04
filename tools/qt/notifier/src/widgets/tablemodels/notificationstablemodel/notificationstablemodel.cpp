@@ -1,5 +1,6 @@
 #include "src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.h"
 
+#include <QBrush>
 #include <QDebug>
 #include <algorithm>
 #include <execution>
@@ -10,6 +11,12 @@
 
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+const QColor      HIGHLIGHT_COLOR = QColor("#918A00"); // clazy:exclude=non-pod-global-static
+const QColor      NORMAL_COLOR    = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+
+constexpr qint64 MS_IN_SECOND    = 1000LL;
+constexpr qint64 ONE_MINUTE      = 60LL * MS_IN_SECOND;
+constexpr qint64 HIGHLIGHT_DELAY = 15LL * ONE_MINUTE;
 
 
 
@@ -78,9 +85,9 @@ static QVariant notificationsTextDisplayRole(const NotificationInfo& notificatio
 
 using DisplayRoleHandler = QVariant (*)(const NotificationInfo& notification, const QStringList& messageTypes);
 
-static const DisplayRoleHandler DISPLAY_ROLE_HANDLER[NOTIFICATIONS_COLUMN_COUNT]{notificationsTimeDisplayRole,
-                                                                                 notificationsTypeDisplayRole,
-                                                                                 notificationsTextDisplayRole};
+static const DisplayRoleHandler DISPLAY_ROLE_HANDLER[NOTIFICATIONS_COLUMN_COUNT]{
+    notificationsTimeDisplayRole, notificationsTypeDisplayRole, notificationsTextDisplayRole
+};
 
 QVariant NotificationsTableModel::data(const QModelIndex& index, int role) const
 {
@@ -90,6 +97,27 @@ QVariant NotificationsTableModel::data(const QModelIndex& index, int role) const
         const int column = index.column();
 
         return DISPLAY_ROLE_HANDLER[column](mEntries->at(row), mMessageTypes);
+    }
+
+    if (role == Qt::BackgroundRole)
+    {
+        const int               row          = index.row();
+        const NotificationInfo& notification = mEntries->at(row);
+
+        const qint64 delta = qMax(QDateTime::currentMSecsSinceEpoch() - notification.requestTimestamp, 0);
+
+        if (delta <= HIGHLIGHT_DELAY)
+        {
+            // clang-format off
+            const int r = HIGHLIGHT_COLOR.red()   + (NORMAL_COLOR.red()   - HIGHLIGHT_COLOR.red())   * delta / HIGHLIGHT_DELAY;
+            const int g = HIGHLIGHT_COLOR.green() + (NORMAL_COLOR.green() - HIGHLIGHT_COLOR.green()) * delta / HIGHLIGHT_DELAY;
+            const int b = HIGHLIGHT_COLOR.blue()  + (NORMAL_COLOR.blue()  - HIGHLIGHT_COLOR.blue())  * delta / HIGHLIGHT_DELAY;
+            // clang-format on
+
+            return QBrush(QColor(r, g, b));
+        }
+
+        return QVariant();
     }
 
     return QVariant();
@@ -148,10 +176,13 @@ void NotificationsTableModel::notificationsRead(const QList<NotificationInfo>& n
     endResetModel();
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void NotificationsTableModel::notificationsAdded(const QList<NotificationInfo>& notifications)
 {
-    for (const NotificationInfo& notification : notifications)
+    for (int i = notifications.size() - 1; i >= 0; --i)
     {
+        const NotificationInfo& notification = notifications.at(i);
+
         if (mFilter.isActive())
         {
             if (mSortColumn == NOTIFICATIONS_TIME_COLUMN)
@@ -206,6 +237,12 @@ void NotificationsTableModel::notificationsAdded(const QList<NotificationInfo>& 
     }
 }
 // NOLINTEND(readability-function-cognitive-complexity)
+
+void NotificationsTableModel::refreshBackground()
+{
+    beginResetModel();
+    endResetModel();
+}
 
 static void fillEntriesIndeciesForParallel(
     QThread* parentThread, int /*threadId*/, int* res, int /*size*/, int start, int end, void* /*additionalArgs*/
@@ -339,15 +376,19 @@ void NotificationsTableModel::reverseEntries()
 
 using AscSortHandler = bool (*)(const NotificationInfo& l, const NotificationInfo& r);
 
-static const AscSortHandler ASC_SORT_HANDLER[NOTIFICATIONS_COLUMN_COUNT]{nullptr, // Never used
-                                                                         notificationsTypeLess,
-                                                                         notificationsTextLess};
+static const AscSortHandler ASC_SORT_HANDLER[NOTIFICATIONS_COLUMN_COUNT]{
+    nullptr, // Never used
+    notificationsTypeLess,
+    notificationsTextLess
+};
 
 using DescSortHandler = bool (*)(const NotificationInfo& l, const NotificationInfo& r);
 
-static const DescSortHandler DESC_SORT_HANDLER[NOTIFICATIONS_COLUMN_COUNT]{nullptr, // Never used
-                                                                           notificationsTypeGreater,
-                                                                           notificationsTextGreater};
+static const DescSortHandler DESC_SORT_HANDLER[NOTIFICATIONS_COLUMN_COUNT]{
+    nullptr, // Never used
+    notificationsTypeGreater,
+    notificationsTextGreater
+};
 
 int NotificationsTableModel::indexOfSortedInsert(QList<NotificationInfo>* entries, const NotificationInfo& entry)
 {

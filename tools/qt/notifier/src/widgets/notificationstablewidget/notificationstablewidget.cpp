@@ -55,6 +55,11 @@ void NotificationsTableWidget::notificationsAdded(const QList<NotificationInfo>&
     mNotificationsTableModel->notificationsAdded(notifications);
 }
 
+void NotificationsTableWidget::refreshBackground()
+{
+    mNotificationsTableModel->refreshBackground();
+}
+
 void NotificationsTableWidget::saveWindowState(const QString& type)
 {
     // clang-format off

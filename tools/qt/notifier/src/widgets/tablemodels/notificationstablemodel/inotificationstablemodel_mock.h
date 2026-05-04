@@ -29,4 +29,5 @@ public:
     MOCK_METHOD(void, setFilter, (const Filter& filter), (override));
     MOCK_METHOD(void, notificationsRead, (const QList<NotificationInfo>& notifications), (override));
     MOCK_METHOD(void, notificationsAdded, (const QList<NotificationInfo>& notifications), (override));
+    MOCK_METHOD(void, refreshBackground, (), (override));
 };

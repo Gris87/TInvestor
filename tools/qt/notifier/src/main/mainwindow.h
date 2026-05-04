@@ -53,6 +53,7 @@ public:
     Ui::MainWindow* ui;
 
     QTimer requestTimer;
+    QTimer refreshBackgroundTimer;
 
 private:
     void applyConfig();
@@ -73,6 +74,7 @@ public slots:
     void trayIconShowClicked();
     void trayIconExitClicked();
     void requestTimerTicked();
+    void refreshBackgroundTimerTicked();
     void notificationsRead(const QList<NotificationInfo>& notifications);
     void notificationsAdded(const QList<NotificationInfo>& notifications);
 
