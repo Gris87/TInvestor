@@ -34,4 +34,22 @@ public:
 
     MOCK_METHOD(void, setServerPort, (int value), (override));
     MOCK_METHOD(int, getServerPort, (), (override));
+
+    MOCK_METHOD(void, setNotificationsEnabled, (bool value), (override));
+    MOCK_METHOD(bool, isNotificationsEnabled, (), (override));
+
+    MOCK_METHOD(void, setFilterSystem, (bool value), (override));
+    MOCK_METHOD(bool, isFilterSystem, (), (override));
+
+    MOCK_METHOD(void, setFilterPortfolio, (bool value), (override));
+    MOCK_METHOD(bool, isFilterPortfolio, (), (override));
+
+    MOCK_METHOD(void, setFilterHugeSell, (bool value), (override));
+    MOCK_METHOD(bool, isFilterHugeSell, (), (override));
+
+    MOCK_METHOD(void, setFilterDividends, (bool value), (override));
+    MOCK_METHOD(bool, isFilterDividends, (), (override));
+
+    MOCK_METHOD(void, setFilterPulse, (bool value), (override));
+    MOCK_METHOD(bool, isFilterPulse, (), (override));
 };

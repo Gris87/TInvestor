@@ -6,8 +6,14 @@
 
 const char* const SERVER_ADDRESS_DEFAULT = "localhost";
 
-constexpr bool AUTORUN_DEFAULT     = true;
-constexpr int  SERVER_PORT_DEFAULT = 8041;
+constexpr bool AUTORUN_DEFAULT               = true;
+constexpr int  SERVER_PORT_DEFAULT           = 8041;
+constexpr bool NOTIFICATIONS_ENABLED_DEFAULT = true;
+constexpr bool FILTER_SYSTEM_DEFAULT         = true;
+constexpr bool FILTER_PORTFOLIO_DEFAULT      = true;
+constexpr bool FILTER_HUGE_SELL_DEFAULT      = true;
+constexpr bool FILTER_DIVIDENDS_DEFAULT      = true;
+constexpr bool FILTER_PULSE_DEFAULT          = true;
 
 
 
@@ -16,7 +22,13 @@ Config::Config() :
     mRwMutex(new QReadWriteLock()),
     mAutorun(),
     mServerAddress(),
-    mServerPort()
+    mServerPort(),
+    mNotificationsEnabled(),
+    mFilterSystem(),
+    mFilterPortfolio(),
+    mFilterHugeSell(),
+    mFilterDividends(),
+    mFilterPulse()
 {
     qDebug() << "Create Config";
 }
@@ -37,9 +49,15 @@ void Config::assign(IConfig* another)
     const Config&     config = *dynamic_cast<Config*>(another);
     const QReadLocker lock2(config.mRwMutex);
 
-    mAutorun       = config.mAutorun;
-    mServerAddress = config.mServerAddress;
-    mServerPort    = config.mServerPort;
+    mAutorun              = config.mAutorun;
+    mServerAddress        = config.mServerAddress;
+    mServerPort           = config.mServerPort;
+    mNotificationsEnabled = config.mNotificationsEnabled;
+    mFilterSystem         = config.mFilterSystem;
+    mFilterPortfolio      = config.mFilterPortfolio;
+    mFilterHugeSell       = config.mFilterHugeSell;
+    mFilterDividends      = config.mFilterDividends;
+    mFilterPulse          = config.mFilterPulse;
 }
 
 void Config::makeDefault()
@@ -48,9 +66,15 @@ void Config::makeDefault()
 
     qInfo() << "Set Config to default";
 
-    mAutorun       = AUTORUN_DEFAULT;
-    mServerAddress = SERVER_ADDRESS_DEFAULT;
-    mServerPort    = SERVER_PORT_DEFAULT;
+    mAutorun              = AUTORUN_DEFAULT;
+    mServerAddress        = SERVER_ADDRESS_DEFAULT;
+    mServerPort           = SERVER_PORT_DEFAULT;
+    mNotificationsEnabled = NOTIFICATIONS_ENABLED_DEFAULT;
+    mFilterSystem         = FILTER_SYSTEM_DEFAULT;
+    mFilterPortfolio      = FILTER_PORTFOLIO_DEFAULT;
+    mFilterHugeSell       = FILTER_HUGE_SELL_DEFAULT;
+    mFilterDividends      = FILTER_DIVIDENDS_DEFAULT;
+    mFilterPulse          = FILTER_PULSE_DEFAULT;
 }
 
 void Config::save(ISettingsEditor* settingsEditor)
@@ -60,9 +84,15 @@ void Config::save(ISettingsEditor* settingsEditor)
     qInfo() << "Save Config";
 
     // clang-format off
-    settingsEditor->setValue("Config/Autorun",                               mAutorun);
-    settingsEditor->setValue("Config/ServerAddress",                              mServerAddress);
-    settingsEditor->setValue("Config/ServerPort",                     mServerPort);
+    settingsEditor->setValue("Config/Autorun",              mAutorun);
+    settingsEditor->setValue("Config/ServerAddress",        mServerAddress);
+    settingsEditor->setValue("Config/ServerPort",           mServerPort);
+    settingsEditor->setValue("Config/NotificationsEnabled", mNotificationsEnabled);
+    settingsEditor->setValue("Config/FilterSystem",         mFilterSystem);
+    settingsEditor->setValue("Config/FilterPortfolio",      mFilterPortfolio);
+    settingsEditor->setValue("Config/FilterHugeSell",       mFilterHugeSell);
+    settingsEditor->setValue("Config/FilterDividends",      mFilterDividends);
+    settingsEditor->setValue("Config/FilterPulse",          mFilterPulse);
     // clang-format on
 }
 
@@ -73,9 +103,15 @@ void Config::load(ISettingsEditor* settingsEditor)
     qInfo() << "Load Config";
 
     // clang-format off
-    mAutorun       = settingsEditor->value("Config/Autorun",       mAutorun).toBool();
-    mServerAddress = settingsEditor->value("Config/ServerAddress", mServerAddress).toString();
-    mServerPort    = settingsEditor->value("Config/ServerPort",    mServerPort).toInt();
+    mAutorun              = settingsEditor->value("Config/Autorun",              mAutorun).toBool();
+    mServerAddress        = settingsEditor->value("Config/ServerAddress",        mServerAddress).toString();
+    mServerPort           = settingsEditor->value("Config/ServerPort",           mServerPort).toInt();
+    mNotificationsEnabled = settingsEditor->value("Config/NotificationsEnabled", mNotificationsEnabled).toBool();
+    mFilterSystem         = settingsEditor->value("Config/FilterSystem",         mFilterSystem).toBool();
+    mFilterPortfolio      = settingsEditor->value("Config/FilterPortfolio",      mFilterPortfolio).toBool();
+    mFilterHugeSell       = settingsEditor->value("Config/FilterHugeSell",       mFilterHugeSell).toBool();
+    mFilterDividends      = settingsEditor->value("Config/FilterDividends",      mFilterDividends).toBool();
+    mFilterPulse          = settingsEditor->value("Config/FilterPulse",          mFilterPulse).toBool();
     // clang-format on
 }
 
@@ -119,4 +155,88 @@ int Config::getServerPort()
     const QReadLocker lock(mRwMutex);
 
     return mServerPort;
+}
+
+void Config::setNotificationsEnabled(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mNotificationsEnabled = value;
+}
+
+bool Config::isNotificationsEnabled()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mNotificationsEnabled;
+}
+
+void Config::setFilterSystem(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mFilterSystem = value;
+}
+
+bool Config::isFilterSystem()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mFilterSystem;
+}
+
+void Config::setFilterPortfolio(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mFilterPortfolio = value;
+}
+
+bool Config::isFilterPortfolio()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mFilterPortfolio;
+}
+
+void Config::setFilterHugeSell(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mFilterHugeSell = value;
+}
+
+bool Config::isFilterHugeSell()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mFilterHugeSell;
+}
+
+void Config::setFilterDividends(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mFilterDividends = value;
+}
+
+bool Config::isFilterDividends()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mFilterDividends;
+}
+
+void Config::setFilterPulse(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mFilterPulse = value;
+}
+
+bool Config::isFilterPulse()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mFilterPulse;
 }

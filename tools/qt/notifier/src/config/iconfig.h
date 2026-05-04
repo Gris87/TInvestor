@@ -29,4 +29,22 @@ public:
 
     virtual void setServerPort(int value) = 0;
     virtual int  getServerPort()          = 0;
+
+    virtual void setNotificationsEnabled(bool value) = 0;
+    virtual bool isNotificationsEnabled()            = 0;
+
+    virtual void setFilterSystem(bool value) = 0;
+    virtual bool isFilterSystem()            = 0;
+
+    virtual void setFilterPortfolio(bool value) = 0;
+    virtual bool isFilterPortfolio()            = 0;
+
+    virtual void setFilterHugeSell(bool value) = 0;
+    virtual bool isFilterHugeSell()            = 0;
+
+    virtual void setFilterDividends(bool value) = 0;
+    virtual bool isFilterDividends()            = 0;
+
+    virtual void setFilterPulse(bool value) = 0;
+    virtual bool isFilterPulse()            = 0;
 };
