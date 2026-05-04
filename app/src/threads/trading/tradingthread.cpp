@@ -728,7 +728,7 @@ Quotation TradingThread::calculateSellPrice(const tinkoff::GetOrderBookResponse&
         limitPrice               = quotationConvert(tinkoffOrderBook.bids(0).price());
         const double topBidPrice = quotationToDouble(limitPrice);
 
-        if (mode == ASAP_MODE_IMMEDIATELY_TRADE || topBidPrice > avgPrice())
+        if (mode == ASAP_MODE_IMMEDIATELY_TRADE || topBidPrice >= avgPrice() + DOUBLE_EPSILON)
         {
             price = topBidPrice;
         }

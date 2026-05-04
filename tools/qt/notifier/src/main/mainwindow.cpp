@@ -49,10 +49,12 @@ MainWindow::MainWindow(
     mTrayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(mTrayIcon,     SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(mTrayIcon,     SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
-    connect(mTrayIcon,     SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
-    connect(&requestTimer, SIGNAL(timeout()),                                    this, SLOT(requestTimerTicked()));
+    connect(mTrayIcon,      SIGNAL(activated(QSystemTrayIcon::ActivationReason)),       this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(mTrayIcon,      SIGNAL(trayIconShowClicked()),                              this, SLOT(trayIconShowClicked()));
+    connect(mTrayIcon,      SIGNAL(trayIconExitClicked()),                              this, SLOT(trayIconExitClicked()));
+    connect(&requestTimer,  SIGNAL(timeout()),                                          this, SLOT(requestTimerTicked()));
+    connect(mRequestThread, SIGNAL(notificationsRead(const QList<NotificationInfo>&)),  this, SLOT(notificationsRead(const QList<NotificationInfo>&)));
+    connect(mRequestThread, SIGNAL(notificationsAdded(const QList<NotificationInfo>&)), this, SLOT(notificationsAdded(const QList<NotificationInfo>&)));
     // clang-format on
 
     mTrayIcon->show();
@@ -118,6 +120,16 @@ void MainWindow::trayIconExitClicked()
 void MainWindow::requestTimerTicked()
 {
     mRequestThread->start();
+}
+
+void MainWindow::notificationsRead(const QList<NotificationInfo>& notifications)
+{
+    mNotificationsTableWidget->notificationsRead(notifications);
+}
+
+void MainWindow::notificationsAdded(const QList<NotificationInfo>& notifications)
+{
+    mNotificationsTableWidget->notificationsAdded(notifications);
 }
 
 void MainWindow::on_actionSettings_triggered()

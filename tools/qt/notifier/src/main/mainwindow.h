@@ -73,6 +73,8 @@ public slots:
     void trayIconShowClicked();
     void trayIconExitClicked();
     void requestTimerTicked();
+    void notificationsRead(const QList<NotificationInfo>& notifications);
+    void notificationsAdded(const QList<NotificationInfo>& notifications);
 
 private slots:
     void on_actionSettings_triggered();
