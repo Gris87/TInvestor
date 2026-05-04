@@ -37,6 +37,12 @@ private slots:
     void on_autorunCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_serverAddressLineEdit_textChanged(const QString& value);
     void on_serverPortSpinBox_valueChanged(int value);
+    void on_notificationsEnabledCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_filterSystemCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_filterPortfolioCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_filterHugeSellCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_filterDividendsCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_filterPulseCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_okButton_clicked();
     void on_cancelButton_clicked();
     void on_defaultButton_clicked();

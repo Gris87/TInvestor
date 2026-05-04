@@ -32,6 +32,12 @@ void SettingsDialog::updateUiFromConfig()
     ui->autorunCheckBox->setChecked(mConfig->isAutorun());
     ui->serverAddressLineEdit->setText(mConfig->getServerAddress());
     ui->serverPortSpinBox->setValue(mConfig->getServerPort());
+    ui->notificationsEnabledCheckBox->setChecked(mConfig->isNotificationsEnabled());
+    ui->filterSystemCheckBox->setChecked(mConfig->isFilterSystem());
+    ui->filterPortfolioCheckBox->setChecked(mConfig->isFilterPortfolio());
+    ui->filterHugeSellCheckBox->setChecked(mConfig->isFilterHugeSell());
+    ui->filterDividendsCheckBox->setChecked(mConfig->isFilterDividends());
+    ui->filterPulseCheckBox->setChecked(mConfig->isFilterPulse());
 }
 
 void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -49,6 +55,48 @@ void SettingsDialog::on_serverAddressLineEdit_textChanged(const QString& value)
 void SettingsDialog::on_serverPortSpinBox_valueChanged(int value)
 {
     mConfig->setServerPort(value);
+}
+
+void SettingsDialog::on_notificationsEnabledCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setNotificationsEnabled(checked);
+}
+
+void SettingsDialog::on_filterSystemCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setFilterSystem(checked);
+}
+
+void SettingsDialog::on_filterPortfolioCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setFilterPortfolio(checked);
+}
+
+void SettingsDialog::on_filterHugeSellCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setFilterHugeSell(checked);
+}
+
+void SettingsDialog::on_filterDividendsCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setFilterDividends(checked);
+}
+
+void SettingsDialog::on_filterPulseCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setFilterPulse(checked);
 }
 
 void SettingsDialog::on_okButton_clicked()
