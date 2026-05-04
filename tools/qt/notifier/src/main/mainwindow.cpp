@@ -172,6 +172,27 @@ void MainWindow::init()
 void MainWindow::applyConfig()
 {
     mAutorunEnabler->setEnabled(mConfig->isAutorun());
+
+    QList<MessageType> types;
+
+    prepareFilterTypes(types, mConfig->isFilterSystem(), MESSAGE_TYPE_SYSTEM);
+    prepareFilterTypes(types, mConfig->isFilterPortfolio(), MESSAGE_TYPE_PORTFOLIO);
+    prepareFilterTypes(types, mConfig->isFilterHugeSell(), MESSAGE_TYPE_HUGE_SELL);
+    prepareFilterTypes(types, mConfig->isFilterDividends(), MESSAGE_TYPE_DIVIDENDS);
+    prepareFilterTypes(types, mConfig->isFilterPulse(), MESSAGE_TYPE_PULSE);
+
+    Filter filter;
+    filter.setMessageTypeMask(types);
+
+    mNotificationsTableWidget->setFilter(filter);
+}
+
+void MainWindow::prepareFilterTypes(QList<MessageType>& types, bool enabled, MessageType messageType)
+{
+    if (enabled)
+    {
+        types.append(messageType);
+    }
 }
 
 void MainWindow::saveWindowState()

@@ -9,7 +9,7 @@ Filter::Filter() :
 
 void Filter::setMessageTypeMask(const QList<MessageType>& types)
 {
-    messageTypeMask = 0;
+    messageTypeMask = 1; // MESSAGE_TYPE_NONE always enabled
 
     for (MessageType messageType : types)
     {

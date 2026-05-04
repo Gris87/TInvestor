@@ -57,6 +57,7 @@ public:
 
 private:
     void applyConfig();
+    void prepareFilterTypes(QList<MessageType>& types, bool enabled, MessageType messageType);
     void saveWindowState();
     void loadWindowState();
 

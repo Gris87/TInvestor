@@ -18,42 +18,42 @@
 <context>
     <name>NotificationsTableModel</name>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="27"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="34"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="27"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="34"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="27"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="34"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
         <source>System</source>
         <translation>Система</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
         <source>Portfolio</source>
         <translation>Портфолио</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
         <source>Huge sell</source>
         <translation>Большая продажа</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
         <source>Dividends</source>
         <translation>Дивиденды</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="30"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
         <source>Pulse</source>
         <translation>Пульс</translation>
     </message>
@@ -84,32 +84,67 @@
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="14"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="20"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="173"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="263"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="50"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="56"/>
         <source>Addess:</source>
         <translation>Адрес:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="64"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="70"/>
         <source>Port:</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="130"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="105"/>
+        <source>Show notifications when minimazed</source>
+        <translation>Показывать уведомления когда свёрнуто</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="115"/>
+        <source>Filter:</source>
+        <translation>Фильтр:</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="136"/>
+        <source>System</source>
+        <translation>Система</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="146"/>
+        <source>Portfolio</source>
+        <translation>Портфолио</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="156"/>
+        <source>Huge sell</source>
+        <translation>Большая продажа</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="166"/>
+        <source>Dividends</source>
+        <translation>Дивиденды</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="176"/>
+        <source>Pulse</source>
+        <translation>Пульс</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="220"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="153"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="243"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>

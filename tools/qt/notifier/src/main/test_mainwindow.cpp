@@ -66,6 +66,12 @@ protected:
         EXPECT_CALL(*configMock, load(settingsEditorMock));
         EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
         EXPECT_CALL(*autorunEnablerMock, setEnabled(true));
+        EXPECT_CALL(*configMock, isFilterSystem()).WillOnce(Return(true));
+        EXPECT_CALL(*configMock, isFilterPortfolio()).WillOnce(Return(true));
+        EXPECT_CALL(*configMock, isFilterHugeSell()).WillOnce(Return(true));
+        EXPECT_CALL(*configMock, isFilterDividends()).WillOnce(Return(true));
+        EXPECT_CALL(*configMock, isFilterPulse()).WillOnce(Return(true));
+        EXPECT_CALL(*notificationsTableWidgetMock, setFilter(Filter()));
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
@@ -222,6 +228,12 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
     EXPECT_CALL(*autorunEnablerMock, setEnabled(false));
+    EXPECT_CALL(*configMock, isFilterSystem()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPortfolio()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterHugeSell()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterDividends()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPulse()).WillOnce(Return(true));
+    EXPECT_CALL(*notificationsTableWidgetMock, setFilter(Filter()));
 
     mainWindow->ui->actionSettings->trigger();
 }
