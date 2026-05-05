@@ -111,6 +111,8 @@ void MainWindow::trayIconShowClicked()
     raise();
     activateWindow();
 
+    mTrayIcon->resetCounter();
+
     qDebug() << "Main window displayed";
 }
 
@@ -137,6 +139,11 @@ void MainWindow::notificationsRead(const QList<NotificationInfo>& notifications)
 void MainWindow::notificationsAdded(const QList<NotificationInfo>& notifications)
 {
     mNotificationsTableWidget->notificationsAdded(notifications);
+
+    if (!isVisible())
+    {
+        mTrayIcon->notificationsAdded(notifications);
+    }
 }
 
 void MainWindow::on_actionSettings_triggered()
@@ -185,6 +192,7 @@ void MainWindow::applyConfig()
     filter.setMessageTypeMask(types);
 
     mNotificationsTableWidget->setFilter(filter);
+    mTrayIcon->setFilter(filter);
 }
 
 void MainWindow::prepareFilterTypes(QList<MessageType>& types, bool enabled, MessageType messageType)
