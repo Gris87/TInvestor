@@ -25,6 +25,7 @@ MainWindow::MainWindow(
     INotificationsTableWidgetFactory* notificationsTableWidgetFactory,
     INotificationsTableModelFactory*  notificationsTableModelFactory,
     ITrayIconFactory*                 trayIconFactory,
+    INotifier*                        notifier,
     IRequestThread*                   requestThread,
     ISettingsEditor*                  settingsEditor,
     IAutorunEnabler*                  autorunEnabler,
@@ -35,6 +36,7 @@ MainWindow::MainWindow(
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mSettingsDialogFactory(settingsDialogFactory),
+    mNotifier(notifier),
     mRequestThread(requestThread),
     mSettingsEditor(settingsEditor),
     mAutorunEnabler(autorunEnabler)
@@ -179,6 +181,7 @@ void MainWindow::init()
 void MainWindow::applyConfig()
 {
     mAutorunEnabler->setEnabled(mConfig->isAutorun());
+    mNotifier->setEnabled(mConfig->isNotificationsEnabled());
 
     QList<MessageType> types;
 
@@ -193,6 +196,7 @@ void MainWindow::applyConfig()
 
     mNotificationsTableWidget->setFilter(filter);
     mTrayIcon->setFilter(filter);
+    mNotifier->setFilter(filter);
 }
 
 void MainWindow::prepareFilterTypes(QList<MessageType>& types, bool enabled, MessageType messageType)

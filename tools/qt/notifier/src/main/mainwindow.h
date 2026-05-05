@@ -10,6 +10,7 @@
 #include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
 #include "src/threads/request/irequestthread.h"
 #include "src/utils/autorunenabler/iautorunenabler.h"
+#include "src/utils/notifier/inotifier.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/notificationstablewidget/inotificationstablewidgetfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
@@ -37,6 +38,7 @@ public:
         INotificationsTableWidgetFactory* notificationsTableWidgetFactory,
         INotificationsTableModelFactory*  notificationsTableModelFactory,
         ITrayIconFactory*                 trayIconFactory,
+        INotifier*                        notifier,
         IRequestThread*                   requestThread,
         ISettingsEditor*                  settingsEditor,
         IAutorunEnabler*                  autorunEnabler,
@@ -66,6 +68,7 @@ private:
     ISettingsDialogFactory*    mSettingsDialogFactory;
     INotificationsTableWidget* mNotificationsTableWidget;
     ITrayIcon*                 mTrayIcon;
+    INotifier*                 mNotifier;
     IRequestThread*            mRequestThread;
     ISettingsEditor*           mSettingsEditor;
     IAutorunEnabler*           mAutorunEnabler;

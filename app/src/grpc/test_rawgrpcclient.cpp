@@ -289,7 +289,7 @@ TEST_F(Test_RawGrpcClient, Test_findBonds)
     ASSERT_EQ(resp->instruments(index).dshort_min().units(),               0);
     ASSERT_EQ(resp->instruments(index).dshort_min().nano(),                0);
     ASSERT_EQ(resp->instruments(index).short_enabled_flag(),               false);
-    ASSERT_EQ(resp->instruments(index).name(),                             "Gazprom");
+    ASSERT_EQ(resp->instruments(index).name(),                             "Gazprom SA 7.28800 16/08/3");
     ASSERT_EQ(resp->instruments(index).exchange(),                         "unknown");
     ASSERT_EQ(resp->instruments(index).coupon_quantity_per_year(),         2);
     ASSERT_EQ(resp->instruments(index).maturity_date().seconds(),          2133993600);

@@ -9,6 +9,7 @@
 #include "src/dialogs/settingsdialog/isettingsdialogfactory_mock.h"
 #include "src/threads/request/irequestthread_mock.h"
 #include "src/utils/autorunenabler/iautorunenabler_mock.h"
+#include "src/utils/notifier/inotifier_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/notificationstablewidget/inotificationstablewidget_mock.h"
 #include "src/widgets/notificationstablewidget/inotificationstablewidgetfactory_mock.h"
@@ -50,6 +51,7 @@ protected:
         notificationsTableWidgetFactoryMock = new StrictMock<NotificationsTableWidgetFactoryMock>();
         notificationsTableModelFactoryMock  = new StrictMock<NotificationsTableModelFactoryMock>();
         trayIconFactoryMock                 = new StrictMock<TrayIconFactoryMock>();
+        notifierMock                        = new StrictMock<NotifierMock>();
         requestThreadMock                   = new StrictMock<RequestThreadMock>();
         settingsEditorMock                  = new StrictMock<SettingsEditorMock>();
         autorunEnablerMock                  = new StrictMock<AutorunEnablerMock>();
@@ -66,12 +68,16 @@ protected:
         EXPECT_CALL(*configMock, load(settingsEditorMock));
         EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
         EXPECT_CALL(*autorunEnablerMock, setEnabled(true));
+        EXPECT_CALL(*configMock, isNotificationsEnabled()).WillOnce(Return(true));
+        EXPECT_CALL(*notifierMock, setEnabled(true));
         EXPECT_CALL(*configMock, isFilterSystem()).WillOnce(Return(true));
         EXPECT_CALL(*configMock, isFilterPortfolio()).WillOnce(Return(true));
         EXPECT_CALL(*configMock, isFilterHugeSell()).WillOnce(Return(true));
         EXPECT_CALL(*configMock, isFilterDividends()).WillOnce(Return(true));
         EXPECT_CALL(*configMock, isFilterPulse()).WillOnce(Return(true));
         EXPECT_CALL(*notificationsTableWidgetMock, setFilter(Filter()));
+        EXPECT_CALL(*trayIconMock, setFilter(Filter()));
+        EXPECT_CALL(*notifierMock, setFilter(Filter()));
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
@@ -87,6 +93,7 @@ protected:
             notificationsTableWidgetFactoryMock,
             notificationsTableModelFactoryMock,
             trayIconFactoryMock,
+            notifierMock,
             requestThreadMock,
             settingsEditorMock,
             autorunEnablerMock
@@ -113,6 +120,7 @@ protected:
         delete notificationsTableWidgetFactoryMock;
         delete notificationsTableModelFactoryMock;
         delete trayIconFactoryMock;
+        delete notifierMock;
         delete requestThreadMock;
         delete settingsEditorMock;
         delete autorunEnablerMock;
@@ -130,6 +138,7 @@ protected:
     StrictMock<NotificationsTableWidgetFactoryMock>* notificationsTableWidgetFactoryMock;
     StrictMock<NotificationsTableModelFactoryMock>*  notificationsTableModelFactoryMock;
     StrictMock<TrayIconFactoryMock>*                 trayIconFactoryMock;
+    StrictMock<NotifierMock>*                        notifierMock;
     StrictMock<RequestThreadMock>*                   requestThreadMock;
     StrictMock<SettingsEditorMock>*                  settingsEditorMock;
     StrictMock<AutorunEnablerMock>*                  autorunEnablerMock;
@@ -163,6 +172,10 @@ TEST_F(Test_MainWindow, Test_closeEvent)
 
 TEST_F(Test_MainWindow, Test_trayIconClicked)
 {
+    const InSequence seq;
+
+    EXPECT_CALL(*trayIconMock, resetCounter());
+
     mainWindow->trayIconClicked(DOUBLE_CLICK_REASON);
 
     ASSERT_EQ(mainWindow->isVisible(), true);
@@ -170,6 +183,10 @@ TEST_F(Test_MainWindow, Test_trayIconClicked)
 
 TEST_F(Test_MainWindow, Test_trayIconShowClicked)
 {
+    const InSequence seq;
+
+    EXPECT_CALL(*trayIconMock, resetCounter());
+
     mainWindow->trayIconShowClicked();
 
     ASSERT_EQ(mainWindow->isVisible(), true);
@@ -228,12 +245,16 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
     EXPECT_CALL(*autorunEnablerMock, setEnabled(false));
+    EXPECT_CALL(*configMock, isNotificationsEnabled()).WillOnce(Return(false));
+    EXPECT_CALL(*notifierMock, setEnabled(false));
     EXPECT_CALL(*configMock, isFilterSystem()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isFilterPortfolio()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isFilterHugeSell()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isFilterDividends()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isFilterPulse()).WillOnce(Return(true));
     EXPECT_CALL(*notificationsTableWidgetMock, setFilter(Filter()));
+    EXPECT_CALL(*trayIconMock, setFilter(Filter()));
+    EXPECT_CALL(*notifierMock, setFilter(Filter()));
 
     mainWindow->ui->actionSettings->trigger();
 }

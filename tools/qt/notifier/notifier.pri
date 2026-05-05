@@ -23,6 +23,7 @@ SOURCES += \
     src/utils/fs/file/filefactory.cpp \
     src/utils/http/httpclient.cpp \
     src/utils/logger/logger.cpp \
+    src/utils/notifier/notifier.cpp \
     src/utils/optimizer/optimizer.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
@@ -63,6 +64,8 @@ HEADERS += \
     src/utils/http/httpclient.h \
     src/utils/http/ihttpclient.h \
     src/utils/logger/logger.h \
+    src/utils/notifier/inotifier.h \
+    src/utils/notifier/notifier.h \
     src/utils/optimizer/ioptimizer.h \
     src/utils/optimizer/optimizer.h \
     src/utils/settingseditor/isettingseditor.h \
