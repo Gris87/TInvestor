@@ -2,6 +2,12 @@
 
 #include <gtest/gtest.h>
 
+#include "src/widgets/notificationwidget/inotificationwidgetfactory_mock.h"
+
+
+
+using ::testing::StrictMock;
+
 
 
 class Test_Notifier : public ::testing::Test
@@ -9,15 +15,19 @@ class Test_Notifier : public ::testing::Test
 protected:
     void SetUp() override
     {
-        notifier = new Notifier();
+        notificationWidgetFactoryMock = new StrictMock<NotificationWidgetFactoryMock>();
+
+        notifier = new Notifier(notificationWidgetFactoryMock);
     }
 
     void TearDown() override
     {
         delete notifier;
+        delete notificationWidgetFactoryMock;
     }
 
-    Notifier* notifier;
+    Notifier*                                  notifier;
+    StrictMock<NotificationWidgetFactoryMock>* notificationWidgetFactoryMock;
 };
 
 

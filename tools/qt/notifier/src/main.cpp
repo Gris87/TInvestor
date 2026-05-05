@@ -23,6 +23,7 @@
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
 #include "src/widgets/notificationstablewidget/notificationstablewidgetfactory.h"
+#include "src/widgets/notificationwidget/notificationwidgetfactory.h"
 #include "src/widgets/tablemodels/notificationstablemodel/notificationstablemodelfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
@@ -129,6 +130,7 @@ static int runApplication(QApplication* app)
 
     SettingsDialogFactory settingsDialogFactory;
 
+    NotificationWidgetFactory       notificationWidgetFactory;
     NotificationsTableWidgetFactory notificationsTableWidgetFactory;
 
     NotificationsTableModelFactory notificationsTableModelFactory;
@@ -148,7 +150,7 @@ static int runApplication(QApplication* app)
 
     HttpClient httpClient;
     Optimizer  optimizer;
-    Notifier   notifier;
+    Notifier   notifier(&notificationWidgetFactory);
 
     RequestThread requestThread(&config, &notificationsDatabase, &httpClient, &optimizer);
 

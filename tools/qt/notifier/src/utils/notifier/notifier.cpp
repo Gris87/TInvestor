@@ -4,8 +4,9 @@
 
 
 
-Notifier::Notifier() :
+Notifier::Notifier(INotificationWidgetFactory* notificationWidgetFactory) :
     INotifier(),
+    mNotificationWidgetFactory(notificationWidgetFactory),
     mEnabled(),
     mFilter()
 {

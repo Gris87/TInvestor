@@ -4,12 +4,14 @@
 
 #include "src/utils/notifier/inotifier.h"
 
+#include "src/widgets/notificationwidget/inotificationwidgetfactory.h"
+
 
 
 class Notifier : public INotifier
 {
 public:
-    Notifier();
+    Notifier(INotificationWidgetFactory* notificationWidgetFactory);
     ~Notifier() override;
 
     Notifier(const Notifier& another)            = delete;
@@ -20,6 +22,7 @@ public:
     void notificationsAdded(const QList<NotificationInfo>& notifications) override;
 
 private:
-    bool   mEnabled;
-    Filter mFilter;
+    INotificationWidgetFactory* mNotificationWidgetFactory;
+    bool                        mEnabled;
+    Filter                      mFilter;
 };
