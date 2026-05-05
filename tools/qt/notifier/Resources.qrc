@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>assets/images/icon.png</file>
+        <file>assets/images/icon_hires.png</file>
         <file>assets/images/settings.png</file>
         <file>assets/translations/language_en.qm</file>
         <file>assets/translations/language_ru.qm</file>

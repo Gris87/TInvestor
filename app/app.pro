@@ -51,6 +51,7 @@ win32* {
 
 linux* {
     copy_dist_files.commands =  $(COPY_FILE) "$$shell_path($${PWD}/dist/linux/icon.png)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_dist_files.commands =  $(COPY_FILE) "$$shell_path($${PWD}/dist/linux/notifier_icon.png)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/linux/post_install.sh)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_dist_files.commands += rm -rf "$$shell_path($${OUT_PWD}/build/tools)" &&
 }

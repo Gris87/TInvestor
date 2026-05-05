@@ -84,7 +84,7 @@ void TrayIcon::notificationsAdded(const QList<NotificationInfo>& notifications)
         painter.drawEllipse(x, y, w, h);
 
         painter.setPen(BADGE_FONT_COLOR);
-        painter.setFont(QFont("Arial", 48, QFont::Bold));
+        painter.setFont(QFont("Arial", 12, QFont::Bold));
         painter.drawText(x, y, w, h, Qt::AlignCenter, QString::number(qMin(mCounter, MAX_DISPLAY_COUNTER)));
         painter.end();
 
