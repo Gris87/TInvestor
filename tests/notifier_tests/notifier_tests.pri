@@ -24,6 +24,8 @@ SOURCES += \
     src/utils/style/test_darkpalette.cpp \
     src/widgets/notificationstablewidget/test_notificationstablewidget.cpp \
     src/widgets/notificationstablewidget/test_notificationstablewidgetfactory.cpp \
+    src/widgets/notificationwidget/test_notificationwidget.cpp \
+    src/widgets/notificationwidget/test_notificationwidgetfactory.cpp \
     src/widgets/tablemodels/notificationstablemodel/test_notificationstablemodel.cpp \
     src/widgets/tablemodels/notificationstablemodel/test_notificationstablemodelfactory.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
@@ -47,6 +49,8 @@ HEADERS += \
     src/utils/settingseditor/isettingseditor_mock.h \
     src/widgets/notificationstablewidget/inotificationstablewidget_mock.h \
     src/widgets/notificationstablewidget/inotificationstablewidgetfactory_mock.h \
+    src/widgets/notificationwidget/inotificationwidget_mock.h \
+    src/widgets/notificationwidget/inotificationwidgetfactory_mock.h \
     src/widgets/tablemodels/notificationstablemodel/inotificationstablemodel_mock.h \
     src/widgets/tablemodels/notificationstablemodel/inotificationstablemodelfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \
