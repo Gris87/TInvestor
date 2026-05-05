@@ -15,5 +15,5 @@ public:
     NotificationWidgetFactory(const NotificationWidgetFactory& another)            = delete;
     NotificationWidgetFactory& operator=(const NotificationWidgetFactory& another) = delete;
 
-    INotificationWidget* newInstance(QWidget* parent) const override;
+    INotificationWidget* newInstance(const QString& text, QWidget* parent) const override;
 };

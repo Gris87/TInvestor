@@ -10,7 +10,7 @@ class Test_NotificationWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
-        notificationWidget = new NotificationWidget();
+        notificationWidget = new NotificationWidget("");
     }
 
     void TearDown() override

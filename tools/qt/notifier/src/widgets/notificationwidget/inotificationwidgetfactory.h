@@ -15,5 +15,5 @@ public:
     INotificationWidgetFactory(const INotificationWidgetFactory& another)            = delete;
     INotificationWidgetFactory& operator=(const INotificationWidgetFactory& another) = delete;
 
-    virtual INotificationWidget* newInstance(QWidget* parent) const = 0;
+    virtual INotificationWidget* newInstance(const QString& text, QWidget* parent) const = 0;
 };

@@ -17,7 +17,7 @@ NotificationWidgetFactory::~NotificationWidgetFactory()
     qDebug() << "Destroy NotificationWidgetFactory";
 }
 
-INotificationWidget* NotificationWidgetFactory::newInstance(QWidget* parent) const
+INotificationWidget* NotificationWidgetFactory::newInstance(const QString& text, QWidget* parent) const
 {
-    return new NotificationWidget(parent);
+    return new NotificationWidget(text, parent);
 }

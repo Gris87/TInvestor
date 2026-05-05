@@ -20,5 +20,5 @@ public:
     NotificationWidgetFactoryMock(const NotificationWidgetFactoryMock& another)            = delete;
     NotificationWidgetFactoryMock& operator=(const NotificationWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(INotificationWidget*, newInstance, (QWidget * parent), (const, override));
+    MOCK_METHOD(INotificationWidget*, newInstance, (const QString& text, QWidget* parent), (const, override));
 };
