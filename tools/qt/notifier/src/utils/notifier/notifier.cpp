@@ -14,8 +14,8 @@ constexpr int NOTIFICATION_GAP            = 8;
 
 
 
-Notifier::Notifier(INotificationWidgetFactory* notificationWidgetFactory) :
-    INotifier(),
+Notifier::Notifier(INotificationWidgetFactory* notificationWidgetFactory, QObject* parent) :
+    INotifier(parent),
     mNotificationWidgetFactory(notificationWidgetFactory),
     mEnabled(),
     mFilter()
@@ -73,8 +73,9 @@ void Notifier::notificationsAdded(const QList<NotificationInfo>& notifications)
 
             INotificationWidget* notificationWidget = mNotificationWidgetFactory->newInstance(notification.text, nullptr);
 
-            notificationWidget->setGeometry(posX, posY, NOTIFICATION_WIDTH, NOTIFICATION_HEIGHT);
+            connect(notificationWidget, SIGNAL(notificationClicked()), this, SLOT(notificationClicked()));
 
+            notificationWidget->setGeometry(posX, posY, NOTIFICATION_WIDTH, NOTIFICATION_HEIGHT);
             notificationWidget->show();
         }
 
@@ -84,9 +85,15 @@ void Notifier::notificationsAdded(const QList<NotificationInfo>& notifications)
 
             INotificationWidget* notificationWidget = mNotificationWidgetFactory->newInstance("...", nullptr);
 
-            notificationWidget->setGeometry(posX, posY, NOTIFICATION_WIDTH, NOTIFICATION_TINY_HEIGHT);
+            connect(notificationWidget, SIGNAL(notificationClicked()), this, SLOT(widgetClicked()));
 
+            notificationWidget->setGeometry(posX, posY, NOTIFICATION_WIDTH, NOTIFICATION_TINY_HEIGHT);
             notificationWidget->show();
         }
     }
+}
+
+void Notifier::widgetClicked()
+{
+    emit notificationClicked();
 }

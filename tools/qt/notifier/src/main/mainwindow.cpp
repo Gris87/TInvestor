@@ -57,6 +57,7 @@ MainWindow::MainWindow(
     connect(mTrayIcon,               SIGNAL(trayIconExitClicked()),                              this, SLOT(trayIconExitClicked()));
     connect(&requestTimer,           SIGNAL(timeout()),                                          this, SLOT(requestTimerTicked()));
     connect(&refreshBackgroundTimer, SIGNAL(timeout()),                                          this, SLOT(refreshBackgroundTimerTicked()));
+    connect(mNotifier,               SIGNAL(notificationClicked()),                              this, SLOT(trayIconShowClicked()));
     connect(mRequestThread,          SIGNAL(notificationsRead(const QList<NotificationInfo>&)),  this, SLOT(notificationsRead(const QList<NotificationInfo>&)));
     connect(mRequestThread,          SIGNAL(notificationsAdded(const QList<NotificationInfo>&)), this, SLOT(notificationsAdded(const QList<NotificationInfo>&)));
     // clang-format on
@@ -145,6 +146,7 @@ void MainWindow::notificationsAdded(const QList<NotificationInfo>& notifications
     if (!isVisible())
     {
         mTrayIcon->notificationsAdded(notifications);
+        mNotifier->notificationsAdded(notifications);
     }
 }
 

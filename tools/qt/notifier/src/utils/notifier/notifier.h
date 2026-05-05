@@ -11,7 +11,7 @@
 class Notifier : public INotifier
 {
 public:
-    Notifier(INotificationWidgetFactory* notificationWidgetFactory);
+    explicit Notifier(INotificationWidgetFactory* notificationWidgetFactory, QObject* parent = nullptr);
     ~Notifier() override;
 
     Notifier(const Notifier& another)            = delete;
@@ -25,4 +25,7 @@ private:
     INotificationWidgetFactory* mNotificationWidgetFactory;
     bool                        mEnabled;
     Filter                      mFilter;
+
+private slots:
+    void widgetClicked();
 };

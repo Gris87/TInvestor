@@ -10,9 +10,11 @@
 
 class NotifierMock : public INotifier
 {
+    Q_OBJECT
+
 public:
-    NotifierMock() :
-        INotifier()
+    explicit NotifierMock(QObject* parent = nullptr) :
+        INotifier(parent)
     {
     }
     ~NotifierMock() override = default;
