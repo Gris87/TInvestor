@@ -6,11 +6,11 @@
 
 
 constexpr qint64 MS_IN_SECOND   = 1000LL;
-constexpr qint64 DEATH_INTERVAL = 5 * MS_IN_SECOND; // 5 seconds
+constexpr qint64 DEATH_INTERVAL = 15 * MS_IN_SECOND; // 15 seconds
 
 
 
-NotificationWidget::NotificationWidget(const QString& /*text*/, QWidget* parent) :
+NotificationWidget::NotificationWidget(const QString& text, QWidget* parent) :
     INotificationWidget(parent),
     ui(new Ui::NotificationWidget),
     mDeathTimer()
@@ -18,8 +18,9 @@ NotificationWidget::NotificationWidget(const QString& /*text*/, QWidget* parent)
     qDebug() << "Create NotificationWidget";
 
     ui->setupUi(this);
+    ui->textLabel->setText(text);
 
-    setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint);
+    setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
 
     mOpacityAnimation.setTargetObject(this);
     mOpacityAnimation.setPropertyName("windowOpacity");

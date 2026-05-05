@@ -16,6 +16,14 @@
     </message>
 </context>
 <context>
+    <name>NotificationWidget</name>
+    <message>
+        <location filename="../../src/widgets/notificationwidget/notificationwidget.ui" line="44"/>
+        <source>TInvestor</source>
+        <translation>Ты ж инвестор</translation>
+    </message>
+</context>
+<context>
     <name>NotificationsTableModel</name>
     <message>
         <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="34"/>
@@ -61,22 +69,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="95"/>
+        <location filename="../../src/main.cpp" line="97"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="95"/>
+        <location filename="../../src/main.cpp" line="97"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="121"/>
+        <location filename="../../src/main.cpp" line="123"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="121"/>
+        <location filename="../../src/main.cpp" line="123"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -157,17 +165,17 @@
 <context>
     <name>TrayIcon</name>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="16"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="26"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="18"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="28"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="24"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="34"/>
         <source>TInvestor notifier</source>
         <translation>Уведомления Ты ж инвестор</translation>
     </message>
