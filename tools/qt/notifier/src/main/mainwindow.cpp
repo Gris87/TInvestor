@@ -115,6 +115,7 @@ void MainWindow::trayIconShowClicked()
     activateWindow();
 
     mTrayIcon->resetCounter();
+    mNotifier->resetNotificationWidgets();
 
     qDebug() << "Main window displayed";
 }

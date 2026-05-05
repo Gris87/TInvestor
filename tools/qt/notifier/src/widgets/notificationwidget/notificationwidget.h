@@ -25,6 +25,8 @@ public:
     NotificationWidget(const NotificationWidget& another)            = delete;
     NotificationWidget& operator=(const NotificationWidget& another) = delete;
 
+    void mouseReleaseEvent(QMouseEvent* event) override;
+
     Ui::NotificationWidget* ui;
 
 private:

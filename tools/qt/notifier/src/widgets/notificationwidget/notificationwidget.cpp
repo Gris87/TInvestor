@@ -2,6 +2,7 @@
 #include "ui_notificationwidget.h"
 
 #include <QDebug>
+#include <QMouseEvent>
 
 
 
@@ -47,6 +48,17 @@ NotificationWidget::~NotificationWidget()
 
     delete ui;
 }
+
+void NotificationWidget::mouseReleaseEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        emit notificationClicked();
+    }
+
+    INotificationWidget::mouseReleaseEvent(event);
+}
+
 void NotificationWidget::deathTimerTicked()
 {
     deleteLater();

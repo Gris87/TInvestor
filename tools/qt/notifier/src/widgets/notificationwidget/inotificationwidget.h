@@ -19,4 +19,7 @@ public:
 
     INotificationWidget(const INotificationWidget& another)            = delete;
     INotificationWidget& operator=(const INotificationWidget& another) = delete;
+
+signals:
+    void notificationClicked();
 };

@@ -175,6 +175,7 @@ TEST_F(Test_MainWindow, Test_trayIconClicked)
     const InSequence seq;
 
     EXPECT_CALL(*trayIconMock, resetCounter());
+    EXPECT_CALL(*notifierMock, resetNotificationWidgets());
 
     mainWindow->trayIconClicked(DOUBLE_CLICK_REASON);
 
@@ -186,6 +187,7 @@ TEST_F(Test_MainWindow, Test_trayIconShowClicked)
     const InSequence seq;
 
     EXPECT_CALL(*trayIconMock, resetCounter());
+    EXPECT_CALL(*notifierMock, resetNotificationWidgets());
 
     mainWindow->trayIconShowClicked();
 

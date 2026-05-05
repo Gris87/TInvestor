@@ -18,7 +18,8 @@ Notifier::Notifier(INotificationWidgetFactory* notificationWidgetFactory, QObjec
     INotifier(parent),
     mNotificationWidgetFactory(notificationWidgetFactory),
     mEnabled(),
-    mFilter()
+    mFilter(),
+    mNotificationWidgets()
 {
     qDebug() << "Create Notifier";
 }
@@ -36,6 +37,16 @@ void Notifier::setEnabled(bool enabled)
 void Notifier::setFilter(const Filter& filter)
 {
     mFilter = filter;
+}
+
+void Notifier::resetNotificationWidgets()
+{
+    for (INotificationWidget* notificationWidget : mNotificationWidgets)
+    {
+        notificationWidget->deleteLater();
+    }
+
+    mNotificationWidgets.clear();
 }
 
 void Notifier::notificationsAdded(const QList<NotificationInfo>& notifications)
@@ -64,36 +75,47 @@ void Notifier::notificationsAdded(const QList<NotificationInfo>& notifications)
             }
         }
 
-        const int posX = bottomRightPos.x() - (NOTIFICATION_WIDTH + NOTIFICATION_GAP);
-        int       posY = bottomRightPos.y() - ((NOTIFICATION_HEIGHT + NOTIFICATION_GAP) * filtered.size()) - NOTIFICATION_GAP;
+        const int posX = bottomRightPos.x() - NOTIFICATION_WIDTH - NOTIFICATION_GAP;
+        int       posY = bottomRightPos.y() -
+                   ((NOTIFICATION_HEIGHT + NOTIFICATION_GAP) * filtered.size()) -
+                   (tooMuchNotifications ? NOTIFICATION_TINY_HEIGHT + NOTIFICATION_GAP : 0) -
+                   NOTIFICATION_GAP;
 
         for (const NotificationInfo& notification : filtered)
         {
             posY += NOTIFICATION_GAP;
 
-            INotificationWidget* notificationWidget = mNotificationWidgetFactory->newInstance(notification.text, nullptr);
+            createNotificationWidget(posX, posY, NOTIFICATION_WIDTH, NOTIFICATION_HEIGHT, notification.text);
 
-            connect(notificationWidget, SIGNAL(notificationClicked()), this, SLOT(notificationClicked()));
-
-            notificationWidget->setGeometry(posX, posY, NOTIFICATION_WIDTH, NOTIFICATION_HEIGHT);
-            notificationWidget->show();
+            posY += NOTIFICATION_HEIGHT;
         }
 
         if (tooMuchNotifications)
         {
             posY += NOTIFICATION_GAP;
 
-            INotificationWidget* notificationWidget = mNotificationWidgetFactory->newInstance("...", nullptr);
-
-            connect(notificationWidget, SIGNAL(notificationClicked()), this, SLOT(widgetClicked()));
-
-            notificationWidget->setGeometry(posX, posY, NOTIFICATION_WIDTH, NOTIFICATION_TINY_HEIGHT);
-            notificationWidget->show();
+            createNotificationWidget(posX, posY, NOTIFICATION_WIDTH, NOTIFICATION_TINY_HEIGHT, "...");
         }
     }
 }
 
-void Notifier::widgetClicked()
+void Notifier::createNotificationWidget(int posX, int posY, int width, int height, const QString& text)
 {
-    emit notificationClicked();
+    INotificationWidget* notificationWidget = mNotificationWidgetFactory->newInstance(text, nullptr);
+
+    // clang-format off
+    connect(notificationWidget, SIGNAL(notificationClicked()), this, SIGNAL(notificationClicked()));
+    connect(notificationWidget, SIGNAL(destroyed(QObject *)),  this, SLOT(notificationWidgetDestroyed(QObject *)));
+    // clang-format on
+
+    notificationWidget->setFixedSize(width, height);
+    notificationWidget->setGeometry(posX, posY, width, height);
+    notificationWidget->show();
+
+    mNotificationWidgets.append(notificationWidget);
+}
+
+void Notifier::notificationWidgetDestroyed(QObject* obj)
+{
+    mNotificationWidgets.removeOne(obj);
 }
