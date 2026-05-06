@@ -10,7 +10,10 @@
 
 
 
-namespace Ui { class NotificationWidget; }
+namespace Ui
+{
+class NotificationWidget;
+}
 
 
 

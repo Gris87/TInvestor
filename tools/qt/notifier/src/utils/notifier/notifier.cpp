@@ -76,10 +76,8 @@ void Notifier::notificationsAdded(const QList<NotificationInfo>& notifications)
         }
 
         const int posX = bottomRightPos.x() - NOTIFICATION_WIDTH - NOTIFICATION_GAP;
-        int       posY = bottomRightPos.y() -
-                   ((NOTIFICATION_HEIGHT + NOTIFICATION_GAP) * filtered.size()) -
-                   (tooMuchNotifications ? NOTIFICATION_TINY_HEIGHT + NOTIFICATION_GAP : 0) -
-                   NOTIFICATION_GAP;
+        int       posY = bottomRightPos.y() - ((NOTIFICATION_HEIGHT + NOTIFICATION_GAP) * filtered.size()) -
+                   (tooMuchNotifications ? NOTIFICATION_TINY_HEIGHT + NOTIFICATION_GAP : 0) - NOTIFICATION_GAP;
 
         for (const NotificationInfo& notification : filtered)
         {
