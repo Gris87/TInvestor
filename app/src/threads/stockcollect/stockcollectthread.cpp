@@ -476,7 +476,10 @@ bool StockCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
     {
         const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
 
-        if (tinkoffStock.currency() == "rub" && tinkoffStock.api_trade_available_flag())
+        if (tinkoffStock.currency() == "rub" &&
+            tinkoffStock.api_trade_available_flag() &&
+            tinkoffStock.buy_available_flag() &&
+            tinkoffStock.sell_available_flag())
         {
             StockMeta stockMeta;
 

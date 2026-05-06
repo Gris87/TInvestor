@@ -150,6 +150,8 @@ TEST_F(Test_StockCollectThread, Test_run)
     stockShare->set_currency("rub");
     stockShare->set_country_of_risk("RU");
     stockShare->set_api_trade_available_flag(true);
+    stockShare->set_buy_available_flag(true);
+    stockShare->set_sell_available_flag(true);
     stockShare->set_uid("aaaaa");
     stockShare->set_ticker("WAGA");
     stockShare->set_name("Wagadaka too");
@@ -167,6 +169,8 @@ TEST_F(Test_StockCollectThread, Test_run)
     share->set_currency("rub");
     share->set_country_of_risk("RU");
     share->set_api_trade_available_flag(true);
+    share->set_buy_available_flag(true);
+    share->set_sell_available_flag(true);
     share->set_uid("bbbbb");
     share->set_ticker("ZARA");
     share->set_name("Zaraza");
@@ -181,6 +185,8 @@ TEST_F(Test_StockCollectThread, Test_run)
     bond->set_currency("rub");
     bond->set_country_of_risk("RU");
     bond->set_api_trade_available_flag(true);
+    bond->set_buy_available_flag(true);
+    bond->set_sell_available_flag(true);
     bond->set_uid("ccccc");
     bond->set_ticker("LOTO");
     bond->set_name("Sport loto");
@@ -195,6 +201,8 @@ TEST_F(Test_StockCollectThread, Test_run)
     currency->set_currency("rub");
     currency->set_country_of_risk("RU");
     currency->set_api_trade_available_flag(true);
+    currency->set_buy_available_flag(true);
+    currency->set_sell_available_flag(true);
     currency->set_uid("ddddd");
     currency->set_ticker("USDRUB");
     currency->set_name("USD to RUB");
@@ -209,6 +217,8 @@ TEST_F(Test_StockCollectThread, Test_run)
     etf->set_currency("rub");
     etf->set_country_of_risk("RU");
     etf->set_api_trade_available_flag(true);
+    etf->set_buy_available_flag(true);
+    etf->set_sell_available_flag(true);
     etf->set_uid("eeeee");
     etf->set_ticker("Dogs");
     etf->set_name("Save dogs");
@@ -223,6 +233,8 @@ TEST_F(Test_StockCollectThread, Test_run)
     future->set_currency("rub");
     future->set_country_of_risk("RU");
     future->set_api_trade_available_flag(true);
+    future->set_buy_available_flag(true);
+    future->set_sell_available_flag(true);
     future->set_uid("fffff");
     future->set_ticker("GOLD");
     future->set_name("Man, I am rich");

@@ -15,14 +15,12 @@ from localization import *
 #logging.basicConfig(level=logging.DEBUG)
 
 
-HHRU_UID   = "cf9ed7ef-784d-4c2c-aabe-362891fcd80c"
 GTRK_UID   = "9e69afb6-4561-4fc2-b63b-b181e3f9ecdc"
 JETL_UID   = "34f51a49-919b-4eb1-9ed0-59c26f4cdc1e"
 TMON_UID   = "498ec3ff-ef27-4729-9703-a5aac48d5789"
 IMOEXF_UID = "5bcff194-f10d-4314-b9ee-56b7fdb344fd"
 
 IGNORE_STOCKS = [
-    HHRU_UID,
     GTRK_UID,
     JETL_UID
 ]
@@ -85,7 +83,7 @@ async def _get_stocks(client):
     tinkoff_shares = await client.instruments.shares()
 
     for instrument in tinkoff_shares.instruments:
-        if instrument.currency == "rub" and instrument.api_trade_available_flag and not instrument.for_qual_investor_flag and instrument.uid not in IGNORE_STOCKS:
+        if instrument.currency == "rub" and instrument.api_trade_available_flag and instrument.buy_available_flag and instrument.sell_available_flag and not instrument.for_qual_investor_flag and instrument.uid not in IGNORE_STOCKS:
             res.append(instrument.uid)
 
     res.extend(EXTEND_STOCKS)

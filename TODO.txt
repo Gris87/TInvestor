@@ -1,4 +1,3 @@
-Adapt for new stocks
 Create script for terminating orders
 Create script for selling TMON if over bought
 Perform own calculation of yield for daily yield instead of just calculate difference between total money
