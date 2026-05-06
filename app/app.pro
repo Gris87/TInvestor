@@ -12,7 +12,6 @@ RESOURCES += Resources.qrc
 
 
 
-# TODO: Uncomment
 #CONFIG (debug, debug|release) {
 #    DEFINES += USE_SANDBOX
 #}

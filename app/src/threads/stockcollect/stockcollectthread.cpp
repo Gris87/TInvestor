@@ -50,7 +50,6 @@ enum CsvField : qint8
 
 StockCollectThread::StockCollectThread(
     IConfig*             config,
-    IUserStorage*        userStorage,
     IStocksStorage*      stocksStorage,
     IInstrumentsStorage* instrumentsStorage,
     ILogosStorage*       logosStorage,
@@ -66,7 +65,6 @@ StockCollectThread::StockCollectThread(
 ) :
     IStockCollectThread(parent),
     mConfig(config),
-    mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
@@ -623,7 +621,6 @@ static int getCandlesFromZipFile(
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 static void getCandlesWithHttp(
     QThread*          parentThread,
-    IUserStorage*     userStorage,
     IStocksStorage*   stocksStorage,
     IFileFactory*     fileFactory,
     IQZipFactory*     qZipFactory,
@@ -668,11 +665,7 @@ static void getCandlesWithHttp(
 
             url.setQuery(query.query());
 
-            // TODO: No need
             IHttpClient::Headers headers;
-            userStorage->readLock();
-            headers["Authorization"] = QString("Bearer %1").arg(userStorage->getToken());
-            userStorage->readUnlock();
 
             while (true)
             {
@@ -716,7 +709,6 @@ struct GetCandlesInfo
     explicit GetCandlesInfo(
         StockCollectThread* _thread,
         IConfig*            _config,
-        IUserStorage*       _userStorage,
         IStocksStorage*     _stocksStorage,
         IFileFactory*       _fileFactory,
         IQZipFactory*       _qZipFactory,
@@ -728,7 +720,6 @@ struct GetCandlesInfo
     ) :
         thread(_thread),
         config(_config),
-        userStorage(_userStorage),
         stocksStorage(_stocksStorage),
         fileFactory(_fileFactory),
         qZipFactory(_qZipFactory),
@@ -743,7 +734,6 @@ struct GetCandlesInfo
 
     StockCollectThread* thread;
     IConfig*            config;
-    IUserStorage*       userStorage;
     IStocksStorage*     stocksStorage;
     IFileFactory*       fileFactory;
     IQZipFactory*       qZipFactory;
@@ -761,7 +751,6 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, Stock** stocks, i
     GetCandlesInfo*     getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
     StockCollectThread* thread           = getCandlesInfo->thread;
     IConfig*            config           = getCandlesInfo->config;
-    IUserStorage*       userStorage      = getCandlesInfo->userStorage;
     IStocksStorage*     stocksStorage    = getCandlesInfo->stocksStorage;
     IFileFactory*       fileFactory      = getCandlesInfo->fileFactory;
     IQZipFactory*       qZipFactory      = getCandlesInfo->qZipFactory;
@@ -786,7 +775,6 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, Stock** stocks, i
         {
             getCandlesWithHttp(
                 parentThread,
-                userStorage,
                 stocksStorage,
                 fileFactory,
                 qZipFactory,
@@ -826,7 +814,6 @@ void StockCollectThread::obtainStocksData()
     GetCandlesInfo getCandlesInfo(
         this,
         mConfig,
-        mUserStorage,
         mStocksStorage,
         mFileFactory,
         mQZipFactory,

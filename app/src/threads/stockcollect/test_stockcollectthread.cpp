@@ -11,7 +11,6 @@
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
-#include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/fs/dir/idir_mock.h"
 #include "src/utils/fs/dir/idirfactory_mock.h"
 #include "src/utils/fs/file/ifile_mock.h"
@@ -46,7 +45,6 @@ protected:
         appDir = qApp->applicationDirPath();
 
         configMock             = new StrictMock<ConfigMock>();
-        userStorageMock        = new StrictMock<UserStorageMock>();
         stocksStorageMock      = new StrictMock<StocksStorageMock>();
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         logosStorageMock       = new StrictMock<LogosStorageMock>();
@@ -61,7 +59,6 @@ protected:
 
         thread = new StockCollectThread(
             configMock,
-            userStorageMock,
             stocksStorageMock,
             instrumentsStorageMock,
             logosStorageMock,
@@ -80,7 +77,6 @@ protected:
     {
         delete thread;
         delete configMock;
-        delete userStorageMock;
         delete stocksStorageMock;
         delete instrumentsStorageMock;
         delete logosStorageMock;
@@ -96,7 +92,6 @@ protected:
 
     StockCollectThread*                 thread;
     StrictMock<ConfigMock>*             configMock;
-    StrictMock<UserStorageMock>*        userStorageMock;
     StrictMock<StocksStorageMock>*      stocksStorageMock;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
     StrictMock<LogosStorageMock>*       logosStorageMock;
@@ -282,9 +277,6 @@ TEST_F(Test_StockCollectThread, Test_run)
 
     QString token = "SomeToken";
 
-    IHttpClient::Headers headers;
-    headers["Authorization"] = "Bearer SomeToken";
-
     QuaZip zip;
 
     const std::shared_ptr<tinkoff::GetCandlesResponse> getCandlesResponse(new tinkoff::GetCandlesResponse());
@@ -385,16 +377,15 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/cache/stocks/aaaaa_2024.zip").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(zipFileMock1)));
     EXPECT_CALL(*zipFileMock1, exists()).WillOnce(Return(false));
-    EXPECT_CALL(*userStorageMock, readLock());
-    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
-    EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *httpClientMock, get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), headers)
+        *httpClientMock,
+        get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), IHttpClient::Headers())
     )
         .WillOnce(Return(tooManyRequestsHttpResult));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(
-        *httpClientMock, get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), headers)
+        *httpClientMock,
+        get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
     EXPECT_CALL(*zipFileMock1, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
@@ -419,11 +410,9 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/cache/stocks/aaaaa_2025.zip").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(zipFileMock2)));
     EXPECT_CALL(*zipFileMock2, exists()).WillOnce(Return(false));
-    EXPECT_CALL(*userStorageMock, readLock());
-    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
-    EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *httpClientMock, get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2025"), headers)
+        *httpClientMock,
+        get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2025"), IHttpClient::Headers())
     )
         .WillOnce(Return(internalServerErrorHttpResult));
     EXPECT_CALL(*zipFileMock2, getDevice()).WillOnce(Return(&zipBuffer));
@@ -432,11 +421,9 @@ TEST_F(Test_StockCollectThread, Test_run)
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/cache/stocks/aaaaa_2026.zip").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(zipFileMock3)));
-    EXPECT_CALL(*userStorageMock, readLock());
-    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
-    EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *httpClientMock, get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2026"), headers)
+        *httpClientMock,
+        get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2026"), IHttpClient::Headers())
     )
         .WillOnce(Return(tooManyRequestsHttpResult));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));

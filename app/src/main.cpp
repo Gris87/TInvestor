@@ -495,7 +495,6 @@ static int runApplication(QApplication* app)
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
     StockCollectThread stockCollectThread(
         &config,
-        &userStorage,
         &stocksStorage,
         &instrumentsStorage,
         &logosStorage,
