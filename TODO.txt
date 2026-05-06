@@ -1,5 +1,7 @@
 Create script for terminating orders
 Create script for selling TMON if over bought
+Fix clang-tidy
+Improve module-coverage for notifier
 Perform own calculation of yield for daily yield instead of just calculate difference between total money
 Make bi-dir script to work for fast with TMON trading (without canceling orders)
 High priority for bi-dir tradings
