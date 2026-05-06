@@ -8,6 +8,7 @@ from loguru import logger
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
+from tinkoff.invest.schemas import OrderIdType
 
 
 #logging.basicConfig(level=logging.DEBUG)
@@ -63,6 +64,15 @@ async def _validate_account(client, account_id):
 
 async def _cancel_orders(client, account):
     logger.info(f"Cancel orders")
+
+    tinkoff_orders = await client.orders.get_orders(account_id=account)
+
+    for order in tinkoff_orders.orders:
+        await client.orders.cancel_order(
+            account_id=account,
+            order_id=order.order_id,
+            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+        )
 
 
 def main():
