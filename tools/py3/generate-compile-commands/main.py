@@ -3,8 +3,11 @@ import json
 import os
 import sys
 
+from loguru import logger
 from pathlib import Path
 
+
+files_pattern = ["*.h", "*.cpp", "*.cc"]
 
 cwd = os.getcwd()
 
@@ -13,21 +16,19 @@ def generate(args):
     commands = _generate_compile_commands(args)
     qtc_commands = _load_qtc_compile_commands(args)
 
-    _compare_compile_commands(commands, qtc_commands)
+    _compare_compile_commands(args, commands, qtc_commands)
 
     return _store_compile_commands(args, commands)
 
 
-# TODO: Adapt for notifier
 def _generate_compile_commands(args):
     res = []
 
     directory = str(Path(args.directory).absolute()).replace("\\", "/")
 
     paths = []
-    paths.extend(Path(".").rglob("*.h"))
-    paths.extend(Path(".").rglob("*.cpp"))
-    paths.extend(Path(".").rglob("*.cc"))
+    for pattern in files_pattern:
+        paths.extend(Path(".").rglob(pattern))
 
     for path in paths:
         file_path = str(path.absolute()).replace("\\", "/")
@@ -40,32 +41,37 @@ def _generate_compile_commands(args):
         if need_to_skip:
             continue
 
-        if "_mock.h" not in file_path and "/test_" not in file_path and "/tests/main.cpp" not in file_path:
+        app_path, app_name, app_tests_name = _get_app_variables(file_path)
+
+        if "_mock.h" not in file_path and "/test_" not in file_path and "_tests/main.cpp" not in file_path:
             res.append({
-                "arguments": _get_arguments_for_file(args, file_path, False),
+                "arguments": _get_arguments_for_file(args, file_path, app_path, app_name, app_tests_name, False),
                 "directory": directory,
                 "file": file_path,
             })
 
-        if ("/app/src/" in file_path and "/app/src/main.cpp" not in file_path) or "/tests/main.cpp" in file_path:
+        if ("/app/src/" in file_path and "/app/src/main.cpp" not in file_path) or ("/tools/qt/notifier/src/" in file_path and "/tools/qt/notifier/src/main.cpp" not in file_path) or "_tests/main.cpp" in file_path:
             res.append({
-                "arguments": _get_arguments_for_file(args, file_path, True),
+                "arguments": _get_arguments_for_file(args, file_path, app_path, app_name, app_tests_name, True),
                 "directory": directory,
                 "file": file_path,
             })
 
     for path in Path(".").rglob("*.ui"):
+        file_path = str(path.absolute()).replace("\\", "/")
+        app_path, app_name, app_tests_name = _get_app_variables(file_path)
+
         header_file = path.name.replace(".ui", ".h")
-        app_file_path = f"{cwd}/build/Desktop-Debug/app/build/gen/TInvestor/ui/ui_{header_file}".replace("\\", "/")
-        test_file_path = f"{cwd}/build/Desktop-Debug/tests/build/gen/tests/ui/ui_{header_file}".replace("\\", "/")
+        app_file_path = f"{cwd}/build/Desktop-Debug/{app_path}/build/gen/{app_name}/ui/ui_{header_file}".replace("\\", "/")
+        test_file_path = f"{cwd}/build/Desktop-Debug/tests/{app_tests_name}/build/gen/{app_tests_name}/ui/ui_{header_file}".replace("\\", "/")
 
         res.append({
-            "arguments": _get_arguments_for_file(args, app_file_path, False),
+            "arguments": _get_arguments_for_file(args, app_file_path, app_path, app_name, app_tests_name, False),
             "directory": directory,
             "file": app_file_path,
         })
         res.append({
-            "arguments": _get_arguments_for_file(args, test_file_path, True),
+            "arguments": _get_arguments_for_file(args, test_file_path, app_path, app_name, app_tests_name, True),
             "directory": directory,
             "file": test_file_path,
         })
@@ -74,12 +80,22 @@ def _generate_compile_commands(args):
     gtest_all = f"{args.google_test_path}/googletest/src/gtest-all.cc".replace("\\", "/")
 
     res.append({
-        "arguments": _get_arguments_for_file(args, gmock_all, True),
+        "arguments": _get_arguments_for_file(args, gmock_all, "app", "TInvestor", "app_tests", True),
         "directory": directory,
         "file": gmock_all,
     })
     res.append({
-        "arguments": _get_arguments_for_file(args, gtest_all, True),
+        "arguments": _get_arguments_for_file(args, gmock_all, "tools/qt/notifier", "Notifier", "notifier_tests", True),
+        "directory": directory,
+        "file": gmock_all,
+    })
+    res.append({
+        "arguments": _get_arguments_for_file(args, gtest_all, "app", "TInvestor", "app_tests", True),
+        "directory": directory,
+        "file": gtest_all,
+    })
+    res.append({
+        "arguments": _get_arguments_for_file(args, gtest_all, "tools/qt/notifier", "Notifier", "notifier_tests", True),
         "directory": directory,
         "file": gtest_all,
     })
@@ -89,14 +105,15 @@ def _generate_compile_commands(args):
     return res
 
 
-def _get_arguments_for_file(args, file_path, duplicate_for_tests):
-    return _get_arguments_for_file_windows(args, file_path, duplicate_for_tests) if args.operation_system == "Windows" else _get_arguments_for_file_linux(args, file_path, duplicate_for_tests)
+def _get_arguments_for_file(args, file_path, app_path, app_name, app_tests_name, duplicate_for_tests):
+    return _get_arguments_for_file_windows(args, file_path, app_path, app_name, app_tests_name, duplicate_for_tests) if args.operation_system == "Windows" else _get_arguments_for_file_linux(args, file_path, app_path, app_name, app_tests_name, duplicate_for_tests)
 
 
-def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
+def _get_arguments_for_file_windows(args, file_path, app_path, app_name, app_tests_name, duplicate_for_tests):
     res = []
 
-    app_or_test = "/app/src/" in file_path or "/tests/main.cpp" in file_path or "/app/build/gen/" in file_path or "/tests/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
+    app_or_test = "/app/src/" in file_path or "/tools/qt/notifier/src/" in file_path or "_tests/main.cpp" in file_path or "/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
+    app_path = app_path.replace("/", "\\")
 
     res.append("clang")
     res.append("-Wno-documentation-unknown-command")
@@ -164,18 +181,24 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-DWIN64")
 
     if app_or_test and "/libs/" not in file_path:
-        res.append("-DUSE_SANDBOX")
-
         if duplicate_for_tests:
+            if app_name == "TInvestor":
+                res.append("-DUSE_SANDBOX")
+
             res.append("-DTESTING_MODE")
 
     res.append("-DQT_QML_DEBUG")
 
     if app_or_test and "/libs/" not in file_path:
-        res.append("-DQT_CHARTS_LIB")
-        res.append("-DQT_OPENGLWIDGETS_LIB")
+        if app_name == "TInvestor":
+            res.append("-DQT_CHARTS_LIB")
+            res.append("-DQT_OPENGLWIDGETS_LIB")
+
         res.append("-DQT_WIDGETS_LIB")
-        res.append("-DQT_OPENGL_LIB")
+
+        if app_name == "TInvestor":
+            res.append("-DQT_OPENGL_LIB")
+
         res.append("-DQT_GUI_LIB")
         res.append("-DQT_NETWORK_LIB")
         res.append("-DQT_SQL_LIB")
@@ -214,9 +237,9 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
             res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
 
         if duplicate_for_tests:
-            res.append(f"-I{cwd}\\tests")
+            res.append(f"-I{cwd}\\tests\\{app_tests_name}")
 
-        res.append(f"-I{cwd}\\app")
+        res.append(f"-I{cwd}\\{app_path}")
 
         if duplicate_for_tests:
             res.append(f"-I{args.google_test_path}\\googletest")
@@ -234,10 +257,15 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{cwd}\\libs\\verticallabel")
         res.append(f"-I{cwd}\\libs\\waitingspinner")
         res.append(f"-I{args.qt_path}\\include")
-        res.append(f"-I{args.qt_path}\\include\\QtCharts")
-        res.append(f"-I{args.qt_path}\\include\\QtOpenGLWidgets")
+
+        if app_name == "TInvestor":
+            res.append(f"-I{args.qt_path}\\include\\QtCharts")
+            res.append(f"-I{args.qt_path}\\include\\QtOpenGLWidgets")
+
         res.append(f"-I{args.qt_path}\\include\\QtWidgets")
-        res.append(f"-I{args.qt_path}\\include\\QtOpenGL")
+
+        if app_name == "TInvestor":
+            res.append(f"-I{args.qt_path}\\include\\QtOpenGL")
 
         if duplicate_for_tests:
             res.append(f"-I{args.qt_path}\\include\\QtGui\\6.11.0")
@@ -254,13 +282,13 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}\\include\\QtCore")
 
         if duplicate_for_tests:
-            res.append(f"-I{cwd}\\build\\Desktop-Debug\\tests\\build\\gen\\tests\\moc")
-            res.append(f"-I{cwd}\\build\\Desktop-Debug\\tests\\build\\gen\\tests\\ui")
-            res.append(f"-I{cwd}\\build\\Desktop-Debug\\tests")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\tests\\{app_tests_name}\\build\\gen\\{app_tests_name}\\moc")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\tests\\{app_tests_name}\\build\\gen\\{app_tests_name}\\ui")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\tests\\{app_tests_name}")
         else:
-            res.append(f"-I{cwd}\\build\\Desktop-Debug\\app\\build\\gen\\TInvestor\\moc")
-            res.append(f"-I{cwd}\\build\\Desktop-Debug\\app\\build\\gen\\TInvestor\\ui")
-            res.append(f"-I{cwd}\\build\\Desktop-Debug\\app")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\{app_path}\\build\\gen\\{app_name}\\moc")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\{app_path}\\build\\gen\\{app_name}\\ui")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\{app_path}")
 
     if "/libs/investapi/" in file_path:
         res.append(f"-I{cwd}\\libs\\investapi")
@@ -340,8 +368,6 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("/clang:-isystem")
     res.append(f"/clang:{args.msvc_tools_path}\\include")
     res.append("/clang:-isystem")
-    res.append(f"/clang:{args.msvc_tools_path}\\ATLMFC\\include")
-    res.append("/clang:-isystem")
     res.append(f"/clang:{args.msvc_auxiliary_path}\\VS\\include")
     res.append("/clang:-isystem")
     res.append(f"/clang:{args.windows_kits_path}\\ucrt")
@@ -372,10 +398,10 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     return res
 
 
-def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
+def _get_arguments_for_file_linux(args, file_path, app_path, app_name, app_tests_name, duplicate_for_tests):
     res = []
 
-    app_or_test = "/app/src/" in file_path or "/tests/main.cpp" in file_path or "/app/build/gen/" in file_path or "/tests/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
+    app_or_test = "/app/src/" in file_path or "/tools/qt/notifier/src/" in file_path or "_tests/main.cpp" in file_path or "/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
 
     res.append("clang")
     res.append("-Wno-documentation-unknown-command")
@@ -430,18 +456,24 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
     res.append("--target=x86_64-pc-linux-gnu")
 
     if app_or_test and "/libs/" not in file_path:
-        res.append("-DUSE_SANDBOX")
-
         if duplicate_for_tests:
+            if app_name == "TInvestor":
+                res.append("-DUSE_SANDBOX")
+
             res.append("-DTESTING_MODE")
 
     res.append("-DQT_QML_DEBUG")
 
     if app_or_test and "/libs/" not in file_path:
-        res.append("-DQT_CHARTS_LIB")
-        res.append("-DQT_OPENGLWIDGETS_LIB")
+        if app_name == "TInvestor":
+            res.append("-DQT_CHARTS_LIB")
+            res.append("-DQT_OPENGLWIDGETS_LIB")
+
         res.append("-DQT_WIDGETS_LIB")
-        res.append("-DQT_OPENGL_LIB")
+
+        if app_name == "TInvestor":
+            res.append("-DQT_OPENGL_LIB")
+
         res.append("-DQT_GUI_LIB")
         res.append("-DQT_NETWORK_LIB")
         res.append("-DQT_SQL_LIB")
@@ -476,9 +508,9 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
             res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
 
         if duplicate_for_tests:
-            res.append(f"-I{cwd}/tests")
+            res.append(f"-I{cwd}/tests/{app_tests_name}")
 
-        res.append(f"-I{cwd}/app")
+        res.append(f"-I{cwd}/{app_path}")
 
         if duplicate_for_tests:
             res.append(f"-I{args.google_test_path}/googletest")
@@ -496,10 +528,15 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{cwd}/libs/verticallabel")
         res.append(f"-I{cwd}/libs/waitingspinner")
         res.append(f"-I{args.qt_path}/include")
-        res.append(f"-I{args.qt_path}/include/QtCharts")
-        res.append(f"-I{args.qt_path}/include/QtOpenGLWidgets")
+
+        if app_name == "TInvestor":
+            res.append(f"-I{args.qt_path}/include/QtCharts")
+            res.append(f"-I{args.qt_path}/include/QtOpenGLWidgets")
+
         res.append(f"-I{args.qt_path}/include/QtWidgets")
-        res.append(f"-I{args.qt_path}/include/QtOpenGL")
+
+        if app_name == "TInvestor":
+            res.append(f"-I{args.qt_path}/include/QtOpenGL")
 
         if duplicate_for_tests:
             res.append(f"-I{args.qt_path}/include/QtGui/6.11.0")
@@ -516,13 +553,13 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}/include/QtCore")
 
         if duplicate_for_tests:
-            res.append(f"-I{cwd}/build/Desktop-Debug/tests/build/gen/tests/moc")
-            res.append(f"-I{cwd}/build/Desktop-Debug/tests/build/gen/tests/ui")
-            res.append(f"-I{cwd}/build/Desktop-Debug/tests")
+            res.append(f"-I{cwd}/build/Desktop-Debug/tests/{app_tests_name}/build/gen/{app_tests_name}/moc")
+            res.append(f"-I{cwd}/build/Desktop-Debug/tests/{app_tests_name}/build/gen/{app_tests_name}/ui")
+            res.append(f"-I{cwd}/build/Desktop-Debug/tests/{app_tests_name}")
         else:
-            res.append(f"-I{cwd}/build/Desktop-Debug/app/build/gen/TInvestor/moc")
-            res.append(f"-I{cwd}/build/Desktop-Debug/app/build/gen/TInvestor/ui")
-            res.append(f"-I{cwd}/build/Desktop-Debug/app")
+            res.append(f"-I{cwd}/build/Desktop-Debug/{app_path}/build/gen/{app_name}/moc")
+            res.append(f"-I{cwd}/build/Desktop-Debug/{app_path}/build/gen/{app_name}/ui")
+            res.append(f"-I{cwd}/build/Desktop-Debug/{app_path}")
 
     if "/libs/investapi/" in file_path:
         res.append(f"-I{cwd}/libs/investapi")
@@ -651,17 +688,13 @@ def _load_qtc_compile_commands(args):
     return res
 
 
-def _compare_compile_commands(commands, qtc_commands):
+def _compare_compile_commands(args, commands, qtc_commands):
     if qtc_commands is not None:
         commands_text = json.dumps(commands, indent=4)
         qtc_commands_text = json.dumps(qtc_commands, indent=4)
 
         if commands_text != qtc_commands_text:
-            print("Generated:")
-            print(commands_text)
-            print("")
-            print("But expecting for:")
-            print(qtc_commands_text)
+            logger.warning(f"{args.qtc_commands} and {args.output} are different")
 
 
 def _store_compile_commands(args, commands):
@@ -671,6 +704,19 @@ def _store_compile_commands(args, commands):
         f.write(json.dumps(commands, indent=4))
 
     return True
+
+
+def _get_app_variables(file_path):
+    app_path = "app"
+    app_name = "TInvestor"
+    app_tests_name = "app_tests"
+
+    if "/notifier/" in file_path or "/notifier_tests/" in file_path:
+        app_path = "tools/qt/notifier"
+        app_name = "Notifier"
+        app_tests_name = "notifier_tests"
+
+    return app_path, app_name, app_tests_name
 
 
 def main():

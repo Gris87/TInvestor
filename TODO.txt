@@ -1,7 +1,8 @@
-Create script for selling TMON if over bought
-Fix clang-tidy
-Improve module-coverage for notifier
 Perform own calculation of yield for daily yield instead of just calculate difference between total money
+Improve coverage
+Improve module-coverage for notifier
+Create release
+
 High priority for bi-dir tradings
 Find best configs for different commission
 Change config defaults
