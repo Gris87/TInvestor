@@ -1,4 +1,3 @@
-Notify about crontab failures
 Create script for selling TMON if over bought
 Fix clang-tidy
 Improve module-coverage for notifier

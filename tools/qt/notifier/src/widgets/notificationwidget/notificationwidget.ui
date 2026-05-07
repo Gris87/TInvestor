@@ -40,6 +40,12 @@
      </property>
      <item>
       <widget class="QLabel" name="titleLabel">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>TInvestor</string>
        </property>

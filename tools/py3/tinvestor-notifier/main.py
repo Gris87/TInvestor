@@ -39,6 +39,7 @@ def notifier(args):
 
     _check_operations_json(args)
     _check_core_file(args)
+    _check_cron_failures(args)
     _check_app_running(args)
 
     if args.extra_huge_sell:
@@ -62,13 +63,19 @@ def _check_operations_json(args):
 
 
 def _check_core_file(args):
-    core_file = Path(args.path_to_operations).parent.parent.parent.parent / "core"
+    core_file = Path("core")
 
     if core_file.exists():
         store_message(args, "system", msg_core_file_found)
 
         now = round(time.time() * MS_IN_SECOND)
         os.rename(core_file, f"{core_file}_{now}")
+
+
+def _check_cron_failures(args):
+    for cron_failure_path in sorted(Path(".").glob("cron_failure_*.txt")):
+        store_message(args, "system", msg_cron_failure_found.format(cron_failure_path=cron_failure_path))
+        cron_failure_path.unlink()
 
 
 def _check_app_running(args):
