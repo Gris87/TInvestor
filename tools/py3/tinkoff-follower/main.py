@@ -144,7 +144,7 @@ async def _handle_portfolios(dest_client, dest_account, src_portfolio, dest_port
 
 def _build_instrument_to_cost_map(portfolio):
     res = {}
-    total_cost = Decimal("0.10")
+    total_cost = Decimal("0.00")
 
     for position in portfolio.positions:
         if position.instrument_uid == RUBLE_UID:

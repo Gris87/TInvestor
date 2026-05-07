@@ -102,7 +102,7 @@ def _get_portfolio(client, account_id):
 
 
 def _describe_portfolio(positions):
-    total_cost = Decimal("0.10")
+    total_cost = Decimal("0.00")
     currency_info = ""
     stocks_info = ""
 

@@ -3,14 +3,22 @@ import argparse
 import logging
 import sys
 
+from decimal import Decimal
 from loguru import logger
 
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
+from tinkoff.invest.utils import quotation_to_decimal
 
 
 #logging.basicConfig(level=logging.DEBUG)
+
+
+RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
+TMON_UID  = "498ec3ff-ef27-4729-9703-a5aac48d5789"
+
+FREE_MM_MONEY = 5000.0
 
 
 async def annihilate_mm(args):
@@ -30,6 +38,15 @@ async def annihilate_mm(args):
 
         if not await _validate_account(client, args.account):
             return
+
+        money, tmon_cost = await _get_money_and_tmon_cost(client, args.account)
+
+        if money >= Decimal(-FREE_MM_MONEY) or tmon_cost <= Decimal(0):
+            logger.info("There is nothing to do")
+
+            return
+
+        await _sell_tmon(client, args.account, -Decimal(FREE_MM_MONEY) - money)
 
 
 def _get_token(token, token_file):
@@ -57,6 +74,36 @@ async def _validate_account(client, account_id):
         return False
 
     return True
+
+
+async def _get_money_and_tmon_cost(client, account_id):
+    money = Decimal(0)
+    tmon_cost = Decimal(0)
+
+    while True:
+        portfolio = await client.operations.get_portfolio(account_id=account_id)
+
+        good = True
+
+        for position in portfolio.positions:
+            if position.instrument_uid==RUBLE_UID:
+                money = quotation_to_decimal(position.quantity)
+            elif position.instrument_uid==TMON_UID:
+                good = (position.average_position_price.units > 0 or position.average_position_price.nano > 0)
+
+                if good:
+                    tmon_cost = quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price)
+
+        if good:
+            break
+
+        await asyncio.sleep(1)
+
+    return money, tmon_cost
+
+
+async def _sell_tmon(client, account_id, cost):
+    logger.info(f"Selling TMON with cost {cost}")
 
 
 def main():
