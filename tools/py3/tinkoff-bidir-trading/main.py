@@ -183,7 +183,7 @@ async def _buy(client, account, instrument_id, amount_of_lots, price):
             )
 
             if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
-                logger.info(f"Buy {amount_of_lots} lots with price {quotation_to_decimal(price)}")
+                logger.info(f"Buy {amount_to_buy} lots with price {quotation_to_decimal(price)}")
 
                 buy_order_id = resp.order_id
 
@@ -238,7 +238,7 @@ async def _sell(client, account, instrument_id, amount_of_lots, price):
             )
 
             if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
-                logger.info(f"Sell {amount_of_lots} lots with price {quotation_to_decimal(price)}")
+                logger.info(f"Sell {amount_to_sell} lots with price {quotation_to_decimal(price)}")
 
                 sell_order_id = resp.order_id
 

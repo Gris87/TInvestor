@@ -3,9 +3,10 @@ import argparse
 import logging
 import sys
 
-from decimal import Decimal
+from decimal import Decimal, ROUND_CEILING
 from loguru import logger
 
+from tinkoff.invest import GetMaxLotsRequest, OrderDirection, OrderExecutionReportStatus, OrderType, PriceType, TimeInForceType
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
@@ -40,6 +41,7 @@ async def annihilate_mm(args):
             return
 
         money, tmon_cost = await _get_money_and_tmon_cost(client, args.account)
+        logger.info(f"You have {money} money while TMON cost {tmon_cost}")
 
         if money >= Decimal(-FREE_MM_MONEY) or tmon_cost <= Decimal(0):
             logger.info("There is nothing to do")
@@ -104,6 +106,44 @@ async def _get_money_and_tmon_cost(client, account_id):
 
 async def _sell_tmon(client, account_id, cost):
     logger.info(f"Selling TMON with cost {cost}")
+
+    orderbook = await client.market_data.get_order_book(instrument_id=TMON_UID, depth=1)
+
+    if len(orderbook.bids) <= 0:
+        logger.warning(f"Impossible to sell TMON")
+
+        return
+
+    price = orderbook.bids[0].price
+    amount_of_lots_decimal = cost / quotation_to_decimal(price)
+    amount_of_lots = int(amount_of_lots_decimal.to_integral_value(rounding=ROUND_CEILING))
+
+    while True:
+        req = GetMaxLotsRequest(account_id=account_id, instrument_id=TMON_UID, price=price)
+        max_lots = await client.orders.get_max_lots(req)
+
+        amount_to_sell = min(amount_of_lots, max_lots.sell_limits.sell_max_lots)
+
+        if amount_to_sell > 0:
+            resp = await client.orders.post_order(
+                quantity=amount_to_sell,
+                price=price,
+                direction=OrderDirection.ORDER_DIRECTION_SELL,
+                account_id=account_id,
+                order_type=OrderType.ORDER_TYPE_LIMIT,
+                instrument_id=TMON_UID,
+                time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+                price_type=PriceType.PRICE_TYPE_CURRENCY
+            )
+
+            if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                logger.info(f"Sell {amount_to_sell} lots with price {quotation_to_decimal(price)}")
+
+                break
+        else:
+            break
+
+        await asyncio.sleep(1)
 
 
 def main():
