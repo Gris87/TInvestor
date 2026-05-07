@@ -7,8 +7,8 @@
 
 
 constexpr int MAX_AMOUNT_OF_NOTIFICATIONS = 3;
-constexpr int NOTIFICATION_WIDTH          = 500;
-constexpr int NOTIFICATION_HEIGHT         = 136;
+constexpr int NOTIFICATION_WIDTH          = 320;
+constexpr int NOTIFICATION_HEIGHT         = 80;
 constexpr int NOTIFICATION_TINY_HEIGHT    = 32;
 constexpr int NOTIFICATION_GAP            = 8;
 
