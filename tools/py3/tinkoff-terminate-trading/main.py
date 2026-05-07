@@ -5,6 +5,7 @@ import sys
 
 from loguru import logger
 
+from tinkoff.invest import OrderDirection
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
@@ -68,6 +69,9 @@ async def _cancel_orders(client, account):
     tinkoff_orders = await client.orders.get_orders(account_id=account)
 
     for order in tinkoff_orders.orders:
+        direction = "Buy" if order.direction == OrderDirection.ORDER_DIRECTION_BUY else "Sell"
+        logger.info(f"Cancelling order: {direction} {order.instrument_uid} {order.order_id}")
+
         await client.orders.cancel_order(
             account_id=account,
             order_id=order.order_id,

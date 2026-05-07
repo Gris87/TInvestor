@@ -10,6 +10,7 @@
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
+#include "src/storage/user/iuserstorage.h"
 #include "src/utils/fs/dir/idirfactory.h"
 #include "src/utils/fs/file/ifilefactory.h"
 #include "src/utils/fs/zip/qzip/iqzipfactory.h"
@@ -41,6 +42,7 @@ class StockCollectThread : public IStockCollectThread
 public:
     explicit StockCollectThread(
         IConfig*             config,
+        IUserStorage*        userStorage,
         IStocksStorage*      stocksStorage,
         IInstrumentsStorage* instrumentsStorage,
         ILogosStorage*       logosStorage,
@@ -79,6 +81,7 @@ public:
 
 private:
     IConfig*             mConfig;
+    IUserStorage*        mUserStorage;
     IStocksStorage*      mStocksStorage;
     IInstrumentsStorage* mInstrumentsStorage;
     ILogosStorage*       mLogosStorage;

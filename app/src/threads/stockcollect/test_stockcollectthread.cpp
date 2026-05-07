@@ -11,6 +11,7 @@
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/fs/dir/idir_mock.h"
 #include "src/utils/fs/dir/idirfactory_mock.h"
 #include "src/utils/fs/file/ifile_mock.h"
@@ -45,6 +46,7 @@ protected:
         appDir = qApp->applicationDirPath();
 
         configMock             = new StrictMock<ConfigMock>();
+        userStorageMock        = new StrictMock<UserStorageMock>();
         stocksStorageMock      = new StrictMock<StocksStorageMock>();
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         logosStorageMock       = new StrictMock<LogosStorageMock>();
@@ -59,6 +61,7 @@ protected:
 
         thread = new StockCollectThread(
             configMock,
+            userStorageMock,
             stocksStorageMock,
             instrumentsStorageMock,
             logosStorageMock,
@@ -77,6 +80,7 @@ protected:
     {
         delete thread;
         delete configMock;
+        delete userStorageMock;
         delete stocksStorageMock;
         delete instrumentsStorageMock;
         delete logosStorageMock;
@@ -92,6 +96,7 @@ protected:
 
     StockCollectThread*                 thread;
     StrictMock<ConfigMock>*             configMock;
+    StrictMock<UserStorageMock>*        userStorageMock;
     StrictMock<StocksStorageMock>*      stocksStorageMock;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
     StrictMock<LogosStorageMock>*       logosStorageMock;
@@ -359,6 +364,9 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*biDirInfosStorageMock, readFromDatabase());
     EXPECT_CALL(*biDirInfosStorageMock, writeUnlock());
 
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+    EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logoImage));
     EXPECT_CALL(*logosStorageMock, readUnlock());

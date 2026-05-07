@@ -117,7 +117,7 @@ JETL_UID   = "34f51a49-919b-4eb1-9ed0-59c26f4cdc1e"
 TMON_UID   = "498ec3ff-ef27-4729-9703-a5aac48d5789"
 IMOEXF_UID = "5bcff194-f10d-4314-b9ee-56b7fdb344fd"
 
-IGNORE_STOCKS = [
+LOCKED_STOCKS = [
     NEW_VLHZ_UID,
     NEW_KBSB_UID,
     NEW_RZSB_UID,
@@ -213,7 +213,10 @@ IGNORE_STOCKS = [
     NEW_NNSBP_UID,
     NEW_TORSP_UID,
     NEW_LPSB_UID,
-    NEW_GAZA_UID,
+    NEW_GAZA_UID
+]
+
+IGNORE_STOCKS = [
     GTRK_UID,
     JETL_UID
 ]
@@ -286,7 +289,7 @@ async def _get_stocks(client, qual_investor):
     tinkoff_shares = await client.instruments.shares()
 
     for instrument in tinkoff_shares.instruments:
-        if instrument.currency == "rub" and instrument.api_trade_available_flag and instrument.buy_available_flag and instrument.sell_available_flag and (qual_investor or not instrument.for_qual_investor_flag) and instrument.uid not in IGNORE_STOCKS:
+        if instrument.currency == "rub" and instrument.api_trade_available_flag and instrument.buy_available_flag and instrument.sell_available_flag and (qual_investor or (not instrument.for_qual_investor_flag and instrument.uid not in LOCKED_STOCKS)) and instrument.uid not in IGNORE_STOCKS:
             res.append(instrument.uid)
 
     res.extend(EXTEND_STOCKS)
