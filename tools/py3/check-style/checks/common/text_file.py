@@ -250,6 +250,7 @@ def is_file_skipped(file_path):
         "/libs/investapi/messages/" in file_path or
         "/libs/simdjson/src/simdjson/" in file_path or
         "/tools/py3/tinkoff-accounts/tinkoff/" in file_path or
+        "/tools/py3/tinkoff-annihilate-mm/tinkoff/" in file_path or
         "/tools/py3/tinkoff-asap-trading/tinkoff/" in file_path or
         "/tools/py3/tinkoff-bidir-trading/tinkoff/" in file_path or
         "/tools/py3/tinkoff-favorite-group/tinkoff/" in file_path or

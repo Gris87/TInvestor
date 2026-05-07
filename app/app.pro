@@ -58,6 +58,7 @@ linux* {
 copy_dist_files.commands += $(MKDIR) "$$shell_path($${OUT_PWD}/build/tools)" &&
 copy_dist_files.commands += $(MKDIR) "$$shell_path($${OUT_PWD}/build/tools/py3)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/generate-bidir-info)" "$$shell_path($${OUT_PWD}/build/tools/py3/generate-bidir-info)" &&
+copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-annihilate-mm)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-annihilate-mm)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-asap-trading)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-asap-trading)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-bidir-trading)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-bidir-trading)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-follower)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-follower)" &&
