@@ -63,20 +63,20 @@ TEST_F(Test_Filter, Test_isActive)
 TEST_F(Test_Filter, Test_isFiltered)
 {
     Filter           filter;
-    NotificationInfo info;
+    NotificationInfo notification;
 
     filter.messageTypeMask = 5;
 
-    info.requestTimestamp = 1;
-    info.timestamp        = 2;
-    info.messageType      = MESSAGE_TYPE_PORTFOLIO;
-    info.text             = "a";
+    notification.requestTimestamp = 1;
+    notification.timestamp        = 2;
+    notification.messageType      = MESSAGE_TYPE_PORTFOLIO;
+    notification.text             = "a";
 
-    ASSERT_EQ(filter.isFiltered(info), true);
+    ASSERT_EQ(filter.isFiltered(notification), true);
 
-    info.messageType = MESSAGE_TYPE_SYSTEM;
+    notification.messageType = MESSAGE_TYPE_SYSTEM;
 
-    ASSERT_EQ(filter.isFiltered(info), false);
+    ASSERT_EQ(filter.isFiltered(notification), false);
 }
 
 TEST_F(Test_Filter, Test_equals)

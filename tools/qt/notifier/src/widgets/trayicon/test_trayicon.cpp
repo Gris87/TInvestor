@@ -43,4 +43,28 @@ TEST_F(Test_TrayIcon, Test_constructor_and_destructor)
 
     ASSERT_EQ(trayIcon->toolTip(), "TInvestor notifier");
 }
+
+TEST_F(Test_TrayIcon, Test_setFilter)
+{
+    const Filter filter;
+
+    trayIcon->setFilter(filter);
+}
+
+TEST_F(Test_TrayIcon, Test_notificationsAdded_and_resetCounter)
+{
+    QList<NotificationInfo> notifications;
+    NotificationInfo        notification;
+
+    notification.requestTimestamp = 1704056400000;
+    notification.timestamp        = 1704056400000;
+    notification.messageType      = MESSAGE_TYPE_SYSTEM;
+    notification.text             = "aaaa";
+
+    notifications << notification;
+
+    trayIcon->notificationsAdded(notifications);
+
+    trayIcon->resetCounter();
+}
 // NOLINTEND(readability-function-cognitive-complexity)
