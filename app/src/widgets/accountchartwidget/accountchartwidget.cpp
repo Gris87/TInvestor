@@ -554,7 +554,7 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
         mDailyYieldNegativePoints.append(0);
     }
 
-    const float monthlyYield = yieldPercent - mLastMonthlyYield;
+    const float monthlyYield  = yieldPercent - mLastMonthlyYield;
     mLastDailyYield          += yield;
 
     mAxisXMin[0] = qMin(mAxisXMin[0], operation.timestamp);

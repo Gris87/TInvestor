@@ -59,6 +59,11 @@ public:
     {
         mOptimizeSize = optimizeSize;
     }
+
+    void testSetInstruments(const QuantityAndCostInstruments& instruments)
+    {
+        mInstruments = instruments;
+    }
 #endif
 
 private:

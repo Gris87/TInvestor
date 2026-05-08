@@ -871,6 +871,163 @@ TEST_F(Test_BiDirTradingThread, Test_removeOwnOrdersFromOrderBook)
     // clang-format on
 }
 
+TEST_F(Test_BiDirTradingThread, Test_calculateBuySellPriceAndLots)
+{
+    const InSequence seq;
+
+    Instruments instruments;
+    Instrument  instrument;
+
+    instrument.ticker            = "ABBA";
+    instrument.name              = "Abstract Basics";
+    instrument.lot               = 1;
+    instrument.pricePrecision    = 2;
+    instrument.minPriceIncrement = Quotation(1, 0);
+
+    instruments["aaa-aaa"] = instrument;
+
+    BiDirInfos biDirInfos;
+    BiDirInfo  biDirInfo;
+
+    biDirInfo.spread     = 0.5f;
+    biDirInfo.minYield   = 0.1f;
+    biDirInfo.totalYield = 10.0f;
+    biDirInfo.priority   = BIDIR_PRIORITY_LOW;
+
+    biDirInfos["aaa-aaa"] = biDirInfo;
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*biDirInfosStorageMock, readLock());
+    EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
+
+    thread->getInstrumentData();
+
+    tinkoff::GetOrderBookResponse tinkoffOrderBook;
+
+    tinkoff::Order* bid = tinkoffOrderBook.add_bids(); // tinkoffOrderBook will take ownership
+    tinkoff::Order* ask = tinkoffOrderBook.add_asks(); // tinkoffOrderBook will take ownership
+
+    tinkoff::Quotation* bidPrice  = new tinkoff::Quotation(); // bid will take ownership
+    tinkoff::Quotation* askPrice  = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* lastPrice = new tinkoff::Quotation(); // tinkoffOrderBook will take ownership
+
+    bidPrice->set_units(870);
+    bidPrice->set_nano(0);
+    askPrice->set_units(905);
+    askPrice->set_nano(0);
+    lastPrice->set_units(905);
+    lastPrice->set_nano(0);
+
+    bid->set_quantity(100);
+    bid->set_allocated_price(bidPrice);
+    ask->set_quantity(100);
+    ask->set_allocated_price(askPrice);
+
+    tinkoffOrderBook.set_allocated_last_price(lastPrice);
+
+    tinkoff::PortfolioResponse tinkoffPortfolio;
+
+    tinkoff::PortfolioPosition* position1 = tinkoffPortfolio.add_positions(); // tinkoffPortfolio will take ownership
+    tinkoff::PortfolioPosition* position2 = tinkoffPortfolio.add_positions(); // tinkoffPortfolio will take ownership
+
+    tinkoff::Quotation*  tinkoffQuantity1     = new tinkoff::Quotation();  // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffCurrentPrice1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceWavg1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffDailyYield1   = new tinkoff::MoneyValue(); // position1 will take ownership
+
+    tinkoffQuantity1->set_units(100000);
+    tinkoffQuantity1->set_nano(0);
+
+    tinkoffCurrentPrice1->set_currency("rub");
+    tinkoffCurrentPrice1->set_units(1);
+    tinkoffCurrentPrice1->set_nano(0);
+
+    tinkoffAvgPriceFifo1->set_currency("rub");
+    tinkoffAvgPriceFifo1->set_units(1);
+    tinkoffAvgPriceFifo1->set_nano(0);
+
+    tinkoffAvgPriceWavg1->set_currency("rub");
+    tinkoffAvgPriceWavg1->set_units(1);
+    tinkoffAvgPriceWavg1->set_nano(0);
+
+    tinkoffDailyYield1->set_currency("rub");
+    tinkoffDailyYield1->set_units(0);
+    tinkoffDailyYield1->set_nano(0);
+
+    position1->set_instrument_uid(RUBLE_UID);
+    position1->set_instrument_type("currency");
+    position1->set_allocated_quantity(tinkoffQuantity1);
+    position1->set_allocated_current_price(tinkoffCurrentPrice1);
+    position1->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo1);
+    position1->set_allocated_average_position_price(tinkoffAvgPriceWavg1);
+    position1->set_allocated_daily_yield(tinkoffDailyYield1);
+
+    tinkoff::Quotation*  tinkoffQuantity2     = new tinkoff::Quotation();  // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffCurrentPrice2 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo2 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceWavg2 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffDailyYield2   = new tinkoff::MoneyValue(); // position2 will take ownership
+
+    tinkoffQuantity2->set_units(-4);
+    tinkoffQuantity2->set_nano(0);
+
+    tinkoffCurrentPrice2->set_currency("rub");
+    tinkoffCurrentPrice2->set_units(870);
+    tinkoffCurrentPrice2->set_nano(0);
+
+    tinkoffAvgPriceFifo2->set_currency("rub");
+    tinkoffAvgPriceFifo2->set_units(900);
+    tinkoffAvgPriceFifo2->set_nano(0);
+
+    tinkoffAvgPriceWavg2->set_currency("rub");
+    tinkoffAvgPriceWavg2->set_units(900);
+    tinkoffAvgPriceWavg2->set_nano(0);
+
+    tinkoffDailyYield2->set_currency("rub");
+    tinkoffDailyYield2->set_units(0);
+    tinkoffDailyYield2->set_nano(0);
+
+    position2->set_instrument_uid("aaa-aaa");
+    position2->set_instrument_type("etf");
+    position2->set_allocated_quantity(tinkoffQuantity2);
+    position2->set_allocated_current_price(tinkoffCurrentPrice2);
+    position2->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo2);
+    position2->set_allocated_average_position_price(tinkoffAvgPriceWavg2);
+    position2->set_allocated_daily_yield(tinkoffDailyYield2);
+
+    qint64    lotsToBuy  = -1;
+    qint64    lotsToSell = -1;
+    Quotation buyPrice;
+    Quotation sellPrice;
+
+    thread->calculateBuySellPriceAndLots(tinkoffOrderBook, tinkoffPortfolio, 0.04f, lotsToBuy, lotsToSell, buyPrice, sellPrice);
+
+    // clang-format off
+    ASSERT_EQ(lotsToBuy,  -1);
+    ASSERT_EQ(lotsToSell, -1);
+    ASSERT_EQ(buyPrice,   Quotation());
+    ASSERT_EQ(sellPrice,  Quotation());
+    // clang-format on
+
+    tinkoffQuantity2->set_units(4);
+
+    EXPECT_CALL(*configMock, isAdditionalGap()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAdditionalGapPercent()).WillOnce(Return(0.1f));
+
+    thread->calculateBuySellPriceAndLots(tinkoffOrderBook, tinkoffPortfolio, 0.04f, lotsToBuy, lotsToSell, buyPrice, sellPrice);
+
+    // clang-format off
+    ASSERT_EQ(lotsToBuy,  0);
+    ASSERT_EQ(lotsToSell, 4);
+    ASSERT_EQ(buyPrice,   Quotation(870, 0));
+    ASSERT_EQ(sellPrice,  Quotation(905, 0));
+    // clang-format on
+}
+
 TEST_F(Test_BiDirTradingThread, Test_calculateBuyPrice)
 {
     const InSequence seq;

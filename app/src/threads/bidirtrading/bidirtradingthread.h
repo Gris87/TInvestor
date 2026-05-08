@@ -73,6 +73,15 @@ public:
         const std::shared_ptr<tinkoff::OrderState>& tinkoffBuyOrder,
         const std::shared_ptr<tinkoff::OrderState>& tinkoffSellOrder
     );
+    void calculateBuySellPriceAndLots(
+        const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
+        const tinkoff::PortfolioResponse&    tinkoffPortfolio,
+        float                                commission,
+        qint64&                              lotsToBuy,
+        qint64&                              lotsToSell,
+        Quotation&                           buyPrice,
+        Quotation&                           sellPrice
+    );
     Quotation calculateBuyPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, BiDirMode mode);
     Quotation
     calculateSellPrice(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, double instrumentAvgPrice, float commission);
@@ -91,15 +100,6 @@ private:
         double&                           instrumentCost,
         qint64&                           instrumentLots,
         double&                           instrumentAvgPrice
-    );
-    void calculateBuySellPriceAndLots(
-        const tinkoff::GetOrderBookResponse& tinkoffOrderBook,
-        const tinkoff::PortfolioResponse&    tinkoffPortfolio,
-        float                                commission,
-        qint64&                              lotsToBuy,
-        qint64&                              lotsToSell,
-        Quotation&                           buyPrice,
-        Quotation&                           sellPrice
     );
     Quotation calculateBuyPriceInternal(const tinkoff::GetOrderBookResponse& tinkoffOrderBook, float spread);
 

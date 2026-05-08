@@ -609,6 +609,35 @@ TEST_F(Test_TradingThread, Test_buy)
         .WillOnce(Return(nullptr));
 
     ASSERT_EQ(thread->buy(30000, 10000, 40000), true);
+
+    Quotation priceForBuy(9, 952000000);
+
+    EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))
+        .WillOnce(Return(getOrderBookResponse));
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), priceForBuy))
+        .WillOnce(Return(getMaxLotsResponse));
+    EXPECT_CALL(
+        *grpcClientMock,
+        postOrder(
+            QThread::currentThread(), QString("account-id"), QString("aaaaa"), tinkoff::ORDER_DIRECTION_BUY, 5, priceForBuy, false
+        )
+    )
+        .WillOnce(Return(postOrderResponse2));
+    EXPECT_CALL(
+        *logsThreadMock,
+        addLog(
+            LOG_LEVEL_VERBOSE,
+            QString("aaaaa"),
+            QString("Order to buy 50 created with a price 9.952 \u20BD while market price 10.040 \u20BD")
+        )
+    );
+    EXPECT_CALL(*grpcClientMock, getOrderState(QThread::currentThread(), QString("account-id"), QString("order-id")))
+        .WillOnce(Return(nullptr));
+
+    ASSERT_EQ(thread->buy(-30000, 0, 30000), false);
 }
 
 TEST_F(Test_TradingThread, Test_sell)
@@ -1109,8 +1138,8 @@ TEST_F(Test_TradingThread, Test_calculateBuyPrice)
 
     bidPrice41->set_units(10);
     bidPrice41->set_nano(20000000);
-    bidPrice42->set_units(10);
-    bidPrice42->set_nano(10000000);
+    bidPrice42->set_units(9);
+    bidPrice42->set_nano(50000000);
     askPrice41->set_units(10);
     askPrice41->set_nano(30000000);
     askPrice42->set_units(10);
@@ -1128,6 +1157,16 @@ TEST_F(Test_TradingThread, Test_calculateBuyPrice)
     // clang-format off
     ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_NONE, false),              Quotation(10, 20000000));
     ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_FOLLOW_PRICE, false),      Quotation(10, 20000000));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_IMMEDIATELY_TRADE, false), Quotation(10, 30000000));
+    // clang-format on
+
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+
+    // clang-format off
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_NONE, true),               Quotation(9,  50000000));
+    ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_FOLLOW_PRICE, true),       Quotation(10, 20000000));
     ASSERT_EQ(thread->calculateBuyPrice(tinkoffOrderBook4, ASAP_MODE_IMMEDIATELY_TRADE, false), Quotation(10, 30000000));
     // clang-format on
 }

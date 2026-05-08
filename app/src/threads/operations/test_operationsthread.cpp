@@ -1212,7 +1212,6 @@ TEST_F(Test_OperationsThread, Test_alignWithPortfolio)
 {
     const InSequence seq;
 
-    /*
     EXPECT_CALL(*operationsDatabaseMock, setAccount(QString("account-hash")));
 
     thread->setAccountId("account-hash", "account-id");
@@ -1220,6 +1219,7 @@ TEST_F(Test_OperationsThread, Test_alignWithPortfolio)
     const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
 
     tinkoff::PortfolioPosition* position1 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+    tinkoff::PortfolioPosition* position2 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
 
     tinkoff::Quotation*  tinkoffQuantity1     = new tinkoff::Quotation();  // position1 will take ownership
     tinkoff::MoneyValue* tinkoffAvgPriceFifo1 = new tinkoff::MoneyValue(); // position1 will take ownership
@@ -1235,21 +1235,6 @@ TEST_F(Test_OperationsThread, Test_alignWithPortfolio)
     position1->set_allocated_quantity(tinkoffQuantity1);
     position1->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo1);
 
-    QList<Operation> operations;
-    operations << Operation();
-
-    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(portfolioResponse));
-
-    thread->alignWithPortfolio(operations);
-
-    // clang-format off
-    ASSERT_EQ(operations.at(0).remainedMoney, Quotation(100000, 0));
-    ASSERT_EQ(operations.at(0).totalMoney,    Quotation(100000, 0));
-    // clang-format on
-
-    tinkoff::PortfolioPosition* position2 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
-
     tinkoff::Quotation*  tinkoffQuantity2     = new tinkoff::Quotation();  // position1 will take ownership
     tinkoff::MoneyValue* tinkoffAvgPriceFifo2 = new tinkoff::MoneyValue(); // position1 will take ownership
 
@@ -1264,42 +1249,207 @@ TEST_F(Test_OperationsThread, Test_alignWithPortfolio)
     position2->set_allocated_quantity(tinkoffQuantity2);
     position2->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo2);
 
+    QList<Operation> lastOperations;
+    Operation        lastOperation1;
+    Operation        lastOperation2;
+
+    lastOperation1.timestamp                       = 1704056580000;
+    lastOperation1.originalTimestamp               = 1704056580000;
+    lastOperation1.instrumentId                    = "aaaaa";
+    lastOperation1.instrumentTicker                = "AZAZ";
+    lastOperation1.instrumentName                  = "Azazaza";
+    lastOperation1.description                     = "Sell 10 ivashka durashka shares";
+    lastOperation1.price                           = 105.0f;
+    lastOperation1.avgPriceFifo                    = 100.0f;
+    lastOperation1.avgPriceWavg                    = 100.0f;
+    lastOperation1.quantity                        = 10;
+    lastOperation1.remainedQuantity                = 10;
+    lastOperation1.payment                         = 1050.0f;
+    lastOperation1.avgCostFifo                     = 1000.0f;
+    lastOperation1.costFifo                        = Quotation(1000, 0);
+    lastOperation1.costWavg                        = Quotation(1000, 0);
+    lastOperation1.commission                      = -1.5f;
+    lastOperation1.yield                           = 50.0f;
+    lastOperation1.yieldWithCommission             = 48.5f;
+    lastOperation1.yieldWithCommissionPercent      = 0.15f;
+    lastOperation1.inputMoney                      = Quotation(200000, 0);
+    lastOperation1.totalYieldWithCommission        = Quotation(-1, -266500000);
+    lastOperation1.totalYieldWithCommissionPercent = -0.0006332f;
+    lastOperation1.remainedMoney                   = Quotation(197466, -266500000);
+    lastOperation1.totalMoney                      = Quotation(199999, -266500000);
+    lastOperation1.pricePrecision                  = 2;
+    lastOperation1.paymentPrecision                = 2;
+    lastOperation1.commissionPrecision             = 4;
+
+    lastOperation2.timestamp                       = 1704056520000;
+    lastOperation2.originalTimestamp               = 1704056520000;
+    lastOperation2.instrumentId                    = "bbbbb";
+    lastOperation2.instrumentTicker                = "BAKA";
+    lastOperation2.instrumentName                  = "Byaka";
+    lastOperation2.description                     = "Sell 60 mega bonds";
+    lastOperation2.price                           = 250.0f;
+    lastOperation2.avgPriceFifo                    = 125.0f;
+    lastOperation2.avgPriceWavg                    = 125.0f;
+    lastOperation2.quantity                        = 60;
+    lastOperation2.remainedQuantity                = 50;
+    lastOperation2.payment                         = 15000.0f;
+    lastOperation2.avgCostFifo                     = 6250.0f;
+    lastOperation2.costFifo                        = Quotation(6250, 0);
+    lastOperation2.costWavg                        = Quotation(6250, 0);
+    lastOperation2.commission                      = -5.0f;
+    lastOperation2.yield                           = 7500.0f;
+    lastOperation2.yieldWithCommission             = 7495.0f;
+    lastOperation2.yieldWithCommissionPercent      = 99.95f;
+    lastOperation2.inputMoney                      = Quotation(200000, 0);
+    lastOperation2.totalYieldWithCommission        = Quotation(-1, -266500000);
+    lastOperation2.totalYieldWithCommissionPercent = -0.0006332f;
+    lastOperation2.remainedMoney                   = Quotation(197466, -266500000);
+    lastOperation2.totalMoney                      = Quotation(199999, -266500000);
+    lastOperation2.pricePrecision                  = 2;
+    lastOperation2.paymentPrecision                = 2;
+    lastOperation2.commissionPrecision             = 4;
+
+    lastOperations << lastOperation1 << lastOperation2;
+
+    QuantityAndCostInstruments instruments;
+
+    instruments["aaaaa"] = QuantityAndCost();
+    instruments["bbbbb"] = QuantityAndCost();
+    instruments["ccccc"] = QuantityAndCost();
+
+    thread->testSetInstruments(instruments);
+
+    QList<Operation> oldOperations;
+    Operation        oldOperation1;
+    Operation        oldOperation2;
+
+    oldOperation1.timestamp                       = 1704056460000;
+    oldOperation1.originalTimestamp               = 1704056460000;
+    oldOperation1.instrumentId                    = "aaaaa";
+    oldOperation1.instrumentTicker                = "AZAZ";
+    oldOperation1.instrumentName                  = "Azazaza";
+    oldOperation1.description                     = "Buy 20 ivashka durashka shares";
+    oldOperation1.price                           = 100.0f;
+    oldOperation1.avgPriceFifo                    = 100.0f;
+    oldOperation1.avgPriceWavg                    = 100.0f;
+    oldOperation1.quantity                        = 20;
+    oldOperation1.remainedQuantity                = 20;
+    oldOperation1.payment                         = -2000.0f;
+    oldOperation1.avgCostFifo                     = 2000.0f;
+    oldOperation1.costFifo                        = Quotation(2000, 0);
+    oldOperation1.costWavg                        = Quotation(2000, 0);
+    oldOperation1.commission                      = -1.5f;
+    oldOperation1.yield                           = 0.0f;
+    oldOperation1.yieldWithCommission             = -1.5f;
+    oldOperation1.yieldWithCommissionPercent      = -0.04f;
+    oldOperation1.inputMoney                      = Quotation(200000, 0);
+    oldOperation1.totalYieldWithCommission        = Quotation(-1, -266500000);
+    oldOperation1.totalYieldWithCommissionPercent = -0.0006332f;
+    oldOperation1.remainedMoney                   = Quotation(197466, -266500000);
+    oldOperation1.totalMoney                      = Quotation(199999, -266500000);
+    oldOperation1.pricePrecision                  = 2;
+    oldOperation1.paymentPrecision                = 2;
+    oldOperation1.commissionPrecision             = 4;
+
+    oldOperation2.timestamp                       = 1704056400000;
+    oldOperation2.originalTimestamp               = 1704056400000;
+    oldOperation2.instrumentId                    = "ccccc";
+    oldOperation2.instrumentTicker                = "CHAZ";
+    oldOperation2.instrumentName                  = "Chakuza";
+    oldOperation2.description                     = "Buy 2 chakuzas";
+    oldOperation2.price                           = 50000.0f;
+    oldOperation2.avgPriceFifo                    = 50000.0f;
+    oldOperation2.avgPriceWavg                    = 50000.0f;
+    oldOperation2.quantity                        = 2;
+    oldOperation2.remainedQuantity                = 2;
+    oldOperation2.payment                         = -100000.0f;
+    oldOperation2.avgCostFifo                     = 100000.0f;
+    oldOperation2.costFifo                        = Quotation(100000, 0);
+    oldOperation2.costWavg                        = Quotation(100000, 0);
+    oldOperation2.commission                      = 0.0f;
+    oldOperation2.yield                           = 0.0f;
+    oldOperation2.yieldWithCommission             = 0.0f;
+    oldOperation2.yieldWithCommissionPercent      = 0.0f;
+    oldOperation2.inputMoney                      = Quotation(200000, 0);
+    oldOperation2.totalYieldWithCommission        = Quotation(-1, -266500000);
+    oldOperation2.totalYieldWithCommissionPercent = -0.0006332f;
+    oldOperation2.remainedMoney                   = Quotation(197466, -266500000);
+    oldOperation2.totalMoney                      = Quotation(199999, -266500000);
+    oldOperation2.pricePrecision                  = 2;
+    oldOperation2.paymentPrecision                = 2;
+    oldOperation2.commissionPrecision             = 4;
+
+    oldOperations << oldOperation1 << oldOperation2;
+
+    QList<Operation> oldOperationsUpdated;
+
+    oldOperation2.remainedQuantity = 0;
+
+    oldOperationsUpdated << oldOperation1 << oldOperation2;
+
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(oldOperations));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(oldOperationsUpdated, -1));
 
-    thread->alignWithPortfolio(operations);
-
-    // clang-format off
-    ASSERT_EQ(operations.at(0).remainedMoney, Quotation(100000, 0));
-    ASSERT_EQ(operations.at(0).totalMoney,    Quotation(105000, 0));
-    // clang-format on
-
-    tinkoff::PortfolioPosition* position3 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
-
-    tinkoff::Quotation*  tinkoffQuantity3     = new tinkoff::Quotation();  // position1 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo3 = new tinkoff::MoneyValue(); // position1 will take ownership
-
-    tinkoffQuantity3->set_units(200);
-    tinkoffQuantity3->set_nano(0);
-
-    tinkoffAvgPriceFifo3->set_currency("rub");
-    tinkoffAvgPriceFifo3->set_units(130);
-    tinkoffAvgPriceFifo3->set_nano(0);
-
-    position3->set_instrument_uid("bbbbb");
-    position3->set_allocated_quantity(tinkoffQuantity3);
-    position3->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo3);
-
-    EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(portfolioResponse));
-
-    thread->alignWithPortfolio(operations);
+    thread->alignWithPortfolio(lastOperations);
 
     // clang-format off
-    ASSERT_EQ(operations.at(0).remainedMoney, Quotation(100000, 0));
-    ASSERT_EQ(operations.at(0).totalMoney,    Quotation(131000, 0));
+    ASSERT_EQ(lastOperations.at(0).timestamp,                         1704056580000);
+    ASSERT_EQ(lastOperations.at(0).originalTimestamp,                 1704056580000);
+    ASSERT_EQ(lastOperations.at(0).instrumentId,                      "aaaaa");
+    ASSERT_EQ(lastOperations.at(0).instrumentTicker,                  "AZAZ");
+    ASSERT_EQ(lastOperations.at(0).instrumentName,                    "Azazaza");
+    ASSERT_EQ(lastOperations.at(0).description,                       "Sell 10 ivashka durashka shares");
+    ASSERT_NEAR(lastOperations.at(0).price,                           105.0f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(0).avgPriceFifo,                    100.0f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(0).avgPriceWavg,                    100.0f, 0.0001f);
+    ASSERT_EQ(lastOperations.at(0).quantity,                          10);
+    ASSERT_EQ(lastOperations.at(0).remainedQuantity,                  10);
+    ASSERT_NEAR(lastOperations.at(0).payment,                         1050.0f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(0).avgCostFifo,                     1000.0f, 0.0001f);
+    ASSERT_EQ(lastOperations.at(0).costFifo,                          Quotation(1000, 0));
+    ASSERT_EQ(lastOperations.at(0).costWavg,                          Quotation(1000, 0));
+    ASSERT_NEAR(lastOperations.at(0).commission,                      -1.5f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(0).yield,                           50.0f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(0).yieldWithCommission,             48.5f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(0).yieldWithCommissionPercent,      0.15f, 0.0001f);
+    ASSERT_EQ(lastOperations.at(0).inputMoney,                        Quotation(200000, 0));
+    ASSERT_EQ(lastOperations.at(0).totalYieldWithCommission,          Quotation(105000, 0));
+    ASSERT_NEAR(lastOperations.at(0).totalYieldWithCommissionPercent, 0.0f, 0.0001f);
+    ASSERT_EQ(lastOperations.at(0).remainedMoney,                     Quotation(100000, 0));
+    ASSERT_EQ(lastOperations.at(0).totalMoney,                        Quotation(105000, 0));
+    ASSERT_EQ(lastOperations.at(0).pricePrecision,                    2);
+    ASSERT_EQ(lastOperations.at(0).paymentPrecision,                  2);
+    ASSERT_EQ(lastOperations.at(0).commissionPrecision,               4);
+    ASSERT_EQ(lastOperations.at(1).timestamp,                         1704056520000);
+    ASSERT_EQ(lastOperations.at(1).originalTimestamp,                 1704056520000);
+    ASSERT_EQ(lastOperations.at(1).instrumentId,                      "bbbbb");
+    ASSERT_EQ(lastOperations.at(1).instrumentTicker,                  "BAKA");
+    ASSERT_EQ(lastOperations.at(1).instrumentName,                    "Byaka");
+    ASSERT_EQ(lastOperations.at(1).description,                       "Sell 60 mega bonds");
+    ASSERT_NEAR(lastOperations.at(1).price,                           250.0f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(1).avgPriceFifo,                    125.0f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(1).avgPriceWavg,                    125.0f, 0.0001f);
+    ASSERT_EQ(lastOperations.at(1).quantity,                          60);
+    ASSERT_EQ(lastOperations.at(1).remainedQuantity,                  0);
+    ASSERT_NEAR(lastOperations.at(1).payment,                         15000.0f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(1).avgCostFifo,                     6250.0f, 0.0001f);
+    ASSERT_EQ(lastOperations.at(1).costFifo,                          Quotation(6250, 0));
+    ASSERT_EQ(lastOperations.at(1).costWavg,                          Quotation(6250, 0));
+    ASSERT_NEAR(lastOperations.at(1).commission,                      -5.0f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(1).yield,                           7500.0f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(1).yieldWithCommission,             7495.0f, 0.0001f);
+    ASSERT_NEAR(lastOperations.at(1).yieldWithCommissionPercent,      99.95f, 0.0001f);
+    ASSERT_EQ(lastOperations.at(1).inputMoney,                        Quotation(200000, 0));
+    ASSERT_EQ(lastOperations.at(1).totalYieldWithCommission,          Quotation(-1, -266500000));
+    ASSERT_NEAR(lastOperations.at(1).totalYieldWithCommissionPercent, -0.0006332f, 0.0001f);
+    ASSERT_EQ(lastOperations.at(1).remainedMoney,                     Quotation(197466, -266500000));
+    ASSERT_EQ(lastOperations.at(1).totalMoney,                        Quotation(199999, -266500000));
+    ASSERT_EQ(lastOperations.at(1).pricePrecision,                    2);
+    ASSERT_EQ(lastOperations.at(1).paymentPrecision,                  2);
+    ASSERT_EQ(lastOperations.at(1).commissionPrecision,               4);
     // clang-format on
-    */
 }
 
 TEST_F(Test_OperationsThread, Test_optimize)
