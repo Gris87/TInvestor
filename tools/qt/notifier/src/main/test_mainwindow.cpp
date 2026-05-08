@@ -229,6 +229,30 @@ TEST_F(Test_MainWindow, Test_refreshBackgroundTimerTicked)
     ASSERT_EQ(mainWindow->refreshBackgroundTimer.isActive(), true);
 }
 
+TEST_F(Test_MainWindow, Test_notificationsRead)
+{
+    const InSequence seq;
+
+    QList<NotificationInfo> notifications;
+
+    EXPECT_CALL(*notificationsTableWidgetMock, notificationsRead(notifications));
+
+    mainWindow->notificationsRead(notifications);
+}
+
+TEST_F(Test_MainWindow, Test_notificationsAdded)
+{
+    const InSequence seq;
+
+    QList<NotificationInfo> notifications;
+
+    EXPECT_CALL(*notificationsTableWidgetMock, notificationsAdded(notifications));
+    EXPECT_CALL(*trayIconMock, notificationsAdded(notifications));
+    EXPECT_CALL(*notifierMock, notificationsAdded(notifications));
+
+    mainWindow->notificationsAdded(notifications);
+}
+
 TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 {
     const InSequence seq;

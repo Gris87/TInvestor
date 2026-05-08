@@ -56,6 +56,7 @@ TEST_F(Test_NotificationsDatabase, Test_readNotifications)
     StrictMock<FileMock>* fileMock1 = new StrictMock<FileMock>(); // Will be deleted in readNotifications function
     StrictMock<FileMock>* fileMock2 = new StrictMock<FileMock>(); // Will be deleted in readNotifications function
     StrictMock<FileMock>* fileMock3 = new StrictMock<FileMock>(); // Will be deleted in readNotifications function
+    StrictMock<FileMock>* fileMock4 = new StrictMock<FileMock>(); // Will be deleted in readNotifications function
 
     QList<NotificationInfo> notifications;
 
@@ -132,6 +133,29 @@ TEST_F(Test_NotificationsDatabase, Test_readNotifications)
     notifications = database->readNotifications();
 
     ASSERT_EQ(notifications.size(), 0);
+
+    largeNotificationsStr   += ",\n{Bad content ::::: 555";
+    largeNotificationsBytes  = largeNotificationsStr.toUtf8();
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/notifications/notifications.json"))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock4)));
+    EXPECT_CALL(*fileMock4, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock4, readAll()).WillOnce(Return(largeNotificationsBytes));
+    EXPECT_CALL(*fileMock4, close());
+
+    notifications = database->readNotifications();
+
+    ASSERT_EQ(notifications.size(), 1001);
+
+    for (int i = 1; i < notifications.size(); ++i)
+    {
+        // clang-format off
+        ASSERT_EQ(notifications.at(i).requestTimestamp, 1000000 - i * 1000);
+        ASSERT_EQ(notifications.at(i).timestamp,        1000000 - i * 1000);
+        ASSERT_EQ(notifications.at(i).messageType,      MESSAGE_TYPE_SYSTEM);
+        ASSERT_EQ(notifications.at(i).text,             "aaaaa");
+        // clang-format on
+    }
 }
 
 TEST_F(Test_NotificationsDatabase, Test_writeNotifications)

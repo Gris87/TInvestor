@@ -97,6 +97,15 @@ TEST_F(Test_NotificationsTableWidget, Test_notificationsAdded)
     notificationsTableWidget->notificationsAdded(notifications);
 }
 
+TEST_F(Test_NotificationsTableWidget, Test_refreshBackground)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*notificationsTableModelMock, refreshBackground());
+
+    notificationsTableWidget->refreshBackground();
+}
+
 TEST_F(Test_NotificationsTableWidget, Test_saveWindowState)
 {
     const InSequence seq;
