@@ -59,8 +59,8 @@ void RequestThread::readNotificationsAtFirstRun()
 {
     if (mAmountOfEntries == 0)
     {
-        QList<NotificationInfo> notifications = mNotificationsDatabase->readNotifications();
-        mAmountOfEntries                      = notifications.size();
+        const QList<NotificationInfo> notifications = mNotificationsDatabase->readNotifications();
+        mAmountOfEntries                            = notifications.size();
 
         if (mAmountOfEntries > 0)
         {
@@ -79,7 +79,7 @@ void RequestThread::requestNotifications()
         QUrl(QString("https://%1:%2/notifications").arg(mConfig->getServerAddress(), QString::number(mConfig->getServerPort())));
 
     QUrlQuery query;
-    query.addQueryItem("from", QString::number(mLastNotificationTimestamp + 1));
+    query.addQueryItem("from", QString::number(mLastNotificationTimestamp + 10));
 
     url.setQuery(query.query());
 

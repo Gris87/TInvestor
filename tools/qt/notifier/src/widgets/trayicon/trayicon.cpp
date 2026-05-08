@@ -11,6 +11,7 @@ const QBrush BADGE_BACKGROUND_COLOR = QBrush(QColor("#FF0000")); // clazy:exclud
 const QColor BADGE_FONT_COLOR       = QColor("#FFFFFF");         // clazy:exclude=non-pod-global-static
 
 constexpr int MAX_DISPLAY_COUNTER = 99;
+constexpr int BADGE_FONT_SIZE     = 12;
 
 
 
@@ -84,7 +85,7 @@ void TrayIcon::notificationsAdded(const QList<NotificationInfo>& notifications)
         painter.drawEllipse(x, y, w, h);
 
         painter.setPen(BADGE_FONT_COLOR);
-        painter.setFont(QFont("Arial", 12, QFont::Bold));
+        painter.setFont(QFont("Arial", BADGE_FONT_SIZE, QFont::Bold));
         painter.drawText(x, y, w, h, Qt::AlignCenter, QString::number(qMin(mCounter, MAX_DISPLAY_COUNTER)));
         painter.end();
 

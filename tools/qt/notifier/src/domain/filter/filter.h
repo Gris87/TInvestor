@@ -22,7 +22,7 @@ struct Filter
     [[nodiscard]]
     bool isFiltered(const NotificationInfo& notification) const;
 
-    qint64 messageTypeMask;
+    quint64 messageTypeMask;
 };
 
 

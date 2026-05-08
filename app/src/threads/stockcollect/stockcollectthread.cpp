@@ -871,7 +871,7 @@ static void getCandlesWithHttp(
 
             url.setQuery(query.query());
 
-            IHttpClient::Headers headers;
+            const IHttpClient::Headers headers;
 
             while (true)
             {

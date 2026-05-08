@@ -3,7 +3,7 @@
 
 
 Filter::Filter() :
-    messageTypeMask((1LL << MESSAGE_TYPE_COUNT) - 1)
+    messageTypeMask((1ULL << MESSAGE_TYPE_COUNT) - 1)
 {
 }
 
@@ -11,25 +11,20 @@ void Filter::setMessageTypeMask(const QList<MessageType>& types)
 {
     messageTypeMask = 1; // MESSAGE_TYPE_NONE always enabled
 
-    for (MessageType messageType : types)
+    for (const MessageType& messageType : types)
     {
-        messageTypeMask |= 1LL << messageType;
+        messageTypeMask |= 1ULL << messageType;
     }
 }
 
 bool Filter::isActive() const
 {
-    return messageTypeMask != (1LL << MESSAGE_TYPE_COUNT) - 1;
+    return messageTypeMask != (1ULL << MESSAGE_TYPE_COUNT) - 1;
 }
 
 bool Filter::isFiltered(const NotificationInfo& notification) const
 {
-    if ((messageTypeMask & (1LL << notification.messageType)) == 0)
-    {
-        return false;
-    }
-
-    return true;
+    return ((messageTypeMask & (1ULL << notification.messageType)) != 0);
 }
 
 bool operator==(const Filter& lhs, const Filter& rhs)

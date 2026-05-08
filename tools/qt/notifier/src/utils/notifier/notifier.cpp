@@ -41,7 +41,7 @@ void Notifier::setFilter(const Filter& filter)
 
 void Notifier::resetNotificationWidgets()
 {
-    for (INotificationWidget* notificationWidget : mNotificationWidgets)
+    for (INotificationWidget* notificationWidget : std::as_const(mNotificationWidgets))
     {
         notificationWidget->deleteLater();
     }

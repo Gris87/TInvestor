@@ -109,9 +109,9 @@ QVariant NotificationsTableModel::data(const QModelIndex& index, int role) const
         if (delta <= HIGHLIGHT_DELAY)
         {
             // clang-format off
-            const int r = HIGHLIGHT_COLOR.red()   + (NORMAL_COLOR.red()   - HIGHLIGHT_COLOR.red())   * delta / HIGHLIGHT_DELAY;
-            const int g = HIGHLIGHT_COLOR.green() + (NORMAL_COLOR.green() - HIGHLIGHT_COLOR.green()) * delta / HIGHLIGHT_DELAY;
-            const int b = HIGHLIGHT_COLOR.blue()  + (NORMAL_COLOR.blue()  - HIGHLIGHT_COLOR.blue())  * delta / HIGHLIGHT_DELAY;
+            const int r = HIGHLIGHT_COLOR.red()   + ((NORMAL_COLOR.red()   - HIGHLIGHT_COLOR.red())   * delta) / HIGHLIGHT_DELAY;
+            const int g = HIGHLIGHT_COLOR.green() + ((NORMAL_COLOR.green() - HIGHLIGHT_COLOR.green()) * delta) / HIGHLIGHT_DELAY;
+            const int b = HIGHLIGHT_COLOR.blue()  + ((NORMAL_COLOR.blue()  - HIGHLIGHT_COLOR.blue())  * delta) / HIGHLIGHT_DELAY;
             // clang-format on
 
             return QBrush(QColor(r, g, b));
