@@ -508,7 +508,7 @@ void
 AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& yieldPoints, QList<QPointF>& totalMoneyPoints)
 {
     const float yieldPercent = operation.totalYieldWithCommissionPercent;
-    const float yield        = quotationToFloat(operation.totalYieldWithCommission);
+    const float yield        = operation.yieldWithCommission;
     const float totalMoney   = quotationToFloat(operation.totalMoney);
 
     if (operation.timestamp < mLastMonthLimitsStart || operation.timestamp > mLastMonthLimitsEnd)
@@ -540,10 +540,7 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
         mLastDayLimitsStart = QDateTime(operationDate, QTime(0, 0)).toMSecsSinceEpoch();
         mLastDayLimitsEnd   = mLastDayLimitsStart + ONE_DAY;
 
-        mLastDailyYield += mDailyYieldPositivePoints.count() > 0
-                               ? mDailyYieldPositivePoints.at(mDailyYieldPositivePoints.count() - 1) +
-                                     mDailyYieldNegativePoints.at(mDailyYieldNegativePoints.count() - 1)
-                               : 0.0f;
+        mLastDailyYield = 0.0f;
 
         if (mDailyYieldAxisX.count() >= LIMIT_AMOUNT_OF_DAYS)
         {
@@ -558,7 +555,7 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
     }
 
     const float monthlyYield = yieldPercent - mLastMonthlyYield;
-    const float dailyYield   = yield - mLastDailyYield;
+    mLastDailyYield          += yield;
 
     mAxisXMin[0] = qMin(mAxisXMin[0], operation.timestamp);
     mAxisXMax    = qMax(mAxisXMax, operation.timestamp);
@@ -567,16 +564,16 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
     mYieldAxisYMax[0]      = qMax(mYieldAxisYMax[0], yieldPercent);
     mMonthlyYieldAxisYMin  = qMin(mMonthlyYieldAxisYMin, monthlyYield);
     mMonthlyYieldAxisYMax  = qMax(mMonthlyYieldAxisYMax, monthlyYield);
-    mDailyYieldAxisYMin    = qMin(mDailyYieldAxisYMin, dailyYield);
-    mDailyYieldAxisYMax    = qMax(mDailyYieldAxisYMax, dailyYield);
+    mDailyYieldAxisYMin    = qMin(mDailyYieldAxisYMin, mLastDailyYield);
+    mDailyYieldAxisYMax    = qMax(mDailyYieldAxisYMax, mLastDailyYield);
     mTotalMoneyAxisYMin[0] = qMin(mTotalMoneyAxisYMin[0], totalMoney);
     mTotalMoneyAxisYMax[0] = qMax(mTotalMoneyAxisYMax[0], totalMoney);
 
     yieldPoints.append(QPointF(operation.timestamp, yieldPercent));
     mMonthlyYieldPositivePoints.replace(mMonthlyYieldPositivePoints.count() - 1, qMax(monthlyYield, 0.0f));
     mMonthlyYieldNegativePoints.replace(mMonthlyYieldNegativePoints.count() - 1, qMin(monthlyYield, 0.0f));
-    mDailyYieldPositivePoints.replace(mDailyYieldPositivePoints.count() - 1, qMax(dailyYield, 0.0f));
-    mDailyYieldNegativePoints.replace(mDailyYieldNegativePoints.count() - 1, qMin(dailyYield, 0.0f));
+    mDailyYieldPositivePoints.replace(mDailyYieldPositivePoints.count() - 1, qMax(mLastDailyYield, 0.0f));
+    mDailyYieldNegativePoints.replace(mDailyYieldNegativePoints.count() - 1, qMin(mLastDailyYield, 0.0f));
     totalMoneyPoints.append(QPointF(operation.timestamp, totalMoney));
 }
 
