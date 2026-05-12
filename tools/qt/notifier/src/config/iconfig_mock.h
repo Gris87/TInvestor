@@ -50,6 +50,12 @@ public:
     MOCK_METHOD(void, setFilterDividends, (bool value), (override));
     MOCK_METHOD(bool, isFilterDividends, (), (override));
 
-    MOCK_METHOD(void, setFilterPulse, (bool value), (override));
-    MOCK_METHOD(bool, isFilterPulse, (), (override));
+    MOCK_METHOD(void, setFilterPulseNeutral, (bool value), (override));
+    MOCK_METHOD(bool, isFilterPulseNeutral, (), (override));
+
+    MOCK_METHOD(void, setFilterPulseBuy, (bool value), (override));
+    MOCK_METHOD(bool, isFilterPulseBuy, (), (override));
+
+    MOCK_METHOD(void, setFilterPulseSell, (bool value), (override));
+    MOCK_METHOD(bool, isFilterPulseSell, (), (override));
 };

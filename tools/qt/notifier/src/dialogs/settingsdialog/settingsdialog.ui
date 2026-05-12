@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>277</height>
+    <height>327</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>277</height>
+    <height>327</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -171,9 +171,29 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="filterPulseCheckBox">
+       <widget class="QCheckBox" name="filterPulseNeutralCheckBox">
         <property name="text">
-         <string>Pulse</string>
+         <string>Pulse (Neutral)</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="filterPulseBuyCheckBox">
+        <property name="text">
+         <string>Pulse (Buy)</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="filterPulseSellCheckBox">
+        <property name="text">
+         <string>Pulse (Sell)</string>
         </property>
         <property name="checked">
          <bool>true</bool>

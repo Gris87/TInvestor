@@ -37,7 +37,9 @@ void SettingsDialog::updateUiFromConfig()
     ui->filterPortfolioCheckBox->setChecked(mConfig->isFilterPortfolio());
     ui->filterHugeSellCheckBox->setChecked(mConfig->isFilterHugeSell());
     ui->filterDividendsCheckBox->setChecked(mConfig->isFilterDividends());
-    ui->filterPulseCheckBox->setChecked(mConfig->isFilterPulse());
+    ui->filterPulseNeutralCheckBox->setChecked(mConfig->isFilterPulseNeutral());
+    ui->filterPulseBuyCheckBox->setChecked(mConfig->isFilterPulseBuy());
+    ui->filterPulseSellCheckBox->setChecked(mConfig->isFilterPulseSell());
 }
 
 void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -92,11 +94,25 @@ void SettingsDialog::on_filterDividendsCheckBox_checkStateChanged(const Qt::Chec
     mConfig->setFilterDividends(checked);
 }
 
-void SettingsDialog::on_filterPulseCheckBox_checkStateChanged(const Qt::CheckState& value)
+void SettingsDialog::on_filterPulseNeutralCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     const bool checked = value == Qt::Checked;
 
-    mConfig->setFilterPulse(checked);
+    mConfig->setFilterPulseNeutral(checked);
+}
+
+void SettingsDialog::on_filterPulseBuyCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setFilterPulseBuy(checked);
+}
+
+void SettingsDialog::on_filterPulseSellCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setFilterPulseSell(checked);
 }
 
 void SettingsDialog::on_okButton_clicked()

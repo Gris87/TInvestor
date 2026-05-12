@@ -192,7 +192,9 @@ void MainWindow::applyConfig()
     prepareFilterTypes(types, mConfig->isFilterPortfolio(), MESSAGE_TYPE_PORTFOLIO);
     prepareFilterTypes(types, mConfig->isFilterHugeSell(), MESSAGE_TYPE_HUGE_SELL);
     prepareFilterTypes(types, mConfig->isFilterDividends(), MESSAGE_TYPE_DIVIDENDS);
-    prepareFilterTypes(types, mConfig->isFilterPulse(), MESSAGE_TYPE_PULSE);
+    prepareFilterTypes(types, mConfig->isFilterPulseNeutral(), MESSAGE_TYPE_PULSE_NEUTRAL);
+    prepareFilterTypes(types, mConfig->isFilterPulseBuy(), MESSAGE_TYPE_PULSE_BUY);
+    prepareFilterTypes(types, mConfig->isFilterPulseSell(), MESSAGE_TYPE_PULSE_SELL);
 
     Filter filter;
     filter.setMessageTypeMask(types);

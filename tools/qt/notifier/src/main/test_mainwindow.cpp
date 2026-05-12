@@ -74,7 +74,9 @@ protected:
         EXPECT_CALL(*configMock, isFilterPortfolio()).WillOnce(Return(true));
         EXPECT_CALL(*configMock, isFilterHugeSell()).WillOnce(Return(true));
         EXPECT_CALL(*configMock, isFilterDividends()).WillOnce(Return(true));
-        EXPECT_CALL(*configMock, isFilterPulse()).WillOnce(Return(true));
+        EXPECT_CALL(*configMock, isFilterPulseNeutral()).WillOnce(Return(true));
+        EXPECT_CALL(*configMock, isFilterPulseBuy()).WillOnce(Return(true));
+        EXPECT_CALL(*configMock, isFilterPulseSell()).WillOnce(Return(true));
         EXPECT_CALL(*notificationsTableWidgetMock, setFilter(Filter()));
         EXPECT_CALL(*trayIconMock, setFilter(Filter()));
         EXPECT_CALL(*notifierMock, setFilter(Filter()));
@@ -277,7 +279,9 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*configMock, isFilterPortfolio()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isFilterHugeSell()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isFilterDividends()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, isFilterPulse()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPulseNeutral()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPulseBuy()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPulseSell()).WillOnce(Return(true));
     EXPECT_CALL(*notificationsTableWidgetMock, setFilter(Filter()));
     EXPECT_CALL(*trayIconMock, setFilter(Filter()));
     EXPECT_CALL(*notifierMock, setFilter(Filter()));

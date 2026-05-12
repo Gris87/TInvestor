@@ -34,7 +34,8 @@ NotificationsTableModel::NotificationsTableModel(QObject* parent) :
     mHeader << tr("Time") << tr("Type") << tr("Text");
     Q_ASSERT_X(mHeader.size() == NOTIFICATIONS_COLUMN_COUNT, __FUNCTION__, "Header is incorrect");
 
-    mMessageTypes << "" << tr("System") << tr("Portfolio") << tr("Huge sell") << tr("Dividends") << tr("Pulse");
+    mMessageTypes << "" << tr("System") << tr("Portfolio") << tr("Huge sell") << tr("Dividends") << tr("Pulse (Neutral)")
+                  << tr("Pulse (Buy)") << tr("Pulse (Sell)");
     Q_ASSERT_X(mMessageTypes.size() == MESSAGE_TYPE_COUNT, __FUNCTION__, "Header is incorrect");
 }
 

@@ -18,7 +18,7 @@
 <context>
     <name>NotificationWidget</name>
     <message>
-        <location filename="../../src/widgets/notificationwidget/notificationwidget.ui" line="44"/>
+        <location filename="../../src/widgets/notificationwidget/notificationwidget.ui" line="50"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
@@ -62,8 +62,18 @@
     </message>
     <message>
         <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
-        <source>Pulse</source>
-        <translation>Пульс</translation>
+        <source>Pulse (Neutral)</source>
+        <translation>Пульс (Нейтральный)</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
+        <source>Pulse (Buy)</source>
+        <translation>Пульс (Покупка)</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
+        <source>Pulse (Sell)</source>
+        <translation>Пульс (Продажа)</translation>
     </message>
 </context>
 <context>
@@ -97,7 +107,22 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="263"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="176"/>
+        <source>Pulse (Neutral)</source>
+        <translation>Пульс (Нейтральный)</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="186"/>
+        <source>Pulse (Buy)</source>
+        <translation>Пульс (Покупка)</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="196"/>
+        <source>Pulse (Sell)</source>
+        <translation>Пульс (Продажа)</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="283"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
@@ -142,17 +167,12 @@
         <translation>Дивиденды</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="176"/>
-        <source>Pulse</source>
-        <translation>Пульс</translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="220"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="240"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="243"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="263"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -165,17 +185,17 @@
 <context>
     <name>TrayIcon</name>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="26"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="27"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="28"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="29"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="34"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="35"/>
         <source>TInvestor notifier</source>
         <translation>Уведомления Ты ж инвестор</translation>
     </message>

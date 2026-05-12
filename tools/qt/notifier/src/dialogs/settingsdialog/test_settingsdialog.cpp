@@ -53,7 +53,9 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->filterPortfolioCheckBox->blockSignals(true);
     dialog->ui->filterHugeSellCheckBox->blockSignals(true);
     dialog->ui->filterDividendsCheckBox->blockSignals(true);
-    dialog->ui->filterPulseCheckBox->blockSignals(true);
+    dialog->ui->filterPulseNeutralCheckBox->blockSignals(true);
+    dialog->ui->filterPulseBuyCheckBox->blockSignals(true);
+    dialog->ui->filterPulseSellCheckBox->blockSignals(true);
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getServerAddress()).WillOnce(Return("yandex.ru"));
@@ -63,7 +65,9 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isFilterPortfolio()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isFilterHugeSell()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isFilterDividends()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, isFilterPulse()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPulseNeutral()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPulseBuy()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPulseSell()).WillOnce(Return(true));
 
     dialog->updateUiFromConfig();
 
@@ -76,7 +80,9 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->filterPortfolioCheckBox->isChecked(),      true);
     ASSERT_EQ(dialog->ui->filterHugeSellCheckBox->isChecked(),       true);
     ASSERT_EQ(dialog->ui->filterDividendsCheckBox->isChecked(),      true);
-    ASSERT_EQ(dialog->ui->filterPulseCheckBox->isChecked(),          true);
+    ASSERT_EQ(dialog->ui->filterPulseNeutralCheckBox->isChecked(),   true);
+    ASSERT_EQ(dialog->ui->filterPulseBuyCheckBox->isChecked(),       true);
+    ASSERT_EQ(dialog->ui->filterPulseSellCheckBox->isChecked(),      true);
     // clang-format on
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
@@ -87,7 +93,9 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isFilterPortfolio()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isFilterHugeSell()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isFilterDividends()).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, isFilterPulse()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isFilterPulseNeutral()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isFilterPulseBuy()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isFilterPulseSell()).WillOnce(Return(false));
 
     dialog->updateUiFromConfig();
 
@@ -100,7 +108,9 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->filterPortfolioCheckBox->isChecked(),      false);
     ASSERT_EQ(dialog->ui->filterHugeSellCheckBox->isChecked(),       false);
     ASSERT_EQ(dialog->ui->filterDividendsCheckBox->isChecked(),      false);
-    ASSERT_EQ(dialog->ui->filterPulseCheckBox->isChecked(),          false);
+    ASSERT_EQ(dialog->ui->filterPulseNeutralCheckBox->isChecked(),   false);
+    ASSERT_EQ(dialog->ui->filterPulseBuyCheckBox->isChecked(),       false);
+    ASSERT_EQ(dialog->ui->filterPulseSellCheckBox->isChecked(),      false);
     // clang-format on
 }
 
@@ -224,19 +234,49 @@ TEST_F(Test_SettingsDialog, Test_on_filterDividendsCheckBox_checkStateChanged)
     dialog->ui->filterDividendsCheckBox->setChecked(false);
 }
 
-TEST_F(Test_SettingsDialog, Test_on_filterPulseCheckBox_checkStateChanged)
+TEST_F(Test_SettingsDialog, Test_on_filterPulseNeutralCheckBox_checkStateChanged)
 {
     const InSequence seq;
 
-    dialog->ui->filterPulseCheckBox->blockSignals(true);
-    dialog->ui->filterPulseCheckBox->setChecked(false);
-    dialog->ui->filterPulseCheckBox->blockSignals(false);
+    dialog->ui->filterPulseNeutralCheckBox->blockSignals(true);
+    dialog->ui->filterPulseNeutralCheckBox->setChecked(false);
+    dialog->ui->filterPulseNeutralCheckBox->blockSignals(false);
 
-    EXPECT_CALL(*configMock, setFilterPulse(true));
-    dialog->ui->filterPulseCheckBox->setChecked(true);
+    EXPECT_CALL(*configMock, setFilterPulseNeutral(true));
+    dialog->ui->filterPulseNeutralCheckBox->setChecked(true);
 
-    EXPECT_CALL(*configMock, setFilterPulse(false));
-    dialog->ui->filterPulseCheckBox->setChecked(false);
+    EXPECT_CALL(*configMock, setFilterPulseNeutral(false));
+    dialog->ui->filterPulseNeutralCheckBox->setChecked(false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_filterPulseBuyCheckBox_checkStateChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->filterPulseBuyCheckBox->blockSignals(true);
+    dialog->ui->filterPulseBuyCheckBox->setChecked(false);
+    dialog->ui->filterPulseBuyCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setFilterPulseBuy(true));
+    dialog->ui->filterPulseBuyCheckBox->setChecked(true);
+
+    EXPECT_CALL(*configMock, setFilterPulseBuy(false));
+    dialog->ui->filterPulseBuyCheckBox->setChecked(false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_filterPulseSellCheckBox_checkStateChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->filterPulseSellCheckBox->blockSignals(true);
+    dialog->ui->filterPulseSellCheckBox->setChecked(false);
+    dialog->ui->filterPulseSellCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setFilterPulseSell(true));
+    dialog->ui->filterPulseSellCheckBox->setChecked(true);
+
+    EXPECT_CALL(*configMock, setFilterPulseSell(false));
+    dialog->ui->filterPulseSellCheckBox->setChecked(false);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_okButton_clicked)
@@ -265,7 +305,9 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->filterPortfolioCheckBox->blockSignals(true);
     dialog->ui->filterHugeSellCheckBox->blockSignals(true);
     dialog->ui->filterDividendsCheckBox->blockSignals(true);
-    dialog->ui->filterPulseCheckBox->blockSignals(true);
+    dialog->ui->filterPulseNeutralCheckBox->blockSignals(true);
+    dialog->ui->filterPulseBuyCheckBox->blockSignals(true);
+    dialog->ui->filterPulseSellCheckBox->blockSignals(true);
 
     EXPECT_CALL(*configMock, makeDefault());
 
@@ -277,7 +319,9 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*configMock, isFilterPortfolio()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isFilterHugeSell()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isFilterDividends()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, isFilterPulse()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPulseNeutral()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPulseBuy()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isFilterPulseSell()).WillOnce(Return(true));
 
     dialog->ui->defaultButton->click();
 
@@ -290,7 +334,9 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     ASSERT_EQ(dialog->ui->filterPortfolioCheckBox->isChecked(),      true);
     ASSERT_EQ(dialog->ui->filterHugeSellCheckBox->isChecked(),       true);
     ASSERT_EQ(dialog->ui->filterDividendsCheckBox->isChecked(),      true);
-    ASSERT_EQ(dialog->ui->filterPulseCheckBox->isChecked(),          true);
+    ASSERT_EQ(dialog->ui->filterPulseNeutralCheckBox->isChecked(),   true);
+    ASSERT_EQ(dialog->ui->filterPulseBuyCheckBox->isChecked(),       true);
+    ASSERT_EQ(dialog->ui->filterPulseSellCheckBox->isChecked(),      true);
     // clang-format on
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

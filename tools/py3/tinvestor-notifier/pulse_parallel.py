@@ -61,21 +61,21 @@ def _process_posts(args, posts):
         if match is not None:
             found_text = match.group(1).strip()
 
-            store_message(args, "pulse", msg_recommend_to_investigate + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
+            store_message(args, "pulse_neutral", msg_recommend_to_investigate + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
 
         match = recommend_to_buy_regexp.match(post_text_simplified)
 
         if match is not None:
             found_text = match.group(1).strip()
 
-            store_message(args, "pulse", msg_recommend_to_buy + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
+            store_message(args, "pulse_buy", msg_recommend_to_buy + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
 
         match = recommend_to_short_regexp.match(post_text_simplified)
 
         if match is not None:
             found_text = match.group(1).strip()
 
-            store_message(args, "pulse", msg_recommend_to_short + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
+            store_message(args, "pulse_sell", msg_recommend_to_short + "\n" + msg_pulse_text_found.format(found_text=found_text) + "\n" + post_text)
 
 
 if __name__ == "__main__":

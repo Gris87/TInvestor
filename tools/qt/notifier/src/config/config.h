@@ -47,8 +47,14 @@ public:
     void setFilterDividends(bool value) override;
     bool isFilterDividends() override;
 
-    void setFilterPulse(bool value) override;
-    bool isFilterPulse() override;
+    void setFilterPulseNeutral(bool value) override;
+    bool isFilterPulseNeutral() override;
+
+    void setFilterPulseBuy(bool value) override;
+    bool isFilterPulseBuy() override;
+
+    void setFilterPulseSell(bool value) override;
+    bool isFilterPulseSell() override;
 
 private:
     QReadWriteLock* mRwMutex;
@@ -61,5 +67,7 @@ private:
     bool    mFilterPortfolio;
     bool    mFilterHugeSell;
     bool    mFilterDividends;
-    bool    mFilterPulse;
+    bool    mFilterPulseNeutral;
+    bool    mFilterPulseBuy;
+    bool    mFilterPulseSell;
 };

@@ -47,7 +47,9 @@ TEST_F(Test_Config, Test_assign)
     config->setFilterPortfolio(false);
     config->setFilterHugeSell(false);
     config->setFilterDividends(false);
-    config->setFilterPulse(false);
+    config->setFilterPulseNeutral(false);
+    config->setFilterPulseBuy(false);
+    config->setFilterPulseSell(false);
 
     // clang-format off
     ASSERT_EQ(config->isAutorun(),              false);
@@ -58,7 +60,9 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->isFilterPortfolio(),      false);
     ASSERT_EQ(config->isFilterHugeSell(),       false);
     ASSERT_EQ(config->isFilterDividends(),      false);
-    ASSERT_EQ(config->isFilterPulse(),          false);
+    ASSERT_EQ(config->isFilterPulseNeutral(),   false);
+    ASSERT_EQ(config->isFilterPulseBuy(),       false);
+    ASSERT_EQ(config->isFilterPulseSell(),      false);
     // clang-format on
 
     config2.setAutorun(true);
@@ -69,7 +73,9 @@ TEST_F(Test_Config, Test_assign)
     config2.setFilterPortfolio(true);
     config2.setFilterHugeSell(true);
     config2.setFilterDividends(true);
-    config2.setFilterPulse(true);
+    config2.setFilterPulseNeutral(true);
+    config2.setFilterPulseBuy(true);
+    config2.setFilterPulseSell(true);
 
     // clang-format off
     ASSERT_EQ(config2.isAutorun(),              true);
@@ -80,7 +86,9 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.isFilterPortfolio(),      true);
     ASSERT_EQ(config2.isFilterHugeSell(),       true);
     ASSERT_EQ(config2.isFilterDividends(),      true);
-    ASSERT_EQ(config2.isFilterPulse(),          true);
+    ASSERT_EQ(config2.isFilterPulseNeutral(),   true);
+    ASSERT_EQ(config2.isFilterPulseBuy(),       true);
+    ASSERT_EQ(config2.isFilterPulseSell(),      true);
     // clang-format on
 
     config->assign(&config2);
@@ -94,7 +102,9 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->isFilterPortfolio(),      true);
     ASSERT_EQ(config->isFilterHugeSell(),       true);
     ASSERT_EQ(config->isFilterDividends(),      true);
-    ASSERT_EQ(config->isFilterPulse(),          true);
+    ASSERT_EQ(config->isFilterPulseNeutral(),   true);
+    ASSERT_EQ(config->isFilterPulseBuy(),       true);
+    ASSERT_EQ(config->isFilterPulseSell(),      true);
     // clang-format on
 
     // clang-format off
@@ -106,7 +116,9 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.isFilterPortfolio(),      true);
     ASSERT_EQ(config2.isFilterHugeSell(),       true);
     ASSERT_EQ(config2.isFilterDividends(),      true);
-    ASSERT_EQ(config2.isFilterPulse(),          true);
+    ASSERT_EQ(config2.isFilterPulseNeutral(),   true);
+    ASSERT_EQ(config2.isFilterPulseBuy(),       true);
+    ASSERT_EQ(config2.isFilterPulseSell(),      true);
     // clang-format on
 }
 
@@ -120,7 +132,9 @@ TEST_F(Test_Config, Test_makeDefault)
     config->setFilterPortfolio(false);
     config->setFilterHugeSell(false);
     config->setFilterDividends(false);
-    config->setFilterPulse(false);
+    config->setFilterPulseNeutral(false);
+    config->setFilterPulseBuy(false);
+    config->setFilterPulseSell(false);
 
     // clang-format off
     ASSERT_EQ(config->isAutorun(),              false);
@@ -131,7 +145,9 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isFilterPortfolio(),      false);
     ASSERT_EQ(config->isFilterHugeSell(),       false);
     ASSERT_EQ(config->isFilterDividends(),      false);
-    ASSERT_EQ(config->isFilterPulse(),          false);
+    ASSERT_EQ(config->isFilterPulseNeutral(),   false);
+    ASSERT_EQ(config->isFilterPulseBuy(),       false);
+    ASSERT_EQ(config->isFilterPulseSell(),      false);
     // clang-format on
 
     config->makeDefault();
@@ -145,7 +161,9 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isFilterPortfolio(),      true);
     ASSERT_EQ(config->isFilterHugeSell(),       true);
     ASSERT_EQ(config->isFilterDividends(),      true);
-    ASSERT_EQ(config->isFilterPulse(),          true);
+    ASSERT_EQ(config->isFilterPulseNeutral(),   true);
+    ASSERT_EQ(config->isFilterPulseBuy(),       true);
+    ASSERT_EQ(config->isFilterPulseSell(),      true);
     // clang-format on
 }
 
@@ -161,7 +179,9 @@ TEST_F(Test_Config, Test_save)
     config->setFilterPortfolio(false);
     config->setFilterHugeSell(false);
     config->setFilterDividends(false);
-    config->setFilterPulse(false);
+    config->setFilterPulseNeutral(false);
+    config->setFilterPulseBuy(false);
+    config->setFilterPulseSell(false);
 
     // clang-format off
     ASSERT_EQ(config->isAutorun(),              false);
@@ -172,7 +192,9 @@ TEST_F(Test_Config, Test_save)
     ASSERT_EQ(config->isFilterPortfolio(),      false);
     ASSERT_EQ(config->isFilterHugeSell(),       false);
     ASSERT_EQ(config->isFilterDividends(),      false);
-    ASSERT_EQ(config->isFilterPulse(),          false);
+    ASSERT_EQ(config->isFilterPulseNeutral(),   false);
+    ASSERT_EQ(config->isFilterPulseBuy(),       false);
+    ASSERT_EQ(config->isFilterPulseSell(),      false);
     // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
@@ -186,7 +208,9 @@ TEST_F(Test_Config, Test_save)
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/FilterPortfolio"),      QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/FilterHugeSell"),       QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/FilterDividends"),      QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/FilterPulse"),          QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/FilterPulseNeutral"),   QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/FilterPulseBuy"),       QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/FilterPulseSell"),      QVariant(false)));
     // clang-format on
 
     config->save(&settingsEditorMock);
@@ -204,7 +228,9 @@ TEST_F(Test_Config, Test_load)
     config->setFilterPortfolio(false);
     config->setFilterHugeSell(false);
     config->setFilterDividends(false);
-    config->setFilterPulse(false);
+    config->setFilterPulseNeutral(false);
+    config->setFilterPulseBuy(false);
+    config->setFilterPulseSell(false);
 
     // clang-format off
     ASSERT_EQ(config->isAutorun(),              false);
@@ -215,7 +241,9 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->isFilterPortfolio(),      false);
     ASSERT_EQ(config->isFilterHugeSell(),       false);
     ASSERT_EQ(config->isFilterDividends(),      false);
-    ASSERT_EQ(config->isFilterPulse(),          false);
+    ASSERT_EQ(config->isFilterPulseNeutral(),   false);
+    ASSERT_EQ(config->isFilterPulseBuy(),       false);
+    ASSERT_EQ(config->isFilterPulseSell(),      false);
     // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
@@ -229,7 +257,9 @@ TEST_F(Test_Config, Test_load)
     EXPECT_CALL(settingsEditorMock, value(QString("Config/FilterPortfolio"),      QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/FilterHugeSell"),       QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/FilterDividends"),      QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/FilterPulse"),          QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/FilterPulseNeutral"),   QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/FilterPulseBuy"),       QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/FilterPulseSell"),      QVariant(false))).WillOnce(Return(QVariant(true)));
     // clang-format on
 
     config->load(&settingsEditorMock);
@@ -243,7 +273,9 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->isFilterPortfolio(),      true);
     ASSERT_EQ(config->isFilterHugeSell(),       true);
     ASSERT_EQ(config->isFilterDividends(),      true);
-    ASSERT_EQ(config->isFilterPulse(),          true);
+    ASSERT_EQ(config->isFilterPulseNeutral(),   true);
+    ASSERT_EQ(config->isFilterPulseBuy(),       true);
+    ASSERT_EQ(config->isFilterPulseSell(),      true);
     // clang-format on
 }
 
@@ -319,12 +351,30 @@ TEST_F(Test_Config, Test_setFilterDividends_and_isFilterDividends)
     ASSERT_EQ(config->isFilterDividends(), true);
 }
 
-TEST_F(Test_Config, Test_setFilterPulse_and_isFilterPulse)
+TEST_F(Test_Config, Test_setFilterPulseNeutral_and_isFilterPulseNeutral)
 {
-    config->setFilterPulse(false);
-    ASSERT_EQ(config->isFilterPulse(), false);
+    config->setFilterPulseNeutral(false);
+    ASSERT_EQ(config->isFilterPulseNeutral(), false);
 
-    config->setFilterPulse(true);
-    ASSERT_EQ(config->isFilterPulse(), true);
+    config->setFilterPulseNeutral(true);
+    ASSERT_EQ(config->isFilterPulseNeutral(), true);
+}
+
+TEST_F(Test_Config, Test_setFilterPulseBuy_and_isFilterPulseBuy)
+{
+    config->setFilterPulseBuy(false);
+    ASSERT_EQ(config->isFilterPulseBuy(), false);
+
+    config->setFilterPulseBuy(true);
+    ASSERT_EQ(config->isFilterPulseBuy(), true);
+}
+
+TEST_F(Test_Config, Test_setFilterPulseSell_and_isFilterPulseSell)
+{
+    config->setFilterPulseSell(false);
+    ASSERT_EQ(config->isFilterPulseSell(), false);
+
+    config->setFilterPulseSell(true);
+    ASSERT_EQ(config->isFilterPulseSell(), true);
 }
 // NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

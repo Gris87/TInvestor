@@ -98,17 +98,17 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="708"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="705"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="718"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="715"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="718"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="715"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
@@ -1536,19 +1536,19 @@
 <context>
     <name>StockCollectThread</name>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="96"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="296"/>
         <source>Downloading metadata</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="414"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="442"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="614"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="642"/>
         <source>Downloading logos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="808"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="816"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="1005"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="1013"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>

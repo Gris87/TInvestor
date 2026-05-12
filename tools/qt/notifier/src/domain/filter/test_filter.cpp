@@ -22,7 +22,7 @@ TEST_F(Test_Filter, Test_constructor_and_destructor)
 {
     const Filter filter;
 
-    ASSERT_EQ(filter.messageTypeMask, 63);
+    ASSERT_EQ(filter.messageTypeMask, 255);
 }
 
 TEST_F(Test_Filter, Test_copy_constructor)
@@ -56,7 +56,7 @@ TEST_F(Test_Filter, Test_isActive)
 
     filter.messageTypeMask = 1;
     ASSERT_EQ(filter.isActive(), true);
-    filter.messageTypeMask = 63;
+    filter.messageTypeMask = 255;
     ASSERT_EQ(filter.isActive(), false);
 }
 

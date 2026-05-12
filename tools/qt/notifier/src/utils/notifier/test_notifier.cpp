@@ -73,7 +73,7 @@ TEST_F(Test_Notifier, Test_notificationsAdded_and_resetNotificationWidgets)
 
     notification2.requestTimestamp = 1704056460000;
     notification2.timestamp        = 1704056460000;
-    notification2.messageType      = MESSAGE_TYPE_PULSE;
+    notification2.messageType      = MESSAGE_TYPE_HUGE_SELL;
     notification2.text             = "Darkness";
 
     notification3.requestTimestamp = 1704056520000;

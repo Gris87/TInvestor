@@ -6,19 +6,23 @@
 
 // clang-format off
 static const QMap<QString, MessageType> STRING_TO_MESSAGE_TYPE{ // clazy:exclude=non-pod-global-static
-    {"system",    MESSAGE_TYPE_SYSTEM},
-    {"portfolio", MESSAGE_TYPE_PORTFOLIO},
-    {"huge_sell", MESSAGE_TYPE_HUGE_SELL},
-    {"dividends", MESSAGE_TYPE_DIVIDENDS},
-    {"pulse",     MESSAGE_TYPE_PULSE}
+    {"system",        MESSAGE_TYPE_SYSTEM},
+    {"portfolio",     MESSAGE_TYPE_PORTFOLIO},
+    {"huge_sell",     MESSAGE_TYPE_HUGE_SELL},
+    {"dividends",     MESSAGE_TYPE_DIVIDENDS},
+    {"pulse_neutral", MESSAGE_TYPE_PULSE_NEUTRAL},
+    {"pulse_buy",     MESSAGE_TYPE_PULSE_BUY},
+    {"pulse_sell",    MESSAGE_TYPE_PULSE_SELL}
 };
 
 static const QMap<MessageType, QString> MESSAGE_TYPE_TO_STRING{ // clazy:exclude=non-pod-global-static
-    {MESSAGE_TYPE_SYSTEM,    "system"},
-    {MESSAGE_TYPE_PORTFOLIO, "portfolio"},
-    {MESSAGE_TYPE_HUGE_SELL, "huge_sell"},
-    {MESSAGE_TYPE_DIVIDENDS, "dividends"},
-    {MESSAGE_TYPE_PULSE,     "pulse"}
+    {MESSAGE_TYPE_SYSTEM,        "system"},
+    {MESSAGE_TYPE_PORTFOLIO,     "portfolio"},
+    {MESSAGE_TYPE_HUGE_SELL,     "huge_sell"},
+    {MESSAGE_TYPE_DIVIDENDS,     "dividends"},
+    {MESSAGE_TYPE_PULSE_NEUTRAL, "pulse_neutral"},
+    {MESSAGE_TYPE_PULSE_BUY,     "pulse_buy"},
+    {MESSAGE_TYPE_PULSE_SELL,    "pulse_sell"}
 };
 // clang-format on
 

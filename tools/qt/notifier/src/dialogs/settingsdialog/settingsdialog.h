@@ -42,7 +42,9 @@ private slots:
     void on_filterPortfolioCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_filterHugeSellCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_filterDividendsCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_filterPulseCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_filterPulseNeutralCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_filterPulseBuyCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_filterPulseSellCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_okButton_clicked();
     void on_cancelButton_clicked();
     void on_defaultButton_clicked();

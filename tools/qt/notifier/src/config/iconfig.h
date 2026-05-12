@@ -45,6 +45,12 @@ public:
     virtual void setFilterDividends(bool value) = 0;
     virtual bool isFilterDividends()            = 0;
 
-    virtual void setFilterPulse(bool value) = 0;
-    virtual bool isFilterPulse()            = 0;
+    virtual void setFilterPulseNeutral(bool value) = 0;
+    virtual bool isFilterPulseNeutral()            = 0;
+
+    virtual void setFilterPulseBuy(bool value) = 0;
+    virtual bool isFilterPulseBuy()            = 0;
+
+    virtual void setFilterPulseSell(bool value) = 0;
+    virtual bool isFilterPulseSell()            = 0;
 };

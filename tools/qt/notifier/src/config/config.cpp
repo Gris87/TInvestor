@@ -13,7 +13,9 @@ constexpr bool FILTER_SYSTEM_DEFAULT         = true;
 constexpr bool FILTER_PORTFOLIO_DEFAULT      = true;
 constexpr bool FILTER_HUGE_SELL_DEFAULT      = true;
 constexpr bool FILTER_DIVIDENDS_DEFAULT      = true;
-constexpr bool FILTER_PULSE_DEFAULT          = true;
+constexpr bool FILTER_PULSE_NEUTRAL_DEFAULT  = true;
+constexpr bool FILTER_PULSE_BUY_DEFAULT      = true;
+constexpr bool FILTER_PULSE_SELL_DEFAULT     = true;
 
 
 
@@ -28,7 +30,9 @@ Config::Config() :
     mFilterPortfolio(),
     mFilterHugeSell(),
     mFilterDividends(),
-    mFilterPulse()
+    mFilterPulseNeutral(),
+    mFilterPulseBuy(),
+    mFilterPulseSell()
 {
     qDebug() << "Create Config";
 }
@@ -57,7 +61,9 @@ void Config::assign(IConfig* another)
     mFilterPortfolio      = config.mFilterPortfolio;
     mFilterHugeSell       = config.mFilterHugeSell;
     mFilterDividends      = config.mFilterDividends;
-    mFilterPulse          = config.mFilterPulse;
+    mFilterPulseNeutral   = config.mFilterPulseNeutral;
+    mFilterPulseBuy       = config.mFilterPulseBuy;
+    mFilterPulseSell      = config.mFilterPulseSell;
 }
 
 void Config::makeDefault()
@@ -74,7 +80,9 @@ void Config::makeDefault()
     mFilterPortfolio      = FILTER_PORTFOLIO_DEFAULT;
     mFilterHugeSell       = FILTER_HUGE_SELL_DEFAULT;
     mFilterDividends      = FILTER_DIVIDENDS_DEFAULT;
-    mFilterPulse          = FILTER_PULSE_DEFAULT;
+    mFilterPulseNeutral   = FILTER_PULSE_NEUTRAL_DEFAULT;
+    mFilterPulseBuy       = FILTER_PULSE_BUY_DEFAULT;
+    mFilterPulseSell      = FILTER_PULSE_SELL_DEFAULT;
 }
 
 void Config::save(ISettingsEditor* settingsEditor)
@@ -92,7 +100,9 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/FilterPortfolio",      mFilterPortfolio);
     settingsEditor->setValue("Config/FilterHugeSell",       mFilterHugeSell);
     settingsEditor->setValue("Config/FilterDividends",      mFilterDividends);
-    settingsEditor->setValue("Config/FilterPulse",          mFilterPulse);
+    settingsEditor->setValue("Config/FilterPulseNeutral",   mFilterPulseNeutral);
+    settingsEditor->setValue("Config/FilterPulseBuy",       mFilterPulseBuy);
+    settingsEditor->setValue("Config/FilterPulseSell",      mFilterPulseSell);
     // clang-format on
 }
 
@@ -111,7 +121,9 @@ void Config::load(ISettingsEditor* settingsEditor)
     mFilterPortfolio      = settingsEditor->value("Config/FilterPortfolio",      mFilterPortfolio).toBool();
     mFilterHugeSell       = settingsEditor->value("Config/FilterHugeSell",       mFilterHugeSell).toBool();
     mFilterDividends      = settingsEditor->value("Config/FilterDividends",      mFilterDividends).toBool();
-    mFilterPulse          = settingsEditor->value("Config/FilterPulse",          mFilterPulse).toBool();
+    mFilterPulseNeutral   = settingsEditor->value("Config/FilterPulseNeutral",   mFilterPulseNeutral).toBool();
+    mFilterPulseBuy       = settingsEditor->value("Config/FilterPulseBuy",       mFilterPulseBuy).toBool();
+    mFilterPulseSell      = settingsEditor->value("Config/FilterPulseSell",      mFilterPulseSell).toBool();
     // clang-format on
 }
 
@@ -227,16 +239,44 @@ bool Config::isFilterDividends()
     return mFilterDividends;
 }
 
-void Config::setFilterPulse(bool value)
+void Config::setFilterPulseNeutral(bool value)
 {
     const QWriteLocker lock(mRwMutex);
 
-    mFilterPulse = value;
+    mFilterPulseNeutral = value;
 }
 
-bool Config::isFilterPulse()
+bool Config::isFilterPulseNeutral()
 {
     const QReadLocker lock(mRwMutex);
 
-    return mFilterPulse;
+    return mFilterPulseNeutral;
+}
+
+void Config::setFilterPulseBuy(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mFilterPulseBuy = value;
+}
+
+bool Config::isFilterPulseBuy()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mFilterPulseBuy;
+}
+
+void Config::setFilterPulseSell(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mFilterPulseSell = value;
+}
+
+bool Config::isFilterPulseSell()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mFilterPulseSell;
 }

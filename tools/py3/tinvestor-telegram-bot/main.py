@@ -100,7 +100,7 @@ def main():
         dest="filter",
         type=str,
         default="all",
-        help="Comma separated list of filters: system,portfolio,huge_sell,dividends,pulse (default: all)"
+        help="Comma separated list of filters: system,portfolio,huge_sell,dividends,pulse_neutral,pulse_buy,pulse_sell (default: all)"
     )
     args = parser.parse_args()
 
@@ -137,7 +137,7 @@ def main():
     filter = args.filter.split(",")
 
     for f in filter:
-        if f not in ["system", "portfolio", "huge_sell", "dividends", "pulse", "all"]:
+        if f not in ["system", "portfolio", "huge_sell", "dividends", "pulse_neutral", "pulse_buy", "pulse_sell", "all"]:
             logger.error("Please specify valid filter")
 
             sys.exit(1)

@@ -85,7 +85,7 @@ TEST_F(Test_RequestThread, Test_run)
     HttpResult httpResult1;
     httpResult1.statusCode = 200;
     httpResult1.body =
-        R"({"notifications":[{"timestamp":1704056460000,"type":"system","text":"Everything crashes"},{"timestamp":1704056520000,"type":"pulse","text":"Hello my subscribers"}]})";
+        R"({"notifications":[{"timestamp":1704056460000,"type":"system","text":"Everything crashes"},{"timestamp":1704056520000,"type":"dividends","text":"Hello my subscribers"}]})";
 
     HttpResult httpResult2;
     httpResult2.statusCode = 200;
@@ -101,7 +101,7 @@ TEST_F(Test_RequestThread, Test_run)
 
     notification1.requestTimestamp = 1704056520000;
     notification1.timestamp        = 1704056520000;
-    notification1.messageType      = MESSAGE_TYPE_PULSE;
+    notification1.messageType      = MESSAGE_TYPE_DIVIDENDS;
     notification1.text             = "Hello my subscribers";
 
     notification2.requestTimestamp = 1704056460000;
