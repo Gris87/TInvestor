@@ -1,5 +1,6 @@
 Improve coverage
 Telegram bot stable
+Split pulse into 3 groups
 Improve module-coverage for notifier
 Create release
 
