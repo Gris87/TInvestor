@@ -32,10 +32,6 @@ public:
 
     void terminateThread() override;
 
-    void readNotificationsAtFirstRun();
-    void requestNotifications();
-    void processNotificationsResponse(const QByteArray& resp);
-
 #ifdef TESTING_MODE
     void testSetLimitNotifications(int limitNotifications)
     {
@@ -49,6 +45,9 @@ public:
 #endif
 
 private:
+    void readNotificationsAtFirstRun();
+    void requestNotifications();
+    void processNotificationsResponse(const QByteArray& resp);
     void optimize();
 
     IConfig*                mConfig;

@@ -17,7 +17,7 @@ constexpr int NOTIFICATION_GAP            = 8;
 Notifier::Notifier(INotificationWidgetFactory* notificationWidgetFactory, QObject* parent) :
     INotifier(parent),
     mNotificationWidgetFactory(notificationWidgetFactory),
-    mEnabled(),
+    mEnabled(true),
     mFilter(),
     mNotificationWidgets()
 {
