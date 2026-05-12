@@ -1,5 +1,3 @@
-Telegram bot stable
-Improve module-coverage for notifier
 Create release
 
 High priority for bi-dir tradings

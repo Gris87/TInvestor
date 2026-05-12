@@ -32,8 +32,11 @@ def module_coverage():
 def _get_files():
     res = []
 
-    # TODO: Adapt for notifier
-    for path in sorted(Path("app").rglob("*.cpp")):
+    paths = []
+    paths.extend(Path("app").rglob("*.cpp"))
+    paths.extend(Path("tools/qt/notifier").rglob("*.cpp"))
+
+    for path in sorted(paths):
         if path.name.startswith("test_"):
             continue
 
@@ -43,7 +46,8 @@ def _get_files():
             "app/src/main.cpp" in file_path or
             "app/src/utils/filedialog/filedialog.cp" in file_path or
             "app/src/utils/http/httpclient.cpp" in file_path or
-            "app/src/utils/messagebox/messageboxutils.cp" in file_path
+            "app/src/utils/messagebox/messageboxutils.cp" in file_path or
+            "tools/qt/notifier/src/main.cpp" in file_path
         )
 
         if skip_files:
@@ -64,6 +68,9 @@ def _get_commands(files):
     res = []
 
     for path in files:
+        file_path = str(path.absolute()).replace("\\", "/")
+        app_tests_name = _get_app_variables(file_path)
+
         module_path = str(path)
         module_path_simplified = module_path.replace("\\", "_").replace("/", "_").replace(".cpp", "")
 
@@ -89,39 +96,40 @@ def _get_commands(files):
                 "--sources",
                 module_path,
                 "--export_type",
-                f"html:..\\..\\..\\ModuleCoverage\\{module_path_simplified}",
+                f"html:..\\..\\..\\..\\ModuleCoverage\\{module_path_simplified}",
                 "--export_type",
-                f"cobertura:..\\..\\..\\ModuleCoverage\\{module_path_simplified}\\cobertura.xml",
+                f"cobertura:..\\..\\..\\..\\ModuleCoverage\\{module_path_simplified}\\cobertura.xml",
                 "--",
-                "tests.exe",
+                f"{app_tests_name}.exe",
                 f"--gtest_filter={test_group}.*"
             ]
             post_cmd = []
         else:
             prepare_cmd = [
-                "./tests",
+                f"./{app_tests_name}",
                 f"--gtest_filter={test_group}.*"
             ]
             cmd = [
                 "lcov",
                 "-t",
-                "tests",
+                app_tests_name,
                 "--capture",
                 "--include",
                 module_path,
                 "--directory",
-                "gen/tests/objs",
+                f"gen/{app_tests_name}/objs",
                 "--output-file",
                 "lcov.info"
             ]
             post_cmd = [
                 "genhtml",
                 "--output-directory",
-                f"../../../ModuleCoverage/{module_path_simplified}",
+                f"../../../../ModuleCoverage/{module_path_simplified}",
                 "lcov.info",
             ]
 
         res.append({
+            "cwd": f"build/Desktop-Debug/tests/{app_tests_name}/build",
             "prepare_cmd": prepare_cmd,
             "cmd": cmd,
             "post_cmd": post_cmd,
@@ -175,6 +183,7 @@ def _execute_commands(commands):
 
 
 def _execute_command(command):
+    cwd = command["cwd"]
     prepare_cmd = command["prepare_cmd"]
     cmd = command["cmd"]
     post_cmd = command["post_cmd"]
@@ -182,7 +191,7 @@ def _execute_command(command):
     module_path_simplified = command["module_path_simplified"]
 
     my_env = os.environ.copy()
-    my_env["LD_LIBRARY_PATH"] = str(Path("build/Desktop-Debug/tests/build").absolute())
+    my_env["LD_LIBRARY_PATH"] = str(Path(cwd).absolute())
 
     for i in range(5):
         shutil.rmtree(f"build/ModuleCoverage/{module_path_simplified}", ignore_errors=True)
@@ -192,7 +201,7 @@ def _execute_command(command):
                 prepare_cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
-                cwd="build/Desktop-Debug/tests/build",
+                cwd=cwd,
                 env=my_env
             )
 
@@ -205,7 +214,7 @@ def _execute_command(command):
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
-            cwd="build/Desktop-Debug/tests/build"
+            cwd=cwd
         )
 
         if is_windows:
@@ -228,7 +237,7 @@ def _execute_command(command):
                 post_cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
-                cwd="build/Desktop-Debug/tests/build"
+                cwd=cwd
             )
 
             process.wait()
@@ -245,7 +254,7 @@ def _execute_command(command):
             total_lines = 0
             covered_lines = 0
 
-            with open(f"build/Desktop-Debug/tests/build/lcov.info", "r") as f:
+            with open(f"{cwd}/lcov.info", "r") as f:
                 lines = f.readlines()
 
             for line in lines:
@@ -265,11 +274,20 @@ def _execute_command(command):
         shutil.move(f"build/ModuleCoverage/{module_path_simplified}", f"build/ModuleCoverage/results/{int(coverage)}/{module_path_simplified}")
 
         if not is_windows:
-            shutil.move("build/Desktop-Debug/tests/build/lcov.info", f"build/ModuleCoverage/results/{int(coverage)}/{module_path_simplified}/lcov.info")
+            shutil.move(f"{cwd}/lcov.info", f"build/ModuleCoverage/results/{int(coverage)}/{module_path_simplified}/lcov.info")
 
         return True, module_path, coverage
 
     return False, module_path, 0
+
+
+def _get_app_variables(file_path):
+    app_tests_name = "app_tests"
+
+    if "/notifier/" in file_path or "/notifier_tests/" in file_path:
+        app_tests_name = "notifier_tests"
+
+    return app_tests_name
 
 
 def main():

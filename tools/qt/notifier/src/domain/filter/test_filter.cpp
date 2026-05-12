@@ -48,6 +48,25 @@ TEST_F(Test_Filter, Test_assign)
     ASSERT_EQ(filter2.messageTypeMask, 1);
 }
 
+TEST_F(Test_Filter, Test_setMessageTypeMask)
+{
+    Filter filter;
+
+    ASSERT_EQ(filter.messageTypeMask, 255);
+
+    filter.setMessageTypeMask(QList<MessageType>());
+
+    ASSERT_EQ(filter.messageTypeMask, 1);
+
+    filter.setMessageTypeMask(QList<MessageType>() << MESSAGE_TYPE_SYSTEM);
+
+    ASSERT_EQ(filter.messageTypeMask, 3);
+
+    filter.setMessageTypeMask(QList<MessageType>() << MESSAGE_TYPE_SYSTEM << MESSAGE_TYPE_DIVIDENDS);
+
+    ASSERT_EQ(filter.messageTypeMask, 19);
+}
+
 TEST_F(Test_Filter, Test_isActive)
 {
     Filter filter;

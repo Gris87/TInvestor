@@ -1882,7 +1882,6 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     StrictMock<StartAutoPilotDialogMock>* startAutoPilotDialogMock =
         new StrictMock<StartAutoPilotDialogMock>(); // Will be deleted in on_startAutoPilotButton_clicked
 
-    // Will be deleted in stopAutoPilot function
     StrictMock<TradingThreadMock>*      tradingThreadMock      = new StrictMock<TradingThreadMock>();
     StrictMock<BiDirTradingThreadMock>* biDirTradingThreadMock = new StrictMock<BiDirTradingThreadMock>();
 
@@ -2093,9 +2092,12 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
     // clang-format on
 
+    delete tradingThreadMock;
+    delete biDirTradingThreadMock;
+
     startAutoPilotDialogMock = new StrictMock<StartAutoPilotDialogMock>(); // Will be deleted in on_startAutoPilotButton_clicked
-    tradingThreadMock        = new StrictMock<TradingThreadMock>();        // Will be deleted in stopAutoPilot function
-    biDirTradingThreadMock   = new StrictMock<BiDirTradingThreadMock>();   // Will be deleted in stopAutoPilot function
+    tradingThreadMock        = new StrictMock<TradingThreadMock>();
+    biDirTradingThreadMock   = new StrictMock<BiDirTradingThreadMock>();
 
     EXPECT_CALL(
         *startAutoPilotDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, settingsEditorMock, mainWindow)
@@ -2251,6 +2253,9 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), false);
     ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
     // clang-format on
+
+    delete tradingThreadMock;
+    delete biDirTradingThreadMock;
 }
 
 TEST_F(Test_MainWindow, Test_on_autoPilotEyeButton_clicked)

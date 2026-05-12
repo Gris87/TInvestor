@@ -230,6 +230,230 @@ TEST_F(Test_StockMeta, Test_toJsonObject)
     ASSERT_EQ(content, expectedContent);
 }
 
+TEST_F(Test_StockMeta, Test_merge)
+{
+    StockMeta stockMeta;
+    StockMeta stockMeta2;
+
+    stockMeta.instrumentId                = "a";
+    stockMeta.instrumentTicker            = "b";
+    stockMeta.instrumentName              = "c";
+    stockMeta.forQualInvestorFlag         = true;
+    stockMeta.lot                         = 1;
+    stockMeta.pricePrecision              = 2;
+    stockMeta.minPriceIncrement           = 3.0f;
+    stockMeta.ignore                      = true;
+    stockMeta.lastTradeTime               = QTime(4, 5);
+    stockMeta.turnover                    = 6;
+    stockMeta.dividends.createTimestamp   = 7;
+    stockMeta.dividends.paymentTimestamp  = 8;
+    stockMeta.dividends.price             = 9.0f;
+    stockMeta.dividends.yield             = 10.0f;
+    stockMeta.shorts.enabled              = true;
+    stockMeta.shorts.lastEnabledTimestamp = 11;
+
+    stockMeta2.instrumentId                = "9a";
+    stockMeta2.instrumentTicker            = "9b";
+    stockMeta2.instrumentName              = "9c";
+    stockMeta2.forQualInvestorFlag         = false;
+    stockMeta2.lot                         = 91;
+    stockMeta2.pricePrecision              = 92;
+    stockMeta2.minPriceIncrement           = 93.0f;
+    stockMeta2.ignore                      = false;
+    stockMeta2.lastTradeTime               = QTime(9, 6);
+    stockMeta2.turnover                    = 96;
+    stockMeta2.dividends.createTimestamp   = 97;
+    stockMeta2.dividends.paymentTimestamp  = 98;
+    stockMeta2.dividends.price             = 99.0f;
+    stockMeta2.dividends.yield             = 910.0f;
+    stockMeta2.shorts.enabled              = false;
+    stockMeta2.shorts.lastEnabledTimestamp = 911;
+
+    // clang-format off
+    ASSERT_EQ(stockMeta.instrumentId,                "a");
+    ASSERT_EQ(stockMeta.instrumentLogo,              nullptr);
+    ASSERT_EQ(stockMeta.instrumentTicker,            "b");
+    ASSERT_EQ(stockMeta.instrumentName,              "c");
+    ASSERT_EQ(stockMeta.forQualInvestorFlag,         true);
+    ASSERT_EQ(stockMeta.lot,                         1);
+    ASSERT_EQ(stockMeta.pricePrecision,              2);
+    ASSERT_NEAR(stockMeta.minPriceIncrement,         3.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.ignore,                      true);
+    ASSERT_EQ(stockMeta.lastTradeTime,               QTime(4, 5));
+    ASSERT_EQ(stockMeta.turnover,                    6);
+    ASSERT_EQ(stockMeta.dividends.createTimestamp,   7);
+    ASSERT_EQ(stockMeta.dividends.paymentTimestamp,  8);
+    ASSERT_NEAR(stockMeta.dividends.price,           9.0f, 0.0001f);
+    ASSERT_NEAR(stockMeta.dividends.yield,           10.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.shorts.enabled,              true);
+    ASSERT_EQ(stockMeta.shorts.lastEnabledTimestamp, 11);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stockMeta2.instrumentId,                "9a");
+    ASSERT_EQ(stockMeta2.instrumentLogo,              nullptr);
+    ASSERT_EQ(stockMeta2.instrumentTicker,            "9b");
+    ASSERT_EQ(stockMeta2.instrumentName,              "9c");
+    ASSERT_EQ(stockMeta2.forQualInvestorFlag,         false);
+    ASSERT_EQ(stockMeta2.lot,                         91);
+    ASSERT_EQ(stockMeta2.pricePrecision,              92);
+    ASSERT_NEAR(stockMeta2.minPriceIncrement,         93.0f, 0.0001f);
+    ASSERT_EQ(stockMeta2.ignore,                      false);
+    ASSERT_EQ(stockMeta2.lastTradeTime,               QTime(9, 6));
+    ASSERT_EQ(stockMeta2.turnover,                    96);
+    ASSERT_EQ(stockMeta2.dividends.createTimestamp,   97);
+    ASSERT_EQ(stockMeta2.dividends.paymentTimestamp,  98);
+    ASSERT_NEAR(stockMeta2.dividends.price,           99.0f, 0.0001f);
+    ASSERT_NEAR(stockMeta2.dividends.yield,           910.0f, 0.0001f);
+    ASSERT_EQ(stockMeta2.shorts.enabled,              false);
+    ASSERT_EQ(stockMeta2.shorts.lastEnabledTimestamp, 911);
+    // clang-format on
+
+    stockMeta.merge(stockMeta2);
+
+    // clang-format off
+    ASSERT_EQ(stockMeta.instrumentId,                "9a");
+    ASSERT_EQ(stockMeta.instrumentLogo,              nullptr);
+    ASSERT_EQ(stockMeta.instrumentTicker,            "9b");
+    ASSERT_EQ(stockMeta.instrumentName,              "9c");
+    ASSERT_EQ(stockMeta.forQualInvestorFlag,         false);
+    ASSERT_EQ(stockMeta.lot,                         91);
+    ASSERT_EQ(stockMeta.pricePrecision,              92);
+    ASSERT_NEAR(stockMeta.minPriceIncrement,         93.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.ignore,                      true);
+    ASSERT_EQ(stockMeta.lastTradeTime,               QTime(4, 5));
+    ASSERT_EQ(stockMeta.turnover,                    6);
+    ASSERT_EQ(stockMeta.dividends.createTimestamp,   7);
+    ASSERT_EQ(stockMeta.dividends.paymentTimestamp,  8);
+    ASSERT_NEAR(stockMeta.dividends.price,           9.0f, 0.0001f);
+    ASSERT_NEAR(stockMeta.dividends.yield,           10.0f, 0.0001f);
+    ASSERT_EQ(stockMeta.shorts.enabled,              true);
+    ASSERT_EQ(stockMeta.shorts.lastEnabledTimestamp, 11);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stockMeta2.instrumentId,                "9a");
+    ASSERT_EQ(stockMeta2.instrumentLogo,              nullptr);
+    ASSERT_EQ(stockMeta2.instrumentTicker,            "9b");
+    ASSERT_EQ(stockMeta2.instrumentName,              "9c");
+    ASSERT_EQ(stockMeta2.forQualInvestorFlag,         false);
+    ASSERT_EQ(stockMeta2.lot,                         91);
+    ASSERT_EQ(stockMeta2.pricePrecision,              92);
+    ASSERT_NEAR(stockMeta2.minPriceIncrement,         93.0f, 0.0001f);
+    ASSERT_EQ(stockMeta2.ignore,                      false);
+    ASSERT_EQ(stockMeta2.lastTradeTime,               QTime(9, 6));
+    ASSERT_EQ(stockMeta2.turnover,                    96);
+    ASSERT_EQ(stockMeta2.dividends.createTimestamp,   97);
+    ASSERT_EQ(stockMeta2.dividends.paymentTimestamp,  98);
+    ASSERT_NEAR(stockMeta2.dividends.price,           99.0f, 0.0001f);
+    ASSERT_NEAR(stockMeta2.dividends.yield,           910.0f, 0.0001f);
+    ASSERT_EQ(stockMeta2.shorts.enabled,              false);
+    ASSERT_EQ(stockMeta2.shorts.lastEnabledTimestamp, 911);
+    // clang-format on
+}
+
+TEST_F(Test_StockMeta, Test_compareForMerge)
+{
+    StockMeta stockMeta;
+    StockMeta stockMeta2;
+
+    stockMeta.instrumentId                = "a";
+    stockMeta.instrumentTicker            = "b";
+    stockMeta.instrumentName              = "c";
+    stockMeta.forQualInvestorFlag         = true;
+    stockMeta.lot                         = 1;
+    stockMeta.pricePrecision              = 2;
+    stockMeta.minPriceIncrement           = 3.0f;
+    stockMeta.ignore                      = true;
+    stockMeta.lastTradeTime               = QTime(4, 5);
+    stockMeta.turnover                    = 6;
+    stockMeta.dividends.createTimestamp   = 7;
+    stockMeta.dividends.paymentTimestamp  = 8;
+    stockMeta.dividends.price             = 9.0f;
+    stockMeta.dividends.yield             = 10.0f;
+    stockMeta.shorts.enabled              = true;
+    stockMeta.shorts.lastEnabledTimestamp = 11;
+
+    stockMeta2.instrumentId                = "a";
+    stockMeta2.instrumentTicker            = "b";
+    stockMeta2.instrumentName              = "c";
+    stockMeta2.forQualInvestorFlag         = true;
+    stockMeta2.lot                         = 1;
+    stockMeta2.pricePrecision              = 2;
+    stockMeta2.minPriceIncrement           = 3.0f;
+    stockMeta2.ignore                      = true;
+    stockMeta2.lastTradeTime               = QTime(4, 5);
+    stockMeta2.turnover                    = 6;
+    stockMeta2.dividends.createTimestamp   = 7;
+    stockMeta2.dividends.paymentTimestamp  = 8;
+    stockMeta2.dividends.price             = 9.0f;
+    stockMeta2.dividends.yield             = 10.0f;
+    stockMeta2.shorts.enabled              = true;
+    stockMeta2.shorts.lastEnabledTimestamp = 11;
+
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.instrumentId = "aaaa";
+    ASSERT_FALSE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.instrumentId = "a";
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.instrumentTicker = "bbbb";
+    ASSERT_FALSE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.instrumentTicker = "b";
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.instrumentName = "cccc";
+    ASSERT_FALSE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.instrumentName = "c";
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.forQualInvestorFlag = false;
+    ASSERT_FALSE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.forQualInvestorFlag = true;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.lot = -1;
+    ASSERT_FALSE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.lot = 1;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.pricePrecision = -2;
+    ASSERT_FALSE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.pricePrecision = 2;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.minPriceIncrement = 3000.0f;
+    ASSERT_FALSE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.minPriceIncrement = 3.0f;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.ignore = false;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.ignore = true;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.lastTradeTime = QTime(5, 4);
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.lastTradeTime = QTime(4, 5);
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.turnover = -6;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.turnover = 6;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.dividends.createTimestamp = -7;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.dividends.createTimestamp = 7;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+
+    stockMeta2.shorts.enabled = false;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+    stockMeta2.shorts.enabled = true;
+    ASSERT_TRUE(stockMeta.compareForMerge(stockMeta2));
+}
+
 TEST_F(Test_StockMeta, Test_equals)
 {
     StockMeta stockMeta;
