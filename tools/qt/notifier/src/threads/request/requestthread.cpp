@@ -81,7 +81,7 @@ void RequestThread::requestNotifications()
     QUrl url = QUrl(QString("https://%1:%2/notifications").arg(address, port));
 
     QUrlQuery query;
-    query.addQueryItem("from", QString::number(mLastNotificationTimestamp + 10));
+    query.addQueryItem("from", QString::number(mLastNotificationTimestamp + 10)); // NOLINT(readability-magic-numbers)
 
     url.setQuery(query.query());
 
