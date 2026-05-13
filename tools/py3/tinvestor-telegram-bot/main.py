@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import sys
+import traceback
 
 from telethon import TelegramClient, connection
 from loguru import logger
@@ -24,15 +25,22 @@ def telegram_bot(args, filter):
     Path("bot.session").unlink(missing_ok=True)
     Path("bot.session-journal").unlink(missing_ok=True)
 
-    client = TelegramClient("bot", api_id, api_hash, connection=connection.ConnectionTcpMTProxyRandomizedIntermediate, proxy=(mtproxy_server, mtproxy_port, mtproxy_secret)).start(bot_token=bot_token)
+    res = True
 
-    with client:
-        client.loop.run_until_complete(_process_files(args, client, filter))
+    try:
+        client = TelegramClient("bot", api_id, api_hash, connection=connection.ConnectionTcpMTProxyRandomizedIntermediate, proxy=(mtproxy_server, mtproxy_port, mtproxy_secret)).start(bot_token=bot_token)
+
+        with client:
+            client.loop.run_until_complete(_process_files(args, client, filter))
+    except Exception as e:
+        res = False
+
+        traceback.print_exc()
 
     Path("bot.session").unlink(missing_ok=True)
     Path("bot.session-journal").unlink(missing_ok=True)
 
-    return True
+    return res
 
 
 async def _process_files(args, client, filter):

@@ -126,7 +126,7 @@
 
 
 
-const char* const VERSION  = "v1.4.0";
+const char* const VERSION  = "v1.5.0";
 const char* const GIT_HASH = "DEV_BUILD";
 
 constexpr int    DETECT_TRAY_ATTEMPTS = 5;

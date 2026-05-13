@@ -1,5 +1,3 @@
-Create release
-
 High priority for bi-dir tradings
 Find best configs for different commission
 Change config defaults
