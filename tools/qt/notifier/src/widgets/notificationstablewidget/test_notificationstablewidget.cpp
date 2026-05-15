@@ -126,7 +126,7 @@ TEST_F(Test_NotificationsTableWidget, Test_loadWindowState)
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"), _)).WillOnce(Return(QVariant(110)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Type"), _)).WillOnce(Return(QVariant(128)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Text"), _)).WillOnce(Return(QVariant(1600)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Text"), _)).WillOnce(Return(QVariant(1590)));
     // clang-format on
 
     notificationsTableWidget->loadWindowState("AAAAA");
