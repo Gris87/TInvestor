@@ -60,10 +60,6 @@ void BiDirTradingControlThread::run()
         mLastTradeHugeSpread != tradeHugeSpread)
     {
         detectStocksForBiDirTrading(timestamp, tradeHugeBid, tradeHugeSpread);
-
-        mLastDetectionTimestamp = timestamp;
-        mLastTradeHugeBid       = tradeHugeBid;
-        mLastTradeHugeSpread    = tradeHugeSpread;
     }
 
     qDebug() << "Finish BiDirTradingControlThread";
@@ -271,6 +267,10 @@ void BiDirTradingControlThread::detectStocksForBiDirTrading(qint64 timestamp, bo
                 instrumentsForTrading.insert(result);
             }
         }
+
+        mLastDetectionTimestamp = timestamp;
+        mLastTradeHugeBid       = tradeHugeBid;
+        mLastTradeHugeSpread    = tradeHugeSpread;
     }
     else
     {
