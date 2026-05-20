@@ -88,6 +88,8 @@ runs:
                 # Remove-Item "installed/${PACKAGE_NAME}/lib/utf8_validity.lib" -Force
             }
             "Linux" {
+                pkill -f vcpkg
+
                 ${PACKAGE_NAME} = "x64-linux"
                 Remove-Item "installed/${PACKAGE_NAME}/etc" -Recurse -Force
                 # Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_bad_any_cast_impl.a" -Force
