@@ -46,7 +46,7 @@ runs:
         {
             "Windows" {
                 ${PACKAGE_NAME} = "x64-windows"
-                Remove-Item "installed/${PACKAGE_NAME}/debug/bin/*.pdb" -Force
+                # Remove-Item "installed/${PACKAGE_NAME}/debug/bin/*.pdb" -Force
                 # Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_decode_rust_punycode.lib" -Force
                 # Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_demangle_rust.lib" -Force
                 # Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_flags_parse.lib" -Force
@@ -86,10 +86,11 @@ runs:
                 # Remove-Item "installed/${PACKAGE_NAME}/lib/libprotobuf-lite.lib" -Force
                 # Remove-Item "installed/${PACKAGE_NAME}/lib/libprotoc.lib" -Force
                 # Remove-Item "installed/${PACKAGE_NAME}/lib/utf8_validity.lib" -Force
+                # Remove-Item "installed/${PACKAGE_NAME}/Program Files" -Recurse -Force
             }
             "Linux" {
                 ${PACKAGE_NAME} = "x64-linux"
-                Remove-Item "installed/${PACKAGE_NAME}/etc" -Recurse -Force
+                # Remove-Item "installed/${PACKAGE_NAME}/etc" -Recurse -Force
                 # Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_bad_any_cast_impl.a" -Force
                 # Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_cordz_sample_token.a" -Force
                 # Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_failure_signal_handler.a" -Force
@@ -134,6 +135,7 @@ runs:
         }
 
         Remove-Item "installed/vcpkg" -Recurse -Force
+        # Remove-Item "installed/${PACKAGE_NAME}/debug/lib/pkgconfig" -Recurse -Force
         # Remove-Item "installed/${PACKAGE_NAME}/lib/pkgconfig" -Recurse -Force
         # Remove-Item "installed/${PACKAGE_NAME}/share" -Recurse -Force
 
