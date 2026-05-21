@@ -199,10 +199,10 @@ runs:
         cmake --install . --config Release
 
         # Cleanup
-        # Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/bin/*.pdb" -Force
-        # Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/lib/cmake" -Recurse -Force
-        # Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/lib/pkgconfig" -Recurse -Force
-        # Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/share" -Recurse -Force
+        Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/bin/*.pdb" -Force
+        Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/lib/cmake" -Recurse -Force
+        Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/lib/pkgconfig" -Recurse -Force
+        Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/share" -Recurse -Force
 
     # Checkout quazip repository with specific version to $GITHUB_WORKSPACE/quazip-source
     - name: Checkout quazip
@@ -259,8 +259,8 @@ runs:
         cmake --install . --config Release
 
         # Cleanup
-        # Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/cmake" -Recurse -Force
-        # Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/pkgconfig" -Recurse -Force
+        Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/cmake" -Recurse -Force
+        Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/pkgconfig" -Recurse -Force
 
     # Upload environment artifacts
     - name: Upload environment artifacts

@@ -56,7 +56,7 @@ win32* {
         -lupb_textformat_lib \
         -lupb_wire_lib \
         -lutf8_range \
-        -lzlib$${DEBUG_SUFFIX}
+        -lz$${DEBUG_SUFFIX}
 } else {
     INCLUDEPATH += \
         $${VCPKG_PATH}/installed/x64-linux/include
