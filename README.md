@@ -54,7 +54,7 @@ You have to install prerequisites in order to build TInvestor.
 
 2. Install CMake
 
-- Please visit [CMake download page](https://cmake.org/download) and install CMake 4.0.1
+- Please visit [CMake download page](https://cmake.org/download) and install CMake 4.3.2
 
 3. Install Qt 6.11.1
 
