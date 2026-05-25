@@ -96,6 +96,7 @@ runs:
             }
         }
 
+        Remove-Item "buildtrees" -Recurse -Force
         Remove-Item "installed/vcpkg" -Recurse -Force
         Remove-Item "installed/${PACKAGE_NAME}/debug/lib/pkgconfig" -Recurse -Force
         Remove-Item "installed/${PACKAGE_NAME}/lib/pkgconfig" -Recurse -Force
