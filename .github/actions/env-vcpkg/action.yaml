@@ -101,13 +101,13 @@ runs:
         Remove-Item "installed/${PACKAGE_NAME}/lib/pkgconfig" -Recurse -Force
         Remove-Item "installed/${PACKAGE_NAME}/share" -Recurse -Force
 
-        # Copy-Item installed -Destination "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed" -Recurse
-        Copy-Item . -Destination "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed" -Recurse
+        Copy-Item installed -Destination "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed" -Recurse
 
     # Upload environment artifacts
     - name: Upload environment artifacts
       uses: thebrowsercompany/gha-upload-tar-artifact@main
       with:
         name: env-vcpkg-${{ matrix.config.name }}
-        path: ./Qt
+        #path: ./Qt
+        path: ./vcpkg-source
         retention-days: 1

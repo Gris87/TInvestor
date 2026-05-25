@@ -1,5 +1,6 @@
 Ignore low priority of bi-dir tradings on weekend
 Make ASAP script to sell ASAP if lose -3%
+Set timestamp after sending TG message
 High priority for bi-dir tradings
 Find best configs for different commission
 Change config defaults

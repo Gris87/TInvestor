@@ -199,7 +199,13 @@ runs:
         cmake --install . --config Release
 
         # Cleanup
-        Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/bin/*.pdb" -Force
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/bin/*.pdb" -Force
+            }
+        }
+
         Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/lib/cmake" -Recurse -Force
         Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/lib/pkgconfig" -Recurse -Force
         Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/share" -Recurse -Force

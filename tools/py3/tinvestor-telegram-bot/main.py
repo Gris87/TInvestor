@@ -63,12 +63,12 @@ async def _process_files(args, client, filter):
 
             await _process_file(args, client, filter, record_path)
 
-    state = {
-        "last_timestamp": last_timestamp + 1
-    }
+            state = {
+                "last_timestamp": last_timestamp + 1
+            }
 
-    with open(state_path, "w", encoding="utf-8") as f:
-        json.dump(state, f, ensure_ascii=False)
+            with open(state_path, "w", encoding="utf-8") as f:
+                json.dump(state, f, ensure_ascii=False)
 
 
 async def _process_file(args, client, filter, record_path):
