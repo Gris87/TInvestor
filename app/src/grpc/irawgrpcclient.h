@@ -12,10 +12,12 @@
 #elif defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #else
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmissing-requires"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
 #include "messages/generated/instruments.grpc.pb.h"
