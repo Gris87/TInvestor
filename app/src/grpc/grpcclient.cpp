@@ -433,7 +433,8 @@ static grpc::Status postOrderAction(
 
         auto status1 = google::protobuf::util::MessageToJsonString(req, &json_output, options);
 
-        if (status1.ok()) {
+        if (status1.ok())
+        {
             qWarning() << json_output;
         }
     }
