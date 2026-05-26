@@ -1,14 +1,8 @@
 Ignore low priority of bi-dir tradings on weekend
 Make ASAP script to sell ASAP if lose -3%
-Make TG notifications to rest at night time
 High priority for bi-dir tradings
 Find best configs for different commission
 Change config defaults
-Improve coverage
-Create release
-
-Try to follow for someone clever
-Buy with MK as follower
 Improve coverage
 Create release
 
