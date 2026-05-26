@@ -1,6 +1,7 @@
 #include "src/grpc/grpcclient.h"
 
 #include <QDebug>
+#include <google/protobuf/util/json_util.h>
 #include <grpcpp/grpcpp.h>
 #include <memory>
 
@@ -418,7 +419,26 @@ static grpc::Status postOrderAction(
     grpc::ClientContext context;
     context.set_credentials(creds);
 
-    return rawGrpcClient->postOrder(service, &context, req, resp.get());
+    // TODO: Uncomment
+    // return rawGrpcClient->postOrder(service, &context, req, resp.get());
+
+    grpc::Status status = rawGrpcClient->postOrder(service, &context, req, resp.get());
+
+    if (!status.ok() && status.error_code() == grpc::StatusCode::FAILED_PRECONDITION)
+    {
+        std::string json_output;
+
+        google::protobuf::util::JsonPrintOptions options;
+        options.add_whitespace = true; // Optional: for pretty-printing
+
+        auto status1 = google::protobuf::util::MessageToJsonString(req, &json_output, options);
+
+        if (status1.ok()) {
+            qWarning() << json_output;
+        }
+    }
+
+    return status;
 }
 
 std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(

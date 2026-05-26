@@ -158,9 +158,9 @@ win32* {
         -lcares \
         -lcrypto \
         -lgpr \
+        -lgrpc \
         -lgrpc++ \
         -lgrpc++_reflection \
-        -lgrpc \
         -lprotobuf$${DEBUG_SUFFIX} \
         -lre2 \
         -lssl \
