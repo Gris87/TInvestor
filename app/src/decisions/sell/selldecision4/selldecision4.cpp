@@ -125,10 +125,10 @@ QString SellDecision4::makeDecisionBasedOnStockData(
                 {
                     const int startIndex = i - 2;
 
-                    const double currentTopEdge        = !isShort ? mBollindger->getTopEdge(stock, startIndex + 2, dataIndex + 1)
-                                                                  : mBollindger->getBottomEdge(stock, startIndex + 2, dataIndex + 1);
-                    const double previousTopEdge       = !isShort ? mBollindger->getTopEdge(stock, startIndex + 1, dataIndex)
-                                                                  : mBollindger->getBottomEdge(stock, startIndex + 1, dataIndex);
+                    const double currentTopEdge  = !isShort ? mBollindger->getTopEdge(stock, startIndex + 2, dataIndex + 1)
+                                                            : mBollindger->getBottomEdge(stock, startIndex + 2, dataIndex + 1);
+                    const double previousTopEdge = !isShort ? mBollindger->getTopEdge(stock, startIndex + 1, dataIndex)
+                                                            : mBollindger->getBottomEdge(stock, startIndex + 1, dataIndex);
                     const double beforePreviousTopEdge = !isShort ? mBollindger->getTopEdge(stock, startIndex, dataIndex - 1)
                                                                   : mBollindger->getBottomEdge(stock, startIndex, dataIndex - 1);
 

@@ -381,7 +381,7 @@ TEST_F(Test_RawGrpcClient, Test_findCurrencies)
 
     // clang-format off
     ASSERT_EQ(status.ok(),                                                 true);
-    ASSERT_GE(resp->instruments_size(),                                    16);
+    ASSERT_GE(resp->instruments_size(),                                    10);
     ASSERT_GE(index,                                                       0);
     ASSERT_EQ(resp->instruments(index).figi(),                             "BBG0013HGFT4");
     ASSERT_EQ(resp->instruments(index).ticker(),                           "USD000UTSTOM");

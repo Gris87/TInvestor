@@ -510,9 +510,10 @@ bool Worksheet::write(int row, int column, const QVariant& value, const Format& 
     {
         ret = writeString(row, column, value.value<RichString>(), format);
     }
-    else if (value.userType() == QMetaType::Int || value.userType() == QMetaType::UInt ||
-             value.userType() == QMetaType::LongLong || value.userType() == QMetaType::ULongLong ||
-             value.userType() == QMetaType::Double || value.userType() == QMetaType::Float)
+    else if (
+        value.userType() == QMetaType::Int || value.userType() == QMetaType::UInt || value.userType() == QMetaType::LongLong ||
+        value.userType() == QMetaType::ULongLong || value.userType() == QMetaType::Double || value.userType() == QMetaType::Float
+    )
     {
         // Number
 

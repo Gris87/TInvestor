@@ -211,7 +211,7 @@ static void simulateSellForLogs(
     entry.timestamp = timestamp;
     entry.level     = LOG_LEVEL_VERBOSE;
     entry.message   = QObject::tr("Order to sell %1 created with a price %2")
-                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
+                          .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
 
     entries.append(entry);
     ++timestamp;
@@ -219,7 +219,7 @@ static void simulateSellForLogs(
     entry.timestamp = timestamp;
     entry.level     = LOG_LEVEL_VERBOSE;
     entry.message   = QObject::tr("Order completed. %1/%1 sold with a price %2")
-                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
+                          .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
 
     entries.append(entry);
     ++timestamp;
@@ -412,7 +412,7 @@ static void simulateBuyForLogs(
     entry.timestamp = timestamp;
     entry.level     = LOG_LEVEL_VERBOSE;
     entry.message   = QObject::tr("Order to buy %1 created with a price %2")
-                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
+                          .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
 
     entries.append(entry);
     ++timestamp;
@@ -420,7 +420,7 @@ static void simulateBuyForLogs(
     entry.timestamp = timestamp;
     entry.level     = LOG_LEVEL_VERBOSE;
     entry.message   = QObject::tr("Order completed. %1/%1 bought with a price %2")
-                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
+                          .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
 
     entries.append(entry);
     ++timestamp;

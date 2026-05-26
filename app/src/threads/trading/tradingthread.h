@@ -73,13 +73,13 @@ public:
 private:
     double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     bool   buyWithPrice(
-          const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
-          double                                      cost,
-          double                                      expected,
-          double                                      delta,
-          const Quotation&                            price,
-          float                                       marketPrice
-      );
+        const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,
+        double                                      cost,
+        double                                      expected,
+        double                                      delta,
+        const Quotation&                            price,
+        float                                       marketPrice
+    );
     bool buyWithPriceOptimalAmount(double cost, double expected, double delta, const Quotation& price, float marketPrice);
     bool sellWithPrice(
         const std::shared_ptr<tinkoff::OrderState>& tinkoffOrder,

@@ -524,16 +524,16 @@ static void fillEntriesForParallel(
         entry.dayChange           = stock->operational.dayStartPrice > 0
                                         ? ((entry.price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
                                         : 0;
-        entry.dateChange          = stock->operational.specifiedDatePrice > 0
-                                        ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                        : 0;
-        entry.turnover            = stock->meta.turnover;
-        entry.payback             = stock->operational.payback;
-        entry.dividends           = stock->meta.dividends;
-        entry.shorts              = stock->meta.shorts;
-        entry.dayStartPrice       = stock->operational.dayStartPrice;
-        entry.specifiedDatePrice  = stock->operational.specifiedDatePrice;
-        entry.pricePrecision      = stock->meta.pricePrecision;
+        entry.dateChange    = stock->operational.specifiedDatePrice > 0
+                                  ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                  : 0;
+        entry.turnover      = stock->meta.turnover;
+        entry.payback       = stock->operational.payback;
+        entry.dividends     = stock->meta.dividends;
+        entry.shorts        = stock->meta.shorts;
+        entry.dayStartPrice = stock->operational.dayStartPrice;
+        entry.specifiedDatePrice = stock->operational.specifiedDatePrice;
+        entry.pricePrecision     = stock->meta.pricePrecision;
 
         stock->readUnlock();
     }
@@ -615,16 +615,16 @@ static void updateAllForParallel(
         entry.dayChange           = stock->operational.dayStartPrice > 0
                                         ? ((entry.price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
                                         : 0;
-        entry.dateChange          = stock->operational.specifiedDatePrice > 0
-                                        ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                        : 0;
-        entry.turnover            = stock->meta.turnover;
-        entry.payback             = stock->operational.payback;
-        entry.dividends           = stock->meta.dividends;
-        entry.shorts              = stock->meta.shorts;
-        entry.dayStartPrice       = stock->operational.dayStartPrice;
-        entry.specifiedDatePrice  = stock->operational.specifiedDatePrice;
-        entry.pricePrecision      = stock->meta.pricePrecision;
+        entry.dateChange    = stock->operational.specifiedDatePrice > 0
+                                  ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                  : 0;
+        entry.turnover      = stock->meta.turnover;
+        entry.payback       = stock->operational.payback;
+        entry.dividends     = stock->meta.dividends;
+        entry.shorts        = stock->meta.shorts;
+        entry.dayStartPrice = stock->operational.dayStartPrice;
+        entry.specifiedDatePrice = stock->operational.specifiedDatePrice;
+        entry.pricePrecision     = stock->meta.pricePrecision;
 
         stock->readUnlock();
 
@@ -714,14 +714,14 @@ static void updateLastPricesForParallel(
 
         stock->readLock();
 
-        entry.price              = stock->lastPrice();
-        entry.dayChange          = stock->operational.dayStartPrice > 0
-                                       ? ((entry.price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                       : 0;
-        entry.dateChange         = stock->operational.specifiedDatePrice > 0
-                                       ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                       : 0;
-        entry.dayStartPrice      = stock->operational.dayStartPrice;
+        entry.price         = stock->lastPrice();
+        entry.dayChange     = stock->operational.dayStartPrice > 0
+                                  ? ((entry.price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                  : 0;
+        entry.dateChange    = stock->operational.specifiedDatePrice > 0
+                                  ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                  : 0;
+        entry.dayStartPrice = stock->operational.dayStartPrice;
         entry.specifiedDatePrice = stock->operational.specifiedDatePrice;
         entry.pricePrecision     = stock->meta.pricePrecision;
 
@@ -805,14 +805,14 @@ static void updatePricesForParallel(
 
         stock->readLock();
 
-        entry.price              = stock->lastPrice();
-        entry.dayChange          = stock->operational.dayStartPrice > 0
-                                       ? ((entry.price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                       : 0;
-        entry.dateChange         = stock->operational.specifiedDatePrice > 0
-                                       ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                       : 0;
-        entry.dayStartPrice      = stock->operational.dayStartPrice;
+        entry.price         = stock->lastPrice();
+        entry.dayChange     = stock->operational.dayStartPrice > 0
+                                  ? ((entry.price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                  : 0;
+        entry.dateChange    = stock->operational.specifiedDatePrice > 0
+                                  ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                  : 0;
+        entry.dayStartPrice = stock->operational.dayStartPrice;
         entry.specifiedDatePrice = stock->operational.specifiedDatePrice;
         entry.pricePrecision     = stock->meta.pricePrecision;
 

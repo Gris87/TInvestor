@@ -8,7 +8,7 @@
 
 #ifdef Q_OS_WINDOWS
 #pragma warning(push)
-#pragma warning(disable : 4100 4189 4267)
+#pragma warning(disable : 4018 4100 4267 4996)
 #elif defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"

@@ -14,7 +14,7 @@ RESOURCES += Resources.qrc
 
 # Warnings as errors - BEGIN
 win32-msvc* {
-    QMAKE_CXXFLAGS += /WX
+    QMAKE_CXXFLAGS += /WX /wd4996
 } else {
     QMAKE_CXXFLAGS += -Wall -Wextra -Werror -Wno-comment
 }
