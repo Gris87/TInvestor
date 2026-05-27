@@ -70,9 +70,7 @@ void HighLiquidityThread::makeDecisionBaseOnTimestamp(qint64 timestamp)
 
     if (time < endTime)
     {
-        const int dayOfWeek = dateTime.date().dayOfWeek();
-
-        if (dayOfWeek != Qt::Saturday && dayOfWeek != Qt::Sunday)
+        if (!mTimeUtils->isWeekend(timestamp))
         {
             sellEtf();
         }

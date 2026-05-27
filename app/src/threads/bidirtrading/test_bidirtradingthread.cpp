@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include "src/config/decisions/idecisionmakerconfig_mock.h"
-#include "src/config/decisions/sell/selldecision3config/iselldecision3config_mock.h"
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/grpc/igrpcretryclient_mock.h"
@@ -26,6 +24,7 @@ constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
 using ::testing::_;
 using ::testing::DoubleEq;
 using ::testing::FloatEq;
+using ::testing::Ge;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -206,6 +205,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*biDirInfosStorageMock, readLock());
     EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*timeUtilsMock, isWeekend(Ge(1704056400000))).WillOnce(Return(false));
     EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -221,6 +221,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*biDirInfosStorageMock, readLock());
     EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*timeUtilsMock, isWeekend(Ge(1704056400000))).WillOnce(Return(false));
     EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -265,6 +266,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*biDirInfosStorageMock, readLock());
     EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*timeUtilsMock, isWeekend(Ge(1704056400000))).WillOnce(Return(false));
     EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -392,6 +394,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*biDirInfosStorageMock, readLock());
     EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*timeUtilsMock, isWeekend(Ge(1704056400000))).WillOnce(Return(false));
     EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -494,6 +497,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*biDirInfosStorageMock, readLock());
     EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*timeUtilsMock, isWeekend(Ge(1704056400000))).WillOnce(Return(false));
     EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -901,6 +905,7 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuySellPriceAndLots)
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*biDirInfosStorageMock, readLock());
     EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*timeUtilsMock, isWeekend(Ge(1704056400000))).WillOnce(Return(false));
     EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
 
     thread->getInstrumentData();

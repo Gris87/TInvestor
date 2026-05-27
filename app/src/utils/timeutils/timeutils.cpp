@@ -46,19 +46,26 @@ bool TimeUtils::interruptibleSleep(int ms, QThread* parentThread)
 
 bool TimeUtils::isWorkingHours(qint64 timestamp)
 {
-    const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
-    const int       dayOfWeek = dateTime.date().dayOfWeek();
-
-    if (dayOfWeek == Qt::Saturday || dayOfWeek == Qt::Sunday)
+    if (isWeekend(timestamp))
     {
         return false;
     }
+
+    const QDateTime dateTime = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
 
     const QTime time      = dateTime.time();
     const QTime startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
     const QTime endTime   = QTime(NORMAL_SESSION_END_HOUR, NORMAL_SESSION_END_MINUTE);
 
     return time >= startTime && time < endTime;
+}
+
+bool TimeUtils::isWeekend(qint64 timestamp)
+{
+    const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
+    const int       dayOfWeek = dateTime.date().dayOfWeek();
+
+    return dayOfWeek == Qt::Saturday || dayOfWeek == Qt::Sunday;
 }
 
 bool TimeUtils::isNormalOrEveningSession(qint64 timestamp)

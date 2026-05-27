@@ -1,5 +1,4 @@
 Fix displaying of daily yield
-Ignore low priority of bi-dir tradings on weekend
 Make ASAP script to sell ASAP if lose -3%
 Make TG notifications to rest at night time
 High priority for bi-dir tradings

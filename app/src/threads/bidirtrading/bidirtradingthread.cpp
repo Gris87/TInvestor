@@ -262,7 +262,7 @@ void BiDirTradingThread::getInstrumentData()
         const BiDirInfo& biDirInfo = biDirInfos.value(mInstrumentId);
 
         mMinSpread = biDirInfo.spread;
-        mPriority  = biDirInfo.priority;
+        mPriority  = !mTimeUtils->isWeekend(QDateTime::currentMSecsSinceEpoch()) ? biDirInfo.priority : BIDIR_PRIORITY_NORMAL;
     }
     else
     {
