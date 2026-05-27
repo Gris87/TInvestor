@@ -300,7 +300,7 @@ bool TradingThread::buyWithPrice(
 bool
 TradingThread::buyWithPriceOptimalAmount(double cost, double expected, double delta, const Quotation& price, float marketPrice)
 {
-    while (true)
+    while (!QThread::currentThread()->isInterruptionRequested())
     {
         const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
             mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
@@ -333,7 +333,7 @@ TradingThread::buyWithPriceOptimalAmount(double cost, double expected, double de
                 QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price, false
             );
 
-            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
+            if (tinkoffOrder == nullptr)
             {
                 mLogsThread->addLog(
                     LOG_LEVEL_WARNING,
@@ -486,7 +486,7 @@ bool TradingThread::sellWithPrice(
 bool
 TradingThread::sellWithPriceOptimalAmount(double cost, double expected, double delta, const Quotation& price, float marketPrice)
 {
-    while (true)
+    while (!QThread::currentThread()->isInterruptionRequested())
     {
         const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
             mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
@@ -512,7 +512,7 @@ TradingThread::sellWithPriceOptimalAmount(double cost, double expected, double d
                 QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price, false
             );
 
-            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
+            if (tinkoffOrder == nullptr)
             {
                 mLogsThread->addLog(
                     LOG_LEVEL_WARNING,

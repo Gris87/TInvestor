@@ -305,7 +305,7 @@ void BiDirTradingThread::checkIfNeedToCancelAndCreateOrder(
 
 void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& price)
 {
-    while (true)
+    while (!QThread::currentThread()->isInterruptionRequested())
     {
         const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
             mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
@@ -325,7 +325,7 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
                 QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price, true
             );
 
-            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
+            if (tinkoffOrder == nullptr)
             {
                 if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
                 {
@@ -356,7 +356,7 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
 
 void BiDirTradingThread::sellWithPrice(const Quotation& price)
 {
-    while (true)
+    while (!QThread::currentThread()->isInterruptionRequested())
     {
         const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
             mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
@@ -374,7 +374,7 @@ void BiDirTradingThread::sellWithPrice(const Quotation& price)
                 QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price, false
             );
 
-            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
+            if (tinkoffOrder == nullptr)
             {
                 if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
                 {
