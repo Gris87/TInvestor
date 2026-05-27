@@ -45,6 +45,10 @@ MainWindow::MainWindow(
 
     ui->setupUi(this);
 
+    removeToolBar(ui->toolBar);
+    addToolBar(Qt::RightToolBarArea, ui->toolBar);
+    ui->toolBar->show();
+
     mNotificationsTableWidget =
         notificationsTableWidgetFactory->newInstance(notificationsTableModelFactory, mSettingsEditor, this);
     ui->layoutForNotificationsTableWidget->addWidget(mNotificationsTableWidget);
