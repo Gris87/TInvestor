@@ -322,7 +322,14 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
         if (amountToBuy > 0)
         {
             const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
-                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price, true
+                QThread::currentThread(),
+                mAccountId,
+                mInstrumentId,
+                tinkoff::ORDER_DIRECTION_BUY,
+                amountToBuy,
+                price,
+                true,
+                mPriority == BIDIR_PRIORITY_HIGH ? GRPC_PRIOIRITY_CRITICAL : GRPC_PRIOIRITY_MINOR
             );
 
             if (tinkoffOrder == nullptr)
@@ -371,7 +378,14 @@ void BiDirTradingThread::sellWithPrice(const Quotation& price)
         if (amountToSell > 0)
         {
             const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
-                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price, false
+                QThread::currentThread(),
+                mAccountId,
+                mInstrumentId,
+                tinkoff::ORDER_DIRECTION_SELL,
+                amountToSell,
+                price,
+                false,
+                GRPC_PRIOIRITY_CRITICAL
             );
 
             if (tinkoffOrder == nullptr)

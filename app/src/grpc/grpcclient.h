@@ -113,7 +113,8 @@ public:
         tinkoff::OrderDirection direction,
         qint64                  quantity,
         const Quotation&        price,
-        bool                    confirmMarginTrade
+        bool                    confirmMarginTrade,
+        GrpcPriority            priority
     ) override;
     std::shared_ptr<tinkoff::OrderState>
     getOrderState(QThread* parentThread, const QString& accountId, const QString& orderId) override;

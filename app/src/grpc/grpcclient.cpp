@@ -428,7 +428,8 @@ std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
     tinkoff::OrderDirection direction,
     qint64                  quantity,
     const Quotation&        price,
-    bool                    confirmMarginTrade
+    bool                    confirmMarginTrade,
+    GrpcPriority            priority
 )
 {
     tinkoff::PostOrderRequest                         req;
@@ -449,15 +450,7 @@ std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
     req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
     req.set_confirm_margin_trade(confirmMarginTrade);
 
-    return repeatRequest(
-        parentThread,
-        postOrderAction,
-        mOrdersService,
-        req,
-        resp,
-        true,
-        direction == tinkoff::ORDER_DIRECTION_SELL ? GRPC_PRIOIRITY_MAJOR : GRPC_PRIOIRITY_MINOR
-    );
+    return repeatRequest(parentThread, postOrderAction, mOrdersService, req, resp, true, priority);
 }
 
 static grpc::Status getOrderStateAction(

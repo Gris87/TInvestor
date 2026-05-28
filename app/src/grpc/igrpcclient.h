@@ -60,7 +60,8 @@ public:
         tinkoff::OrderDirection direction,
         qint64                  quantity,
         const Quotation&        price,
-        bool                    confirmMarginTrade
+        bool                    confirmMarginTrade,
+        GrpcPriority            priority
     ) = 0;
     virtual std::shared_ptr<tinkoff::OrderState>
     getOrderState(QThread* parentThread, const QString& accountId, const QString& orderId) = 0;

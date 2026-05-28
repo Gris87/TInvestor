@@ -435,7 +435,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
             tinkoff::ORDER_DIRECTION_BUY,
             5,
             priceForBuy,
-            true
+            true,
+            GRPC_PRIOIRITY_MINOR
         )
     )
         .WillOnce(Return(postOrderResponse));
@@ -450,7 +451,8 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
             tinkoff::ORDER_DIRECTION_SELL,
             5,
             priceForSell,
-            false
+            false,
+            GRPC_PRIOIRITY_CRITICAL
         )
     )
         .WillOnce(Return(postOrderResponse));
@@ -621,7 +623,14 @@ TEST_F(Test_BiDirTradingThread, Test_buyWithPrice)
     EXPECT_CALL(
         *grpcClientMock,
         postOrder(
-            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_BUY, 5, price, true
+            QThread::currentThread(),
+            QString("account-id"),
+            QString("aaa-aaa"),
+            tinkoff::ORDER_DIRECTION_BUY,
+            5,
+            price,
+            true,
+            GRPC_PRIOIRITY_MINOR
         )
     )
         .WillOnce(Return(nullptr));
@@ -631,7 +640,14 @@ TEST_F(Test_BiDirTradingThread, Test_buyWithPrice)
     EXPECT_CALL(
         *grpcClientMock,
         postOrder(
-            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_BUY, 5, price, true
+            QThread::currentThread(),
+            QString("account-id"),
+            QString("aaa-aaa"),
+            tinkoff::ORDER_DIRECTION_BUY,
+            5,
+            price,
+            true,
+            GRPC_PRIOIRITY_MINOR
         )
     )
         .WillOnce(Return(nullptr));
@@ -644,7 +660,14 @@ TEST_F(Test_BiDirTradingThread, Test_buyWithPrice)
     EXPECT_CALL(
         *grpcClientMock,
         postOrder(
-            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_BUY, 5, price, true
+            QThread::currentThread(),
+            QString("account-id"),
+            QString("aaa-aaa"),
+            tinkoff::ORDER_DIRECTION_BUY,
+            5,
+            price,
+            true,
+            GRPC_PRIOIRITY_MINOR
         )
     )
         .WillOnce(Return(postOrderResponse));
@@ -658,7 +681,14 @@ TEST_F(Test_BiDirTradingThread, Test_buyWithPrice)
     EXPECT_CALL(
         *grpcClientMock,
         postOrder(
-            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_BUY, 5, price, true
+            QThread::currentThread(),
+            QString("account-id"),
+            QString("aaa-aaa"),
+            tinkoff::ORDER_DIRECTION_BUY,
+            5,
+            price,
+            true,
+            GRPC_PRIOIRITY_MINOR
         )
     )
         .WillOnce(Return(postOrderResponse));
@@ -668,7 +698,14 @@ TEST_F(Test_BiDirTradingThread, Test_buyWithPrice)
     EXPECT_CALL(
         *grpcClientMock,
         postOrder(
-            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_BUY, 5, price, true
+            QThread::currentThread(),
+            QString("account-id"),
+            QString("aaa-aaa"),
+            tinkoff::ORDER_DIRECTION_BUY,
+            5,
+            price,
+            true,
+            GRPC_PRIOIRITY_MINOR
         )
     )
         .WillOnce(Return(postOrderResponse));
@@ -719,7 +756,14 @@ TEST_F(Test_BiDirTradingThread, Test_sellWithPrice)
     EXPECT_CALL(
         *grpcClientMock,
         postOrder(
-            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_SELL, 5, price, false
+            QThread::currentThread(),
+            QString("account-id"),
+            QString("aaa-aaa"),
+            tinkoff::ORDER_DIRECTION_SELL,
+            5,
+            price,
+            false,
+            GRPC_PRIOIRITY_CRITICAL
         )
     )
         .WillOnce(Return(nullptr));
@@ -729,7 +773,14 @@ TEST_F(Test_BiDirTradingThread, Test_sellWithPrice)
     EXPECT_CALL(
         *grpcClientMock,
         postOrder(
-            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_SELL, 5, price, false
+            QThread::currentThread(),
+            QString("account-id"),
+            QString("aaa-aaa"),
+            tinkoff::ORDER_DIRECTION_SELL,
+            5,
+            price,
+            false,
+            GRPC_PRIOIRITY_CRITICAL
         )
     )
         .WillOnce(Return(nullptr));
@@ -742,7 +793,14 @@ TEST_F(Test_BiDirTradingThread, Test_sellWithPrice)
     EXPECT_CALL(
         *grpcClientMock,
         postOrder(
-            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_SELL, 5, price, false
+            QThread::currentThread(),
+            QString("account-id"),
+            QString("aaa-aaa"),
+            tinkoff::ORDER_DIRECTION_SELL,
+            5,
+            price,
+            false,
+            GRPC_PRIOIRITY_CRITICAL
         )
     )
         .WillOnce(Return(postOrderResponse));
@@ -756,7 +814,14 @@ TEST_F(Test_BiDirTradingThread, Test_sellWithPrice)
     EXPECT_CALL(
         *grpcClientMock,
         postOrder(
-            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_SELL, 5, price, false
+            QThread::currentThread(),
+            QString("account-id"),
+            QString("aaa-aaa"),
+            tinkoff::ORDER_DIRECTION_SELL,
+            5,
+            price,
+            false,
+            GRPC_PRIOIRITY_CRITICAL
         )
     )
         .WillOnce(Return(postOrderResponse));
@@ -766,7 +831,14 @@ TEST_F(Test_BiDirTradingThread, Test_sellWithPrice)
     EXPECT_CALL(
         *grpcClientMock,
         postOrder(
-            QThread::currentThread(), QString("account-id"), QString("aaa-aaa"), tinkoff::ORDER_DIRECTION_SELL, 5, price, false
+            QThread::currentThread(),
+            QString("account-id"),
+            QString("aaa-aaa"),
+            tinkoff::ORDER_DIRECTION_SELL,
+            5,
+            price,
+            false,
+            GRPC_PRIOIRITY_CRITICAL
         )
     )
         .WillOnce(Return(postOrderResponse));

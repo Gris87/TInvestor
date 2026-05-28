@@ -70,7 +70,8 @@ public:
          tinkoff::OrderDirection direction,
          qint64                  quantity,
          const Quotation&        price,
-         bool                    confirmMarginTrade),
+         bool                    confirmMarginTrade,
+         GrpcPriority            priority),
         (override)
     );
     MOCK_METHOD(

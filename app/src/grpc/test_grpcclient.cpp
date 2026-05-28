@@ -352,7 +352,10 @@ TEST_F(Test_GrpcClient, Test_postOrder)
     EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
 
     ASSERT_NE(
-        client->postOrder(QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_SELL, 1, price, false), nullptr
+        client->postOrder(
+            QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_SELL, 1, price, false, GRPC_PRIOIRITY_MAJOR
+        ),
+        nullptr
     );
 
     EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
@@ -360,14 +363,20 @@ TEST_F(Test_GrpcClient, Test_postOrder)
     EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(
-        client->postOrder(QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_SELL, 1, price, false), nullptr
+        client->postOrder(
+            QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_SELL, 1, price, false, GRPC_PRIOIRITY_MAJOR
+        ),
+        nullptr
     );
 
     EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(3000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(
-        client->postOrder(QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_BUY, 1, price, false), nullptr
+        client->postOrder(
+            QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_BUY, 1, price, false, GRPC_PRIOIRITY_MAJOR
+        ),
+        nullptr
     );
 }
 
