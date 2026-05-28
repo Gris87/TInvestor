@@ -6,6 +6,7 @@ import os
 import sys
 import traceback
 
+from datetime import datetime
 from telethon import TelegramClient, connection
 from loguru import logger
 from pathlib import Path
@@ -15,6 +16,25 @@ from pathlib import Path
 
 
 def telegram_bot(args, filter):
+    if args.silence != "":
+        ranges = args.silence.split("-")
+
+        if len(ranges) != 2:
+            logger.error("Please specify valid silence range")
+
+            sys.exit(1)
+
+        start_time = datetime.strptime(ranges[0], "%H:%M").time()
+        end_time   = datetime.strptime(ranges[1], "%H:%M").time()
+        now        = datetime.now().time()
+
+        if start_time < end_time:
+            if now >= start_time and now < end_time:
+                return
+        else:
+            if now >= start_time or now < end_time:
+                return
+
     api_id = os.environ["TELEGRAM_API_ID"]
     api_hash = os.environ["TELEGRAM_API_HASH"]
     mtproxy_server = os.environ["TELEGRAM_MTPROXY_SERVER"]
@@ -102,6 +122,13 @@ def main():
         type=str,
         default="",
         help="Path to notifications folder"
+    )
+    parser.add_argument(
+        "--silence",
+        dest="silence",
+        type=str,
+        default="",
+        help="Time range of silence in format HH:MM-HH:MM"
     )
     parser.add_argument(
         "--filter",

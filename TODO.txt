@@ -1,6 +1,5 @@
 Fix displaying of daily yield
 Make ASAP script to sell ASAP if lose -3%
-Make TG notifications to rest at night time
 High priority for bi-dir tradings
 Find best configs for different commission
 Change config defaults
