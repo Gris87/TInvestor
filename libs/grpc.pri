@@ -49,19 +49,14 @@ win32* {
         -llibssl \
         -lre2 \
         -lupb_base_lib \
-        -lupb_hash_lib \
         -lupb_json_lib \
-        -lupb_lex_lib \
         -lupb_mem_lib \
         -lupb_message_lib \
         -lupb_mini_descriptor_lib \
-        -lupb_mini_table_lib \
-        -lupb_reflection_lib \
         -lupb_textformat_lib \
         -lupb_wire_lib \
         -lutf8_range \
-        -lutf8_validity \
-        -lz$${DEBUG_SUFFIX}
+        -lzlib$${DEBUG_SUFFIX}
 } else {
     INCLUDEPATH += \
         $${VCPKG_PATH}/installed/x64-linux/include
@@ -87,14 +82,10 @@ win32* {
         -labsl_statusor \
         -lupb_json_lib \
         -lupb_textformat_lib \
-        -lupb_lex_lib \
-        -lupb_reflection_lib \
         -lupb_mini_descriptor_lib \
         -lupb_wire_lib \
         -lutf8_range \
         -lupb_message_lib \
-        -lupb_mini_table_lib \
-        -lupb_hash_lib \
         -lupb_base_lib \
         -lupb_mem_lib \
         -lre2 \
@@ -112,7 +103,7 @@ win32* {
         -labsl_flags_commandlineflag_internal \
         -labsl_random_distributions \
         -labsl_random_seed_sequences \
-        -labsl_random_internal_entropy_pool \
+        -labsl_random_internal_pool_urbg \
         -labsl_random_internal_randen \
         -labsl_random_internal_randen_hwaes \
         -labsl_random_internal_randen_hwaes_impl \
@@ -132,9 +123,6 @@ win32* {
         -labsl_crc_internal \
         -labsl_crc_cpu_detect \
         -labsl_flags_marshalling \
-        -lssl \
-        -lcrypto \
-        -laddress_sorting \
         -labsl_log_internal_check_op \
         -labsl_leak_check \
         -labsl_log_internal_conditions \
@@ -145,38 +133,44 @@ win32* {
         -labsl_log_internal_format \
         -labsl_str_format_internal \
         -labsl_log_internal_structured_proto \
+        -labsl_log_internal_proto \
         -labsl_log_internal_log_sink_set \
         -labsl_log_globals \
-        -labsl_log_internal_globals \
-        -labsl_log_sink \
-        -labsl_log_entry \
-        -labsl_log_internal_proto \
+        -labsl_hash \
+        -labsl_bad_variant_access \
+        -labsl_city \
+        -labsl_low_level_hash \
         -labsl_vlog_config_internal \
+        -labsl_bad_optional_access \
+        -labsl_log_internal_fnmatch \
         -labsl_synchronization \
         -labsl_stacktrace \
-        -labsl_borrowed_fixup_buffer \
-        -labsl_hash \
-        -labsl_city \
         -labsl_symbolize \
+        -labsl_debugging_internal \
         -labsl_demangle_internal \
         -labsl_demangle_rust \
         -labsl_decode_rust_punycode \
         -labsl_utf8_for_code_point \
         -labsl_graphcycles_internal \
         -labsl_kernel_timeout_internal \
+        -labsl_malloc_internal \
+        -labsl_tracing_internal \
+        -labsl_log_internal_globals \
+        -labsl_log_sink \
+        -labsl_log_entry \
         -labsl_time \
         -labsl_civil_time \
         -labsl_time_zone \
-        -labsl_malloc_internal \
-        -labsl_tracing_internal \
-        -labsl_log_internal_fnmatch \
         -labsl_strings \
         -labsl_int128 \
-        -labsl_debugging_internal \
         -labsl_strings_internal \
+        -labsl_string_view \
         -labsl_base \
         -labsl_spinlock_wait \
         -labsl_throw_delegate \
         -labsl_raw_logging_internal \
-        -labsl_log_severity
+        -labsl_log_severity \
+        -lssl \
+        -lcrypto \
+        -laddress_sorting
 }
