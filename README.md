@@ -60,7 +60,7 @@ You have to install prerequisites in order to build TInvestor.
 
 - Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.11.1. Please also install addons qt5compat and qtcharts
 
-4. Install zlib 1.3.1
+4. Install zlib 1.3.2
 
 - Run commands below
 
@@ -69,7 +69,7 @@ set ZLIB_PATH=SET_PATH_TO_ZLIB (for example: C:\Qt\zlib)
 
 git clone git@github.com:madler/zlib.git %ZLIB_PATH%
 cd %ZLIB_PATH%
-git checkout v1.3.1 -b temp
+git checkout v1.3.2 -b temp
 mkdir build
 cd build
 cmake ^
@@ -110,7 +110,7 @@ cmake ^
   -DCMAKE_BUILD_TYPE=Debug ^
   -DCMAKE_INSTALL_PREFIX="%QUAZIP_PATH%\install" ^
   -DCMAKE_PREFIX_PATH="%QTDIR%\lib\cmake" ^
-  -DZLIB_LIBRARY:FILEPATH="%ZLIB_PATH%\install\lib\zlibd.lib" ^
+  -DZLIB_LIBRARY:FILEPATH="%ZLIB_PATH%\install\lib\zd.lib" ^
   -DZLIB_INCLUDE_DIR:PATH="%ZLIB_PATH%\install\include"
 cmake --build . --config Debug
 cmake --install . --config Debug
@@ -120,7 +120,7 @@ cmake ^
   -DCMAKE_BUILD_TYPE=Release ^
   -DCMAKE_INSTALL_PREFIX="%QUAZIP_PATH%\install" ^
   -DCMAKE_PREFIX_PATH="%QTDIR%\lib\cmake" ^
-  -DZLIB_LIBRARY:FILEPATH="%ZLIB_PATH%\install\lib\zlib.lib" ^
+  -DZLIB_LIBRARY:FILEPATH="%ZLIB_PATH%\install\lib\z.lib" ^
   -DZLIB_INCLUDE_DIR:PATH="%ZLIB_PATH%\install\include"
 cmake --build . --config Release
 cmake --install . --config Release
@@ -135,7 +135,7 @@ set VCPKG_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\vcpkg)
 
 git clone git@github.com:microsoft/vcpkg.git %VCPKG_PATH%
 cd %VCPKG_PATH%
-git checkout 2025.08.27 -b temp
+git checkout 2026.04.27 -b temp
 bootstrap-vcpkg.bat
 vcpkg integrate install
 vcpkg install grpc
@@ -189,7 +189,7 @@ sudo apt-get install -y \
 
 - Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.11.1. Please also install addons qt5compat and qtcharts
 
-3. Install zlib 1.3.1
+3. Install zlib 1.3.2
 
 - Run commands below
 
@@ -198,7 +198,7 @@ ZLIB_PATH=SET_PATH_TO_ZLIB (for example: /home/user/Qt/zlib)
 
 git clone git@github.com:madler/zlib.git ${ZLIB_PATH}
 cd ${ZLIB_PATH}
-git checkout v1.3.1 -b temp
+git checkout v1.3.2 -b temp
 mkdir build
 cd build
 cmake \
@@ -264,7 +264,7 @@ VCPKG_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/vcpkg)
 
 git clone git@github.com:microsoft/vcpkg.git ${VCPKG_PATH}
 cd ${VCPKG_PATH}
-git checkout 2025.08.27 -b temp
+git checkout 2026.04.27 -b temp
 ./bootstrap-vcpkg.sh
 ./vcpkg integrate install
 ./vcpkg install grpc

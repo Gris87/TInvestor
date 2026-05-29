@@ -38,9 +38,7 @@ win32* {
     copy_grpc_files.commands += $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/libprotobuf$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_grpc_files.commands += $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/libssl-3-x64.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_grpc_files.commands += $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/re2.dll)" "$$shell_path($${OUT_PWD}/build)" &&
-    copy_grpc_files.commands += $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/zlib$${DEBUG_SUFFIX}1.dll)" "$$shell_path($${OUT_PWD}/build)"
-
-    copy_zlib_files.commands = $(COPY_FILE) "$$shell_path($${ZLIB_PATH}/install/bin/zlib$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
+    copy_grpc_files.commands += $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/z$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
     copy_quazip_files.commands = $(COPY_FILE) "$$shell_path($${QUAZIP_PATH}/install/bin/quazip1-qt6$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
@@ -49,7 +47,6 @@ win32* {
     export(first.depends)
     export(copy_qt_files.commands)
     export(copy_grpc_files.commands)
-    export(copy_zlib_files.commands)
     export(copy_quazip_files.commands)
     export(copy_dist_files.commands)
 

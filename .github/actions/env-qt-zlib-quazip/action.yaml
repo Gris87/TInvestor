@@ -227,8 +227,8 @@ runs:
         switch ("${{ runner.os }}")
         {
             "Windows" {
-                ${ZLIB_LIBRARY_DEBUG}   = "zlibd.lib"
-                ${ZLIB_LIBRARY_RELEASE} = "zlib.lib"
+                ${ZLIB_LIBRARY_DEBUG}   = "zd.lib"
+                ${ZLIB_LIBRARY_RELEASE} = "z.lib"
             }
             "Linux" {
                 ${ZLIB_LIBRARY_DEBUG}   = "libz.a"

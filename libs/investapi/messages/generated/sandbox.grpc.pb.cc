@@ -19,6 +19,7 @@
 #include <grpcpp/server_context.h>
 #include <grpcpp/impl/service_type.h>
 #include <grpcpp/support/sync_stream.h>
+#include <grpcpp/ports_def.inc>
 namespace tinkoff {
 namespace public_ {
 namespace invest {
@@ -891,4 +892,5 @@ SandboxService::Service::~Service() {
 }  // namespace api
 }  // namespace contract
 }  // namespace v1
+#include <grpcpp/ports_undef.inc>
 
