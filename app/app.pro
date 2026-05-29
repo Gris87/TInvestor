@@ -45,6 +45,7 @@ UI_DIR      = build/gen/$${TARGET}/ui
 win32* {
     copy_dist_files.commands =  $(COPY_FILE) "$$shell_path($${PWD}/dist/windows/post_install.bat)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/windows/tbank.ru.crt)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_dist_files.commands += (if exist "$$shell_path($${OUT_PWD}/build/tools)" del /F /S /Q "$$shell_path($${OUT_PWD}/build/tools)") &&
     copy_dist_files.commands += (if exist "$$shell_path($${OUT_PWD}/build/tools)" rmdir /S /Q "$$shell_path($${OUT_PWD}/build/tools)") &&
 }
 

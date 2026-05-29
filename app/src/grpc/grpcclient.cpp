@@ -16,6 +16,7 @@ const char* const GRPC_ADDRESS = "sandbox-invest-public-api.tinkoff.ru:443";
 
 constexpr int    MAX_LIMIT_FOR_INTERVAL_1_MIN = 2400;
 constexpr int    OPERATIONS_LIMIT             = 1000;
+constexpr int    MAX_RECEIVE_MESSAGE_SIZE     = 16 * 1024 * 1024; // 16 MB
 constexpr qint64 MS_IN_SECOND                 = 1000LL;
 
 
@@ -65,8 +66,11 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient,
         std::unique_ptr<grpc::MetadataCredentialsPlugin>(new InvestApiAuthenticator(userStorage))
     );
 
+    grpc::ChannelArguments args;
+    args.SetMaxReceiveMessageSize(MAX_RECEIVE_MESSAGE_SIZE);
+
     const std::shared_ptr<grpc::Channel> channel =
-        grpc::CreateChannel(GRPC_ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()));
+        grpc::CreateCustomChannel(GRPC_ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()), args);
 
     mUsersService            = tinkoff::UsersService::NewStub(channel);
     mInstrumentsService      = tinkoff::InstrumentsService::NewStub(channel);
