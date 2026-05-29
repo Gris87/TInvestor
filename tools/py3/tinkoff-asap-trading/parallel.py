@@ -66,6 +66,15 @@ async def _do_instrument_processing(args, client, amount_of_lots, avg_price):
 
 
 async def _buy(args, client, orderbook, amount_of_lots, avg_price):
+    if args.lose < 0 and len(orderbook.asks) > 0:
+        ask = orderbook.asks[0]
+        limit_price = avg_price / Decimal((HUNDRED_PERCENT + args.lose) / HUNDRED_PERCENT)
+
+        if quotation_to_decimal(ask.price) >= limit_price:
+            await _post_order(args, client, OrderDirection.ORDER_DIRECTION_BUY, amount_of_lots, ask.price)
+
+            return
+
     min_lots_to_trade = min(round(amount_of_lots * args.part / HUNDRED_PERCENT), amount_of_lots)
     limit_price = avg_price / Decimal((HUNDRED_PERCENT + args.yield_value) / HUNDRED_PERCENT)
 
@@ -73,17 +82,26 @@ async def _buy(args, client, orderbook, amount_of_lots, avg_price):
 
     for ask in orderbook.asks:
         if quotation_to_decimal(ask.price) > limit_price:
-            break
+            return
 
         lots += ask.quantity
 
         if lots >= min_lots_to_trade:
             await _post_order(args, client, OrderDirection.ORDER_DIRECTION_BUY, min(amount_of_lots, lots), ask.price)
 
-            break
+            return
 
 
 async def _sell(args, client, orderbook, amount_of_lots, avg_price):
+    if args.lose < 0 and len(orderbook.bids) > 0:
+        bid = orderbook.bids[0]
+        limit_price = avg_price * Decimal((HUNDRED_PERCENT + args.lose) / HUNDRED_PERCENT)
+
+        if quotation_to_decimal(bid.price) <= limit_price:
+            await _post_order(args, client, OrderDirection.ORDER_DIRECTION_SELL, amount_of_lots, bid.price)
+
+            return
+
     min_lots_to_trade = min(round(amount_of_lots * args.part / HUNDRED_PERCENT), amount_of_lots)
     limit_price = avg_price * Decimal((HUNDRED_PERCENT + args.yield_value) / HUNDRED_PERCENT)
 
@@ -91,14 +109,14 @@ async def _sell(args, client, orderbook, amount_of_lots, avg_price):
 
     for bid in orderbook.bids:
         if quotation_to_decimal(bid.price) < limit_price:
-            break
+            return
 
         lots += bid.quantity
 
         if lots >= min_lots_to_trade:
             await _post_order(args, client, OrderDirection.ORDER_DIRECTION_SELL, min(amount_of_lots, lots), bid.price)
 
-            break
+            return
 
 
 async def _post_order(args, client, direction, amount_of_lots, price):
@@ -166,6 +184,13 @@ def main():
         help="Instrument ID",
     )
     parser.add_argument(
+        "--lose",
+        dest="lose",
+        type=float,
+        default=0.0,
+        help="Trade instrument when bad yield reached (0.0 to disable)",
+    )
+    parser.add_argument(
         "--yield",
         dest="yield_value",
         type=float,
@@ -180,16 +205,6 @@ def main():
         help="Allow to trade partially",
     )
     args = parser.parse_args()
-
-    if args.account == "":
-        logger.error("Please specify account ID with --account")
-
-        sys.exit(1)
-
-    if args.instrument_id == "":
-        logger.error("Please specify instrument ID with --instrument-id")
-
-        sys.exit(1)
 
     asyncio.run(asap_trading(args))
 

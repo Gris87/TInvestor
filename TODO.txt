@@ -1,5 +1,4 @@
 Fix displaying of daily yield
-Make ASAP script to sell ASAP if lose -3%
 Option for trading with MM
 Find best configs for different commission
 Change config defaults

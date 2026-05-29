@@ -20,6 +20,11 @@ from tinkoff.invest.retrying.settings import RetryClientSettings
 
 PATH_TO_SCRIPT = Path(__file__).parent
 
+TMON_UID = "498ec3ff-ef27-4729-9703-a5aac48d5789"
+
+IGNORE_STOCKS = [
+    TMON_UID
+]
 
 terminated = False
 
@@ -89,6 +94,9 @@ async def _do_processing(args, token, client):
             if position.instrument_type=="currency":
                 continue
 
+            if position.instrument_uid in IGNORE_STOCKS:
+                continue
+
             _start_instrument_processing(args, token, position.instrument_uid, position.ticker)
 
         await asyncio.sleep(10)
@@ -114,6 +122,7 @@ def _start_instrument_processing(args, token, instrument_id, ticker):
         str(Path(PATH_TO_SCRIPT) / "parallel.py"),
         "--account", args.account,
         "--instrument-id", instrument_id,
+        "--lose", str(args.lose),
         "--yield", str(args.yield_value),
         "--part", str(args.part)
     ]
@@ -196,6 +205,13 @@ def main():
         help="Account ID",
     )
     parser.add_argument(
+        "--lose",
+        dest="lose",
+        type=float,
+        default=0.0,
+        help="Trade instrument when bad yield reached (0.0 to disable)",
+    )
+    parser.add_argument(
         "--yield",
         dest="yield_value",
         type=float,
@@ -218,6 +234,21 @@ def main():
 
     if args.account == "":
         logger.error("Please specify account ID with --account")
+
+        sys.exit(1)
+
+    if args.lose > 0:
+        logger.error("Please specify valid lose value with --lose. Must be negative value (for example -3.0)")
+
+        sys.exit(1)
+
+    if args.yield_value <= 0:
+        logger.error("Please specify valid yield value with --yield")
+
+        sys.exit(1)
+
+    if args.part < 0:
+        logger.error("Please specify valid part value with --part")
 
         sys.exit(1)
 
