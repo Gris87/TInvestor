@@ -66,11 +66,12 @@ async def _do_instrument_processing(args, client, amount_of_lots, avg_price):
 
 
 async def _buy(args, client, orderbook, amount_of_lots, avg_price):
-    if args.lose < 0 and len(orderbook.asks) > 0:
+    if args.lose < 0 and len(orderbook.bids) > 0 and len(orderbook.asks) > 0:
+        bid = orderbook.bids[0]
         ask = orderbook.asks[0]
         limit_price = avg_price / Decimal((HUNDRED_PERCENT + args.lose) / HUNDRED_PERCENT)
 
-        if quotation_to_decimal(ask.price) >= limit_price:
+        if quotation_to_decimal(bid.price) >= limit_price:
             await _post_order(args, client, OrderDirection.ORDER_DIRECTION_BUY, amount_of_lots, ask.price)
 
             return
@@ -93,11 +94,12 @@ async def _buy(args, client, orderbook, amount_of_lots, avg_price):
 
 
 async def _sell(args, client, orderbook, amount_of_lots, avg_price):
-    if args.lose < 0 and len(orderbook.bids) > 0:
+    if args.lose < 0 and len(orderbook.bids) > 0 and len(orderbook.asks) > 0:
         bid = orderbook.bids[0]
+        ask = orderbook.asks[0]
         limit_price = avg_price * Decimal((HUNDRED_PERCENT + args.lose) / HUNDRED_PERCENT)
 
-        if quotation_to_decimal(bid.price) <= limit_price:
+        if quotation_to_decimal(ask.price) <= limit_price:
             await _post_order(args, client, OrderDirection.ORDER_DIRECTION_SELL, amount_of_lots, bid.price)
 
             return
