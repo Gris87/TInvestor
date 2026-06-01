@@ -55,6 +55,7 @@ public:
     Ui::MainWindow* ui;
 
     QTimer requestTimer;
+    QTimer disconnectTimer;
     QTimer refreshBackgroundTimer;
 
 private:
@@ -78,7 +79,9 @@ public slots:
     void trayIconShowClicked();
     void trayIconExitClicked();
     void requestTimerTicked();
+    void disconnectTimerTicked();
     void refreshBackgroundTimerTicked();
+    void requestCompleted();
     void notificationsRead(const QList<NotificationInfo>& notifications);
     void notificationsAdded(const QList<NotificationInfo>& notifications);
 

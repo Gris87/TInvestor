@@ -7,8 +7,9 @@
 
 constexpr qint64 MS_IN_SECOND                = 1000LL;
 constexpr qint64 ONE_MINUTE                  = 60LL * MS_IN_SECOND;
-constexpr qint64 REQUEST_INTERVAL            = ONE_MINUTE; // 1 minute
-constexpr qint64 REFRESH_BACKGROUND_INTERVAL = ONE_MINUTE; // 1 minute
+constexpr qint64 REQUEST_INTERVAL            = ONE_MINUTE;     // 1 minute
+constexpr qint64 DISCONNECT_INTERVAL         = 5 * ONE_MINUTE; // 5 minutes
+constexpr qint64 REFRESH_BACKGROUND_INTERVAL = ONE_MINUTE;     // 1 minute
 
 #ifdef Q_OS_WINDOWS
 constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIcon::DoubleClick;
@@ -60,8 +61,10 @@ MainWindow::MainWindow(
     connect(mTrayIcon,               SIGNAL(trayIconShowClicked()),                              this, SLOT(trayIconShowClicked()));
     connect(mTrayIcon,               SIGNAL(trayIconExitClicked()),                              this, SLOT(trayIconExitClicked()));
     connect(&requestTimer,           SIGNAL(timeout()),                                          this, SLOT(requestTimerTicked()));
+    connect(&disconnectTimer,        SIGNAL(timeout()),                                          this, SLOT(disconnectTimerTicked()));
     connect(&refreshBackgroundTimer, SIGNAL(timeout()),                                          this, SLOT(refreshBackgroundTimerTicked()));
     connect(mNotifier,               SIGNAL(notificationClicked()),                              this, SLOT(trayIconShowClicked()));
+    connect(mRequestThread,          SIGNAL(requestCompleted()),                                 this, SLOT(requestCompleted()));
     connect(mRequestThread,          SIGNAL(notificationsRead(const QList<NotificationInfo>&)),  this, SLOT(notificationsRead(const QList<NotificationInfo>&)));
     connect(mRequestThread,          SIGNAL(notificationsAdded(const QList<NotificationInfo>&)), this, SLOT(notificationsAdded(const QList<NotificationInfo>&)));
     // clang-format on
@@ -134,9 +137,21 @@ void MainWindow::requestTimerTicked()
     mRequestThread->start();
 }
 
+void MainWindow::disconnectTimerTicked()
+{
+    mTrayIcon->handleDisconnection();
+    disconnectTimer.stop();
+}
+
 void MainWindow::refreshBackgroundTimerTicked()
 {
     mNotificationsTableWidget->refreshBackground();
+}
+
+void MainWindow::requestCompleted()
+{
+    mTrayIcon->handleConnection();
+    disconnectTimer.start();
 }
 
 void MainWindow::notificationsRead(const QList<NotificationInfo>& notifications)
@@ -179,6 +194,7 @@ void MainWindow::init()
     qInfo() << "Start main initialization";
 
     requestTimer.start(REQUEST_INTERVAL);
+    disconnectTimer.start(DISCONNECT_INTERVAL);
     refreshBackgroundTimer.start(REFRESH_BACKGROUND_INTERVAL);
 
     requestTimerTicked();

@@ -18,10 +18,16 @@ public:
     TrayIcon& operator=(const TrayIcon& another) = delete;
 
     void setFilter(const Filter& filter) override;
+    void handleDisconnection() override;
+    void handleConnection() override;
     void resetCounter() override;
     void notificationsAdded(const QList<NotificationInfo>& notifications) override;
 
 private:
-    Filter mFilter;
-    int    mCounter;
+    void updateIcon();
+
+    QPixmap mPixmap;
+    Filter  mFilter;
+    bool    mConnected;
+    int     mCounter;
 };

@@ -25,6 +25,7 @@ public:
     virtual void terminateThread() = 0;
 
 signals:
+    void requestCompleted();
     void notificationsRead(const QList<NotificationInfo>& notifications);
     void notificationsAdded(const QList<NotificationInfo>& notifications);
 };

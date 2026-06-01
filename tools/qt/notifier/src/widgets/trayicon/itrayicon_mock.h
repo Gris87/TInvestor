@@ -23,6 +23,8 @@ public:
     TrayIconMock& operator=(const TrayIconMock& another) = delete;
 
     MOCK_METHOD(void, setFilter, (const Filter& filter), (override));
+    MOCK_METHOD(void, handleDisconnection, (), (override));
+    MOCK_METHOD(void, handleConnection, (), (override));
     MOCK_METHOD(void, resetCounter, (), (override));
     MOCK_METHOD(void, notificationsAdded, (const QList<NotificationInfo>& notifications), (override));
 };

@@ -24,6 +24,8 @@ public:
     ITrayIcon& operator=(const ITrayIcon& another) = delete;
 
     virtual void setFilter(const Filter& filter)                                  = 0;
+    virtual void handleDisconnection()                                            = 0;
+    virtual void handleConnection()                                               = 0;
     virtual void resetCounter()                                                   = 0;
     virtual void notificationsAdded(const QList<NotificationInfo>& notifications) = 0;
 

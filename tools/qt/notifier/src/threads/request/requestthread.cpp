@@ -141,6 +141,8 @@ void RequestThread::processNotificationsResponse(const QByteArray& resp)
             mLastNotificationTimestamp  = notifications.constFirst().timestamp; // Since it reversed
             mAmountOfEntries           += notifications.size();
         }
+
+        emit requestCompleted();
     }
     catch (...)
     {
