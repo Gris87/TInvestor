@@ -1006,20 +1006,23 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
         }
         else
         {
-            for (auto it2 = biDirTradingThreads.constBegin(); it2 != biDirTradingThreads.constEnd(); ++it2)
+            if (!mConfig->isTradeWithMarginCall())
             {
-                const QString&       biDirInstrumentId  = it2.key();
-                IBiDirTradingThread* biDirTradingThread = it2.value();
-
-                if (!biDirTradingThreadsToKill.contains(biDirInstrumentId))
+                for (auto it2 = biDirTradingThreads.constBegin(); it2 != biDirTradingThreads.constEnd(); ++it2)
                 {
-                    biDirTradingThread->terminateThread(false);
+                    const QString&       biDirInstrumentId  = it2.key();
+                    IBiDirTradingThread* biDirTradingThread = it2.value();
 
-                    biDirTradingThreadsToKill.append(biDirInstrumentId);
+                    if (!biDirTradingThreadsToKill.contains(biDirInstrumentId))
+                    {
+                        biDirTradingThread->terminateThread(false);
+
+                        biDirTradingThreadsToKill.append(biDirInstrumentId);
+                    }
                 }
-            }
 
-            break;
+                break;
+            }
         }
     }
 

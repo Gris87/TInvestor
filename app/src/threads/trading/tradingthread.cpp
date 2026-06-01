@@ -302,6 +302,8 @@ TradingThread::buyWithPriceOptimalAmount(double cost, double expected, double de
 {
     while (!QThread::currentThread()->isInterruptionRequested())
     {
+        const bool confirmMarginTrade = mConfig->isTradeWithMarginCall();
+
         const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
             mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
 
@@ -310,7 +312,10 @@ TradingThread::buyWithPriceOptimalAmount(double cost, double expected, double de
             return false;
         }
 
-        qint64 amountToBuy = tinkoffMaxLots->buy_limits().buy_max_lots();
+        qint64 amountToBuy =
+            confirmMarginTrade
+                ? qMax(tinkoffMaxLots->buy_limits().buy_max_lots(), tinkoffMaxLots->buy_margin_limits().buy_max_lots())
+                : tinkoffMaxLots->buy_limits().buy_max_lots();
 
         if (expected != 0)
         {
@@ -336,7 +341,7 @@ TradingThread::buyWithPriceOptimalAmount(double cost, double expected, double de
                 tinkoff::ORDER_DIRECTION_BUY,
                 amountToBuy,
                 price,
-                false,
+                confirmMarginTrade,
                 GRPC_PRIOIRITY_MAJOR
             );
 

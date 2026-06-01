@@ -1256,6 +1256,7 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
 
     instruments2["aaaaa"] = tradingInfo3;
 
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(*biDirTradingThreadMock1, terminateThread(false));
     EXPECT_CALL(
         *tradingThreadFactoryMock,
@@ -1983,6 +1984,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
 
     instruments["aaa-aaa"] = tradingInfo;
 
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(
         *tradingThreadFactoryMock,
         newInstance(
@@ -2155,6 +2157,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     autoPilotPortfolioLastPriceThreadMock->wait();
     followThreadMock->wait();
 
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(
         *tradingThreadFactoryMock,
         newInstance(

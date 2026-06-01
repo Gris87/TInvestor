@@ -307,6 +307,8 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
 {
     while (!QThread::currentThread()->isInterruptionRequested())
     {
+        const bool confirmMarginTrade = mConfig->isTradeWithMarginCall();
+
         const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
             mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
 
@@ -316,7 +318,10 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
         }
 
         const qint64 amountToBuy = qMin(
-            amountOfLots, qMax(tinkoffMaxLots->buy_limits().buy_max_lots(), tinkoffMaxLots->buy_margin_limits().buy_max_lots())
+            amountOfLots,
+            confirmMarginTrade
+                ? qMax(tinkoffMaxLots->buy_limits().buy_max_lots(), tinkoffMaxLots->buy_margin_limits().buy_max_lots())
+                : tinkoffMaxLots->buy_limits().buy_max_lots()
         );
 
         if (amountToBuy > 0)
@@ -328,7 +333,7 @@ void BiDirTradingThread::buyWithPrice(qint64 amountOfLots, const Quotation& pric
                 tinkoff::ORDER_DIRECTION_BUY,
                 amountToBuy,
                 price,
-                true,
+                confirmMarginTrade,
                 mPriority == BIDIR_PRIORITY_HIGH ? GRPC_PRIOIRITY_CRITICAL : GRPC_PRIOIRITY_MINOR
             );
 
