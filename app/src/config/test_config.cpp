@@ -53,6 +53,7 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
     config->setTradeInNonWorkingHours(false);
+    config->setTradeWithMarginCall(false);
     config->setTradeHugeBid(false);
     config->setHugeBid(3.0f);
     config->setHugeBidLimitStockPurchase(false);
@@ -89,6 +90,7 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeWithMarginCall(),                      false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
     ASSERT_EQ(config->isHugeBidLimitStockPurchase(),                false);
@@ -133,6 +135,7 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeWithMarginCall(),                      false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
     ASSERT_EQ(config->isHugeBidLimitStockPurchase(),                false);
@@ -170,6 +173,7 @@ TEST_F(Test_Config, Test_clone_and_deleteRecursively)
     ASSERT_EQ(config2->isAutorun(),                                  false);
     ASSERT_EQ(config2->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config2->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config2->isTradeWithMarginCall(),                      false);
     ASSERT_EQ(config2->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config2->getHugeBid(),                               3.0f, 0.0001f);
     ASSERT_EQ(config2->isHugeBidLimitStockPurchase(),                false);
@@ -221,6 +225,7 @@ TEST_F(Test_Config, Test_assign)
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
     config->setTradeInNonWorkingHours(false);
+    config->setTradeWithMarginCall(false);
     config->setTradeHugeBid(false);
     config->setHugeBid(3.0f);
     config->setHugeBidLimitStockPurchase(false);
@@ -257,6 +262,7 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeWithMarginCall(),                      false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
     ASSERT_EQ(config->isHugeBidLimitStockPurchase(),                false);
@@ -293,6 +299,7 @@ TEST_F(Test_Config, Test_assign)
     config2.setAutorun(true);
     config2.setCpuUsage("OPTIMAL");
     config2.setTradeInNonWorkingHours(true);
+    config2.setTradeWithMarginCall(true);
     config2.setTradeHugeBid(true);
     config2.setHugeBid(4.5f);
     config2.setHugeBidLimitStockPurchase(true);
@@ -329,6 +336,7 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.isAutorun(),                                  true);
     ASSERT_EQ(config2.getCpuUsage(),                                "OPTIMAL");
     ASSERT_EQ(config2.isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config2.isTradeWithMarginCall(),                      true);
     ASSERT_EQ(config2.isTradeHugeBid(),                             true);
     ASSERT_NEAR(config2.getHugeBid(),                               4.5f, 0.0001f);
     ASSERT_EQ(config2.isHugeBidLimitStockPurchase(),                true);
@@ -371,6 +379,7 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config->isAutorun(),                                  true);
     ASSERT_EQ(config->getCpuUsage(),                                "OPTIMAL");
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config->isTradeWithMarginCall(),                      true);
     ASSERT_EQ(config->isTradeHugeBid(),                             true);
     ASSERT_NEAR(config->getHugeBid(),                               4.5f, 0.0001f);
     ASSERT_EQ(config->isHugeBidLimitStockPurchase(),                true);
@@ -408,6 +417,7 @@ TEST_F(Test_Config, Test_assign)
     ASSERT_EQ(config2.isAutorun(),                                  true);
     ASSERT_EQ(config2.getCpuUsage(),                                "OPTIMAL");
     ASSERT_EQ(config2.isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config2.isTradeWithMarginCall(),                      true);
     ASSERT_EQ(config2.isTradeHugeBid(),                             true);
     ASSERT_NEAR(config2.getHugeBid(),                               4.5f, 0.0001f);
     ASSERT_EQ(config2.isHugeBidLimitStockPurchase(),                true);
@@ -449,6 +459,7 @@ TEST_F(Test_Config, Test_makeDefault)
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
     config->setTradeInNonWorkingHours(false);
+    config->setTradeWithMarginCall(false);
     config->setTradeHugeBid(false);
     config->setHugeBid(3.0f);
     config->setHugeBidLimitStockPurchase(false);
@@ -485,6 +496,7 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeWithMarginCall(),                      false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
     ASSERT_EQ(config->isHugeBidLimitStockPurchase(),                false);
@@ -527,6 +539,7 @@ TEST_F(Test_Config, Test_makeDefault)
     ASSERT_EQ(config->isAutorun(),                                  true);
     ASSERT_EQ(config->getCpuUsage(),                                "MAXIMUM");
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config->isTradeWithMarginCall(),                      true);
     ASSERT_EQ(config->isTradeHugeBid(),                             true);
     ASSERT_NEAR(config->getHugeBid(),                               2.5f, 0.0001f);
     ASSERT_EQ(config->isHugeBidLimitStockPurchase(),                true);
@@ -568,6 +581,7 @@ TEST_F(Test_Config, Test_save)
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
     config->setTradeInNonWorkingHours(false);
+    config->setTradeWithMarginCall(false);
     config->setTradeHugeBid(false);
     config->setHugeBid(3.0f);
     config->setHugeBidLimitStockPurchase(false);
@@ -604,6 +618,7 @@ TEST_F(Test_Config, Test_save)
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeWithMarginCall(),                      false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
     ASSERT_EQ(config->isHugeBidLimitStockPurchase(),                false);
@@ -646,6 +661,7 @@ TEST_F(Test_Config, Test_save)
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),                               QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/CpuUsage"),                              QVariant("MINIMUM")));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeInNonWorkingHours"),                QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeWithMarginCall"),                   QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/TradeHugeBid"),                          QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HugeBid"),                               QVariant(3.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/HugeBidLimitStockPurchase"),             QVariant(false)));
@@ -689,6 +705,7 @@ TEST_F(Test_Config, Test_load)
     config->setAutorun(false);
     config->setCpuUsage("MINIMUM");
     config->setTradeInNonWorkingHours(false);
+    config->setTradeWithMarginCall(false);
     config->setTradeHugeBid(false);
     config->setHugeBid(3.0f);
     config->setHugeBidLimitStockPurchase(false);
@@ -725,6 +742,7 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->isAutorun(),                                  false);
     ASSERT_EQ(config->getCpuUsage(),                                "MINIMUM");
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   false);
+    ASSERT_EQ(config->isTradeWithMarginCall(),                      false);
     ASSERT_EQ(config->isTradeHugeBid(),                             false);
     ASSERT_NEAR(config->getHugeBid(),                               3.0f, 0.0001f);
     ASSERT_EQ(config->isHugeBidLimitStockPurchase(),                false);
@@ -767,6 +785,7 @@ TEST_F(Test_Config, Test_load)
     EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),                               QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/CpuUsage"),                              QVariant("MINIMUM"))).WillOnce(Return(QVariant("OPTIMAL")));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeInNonWorkingHours"),                QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeWithMarginCall"),                   QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/TradeHugeBid"),                          QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/HugeBid"),                               QVariant(3.0f))).WillOnce(Return(QVariant(9.0f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/HugeBidLimitStockPurchase"),             QVariant(false))).WillOnce(Return(QVariant(true)));
@@ -806,6 +825,7 @@ TEST_F(Test_Config, Test_load)
     ASSERT_EQ(config->isAutorun(),                                  true);
     ASSERT_EQ(config->getCpuUsage(),                                "OPTIMAL");
     ASSERT_EQ(config->isTradeInNonWorkingHours(),                   true);
+    ASSERT_EQ(config->isTradeWithMarginCall(),                      true);
     ASSERT_EQ(config->isTradeHugeBid(),                             true);
     ASSERT_NEAR(config->getHugeBid(),                               9.0f, 0.0001f);
     ASSERT_EQ(config->isHugeBidLimitStockPurchase(),                true);
@@ -875,6 +895,15 @@ TEST_F(Test_Config, Test_setTradeInNonWorkingHours_and_isTradeInNonWorkingHours)
 
     config->setTradeInNonWorkingHours(true);
     ASSERT_EQ(config->isTradeInNonWorkingHours(), true);
+}
+
+TEST_F(Test_Config, Test_setTradeWithMarginCall_and_isTradeWithMarginCall)
+{
+    config->setTradeWithMarginCall(false);
+    ASSERT_EQ(config->isTradeWithMarginCall(), false);
+
+    config->setTradeWithMarginCall(true);
+    ASSERT_EQ(config->isTradeWithMarginCall(), true);
 }
 
 TEST_F(Test_Config, Test_setTradeHugeBid_and_isTradeHugeBid)

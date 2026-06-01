@@ -61,6 +61,7 @@ private slots:
     void on_autorunCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_cpuUsageComboBox_currentIndexChanged(int index);
     void on_tradeInNonWorkingHoursCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_tradeWithMarginCallCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_tradeHugeBidCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_hugeBidDoubleSpinBox_valueChanged(double value);
     void on_hugeBidLimitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value);

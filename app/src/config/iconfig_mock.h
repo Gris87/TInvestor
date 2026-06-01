@@ -40,6 +40,9 @@ public:
     MOCK_METHOD(void, setTradeInNonWorkingHours, (bool value), (override));
     MOCK_METHOD(bool, isTradeInNonWorkingHours, (), (override));
 
+    MOCK_METHOD(void, setTradeWithMarginCall, (bool value), (override));
+    MOCK_METHOD(bool, isTradeWithMarginCall, (), (override));
+
     MOCK_METHOD(void, setTradeHugeBid, (bool value), (override));
     MOCK_METHOD(bool, isTradeHugeBid, (), (override));
 

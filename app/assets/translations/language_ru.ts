@@ -447,12 +447,12 @@
 <context>
     <name>HighLiquidityThread</name>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="108"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="106"/>
         <source>Decided to buy because trading day is over</source>
         <translation>Решено покупать, потому что торговый день окончен</translation>
     </message>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="139"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="137"/>
         <source>Decided to sell because it had been a night since buying</source>
         <translation>Решено продать, потому что прошла ночь с момента покупки</translation>
     </message>
@@ -1059,12 +1059,12 @@
         <translation>Заявка выполнена. %1/%1 куплено по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="99"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="95"/>
         <source>Decided to start reselling because amount of asks more than amount of bids in %1 times</source>
         <translation>Решено начать перепродажу, потому что количество продавцов больше в %1 раза</translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="123"/>
+        <location filename="../../src/threads/bidirtradingcontrol/bidirtradingcontrolthread.cpp" line="119"/>
         <source>Decided to start reselling because spread is %1</source>
         <translation>Решено начать перепродажу, потому что спред %1</translation>
     </message>
@@ -1301,89 +1301,94 @@
         <translation>Максимально</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="351"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="381"/>
         <source>Trade stocks with spread more than</source>
         <translation>Торговать акциями со спредом больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="277"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="465"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="659"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="307"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="495"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="689"/>
         <source>of average daily turnover</source>
         <translation>от среднего дневного оборота</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="159"/>
+        <source>Trade with Margin Call (recommended)</source>
+        <translation>Торговать с маржиналкой (рекомендовано)</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="189"/>
         <source>Trade stocks when amount of asks more than amount of bids in</source>
         <translation>Торговать акциями, когда количество продавцов больше в</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="203"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="233"/>
         <source>times</source>
         <translation>раза</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="321"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="509"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="351"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="539"/>
         <source>T-Bank Premium only</source>
         <translation>только Premium Т-Банка</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="769"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="799"/>
         <source>of average daily turnover in non-wokring hours</source>
         <translation>от среднего дневного оборота в нерабочее время</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="800"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="830"/>
         <source>Try to buy stocks with additional gap in</source>
         <translation>Пытаться покупать акции с дополнительным отступом в</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="849"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="879"/>
         <source>Store stocks data for</source>
         <translation>Хранить данные об акциях</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="856"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="886"/>
         <source> months</source>
         <translation> месяцев</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="901"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="931"/>
         <source>View</source>
         <translation>Вид</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="927"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="957"/>
         <source>Highlight operations in green color with yield more than</source>
         <translation>Подсвечивать операции зелёным цветом, если доход больше</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="973"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1003"/>
         <source>Highlight operations in red color with lose more than</source>
         <translation>Подсвечивать операции красным цветом, если убыток больше</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1102"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1196"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1132"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1226"/>
         <source>non-default values</source>
         <translation>отличается от конфигурации по умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1122"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="410"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="434"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1152"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="420"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="444"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1280"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1310"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1051"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1145"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1081"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1175"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
     </message>
@@ -1393,49 +1398,49 @@
         <translation>Торговать акциями в нерабочее время</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="539"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="569"/>
         <source>Trade high liquidity ETF (e.g. TMON@) at night with keeping</source>
         <translation>Торговать высоколиквидными фондами (например, TMON@) ночью, сохраняя</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="565"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="595"/>
         <source>of money from total portfolio cost</source>
         <translation>денежных средств от общей стоимости портфеля</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="592"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="702"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="622"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="732"/>
         <source>Limit stock purchase part less than</source>
         <translation>Не покупать акции с долей больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="254"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="442"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="636"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="746"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="284"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="472"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="666"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="776"/>
         <source>and less than</source>
         <translation>и больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="210"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="398"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="240"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="428"/>
         <source>and limit stock purchase part less than</source>
         <translation>и не покупать акции с долей больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1028"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="411"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="433"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1058"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="421"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="443"/>
         <source>Simulation</source>
         <translation>Симуляция</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1237"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1267"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1260"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="1290"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -1445,8 +1450,8 @@
         <translation>Автозапускать при запуске %1</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="405"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="428"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="415"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="438"/>
         <source>Decision maker</source>
         <translation>Принятие решений</translation>
     </message>
@@ -1536,19 +1541,19 @@
 <context>
     <name>StockCollectThread</name>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="296"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="298"/>
         <source>Downloading metadata</source>
         <translation>Скачивание метаданных</translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="614"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="642"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="616"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="644"/>
         <source>Downloading logos</source>
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="1005"/>
-        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="1013"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="1007"/>
+        <location filename="../../src/threads/stockcollect/stockcollectthread.cpp" line="1015"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>
@@ -1746,79 +1751,79 @@
         <translation>Торговля успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="808"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="858"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="822"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="872"/>
         <source>Order cancelled</source>
         <translation>Заявка отменена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="540"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="554"/>
         <source>Order to sell %1 created with a price %2</source>
         <translation>Заявка создана на продажу %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="520"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="534"/>
         <source>Failed to create order to sell %1 with a price %2</source>
         <translation>Не удалось создать заявку на продажу %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="368"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="547"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="375"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="561"/>
         <source>while market price %1</source>
         <translation>пока рыночная цена %1</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="562"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="576"/>
         <source>Order to sell %1 rejected with a price %2. Let&apos;s try again</source>
         <translation>Заявка отклонена на продажу %1 по цене %2. Попробуем ещё раз</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="654"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="668"/>
         <source>Trade interrupted because the price reached %1 with raise %2 from the price %3</source>
         <translation>Торговля прервана, потому что цена достигла %1 с ростом %2 от цены %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="341"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="348"/>
         <source>Failed to create order to buy %1 with a price %2</source>
         <translation>Не удалось создать заявку на покупку %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="361"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="368"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation>Заявка создана на покупку %1 по цене %2</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="383"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="390"/>
         <source>Order to buy %1 rejected with a price %2. Let&apos;s try again</source>
         <translation>Заявка отклонена на покупку %1 по цене %2. Попробуем ещё раз</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="824"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="838"/>
         <source>%1/%2 bought with a price %3</source>
         <translation>%1/%2 куплено по цене %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="834"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="848"/>
         <source>%1/%2 sold with a price %3</source>
         <translation>%1/%2 продано по цене %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="846"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="860"/>
         <source>Order completed</source>
         <translation>Заявка выполнена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="850"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="864"/>
         <source>Order partially completed</source>
         <translation>Заявка частично выполнена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="854"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="868"/>
         <source>Order rejected</source>
         <translation>Заявка отклонена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="862"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="876"/>
         <source>Order is still waiting</source>
         <translation>Заявка ещё ожидает</translation>
     </message>

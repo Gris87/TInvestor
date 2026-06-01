@@ -1,5 +1,6 @@
 Fix displaying of daily yield
 Option for trading with MM
+Notifier show disconnection
 Find best configs for different commission
 Change config defaults
 Improve coverage

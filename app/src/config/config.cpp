@@ -8,6 +8,7 @@ const char* const CPU_USAGE_DEFAULT = "MAXIMUM";
 
 constexpr bool  AUTORUN_DEFAULT                                     = true;
 constexpr bool  TRADE_IN_NON_WORKING_HOURS_DEFAULT                  = true;
+constexpr bool  TRADE_WITH_MARGIN_CALL_DEFAULT                      = true;
 constexpr bool  TRADE_HUGE_BID_DEFAULT                              = true;
 constexpr float HUGE_BID_DEFAULT                                    = 2.5f;
 constexpr bool  HUGE_BID_LIMIT_STOCK_PURCHASE_DEFAULT               = true;
@@ -50,6 +51,7 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mAutorun(),
     mCpuUsage(),
     mTradeInNonWorkingHours(),
+    mTradeWithMarginCall(),
     mTradeHugeBid(),
     mHugeBid(),
     mHugeBidLimitStockPurchase(),
@@ -126,6 +128,7 @@ void Config::assign(IConfig* another)
     mAutorun                               = config.mAutorun;
     mCpuUsage                              = config.mCpuUsage;
     mTradeInNonWorkingHours                = config.mTradeInNonWorkingHours;
+    mTradeWithMarginCall                   = config.mTradeWithMarginCall;
     mTradeHugeBid                          = config.mTradeHugeBid;
     mHugeBid                               = config.mHugeBid;
     mHugeBidLimitStockPurchase             = config.mHugeBidLimitStockPurchase;
@@ -171,6 +174,7 @@ void Config::makeDefault(float commission)
     mAutorun                               = AUTORUN_DEFAULT;
     mCpuUsage                              = CPU_USAGE_DEFAULT;
     mTradeInNonWorkingHours                = TRADE_IN_NON_WORKING_HOURS_DEFAULT;
+    mTradeWithMarginCall                   = TRADE_WITH_MARGIN_CALL_DEFAULT;
     mTradeHugeBid                          = TRADE_HUGE_BID_DEFAULT;
     mHugeBid                               = HUGE_BID_DEFAULT;
     mHugeBidLimitStockPurchase             = HUGE_BID_LIMIT_STOCK_PURCHASE_DEFAULT;
@@ -217,6 +221,7 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/Autorun",                               mAutorun);
     settingsEditor->setValue("Config/CpuUsage",                              mCpuUsage);
     settingsEditor->setValue("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours);
+    settingsEditor->setValue("Config/TradeWithMarginCall",                   mTradeWithMarginCall);
     settingsEditor->setValue("Config/TradeHugeBid",                          mTradeHugeBid);
     settingsEditor->setValue("Config/HugeBid",                               mHugeBid);
     settingsEditor->setValue("Config/HugeBidLimitStockPurchase",             mHugeBidLimitStockPurchase);
@@ -264,6 +269,7 @@ void Config::load(ISettingsEditor* settingsEditor)
     mAutorun                               = settingsEditor->value("Config/Autorun",                               mAutorun).toBool();
     mCpuUsage                              = settingsEditor->value("Config/CpuUsage",                              mCpuUsage).toString();
     mTradeInNonWorkingHours                = settingsEditor->value("Config/TradeInNonWorkingHours",                mTradeInNonWorkingHours).toBool();
+    mTradeWithMarginCall                   = settingsEditor->value("Config/TradeWithMarginCall",                   mTradeWithMarginCall).toBool();
     mTradeHugeBid                          = settingsEditor->value("Config/TradeHugeBid",                          mTradeHugeBid).toBool();
     mHugeBid                               = settingsEditor->value("Config/HugeBid",                               mHugeBid).toFloat();
     mHugeBidLimitStockPurchase             = settingsEditor->value("Config/HugeBidLimitStockPurchase",             mHugeBidLimitStockPurchase).toBool();
@@ -348,6 +354,20 @@ bool Config::isTradeInNonWorkingHours()
     const QReadLocker lock(mRwMutex);
 
     return mTradeInNonWorkingHours;
+}
+
+void Config::setTradeWithMarginCall(bool value)
+{
+    const QWriteLocker lock(mRwMutex);
+
+    mTradeWithMarginCall = value;
+}
+
+bool Config::isTradeWithMarginCall()
+{
+    const QReadLocker lock(mRwMutex);
+
+    return mTradeWithMarginCall;
 }
 
 void Config::setTradeHugeBid(bool value)

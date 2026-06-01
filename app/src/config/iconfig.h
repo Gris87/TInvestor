@@ -36,6 +36,9 @@ public:
     virtual void setTradeInNonWorkingHours(bool value) = 0;
     virtual bool isTradeInNonWorkingHours()            = 0;
 
+    virtual void setTradeWithMarginCall(bool value) = 0;
+    virtual bool isTradeWithMarginCall()            = 0;
+
     virtual void setTradeHugeBid(bool value) = 0;
     virtual bool isTradeHugeBid()            = 0;
 

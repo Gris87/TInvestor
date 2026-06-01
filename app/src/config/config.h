@@ -37,6 +37,9 @@ public:
     void setTradeInNonWorkingHours(bool value) override;
     bool isTradeInNonWorkingHours() override;
 
+    void setTradeWithMarginCall(bool value) override;
+    bool isTradeWithMarginCall() override;
+
     void setTradeHugeBid(bool value) override;
     bool isTradeHugeBid() override;
 
@@ -139,6 +142,7 @@ private:
     bool    mAutorun;
     QString mCpuUsage;
     bool    mTradeInNonWorkingHours;
+    bool    mTradeWithMarginCall;
     bool    mTradeHugeBid;
     float   mHugeBid;
     bool    mHugeBidLimitStockPurchase;

@@ -134,6 +134,7 @@ void SettingsDialog::updateUiFromConfig()
     ui->autorunCheckBox->setChecked(mConfig->isAutorun());
     ui->cpuUsageComboBox->setCurrentIndex(CPU_USAGE_INDEX.value(mConfig->getCpuUsage(), CPU_USAGE_INDEX.value("MAXIMUM")));
     ui->tradeInNonWorkingHoursCheckBox->setChecked(mConfig->isTradeInNonWorkingHours());
+    ui->tradeWithMarginCallCheckBox->setChecked(mConfig->isTradeWithMarginCall());
     ui->tradeHugeBidCheckBox->setChecked(mConfig->isTradeHugeBid());
     ui->hugeBidDoubleSpinBox->setValue(mConfig->getHugeBid());
     ui->hugeBidLimitStockPurchaseCheckBox->setChecked(mConfig->isHugeBidLimitStockPurchase());
@@ -184,6 +185,15 @@ void SettingsDialog::on_tradeInNonWorkingHoursCheckBox_checkStateChanged(const Q
     const bool checked = value == Qt::Checked;
 
     mConfig->setTradeInNonWorkingHours(checked);
+
+    ui->limitStockPurchaseNonWorkingHoursWidget->setEnabled(checked);
+}
+
+void SettingsDialog::on_tradeWithMarginCallCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setTradeWithMarginCall(checked);
 
     ui->limitStockPurchaseNonWorkingHoursWidget->setEnabled(checked);
 }

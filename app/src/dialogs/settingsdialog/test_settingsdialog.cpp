@@ -193,6 +193,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->autorunCheckBox->blockSignals(true);
     dialog->ui->cpuUsageComboBox->blockSignals(true);
     dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
+    dialog->ui->tradeWithMarginCallCheckBox->blockSignals(true);
     dialog->ui->tradeHugeBidCheckBox->blockSignals(true);
     dialog->ui->hugeBidDoubleSpinBox->blockSignals(true);
     dialog->ui->hugeBidLimitStockPurchaseCheckBox->blockSignals(true);
@@ -231,6 +232,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBid()).WillOnce(Return(3.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
@@ -269,6 +271,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                                  true);
     ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),                              2);
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   true);
+    ASSERT_EQ(dialog->ui->tradeWithMarginCallCheckBox->isChecked(),                      true);
     ASSERT_EQ(dialog->ui->tradeHugeBidCheckBox->isChecked(),                             true);
     ASSERT_NEAR(dialog->ui->hugeBidDoubleSpinBox->value(),                               3.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->hugeBidLimitStockPurchaseCheckBox->isChecked(),                true);
@@ -308,6 +311,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("MINIMUM"));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getHugeBid()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(false));
@@ -346,6 +350,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                                  false);
     ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),                              0);
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   false);
+    ASSERT_EQ(dialog->ui->tradeWithMarginCallCheckBox->isChecked(),                      false);
     ASSERT_EQ(dialog->ui->tradeHugeBidCheckBox->isChecked(),                             false);
     ASSERT_NEAR(dialog->ui->hugeBidDoubleSpinBox->value(),                               2.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->hugeBidLimitStockPurchaseCheckBox->isChecked(),                false);
@@ -424,6 +429,23 @@ TEST_F(Test_SettingsDialog, Test_on_tradeInNonWorkingHoursCheckBox_checkStateCha
 
     EXPECT_CALL(*configMock, setTradeInNonWorkingHours(false));
     dialog->ui->tradeInNonWorkingHoursCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->limitStockPurchaseNonWorkingHoursWidget->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_tradeWithMarginCallCheckBox_checkStateChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->tradeWithMarginCallCheckBox->blockSignals(true);
+    dialog->ui->tradeWithMarginCallCheckBox->setChecked(false);
+    dialog->ui->tradeWithMarginCallCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setTradeWithMarginCall(true));
+    dialog->ui->tradeWithMarginCallCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->limitStockPurchaseNonWorkingHoursWidget->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setTradeWithMarginCall(false));
+    dialog->ui->tradeWithMarginCallCheckBox->setChecked(false);
     ASSERT_EQ(dialog->ui->limitStockPurchaseNonWorkingHoursWidget->isEnabled(), false);
 }
 
@@ -1035,6 +1057,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->autorunCheckBox->blockSignals(true);
     dialog->ui->cpuUsageComboBox->blockSignals(true);
     dialog->ui->tradeInNonWorkingHoursCheckBox->blockSignals(true);
+    dialog->ui->tradeWithMarginCallCheckBox->blockSignals(true);
     dialog->ui->tradeHugeBidCheckBox->blockSignals(true);
     dialog->ui->hugeBidDoubleSpinBox->blockSignals(true);
     dialog->ui->hugeBidLimitStockPurchaseCheckBox->blockSignals(true);
@@ -1078,6 +1101,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBid()).WillOnce(Return(1.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitStockPurchase()).WillOnce(Return(true));
@@ -1116,6 +1140,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                                  true);
     ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),                              2);
     ASSERT_EQ(dialog->ui->tradeInNonWorkingHoursCheckBox->isChecked(),                   true);
+    ASSERT_EQ(dialog->ui->tradeWithMarginCallCheckBox->isChecked(),                      true);
     ASSERT_EQ(dialog->ui->tradeHugeBidCheckBox->isChecked(),                             true);
     ASSERT_NEAR(dialog->ui->hugeBidDoubleSpinBox->value(),                               1.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->hugeBidLimitStockPurchaseCheckBox->isChecked(),                true);
