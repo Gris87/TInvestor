@@ -28,19 +28,20 @@ const QColor      HEADER_FONT_COLOR       = QColor("#699BA2"); // clazy:exclude=
 const QColor      CELL_BACKGROUND_COLOR   = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
 const QColor      CELL_FONT_COLOR         = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
-constexpr qint64 MS_IN_SECOND          = 1000LL;
-constexpr qint64 ONE_MINUTE            = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR              = 60LL * ONE_MINUTE;
-constexpr qint64 ONE_DAY               = 24LL * ONE_HOUR;
-constexpr qint64 TOOLTIP_HIDE_DELAY    = MS_IN_SECOND; // 1 second
-constexpr double ZOOM_FACTOR_BASE      = 1.001;
-constexpr double CHART_PEN_SIZE_FACTOR = 3000.0;
-constexpr double CHART_PEN_MAX_SIZE    = 3.0;
-constexpr int    LIMIT_AMOUNT_OF_DAYS  = 90;
-constexpr int    MONTH_COUNT           = 12;
-constexpr int    TITLE_FONT_SIZE       = 16;
-constexpr qreal  TOOLTIP_Z_VALUE       = 11;
-constexpr double COLUMN_GAP            = 0.71;
+constexpr qint64 MS_IN_SECOND           = 1000LL;
+constexpr qint64 ONE_MINUTE             = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR               = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY                = 24LL * ONE_HOUR;
+constexpr qint64 TOOLTIP_HIDE_DELAY     = MS_IN_SECOND; // 1 second
+constexpr double ZOOM_FACTOR_BASE       = 1.001;
+constexpr double CHART_PEN_SIZE_FACTOR  = 3000.0;
+constexpr double CHART_PEN_MAX_SIZE     = 3.0;
+constexpr int    LIMIT_AMOUNT_OF_MONTHS = 12;
+constexpr int    LIMIT_AMOUNT_OF_DAYS   = 30;
+constexpr int    MONTH_COUNT            = 12;
+constexpr int    TITLE_FONT_SIZE        = 16;
+constexpr qreal  TOOLTIP_Z_VALUE        = 11;
+constexpr double COLUMN_GAP             = 0.71;
 
 // clang-format off
 // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
@@ -528,6 +529,16 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
                                        mMonthlyYieldNegativePoints.at(mMonthlyYieldNegativePoints.count() - 1)
                                  : 0.0f;
 
+        if (mMonthlyYieldAxisX.count() >= LIMIT_AMOUNT_OF_MONTHS)
+        {
+            mMonthlyYieldAxisYMin = 0;
+            mMonthlyYieldAxisYMax = 0;
+
+            mMonthlyYieldAxisX.remove(mMonthlyYieldAxisX.at(0));
+            mMonthlyYieldPositivePoints.remove(0);
+            mMonthlyYieldNegativePoints.remove(0);
+        }
+
         mMonthlyYieldAxisX.append(QString("%1 %2").arg(mMonthNames.at(month - 1), QString::number(year)));
         mMonthlyYieldPositivePoints.append(0);
         mMonthlyYieldNegativePoints.append(0);
@@ -544,6 +555,9 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
 
         if (mDailyYieldAxisX.count() >= LIMIT_AMOUNT_OF_DAYS)
         {
+            mDailyYieldAxisYMin = 0;
+            mDailyYieldAxisYMax = 0;
+
             mDailyYieldAxisX.remove(mDailyYieldAxisX.at(0));
             mDailyYieldPositivePoints.remove(0);
             mDailyYieldNegativePoints.remove(0);
@@ -557,24 +571,48 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
     const float monthlyYield  = yieldPercent - mLastMonthlyYield;
     mLastDailyYield          += yield;
 
-    mAxisXMin[0] = qMin(mAxisXMin[0], operation.timestamp);
-    mAxisXMax    = qMax(mAxisXMax, operation.timestamp);
-
-    mYieldAxisYMin[0]      = qMin(mYieldAxisYMin[0], yieldPercent);
-    mYieldAxisYMax[0]      = qMax(mYieldAxisYMax[0], yieldPercent);
-    mMonthlyYieldAxisYMin  = qMin(mMonthlyYieldAxisYMin, monthlyYield);
-    mMonthlyYieldAxisYMax  = qMax(mMonthlyYieldAxisYMax, monthlyYield);
-    mDailyYieldAxisYMin    = qMin(mDailyYieldAxisYMin, mLastDailyYield);
-    mDailyYieldAxisYMax    = qMax(mDailyYieldAxisYMax, mLastDailyYield);
-    mTotalMoneyAxisYMin[0] = qMin(mTotalMoneyAxisYMin[0], totalMoney);
-    mTotalMoneyAxisYMax[0] = qMax(mTotalMoneyAxisYMax[0], totalMoney);
-
     yieldPoints.append(QPointF(operation.timestamp, yieldPercent));
     mMonthlyYieldPositivePoints.replace(mMonthlyYieldPositivePoints.count() - 1, qMax(monthlyYield, 0.0f));
     mMonthlyYieldNegativePoints.replace(mMonthlyYieldNegativePoints.count() - 1, qMin(monthlyYield, 0.0f));
     mDailyYieldPositivePoints.replace(mDailyYieldPositivePoints.count() - 1, qMax(mLastDailyYield, 0.0f));
     mDailyYieldNegativePoints.replace(mDailyYieldNegativePoints.count() - 1, qMin(mLastDailyYield, 0.0f));
     totalMoneyPoints.append(QPointF(operation.timestamp, totalMoney));
+
+    mAxisXMin[0] = qMin(mAxisXMin[0], operation.timestamp);
+    mAxisXMax    = qMax(mAxisXMax, operation.timestamp);
+
+    mYieldAxisYMin[0]      = qMin(mYieldAxisYMin[0], yieldPercent);
+    mYieldAxisYMax[0]      = qMax(mYieldAxisYMax[0], yieldPercent);
+    mTotalMoneyAxisYMin[0] = qMin(mTotalMoneyAxisYMin[0], totalMoney);
+    mTotalMoneyAxisYMax[0] = qMax(mTotalMoneyAxisYMax[0], totalMoney);
+
+    if (mMonthlyYieldAxisYMin == 0 && mMonthlyYieldAxisYMax == 0)
+    {
+        for (int i = 0; i < mMonthlyYieldPositivePoints.count(); ++i)
+        {
+            mMonthlyYieldAxisYMin = qMin(mMonthlyYieldAxisYMin, mMonthlyYieldNegativePoints.at(i));
+            mMonthlyYieldAxisYMax = qMax(mMonthlyYieldAxisYMax, mMonthlyYieldPositivePoints.at(i));
+        }
+    }
+    else
+    {
+        mMonthlyYieldAxisYMin = qMin(mMonthlyYieldAxisYMin, monthlyYield);
+        mMonthlyYieldAxisYMax = qMax(mMonthlyYieldAxisYMax, monthlyYield);
+    }
+
+    if (mDailyYieldAxisYMin == 0 && mDailyYieldAxisYMax == 0)
+    {
+        for (int i = 0; i < mDailyYieldPositivePoints.count(); ++i)
+        {
+            mDailyYieldAxisYMin = qMin(mDailyYieldAxisYMin, mDailyYieldNegativePoints.at(i));
+            mDailyYieldAxisYMax = qMax(mDailyYieldAxisYMax, mDailyYieldPositivePoints.at(i));
+        }
+    }
+    else
+    {
+        mDailyYieldAxisYMin = qMin(mDailyYieldAxisYMin, mLastDailyYield);
+        mDailyYieldAxisYMax = qMax(mDailyYieldAxisYMax, mLastDailyYield);
+    }
 }
 
 struct SyncTimeRangeSeriesInfo

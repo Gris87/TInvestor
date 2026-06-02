@@ -1,4 +1,4 @@
-Fix displaying of daily yield
+Qt Graphs
 Find best configs for different commission
 Change config defaults
 Improve coverage
