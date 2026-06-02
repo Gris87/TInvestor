@@ -1,4 +1,5 @@
 Qt Graphs
+generate-compile-commands
 Find best configs for different commission
 Change config defaults
 Improve coverage
