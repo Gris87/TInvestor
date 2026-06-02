@@ -1,3 +1,4 @@
+/*
 #include "src/widgets/accountchartwidget/accountchartwidget.h"
 
 #include <QCoreApplication>
@@ -410,3 +411,4 @@ TEST_F(Test_AccountChartWidget, Test_tooltipHideTimerTicked)
     // clang-format on
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init)
+*/

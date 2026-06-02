@@ -1,3 +1,4 @@
+/*
 #pragma once
 
 
@@ -38,3 +39,4 @@ private:
     QString mText;
     QFont   mFont;
 };
+*/

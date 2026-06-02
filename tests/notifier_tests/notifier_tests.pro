@@ -45,6 +45,10 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 
+copy_dist_files.commands = echo "Nothing to copy from dist folder"
+
+
+
 PROJECT_ROOT_PATH = ../..
 
 include($${PROJECT_ROOT_PATH}/tools/qt/notifier/notifier.pri)

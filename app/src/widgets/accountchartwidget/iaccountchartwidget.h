@@ -2,7 +2,7 @@
 
 
 
-#include <QChartView>
+#include <QWidget>
 
 #include "src/domain/operation/operation.h"
 
@@ -28,13 +28,13 @@ enum TimeRange : quint8
 
 
 
-class IAccountChartWidget : public QChartView
+class IAccountChartWidget : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit IAccountChartWidget(QWidget* parent = nullptr) :
-        QChartView(parent)
+        QWidget(parent)
     {
     }
     ~IAccountChartWidget() override = default;
