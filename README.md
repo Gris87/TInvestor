@@ -58,7 +58,7 @@ You have to install prerequisites in order to build TInvestor.
 
 3. Install Qt 6.11.1
 
-- Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.11.1. Please also install addons qt5compat and qtgraphs
+- Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.11.1. Please also install addons qt5compat and qtcharts
 
 4. Install zlib 1.3.2
 
@@ -187,7 +187,7 @@ sudo apt-get install -y \
 
 2. Install Qt 6.11.1
 
-- Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.11.1. Please also install addons qt5compat and qtgraphs
+- Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.11.1. Please also install addons qt5compat and qtcharts
 
 3. Install zlib 1.3.2
 

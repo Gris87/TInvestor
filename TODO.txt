@@ -1,5 +1,3 @@
-Qt Graphs
-generate-compile-commands
 Find best configs for different commission
 Change config defaults
 Improve coverage
@@ -24,7 +22,6 @@ Add more logs
 Thread to sell gifts
 Asap mode immediately but with positive yield and small spread
 Sell into chunks
-Own chart library
 
 AI
 Try to get dependencies between stocks. One price raise after another stock raise/fall

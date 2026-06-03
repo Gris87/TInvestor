@@ -543,7 +543,6 @@ FORMS += \
     src/dialogs/startautopilotdialog/startautopilotdialog.ui \
     src/dialogs/startsimulationdialog/startsimulationdialog.ui \
     src/main/mainwindow.ui \
-    src/widgets/accountchartwidget/accountchartwidget.ui \
     src/widgets/actionstableitemwidget/actionstableitemwidget.ui \
     src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
     src/widgets/logsfilterwidget/logsfilterwidget.ui \

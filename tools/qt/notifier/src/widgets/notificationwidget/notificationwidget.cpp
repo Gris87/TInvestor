@@ -28,7 +28,8 @@ NotificationWidget::NotificationWidget(const QString& text, QWidget* parent) :
         ui->textLabel->setAlignment(Qt::AlignCenter);
     }
 
-    setWindowFlags(Qt::SplashScreen | Qt::WindowStaysOnTopHint);
+    setAttribute(Qt::WA_ShowWithoutActivating);
+    setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 
     mOpacityAnimation.setTargetObject(this);
     mOpacityAnimation.setPropertyName("windowOpacity");

@@ -1,4 +1,4 @@
-QT += core gui widgets graphs network sql gui-private
+QT += core gui widgets charts network sql gui-private
 
 CONFIG += c++20
 

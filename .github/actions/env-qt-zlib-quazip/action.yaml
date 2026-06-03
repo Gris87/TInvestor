@@ -104,7 +104,7 @@ runs:
         endforeach()
 
         # Download addons
-        foreach(package qt5compat qtgraphs)
+        foreach(package qt5compat qtcharts)
           downloadAndExtract(
             "${qt_base_url}/qt.qt6.${qt_version_dotless}.addons.${package}.${qt_package_arch_suffix}/${qt_package_version}${package}${qt_package_suffix}.7z"
             ${package}.7z
