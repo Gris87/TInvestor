@@ -719,14 +719,14 @@ void AccountChartWidget::syncBarSetFromPoints(QBarSet* barSet, const QList<qreal
     Q_ASSERT_X(points.count() > 0, __FUNCTION__, "points is empty");
     Q_ASSERT_X(barSet->count() <= points.count(), __FUNCTION__, "barSet should be smaller than points");
 
-    if (barSet->count() > 0)
+    for (int i = 0; i < barSet->count(); ++i)
     {
-        const qreal barSetValue = barSet->at(barSet->count() - 1);
-        const qreal pointValue  = points.at(barSet->count() - 1);
+        const qreal barSetValue = barSet->at(i);
+        const qreal pointValue  = points.at(i);
 
         if (barSetValue != pointValue)
         {
-            barSet->replace(barSet->count() - 1, pointValue);
+            barSet->replace(i, pointValue);
         }
     }
 
