@@ -984,6 +984,7 @@ void MainWindow::autoPilotPortfolioLastPriceChanged(const QString& instrumentId,
     mAutoPilotDecisionMakerWidget->lastPriceChanged(instrumentId, price);
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instruments)
 {
     QStringList biDirTradingThreadsToKill;
@@ -1082,6 +1083,7 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
         }
     }
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void MainWindow::autoPilotTradingCompleted(const QString& instrumentId)
 {
