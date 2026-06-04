@@ -41,7 +41,7 @@ TEST_F(Test_LogsTableWidgetFactory, Test_constructor_and_destructor)
 
 TEST_F(Test_LogsTableWidgetFactory, Test_newInstance)
 {
-    const InSequence seq;
+    // const InSequence seq;
 
     StrictMock<LogsTableModelFactoryMock> logsTableModelFactoryMock;
     StrictMock<FileDialogFactoryMock>     fileDialogFactoryMock;

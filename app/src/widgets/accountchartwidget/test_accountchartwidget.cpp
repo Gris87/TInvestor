@@ -152,7 +152,7 @@ TEST_F(Test_AccountChartWidget, Test_operationsRead_and_operationsAdded)
 
     operations.clear();
 
-    for (int i = 0; i < 100; ++i)
+    for (int i = 0; i < 1000; ++i)
     {
         operation.timestamp                       = 1704056400000 + i * ONE_DAY;
         operation.originalTimestamp               = 1704056400000 + i * ONE_DAY;

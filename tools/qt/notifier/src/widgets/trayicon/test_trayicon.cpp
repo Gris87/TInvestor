@@ -51,6 +51,12 @@ TEST_F(Test_TrayIcon, Test_setFilter)
     trayIcon->setFilter(filter);
 }
 
+TEST_F(Test_TrayIcon, Test_handleConnection_and_handleDisconnection)
+{
+    trayIcon->handleConnection();
+    trayIcon->handleDisconnection();
+}
+
 TEST_F(Test_TrayIcon, Test_notificationsAdded_and_resetCounter)
 {
     QList<NotificationInfo> notifications;

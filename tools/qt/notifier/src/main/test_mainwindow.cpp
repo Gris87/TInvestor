@@ -217,6 +217,20 @@ TEST_F(Test_MainWindow, Test_requestTimerTicked)
     requestThreadMock->wait();
 }
 
+TEST_F(Test_MainWindow, Test_disconnectTimerTicked)
+{
+    const InSequence seq;
+
+    mainWindow->disconnectTimer.start(100000);
+    ASSERT_EQ(mainWindow->disconnectTimer.isActive(), true);
+
+    EXPECT_CALL(*trayIconMock, handleDisconnection());
+
+    mainWindow->disconnectTimerTicked();
+
+    ASSERT_EQ(mainWindow->disconnectTimer.isActive(), false);
+}
+
 TEST_F(Test_MainWindow, Test_refreshBackgroundTimerTicked)
 {
     const InSequence seq;
@@ -229,6 +243,19 @@ TEST_F(Test_MainWindow, Test_refreshBackgroundTimerTicked)
     mainWindow->refreshBackgroundTimerTicked();
 
     ASSERT_EQ(mainWindow->refreshBackgroundTimer.isActive(), true);
+}
+
+TEST_F(Test_MainWindow, Test_requestCompleted)
+{
+    const InSequence seq;
+
+    ASSERT_EQ(mainWindow->disconnectTimer.isActive(), false);
+
+    EXPECT_CALL(*trayIconMock, handleConnection());
+
+    mainWindow->requestCompleted();
+
+    ASSERT_EQ(mainWindow->disconnectTimer.isActive(), true);
 }
 
 TEST_F(Test_MainWindow, Test_notificationsRead)
