@@ -216,7 +216,7 @@ TEST_F(Test_OperationsTableWidget, Test_loadWindowState)
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_AvgPriceWavg"),                    _)).WillOnce(Return(QVariant(153)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Quantity"),                        _)).WillOnce(Return(QVariant(95)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_RemainedQuantity"),                _)).WillOnce(Return(QVariant(167)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Payment"),                         _)).WillOnce(Return(QVariant(87)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Payment"),                         _)).WillOnce(Return(QVariant(103)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Commission"),                      _)).WillOnce(Return(QVariant(85)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Yield"),                           _)).WillOnce(Return(QVariant(66)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_YieldWithCommission"),             _)).WillOnce(Return(QVariant(141)));
