@@ -10,22 +10,22 @@ constexpr int COMMISSION_30 = 30;
 constexpr int COMMISSION_5  = 5;
 
 // For commission 0.30%
-constexpr bool  ENABLED_DEFAULT_30    = true;
-constexpr float PRICE_FALL_DEFAULT_30 = 10.0f;
+constexpr bool  ENABLED_DEFAULT_30    = false;
+constexpr float PRICE_FALL_DEFAULT_30 = 7.0f;
 constexpr float LOSE_YIELD_DEFAULT_30 = 1.0f;
-constexpr int   DURATION_DEFAULT_30   = 7;
+constexpr int   DURATION_DEFAULT_30   = 14;
 
 // For commission 0.05%
-constexpr bool  ENABLED_DEFAULT_5    = true;
-constexpr float PRICE_FALL_DEFAULT_5 = 10.0f;
+constexpr bool  ENABLED_DEFAULT_5    = false;
+constexpr float PRICE_FALL_DEFAULT_5 = 7.0f;
 constexpr float LOSE_YIELD_DEFAULT_5 = 1.0f;
-constexpr int   DURATION_DEFAULT_5   = 7;
+constexpr int   DURATION_DEFAULT_5   = 14;
 
 // For commission 0.04%
-constexpr bool  ENABLED_DEFAULT_4    = true;
-constexpr float PRICE_FALL_DEFAULT_4 = 10.0f;
+constexpr bool  ENABLED_DEFAULT_4    = false;
+constexpr float PRICE_FALL_DEFAULT_4 = 7.0f;
 constexpr float LOSE_YIELD_DEFAULT_4 = 1.0f;
-constexpr int   DURATION_DEFAULT_4   = 7;
+constexpr int   DURATION_DEFAULT_4   = 14;
 
 
 

@@ -16,6 +16,7 @@ FloatingLabel::FloatingLabel(const QString& text, const QPoint& startPoint, cons
 {
     qDebug() << "Create FloatingLabel";
 
+    setAttribute(Qt::WA_ShowWithoutActivating);
     setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::WindowTransparentForInput);
 
     mOpacityAnimation.setTargetObject(this);

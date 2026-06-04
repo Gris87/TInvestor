@@ -97,12 +97,12 @@ TEST_F(Test_BuyDecision6Config, Test_assign)
 
 TEST_F(Test_BuyDecision6Config, Test_makeDefault)
 {
-    config->setEnabled(false);
+    config->setEnabled(true);
     config->setRsi(2.5f);
     config->setDuration(123);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),   false);
+    ASSERT_EQ(config->isEnabled(),   true);
     ASSERT_EQ(config->getRsi(),      2.5f);
     ASSERT_EQ(config->getDuration(), 123);
     // clang-format on
@@ -110,15 +110,15 @@ TEST_F(Test_BuyDecision6Config, Test_makeDefault)
     config->makeDefault(30);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),   true);
-    ASSERT_EQ(config->getRsi(),      25.0f);
+    ASSERT_EQ(config->isEnabled(),   false);
+    ASSERT_EQ(config->getRsi(),      20.0f);
     ASSERT_EQ(config->getDuration(), 15);
     // clang-format on
 
     config->makeDefault(5);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),   true);
+    ASSERT_EQ(config->isEnabled(),   false);
     ASSERT_EQ(config->getRsi(),      25.0f);
     ASSERT_EQ(config->getDuration(), 15);
     // clang-format on
@@ -126,7 +126,7 @@ TEST_F(Test_BuyDecision6Config, Test_makeDefault)
     config->makeDefault(4);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),   true);
+    ASSERT_EQ(config->isEnabled(),   false);
     ASSERT_EQ(config->getRsi(),      25.0f);
     ASSERT_EQ(config->getDuration(), 15);
     // clang-format on
@@ -138,14 +138,14 @@ TEST_F(Test_BuyDecision6Config, Test_isDefault)
     ASSERT_EQ(config->isDefault(4), true);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),   true);
+    ASSERT_EQ(config->isEnabled(),   false);
     ASSERT_EQ(config->getRsi(),      25.0f);
     ASSERT_EQ(config->getDuration(), 15);
     // clang-format on
 
-    config->setEnabled(false);
-    ASSERT_EQ(config->isDefault(4), false);
     config->setEnabled(true);
+    ASSERT_EQ(config->isDefault(4), false);
+    config->setEnabled(false);
     ASSERT_EQ(config->isDefault(4), true);
 
     config->setRsi(84.5f);

@@ -116,7 +116,7 @@ TEST_F(Test_BuyDecision7, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceRaise()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(1));
-    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(23, 40), QTime(23, 50))).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(22, 50), QTime(23, 50))).WillOnce(Return(false));
 
     cause = buyDecision7->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, false, 100.0f, -1.0f, 0.04f);
 
@@ -154,7 +154,7 @@ TEST_F(Test_BuyDecision7, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceRaise()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(0));
-    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(23, 40), QTime(23, 50))).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(22, 50), QTime(23, 50))).WillOnce(Return(true));
 
     cause = buyDecision7->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, false, 100.0f, -1.0f, 0.04f);
 
@@ -195,7 +195,7 @@ TEST_F(Test_BuyDecision7, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceRaise()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(1));
-    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(23, 40), QTime(23, 50))).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(22, 50), QTime(23, 50))).WillOnce(Return(true));
 
     cause = buyDecision7->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, false, 100.0f, -1.0f, 0.04f);
 
@@ -236,7 +236,7 @@ TEST_F(Test_BuyDecision7, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceRaise()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(1));
-    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(23, 40), QTime(23, 50))).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(22, 50), QTime(23, 50))).WillOnce(Return(true));
 
     cause = buyDecision7->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, false, 100.0f, -1.0f, 0.04f);
 
@@ -278,7 +278,7 @@ TEST_F(Test_BuyDecision7, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceRaise()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(1));
-    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(23, 40), QTime(23, 50))).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(22, 50), QTime(23, 50))).WillOnce(Return(true));
 
     cause = buyDecision7->makeDecision(QThread::currentThread(), &configMock, 0, &stock, true, 14, false, 100.0f, -1.0f, 0.04f);
 
@@ -313,7 +313,7 @@ TEST_F(Test_BuyDecision7, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceRaise()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(1));
-    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(23, 40), QTime(23, 50))).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(22, 50), QTime(23, 50))).WillOnce(Return(false));
 
     cause = buyDecision7->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, false, 100.0f, -1.0f, 0.04f);
 
@@ -351,7 +351,7 @@ TEST_F(Test_BuyDecision7, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceRaise()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(0));
-    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(23, 40), QTime(23, 50))).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(22, 50), QTime(23, 50))).WillOnce(Return(true));
 
     cause = buyDecision7->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, false, 100.0f, -1.0f, 0.04f);
 
@@ -392,7 +392,7 @@ TEST_F(Test_BuyDecision7, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceRaise()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(1));
-    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(23, 40), QTime(23, 50))).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(22, 50), QTime(23, 50))).WillOnce(Return(true));
 
     cause = buyDecision7->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, false, 100.0f, -1.0f, 0.04f);
 
@@ -433,7 +433,7 @@ TEST_F(Test_BuyDecision7, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceRaise()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(1));
-    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(23, 40), QTime(23, 50))).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(22, 50), QTime(23, 50))).WillOnce(Return(true));
 
     cause = buyDecision7->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, false, 100.0f, -1.0f, 0.04f);
 
@@ -475,7 +475,7 @@ TEST_F(Test_BuyDecision7, Test_makeDecision)
     EXPECT_CALL(decisionConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(decisionConfigMock, getPriceRaise()).WillOnce(Return(2.0f));
     EXPECT_CALL(decisionConfigMock, getDuration()).WillOnce(Return(1));
-    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(23, 40), QTime(23, 50))).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isTimeBetween(_, QTime(22, 50), QTime(23, 50))).WillOnce(Return(true));
 
     cause = buyDecision7->makeDecision(QThread::currentThread(), &configMock, 0, &stock, false, -1, false, 100.0f, -1.0f, 0.04f);
 

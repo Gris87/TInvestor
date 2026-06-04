@@ -111,7 +111,7 @@ TEST_F(Test_BuyDecision1Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),    true);
-    ASSERT_EQ(config->getPriceFall(), 4.5f);
+    ASSERT_EQ(config->getPriceFall(), 3.5f);
     ASSERT_EQ(config->getDuration(),  60);
     // clang-format on
 
@@ -119,7 +119,7 @@ TEST_F(Test_BuyDecision1Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),    true);
-    ASSERT_EQ(config->getPriceFall(), 4.5f);
+    ASSERT_EQ(config->getPriceFall(), 2.5f);
     ASSERT_EQ(config->getDuration(),  60);
     // clang-format on
 
@@ -127,7 +127,7 @@ TEST_F(Test_BuyDecision1Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),    true);
-    ASSERT_EQ(config->getPriceFall(), 4.5f);
+    ASSERT_EQ(config->getPriceFall(), 2.5f);
     ASSERT_EQ(config->getDuration(),  60);
     // clang-format on
 }
@@ -139,7 +139,7 @@ TEST_F(Test_BuyDecision1Config, Test_isDefault)
 
     // clang-format off
     ASSERT_EQ(config->isEnabled(),    true);
-    ASSERT_EQ(config->getPriceFall(), 4.5f);
+    ASSERT_EQ(config->getPriceFall(), 2.5f);
     ASSERT_EQ(config->getDuration(),  60);
     // clang-format on
 
@@ -150,7 +150,7 @@ TEST_F(Test_BuyDecision1Config, Test_isDefault)
 
     config->setPriceFall(24.5f);
     ASSERT_EQ(config->isDefault(4), false);
-    config->setPriceFall(4.5f);
+    config->setPriceFall(2.5f);
     ASSERT_EQ(config->isDefault(4), true);
 
     config->setDuration(123);

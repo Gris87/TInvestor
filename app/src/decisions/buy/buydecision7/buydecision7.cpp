@@ -12,7 +12,7 @@ constexpr qint64 ONE_DAY                 = 24LL * ONE_HOUR;
 constexpr qint64 NIGHT_DELAY             = 2LL * ONE_HOUR; // 2 hours
 constexpr int    MINUTES_TO_CHECK        = 15;
 constexpr int    MINUTES_TO_DOUBLE_CHECK = 5;
-constexpr int    MINUTES_BEFORE_DAY_END  = 10;
+constexpr int    MINUTES_BEFORE_DAY_END  = 60;
 
 
 

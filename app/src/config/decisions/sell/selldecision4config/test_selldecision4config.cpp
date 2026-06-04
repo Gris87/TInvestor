@@ -97,12 +97,12 @@ TEST_F(Test_SellDecision4Config, Test_assign)
 
 TEST_F(Test_SellDecision4Config, Test_makeDefault)
 {
-    config->setEnabled(false);
+    config->setEnabled(true);
     config->setDuration(2);
     config->setYieldAbove(4.2f);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),     false);
+    ASSERT_EQ(config->isEnabled(),     true);
     ASSERT_EQ(config->getDuration(),   2);
     ASSERT_EQ(config->getYieldAbove(), 4.2f);
     // clang-format on
@@ -110,7 +110,7 @@ TEST_F(Test_SellDecision4Config, Test_makeDefault)
     config->makeDefault(30);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),     true);
+    ASSERT_EQ(config->isEnabled(),     false);
     ASSERT_EQ(config->getDuration(),   15);
     ASSERT_EQ(config->getYieldAbove(), 0.5f);
     // clang-format on
@@ -118,7 +118,7 @@ TEST_F(Test_SellDecision4Config, Test_makeDefault)
     config->makeDefault(5);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),     true);
+    ASSERT_EQ(config->isEnabled(),     false);
     ASSERT_EQ(config->getDuration(),   15);
     ASSERT_EQ(config->getYieldAbove(), 0.5f);
     // clang-format on
@@ -126,7 +126,7 @@ TEST_F(Test_SellDecision4Config, Test_makeDefault)
     config->makeDefault(4);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),     true);
+    ASSERT_EQ(config->isEnabled(),     false);
     ASSERT_EQ(config->getDuration(),   15);
     ASSERT_EQ(config->getYieldAbove(), 0.5f);
     // clang-format on
@@ -138,14 +138,14 @@ TEST_F(Test_SellDecision4Config, Test_isDefault)
     ASSERT_EQ(config->isDefault(4), true);
 
     // clang-format off
-    ASSERT_EQ(config->isEnabled(),     true);
+    ASSERT_EQ(config->isEnabled(),     false);
     ASSERT_EQ(config->getDuration(),   15);
     ASSERT_EQ(config->getYieldAbove(), 0.5f);
     // clang-format on
 
-    config->setEnabled(false);
-    ASSERT_EQ(config->isDefault(4), false);
     config->setEnabled(true);
+    ASSERT_EQ(config->isDefault(4), false);
+    config->setEnabled(false);
     ASSERT_EQ(config->isDefault(4), true);
 
     config->setDuration(123);

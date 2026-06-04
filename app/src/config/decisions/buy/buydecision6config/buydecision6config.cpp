@@ -10,17 +10,17 @@ constexpr int COMMISSION_30 = 30;
 constexpr int COMMISSION_5  = 5;
 
 // For commission 0.30%
-constexpr bool  ENABLED_DEFAULT_30  = true;
-constexpr float RSI_DEFAULT_30      = 25.0f;
+constexpr bool  ENABLED_DEFAULT_30  = false;
+constexpr float RSI_DEFAULT_30      = 20.0f;
 constexpr int   DURATION_DEFAULT_30 = 15;
 
 // For commission 0.05%
-constexpr bool  ENABLED_DEFAULT_5  = true;
+constexpr bool  ENABLED_DEFAULT_5  = false;
 constexpr float RSI_DEFAULT_5      = 25.0f;
 constexpr int   DURATION_DEFAULT_5 = 15;
 
 // For commission 0.04%
-constexpr bool  ENABLED_DEFAULT_4  = true;
+constexpr bool  ENABLED_DEFAULT_4  = false;
 constexpr float RSI_DEFAULT_4      = 25.0f;
 constexpr int   DURATION_DEFAULT_4 = 15;
 
