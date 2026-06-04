@@ -177,8 +177,8 @@ TEST_F(Test_LogsTableWidget, Test_loadWindowState)
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"),    _)).WillOnce(Return(QVariant(110)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Level"),   _)).WillOnce(Return(QVariant(32)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Name"),    _)).WillOnce(Return(QVariant(103)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Message"), _)).WillOnce(Return(QVariant(900)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Name"),    _)).WillOnce(Return(QVariant(82)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Message"), _)).WillOnce(Return(QVariant(1500)));
     // clang-format on
 
     logsTableWidget->loadWindowState("AAAAA");

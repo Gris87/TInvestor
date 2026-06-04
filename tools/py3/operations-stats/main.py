@@ -203,7 +203,7 @@ def _collect_statistics(args, operations, logs):
         "combined": combined,
         "combined_positive": combined_positive,
         "combined_negative": combined_negative,
-        "yield_per_decision": yield_per_decision,
+        "yield_per_decision": dict(sorted(yield_per_decision.items())),
     }
 
     return stats

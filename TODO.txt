@@ -1,6 +1,3 @@
-Find best configs for different commission
-Change config defaults
-operations-stats sort sheets buy decision number
 Improve coverage
 Create release
 

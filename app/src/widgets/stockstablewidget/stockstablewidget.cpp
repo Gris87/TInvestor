@@ -12,7 +12,7 @@
 #ifdef Q_OS_WINDOWS
 const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {103, 61, 139, 157, 86, 120, 96, 67, 83};
 #else
-const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {113, 82, 171, 191, 99, 142, 109, 88, 97};
+const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {108, 76, 158, 180, 95, 135, 106, 74, 89};
 #endif
 
 const QColor HEADER_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static
