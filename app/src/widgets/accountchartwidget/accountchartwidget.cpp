@@ -465,6 +465,8 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
         mTotalMoneyAxisY.setRange(0, 0);
     }
 
+    notifyAvgYield();
+
     scene()->invalidate();
 }
 
@@ -502,6 +504,8 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
     mYieldSeries.setPen(pen);
     mTotalMoneySeries.setPen(pen);
 
+    notifyAvgYield();
+
     scene()->invalidate();
 }
 
@@ -524,9 +528,9 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
             QDateTime(QDate(month == MONTH_COUNT ? year + 1 : year, month == MONTH_COUNT ? 1 : month + 1, 1), QTime(0, 0))
                 .toMSecsSinceEpoch();
 
-        mLastMonthlyYield += mMonthlyYieldPositivePoints.count() > 0
-                                 ? mMonthlyYieldPositivePoints.at(mMonthlyYieldPositivePoints.count() - 1) +
-                                       mMonthlyYieldNegativePoints.at(mMonthlyYieldNegativePoints.count() - 1)
+        mLastMonthlyYield += mMonthlyYieldPositivePoints.size() > 0
+                                 ? mMonthlyYieldPositivePoints.at(mMonthlyYieldPositivePoints.size() - 1) +
+                                       mMonthlyYieldNegativePoints.at(mMonthlyYieldNegativePoints.size() - 1)
                                  : 0.0f;
 
         if (mMonthlyYieldAxisX.count() >= LIMIT_AMOUNT_OF_MONTHS)
@@ -546,9 +550,29 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
 
     if (operation.timestamp < mLastDayLimitsStart || operation.timestamp > mLastDayLimitsEnd)
     {
-        const QDate operationDate = QDateTime::fromMSecsSinceEpoch(operation.timestamp).date();
+        const QDate  operationDate  = QDateTime::fromMSecsSinceEpoch(operation.timestamp).date();
+        const qint64 dayLimitsStart = QDateTime(operationDate, QTime(0, 0)).toMSecsSinceEpoch();
 
-        mLastDayLimitsStart = QDateTime(operationDate, QTime(0, 0)).toMSecsSinceEpoch();
+        if (mLastDayLimitsStart != 0)
+        {
+            while (dayLimitsStart - mLastDayLimitsStart > ONE_DAY)
+            {
+                mLastDayLimitsStart += ONE_DAY;
+
+                if (mDailyYieldAxisX.count() >= LIMIT_AMOUNT_OF_DAYS)
+                {
+                    mDailyYieldAxisX.remove(mDailyYieldAxisX.at(0));
+                    mDailyYieldPositivePoints.remove(0);
+                    mDailyYieldNegativePoints.remove(0);
+                }
+
+                mDailyYieldAxisX.append(QDateTime::fromMSecsSinceEpoch(mLastDayLimitsStart).date().toString(DATE_FORMAT));
+                mDailyYieldPositivePoints.append(0);
+                mDailyYieldNegativePoints.append(0);
+            }
+        }
+
+        mLastDayLimitsStart = dayLimitsStart;
         mLastDayLimitsEnd   = mLastDayLimitsStart + ONE_DAY;
 
         mLastDailyYield = 0.0f;
@@ -572,10 +596,10 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
     mLastDailyYield          += yield;
 
     yieldPoints.append(QPointF(operation.timestamp, yieldPercent));
-    mMonthlyYieldPositivePoints.replace(mMonthlyYieldPositivePoints.count() - 1, qMax(monthlyYield, 0.0f));
-    mMonthlyYieldNegativePoints.replace(mMonthlyYieldNegativePoints.count() - 1, qMin(monthlyYield, 0.0f));
-    mDailyYieldPositivePoints.replace(mDailyYieldPositivePoints.count() - 1, qMax(mLastDailyYield, 0.0f));
-    mDailyYieldNegativePoints.replace(mDailyYieldNegativePoints.count() - 1, qMin(mLastDailyYield, 0.0f));
+    mMonthlyYieldPositivePoints.replace(mMonthlyYieldPositivePoints.size() - 1, qMax(monthlyYield, 0.0f));
+    mMonthlyYieldNegativePoints.replace(mMonthlyYieldNegativePoints.size() - 1, qMin(monthlyYield, 0.0f));
+    mDailyYieldPositivePoints.replace(mDailyYieldPositivePoints.size() - 1, qMax(mLastDailyYield, 0.0f));
+    mDailyYieldNegativePoints.replace(mDailyYieldNegativePoints.size() - 1, qMin(mLastDailyYield, 0.0f));
     totalMoneyPoints.append(QPointF(operation.timestamp, totalMoney));
 
     mAxisXMin[0] = qMin(mAxisXMin[0], operation.timestamp);
@@ -588,7 +612,7 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
 
     if (mMonthlyYieldAxisYMin == 0 && mMonthlyYieldAxisYMax == 0)
     {
-        for (int i = 0; i < mMonthlyYieldPositivePoints.count(); ++i)
+        for (int i = 0; i < mMonthlyYieldPositivePoints.size(); ++i)
         {
             mMonthlyYieldAxisYMin = qMin(mMonthlyYieldAxisYMin, mMonthlyYieldNegativePoints.at(i));
             mMonthlyYieldAxisYMax = qMax(mMonthlyYieldAxisYMax, mMonthlyYieldPositivePoints.at(i));
@@ -602,7 +626,7 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
 
     if (mDailyYieldAxisYMin == 0 && mDailyYieldAxisYMax == 0)
     {
-        for (int i = 0; i < mDailyYieldPositivePoints.count(); ++i)
+        for (int i = 0; i < mDailyYieldPositivePoints.size(); ++i)
         {
             mDailyYieldAxisYMin = qMin(mDailyYieldAxisYMin, mDailyYieldNegativePoints.at(i));
             mDailyYieldAxisYMax = qMax(mDailyYieldAxisYMax, mDailyYieldPositivePoints.at(i));
@@ -716,8 +740,8 @@ void AccountChartWidget::syncTotalMoneyTimeRangeSeries(TimeRange timeRange)
 
 void AccountChartWidget::syncBarSetFromPoints(QBarSet* barSet, const QList<qreal>& points)
 {
-    Q_ASSERT_X(points.count() > 0, __FUNCTION__, "points is empty");
-    Q_ASSERT_X(barSet->count() <= points.count(), __FUNCTION__, "barSet should be smaller than points");
+    Q_ASSERT_X(points.size() > 0, __FUNCTION__, "points is empty");
+    Q_ASSERT_X(barSet->count() <= points.size(), __FUNCTION__, "barSet should be smaller than points");
 
     for (int i = 0; i < barSet->count(); ++i)
     {
@@ -730,10 +754,31 @@ void AccountChartWidget::syncBarSetFromPoints(QBarSet* barSet, const QList<qreal
         }
     }
 
-    for (int i = barSet->count(); i < points.count(); ++i)
+    for (int i = barSet->count(); i < points.size(); ++i)
     {
         barSet->append(points.at(i));
     }
+}
+
+void AccountChartWidget::notifyAvgYield()
+{
+    double totalMonthlyYield = 0;
+    double totalDailyYield   = 0;
+
+    for (int i = 0; i < mMonthlyYieldPositiveBarSet.count(); ++i)
+    {
+        totalMonthlyYield += mMonthlyYieldPositiveBarSet.at(i) + mMonthlyYieldNegativeBarSet.at(i);
+    }
+
+    for (int i = 0; i < mDailyYieldPositiveBarSet.count(); ++i)
+    {
+        totalDailyYield += mDailyYieldPositiveBarSet.at(i) + mDailyYieldNegativeBarSet.at(i);
+    }
+
+    emit avgMonthlyYieldChanged(
+        mMonthlyYieldPositiveBarSet.count() > 0 ? totalMonthlyYield / mMonthlyYieldPositiveBarSet.count() : 0
+    );
+    emit avgDailyYieldChanged(mDailyYieldPositiveBarSet.count() > 0 ? totalDailyYield / mDailyYieldPositiveBarSet.count() : 0);
 }
 
 void AccountChartWidget::contextMenuRequested(const QPoint& pos)

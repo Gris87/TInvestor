@@ -4,111 +4,111 @@
 <context>
     <name>AccountChartWidget</name>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="189"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="206"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="236"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="268"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="190"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="207"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="237"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="269"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Jan</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Feb</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Mar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Apr</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>May</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Jun</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Jul</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="114"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
         <source>Aug</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="116"/>
         <source>Sep</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="116"/>
         <source>Oct</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="116"/>
         <source>Nov</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="115"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="116"/>
         <source>Dec</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="185"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="186"/>
         <source>Yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="203"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="204"/>
         <source>Yield per month</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="233"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="234"/>
         <source>Yield per day</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="239"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="270"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="240"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="271"/>
         <source>Money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="264"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="265"/>
         <source>Total money on account</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="705"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="743"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="715"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="753"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="715"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="753"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
@@ -185,12 +185,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="80"/>
+        <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="60"/>
         <source>within the last</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="87"/>
+        <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="67"/>
         <source> minutes</source>
         <translation></translation>
     </message>
@@ -226,12 +226,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="80"/>
+        <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="60"/>
         <source>within the last</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="87"/>
+        <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="67"/>
         <source> days</source>
         <translation></translation>
     </message>
@@ -280,12 +280,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision6config/buydecision6configwidget/buydecision6configwidget.ui" line="80"/>
+        <location filename="../../src/config/decisions/buy/buydecision6config/buydecision6configwidget/buydecision6configwidget.ui" line="60"/>
         <source>within the last</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision6config/buydecision6configwidget/buydecision6configwidget.ui" line="87"/>
+        <location filename="../../src/config/decisions/buy/buydecision6config/buydecision6configwidget/buydecision6configwidget.ui" line="67"/>
         <source> minutes</source>
         <translation></translation>
     </message>
@@ -367,58 +367,58 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="212"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="218"/>
         <source>for all time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="217"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="223"/>
         <source>over the last day</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="222"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="228"/>
         <source>over the last week</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="227"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="233"/>
         <source>over the last month</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="232"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="238"/>
         <source>over the last 3 months</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="243"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="249"/>
         <source>Logs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="279"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="165"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="285"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="167"/>
         <source>Best config</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="309"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="315"/>
         <source>Copy to simulator config</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="316"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="322"/>
         <source>Copy to auto-pilot config</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="323"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="329"/>
         <source>Copy to both configs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="330"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="336"/>
         <source>Copied</source>
         <translation></translation>
     </message>
@@ -426,6 +426,16 @@
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="62"/>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="63"/>
         <source>Loading</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="223"/>
+        <source>Average monthly yield: %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="229"/>
+        <source>Average daily yield: %1</source>
         <translation></translation>
     </message>
 </context>
@@ -614,13 +624,13 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="653"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1489"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1494"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="670"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1287"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1292"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
@@ -635,13 +645,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1287"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1292"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="762"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1336"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1341"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
@@ -656,7 +666,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="1336"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1341"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -752,22 +762,22 @@
 <context>
     <name>OperationsTableWidget</name>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="82"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="84"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="92"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="94"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="92"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="94"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="111"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="113"/>
         <source>Operations</source>
         <translation></translation>
     </message>
@@ -1751,79 +1761,79 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="822"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="872"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="827"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="877"/>
         <source>Order cancelled</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="554"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="559"/>
         <source>Order to sell %1 created with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="534"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="539"/>
         <source>Failed to create order to sell %1 with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="375"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="561"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="380"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="566"/>
         <source>while market price %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="576"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="581"/>
         <source>Order to sell %1 rejected with a price %2. Let&apos;s try again</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="668"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="673"/>
         <source>Trade interrupted because the price reached %1 with raise %2 from the price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="348"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="353"/>
         <source>Failed to create order to buy %1 with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="368"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="373"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="390"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="395"/>
         <source>Order to buy %1 rejected with a price %2. Let&apos;s try again</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="838"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="843"/>
         <source>%1/%2 bought with a price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="848"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="853"/>
         <source>%1/%2 sold with a price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="860"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="865"/>
         <source>Order completed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="864"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="869"/>
         <source>Order partially completed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="868"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="873"/>
         <source>Order rejected</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="876"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="881"/>
         <source>Order is still waiting</source>
         <translation></translation>
     </message>

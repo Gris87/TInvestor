@@ -50,6 +50,7 @@ public:
     void syncTimeRangeSeries();
     void syncYieldTimeRangeSeries(TimeRange timeRange);
     void syncTotalMoneyTimeRangeSeries(TimeRange timeRange);
+    void notifyAvgYield();
 
 public slots:
     void contextMenuRequested(const QPoint& pos);

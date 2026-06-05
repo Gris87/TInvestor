@@ -206,6 +206,12 @@
                </spacer>
               </item>
               <item>
+               <widget class="QLabel" name="avgMonthlyYieldLabel"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="avgDailyYieldLabel"/>
+              </item>
+              <item>
                <widget class="QComboBox" name="timeRangeComboBox">
                 <item>
                  <property name="text">

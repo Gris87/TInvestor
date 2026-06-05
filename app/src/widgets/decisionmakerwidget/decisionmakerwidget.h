@@ -89,6 +89,8 @@ public:
     Ui::DecisionMakerWidget* ui;
 
 private:
+    void switchChart(ChartType chartType);
+
     IOperationsTableWidget*     mOperationsTableWidget;
     IAccountChartWidget*        mAccountChartWidget;
     ILogsFilterWidget*          mLogsFilterWidget;
@@ -101,8 +103,11 @@ private:
     QGraphicsOpacityEffect      mCopiedOpacityEffect;
     QPropertyAnimation          mCopiedOpacityAnimation;
     bool                        mShowMoney;
+    float                       mLastAvgDailyYield;
 
 public slots:
+    void avgMonthlyYieldChanged(float value);
+    void avgDailyYieldChanged(float value);
     void logFilterChanged(const LogFilter& filter);
     void portfolioTreeWidgetManualSell(const InstrumentsForTrading& instruments);
 

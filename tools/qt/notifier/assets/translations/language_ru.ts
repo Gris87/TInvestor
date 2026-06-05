@@ -185,17 +185,17 @@
 <context>
     <name>TrayIcon</name>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="27"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="31"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="29"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="33"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="35"/>
+        <location filename="../../src/widgets/trayicon/trayicon.cpp" line="38"/>
         <source>TInvestor notifier</source>
         <translation>Уведомления Ты ж инвестор</translation>
     </message>

@@ -49,4 +49,8 @@ public:
 
     virtual void operationsRead(const QList<Operation>& operations)  = 0;
     virtual void operationsAdded(const QList<Operation>& operations) = 0;
+
+signals:
+    void avgMonthlyYieldChanged(float value);
+    void avgDailyYieldChanged(float value);
 };

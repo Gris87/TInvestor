@@ -153,6 +153,7 @@ TEST_F(Test_DecisionMakerWidgetFactory, Test_newInstance)
     )
         .WillOnce(Return(portfolioTreeWidgetMock));
 
+    EXPECT_CALL(*accountChartWidgetMock, switchChart(CHART_TYPE_YIELD));
     EXPECT_CALL(*logsFilterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
     EXPECT_CALL(*bestConfigWidgetMock, makeReadOnly());

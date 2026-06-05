@@ -49,7 +49,8 @@ DecisionMakerWidget::DecisionMakerWidget(
     mConfig(config),
     mConfigForSimulation(configForSimulation),
     mSettingsEditor(settingsEditor),
-    mShowMoney(true)
+    mShowMoney(true),
+    mLastAvgDailyYield()
 {
     qDebug() << "Create DecisionMakerWidget";
 
@@ -99,6 +100,7 @@ DecisionMakerWidget::DecisionMakerWidget(
         portfolioTreeModelFactory, fileDialogFactory, messageBoxUtils, mSettingsEditor, autoPilot, this
     );
 
+    switchChart(CHART_TYPE_YIELD);
     mLogsTableWidget->setFilter(mLogsFilterWidget->getFilter());
     mBestConfigWidget->makeReadOnly();
 
@@ -113,6 +115,8 @@ DecisionMakerWidget::DecisionMakerWidget(
     ui->tabWidget->setCurrentWidget(ui->operationsTab);
 
     // clang-format off
+    connect(mAccountChartWidget,  SIGNAL(avgMonthlyYieldChanged(float)),                  this, SLOT(avgMonthlyYieldChanged(float)));
+    connect(mAccountChartWidget,  SIGNAL(avgDailyYieldChanged(float)),                    this, SLOT(avgDailyYieldChanged(float)));
     connect(mLogsFilterWidget,    SIGNAL(filterChanged(const LogFilter&)),                this, SLOT(logFilterChanged(const LogFilter&)));
     connect(mPortfolioTreeWidget, SIGNAL(tradeInstruments(const InstrumentsForTrading&)), this, SLOT(portfolioTreeWidgetManualSell(const InstrumentsForTrading&)));
     // clang-format on
@@ -139,9 +143,11 @@ void DecisionMakerWidget::setShowMoney(bool value)
 {
     mShowMoney = value;
 
-    mOperationsTableWidget->setShowMoney(value);
-    mAccountChartWidget->setShowMoney(value);
-    mPortfolioTreeWidget->setShowMoney(value);
+    mOperationsTableWidget->setShowMoney(mShowMoney);
+    mAccountChartWidget->setShowMoney(mShowMoney);
+    mPortfolioTreeWidget->setShowMoney(mShowMoney);
+
+    avgDailyYieldChanged(mLastAvgDailyYield);
 }
 
 void DecisionMakerWidget::showSpinners()
@@ -216,6 +222,20 @@ void DecisionMakerWidget::refreshOperationsBackground()
     mOperationsTableWidget->refreshBackground();
 }
 
+void DecisionMakerWidget::avgMonthlyYieldChanged(float value)
+{
+    ui->avgMonthlyYieldLabel->setText(tr("Average monthly yield: %1").arg(QString::number(value, 'f', 2) + "%"));
+}
+
+void DecisionMakerWidget::avgDailyYieldChanged(float value)
+{
+    mLastAvgDailyYield = value;
+
+    ui->avgDailyYieldLabel->setText(
+        tr("Average daily yield: %1").arg(mShowMoney ? QString::number(mLastAvgDailyYield, 'f', 2) + " \u20BD" : "*** \u20BD")
+    );
+}
+
 void DecisionMakerWidget::logFilterChanged(const LogFilter& filter)
 {
     mLogsTableWidget->setFilter(filter);
@@ -226,52 +246,38 @@ void DecisionMakerWidget::portfolioTreeWidgetManualSell(const InstrumentsForTrad
     emit tradeInstruments(instruments);
 }
 
+void DecisionMakerWidget::switchChart(ChartType chartType)
+{
+    mAccountChartWidget->switchChart(chartType);
+
+    ui->yieldButton->setChecked(chartType == CHART_TYPE_YIELD);
+    ui->monthlyYieldButton->setChecked(chartType == CHART_TYPE_MONTHLY_YIELD);
+    ui->dailyYieldButton->setChecked(chartType == CHART_TYPE_DAILY_YIELD);
+    ui->totalMoneyButton->setChecked(chartType == CHART_TYPE_TOTAL_MONEY);
+
+    ui->avgMonthlyYieldLabel->setVisible(chartType == CHART_TYPE_MONTHLY_YIELD);
+    ui->avgDailyYieldLabel->setVisible(chartType == CHART_TYPE_DAILY_YIELD);
+    ui->timeRangeComboBox->setVisible(chartType == CHART_TYPE_YIELD || chartType == CHART_TYPE_TOTAL_MONEY);
+}
+
 void DecisionMakerWidget::on_yieldButton_clicked()
 {
-    mAccountChartWidget->switchChart(CHART_TYPE_YIELD);
-
-    ui->yieldButton->setChecked(true);
-    ui->monthlyYieldButton->setChecked(false);
-    ui->dailyYieldButton->setChecked(false);
-    ui->totalMoneyButton->setChecked(false);
-
-    ui->timeRangeComboBox->setEnabled(true);
+    switchChart(CHART_TYPE_YIELD);
 }
 
 void DecisionMakerWidget::on_monthlyYieldButton_clicked()
 {
-    mAccountChartWidget->switchChart(CHART_TYPE_MONTHLY_YIELD);
-
-    ui->yieldButton->setChecked(false);
-    ui->monthlyYieldButton->setChecked(true);
-    ui->dailyYieldButton->setChecked(false);
-    ui->totalMoneyButton->setChecked(false);
-
-    ui->timeRangeComboBox->setEnabled(false);
+    switchChart(CHART_TYPE_MONTHLY_YIELD);
 }
 
 void DecisionMakerWidget::on_dailyYieldButton_clicked()
 {
-    mAccountChartWidget->switchChart(CHART_TYPE_DAILY_YIELD);
-
-    ui->yieldButton->setChecked(false);
-    ui->monthlyYieldButton->setChecked(false);
-    ui->dailyYieldButton->setChecked(true);
-    ui->totalMoneyButton->setChecked(false);
-
-    ui->timeRangeComboBox->setEnabled(false);
+    switchChart(CHART_TYPE_DAILY_YIELD);
 }
 
 void DecisionMakerWidget::on_totalMoneyButton_clicked()
 {
-    mAccountChartWidget->switchChart(CHART_TYPE_TOTAL_MONEY);
-
-    ui->yieldButton->setChecked(false);
-    ui->monthlyYieldButton->setChecked(false);
-    ui->dailyYieldButton->setChecked(false);
-    ui->totalMoneyButton->setChecked(true);
-
-    ui->timeRangeComboBox->setEnabled(true);
+    switchChart(CHART_TYPE_TOTAL_MONEY);
 }
 
 void DecisionMakerWidget::on_timeRangeComboBox_currentIndexChanged(int index)

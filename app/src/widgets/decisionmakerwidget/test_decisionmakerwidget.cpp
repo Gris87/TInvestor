@@ -138,6 +138,7 @@ protected:
         )
             .WillOnce(Return(portfolioTreeWidgetMock));
 
+        EXPECT_CALL(*accountChartWidgetMock, switchChart(CHART_TYPE_YIELD));
         EXPECT_CALL(*logsFilterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
         EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
         EXPECT_CALL(*bestConfigWidgetMock, makeReadOnly());
@@ -487,11 +488,10 @@ TEST_F(Test_DecisionMakerWidget, Test_on_yieldButton_clicked)
     decisionMakerWidget->ui->yieldButton->click();
 
     // clang-format off
-    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         true);
-    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
-    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   true);
+    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),        true);
+    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(), false);
+    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),   false);
+    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),   false);
     // clang-format on
 }
 
@@ -504,11 +504,10 @@ TEST_F(Test_DecisionMakerWidget, Test_on_monthlyYieldButton_clicked)
     decisionMakerWidget->ui->monthlyYieldButton->click();
 
     // clang-format off
-    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
-    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  true);
-    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   false);
+    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),        false);
+    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(), true);
+    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),   false);
+    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),   false);
     // clang-format on
 }
 
@@ -521,11 +520,10 @@ TEST_F(Test_DecisionMakerWidget, Test_on_dailyYieldButton_clicked)
     decisionMakerWidget->ui->dailyYieldButton->click();
 
     // clang-format off
-    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
-    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
-    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    true);
-    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   false);
+    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),        false);
+    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(), false);
+    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),   true);
+    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),   false);
     // clang-format on
 }
 
@@ -538,11 +536,10 @@ TEST_F(Test_DecisionMakerWidget, Test_on_totalMoneyButton_clicked)
     decisionMakerWidget->ui->totalMoneyButton->click();
 
     // clang-format off
-    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
-    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
-    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),    false);
-    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    true);
-    ASSERT_EQ(decisionMakerWidget->ui->timeRangeComboBox->isEnabled(),   true);
+    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),        false);
+    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(), false);
+    ASSERT_EQ(decisionMakerWidget->ui->dailyYieldButton->isChecked(),   false);
+    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),   true);
     // clang-format on
 }
 
