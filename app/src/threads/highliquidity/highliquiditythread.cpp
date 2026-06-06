@@ -70,9 +70,19 @@ void HighLiquidityThread::makeDecisionBaseOnTimestamp(qint64 timestamp)
 
     if (time < endTime)
     {
-        if (!mTimeUtils->isWeekend(timestamp))
+        if (mConfig->isTradeWithMarginCall())
         {
-            sellEtf();
+            if (mTimeUtils->isMonday(timestamp))
+            {
+                sellEtf();
+            }
+        }
+        else
+        {
+            if (!mTimeUtils->isWeekend(timestamp))
+            {
+                sellEtf();
+            }
         }
 
         return;

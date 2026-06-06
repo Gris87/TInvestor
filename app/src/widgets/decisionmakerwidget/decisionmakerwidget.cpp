@@ -222,7 +222,7 @@ void DecisionMakerWidget::refreshOperationsBackground()
     mOperationsTableWidget->refreshBackground();
 }
 
-void DecisionMakerWidget::avgMonthlyYieldChanged(float value)
+void DecisionMakerWidget::avgMonthlyYieldChanged(float value) const
 {
     ui->avgMonthlyYieldLabel->setText(tr("Average monthly yield: %1").arg(QString::number(value, 'f', 2) + "%"));
 }

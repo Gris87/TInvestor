@@ -106,7 +106,7 @@ private:
     float                       mLastAvgDailyYield;
 
 public slots:
-    void avgMonthlyYieldChanged(float value);
+    void avgMonthlyYieldChanged(float value) const;
     void avgDailyYieldChanged(float value);
     void logFilterChanged(const LogFilter& filter);
     void portfolioTreeWidgetManualSell(const InstrumentsForTrading& instruments);

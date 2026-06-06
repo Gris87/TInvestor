@@ -150,18 +150,21 @@ TEST_F(Test_HighLiquidityThread, Test_makeDecisionBaseOnTimestamp)
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(*timeUtilsMock, isWeekend(1704542400000)).WillOnce(Return(true));
 
     thread->makeDecisionBaseOnTimestamp(1704542400000); // 15:00 MSK Sat
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(*timeUtilsMock, isWeekend(1704628800000)).WillOnce(Return(true));
 
     thread->makeDecisionBaseOnTimestamp(1704628800000); // 15:00 MSK Sun
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(*timeUtilsMock, isWeekend(1704092700000)).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
@@ -170,6 +173,16 @@ TEST_F(Test_HighLiquidityThread, Test_makeDecisionBaseOnTimestamp)
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isMonday(1704092700000)).WillOnce(Return(true));
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+
+    thread->makeDecisionBaseOnTimestamp(1704092700000); // 10:05 MSK Mon
+
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(*timeUtilsMock, isWeekend(1704140940000)).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
@@ -187,6 +200,7 @@ TEST_F(Test_HighLiquidityThread, Test_makeDecisionBaseOnTimestamp)
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704123240000)).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(*timeUtilsMock, isWeekend(1704123240000)).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));

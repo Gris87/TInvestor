@@ -509,6 +509,7 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
     scene()->invalidate();
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void
 AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& yieldPoints, QList<QPointF>& totalMoneyPoints)
 {
@@ -528,7 +529,7 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
             QDateTime(QDate(month == MONTH_COUNT ? year + 1 : year, month == MONTH_COUNT ? 1 : month + 1, 1), QTime(0, 0))
                 .toMSecsSinceEpoch();
 
-        mLastMonthlyYield += mMonthlyYieldPositivePoints.size() > 0
+        mLastMonthlyYield += !mMonthlyYieldPositivePoints.isEmpty()
                                  ? mMonthlyYieldPositivePoints.at(mMonthlyYieldPositivePoints.size() - 1) +
                                        mMonthlyYieldNegativePoints.at(mMonthlyYieldNegativePoints.size() - 1)
                                  : 0.0f;
@@ -638,6 +639,7 @@ AccountChartWidget::handleOperation(const Operation& operation, QList<QPointF>& 
         mDailyYieldAxisYMax = qMax(mDailyYieldAxisYMax, mLastDailyYield);
     }
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 struct SyncTimeRangeSeriesInfo
 {
@@ -740,7 +742,7 @@ void AccountChartWidget::syncTotalMoneyTimeRangeSeries(TimeRange timeRange)
 
 void AccountChartWidget::syncBarSetFromPoints(QBarSet* barSet, const QList<qreal>& points)
 {
-    Q_ASSERT_X(points.size() > 0, __FUNCTION__, "points is empty");
+    Q_ASSERT_X(!points.isEmpty(), __FUNCTION__, "points is empty");
     Q_ASSERT_X(barSet->count() <= points.size(), __FUNCTION__, "barSet should be smaller than points");
 
     for (int i = 0; i < barSet->count(); ++i)

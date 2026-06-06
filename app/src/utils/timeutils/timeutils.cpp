@@ -60,6 +60,14 @@ bool TimeUtils::isWorkingHours(qint64 timestamp)
     return time >= startTime && time < endTime;
 }
 
+bool TimeUtils::isMonday(qint64 timestamp)
+{
+    const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
+    const int       dayOfWeek = dateTime.date().dayOfWeek();
+
+    return dayOfWeek == Qt::Monday;
+}
+
 bool TimeUtils::isWeekend(qint64 timestamp)
 {
     const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);

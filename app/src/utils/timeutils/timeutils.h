@@ -19,6 +19,7 @@ public:
 
     bool interruptibleSleep(int ms, QThread* parentThread) override;
     bool isWorkingHours(qint64 timestamp) override;
+    bool isMonday(qint64 timestamp) override;
     bool isWeekend(qint64 timestamp) override;
     bool isNormalOrEveningSession(qint64 timestamp) override;
     bool isTimeBetween(QTime time, QTime startTime, QTime endTime) override;
