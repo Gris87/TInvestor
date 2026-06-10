@@ -170,6 +170,11 @@ jobs:
       # Use local build-android action
       - name: Use local build-android action
         uses: ./.github/actions/build-android
+        with:
+          keystore-file: ${{ secrets.KEYSTORE_FILE }}
+          key-alias: ${{ secrets.KEY_ALIAS }}
+          keystore-password: ${{ secrets.KEYSTORE_PASSWORD }}
+          key-password: ${{ secrets.KEY_PASSWORD }}
 
   # Test Android project
   test-android:
