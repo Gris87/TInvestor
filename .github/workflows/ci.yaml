@@ -218,7 +218,7 @@ jobs:
   # This job is only used when github.ref contains /tags/
   # It should be first in order to upload release artifacts.
   create-release:
-    needs: [check-style, test, doc]
+    needs: [check-style, test, build-android, test-android, doc]
     name: Create release
     if: contains(github.ref, '/tags/')
     runs-on: ubuntu-latest

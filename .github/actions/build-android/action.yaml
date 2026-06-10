@@ -21,13 +21,19 @@ runs:
       uses: theowenyoung/folder-hash@v3
       with:
         path: |
-          ./TInvestor-source/app
-          ./TInvestor-source/libs
-          ./TInvestor-source/tests
-          ./TInvestor-source/tools
+          ./TInvestor-source/tools/android/notifier
+
+    # Download/upload cache
+    - name: Caching
+      id: cache-build
+      uses: actions/cache@v5
+      with:
+        path: ./TInvestor-source/tools/android/notifier/app/build/outputs/apk/release/app-release-unsigned.apk
+        key: android-build-${{ steps.folders-hash.outputs.hash }}
 
     # Setup JDK 25
     - name: Setup JDK 25
+      if: steps.cache-build.outputs.cache-hit != 'true'
       uses: actions/setup-java@v5
       with:
         java-version: '25'
@@ -37,16 +43,40 @@ runs:
 
     # Build APK
     - name: Build APK
+      if: steps.cache-build.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         Set-Location -Path "TInvestor-source/tools/android/notifier"
         & ./gradlew assembleRelease
+
+    # Prepare Keystore
+    - name: Prepare Keystore
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y coreutils
+        mkdir -p $RUNNER_TEMP/keystores
+        echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > $RUNNER_TEMP/keystores/keystore.jks
+
+    # Sign APK
+    - name: Sign APK
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      run: |
+        ANDROID_SDK_PATH=$ANDROID_HOME/build-tools/36.0.0/apksigner
+        $ANDROID_SDK_PATH sign \
+          --ks $RUNNER_TEMP/keystores/keystore.jks \
+          --ks-key-alias ${{ secrets.KEY_ALIAS }} \
+          --ks-pass pass:${{ secrets.KEYSTORE_PASSWORD }} \
+          --key-pass pass:${{ secrets.KEY_PASSWORD }} \
+          --out TInvestor-source/tools/android/notifier/app/build/outputs/apk/release/tinvestor-notifier.apk \
+          TInvestor-source/tools/android/notifier/app/build/outputs/apk/release/app-release-unsigned.apk
 
     # Upload artifacts
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
       with:
         name: build-android
-        path: ./TInvestor-source/tools/android/notifier
+        path: ./TInvestor-source/tools/android/notifier/app/build/outputs/apk/release/app-release-unsigned.apk
         retention-days: 1
         compression-level: 9
