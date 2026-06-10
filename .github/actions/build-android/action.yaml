@@ -25,3 +25,18 @@ runs:
           ./TInvestor-source/libs
           ./TInvestor-source/tests
           ./TInvestor-source/tools
+
+    # Setup JDK 25
+    - name: Setup JDK 25
+      uses: actions/setup-java@v5
+      with:
+        java-version: '25'
+        distribution: 'temurin'
+        java-package: 'jdk'
+        cache: 'gradle'
+
+    # Build APK
+    - name: Build APK
+      run: |
+        cd tools/android/notifier
+        ./gradlew assembleRelease
