@@ -1,0 +1,27 @@
+name: build-android
+description: Build Android
+runs:
+  using: "composite"
+  steps:
+    # Set git to disable line endings conversion
+    - name: Configure git
+      shell: pwsh
+      run: |
+        & git config --global core.autocrlf false
+
+    # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
+    - name: Checkout TInvestor
+      uses: actions/checkout@v6
+      with:
+        path: TInvestor-source
+
+    # Calculate TInvestor hash on sources
+    - name: Calculate TInvestor hash
+      id: folders-hash
+      uses: theowenyoung/folder-hash@v3
+      with:
+        path: |
+          ./TInvestor-source/app
+          ./TInvestor-source/libs
+          ./TInvestor-source/tests
+          ./TInvestor-source/tools

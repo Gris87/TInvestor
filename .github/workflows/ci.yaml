@@ -153,6 +153,44 @@ jobs:
         with:
           gist-token: ${{ secrets.GIST_TOKEN }}
 
+  # Build Android project
+  build-android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github
+
+      # Use local build-android action
+      - name: Use local build-android action
+        uses: ./.github/actions/build-android
+
+  # Test Android project
+  test-android:
+    name: Test Android
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github
+
+      # Use local test-android action
+      - name: Use local test-android action
+        uses: ./.github/actions/test-android
+        with:
+          gist-token: ${{ secrets.GIST_TOKEN }}
+
   # Generate documentation
   doc:
     name: Documentation [${{ matrix.config.name }}]
