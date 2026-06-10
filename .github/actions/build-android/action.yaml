@@ -37,6 +37,7 @@ runs:
 
     # Build APK
     - name: Build APK
+      shell: pwsh
       run: |
-        cd tools/android/notifier
-        ./gradlew assembleRelease
+        Set-Location -Path "TInvestor-source/tools/android/notifier"
+        & ./gradlew assembleRelease

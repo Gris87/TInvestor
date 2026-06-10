@@ -41,6 +41,7 @@ runs:
 
     # Test UT
     - name: Test UT
+      shell: pwsh
       run: |
-        cd tools/android/notifier
-        ./gradlew test
+        Set-Location -Path "TInvestor-source/tools/android/notifier"
+        & ./gradlew test
