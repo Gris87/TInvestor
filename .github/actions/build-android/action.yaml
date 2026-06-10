@@ -77,7 +77,7 @@ runs:
       if: steps.cache-build.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-        & ${{ env.ANDROID_HOME }}/build-tools/36.0.0/apksigner sign --ks /tmp/keystores/keystore.jks --ks-key-alias ${{ inputs.key-alias }} --ks-pass pass:${{ inputs.keystore-password }} --key-pass pass:${{ inputs.key-password }} --out TInvestor-source/tools/android/notifier/app/build/outputs/apk/release/tinvestor-notifier.apk TInvestor-source/tools/android/notifier/app/build/outputs/apk/release/app-release-unsigned.apk
+        & /usr/local/lib/android/sdk/build-tools/36.0.0/apksigner sign --ks /tmp/keystores/keystore.jks --ks-key-alias ${{ inputs.key-alias }} --ks-pass pass:${{ inputs.keystore-password }} --key-pass pass:${{ inputs.key-password }} --out TInvestor-source/tools/android/notifier/app/build/outputs/apk/release/tinvestor-notifier.apk TInvestor-source/tools/android/notifier/app/build/outputs/apk/release/app-release-unsigned.apk
 
     # Upload artifacts
     - name: Upload artifacts
