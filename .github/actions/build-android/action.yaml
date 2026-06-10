@@ -41,3 +41,12 @@ runs:
       run: |
         Set-Location -Path "TInvestor-source/tools/android/notifier"
         & ./gradlew assembleRelease
+
+    # Upload artifacts
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-android
+        path: ./TInvestor-source/tools/android/notifier/build/outputs
+        retention-days: 1
+        compression-level: 9
