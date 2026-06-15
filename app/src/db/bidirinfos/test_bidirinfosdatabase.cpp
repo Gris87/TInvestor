@@ -40,9 +40,15 @@ protected:
     {
         const QString biDirInfoStr =
             "{"
-            "    \"aaaaa\": {\"spread\": 0.1, \"priority\": \"low\",    \"minYield\": 1.1, \"totalYield\": 2.1},"
-            "    \"bbbbb\": {\"spread\": 0.2, \"priority\": \"normal\", \"minYield\": 1.2, \"totalYield\": 2.2},"
-            "    \"ccccc\": {\"spread\": 0.3, \"priority\": \"high\",   \"minYield\": 1.3, \"totalYield\": 2.3}"
+            "    \"aaaaa\": {"
+            "        \"spread\": 0.1, \"maxSpread\": 1.1, \"priority\": \"low\",    \"minYield\": 2.1, \"totalYield\": 3.1"
+            "    },"
+            "    \"bbbbb\": {"
+            "        \"spread\": 0.2, \"maxSpread\": 1.2, \"priority\": \"normal\", \"minYield\": 2.2, \"totalYield\": 3.2"
+            "    },"
+            "    \"ccccc\": {"
+            "        \"spread\": 0.3, \"maxSpread\": 1.3, \"priority\": \"high\",   \"minYield\": 2.3, \"totalYield\": 3.3"
+            "    }"
             "}";
 
         testBiDirInfos = biDirInfoStr.toUtf8();
@@ -91,16 +97,19 @@ TEST_F(Test_BiDirInfosDatabase, Test_readBiDirInfos)
     // clang-format off
     ASSERT_EQ(biDirInfos.size(),                3);
     ASSERT_NEAR(biDirInfos["aaaaa"].spread,     0.1f, 0.0001f);
-    ASSERT_NEAR(biDirInfos["aaaaa"].minYield,   1.1f, 0.0001f);
-    ASSERT_NEAR(biDirInfos["aaaaa"].totalYield, 2.1f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["aaaaa"].maxSpread,  1.1f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["aaaaa"].minYield,   2.1f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["aaaaa"].totalYield, 3.1f, 0.0001f);
     ASSERT_EQ(biDirInfos["aaaaa"].priority,     BIDIR_PRIORITY_LOW);
     ASSERT_NEAR(biDirInfos["bbbbb"].spread,     0.2f, 0.0001f);
-    ASSERT_NEAR(biDirInfos["bbbbb"].minYield,   1.2f, 0.0001f);
-    ASSERT_NEAR(biDirInfos["bbbbb"].totalYield, 2.2f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["bbbbb"].maxSpread,  1.2f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["bbbbb"].minYield,   2.2f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["bbbbb"].totalYield, 3.2f, 0.0001f);
     ASSERT_EQ(biDirInfos["bbbbb"].priority,     BIDIR_PRIORITY_NORMAL);
     ASSERT_NEAR(biDirInfos["ccccc"].spread,     0.3f, 0.0001f);
-    ASSERT_NEAR(biDirInfos["ccccc"].minYield,   1.3f, 0.0001f);
-    ASSERT_NEAR(biDirInfos["ccccc"].totalYield, 2.3f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["ccccc"].maxSpread,  1.3f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["ccccc"].minYield,   2.3f, 0.0001f);
+    ASSERT_NEAR(biDirInfos["ccccc"].totalYield, 3.3f, 0.0001f);
     ASSERT_EQ(biDirInfos["ccccc"].priority,     BIDIR_PRIORITY_HIGH);
     // clang-format on
 }

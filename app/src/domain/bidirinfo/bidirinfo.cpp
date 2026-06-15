@@ -26,6 +26,7 @@ constexpr float FLOAT_EPSILON = 0.0001f;
 
 BiDirInfo::BiDirInfo() :
     spread(),
+    maxSpread(),
     minYield(),
     totalYield(),
     priority()
@@ -35,6 +36,11 @@ BiDirInfo::BiDirInfo() :
 static void biDirInfoSpreadParse(BiDirInfo* biDirInfo, simdjson::ondemand::value value)
 {
     biDirInfo->spread = value.get_double();
+}
+
+static void biDirInfoMaxSpreadParse(BiDirInfo* biDirInfo, simdjson::ondemand::value value)
+{
+    biDirInfo->maxSpread = value.get_double();
 }
 
 static void biDirInfoMinYieldParse(BiDirInfo* biDirInfo, simdjson::ondemand::value value)
@@ -67,6 +73,7 @@ using ParseHandler = void (*)(BiDirInfo* biDirInfo, simdjson::ondemand::value va
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"spread",     biDirInfoSpreadParse    },
+    {"maxSpread",  biDirInfoMaxSpreadParse },
     {"minYield",   biDirInfoMinYieldParse  },
     {"totalYield", biDirInfoTotalYieldParse},
     {"priority",   biDirInfoPriorityParse  }
@@ -90,6 +97,7 @@ QJsonObject BiDirInfo::toJsonObject() const
 
     // clang-format off
     res.insert("spread",     spread);
+    res.insert("maxSpread",  maxSpread);
     res.insert("minYield",   minYield);
     res.insert("totalYield", totalYield);
     res.insert("priority",   BIDIR_PRIORITY_TO_STRING.value(priority, "low"));
@@ -100,6 +108,7 @@ QJsonObject BiDirInfo::toJsonObject() const
 
 bool operator==(const BiDirInfo& lhs, const BiDirInfo& rhs)
 {
-    return qAbs(lhs.spread - rhs.spread) < FLOAT_EPSILON && qAbs(lhs.minYield - rhs.minYield) < FLOAT_EPSILON &&
-           qAbs(lhs.totalYield - rhs.totalYield) < FLOAT_EPSILON && lhs.priority == rhs.priority;
+    return qAbs(lhs.spread - rhs.spread) < FLOAT_EPSILON && qAbs(lhs.maxSpread - rhs.maxSpread) < FLOAT_EPSILON &&
+           qAbs(lhs.minYield - rhs.minYield) < FLOAT_EPSILON && qAbs(lhs.totalYield - rhs.totalYield) < FLOAT_EPSILON &&
+           lhs.priority == rhs.priority;
 }

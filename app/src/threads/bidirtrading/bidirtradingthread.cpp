@@ -11,7 +11,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 constexpr float  HUNDRED_PERCENT       = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT = 0.40f;
 constexpr float  SPREAD_FOR_HUGE_BID   = 0.80f;
-constexpr float  TRIPLE_PRICE_RAISE    = 1.00f;
+constexpr float  TRIPLE_PRICE_RAISE    = 2.00f;
 constexpr float  TRIPLE_SAFE_SPREAD    = 4.00f;
 constexpr int    ORDER_BOOK_DEPTH      = 50;
 constexpr int    HOURS_TO_TRIPLE_CHECK = 5;
@@ -58,6 +58,7 @@ BiDirTradingThread::BiDirTradingThread(
     mInstrumentLot(),
     mMinPriceIncrement(),
     mMinSpread(),
+    mMaxSpread(),
     mPriority(),
     mNeedToCancelSell(true),
     mBuyOrderId(),
@@ -262,11 +263,13 @@ void BiDirTradingThread::getInstrumentData()
         const BiDirInfo& biDirInfo = biDirInfos.value(mInstrumentId);
 
         mMinSpread = biDirInfo.spread;
+        mMaxSpread = biDirInfo.maxSpread;
         mPriority  = !mTimeUtils->isWeekend(QDateTime::currentMSecsSinceEpoch()) ? biDirInfo.priority : BIDIR_PRIORITY_NORMAL;
     }
     else
     {
         mMinSpread = SPREAD_FOR_HUGE_BID;
+        mMaxSpread = TRIPLE_SAFE_SPREAD;
         mPriority  = BIDIR_PRIORITY_LOW;
     }
 
@@ -575,8 +578,9 @@ Quotation BiDirTradingThread::calculateBuyPriceInternal(const tinkoff::GetOrderB
     }
 
     const float additionalGap = mConfig->isAdditionalGap() ? mConfig->getAdditionalGapPercent() : 0;
+    spread                    = qMin(qMax(spread + additionalGap, mMinSpread), mMaxSpread);
 
-    const double maximumBuyPrice = basePrice * (1 - ((spread + additionalGap) / HUNDRED_PERCENT));
+    const double maximumBuyPrice = basePrice * (1 - (spread / HUNDRED_PERCENT));
     double       res             = maximumBuyPrice;
 
     for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)

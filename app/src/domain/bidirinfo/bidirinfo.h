@@ -31,6 +31,7 @@ struct BiDirInfo
     QJsonObject toJsonObject() const;
 
     float         spread;
+    float         maxSpread;
     float         minYield;
     float         totalYield;
     BiDirPriority priority;

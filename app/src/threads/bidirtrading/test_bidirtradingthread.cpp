@@ -194,6 +194,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     BiDirInfo  biDirInfo;
 
     biDirInfo.spread     = 0.5f;
+    biDirInfo.maxSpread  = 5.0f;
     biDirInfo.minYield   = 0.1f;
     biDirInfo.totalYield = 10.0f;
     biDirInfo.priority   = BIDIR_PRIORITY_NORMAL;
@@ -975,6 +976,7 @@ TEST_F(Test_BiDirTradingThread, Test_calculateBuySellPriceAndLots)
     BiDirInfo  biDirInfo;
 
     biDirInfo.spread     = 0.5f;
+    biDirInfo.maxSpread  = 5.0f;
     biDirInfo.minYield   = 0.1f;
     biDirInfo.totalYield = 10.0f;
     biDirInfo.priority   = BIDIR_PRIORITY_LOW;

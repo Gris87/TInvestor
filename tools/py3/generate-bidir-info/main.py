@@ -36,7 +36,7 @@ ONE_MONTH    = 31 * ONE_DAY
 
 MINIMUM_STEP_DELTA = 2 * ONE_HOUR
 MINIMUM_SPREAD = 0.8
-MAXIMUM_SPREAD = 2.0
+MAXIMUM_SPREAD = 5.0
 MINIMUM_YIELD_VARIANTS = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
 CSV_FIELD_FIGI = 0
@@ -76,11 +76,7 @@ BAD_INSTRUMENTS = {
 
 def generate_bidir_info(args):
     stocks = _get_stocks(args)
-    operations = _read_operations(args)
-    logs = _read_logs(args)
-
-    priorities = _calculate_stocks_priorities(args, operations, logs)
-    bidir_info = _process_stocks(args, stocks, priorities)
+    bidir_info = _process_stocks(args, stocks)
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
 
@@ -104,161 +100,40 @@ def _get_stocks(args):
     return res
 
 
-def _read_operations(args):
-    with open(args.path_to_operations, "r", encoding="utf-8") as f:
-        content = f.read()
-        operations = json.loads(f"[{content}]")
-
-    return operations
-
-
-def _read_logs(args):
-    with open(args.path_to_logs, "r", encoding="utf-8") as f:
-        content = f.read()
-        logs = json.loads(f"[{content}]")
-
-    return logs
-
-
-def _calculate_stocks_priorities(args, operations, logs):
+def _process_stocks(args, stocks):
     res = {}
 
-    entries = []
-
-    reversed_operations = operations[::-1]
-    limit_timestamp = round(time.time() * MS_IN_SECOND) - args.month_range * ONE_MONTH
-
-    for i, operation in enumerate(reversed_operations):
-        operation_description = operation["description"]
-
-        if operation_description.startswith(text_sale):
-            operation_timestamp = operation["timestamp"]
-            operation_instrumentId = operation["instrumentId"]
-
-            if operation_timestamp < limit_timestamp:
-                break
-
-            last_log_message = None
-
-            for log in logs:
-                log_timestamp = log["timestamp"]
-
-                if log_timestamp > operation_timestamp:
-                    break
-
-                log_instrumentId = log["instrumentId"]
-                log_message = log["message"]
-                log_level = log["level"]
-
-                if operation_instrumentId == log_instrumentId and log_level == LOG_LEVEL_DEBUG and not log_message.startswith(text_trade_interrupted) and not log_message.startswith(text_want_to_sell):
-                    last_log_message = log_message
-
-            decision = _get_buy_decision_from_log_message(last_log_message)
-
-            if decision in [DECISION_HUGE_BID, DECISION_HUGE_SPREAD]:
-                j = i + 1
-                buy_timestamp = 0
-
-                while j < len(reversed_operations):
-                    another_operation = reversed_operations[j]
-
-                    another_operation_description = another_operation["description"]
-                    another_operation_instrumentId = another_operation["instrumentId"]
-
-                    if another_operation_description.startswith(text_buy) and another_operation_instrumentId == operation_instrumentId:
-                        buy_timestamp = another_operation["timestamp"]
-
-                        break
-
-                    j += 1
-
-                entry = {
-                    "buyTimestamp": buy_timestamp,
-                    "sellTimestamp": operation_timestamp,
-                    "instrumentId": operation_instrumentId,
-                    "yieldWithCommissionPercent": operation["yieldWithCommissionPercent"],
-                }
-
-                entries.append(entry)
-
-    instruments = {}
-
-    for entry in entries:
-        instrument_id = entry["instrumentId"]
-
-        instrument_info = {
-            "success": 0,
-            "total": 0
-        }
-
-        if instrument_id in instruments:
-            instrument_info = instruments[instrument_id]
-
-        if entry["sellTimestamp"] - entry["buyTimestamp"] <= GOOD_SELL_TIME and entry["yieldWithCommissionPercent"] >= GOOD_SELL_YIELD:
-            instrument_info["success"] += 1
-
-        instrument_info["total"] += 1
-
-        instruments[instrument_id] = instrument_info
-
-    for instrument_id, instrument_info in instruments.items():
-        if instrument_info["total"] >= GOOD_TOTAL_TRADES and (instrument_info["success"] * HUNDRED_PERCENT / instrument_info["total"]) >= GOOD_SUCCESS_RATE:
-            res[instrument_id] = "high"
-        else:
-            res[instrument_id] = "normal"
-
-    return res
-
-
-def _get_buy_decision_from_log_message(log_message):
-    if log_message is None:
-        return DECISION_OTHER
-
-    match = huge_bid_regexp.match(log_message)
-
-    if match is not None:
-        return DECISION_HUGE_BID
-
-    match = huge_spread_regexp.match(log_message)
-
-    if match is not None:
-        return DECISION_HUGE_SPREAD
-
-    return DECISION_OTHER
-
-
-def _process_stocks(args, stocks, priorities):
-    res = {}
-
-    print("====================================================================")
-    print("N          Stock      Spread    Min Yield    Total yield    Priority")
-    print("====================================================================")
+    print("==================================================================================")
+    print("N          Stock      Spread    Max spread    Min Yield    Total yield    Priority")
+    print("==================================================================================")
 
     for i, stock in enumerate(stocks):
         instrument_id = stock["instrumentId"]
         instrument_ticker = stock["instrumentTicker"]
 
-        print(f"{i+1:3}/{len(stocks)}    {instrument_ticker:11}", end="", flush=True)
-        stock_result = _process_stock(args, stock, priorities)
+        print(f"{i+1:3}/{len(stocks)}    {instrument_ticker:7}    ", end="", flush=True)
+        stock_result = _process_stock(args, stock)
 
         spread = stock_result["spread"]
+        max_spread = stock_result["maxSpread"]
         min_yield = stock_result["minYield"]
         total_yield = stock_result["totalYield"]
         priority = stock_result["priority"]
 
-        print(f"{spread:4}%     {min_yield:3}%        {total_yield:5}%          {priority:5}")
+        print(f"{spread:4}%     {max_spread:4}%         {min_yield:3}%        {total_yield:5}%          {priority:6}")
 
         res[instrument_id] = stock_result
 
     return res
 
 
-def _process_stock(args, stock, priorities):
+def _process_stock(args, stock):
     instrument_id = stock["instrumentId"]
 
     if instrument_id in BAD_INSTRUMENTS:
         return {
             "spread": BAD_INSTRUMENTS[instrument_id],
+            "maxSpread": BAD_INSTRUMENTS[instrument_id],
             "minYield": 0.1,
             "totalYield": 0.0,
             "priority": "low"
@@ -300,9 +175,10 @@ def _process_stock(args, stock, priorities):
 
     res = {
         "spread": max_spread,
+        "maxSpread": max_spread,
         "minYield": 0.1,
         "totalYield": 0.0,
-        "priority": priorities[instrument_id] if instrument_id in priorities else "low"
+        "priority": "low"
     }
 
     success, output = _execute_commands(commands)
@@ -317,6 +193,7 @@ def _process_stock(args, stock, priorities):
                 res["spread"] = float(fields[0])
                 res["minYield"] = float(fields[1])
                 res["totalYield"] = total_yield
+                res["priority"] = "high" if total_yield >= args.high_priority else "normal" if total_yield >= args.normal_priority else "low"
 
     preprocess_file.unlink()
 
@@ -479,13 +356,6 @@ def _is_working_day(d):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--month-range",
-        dest="month_range",
-        type=int,
-        default=3,
-        help="Amount of months to check"
-    )
-    parser.add_argument(
         "--path-to-stocks",
         dest="path_to_stocks",
         type=str,
@@ -493,18 +363,25 @@ def main():
         help="Path to stocks folder"
     )
     parser.add_argument(
-        "--path-to-operations",
-        dest="path_to_operations",
-        type=str,
-        default="build/Desktop-Debug/app/build/data/autopilot/4fa4713d40ede79c630b609d3a95c5ed/operations.json",
-        help="Path to operations.json file"
+        "--month-range",
+        dest="month_range",
+        type=int,
+        default=12,
+        help="Amount of months to check"
     )
     parser.add_argument(
-        "--path-to-logs",
-        dest="path_to_logs",
-        type=str,
-        default="build/Desktop-Debug/app/build/data/autopilot/4fa4713d40ede79c630b609d3a95c5ed/logs.json",
-        help="Path to logs.json file"
+        "--normal-priority",
+        dest="normal_priority",
+        type=float,
+        default=5.0,
+        help="Total yield limit to set normal priority"
+    )
+    parser.add_argument(
+        "--high-priority",
+        dest="high_priority",
+        type=float,
+        default=20.0,
+        help="Total yield limit to set high priority"
     )
     parser.add_argument(
         "--cache",
