@@ -1,4 +1,10 @@
 Notifier for Android
+Terminate single trading thread after 15 minutes
+Make bi_dir_info to use 12 months
+Limit bi-dir trading spread with max_spread from bi_dir_info (and more than 0.8%)
+Script for instant huge fall buy (-2%)
+Make follower script to trade with ASAP trading
+Make follower method to trade with ASAP trading
 Try to follow for someone clever
 Buy with MM as follower (x1.5-x2)
 Improve coverage

@@ -14,6 +14,13 @@ runs:
         name: build-release-tidy-${{ matrix.config.name }}
         path: ./build-release
 
+    # Download Android artifacts
+    - name: Download Android artifacts
+      uses: actions/download-artifact@v8
+      with:
+        name: build-android
+        path: ./
+
     # Download documentation artifacts
     - name: Download documentation artifacts
       uses: thebrowsercompany/gha-download-tar-artifact@main
@@ -80,6 +87,17 @@ runs:
         upload_url: ${{ env.RELEASE_URL }}
         asset_path: ./${{ env.RELEASE_ARCHIVE_NAME }}
         asset_name: ${{ env.RELEASE_ARCHIVE_NAME }}
+        asset_content_type: application/zip
+
+    # Upload Android artifacts
+    - name: Upload Android artifacts
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      with:
+        upload_url: ${{ env.RELEASE_URL }}
+        asset_path: ./tinvestor-notifier.apk
+        asset_name: tinvestor-notifier.apk
         asset_content_type: application/zip
 
     # Upload documentation artifacts
