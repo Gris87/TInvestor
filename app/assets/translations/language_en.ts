@@ -98,17 +98,17 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="743"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="790"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="753"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="800"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="753"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="800"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
@@ -398,7 +398,7 @@
     </message>
     <message>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="285"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="167"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="171"/>
         <source>Best config</source>
         <translation></translation>
     </message>
@@ -423,18 +423,18 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="62"/>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="63"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="64"/>
         <source>Loading</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="223"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="227"/>
         <source>Average monthly yield: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="229"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="235"/>
         <source>Average daily yield: %1</source>
         <translation></translation>
     </message>
@@ -457,12 +457,12 @@
 <context>
     <name>HighLiquidityThread</name>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="106"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="116"/>
         <source>Decided to buy because trading day is over</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="137"/>
+        <location filename="../../src/threads/highliquidity/highliquiditythread.cpp" line="147"/>
         <source>Decided to sell because it had been a night since buying</source>
         <translation></translation>
     </message>
@@ -1756,84 +1756,89 @@
 <context>
     <name>TradingThread</name>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="83"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="85"/>
         <source>Trade completed successfully</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="827"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="877"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="842"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="892"/>
         <source>Order cancelled</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="559"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="574"/>
         <source>Order to sell %1 created with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="539"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="554"/>
         <source>Failed to create order to sell %1 with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="380"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="566"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="395"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="581"/>
         <source>while market price %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="581"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="596"/>
         <source>Order to sell %1 rejected with a price %2. Let&apos;s try again</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="673"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="688"/>
         <source>Trade interrupted because the price reached %1 with raise %2 from the price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="353"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="368"/>
         <source>Failed to create order to buy %1 with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="373"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="160"/>
+        <source>Trade interrupted because it fails to buy during 15 minutes</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="388"/>
         <source>Order to buy %1 created with a price %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="395"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="410"/>
         <source>Order to buy %1 rejected with a price %2. Let&apos;s try again</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="843"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="858"/>
         <source>%1/%2 bought with a price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="853"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="868"/>
         <source>%1/%2 sold with a price %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="865"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="880"/>
         <source>Order completed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="869"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="884"/>
         <source>Order partially completed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="873"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="888"/>
         <source>Order rejected</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="881"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="896"/>
         <source>Order is still waiting</source>
         <translation></translation>
     </message>

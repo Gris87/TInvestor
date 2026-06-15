@@ -11,6 +11,8 @@ constexpr float  MAXIMUM_PRICE_RAISE_PERCENT = 0.30f;
 constexpr float  MINIMUM_YIELD_PERCENT       = 0.40f;
 constexpr int    ORDER_BOOK_DEPTH            = 20;
 constexpr qint64 MS_IN_SECOND                = 1000LL;
+constexpr qint64 ONE_MINUTE                  = 60LL * MS_IN_SECOND;
+constexpr qint64 LIMIT_TIME                  = 15LL * ONE_MINUTE;   // 15 minutes
 constexpr qint64 SLEEP_DELAY                 = 30LL * MS_IN_SECOND; // 30 seconds
 constexpr qint64 ORDER_CANCEL_DELAY          = 3LL * MS_IN_SECOND;  // 3 seconds
 constexpr qint64 ORDER_RETRY_DELAY           = 1LL * MS_IN_SECOND;  // 1 second
@@ -148,8 +150,21 @@ bool TradingThread::trade()
 {
     getInstrumentData();
 
+    const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() + LIMIT_TIME;
+
     while (true)
     {
+        if (QDateTime::currentMSecsSinceEpoch() > limitTimestamp)
+        {
+            mLogsThread->addLog(
+                LOG_LEVEL_DEBUG, mInstrumentId, tr("Trade interrupted because it fails to buy during 15 minutes")
+            );
+
+            cancelOrder();
+
+            break;
+        }
+
         const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
             mGrpcRetryClient->getValidPortfolio(QThread::currentThread(), mAccountId);
 
