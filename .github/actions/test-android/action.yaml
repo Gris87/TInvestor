@@ -25,13 +25,19 @@ runs:
       uses: theowenyoung/folder-hash@v3
       with:
         path: |
-          ./TInvestor-source/app
-          ./TInvestor-source/libs
-          ./TInvestor-source/tests
-          ./TInvestor-source/tools
+          ./TInvestor-source/tools/android/notifier
+
+    # Download/upload cache
+    - name: Caching
+      id: cache-test
+      uses: actions/cache@v5
+      with:
+        path: ./TInvestor-source/tools/android/notifier/app/build/reports
+        key: android-test-${{ steps.folders-hash.outputs.hash }}
 
     # Setup JDK 25
     - name: Setup JDK 25
+      if: steps.cache-test.outputs.cache-hit != 'true'
       uses: actions/setup-java@v5
       with:
         java-version: '25'
@@ -41,7 +47,28 @@ runs:
 
     # Test UT
     - name: Test UT
+      if: steps.cache-test.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         Set-Location -Path "TInvestor-source/tools/android/notifier"
-        & ./gradlew test
+        & ./gradlew createUnitTestCoverageReport
+
+        Rename-Item -Path "app/build/reports/coverage/test/debug/report.xml" -NewName "jacoco-report.xml"
+
+    # Upload coverage badge
+    - name: Upload coverage badge
+      if: steps.cache-test.outputs.cache-hit != 'true'
+      uses: gaelgirodon/ci-badges-action@v1
+      with:
+        gist-id: ${{ env.GIST_ID }}
+        token: ${{ inputs.gist-token }}
+        prefix: TInvestor-Android
+
+    # Upload artifacts
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v7
+      with:
+        name: coverage-${{ matrix.config.name }}
+        path: ./TInvestor-source/tools/android/notifier/app/build/reports
+        retention-days: 1
+        compression-level: 9
