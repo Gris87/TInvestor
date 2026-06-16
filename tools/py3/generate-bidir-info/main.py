@@ -36,7 +36,7 @@ ONE_MONTH    = 31 * ONE_DAY
 
 MINIMUM_STEP_DELTA = 2 * ONE_HOUR
 MINIMUM_SPREAD = 0.8
-MAXIMUM_SPREAD = 5.0
+MAXIMUM_SPREAD = 4.0
 MINIMUM_YIELD_VARIANTS = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
 CSV_FIELD_FIGI = 0
@@ -373,7 +373,7 @@ def main():
         "--normal-priority",
         dest="normal_priority",
         type=float,
-        default=5.0,
+        default=10.0,
         help="Total yield limit to set normal priority"
     )
     parser.add_argument(
