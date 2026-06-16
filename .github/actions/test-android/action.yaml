@@ -68,7 +68,7 @@ runs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: coverage-${{ matrix.config.name }}
+        name: coverage-android
         path: ./TInvestor-source/tools/android/notifier/app/build/reports
         retention-days: 1
         compression-level: 9

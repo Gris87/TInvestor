@@ -1,5 +1,4 @@
 Notifier for Android
-Code coverage for Android
 Script for instant huge fall buy (-2%)
 Make follower script to trade with ASAP trading
 Make follower method to trade with ASAP trading
