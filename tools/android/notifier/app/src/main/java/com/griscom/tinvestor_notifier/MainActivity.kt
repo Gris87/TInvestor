@@ -82,6 +82,14 @@ fun TopBar() {
                     .height(24.dp),
                 contentDescription = stringResource(R.string.content_description_search),
             )
+            Icon(
+                painter = painterResource(R.drawable.ic_settings),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(24.dp),
+                contentDescription = stringResource(R.string.content_description_settings),
+            )
         }
     )
 }
