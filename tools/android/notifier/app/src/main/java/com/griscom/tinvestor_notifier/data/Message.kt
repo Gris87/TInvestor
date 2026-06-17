@@ -13,5 +13,6 @@ enum class MessageType {
 data class Message(
     var timestamp: String,
     var messageType: MessageType,
+    var messageTypeString: Int,
     var text: String
 )

@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">TInvestor Notifier</string>
     <string name="content_description_search">Search</string>
+    <string name="message_type_system">System</string>
+    <string name="message_type_portfolio">Portfolio</string>
+    <string name="message_type_huge_sell">Huge sell</string>
+    <string name="message_type_dividends">Dividends</string>
+    <string name="message_type_pulse_neutral">Pulse (Neutral)</string>
+    <string name="message_type_pulse_buy">Pulse (Buy)</string>
+    <string name="message_type_pulse_sell">Pulse (Sell)</string>
 </resources>

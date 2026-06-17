@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Уведомления Ты ж инвестор</string>
     <string name="content_description_search">Поиск</string>
+    <string name="message_type_system">Система</string>
+    <string name="message_type_portfolio">Портфолио</string>
+    <string name="message_type_huge_sell">Большая продажа</string>
+    <string name="message_type_dividends">Дивиденды</string>
+    <string name="message_type_pulse_neutral">Пульс (Нейтральный)</string>
+    <string name="message_type_pulse_buy">Пульс (Покупка)</string>
+    <string name="message_type_pulse_sell">Пульс (Продажа)</string>
 </resources>
