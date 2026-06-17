@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TInvestor Notifier</string>
+    <string name="content_description_search">Search</string>
 </resources>

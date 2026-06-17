@@ -1,8 +1,8 @@
 Notifier for Android
 Script for instant huge fall buy (-2%)
+Try to follow for someone clever
 Make follower script to trade with ASAP trading
 Make follower method to trade with ASAP trading
-Try to follow for someone clever
 Buy with MM as follower (x1.5-x2)
 Improve coverage
 Create release
