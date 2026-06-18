@@ -155,6 +155,7 @@ def _check_for_non_ascii(file_path, lines):
 
     skip_files = (
         "/assets/translations/" in file_path_simplified or
+        "/values-ru/strings.xml" in file_path_simplified or
         "/localization.py" in file_path_simplified
     )
 
@@ -246,6 +247,7 @@ def is_file_skipped(file_path):
 
     skip_files = (
         "/.git/" in file_path or
+        "/.idea/" in file_path or
         "/build/" in file_path or
         "/libs/investapi/messages/" in file_path or
         "/libs/simdjson/src/simdjson/" in file_path or
