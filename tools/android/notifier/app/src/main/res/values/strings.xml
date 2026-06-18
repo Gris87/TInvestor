@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">TInvestor Notifier</string>
+    <string name="service_running">Service running</string>
     <string name="message_type_system">System</string>
     <string name="message_type_portfolio">Portfolio</string>
     <string name="message_type_huge_sell">Huge sell</string>
