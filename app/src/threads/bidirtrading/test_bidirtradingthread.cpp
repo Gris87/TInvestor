@@ -410,6 +410,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBidLimitByTurnoverPercent()).WillOnce(Return(1.0f));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(true));
     EXPECT_CALL(
         *tradeUtilsMock,
         calculateAmountOfLotsToBuy(
@@ -417,6 +418,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
             DoubleEq(2.0f),
             true,
             DoubleEq(1.0f),
+            true,
             DoubleEq(103600.0),
             DoubleEq(103600.0),
             1000000,
@@ -473,6 +475,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBidLimitByTurnoverPercent()).WillOnce(Return(1.0f));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(true));
     EXPECT_CALL(
         *tradeUtilsMock,
         calculateAmountOfLotsToBuy(
@@ -480,6 +483,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
             DoubleEq(2.0f),
             true,
             DoubleEq(1.0f),
+            true,
             DoubleEq(103600.0),
             DoubleEq(103600.0),
             1000000,
@@ -516,6 +520,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
     EXPECT_CALL(*configMock, getHugeBidLimitStockPurchasePart()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, isHugeBidLimitByTurnover()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getHugeBidLimitByTurnoverPercent()).WillOnce(Return(1.0f));
+    EXPECT_CALL(*configMock, isTradeWithMarginCall()).WillOnce(Return(true));
     EXPECT_CALL(
         *tradeUtilsMock,
         calculateAmountOfLotsToBuy(
@@ -523,6 +528,7 @@ TEST_F(Test_BiDirTradingThread, Test_trade)
             DoubleEq(2.0f),
             true,
             DoubleEq(1.0f),
+            true,
             DoubleEq(103600.0),
             DoubleEq(103600.0),
             1000000,

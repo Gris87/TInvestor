@@ -40,6 +40,7 @@ public:
          double limitStockPurchasePart,
          bool   limitByTurnover,
          double limitByTurnoverPercent,
+         bool   confirmMarginTrade,
          double money,
          double totalCost,
          double turnover,

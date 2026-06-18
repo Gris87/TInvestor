@@ -30,10 +30,11 @@ qint64 TradeUtils::calculateAmountOfLotsToBuy(
     double   lotPriceWithCommission
 ) const
 {
-    bool   limitStockPurchase     = false;
-    double limitStockPurchasePart = 0.0;
-    bool   limitByTurnover        = false;
-    double limitByTurnoverPercent = 0.0;
+    bool       limitStockPurchase     = false;
+    double     limitStockPurchasePart = 0.0;
+    bool       limitByTurnover        = false;
+    double     limitByTurnoverPercent = 0.0;
+    const bool confirmMarginTrade     = config->isTradeWithMarginCall();
 
     if (config->isLimitStockPurchaseNonWorkingHours() && !mTimeUtils->isWorkingHours(timestamp))
     {
@@ -64,6 +65,7 @@ qint64 TradeUtils::calculateAmountOfLotsToBuy(
         limitStockPurchasePart,
         limitByTurnover,
         limitByTurnoverPercent,
+        confirmMarginTrade,
         money,
         totalCost,
         turnover,
@@ -77,6 +79,7 @@ qint64 TradeUtils::calculateAmountOfLotsToBuy(
     double limitStockPurchasePart,
     bool   limitByTurnover,
     double limitByTurnoverPercent,
+    bool   confirmMarginTrade,
     double money,
     double totalCost,
     double turnover,
@@ -96,11 +99,13 @@ qint64 TradeUtils::calculateAmountOfLotsToBuy(
         }
 
         cost = qMax(cost, lotPrice);
-        res  = qMin(qRound64(cost / lotPrice), static_cast<qint64>(money / lotPriceWithCommission));
+        res  = confirmMarginTrade ? qRound64(cost / lotPrice)
+                                  : qMin(qRound64(cost / lotPrice), static_cast<qint64>(money / lotPriceWithCommission));
     }
     else
     {
-        res = money / lotPriceWithCommission;
+        const double cost = qMax(totalCost, lotPrice);
+        res               = confirmMarginTrade ? qRound64(cost / lotPrice) : money / lotPriceWithCommission;
     }
 
     return res;

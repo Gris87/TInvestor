@@ -45,6 +45,7 @@ TEST_F(Test_TradeUtils, Test_calculateAmountOfLotsToBuy)
 
     StrictMock<ConfigMock> configMock;
 
+    EXPECT_CALL(configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(configMock, isLimitStockPurchaseNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(configMock, isLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(configMock, getLimitStockPurchasePart()).WillOnce(Return(7.0f));
@@ -55,6 +56,7 @@ TEST_F(Test_TradeUtils, Test_calculateAmountOfLotsToBuy)
         tradeUtils->calculateAmountOfLotsToBuy(&configMock, 1704110400000, 100000.0, 1000000.0, 9000000000.0, 30.0, 30.012), 1500
     );
 
+    EXPECT_CALL(configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(configMock, isLimitStockPurchaseNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(configMock, isLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(configMock, getLimitStockPurchasePart()).WillOnce(Return(7.0f));
@@ -65,6 +67,7 @@ TEST_F(Test_TradeUtils, Test_calculateAmountOfLotsToBuy)
         tradeUtils->calculateAmountOfLotsToBuy(&configMock, 1704110400000, 100000.0, 1000000.0, 9000000000.0, 30.0, 30.012), 2333
     );
 
+    EXPECT_CALL(configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(configMock, isLimitStockPurchaseNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(configMock, isLimitStockPurchase()).WillOnce(Return(false));
     EXPECT_CALL(configMock, getLimitStockPurchasePart()).WillOnce(Return(0.0f));
@@ -75,6 +78,7 @@ TEST_F(Test_TradeUtils, Test_calculateAmountOfLotsToBuy)
         tradeUtils->calculateAmountOfLotsToBuy(&configMock, 1704110400000, 100000.0, 1000000.0, 9000000000.0, 30.0, 30.012), 3332
     );
 
+    EXPECT_CALL(configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(configMock, isLimitStockPurchaseNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704110400000)).WillOnce(Return(false));
     EXPECT_CALL(configMock, getLimitStockPurchasePartNonWorkingHours()).WillOnce(Return(1.0f));
@@ -85,6 +89,7 @@ TEST_F(Test_TradeUtils, Test_calculateAmountOfLotsToBuy)
         tradeUtils->calculateAmountOfLotsToBuy(&configMock, 1704110400000, 100000.0, 1000000.0, 9000000000.0, 30.0, 30.012), 300
     );
 
+    EXPECT_CALL(configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(configMock, isLimitStockPurchaseNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704110400000)).WillOnce(Return(false));
     EXPECT_CALL(configMock, getLimitStockPurchasePartNonWorkingHours()).WillOnce(Return(1.0f));
@@ -96,6 +101,7 @@ TEST_F(Test_TradeUtils, Test_calculateAmountOfLotsToBuy)
         tradeUtils->calculateAmountOfLotsToBuy(&configMock, 1704110400000, 100000.0, 1000000.0, 9000000000.0, 30.0, 30.012), 333
     );
 
+    EXPECT_CALL(configMock, isTradeWithMarginCall()).WillOnce(Return(false));
     EXPECT_CALL(configMock, isLimitStockPurchaseNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*timeUtilsMock, isWorkingHours(1704110400000)).WillOnce(Return(false));
     EXPECT_CALL(configMock, getLimitStockPurchasePartNonWorkingHours()).WillOnce(Return(1.0f));
