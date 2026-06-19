@@ -36,6 +36,7 @@ runs:
 
     # Setup python
     - name: Setup python
+      if: steps.cache-style.outputs.cache-hit != 'true'
       uses: actions/setup-python@v6
       with:
         python-version: "3.13"
@@ -72,6 +73,16 @@ runs:
 
         file(MAKE_DIRECTORY Qt/clang)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/clang.tar.xz WORKING_DIRECTORY Qt/clang)
+
+    # Setup JDK 25
+    - name: Setup JDK 25
+      if: steps.cache-style.outputs.cache-hit != 'true'
+      uses: actions/setup-java@v5
+      with:
+        java-version: '25'
+        distribution: 'temurin'
+        java-package: 'jdk'
+        cache: 'gradle'
 
     # Check style
     - name: Check style
