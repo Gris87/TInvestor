@@ -1,0 +1,14 @@
+[*.{kt,kts}]
+# Disable a specific standard rule
+ktlint_standard_package-name = disabled
+
+# Allow uppercase for Composable
+ktlint_function_naming_ignore_when_annotated_with = Composable
+
+[**/androidTest/**/*.{kt,kts}]
+# Disable a specific standard rule
+ktlint_standard_no-wildcard-imports = disabled
+
+[**/test/**/*.{kt,kts}]
+# Disable a specific standard rule
+ktlint_standard_no-wildcard-imports = disabled

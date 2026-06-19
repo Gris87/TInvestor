@@ -40,15 +40,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val exampleMessages = listOf(
-            Message("2026-01-01 10:00:00", MessageType.SYSTEM, R.string.message_type_system,"Hello"),
-            Message("2026-01-01 11:00:00", MessageType.PORTFOLIO, R.string.message_type_portfolio,"My"),
-            Message("2026-01-01 12:00:00", MessageType.HUGE_SELL, R.string.message_type_huge_sell,"Dear"),
-            Message("2026-01-02 10:00:00", MessageType.DIVIDENDS, R.string.message_type_dividends,"Friend"),
-            Message("2026-01-03 10:00:00", MessageType.PULSE_NEUTRAL, R.string.message_type_pulse_neutral,"Are"),
-            Message("2026-01-03 11:00:00", MessageType.PULSE_BUY, R.string.message_type_pulse_buy,"You"),
-            Message("2026-01-04 10:00:00", MessageType.PULSE_SELL, R.string.message_type_pulse_sell,"Clever")
-        )
+        val exampleMessages =
+            listOf(
+                Message("2026-01-01 10:00:00", MessageType.SYSTEM, R.string.message_type_system, "Hello"),
+                Message("2026-01-01 11:00:00", MessageType.PORTFOLIO, R.string.message_type_portfolio, "My"),
+                Message("2026-01-01 12:00:00", MessageType.HUGE_SELL, R.string.message_type_huge_sell, "Dear"),
+                Message("2026-01-02 10:00:00", MessageType.DIVIDENDS, R.string.message_type_dividends, "Friend"),
+                Message("2026-01-03 10:00:00", MessageType.PULSE_NEUTRAL, R.string.message_type_pulse_neutral, "Are"),
+                Message("2026-01-03 11:00:00", MessageType.PULSE_BUY, R.string.message_type_pulse_buy, "You"),
+                Message("2026-01-04 10:00:00", MessageType.PULSE_SELL, R.string.message_type_pulse_sell, "Clever"),
+            )
 
         setContent {
             TInvestorNotifierTheme {
@@ -62,7 +63,7 @@ class MainActivity : ComponentActivity() {
 fun ConversationContent(messages: List<Message>) {
     Scaffold(
         topBar = { TopBar() },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
         ScrollContent(innerPadding, messages)
     }
@@ -73,29 +74,34 @@ fun TopBar() {
     @OptIn(ExperimentalMaterial3Api::class)
     TopAppBar(
         title = { Text(text = stringResource(R.string.app_name), fontSize = 24.sp) },
-        actions={
+        actions = {
             Icon(
                 painter = painterResource(R.drawable.ic_search),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .height(24.dp),
+                modifier =
+                    Modifier
+                        .padding(8.dp)
+                        .height(24.dp),
                 contentDescription = stringResource(R.string.content_description_search),
             )
             Icon(
                 painter = painterResource(R.drawable.ic_settings),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .height(24.dp),
+                modifier =
+                    Modifier
+                        .padding(8.dp)
+                        .height(24.dp),
                 contentDescription = stringResource(R.string.content_description_settings),
             )
-        }
+        },
     )
 }
 
 @Composable
-fun ScrollContent(innerPadding: PaddingValues, messages: List<Message>) {
+fun ScrollContent(
+    innerPadding: PaddingValues,
+    messages: List<Message>,
+) {
     LazyColumn(modifier = Modifier.padding(innerPadding)) {
         items(messages) { message ->
             MessageItem(message)
@@ -108,34 +114,36 @@ fun MessageItem(message: Message) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
         shape = ChatBubbleShape,
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier.padding(8.dp),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
                     text = message.timestamp,
                     fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 )
                 Text(
                     text = stringResource(message.messageTypeString),
                     fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 )
             }
             Text(
                 text = message.text,
                 fontSize = 16.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
             )
         }
     }
@@ -144,15 +152,16 @@ fun MessageItem(message: Message) {
 @Preview
 @Composable
 fun ConversationContentPreview() {
-    val exampleMessages = listOf(
-        Message("2026-01-01 10:00:00", MessageType.SYSTEM, R.string.message_type_system,"Hello"),
-        Message("2026-01-01 11:00:00", MessageType.PORTFOLIO, R.string.message_type_portfolio,"My"),
-        Message("2026-01-01 12:00:00", MessageType.HUGE_SELL, R.string.message_type_huge_sell,"Dear"),
-        Message("2026-01-02 10:00:00", MessageType.DIVIDENDS, R.string.message_type_dividends,"Friend"),
-        Message("2026-01-03 10:00:00", MessageType.PULSE_NEUTRAL, R.string.message_type_pulse_neutral,"Are"),
-        Message("2026-01-03 11:00:00", MessageType.PULSE_BUY, R.string.message_type_pulse_buy,"You"),
-        Message("2026-01-04 10:00:00", MessageType.PULSE_SELL, R.string.message_type_pulse_sell,"Clever")
-    )
+    val exampleMessages =
+        listOf(
+            Message("2026-01-01 10:00:00", MessageType.SYSTEM, R.string.message_type_system, "Hello"),
+            Message("2026-01-01 11:00:00", MessageType.PORTFOLIO, R.string.message_type_portfolio, "My"),
+            Message("2026-01-01 12:00:00", MessageType.HUGE_SELL, R.string.message_type_huge_sell, "Dear"),
+            Message("2026-01-02 10:00:00", MessageType.DIVIDENDS, R.string.message_type_dividends, "Friend"),
+            Message("2026-01-03 10:00:00", MessageType.PULSE_NEUTRAL, R.string.message_type_pulse_neutral, "Are"),
+            Message("2026-01-03 11:00:00", MessageType.PULSE_BUY, R.string.message_type_pulse_buy, "You"),
+            Message("2026-01-04 10:00:00", MessageType.PULSE_SELL, R.string.message_type_pulse_sell, "Clever"),
+        )
 
     TInvestorNotifierTheme {
         ConversationContent(exampleMessages)
@@ -162,12 +171,13 @@ fun ConversationContentPreview() {
 @Preview
 @Composable
 fun MessageItemPreview() {
-    val exampleMessage = Message(
-        "2026-01-04 10:00:00",
-        MessageType.PULSE_SELL,
-        R.string.message_type_pulse_sell,
-        "\uD83D\uDD34 Probably need to sell\n\u26A0 Attention! Text found in Pulse post: court\n{EUTR} expects for a court today!"
-    )
+    val exampleMessage =
+        Message(
+            "2026-01-04 10:00:00",
+            MessageType.PULSE_SELL,
+            R.string.message_type_pulse_sell,
+            "\uD83D\uDD34 Probably need to sell\n\u26A0 Attention! Text found in Pulse post: court\n{EUTR} expects for a court today!",
+        )
 
     TInvestorNotifierTheme {
         MessageItem(exampleMessage)

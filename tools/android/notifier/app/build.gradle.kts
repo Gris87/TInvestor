@@ -1,14 +1,17 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+
+    id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
 }
 
 android {
     namespace = "com.griscom.tinvestor_notifier"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+        version =
+            release(36) {
+                minorApiLevel = 1
+            }
     }
 
     defaultConfig {
@@ -42,6 +45,13 @@ android {
     buildFeatures {
         compose = true
     }
+}
+
+tasks.getByPath("preBuild").dependsOn("ktlintFormat")
+
+ktlint {
+    android = true
+    ignoreFailures = false
 }
 
 dependencies {

@@ -9,12 +9,14 @@ from concurrent.futures import ThreadPoolExecutor
 from checks.clang_tidy_checks import run_clang_tidy_checkers
 from checks.common_checks import run_common_checkers
 from checks.cpp_checks import run_cpp_checkers
+from checks.kt_checks import run_kt_checkers
 
 
 check_groups = [
     run_clang_tidy_checkers,
     run_common_checkers,
     run_cpp_checkers,
+    run_kt_checkers,
 ]
 
 

@@ -7,12 +7,12 @@ enum class MessageType {
     DIVIDENDS,
     PULSE_NEUTRAL,
     PULSE_BUY,
-    PULSE_SELL
+    PULSE_SELL,
 }
 
 data class Message(
     var timestamp: String,
     var messageType: MessageType,
     var messageTypeString: Int,
-    var text: String
+    var text: String,
 )

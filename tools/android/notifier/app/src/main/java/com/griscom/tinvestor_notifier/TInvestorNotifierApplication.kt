@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Intent
 import com.griscom.tinvestor_notifier.services.SyncService
 
-class TInvestorNotifierApplication: Application() {
+class TInvestorNotifierApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 

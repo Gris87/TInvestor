@@ -19,8 +19,7 @@ import kotlin.time.Duration.Companion.minutes
 
 private const val TAG = "SyncService"
 private const val CHANNEL_ID = "SYNC_CHANNEL_ID"
-
-private const val FOREGROUND_ID=1
+private const val FOREGROUND_ID = 1
 
 private val INTERVAL = 1.minutes
 
@@ -28,20 +27,27 @@ class SyncService : Service() {
     private val serviceJob = SupervisorJob()
     private val serviceScope = CoroutineScope(Dispatchers.IO + serviceJob)
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val channel = NotificationChannel(
-            CHANNEL_ID,
-            getString(R.string.service_running),
-            NotificationManager.IMPORTANCE_LOW
-        )
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
+        val channel =
+            NotificationChannel(
+                CHANNEL_ID,
+                getString(R.string.service_running),
+                NotificationManager.IMPORTANCE_LOW,
+            )
         val manager = getSystemService(NotificationManager::class.java)
         manager?.createNotificationChannel(channel)
 
-        val notification = Notification.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(getString(R.string.app_name))
-            .setContentText(getString(R.string.service_running))
-            .build()
+        val notification =
+            Notification
+                .Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.service_running))
+                .build()
 
         startForeground(FOREGROUND_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
 
