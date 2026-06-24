@@ -9,7 +9,7 @@ from pathlib import Path
 MS_IN_SECOND = 1000
 
 
-def store_message(args, message_type, msg):
+def store_message(args, message_type, msg, data):
     logger.info(f"Store message: {msg}")
 
     timestamp = int(time.time() * MS_IN_SECOND)
@@ -18,7 +18,8 @@ def store_message(args, message_type, msg):
     record = {
         "timestamp": timestamp,
         "type": message_type,
-        "text": msg
+        "text": msg,
+        "data": data
     }
 
     output_path = Path(args.output)

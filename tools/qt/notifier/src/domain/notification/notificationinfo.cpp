@@ -32,7 +32,8 @@ NotificationInfo::NotificationInfo() :
     requestTimestamp(),
     timestamp(),
     messageType(),
-    text()
+    text(),
+    data()
 {
 }
 
@@ -60,6 +61,12 @@ static void notificationInfoTextParse(NotificationInfo* notificationInfo, simdjs
     notificationInfo->text          = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
+static void notificationInfoDataParse(NotificationInfo* notificationInfo, simdjson::ondemand::value value)
+{
+    const std::string_view valueStr = value.get_string();
+    notificationInfo->data          = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
 static void notificationInfoThrowParseException(
     NotificationInfo* /*notificationInfo*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
@@ -74,7 +81,8 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
     {"requestTimestamp", notificationInfoRequestTimestampParse},
     {"timestamp",        notificationInfoTimestampParse       },
     {"type",             notificationInfoTypeParse            },
-    {"text",             notificationInfoTextParse            }
+    {"text",             notificationInfoTextParse            },
+    {"data",             notificationInfoDataParse            }
 };
 // clang-format on
 
@@ -98,6 +106,7 @@ QJsonObject NotificationInfo::toJsonObject() const
     res.insert("timestamp",        timestamp);
     res.insert("type",             MESSAGE_TYPE_TO_STRING.value(messageType));
     res.insert("text",             text);
+    res.insert("data",             data);
     // clang-format on
 
     return res;
@@ -106,5 +115,5 @@ QJsonObject NotificationInfo::toJsonObject() const
 bool operator==(const NotificationInfo& lhs, const NotificationInfo& rhs)
 {
     return lhs.requestTimestamp == rhs.requestTimestamp && lhs.timestamp == rhs.timestamp && lhs.messageType == rhs.messageType &&
-           lhs.text == rhs.text;
+           lhs.text == rhs.text && lhs.data == rhs.data;
 }

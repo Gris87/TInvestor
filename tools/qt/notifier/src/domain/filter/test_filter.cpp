@@ -90,6 +90,7 @@ TEST_F(Test_Filter, Test_isFiltered)
     notification.timestamp        = 2;
     notification.messageType      = MESSAGE_TYPE_PORTFOLIO;
     notification.text             = "a";
+    notification.data             = "b";
 
     ASSERT_EQ(filter.isFiltered(notification), true);
 

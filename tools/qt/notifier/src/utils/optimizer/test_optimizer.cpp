@@ -42,6 +42,7 @@ TEST_F(Test_Optimizer, Test_optimizeNotifications)
         info.timestamp        = notifications.size() - i;
         info.messageType      = MESSAGE_TYPE_HUGE_SELL;
         info.text             = "aaaaa";
+        info.data             = "bbbbb";
     }
 
     for (int i = 0; i < optimizedNotifications.size(); ++i)
@@ -52,6 +53,7 @@ TEST_F(Test_Optimizer, Test_optimizeNotifications)
         info.timestamp        = notifications.size() - i;
         info.messageType      = MESSAGE_TYPE_HUGE_SELL;
         info.text             = "aaaaa";
+        info.data             = "bbbbb";
     }
 
     QList<NotificationInfo> result = optimizer->optimizeNotifications(notifications, 5);

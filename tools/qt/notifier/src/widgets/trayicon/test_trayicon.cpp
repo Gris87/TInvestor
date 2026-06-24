@@ -65,7 +65,8 @@ TEST_F(Test_TrayIcon, Test_notificationsAdded_and_resetCounter)
     notification.requestTimestamp = 1704056400000;
     notification.timestamp        = 1704056400000;
     notification.messageType      = MESSAGE_TYPE_SYSTEM;
-    notification.text             = "aaaa";
+    notification.text             = "aaaaa";
+    notification.data             = "bbbbb";
 
     notifications << notification;
 

@@ -44,7 +44,7 @@ def check_dividends(args):
                 if instrument_id not in new_instruments:
                     new_instruments[instrument_id] = dividend
 
-                    store_message(args, "dividends", msg_recommend_to_buy + "\n" + msg_dividends.format(ticker=dividend["ticker"], name=dividend["name"], yield_value=dividend["yieldValue"], date_str=date_str))
+                    store_message(args, "dividends", msg_recommend_to_buy + "\n" + msg_dividends.format(ticker=dividend["ticker"], name=dividend["name"], yield_value=dividend["yieldValue"], date_str=date_str), "")
 
             new_dividends[date_str] = new_instruments
 

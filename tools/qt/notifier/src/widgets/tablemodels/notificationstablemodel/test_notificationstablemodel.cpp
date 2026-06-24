@@ -79,16 +79,19 @@ TEST_F(Test_NotificationsTableModel, Test_data)
     entry1.timestamp        = 1704056520000;
     entry1.messageType      = MESSAGE_TYPE_SYSTEM;
     entry1.text             = "A basket full";
+    entry1.data             = "Some log";
 
     entry2.requestTimestamp = QDateTime::currentMSecsSinceEpoch() + 100000;
     entry2.timestamp        = 1704056460000;
     entry2.messageType      = MESSAGE_TYPE_PORTFOLIO;
     entry2.text             = "Ball shall levitate";
+    entry2.data             = "";
 
     entry3.requestTimestamp = 1704056400000;
     entry3.timestamp        = 1704056400000;
     entry3.messageType      = MESSAGE_TYPE_DIVIDENDS;
     entry3.text             = "Can you eat fish?";
+    entry3.data             = "";
 
     entries << entry1 << entry2 << entry3;
 
@@ -124,16 +127,19 @@ TEST_F(Test_NotificationsTableModel, Test_sort)
     entry1.timestamp        = 1704056520000;
     entry1.messageType      = MESSAGE_TYPE_SYSTEM;
     entry1.text             = "A basket full";
+    entry1.data             = "Some log";
 
     entry2.requestTimestamp = QDateTime::currentMSecsSinceEpoch() + 100000;
     entry2.timestamp        = 1704056460000;
     entry2.messageType      = MESSAGE_TYPE_PORTFOLIO;
     entry2.text             = "Ball shall levitate";
+    entry2.data             = "";
 
     entry3.requestTimestamp = 1704056400000;
     entry3.timestamp        = 1704056400000;
     entry3.messageType      = MESSAGE_TYPE_DIVIDENDS;
     entry3.text             = "Can you eat fish?";
+    entry3.data             = "";
 
     entries << entry1 << entry2 << entry3;
 
@@ -225,16 +231,19 @@ TEST_F(Test_NotificationsTableModel, Test_setFilter)
     entry1.timestamp        = 1704056520000;
     entry1.messageType      = MESSAGE_TYPE_SYSTEM;
     entry1.text             = "A basket full";
+    entry1.data             = "Some log";
 
     entry2.requestTimestamp = QDateTime::currentMSecsSinceEpoch() + 100000;
     entry2.timestamp        = 1704056460000;
     entry2.messageType      = MESSAGE_TYPE_PORTFOLIO;
     entry2.text             = "Ball shall levitate";
+    entry2.data             = "";
 
     entry3.requestTimestamp = 1704056400000;
     entry3.timestamp        = 1704056400000;
     entry3.messageType      = MESSAGE_TYPE_DIVIDENDS;
     entry3.text             = "Can you eat fish?";
+    entry3.data             = "";
 
     entries << entry1 << entry2 << entry3;
 
@@ -281,16 +290,19 @@ TEST_F(Test_NotificationsTableModel, Test_notificationsAdded)
     entry1.timestamp        = 1704056520000;
     entry1.messageType      = MESSAGE_TYPE_SYSTEM;
     entry1.text             = "A basket full";
+    entry1.data             = "Some log";
 
     entry2.requestTimestamp = QDateTime::currentMSecsSinceEpoch() + 100000;
     entry2.timestamp        = 1704056460000;
     entry2.messageType      = MESSAGE_TYPE_PORTFOLIO;
     entry2.text             = "Ball shall levitate";
+    entry2.data             = "";
 
     entry3.requestTimestamp = 1704056400000;
     entry3.timestamp        = 1704056400000;
     entry3.messageType      = MESSAGE_TYPE_DIVIDENDS;
     entry3.text             = "Can you eat fish?";
+    entry3.data             = "";
 
     entries << entry1 << entry2 << entry3;
 
@@ -315,6 +327,7 @@ TEST_F(Test_NotificationsTableModel, Test_notificationsAdded)
     newEntry.timestamp        = 1704056580000;
     newEntry.messageType      = MESSAGE_TYPE_HUGE_SELL;
     newEntry.text             = "Do you like pizdyuli?";
+    newEntry.data             = "Wonderful log";
 
     model->notificationsAdded(QList<NotificationInfo>() << newEntry);
     ASSERT_EQ(model->rowCount(), 4);

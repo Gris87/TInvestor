@@ -62,7 +62,7 @@ def check_portfolio(args):
             old_positions = json.loads(f.read())
 
         if positions != old_positions:
-            store_message(args, "portfolio", msg_positions_changed + "\n\n" + _describe_portfolio(portfolio.positions))
+            store_message(args, "portfolio", msg_positions_changed + "\n\n" + _describe_portfolio(portfolio.positions), "")
 
     with open(positions_path, "w", encoding="utf-8") as f:
         json.dump(positions, f, ensure_ascii=False)

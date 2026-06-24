@@ -85,11 +85,12 @@ TEST_F(Test_RequestThread, Test_run)
     HttpResult httpResult1;
     httpResult1.statusCode = 200;
     httpResult1.body =
-        R"({"notifications":[{"timestamp":1704056460000,"type":"system","text":"Everything crashes"},{"timestamp":1704056520000,"type":"dividends","text":"Hello my subscribers"}]})";
+        R"({"notifications":[{"timestamp":1704056460000,"type":"system","text":"Everything crashes","data":""},{"timestamp":1704056520000,"type":"dividends","text":"Hello my subscribers","data":""}]})";
 
     HttpResult httpResult2;
     httpResult2.statusCode = 200;
-    httpResult2.body       = R"({"notifications":[{"timestamp":1704056580000,"type":"portfolio","text":"You are rich"}]})";
+    httpResult2.body =
+        R"({"notifications":[{"timestamp":1704056580000,"type":"portfolio","text":"You are rich","data":"Some log"}]})";
 
     HttpResult badHttpResult;
     badHttpResult.statusCode = 200;
@@ -103,11 +104,13 @@ TEST_F(Test_RequestThread, Test_run)
     notification1.timestamp        = 1704056520000;
     notification1.messageType      = MESSAGE_TYPE_DIVIDENDS;
     notification1.text             = "Hello my subscribers";
+    notification1.data             = "";
 
     notification2.requestTimestamp = 1704056460000;
     notification2.timestamp        = 1704056460000;
     notification2.messageType      = MESSAGE_TYPE_SYSTEM;
     notification2.text             = "Everything crashes";
+    notification2.data             = "";
 
     notificationsForWrite << notification1 << notification2;
 
@@ -118,6 +121,7 @@ TEST_F(Test_RequestThread, Test_run)
     notification.timestamp        = 1704056580000;
     notification.messageType      = MESSAGE_TYPE_PORTFOLIO;
     notification.text             = "You are rich";
+    notification.data             = "Some log";
 
     notificationsForAppend << notification;
 
@@ -172,6 +176,7 @@ TEST_F(Test_RequestThread, Test_optimize)
         notification.timestamp        = notifications.size() - i;
         notification.messageType      = MESSAGE_TYPE_SYSTEM;
         notification.text             = "Hello";
+        notification.data             = "Bye";
     }
 
     for (int i = 0; i < optimizedNotifications.size(); ++i)
@@ -182,6 +187,7 @@ TEST_F(Test_RequestThread, Test_optimize)
         notification.timestamp        = notifications.size() - i;
         notification.messageType      = MESSAGE_TYPE_SYSTEM;
         notification.text             = "Hello";
+        notification.data             = "Bye";
     }
 
     HttpResult httpResult;

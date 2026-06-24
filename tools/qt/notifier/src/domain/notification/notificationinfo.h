@@ -40,6 +40,7 @@ struct NotificationInfo
     qint64      timestamp;
     MessageType messageType;
     QString     text;
+    QString     data;
 };
 
 

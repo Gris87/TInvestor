@@ -1,5 +1,4 @@
 Notifier for Android
-Save cron failures to notifications
 Download cron failures
 Script for instant huge fall buy (-2%)
 Try to follow for someone clever

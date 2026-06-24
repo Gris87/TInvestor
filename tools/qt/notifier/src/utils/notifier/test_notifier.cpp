@@ -70,21 +70,25 @@ TEST_F(Test_Notifier, Test_notificationsAdded_and_resetNotificationWidgets)
     notification1.timestamp        = 1704056400000;
     notification1.messageType      = MESSAGE_TYPE_SYSTEM;
     notification1.text             = "Hello";
+    notification1.data             = "I";
 
     notification2.requestTimestamp = 1704056460000;
     notification2.timestamp        = 1704056460000;
     notification2.messageType      = MESSAGE_TYPE_HUGE_SELL;
     notification2.text             = "Darkness";
+    notification2.data             = "Come";
 
     notification3.requestTimestamp = 1704056520000;
     notification3.timestamp        = 1704056520000;
     notification3.messageType      = MESSAGE_TYPE_DIVIDENDS;
     notification3.text             = "Smile";
+    notification3.data             = "To";
 
     notification4.requestTimestamp = 1704056580000;
     notification4.timestamp        = 1704056580000;
     notification4.messageType      = MESSAGE_TYPE_PORTFOLIO;
-    notification4.text             = "Face";
+    notification4.text             = "Friend";
+    notification4.data             = "Talk";
 
     notifications << notification1 << notification2 << notification3 << notification4;
 

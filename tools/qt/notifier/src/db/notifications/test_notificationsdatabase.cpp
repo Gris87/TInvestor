@@ -61,9 +61,9 @@ TEST_F(Test_NotificationsDatabase, Test_readNotifications)
     QList<NotificationInfo> notifications;
 
     QString notificationsStr =
-        "{\"requestTimestamp\":1000,\"text\":\"aaaaa\",\"timestamp\":1000,\"type\":\"system\"},\n{\"requestTimestamp\":2000,"
-        "\"text\":\"aaaaa\",\"timestamp\":2000,\"type\":\"system\"},\n{\"requestTimestamp\":3000,\"text\":\"aaaaa\","
-        "\"timestamp\":3000,\"type\":\"system\"}";
+        "{\"data\":\"bbbbb\",\"requestTimestamp\":1000,\"text\":\"aaaaa\",\"timestamp\":1000,\"type\":\"system\"},\n{\"data\":"
+        "\"bbbbb\",\"requestTimestamp\":2000,\"text\":\"aaaaa\",\"timestamp\":2000,\"type\":\"system\"},\n{\"data\":\"bbbbb\","
+        "\"requestTimestamp\":3000,\"text\":\"aaaaa\",\"timestamp\":3000,\"type\":\"system\"}";
     QByteArray notificationsBytes = notificationsStr.toUtf8();
 
     EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/notifications/notifications.json"))
@@ -83,6 +83,7 @@ TEST_F(Test_NotificationsDatabase, Test_readNotifications)
         ASSERT_EQ(notifications.at(i).timestamp,        3000 - i * 1000);
         ASSERT_EQ(notifications.at(i).messageType,      MESSAGE_TYPE_SYSTEM);
         ASSERT_EQ(notifications.at(i).text,             "aaaaa");
+        ASSERT_EQ(notifications.at(i).data,             "bbbbb");
         // clang-format on
     }
 
@@ -96,7 +97,8 @@ TEST_F(Test_NotificationsDatabase, Test_readNotifications)
         }
 
         largeNotificationsStr +=
-            QString("{\"requestTimestamp\":%1,\"text\":\"aaaaa\",\"timestamp\":%1,\"type\":\"system\"}").arg(i * 1000);
+            QString("{\"data\":\"bbbbb\",\"requestTimestamp\":%1,\"text\":\"aaaaa\",\"timestamp\":%1,\"type\":\"system\"}")
+                .arg(i * 1000);
     }
 
     QByteArray largeNotificationsBytes = largeNotificationsStr.toUtf8();
@@ -118,6 +120,7 @@ TEST_F(Test_NotificationsDatabase, Test_readNotifications)
         ASSERT_EQ(notifications.at(i).timestamp,        999000 - i * 1000);
         ASSERT_EQ(notifications.at(i).messageType,      MESSAGE_TYPE_SYSTEM);
         ASSERT_EQ(notifications.at(i).text,             "aaaaa");
+        ASSERT_EQ(notifications.at(i).data,             "bbbbb");
         // clang-format on
     }
 
@@ -154,6 +157,7 @@ TEST_F(Test_NotificationsDatabase, Test_readNotifications)
         ASSERT_EQ(notifications.at(i).timestamp,        1000000 - i * 1000);
         ASSERT_EQ(notifications.at(i).messageType,      MESSAGE_TYPE_SYSTEM);
         ASSERT_EQ(notifications.at(i).text,             "aaaaa");
+        ASSERT_EQ(notifications.at(i).data,             "bbbbb");
         // clang-format on
     }
 }
@@ -172,6 +176,7 @@ TEST_F(Test_NotificationsDatabase, Test_writeNotifications)
     notification.timestamp        = 3000;
     notification.messageType      = MESSAGE_TYPE_SYSTEM;
     notification.text             = "aaaaa";
+    notification.data             = "bbbbb";
 
     notifications << notification;
 
@@ -184,9 +189,9 @@ TEST_F(Test_NotificationsDatabase, Test_writeNotifications)
     notifications << notification;
 
     const QString notificationsStr =
-        "{\"requestTimestamp\":1000,\"text\":\"aaaaa\",\"timestamp\":1000,\"type\":\"system\"},\n{\"requestTimestamp\":2000,"
-        "\"text\":\"aaaaa\",\"timestamp\":2000,\"type\":\"system\"},\n{\"requestTimestamp\":3000,\"text\":\"aaaaa\","
-        "\"timestamp\":3000,\"type\":\"system\"}";
+        "{\"data\":\"bbbbb\",\"requestTimestamp\":1000,\"text\":\"aaaaa\",\"timestamp\":1000,\"type\":\"system\"},\n{\"data\":"
+        "\"bbbbb\",\"requestTimestamp\":2000,\"text\":\"aaaaa\",\"timestamp\":2000,\"type\":\"system\"},\n{\"data\":\"bbbbb\","
+        "\"requestTimestamp\":3000,\"text\":\"aaaaa\",\"timestamp\":3000,\"type\":\"system\"}";
     const QByteArray notificationsBytes = notificationsStr.toUtf8();
 
     EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
@@ -213,6 +218,7 @@ TEST_F(Test_NotificationsDatabase, Test_appendNotifications)
     notification.timestamp        = 6000;
     notification.messageType      = MESSAGE_TYPE_SYSTEM;
     notification.text             = "aaaaa";
+    notification.data             = "bbbbb";
 
     notifications << notification;
 
@@ -224,9 +230,12 @@ TEST_F(Test_NotificationsDatabase, Test_appendNotifications)
     notification.timestamp        = 4000;
     notifications << notification;
 
-    const QString    notification1Str   = "{\"requestTimestamp\":4000,\"text\":\"aaaaa\",\"timestamp\":4000,\"type\":\"system\"}";
-    const QString    notification2Str   = "{\"requestTimestamp\":5000,\"text\":\"aaaaa\",\"timestamp\":5000,\"type\":\"system\"}";
-    const QString    notification3Str   = "{\"requestTimestamp\":6000,\"text\":\"aaaaa\",\"timestamp\":6000,\"type\":\"system\"}";
+    const QString notification1Str =
+        "{\"data\":\"bbbbb\",\"requestTimestamp\":4000,\"text\":\"aaaaa\",\"timestamp\":4000,\"type\":\"system\"}";
+    const QString notification2Str =
+        "{\"data\":\"bbbbb\",\"requestTimestamp\":5000,\"text\":\"aaaaa\",\"timestamp\":5000,\"type\":\"system\"}";
+    const QString notification3Str =
+        "{\"data\":\"bbbbb\",\"requestTimestamp\":6000,\"text\":\"aaaaa\",\"timestamp\":6000,\"type\":\"system\"}";
     const QByteArray notification1Bytes = notification1Str.toUtf8();
     const QByteArray notification2Bytes = notification2Str.toUtf8();
     const QByteArray notification3Bytes = notification3Str.toUtf8();

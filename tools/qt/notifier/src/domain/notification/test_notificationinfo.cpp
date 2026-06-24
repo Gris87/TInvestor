@@ -30,6 +30,7 @@ TEST_F(Test_NotificationInfo, Test_constructor_and_destructor)
     ASSERT_EQ(info.timestamp,        0);
     ASSERT_EQ(info.messageType,      MESSAGE_TYPE_NONE);
     ASSERT_EQ(info.text,             "");
+    ASSERT_EQ(info.data,             "");
     // clang-format on
 }
 
@@ -41,6 +42,7 @@ TEST_F(Test_NotificationInfo, Test_copy_constructor)
     info.timestamp        = 2;
     info.messageType      = MESSAGE_TYPE_PORTFOLIO;
     info.text             = "a";
+    info.data             = "b";
 
     const NotificationInfo info2(info);
 
@@ -49,6 +51,7 @@ TEST_F(Test_NotificationInfo, Test_copy_constructor)
     ASSERT_EQ(info2.timestamp,        2);
     ASSERT_EQ(info2.messageType,      MESSAGE_TYPE_PORTFOLIO);
     ASSERT_EQ(info2.text,             "a");
+    ASSERT_EQ(info2.data,             "b");
     // clang-format on
 }
 
@@ -61,6 +64,7 @@ TEST_F(Test_NotificationInfo, Test_assign)
     info.timestamp        = 2;
     info.messageType      = MESSAGE_TYPE_PORTFOLIO;
     info.text             = "a";
+    info.data             = "b";
 
     info2 = info;
 
@@ -69,6 +73,7 @@ TEST_F(Test_NotificationInfo, Test_assign)
     ASSERT_EQ(info2.timestamp,        2);
     ASSERT_EQ(info2.messageType,      MESSAGE_TYPE_PORTFOLIO);
     ASSERT_EQ(info2.text,             "a");
+    ASSERT_EQ(info2.data,             "b");
     // clang-format on
 }
 TEST_F(Test_NotificationInfo, Test_fromJsonObject)
@@ -80,9 +85,10 @@ TEST_F(Test_NotificationInfo, Test_fromJsonObject)
     ASSERT_EQ(info.timestamp,        0);
     ASSERT_EQ(info.messageType,      MESSAGE_TYPE_NONE);
     ASSERT_EQ(info.text,             "");
+    ASSERT_EQ(info.data,             "");
     // clang-format on
 
-    const QString content = R"({"requestTimestamp":1,"text":"a","timestamp":2,"type":"portfolio"})";
+    const QString content = R"({"data":"b","requestTimestamp":1,"text":"a","timestamp":2,"type":"portfolio"})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -96,6 +102,7 @@ TEST_F(Test_NotificationInfo, Test_fromJsonObject)
     ASSERT_EQ(info.timestamp,        2);
     ASSERT_EQ(info.messageType,      MESSAGE_TYPE_PORTFOLIO);
     ASSERT_EQ(info.text,             "a");
+    ASSERT_EQ(info.data,             "b");
     // clang-format on
 
     const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
@@ -114,12 +121,13 @@ TEST_F(Test_NotificationInfo, Test_toJsonObject)
     info.timestamp        = 2;
     info.messageType      = MESSAGE_TYPE_PORTFOLIO;
     info.text             = "a";
+    info.data             = "b";
 
     const QJsonObject   jsonObject = info.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
 
     const QString content         = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
-    const QString expectedContent = R"({"requestTimestamp":1,"text":"a","timestamp":2,"type":"portfolio"})";
+    const QString expectedContent = R"({"data":"b","requestTimestamp":1,"text":"a","timestamp":2,"type":"portfolio"})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -133,11 +141,13 @@ TEST_F(Test_NotificationInfo, Test_equals)
     info.timestamp        = 2;
     info.messageType      = MESSAGE_TYPE_PORTFOLIO;
     info.text             = "a";
+    info.data             = "b";
 
     info2.requestTimestamp = 1;
     info2.timestamp        = 2;
     info2.messageType      = MESSAGE_TYPE_PORTFOLIO;
     info2.text             = "a";
+    info2.data             = "b";
 
     ASSERT_EQ(info, info2);
 
@@ -156,8 +166,13 @@ TEST_F(Test_NotificationInfo, Test_equals)
     info2.messageType = MESSAGE_TYPE_PORTFOLIO;
     ASSERT_EQ(info, info2);
 
-    info2.text = "b";
+    info2.text = "aaaaa";
     ASSERT_NE(info, info2);
     info2.text = "a";
+    ASSERT_EQ(info, info2);
+
+    info2.data = "bbbbb";
+    ASSERT_NE(info, info2);
+    info2.data = "b";
     ASSERT_EQ(info, info2);
 }
