@@ -213,7 +213,7 @@ PortfolioMinItems FollowThread::buildInstrumentToCostMap(const std::shared_ptr<t
         else
         {
             item.price = quotationToFloat(position.current_price());
-            item.cost  = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price_fifo());
+            item.cost  = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price());
         }
 
         res[instrumentId] = item;

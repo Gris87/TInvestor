@@ -19,6 +19,9 @@ from tinkoff.invest.utils import quotation_to_decimal
 PATH_TO_SCRIPT = Path(__file__).parent
 
 
+RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
+
+
 def check_portfolio(args):
     commands = []
     positions = {}
@@ -42,7 +45,7 @@ def check_portfolio(args):
 
         logger.info("Get portfolio")
 
-        portfolio = _get_portfolio(client, args.account)
+        portfolio = _get_valid_portfolio(client, args.account)
 
         for position in portfolio.positions:
             positions[position.instrument_uid] = position.quantity.__dict__
@@ -99,8 +102,25 @@ def _validate_account(client, account_id):
     return True
 
 
-def _get_portfolio(client, account_id):
-    return client.operations.get_portfolio(account_id=account_id)
+def _get_valid_portfolio(client, account):
+    while True:
+        portfolio = client.operations.get_portfolio(account_id=account)
+
+        good = True
+
+        for position in portfolio.positions:
+            if position.instrument_uid==RUBLE_UID:
+                continue
+
+            if position.average_position_price.units <= 0 and position.average_position_price.nano <= 0:
+                good = False
+
+                break
+
+        if good:
+            return portfolio
+
+        time.sleep(1)
 
 
 def _describe_portfolio(positions):

@@ -450,7 +450,7 @@ void BiDirTradingThread::calculateTotalCostAndInstrumentCost(
         }
         else
         {
-            const double cost = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price_fifo());
+            const double cost = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price());
 
             if (instrumentId == mInstrumentId)
             {

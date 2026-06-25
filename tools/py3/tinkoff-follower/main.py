@@ -149,6 +149,9 @@ async def _get_valid_portfolio(client, account):
         good = True
 
         for position in portfolio.positions:
+            if position.instrument_uid==RUBLE_UID:
+                continue
+
             if position.average_position_price.units <= 0 and position.average_position_price.nano <= 0:
                 good = False
 

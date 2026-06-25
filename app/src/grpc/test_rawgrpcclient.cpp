@@ -16,7 +16,7 @@ const char* const RUBLE_UID    = "a92e2e25-a698-45cc-a781-167cf465257c";
 const char* const STOCK_UID    = "cf9ed7ef-784d-4c2c-aabe-362891fcd80c";
 const char* const BOND_UID     = "2c7c296c-1f26-429f-ad8b-03fa1b6ba7fa";
 const char* const CURRENCY_UID = "a22a1263-8e1b-4546-a1aa-416463f104d3";
-const char* const ETF_UID      = "db147f62-8909-44d7-bd73-368ad48dc890";
+const char* const ETF_UID      = "a238f8c4-4a88-4f75-9640-702ce5f6d75f";
 const char* const FUTURE_UID   = "c74d40a7-1cda-4a9e-9ec1-9aa8fe7b0025";
 const char* const SPBE_UID     = "15dc2120-29d2-48b8-87c0-da1d95255f68";
 
@@ -465,9 +465,9 @@ TEST_F(Test_RawGrpcClient, Test_findEtfs)
     ASSERT_EQ(status.ok(),                                                 true);
     ASSERT_GE(resp->instruments_size(),                                    250);
     ASSERT_GE(index,                                                       0);
-    ASSERT_EQ(resp->instruments(index).figi(),                             "TCS00A100P44");
+    ASSERT_EQ(resp->instruments(index).figi(),                             "TCSM59500P44");
     ASSERT_EQ(resp->instruments(index).ticker(),                           "SBRB");
-    ASSERT_EQ(resp->instruments(index).class_code(),                       "TQTF");
+    ASSERT_EQ(resp->instruments(index).class_code(),                       "TQBR");
     ASSERT_EQ(resp->instruments(index).isin(),                             "RU000A100P44");
     ASSERT_EQ(resp->instruments(index).lot(),                              1);
     ASSERT_EQ(resp->instruments(index).currency(),                         "rub");

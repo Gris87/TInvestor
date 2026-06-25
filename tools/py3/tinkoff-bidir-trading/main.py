@@ -21,6 +21,9 @@ from tinkoff.invest.utils import quotation_to_decimal
 #logging.basicConfig(level=logging.DEBUG)
 
 
+RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
+
+
 HUNDRED_PERCENT       = 100.0
 MINIMUM_YIELD_PERCENT = 0.30
 COMMISSION            = 0.04
@@ -96,7 +99,7 @@ async def _start_orderbook_streaming(client, account, instrument_id, spread, max
 async def _handle_orderbook(client, account, instrument_id, spread, max_buy_price, min_sell_price, limit_lots, orderbook):
     tasks = []
 
-    portfolio = await client.operations.get_portfolio(account_id=account)
+    portfolio = await _get_valid_portfolio(client, account)
     amount_of_lots = 0
     avg_price = Decimal(0)
 
@@ -139,6 +142,27 @@ async def _handle_orderbook(client, account, instrument_id, spread, max_buy_pric
 
     if len(tasks) > 0:
         await asyncio.gather(*tasks)
+
+
+async def _get_valid_portfolio(client, account):
+    while True:
+        portfolio = await client.operations.get_portfolio(account_id=account)
+
+        good = True
+
+        for position in portfolio.positions:
+            if position.instrument_uid==RUBLE_UID:
+                continue
+
+            if position.average_position_price.units <= 0 and position.average_position_price.nano <= 0:
+                good = False
+
+                break
+
+        if good:
+            return portfolio
+
+        await asyncio.sleep(1)
 
 
 async def _buy(client, account, instrument_id, amount_of_lots, price):

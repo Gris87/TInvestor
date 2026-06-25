@@ -71,19 +71,19 @@ TEST_F(Test_FollowThread, Test_run)
 
     tinkoff::Quotation*  tinkoffQuantity1     = new tinkoff::Quotation();  // position1 will take ownership
     tinkoff::MoneyValue* tinkoffCurrentPrice1 = new tinkoff::MoneyValue(); // position1 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPrice1     = new tinkoff::MoneyValue(); // position1 will take ownership
 
     tinkoff::Quotation*  tinkoffQuantity2     = new tinkoff::Quotation();  // position2 will take ownership
     tinkoff::MoneyValue* tinkoffCurrentPrice2 = new tinkoff::MoneyValue(); // position2 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo2 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPrice2     = new tinkoff::MoneyValue(); // position2 will take ownership
 
     tinkoff::Quotation*  tinkoffQuantity3     = new tinkoff::Quotation();  // position3 will take ownership
     tinkoff::MoneyValue* tinkoffCurrentPrice3 = new tinkoff::MoneyValue(); // position3 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo3 = new tinkoff::MoneyValue(); // position3 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPrice3     = new tinkoff::MoneyValue(); // position3 will take ownership
 
     tinkoff::Quotation*  tinkoffQuantity4     = new tinkoff::Quotation();  // position4 will take ownership
     tinkoff::MoneyValue* tinkoffCurrentPrice4 = new tinkoff::MoneyValue(); // position4 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo4 = new tinkoff::MoneyValue(); // position4 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPrice4     = new tinkoff::MoneyValue(); // position4 will take ownership
 
     tinkoffQuantity1->set_units(10000);
     tinkoffQuantity1->set_nano(0);
@@ -92,14 +92,14 @@ TEST_F(Test_FollowThread, Test_run)
     tinkoffCurrentPrice1->set_units(5);
     tinkoffCurrentPrice1->set_nano(100000000);
 
-    tinkoffAvgPriceFifo1->set_currency("rub");
-    tinkoffAvgPriceFifo1->set_units(50);
-    tinkoffAvgPriceFifo1->set_nano(500000000);
+    tinkoffAvgPrice1->set_currency("rub");
+    tinkoffAvgPrice1->set_units(50);
+    tinkoffAvgPrice1->set_nano(500000000);
 
     position1->set_instrument_uid(RUBLE_UID);
     position1->set_allocated_quantity(tinkoffQuantity1);
     position1->set_allocated_current_price(tinkoffCurrentPrice1);
-    position1->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo1);
+    position1->set_allocated_average_position_price(tinkoffAvgPrice1);
 
     tinkoffQuantity2->set_units(10000);
     tinkoffQuantity2->set_nano(0);
@@ -108,14 +108,14 @@ TEST_F(Test_FollowThread, Test_run)
     tinkoffCurrentPrice2->set_units(5);
     tinkoffCurrentPrice2->set_nano(100000000);
 
-    tinkoffAvgPriceFifo2->set_currency("rub");
-    tinkoffAvgPriceFifo2->set_units(50);
-    tinkoffAvgPriceFifo2->set_nano(500000000);
+    tinkoffAvgPrice2->set_currency("rub");
+    tinkoffAvgPrice2->set_units(50);
+    tinkoffAvgPrice2->set_nano(500000000);
 
     position2->set_instrument_uid("bbbbb");
     position2->set_allocated_quantity(tinkoffQuantity2);
     position2->set_allocated_current_price(tinkoffCurrentPrice2);
-    position2->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo2);
+    position2->set_allocated_average_position_price(tinkoffAvgPrice2);
 
     tinkoffQuantity3->set_units(30000);
     tinkoffQuantity3->set_nano(0);
@@ -124,14 +124,14 @@ TEST_F(Test_FollowThread, Test_run)
     tinkoffCurrentPrice3->set_units(5);
     tinkoffCurrentPrice3->set_nano(300000000);
 
-    tinkoffAvgPriceFifo3->set_currency("rub");
-    tinkoffAvgPriceFifo3->set_units(50);
-    tinkoffAvgPriceFifo3->set_nano(500000000);
+    tinkoffAvgPrice3->set_currency("rub");
+    tinkoffAvgPrice3->set_units(50);
+    tinkoffAvgPrice3->set_nano(500000000);
 
     position3->set_instrument_uid(RUBLE_UID);
     position3->set_allocated_quantity(tinkoffQuantity3);
     position3->set_allocated_current_price(tinkoffCurrentPrice3);
-    position3->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo3);
+    position3->set_allocated_average_position_price(tinkoffAvgPrice3);
 
     tinkoffQuantity4->set_units(50000);
     tinkoffQuantity4->set_nano(0);
@@ -140,14 +140,14 @@ TEST_F(Test_FollowThread, Test_run)
     tinkoffCurrentPrice4->set_units(5);
     tinkoffCurrentPrice4->set_nano(100000000);
 
-    tinkoffAvgPriceFifo4->set_currency("rub");
-    tinkoffAvgPriceFifo4->set_units(50);
-    tinkoffAvgPriceFifo4->set_nano(500000000);
+    tinkoffAvgPrice4->set_currency("rub");
+    tinkoffAvgPrice4->set_units(50);
+    tinkoffAvgPrice4->set_nano(500000000);
 
     position4->set_instrument_uid("aaaaa");
     position4->set_allocated_quantity(tinkoffQuantity4);
     position4->set_allocated_current_price(tinkoffCurrentPrice4);
-    position4->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo4);
+    position4->set_allocated_average_position_price(tinkoffAvgPrice4);
 
     std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
 
@@ -175,19 +175,19 @@ TEST_F(Test_FollowThread, Test_run)
 
     tinkoff::Quotation*  tinkoffQuantity5     = new tinkoff::Quotation();  // position5 will take ownership
     tinkoff::MoneyValue* tinkoffCurrentPrice5 = new tinkoff::MoneyValue(); // position5 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo5 = new tinkoff::MoneyValue(); // position5 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPrice5     = new tinkoff::MoneyValue(); // position5 will take ownership
 
     tinkoff::Quotation*  tinkoffQuantity6     = new tinkoff::Quotation();  // position6 will take ownership
     tinkoff::MoneyValue* tinkoffCurrentPrice6 = new tinkoff::MoneyValue(); // position6 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo6 = new tinkoff::MoneyValue(); // position6 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPrice6     = new tinkoff::MoneyValue(); // position6 will take ownership
 
     tinkoff::Quotation*  tinkoffQuantity7     = new tinkoff::Quotation();  // position7 will take ownership
     tinkoff::MoneyValue* tinkoffCurrentPrice7 = new tinkoff::MoneyValue(); // position7 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo7 = new tinkoff::MoneyValue(); // position7 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPrice7     = new tinkoff::MoneyValue(); // position7 will take ownership
 
     tinkoff::Quotation*  tinkoffQuantity8     = new tinkoff::Quotation();  // position8 will take ownership
     tinkoff::MoneyValue* tinkoffCurrentPrice8 = new tinkoff::MoneyValue(); // position8 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo8 = new tinkoff::MoneyValue(); // position8 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPrice8     = new tinkoff::MoneyValue(); // position8 will take ownership
 
     tinkoffQuantity5->set_units(50000);
     tinkoffQuantity5->set_nano(0);
@@ -196,14 +196,14 @@ TEST_F(Test_FollowThread, Test_run)
     tinkoffCurrentPrice5->set_units(5);
     tinkoffCurrentPrice5->set_nano(500000000);
 
-    tinkoffAvgPriceFifo5->set_currency("rub");
-    tinkoffAvgPriceFifo5->set_units(50);
-    tinkoffAvgPriceFifo5->set_nano(500000000);
+    tinkoffAvgPrice5->set_currency("rub");
+    tinkoffAvgPrice5->set_units(50);
+    tinkoffAvgPrice5->set_nano(500000000);
 
     position5->set_instrument_uid(RUBLE_UID);
     position5->set_allocated_quantity(tinkoffQuantity5);
     position5->set_allocated_current_price(tinkoffCurrentPrice5);
-    position5->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo5);
+    position5->set_allocated_average_position_price(tinkoffAvgPrice5);
 
     tinkoffQuantity6->set_units(10000);
     tinkoffQuantity6->set_nano(0);
@@ -212,14 +212,14 @@ TEST_F(Test_FollowThread, Test_run)
     tinkoffCurrentPrice6->set_units(5);
     tinkoffCurrentPrice6->set_nano(100000000);
 
-    tinkoffAvgPriceFifo6->set_currency("rub");
-    tinkoffAvgPriceFifo6->set_units(50);
-    tinkoffAvgPriceFifo6->set_nano(500000000);
+    tinkoffAvgPrice6->set_currency("rub");
+    tinkoffAvgPrice6->set_units(50);
+    tinkoffAvgPrice6->set_nano(500000000);
 
     position6->set_instrument_uid("aaaaa");
     position6->set_allocated_quantity(tinkoffQuantity6);
     position6->set_allocated_current_price(tinkoffCurrentPrice6);
-    position6->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo6);
+    position6->set_allocated_average_position_price(tinkoffAvgPrice6);
 
     tinkoffQuantity7->set_units(70000);
     tinkoffQuantity7->set_nano(0);
@@ -228,14 +228,14 @@ TEST_F(Test_FollowThread, Test_run)
     tinkoffCurrentPrice7->set_units(5);
     tinkoffCurrentPrice7->set_nano(700000000);
 
-    tinkoffAvgPriceFifo7->set_currency("rub");
-    tinkoffAvgPriceFifo7->set_units(50);
-    tinkoffAvgPriceFifo7->set_nano(500000000);
+    tinkoffAvgPrice7->set_currency("rub");
+    tinkoffAvgPrice7->set_units(50);
+    tinkoffAvgPrice7->set_nano(500000000);
 
     position7->set_instrument_uid(RUBLE_UID);
     position7->set_allocated_quantity(tinkoffQuantity7);
     position7->set_allocated_current_price(tinkoffCurrentPrice7);
-    position7->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo7);
+    position7->set_allocated_average_position_price(tinkoffAvgPrice7);
 
     tinkoffQuantity8->set_units(50);
     tinkoffQuantity8->set_nano(0);
@@ -244,14 +244,14 @@ TEST_F(Test_FollowThread, Test_run)
     tinkoffCurrentPrice8->set_units(5);
     tinkoffCurrentPrice8->set_nano(100000000);
 
-    tinkoffAvgPriceFifo8->set_currency("rub");
-    tinkoffAvgPriceFifo8->set_units(50);
-    tinkoffAvgPriceFifo8->set_nano(500000000);
+    tinkoffAvgPrice8->set_currency("rub");
+    tinkoffAvgPrice8->set_units(50);
+    tinkoffAvgPrice8->set_nano(500000000);
 
     position8->set_instrument_uid("aaaaa");
     position8->set_allocated_quantity(tinkoffQuantity8);
     position8->set_allocated_current_price(tinkoffCurrentPrice8);
-    position8->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo8);
+    position8->set_allocated_average_position_price(tinkoffAvgPrice8);
 
     Instruments instruments;
     Instrument  instrument1;

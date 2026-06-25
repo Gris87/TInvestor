@@ -705,10 +705,8 @@ void OperationsThread::alignWithPortfolio(QList<Operation>& lastOperations)
             {
                 portfolioInstruments.insert(instrumentId);
 
-                const Quotation avgCostFifo =
-                    quotationMultiply(position.average_position_price_fifo(), position.quantity().units());
-
-                mTotalMoney = quotationSum(mTotalMoney, avgCostFifo);
+                const Quotation avgCostWavg = quotationMultiply(position.average_position_price(), position.quantity().units());
+                mTotalMoney                 = quotationSum(mTotalMoney, avgCostWavg);
             }
         }
 

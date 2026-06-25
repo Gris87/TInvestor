@@ -1,13 +1,14 @@
 import argparse
 import json
 import sys
+import time
 
 from loguru import logger
 from pathlib import Path
 
 from tinkoff.invest import Client, GetOperationsByCursorRequest
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
-from tinkoff.invest.schemas import OperationState
+from tinkoff.invest.schemas import AccountType, OperationState
 
 
 RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
@@ -61,8 +62,13 @@ def _collect_data(client):
 def _get_accounts(client):
     res = []
 
+    logger.info("Collecting accounts")
+
     for account in client.users.get_accounts().accounts:
         account_dict = account.__dict__
+
+        if account_dict["type"] != AccountType.ACCOUNT_TYPE_TINKOFF:
+            continue
 
         account_dict["type"] = account_dict["type"].name
         account_dict["status"] = account_dict["status"].name
@@ -79,7 +85,9 @@ def _get_portfolio(client, accounts):
     res = []
 
     for account in accounts:
-        portfolio_dict = client.operations.get_portfolio(account_id=account["id"]).__dict__
+        logger.info("Collecting portfolio for account: " + account["name"])
+
+        portfolio_dict = _get_valid_portfolio(client, account["id"]).__dict__
 
         portfolio_dict["total_amount_shares"] = portfolio_dict["total_amount_shares"].__dict__
         portfolio_dict["total_amount_bonds"] = portfolio_dict["total_amount_bonds"].__dict__
@@ -146,9 +154,11 @@ def _get_operations(client, accounts):
         cursor = ""
 
         while True:
+            logger.info("Collecting operations for account: " + account["name"])
+
             req = GetOperationsByCursorRequest(
                 account_id=account["id"],
-                limit=1000,
+                limit=100,
                 state=OperationState.OPERATION_STATE_EXECUTED,
                 cursor=cursor,
                 without_trades=True
@@ -197,9 +207,32 @@ def _get_operations(client, accounts):
 
             cursor = operations_dict["next_cursor"]
 
+            time.sleep(1)
+
         res.append(group)
 
     return res
+
+
+def _get_valid_portfolio(client, account):
+    while True:
+        portfolio = client.operations.get_portfolio(account_id=account)
+
+        good = True
+
+        for position in portfolio.positions:
+            if position.instrument_uid==RUBLE_UID:
+                continue
+
+            if position.average_position_price.units <= 0 and position.average_position_price.nano <= 0:
+                good = False
+
+                break
+
+        if good:
+            return portfolio
+
+        time.sleep(1)
 
 
 def _handle_accounts(accounts, portfolios, operations):
@@ -259,7 +292,7 @@ def _handle_portfolio(portfolio):
                 "cost_wavg": cost_wavg,
             }
 
-            portfolio_total_money += cost_fifo
+            portfolio_total_money += cost_wavg
 
     return portfolio_remained_money, portfolio_total_money, portfolio_quantity_and_cost_map
 

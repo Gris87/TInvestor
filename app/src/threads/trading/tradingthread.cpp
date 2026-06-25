@@ -217,9 +217,9 @@ double TradingThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
         if (QString::fromStdString(position.instrument_uid()) == mInstrumentId)
         {
             const double available    = quotationToDouble(position.quantity());
-            const double avgPriceFifo = quotationToDouble(position.average_position_price_fifo());
+            const double avgPriceWavg = quotationToDouble(position.average_position_price());
 
-            return available * avgPriceFifo;
+            return available * avgPriceWavg;
         }
     }
 
