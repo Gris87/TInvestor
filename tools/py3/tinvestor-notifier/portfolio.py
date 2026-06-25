@@ -36,6 +36,8 @@ def check_portfolio(args):
         logger.info("Verifying account")
 
         if not _validate_account(client, args.account):
+            sys.exit(1)
+
             return
 
         logger.info("Get portfolio")
@@ -111,7 +113,7 @@ def _describe_portfolio(positions):
             currency_info += "\n" + msg_currency_cost.format(currency=position.current_price.currency.upper(), cost=quotation_to_decimal(position.quantity))
             total_cost += quotation_to_decimal(position.quantity)
         else:
-            cost = quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price_fifo)
+            cost = quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price)
 
             stocks_info += "\n" + msg_stock_cost.format(ticker=position.ticker, quantity=quotation_to_decimal(position.quantity), cost=cost)
             total_cost += cost

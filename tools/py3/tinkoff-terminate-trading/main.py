@@ -31,6 +31,8 @@ async def terminate_trading(args):
         logger.info("Verifying account")
 
         if not await _validate_account(client, args.account):
+            sys.exit(1)
+
             return
 
         await _cancel_orders(client, args.account)

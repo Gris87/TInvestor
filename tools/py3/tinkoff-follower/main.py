@@ -8,11 +8,11 @@ from aiostream import stream
 from decimal import Decimal
 from loguru import logger
 
-from tinkoff.invest import InstrumentIdType, GetMaxLotsRequest, OrderDirection, OrderExecutionReportStatus, OrderType, PriceType, TimeInForceType
+from tinkoff.invest import InstrumentIdType, GetMaxLotsRequest, GetOperationsByCursorRequest, OrderDirection, OrderExecutionReportStatus, OrderType, PriceType, TimeInForceType
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
-from tinkoff.invest.schemas import OrderIdType
+from tinkoff.invest.schemas import OperationState, OrderIdType
 from tinkoff.invest.utils import quotation_to_decimal
 
 
@@ -40,17 +40,26 @@ async def follow(args):
             logger.info("Verifying accounts")
 
             if not await _validate_account(src_client, args.src_account, "Source"):
+                sys.exit(1)
+
                 return
 
             if not await _validate_account(dest_client, args.dest_account, "Destination"):
+                sys.exit(1)
+
                 return
+
+            src_portfolio = await _get_valid_portfolio(src_client, args.src_account)
+            dest_portfolio = await _get_valid_portfolio(dest_client, args.dest_account)
+
+            await _handle_portfolios(dest_client, args.dest_account, src_portfolio, dest_portfolio)
 
             if args.mode == "stream":
                 await _start_follow_stream_mode(src_client, dest_client, args.src_account, args.dest_account)
-            else:
-                await _start_follow_poll_mode(src_client, dest_client, args.src_account, args.dest_account, args.polling_file)
-
-    return
+            elif args.mode == "poll":
+                await _start_follow_poll_mode(src_client, dest_client, args.src_account, args.dest_account)
+            elif args.mode == "poll-file":
+                await _start_follow_poll_file_mode(src_client, dest_client, args.src_account, args.dest_account, args.polling_file)
 
 
 def _get_token(token, token_file):
@@ -84,31 +93,40 @@ async def _start_follow_stream_mode(src_client, dest_client, src_account, dest_a
     src_stream = src_client.operations_stream.portfolio_stream(accounts=[src_account])
     dest_stream = dest_client.operations_stream.portfolio_stream(accounts=[dest_account])
 
-    src_portfolio = await src_client.operations.get_portfolio(account_id=src_account)
-    dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
-
-    await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
-
     async with stream.merge(src_stream, dest_stream).stream() as streamer:
         async for x in streamer:
             if x.portfolio is not None:
-                if x.portfolio.account_id == src_account:
-                    src_portfolio = x.portfolio
-                elif x.portfolio.account_id == dest_account:
-                    dest_portfolio = x.portfolio
-                else:
-                    raise Exception(f"Unexpected account ID = {x.portfolio.account_id}")
+                src_portfolio = await _get_valid_portfolio(src_client, src_account)
+                dest_portfolio = await _get_valid_portfolio(dest_client, dest_account)
 
                 await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
 
 
-async def _start_follow_poll_mode(src_client, dest_client, src_account, dest_account, polling_file):
+async def _start_follow_poll_mode(src_client, dest_client, src_account, dest_account):
+    src_timestamp = await _get_last_operation_timestamp(src_client, src_account)
+    dest_timestamp = await _get_last_operation_timestamp(dest_client, dest_account)
+
+    last_modified = src_timestamp + dest_timestamp
+
+    while True:
+        src_timestamp = await _get_last_operation_timestamp(src_client, src_account)
+        dest_timestamp = await _get_last_operation_timestamp(dest_client, dest_account)
+
+        current_modified = src_timestamp + dest_timestamp
+
+        if current_modified != last_modified:
+            last_modified = current_modified
+
+            src_portfolio = await _get_valid_portfolio(src_client, src_account)
+            dest_portfolio = await _get_valid_portfolio(dest_client, dest_account)
+
+            await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
+
+        await asyncio.sleep(10)
+
+
+async def _start_follow_poll_file_mode(src_client, dest_client, src_account, dest_account, polling_file):
     last_modified = os.path.getmtime(polling_file)
-
-    src_portfolio = await src_client.operations.get_portfolio(account_id=src_account)
-    dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
-
-    await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
 
     while True:
         current_modified = os.path.getmtime(polling_file)
@@ -116,12 +134,47 @@ async def _start_follow_poll_mode(src_client, dest_client, src_account, dest_acc
         if current_modified != last_modified:
             last_modified = current_modified
 
-            src_portfolio = await src_client.operations.get_portfolio(account_id=src_account)
-            dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
+            src_portfolio = await _get_valid_portfolio(src_client, src_account)
+            dest_portfolio = await _get_valid_portfolio(dest_client, dest_account)
 
             await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
 
-        time.sleep(1)
+        await asyncio.sleep(1)
+
+
+async def _get_valid_portfolio(client, account):
+    while True:
+        portfolio = await client.operations.get_portfolio(account_id=account)
+
+        good = True
+
+        for position in portfolio.positions:
+            if position.average_position_price.units <= 0 and position.average_position_price.nano <= 0:
+                good = False
+
+                break
+
+        if good:
+            return portfolio
+
+        await asyncio.sleep(1)
+
+
+async def _get_last_operation_timestamp(client, account):
+    req = GetOperationsByCursorRequest(
+        account_id=account,
+        limit=1,
+        state=OperationState.OPERATION_STATE_EXECUTED,
+        cursor="",
+        without_trades=True
+    )
+
+    operations = await client.operations.get_operations_by_cursor(req)
+
+    if len(operations.items) > 0:
+        return int(operations.items[0].date.timestamp() * 1000)
+
+    return 0
 
 
 async def _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio):
@@ -200,7 +253,7 @@ async def _build_instruments_for_trading(dest_client, src_instrument_to_cost, de
 async def _trade_instruments(dest_client, dest_account, instruments):
     tasks = []
 
-    dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
+    dest_portfolio = await _get_valid_portfolio(dest_client, dest_account)
 
     for instrument_id, expected_cost in instruments.items():
         current_cost = Decimal(0)
@@ -240,11 +293,10 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
                 break
 
         order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
+        price = _calculate_buy_price(order_book)
 
-        if order_book.bids:
-            bid = order_book.bids[0]
-
-            if bid.price != order_price:
+        if price is not None:
+            if price != order_price:
                 if order_id is not None:
                     resp = await dest_client.orders.get_order_state(
                         account_id=dest_account,
@@ -264,10 +316,10 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
                     order_id = None
                     order_price = None
 
-                bid_decimal = quotation_to_decimal(bid.price)
-                lot_price = lot * bid_decimal
+                price_decimal = quotation_to_decimal(price)
+                lot_price = lot * price_decimal
 
-                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=bid.price)
+                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=price)
                 max_lots = await dest_client.orders.get_max_lots(req)
 
                 delta_quantity = round(delta / lot_price)
@@ -276,7 +328,7 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
                 if amount_to_buy > 0:
                     resp = await dest_client.orders.post_order(
                         quantity=amount_to_buy,
-                        price=bid.price,
+                        price=price,
                         direction=OrderDirection.ORDER_DIRECTION_BUY,
                         account_id=dest_account,
                         order_type=OrderType.ORDER_TYPE_LIMIT,
@@ -287,7 +339,7 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
 
                     if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
                         order_id = resp.order_id
-                        order_price = bid.price
+                        order_price = price
                 else:
                     break
 
@@ -313,11 +365,10 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                 break
 
         order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
+        price = _calculate_sell_price(order_book)
 
-        if order_book.asks:
-            ask = order_book.asks[0]
-
-            if ask.price != order_price:
+        if price is not None:
+            if price != order_price:
                 if order_id is not None:
                     resp = await dest_client.orders.get_order_state(
                         account_id=dest_account,
@@ -337,10 +388,10 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                     order_id = None
                     order_price = None
 
-                ask_decimal = quotation_to_decimal(ask.price)
-                lot_price = lot * ask_decimal
+                price_decimal = quotation_to_decimal(price)
+                lot_price = lot * price_decimal
 
-                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=ask.price)
+                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=price)
                 max_lots = await dest_client.orders.get_max_lots(req)
 
                 if sell_all:
@@ -352,7 +403,7 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                 if amount_to_sell > 0:
                     resp = await dest_client.orders.post_order(
                         quantity=amount_to_sell,
-                        price=ask.price,
+                        price=price,
                         direction=OrderDirection.ORDER_DIRECTION_SELL,
                         account_id=dest_account,
                         order_type=OrderType.ORDER_TYPE_LIMIT,
@@ -363,13 +414,14 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
 
                     if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
                         order_id = resp.order_id
-                        order_price = ask.price
+                        order_price = price
                 else:
                     break
 
         await asyncio.sleep(30)
 
 
+# TODO: Clear at the start of the day
 _instrument_lot_cache = {}
 
 
@@ -383,6 +435,26 @@ async def _get_instrument_lot(client, instrument_id):
     _instrument_lot_cache[instrument_id] = resp.instrument.lot
 
     return resp.instrument.lot
+
+
+def _calculate_buy_price(order_book):
+    if order_book.asks:
+        return order_book.asks[0].price
+
+    if order_book.bids:
+        return order_book.bids[0].price
+
+    return None
+
+
+def _calculate_sell_price(order_book):
+    if order_book.bids:
+        return order_book.bids[0].price
+
+    if order_book.asks:
+        return order_book.asks[0].price
+
+    return None
 
 
 def main():
@@ -454,7 +526,7 @@ def main():
         "--mode",
         dest="mode",
         type=str,
-        choices=["stream", "poll"],
+        choices=["stream", "poll", "poll-file"],
         default="stream",
         help="Mode for detecting portfolio changes",
     )
@@ -463,7 +535,7 @@ def main():
         dest="polling_file",
         type=str,
         default="",
-        help="Path to file for polling (only for --mode poll)",
+        help="Path to file for polling (only for --mode poll-file)",
     )
     args = parser.parse_args()
 
@@ -487,13 +559,13 @@ def main():
 
         sys.exit(1)
 
-    if args.mode == "poll" and args.polling_file == "":
+    if args.mode == "poll-file" and args.polling_file == "":
         logger.error("Please specify path to file for polling with --polling-file")
 
         sys.exit(1)
 
-    if args.mode != "poll" and args.polling_file != "":
-        logger.error("Path to file for polling specified without --mode poll")
+    if args.mode != "poll-file" and args.polling_file != "":
+        logger.error("Path to file for polling specified without --mode poll-file")
 
         sys.exit(1)
 

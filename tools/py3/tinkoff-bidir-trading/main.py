@@ -45,6 +45,8 @@ async def bidir_trading(args):
         logger.info("Verifying account")
 
         if not await _validate_account(client, args.account):
+            sys.exit(1)
+
             return
 
         await _start_orderbook_streaming(client, args.account, args.instrument_id, args.spread, args.max_buy_price, args.min_sell_price, args.limit_lots, args.limit_by_time)

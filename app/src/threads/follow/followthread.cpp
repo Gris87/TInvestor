@@ -253,7 +253,7 @@ void FollowThread::buildInstrumentsForTrading(
         if (!instruments.contains(instrumentId))
         {
             instrumentsForBuy[instrumentId] = TradingInfo(
-                ASAP_MODE_FOLLOW_PRICE,
+                ASAP_MODE_IMMEDIATELY_TRADE,
                 -1.0f,
                 it.value().price,
                 expectedCost,
@@ -273,7 +273,7 @@ void FollowThread::buildInstrumentsForTrading(
         if (delta < -lotPrice)
         {
             instrumentsForSale[instrumentId] = TradingInfo(
-                ASAP_MODE_FOLLOW_PRICE,
+                ASAP_MODE_IMMEDIATELY_TRADE,
                 -1.0f,
                 item.price,
                 expectedCost,
@@ -284,7 +284,7 @@ void FollowThread::buildInstrumentsForTrading(
         else if (delta > lotPrice)
         {
             instrumentsForBuy[instrumentId] = TradingInfo(
-                ASAP_MODE_FOLLOW_PRICE,
+                ASAP_MODE_IMMEDIATELY_TRADE,
                 -1.0f,
                 item.price,
                 expectedCost,
@@ -301,7 +301,7 @@ void FollowThread::buildInstrumentsForTrading(
         if (!anotherInstruments.contains(instrumentId))
         {
             instrumentsForSale[instrumentId] = TradingInfo(
-                ASAP_MODE_FOLLOW_PRICE,
+                ASAP_MODE_IMMEDIATELY_TRADE,
                 -1.0f,
                 it.value().price,
                 0, // Need to sell all

@@ -47,6 +47,8 @@ async def asap_trading(args):
         logger.info("Verifying account")
 
         if not await _validate_account(client, args.account):
+            sys.exit(1)
+
             return
 
         await _do_processing(args, token, client)

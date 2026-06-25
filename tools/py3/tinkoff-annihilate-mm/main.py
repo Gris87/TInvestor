@@ -38,6 +38,8 @@ async def annihilate_mm(args):
         logger.info("Verifying account")
 
         if not await _validate_account(client, args.account):
+            sys.exit(1)
+
             return
 
         money, tmon_cost = await _get_money_and_tmon_cost(client, args.account)
