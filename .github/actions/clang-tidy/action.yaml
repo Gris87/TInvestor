@@ -100,6 +100,9 @@ runs:
         switch ("${{ runner.os }}")
         {
           "Windows" {
+                Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\"
+                Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\Include\"
+
                 & python tools/py3/generate-compile-commands `
                     --os Windows `
                     --target clang-tidy `
