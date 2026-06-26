@@ -36,6 +36,7 @@ runs:
 
     # Setup python
     - name: Setup python
+      if: steps.cache-doc.outputs.cache-hit != 'true'
       uses: actions/setup-python@v6
       with:
         python-version: "3.13"

@@ -36,7 +36,7 @@ runs:
 
     # Download environment artifacts
     - name: Download environment artifacts (Qt/ZLib/Quazip)
-      if: steps.cache-build.outputs.cache-hit != 'true'
+      if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
       uses: thebrowsercompany/gha-download-tar-artifact@main
       with:
         name: env-qt-zlib-quazip-${{ matrix.config.name }}
@@ -44,7 +44,7 @@ runs:
 
     # Download environment artifacts
     - name: Download environment artifacts (vcpkg)
-      if: steps.cache-build.outputs.cache-hit != 'true'
+      if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
       uses: thebrowsercompany/gha-download-tar-artifact@main
       with:
         name: env-vcpkg-${{ matrix.config.name }}
@@ -52,7 +52,7 @@ runs:
 
     # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
     - name: Checkout googletest
-      if: steps.cache-build.outputs.cache-hit != 'true'
+      if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
       uses: actions/checkout@v6
       with:
         repository: google/googletest
@@ -69,9 +69,9 @@ runs:
 
     # Prepare build artifacts (debug)
     - name: Prepare build artifacts (debug)
+      if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-        Get-ChildItem -Path "TInvestor-source/build/Desktop-Debug"
         Copy-Item -Path TInvestor-source/build/Desktop-Debug/libs/* -Destination TInvestor-source/build/Desktop-Debug/app/build/ -Recurse -Force
         Copy-Item -Path TInvestor-source/build/Desktop-Debug/libs/* -Destination TInvestor-source/build/Desktop-Debug/tests/app_tests/build/ -Recurse -Force
         Copy-Item -Path TInvestor-source/build/Desktop-Debug/libs/* -Destination TInvestor-source/build/Desktop-Debug/tests/notifier_tests/build/ -Recurse -Force
@@ -79,20 +79,21 @@ runs:
 
     # Setup python
     - name: Setup python
+      if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
       uses: actions/setup-python@v6
       with:
         python-version: "3.13"
 
     # Install required packages
     - name: System packages
-      if: steps.cache-style.outputs.cache-hit != 'true'
+      if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         pip install colorama loguru
 
     # Generate compile_commands.json
     - name: Generate compile_commands.json
-      if: steps.cache-doc.outputs.cache-hit != 'true'
+      if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         # Enter to TInvestor-source folder
@@ -101,8 +102,6 @@ runs:
         switch ("${{ runner.os }}")
         {
           "Windows" {
-                Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\"
-
                 & python tools/py3/generate-compile-commands `
                     --os Windows `
                     --target clang-tidy `

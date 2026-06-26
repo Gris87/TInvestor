@@ -67,6 +67,7 @@ runs:
 
     # Prepare build artifacts (debug)
     - name: Prepare build artifacts (debug)
+      if: steps.cache-test.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         Copy-Item -Path TInvestor-source/build/Desktop-Debug/libs/* -Destination TInvestor-source/build/Desktop-Debug/app/build/ -Recurse -Force
@@ -76,6 +77,7 @@ runs:
 
     # Prepare build artifacts (release)
     - name: Prepare build artifacts (release)
+      if: steps.cache-test.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         Copy-Item -Path TInvestor-source/build/Desktop-Release/libs/* -Destination TInvestor-source/build/Desktop-Release/app/build/ -Recurse -Force

@@ -36,7 +36,7 @@ runs:
 
     # Download environment artifacts
     - name: Download environment artifacts (Qt/ZLib/Quazip)
-      if: steps.cache-build.outputs.cache-hit != 'true'
+      if: steps.cache-clazy.outputs.cache-hit != 'true'
       uses: thebrowsercompany/gha-download-tar-artifact@main
       with:
         name: env-qt-zlib-quazip-${{ matrix.config.name }}
@@ -44,7 +44,7 @@ runs:
 
     # Download environment artifacts
     - name: Download environment artifacts (vcpkg)
-      if: steps.cache-build.outputs.cache-hit != 'true'
+      if: steps.cache-clazy.outputs.cache-hit != 'true'
       uses: thebrowsercompany/gha-download-tar-artifact@main
       with:
         name: env-vcpkg-${{ matrix.config.name }}
@@ -52,7 +52,7 @@ runs:
 
     # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
     - name: Checkout googletest
-      if: steps.cache-build.outputs.cache-hit != 'true'
+      if: steps.cache-clazy.outputs.cache-hit != 'true'
       uses: actions/checkout@v6
       with:
         repository: google/googletest
@@ -69,6 +69,7 @@ runs:
 
     # Prepare build artifacts (debug)
     - name: Prepare build artifacts (debug)
+      if: steps.cache-clazy.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         Copy-Item -Path TInvestor-source/build/Desktop-Debug/libs/* -Destination TInvestor-source/build/Desktop-Debug/app/build/ -Recurse -Force
@@ -78,20 +79,21 @@ runs:
 
     # Setup python
     - name: Setup python
+      if: steps.cache-clazy.outputs.cache-hit != 'true'
       uses: actions/setup-python@v6
       with:
         python-version: "3.13"
 
     # Install required packages
     - name: System packages
-      if: steps.cache-style.outputs.cache-hit != 'true'
+      if: steps.cache-clazy.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         pip install colorama loguru
 
     # Generate compile_commands.json
     - name: Generate compile_commands.json
-      if: steps.cache-doc.outputs.cache-hit != 'true'
+      if: steps.cache-clazy.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         # Enter to TInvestor-source folder
@@ -109,8 +111,8 @@ runs:
                     --quazip-path "${Env:GITHUB_WORKSPACE}\Qt\quazip\install\include\QuaZip-Qt6-1.5" `
                     --vcpkg-path "${Env:GITHUB_WORKSPACE}\Qt\vcpkg" `
                     --google-test-path "${Env:GITHUB_WORKSPACE}\Qt\googletest-source" `
-                    --msvc-tools-path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207" `
-                    --msvc-auxiliary-path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary" `
+                    --msvc-tools-path "C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.44.35207" `
+                    --msvc-auxiliary-path "C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Auxiliary" `
                     --windows-kits-path "C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0" `
                     --output build\Desktop-Debug\.qtc_clangd\compile_commands.json
             }
