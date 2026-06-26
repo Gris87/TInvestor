@@ -3,6 +3,8 @@ import argparse
 import json
 import logging
 import os
+import re
+import requests
 import sys
 import traceback
 
@@ -13,6 +15,9 @@ from pathlib import Path
 
 
 #logging.basicConfig(level=logging.DEBUG)
+
+
+mtproto_regexp = re.compile(r'https:\/\/t.me\/proxy\?server=(.+)&port=(\d+)&secret=(.+)')
 
 
 def telegram_bot(args, filter):
@@ -37,10 +42,13 @@ def telegram_bot(args, filter):
 
     api_id = os.environ["TELEGRAM_API_ID"]
     api_hash = os.environ["TELEGRAM_API_HASH"]
-    mtproxy_server = os.environ["TELEGRAM_MTPROXY_SERVER"]
-    mtproxy_port = int(os.environ["TELEGRAM_MTPROXY_PORT"])
-    mtproxy_secret = os.environ["TELEGRAM_MTPROXY_SECRET"]
+    mtproxy_server = os.environ.get("TELEGRAM_MTPROXY_SERVER", "")
+    mtproxy_port = int(os.environ.get("TELEGRAM_MTPROXY_PORT", 0))
+    mtproxy_secret = os.environ.get("TELEGRAM_MTPROXY_SECRET", "")
     bot_token = os.environ["TELEGRAM_TOKEN"]
+
+    if mtproxy_server == "" or mtproxy_port == 0 or mtproxy_secret == "":
+        mtproxy_server, mtproxy_port, mtproxy_secret = _get_mtproto(args)
 
     Path("bot.session").unlink(missing_ok=True)
     Path("bot.session-journal").unlink(missing_ok=True)
@@ -48,7 +56,13 @@ def telegram_bot(args, filter):
     res = True
 
     try:
-        client = TelegramClient("bot", api_id, api_hash, connection=connection.ConnectionTcpMTProxyRandomizedIntermediate, proxy=(mtproxy_server, mtproxy_port, mtproxy_secret)).start(bot_token=bot_token)
+        client = TelegramClient(
+            "bot",
+            api_id,
+            api_hash,
+            connection=connection.ConnectionTcpMTProxyRandomizedIntermediate if mtproxy_server != "" else connection.ConnectionTcpFull,
+            proxy=(mtproxy_server, mtproxy_port, mtproxy_secret) if mtproxy_server != "" else None
+        ).start(bot_token=bot_token)
 
         with client:
             client.loop.run_until_complete(_process_files(args, client, filter))
@@ -61,6 +75,88 @@ def telegram_bot(args, filter):
     Path("bot.session-journal").unlink(missing_ok=True)
 
     return res
+
+
+def _get_mtproto(args):
+    res_server = ""
+    res_port = 0
+    res_secret = ""
+
+    api_id = os.environ["TELEGRAM_API_ID"]
+    api_hash = os.environ["TELEGRAM_API_HASH"]
+    bot_token = os.environ["TELEGRAM_TOKEN"]
+
+    cache_folder_path = Path(args.cache) / "telegram"
+    cache_folder_path.mkdir(parents=True, exist_ok=True)
+
+    proxies_path = cache_folder_path / "all_proxies.json"
+    old_proxies = []
+
+    if proxies_path.exists():
+        with open(proxies_path, "r", encoding="utf-8") as f:
+            old_proxies = json.loads(f.read())
+
+    logger.info("Getting all_proxies.txt from GitHub")
+    response = requests.get("https://raw.githubusercontent.com/SoliSpirit/mtproto/refs/heads/master/all_proxies.txt")
+
+    proxies = list(filter(None, response.text.split("\n")))
+    new_proxies = list(dict.fromkeys(old_proxies + proxies))
+
+    index = 0
+
+    while index < len(new_proxies):
+        logger.info(f"Trying MTPROTO {new_proxies[index]}")
+
+        match = mtproto_regexp.match(new_proxies[index])
+
+        if match is not None:
+            mtproxy_server = match.group(1)
+            mtproxy_port = int(match.group(2))
+            mtproxy_secret = match.group(3)
+
+            Path("bot.session").unlink(missing_ok=True)
+            Path("bot.session-journal").unlink(missing_ok=True)
+
+            good = True
+
+            try:
+                client = TelegramClient(
+                    "bot",
+                    api_id,
+                    api_hash,
+                    connection=connection.ConnectionTcpMTProxyRandomizedIntermediate,
+                    proxy=(mtproxy_server, mtproxy_port, mtproxy_secret),
+                    timeout=1,
+                    connection_retries=0
+                ).start(bot_token=bot_token)
+
+                with client:
+                    client.loop.run_until_complete(_dummy())
+            except Exception as e:
+                good = False
+
+            Path("bot.session").unlink(missing_ok=True)
+            Path("bot.session-journal").unlink(missing_ok=True)
+
+            if good:
+                res_server = mtproxy_server
+                res_port = mtproxy_port
+                res_secret = mtproxy_secret
+
+                break
+
+        index += 1
+
+    new_proxies = new_proxies[index:]
+
+    with open(proxies_path, "w", encoding="utf-8") as f:
+        json.dump(new_proxies, f, ensure_ascii=False)
+
+    return res_server, res_port, res_secret
+
+
+async def _dummy():
+    pass
 
 
 async def _process_files(args, client, filter):
@@ -142,9 +238,6 @@ def main():
     expected_env_vars = [
         "TELEGRAM_API_ID",
         "TELEGRAM_API_HASH",
-        "TELEGRAM_MTPROXY_SERVER",
-        "TELEGRAM_MTPROXY_PORT",
-        "TELEGRAM_MTPROXY_SECRET",
         "TELEGRAM_TOKEN",
         "TELEGRAM_TARGET_USERNAME"
     ]

@@ -1,5 +1,4 @@
 Download cron failures
-Make telegram bot to automatically detect MTPROTO from github
 Notifier for Android
 Script for instant huge fall buy (-2%)
 Buy with MM as follower (x1.5-x2)
