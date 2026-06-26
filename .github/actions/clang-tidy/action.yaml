@@ -71,6 +71,7 @@ runs:
     - name: Prepare build artifacts (debug)
       shell: pwsh
       run: |
+        Get-ChildItem -Path "TInvestor-source/build/Desktop-Debug"
         Copy-Item -Path TInvestor-source/build/Desktop-Debug/libs/* -Destination TInvestor-source/build/Desktop-Debug/app/build/ -Recurse -Force
         Copy-Item -Path TInvestor-source/build/Desktop-Debug/libs/* -Destination TInvestor-source/build/Desktop-Debug/tests/app_tests/build/ -Recurse -Force
         Copy-Item -Path TInvestor-source/build/Desktop-Debug/libs/* -Destination TInvestor-source/build/Desktop-Debug/tests/notifier_tests/build/ -Recurse -Force
@@ -100,7 +101,8 @@ runs:
         switch ("${{ runner.os }}")
         {
           "Windows" {
-                Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\"
+                Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\"
+                Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\"
                 Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\Include\"
 
                 & python tools/py3/generate-compile-commands `
