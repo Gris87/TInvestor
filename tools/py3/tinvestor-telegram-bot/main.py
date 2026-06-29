@@ -7,6 +7,7 @@ import re
 import requests
 import sys
 import traceback
+import uuid
 
 from datetime import datetime
 from telethon import TelegramClient, connection
@@ -50,14 +51,22 @@ def telegram_bot(args, filter):
     if mtproxy_server == "" or mtproxy_port == 0 or mtproxy_secret == "":
         mtproxy_server, mtproxy_port, mtproxy_secret = _get_mtproto(args)
 
-    Path("bot.session").unlink(missing_ok=True)
-    Path("bot.session-journal").unlink(missing_ok=True)
+        if mtproxy_server == "" or mtproxy_port == 0 or mtproxy_secret == "":
+            logger.error("Failed to get MTPROTO")
+
+            sys.exit(1)
+
+    temp_uuid = uuid.uuid4()
+    temp_file_session=f"/tmp/tinvestor-telegram-bot-{temp_uuid}"
+
+    Path(f"{temp_file_session}.session").unlink(missing_ok=True)
+    Path(f"{temp_file_session}.session-journal").unlink(missing_ok=True)
 
     res = True
 
     try:
         client = TelegramClient(
-            "bot",
+            temp_file_session,
             api_id,
             api_hash,
             connection=connection.ConnectionTcpMTProxyRandomizedIntermediate if mtproxy_server != "" else connection.ConnectionTcpFull,
@@ -71,8 +80,8 @@ def telegram_bot(args, filter):
 
         traceback.print_exc()
 
-    Path("bot.session").unlink(missing_ok=True)
-    Path("bot.session-journal").unlink(missing_ok=True)
+    Path(f"{temp_file_session}.session").unlink(missing_ok=True)
+    Path(f"{temp_file_session}.session-journal").unlink(missing_ok=True)
 
     return res
 
@@ -114,14 +123,17 @@ def _get_mtproto(args):
             mtproxy_port = int(match.group(2))
             mtproxy_secret = match.group(3)
 
-            Path("bot.session").unlink(missing_ok=True)
-            Path("bot.session-journal").unlink(missing_ok=True)
+            temp_uuid = uuid.uuid4()
+            temp_file_session=f"/tmp/tinvestor-telegram-bot-{temp_uuid}"
+
+            Path(f"{temp_file_session}.session").unlink(missing_ok=True)
+            Path(f"{temp_file_session}.session-journal").unlink(missing_ok=True)
 
             good = True
 
             try:
                 client = TelegramClient(
-                    "bot",
+                    temp_file_session,
                     api_id,
                     api_hash,
                     connection=connection.ConnectionTcpMTProxyRandomizedIntermediate,
@@ -135,8 +147,8 @@ def _get_mtproto(args):
             except Exception as e:
                 good = False
 
-            Path("bot.session").unlink(missing_ok=True)
-            Path("bot.session-journal").unlink(missing_ok=True)
+            Path(f"{temp_file_session}.session").unlink(missing_ok=True)
+            Path(f"{temp_file_session}.session-journal").unlink(missing_ok=True)
 
             if good:
                 res_server = mtproxy_server
@@ -144,6 +156,8 @@ def _get_mtproto(args):
                 res_secret = mtproxy_secret
 
                 break
+        else:
+            logger.warning("Failed to parse MTPROTO {new_proxies[index]}")
 
         index += 1
 
@@ -195,12 +209,18 @@ async def _process_file(args, client, filter, record_path):
         await _send_message(client, record["text"])
 
 
-async def _send_message(client, msg):
-    logger.info(f"Send message: {msg}")
+async def _send_message(client, record):
+    data=record["data"]
+    text=record["text"]
+
+    logger.info(f"Send message: {text}")
 
     target_username = os.environ["TELEGRAM_TARGET_USERNAME"]
 
-    await client.send_message(target_username, msg)
+    if data != "":
+        await client.send_file(target_username, mime_type="text/plain", file=data.encode("utf-8"), caption=text)
+    else:
+        await client.send_message(target_username, text)
 
 
 def main():
