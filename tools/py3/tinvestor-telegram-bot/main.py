@@ -7,6 +7,7 @@ import psutil
 import re
 import requests
 import sys
+import tempfile
 import traceback
 import uuid
 
@@ -234,7 +235,7 @@ async def _process_file(args, client, filter, record_path):
         record = json.loads(f.read())
 
     if args.filter == "all" or record["type"] in filter:
-        await _send_message(client, record["text"])
+        await _send_message(client, record)
 
 
 async def _send_message(client, record):
@@ -246,7 +247,11 @@ async def _send_message(client, record):
     target_username = os.environ["TELEGRAM_TARGET_USERNAME"]
 
     if data != "":
-        await client.send_file(target_username, mime_type="text/plain", file=data.encode("utf-8"), caption=text)
+        with tempfile.TemporaryDirectory() as tmp_dir_name:
+            with open(f"{tmp_dir_name}/log.txt", "w") as f:
+                f.write(data)
+
+            await client.send_file(target_username, file=f"{tmp_dir_name}/log.txt", caption=text)
     else:
         await client.send_message(target_username, text)
 
