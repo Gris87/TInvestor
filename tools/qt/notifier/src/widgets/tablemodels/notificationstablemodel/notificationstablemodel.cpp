@@ -14,9 +14,9 @@
 
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
-const QColor      HIGHLIGHT_COLOR = QColor("#918A00"); // clazy:exclude=non-pod-global-static
-const QColor      NORMAL_COLOR    = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
-const QBrush      LINK_COLOR      = QBrush(QColor("#008CFF")); // clazy:exclude=non-pod-global-static
+const QColor      HIGHLIGHT_COLOR = QColor("#918A00");         // clazy:exclude=non-pod-global-static
+const QColor      NORMAL_COLOR    = QColor("#2C3C4B");         // clazy:exclude=non-pod-global-static
+const QBrush      LINK_COLOR      = QBrush(QColor("#0015FF")); // clazy:exclude=non-pod-global-static
 
 constexpr qint64 MS_IN_SECOND    = 1000LL;
 constexpr qint64 ONE_MINUTE      = 60LL * MS_IN_SECOND;
@@ -107,9 +107,7 @@ static QVariant notificationsNothingForegroundRole(const NotificationInfo& /*not
 using ForegroundRoleHandler = QVariant (*)(const NotificationInfo& notification);
 
 static const ForegroundRoleHandler FOREGROUND_ROLE_HANDLER[NOTIFICATIONS_COLUMN_COUNT]{
-    notificationsNothingForegroundRole,
-    notificationsNothingForegroundRole,
-    notificationsTextForegroundRole
+    notificationsNothingForegroundRole, notificationsNothingForegroundRole, notificationsTextForegroundRole
 };
 
 static QVariant notificationsTextFontRole(const NotificationInfo& notification)
@@ -133,9 +131,7 @@ static QVariant notificationsNothingFontRole(const NotificationInfo& /*notificat
 using FontRoleHandler = QVariant (*)(const NotificationInfo& notification);
 
 static const FontRoleHandler FONT_ROLE_HANDLER[NOTIFICATIONS_COLUMN_COUNT]{
-    notificationsNothingFontRole,
-    notificationsNothingFontRole,
-    notificationsTextFontRole
+    notificationsNothingFontRole, notificationsNothingFontRole, notificationsTextFontRole
 };
 
 QVariant NotificationsTableModel::data(const QModelIndex& index, int role) const

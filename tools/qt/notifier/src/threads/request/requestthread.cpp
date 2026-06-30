@@ -124,6 +124,12 @@ void RequestThread::processNotificationsResponse(const QByteArray& resp)
                 notification.fromJsonObject(jsonObject);
                 notification.requestTimestamp = timestamp;
 
+                if (notification.data != "")
+                {
+                    mNotificationsDatabase->writeAttachment(notification);
+                    notification.data = "+";
+                }
+
                 --i;
             }
 

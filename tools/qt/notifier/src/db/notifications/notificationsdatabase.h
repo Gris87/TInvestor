@@ -21,6 +21,7 @@ public:
     QList<NotificationInfo> readNotifications() override;
     void                    writeNotifications(QList<NotificationInfo>& notifications) override;
     void                    appendNotifications(const QList<NotificationInfo>& notifications) override;
+    void                    writeAttachment(const NotificationInfo& notification) override;
 
 private:
     IDirFactory*  mDirFactory;

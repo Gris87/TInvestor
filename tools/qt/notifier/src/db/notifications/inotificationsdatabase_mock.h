@@ -23,4 +23,5 @@ public:
     MOCK_METHOD(QList<NotificationInfo>, readNotifications, (), (override));
     MOCK_METHOD(void, writeNotifications, (QList<NotificationInfo> & notifications), (override));
     MOCK_METHOD(void, appendNotifications, (const QList<NotificationInfo>& notifications), (override));
+    MOCK_METHOD(void, writeAttachment, (const NotificationInfo& notification), (override));
 };

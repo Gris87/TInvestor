@@ -18,4 +18,5 @@ public:
     virtual QList<NotificationInfo> readNotifications()                                               = 0;
     virtual void                    writeNotifications(QList<NotificationInfo>& notifications)        = 0;
     virtual void                    appendNotifications(const QList<NotificationInfo>& notifications) = 0;
+    virtual void                    writeAttachment(const NotificationInfo& notification)             = 0;
 };

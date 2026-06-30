@@ -315,3 +315,24 @@ void NotificationsDatabase::appendNotifications(const QList<NotificationInfo>& n
 
     notificationsFile->close();
 }
+
+void NotificationsDatabase::writeAttachment(const NotificationInfo& notification)
+{
+    qDebug() << "Writing attachment to database";
+
+    const QString dirPath = QString("%1/data/attachments").arg(qApp->applicationDirPath());
+
+    const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
+
+    bool ok = dir->mkpath(dirPath);
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
+
+    const std::shared_ptr<IFile> attachmentFile =
+        mFileFactory->newInstance(QString("%1/%2.txt").arg(dirPath, QString::number(notification.timestamp)));
+
+    ok = attachmentFile->open(QIODevice::WriteOnly);
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
+
+    attachmentFile->write(notification.data.toUtf8());
+    attachmentFile->close();
+}
