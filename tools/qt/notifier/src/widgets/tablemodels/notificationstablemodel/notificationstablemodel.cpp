@@ -1,11 +1,14 @@
 #include "src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.h"
 
 #include <QBrush>
+#include <QCoreApplication>
 #include <QDebug>
+#include <QFont>
 #include <algorithm>
 #include <execution>
 
 #include "src/threads/parallelhelper/parallelhelperthread.h"
+#include "src/widgets/tablemodels/modelroles.h"
 #include "src/widgets/tablemodels/notificationstablemodel/comparators.h"
 
 
@@ -13,6 +16,7 @@
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 const QColor      HIGHLIGHT_COLOR = QColor("#918A00"); // clazy:exclude=non-pod-global-static
 const QColor      NORMAL_COLOR    = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QBrush      LINK_COLOR      = QBrush(QColor("#008CFF")); // clazy:exclude=non-pod-global-static
 
 constexpr qint64 MS_IN_SECOND    = 1000LL;
 constexpr qint64 ONE_MINUTE      = 60LL * MS_IN_SECOND;
@@ -90,6 +94,50 @@ static const DisplayRoleHandler DISPLAY_ROLE_HANDLER[NOTIFICATIONS_COLUMN_COUNT]
     notificationsTimeDisplayRole, notificationsTypeDisplayRole, notificationsTextDisplayRole
 };
 
+static QVariant notificationsTextForegroundRole(const NotificationInfo& notification)
+{
+    return notification.data != "" ? LINK_COLOR : QVariant();
+}
+
+static QVariant notificationsNothingForegroundRole(const NotificationInfo& /*notification*/)
+{
+    return QVariant();
+}
+
+using ForegroundRoleHandler = QVariant (*)(const NotificationInfo& notification);
+
+static const ForegroundRoleHandler FOREGROUND_ROLE_HANDLER[NOTIFICATIONS_COLUMN_COUNT]{
+    notificationsNothingForegroundRole,
+    notificationsNothingForegroundRole,
+    notificationsTextForegroundRole
+};
+
+static QVariant notificationsTextFontRole(const NotificationInfo& notification)
+{
+    if (notification.data == "")
+    {
+        return QVariant();
+    }
+
+    QFont font;
+    font.setUnderline(true);
+
+    return font;
+}
+
+static QVariant notificationsNothingFontRole(const NotificationInfo& /*notification*/)
+{
+    return QVariant();
+}
+
+using FontRoleHandler = QVariant (*)(const NotificationInfo& notification);
+
+static const FontRoleHandler FONT_ROLE_HANDLER[NOTIFICATIONS_COLUMN_COUNT]{
+    notificationsNothingFontRole,
+    notificationsNothingFontRole,
+    notificationsTextFontRole
+};
+
 QVariant NotificationsTableModel::data(const QModelIndex& index, int role) const
 {
     if (role == Qt::DisplayRole)
@@ -119,6 +167,32 @@ QVariant NotificationsTableModel::data(const QModelIndex& index, int role) const
         }
 
         return QVariant();
+    }
+
+    if (role == Qt::ForegroundRole)
+    {
+        const int row    = index.row();
+        const int column = index.column();
+
+        return FOREGROUND_ROLE_HANDLER[column](mEntries->at(row));
+    }
+
+    if (role == Qt::FontRole)
+    {
+        const int row    = index.row();
+        const int column = index.column();
+
+        return FONT_ROLE_HANDLER[column](mEntries->at(row));
+    }
+
+    if (role == ROLE_URL)
+    {
+        const int row = index.row();
+        Q_ASSERT_X(index.column() == NOTIFICATIONS_TEXT_COLUMN, __FUNCTION__, "Unexpected behavior");
+
+        return mEntries->at(row).data != "" ? QString("%1/data/attachments/%2.txt")
+                                                  .arg(qApp->applicationDirPath(), QString::number(mEntries->at(row).timestamp))
+                                            : "";
     }
 
     return QVariant();

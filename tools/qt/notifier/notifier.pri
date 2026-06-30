@@ -81,6 +81,7 @@ HEADERS += \
     src/widgets/notificationwidget/inotificationwidgetfactory.h \
     src/widgets/notificationwidget/notificationwidget.h \
     src/widgets/notificationwidget/notificationwidgetfactory.h \
+    src/widgets/tablemodels/modelroles.h \
     src/widgets/tablemodels/notificationstablemodel/comparators.h \
     src/widgets/tablemodels/notificationstablemodel/inotificationstablemodel.h \
     src/widgets/tablemodels/notificationstablemodel/inotificationstablemodelfactory.h \

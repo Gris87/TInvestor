@@ -2,6 +2,10 @@
 #include "ui_notificationstablewidget.h"
 
 #include <QDebug>
+#include <QDesktopServices>
+#include <QMouseEvent>
+
+#include "src/widgets/tablemodels/modelroles.h"
 
 
 
@@ -30,6 +34,8 @@ NotificationsTableWidget::NotificationsTableWidget(
     ui->tableView->setModel(mNotificationsTableModel);
     ui->tableView->sortByColumn(NOTIFICATIONS_TIME_COLUMN, Qt::DescendingOrder);
     ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    ui->tableView->viewport()->installEventFilter(this);
 }
 
 NotificationsTableWidget::~NotificationsTableWidget()
@@ -37,6 +43,33 @@ NotificationsTableWidget::~NotificationsTableWidget()
     qDebug() << "Destroy NotificationsTableWidget";
 
     delete ui;
+}
+
+bool NotificationsTableWidget::eventFilter(QObject* object, QEvent* event)
+{
+    if (event->type() == QEvent::MouseMove || event->type() == QEvent::MouseButtonRelease)
+    {
+        const QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
+        const QModelIndex  index      = ui->tableView->indexAt(mouseEvent->pos());
+
+        const QString url = index.isValid() && index.column() == NOTIFICATIONS_TEXT_COLUMN ? index.data(ROLE_URL).toString() : "";
+
+        if (url != "")
+        {
+            ui->tableView->setCursor(Qt::PointingHandCursor);
+
+            if (event->type() == QEvent::MouseButtonRelease && mouseEvent->button() == Qt::LeftButton)
+            {
+                QDesktopServices::openUrl(QUrl(url));
+            }
+        }
+        else
+        {
+            ui->tableView->setCursor(Qt::ArrowCursor);
+        }
+    }
+
+    return INotificationsTableWidget::eventFilter(object, event);
 }
 
 void NotificationsTableWidget::setFilter(const Filter& filter)

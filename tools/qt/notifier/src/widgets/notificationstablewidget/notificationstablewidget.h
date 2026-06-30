@@ -33,6 +33,8 @@ public:
 
     Ui::NotificationsTableWidget* ui;
 
+    bool eventFilter(QObject* object, QEvent* event) override;
+
     void setFilter(const Filter& filter) override;
     void notificationsRead(const QList<NotificationInfo>& notifications) override;
     void notificationsAdded(const QList<NotificationInfo>& notifications) override;
