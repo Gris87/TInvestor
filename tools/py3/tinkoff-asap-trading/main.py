@@ -114,6 +114,8 @@ def _start_instrument_processing(args, token, instrument_id, ticker):
             if cmdline is not None and len(cmdline) > 1 and "tools/py3/tinkoff-asap-trading/parallel.py" in cmdline[1] and args.account in cmdline and instrument_id in cmdline:
                 found = True
 
+                break
+
     if found:
         return
 

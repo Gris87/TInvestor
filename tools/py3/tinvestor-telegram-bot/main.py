@@ -3,6 +3,7 @@ import argparse
 import json
 import logging
 import os
+import psutil
 import re
 import requests
 import sys
@@ -22,24 +23,8 @@ mtproto_regexp = re.compile(r'https:\/\/t.me\/proxy\?server=(.+)&port=(\d+)&secr
 
 
 def telegram_bot(args, filter):
-    if args.silence != "":
-        ranges = args.silence.split("-")
-
-        if len(ranges) != 2:
-            logger.error("Please specify valid silence range")
-
-            sys.exit(1)
-
-        start_time = datetime.strptime(ranges[0], "%H:%M").time()
-        end_time   = datetime.strptime(ranges[1], "%H:%M").time()
-        now        = datetime.now().time()
-
-        if start_time < end_time:
-            if now >= start_time and now < end_time:
-                return
-        else:
-            if now >= start_time or now < end_time:
-                return
+    _check_running_instance()
+    _check_silence_range(args)
 
     api_id = os.environ["TELEGRAM_API_ID"]
     api_hash = os.environ["TELEGRAM_API_HASH"]
@@ -84,6 +69,49 @@ def telegram_bot(args, filter):
     Path(f"{temp_file_session}.session-journal").unlink(missing_ok=True)
 
     return res
+
+
+def _check_running_instance():
+    found = False
+
+    for p in psutil.process_iter(["name", "cmdline"]):
+        if "python" in p.info["name"]:
+            cmdline = p.info["cmdline"]
+
+            if cmdline is not None and len(cmdline) > 1 and "tools/py3/tinvestor-telegram-bot" in cmdline[1] and p.pid != os.getpid():
+                found = True
+
+                break
+
+    if found:
+        logger.warning("Another instance is running. Terminating")
+
+        sys.exit(0)
+
+
+def _check_silence_range(args):
+    if args.silence != "":
+        ranges = args.silence.split("-")
+
+        if len(ranges) != 2:
+            logger.error("Please specify valid silence range")
+
+            sys.exit(1)
+
+        start_time = datetime.strptime(ranges[0], "%H:%M").time()
+        end_time   = datetime.strptime(ranges[1], "%H:%M").time()
+        now        = datetime.now().time()
+
+        if start_time < end_time:
+            if now >= start_time and now < end_time:
+                logger.warning("Zzzzzz")
+
+                sys.exit(0)
+        else:
+            if now >= start_time or now < end_time:
+                logger.warning("Zzzzzz")
+
+                sys.exit(0)
 
 
 def _get_mtproto(args):
