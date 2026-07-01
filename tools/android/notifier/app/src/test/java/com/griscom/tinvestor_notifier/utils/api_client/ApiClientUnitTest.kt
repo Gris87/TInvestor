@@ -1,5 +1,7 @@
 package com.griscom.tinvestor_notifier.utils.api_client
 
+import com.griscom.tinvestor_notifier.R
+import com.griscom.tinvestor_notifier.data.MessageType
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -10,7 +12,7 @@ import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
+import org.junit.Assert
 import org.junit.Test
 
 class ApiClientUnitTest {
@@ -18,7 +20,7 @@ class ApiClientUnitTest {
     fun getMessages() {
         runBlocking {
             val mockEngine =
-                MockEngine { request ->
+                MockEngine {
                     respond(
                         content =
                             ByteReadChannel(
@@ -48,10 +50,52 @@ class ApiClientUnitTest {
                     }
                 }
 
-            var apiClient = ApiClient(httpClient)
-            apiClient.getMessages()
+            val apiClient = ApiClient(httpClient)
+            val messages = apiClient.getMessages()
 
-            assertEquals(4, 2 + 2)
+            Assert.assertEquals(7, messages.size)
+
+            Assert.assertEquals("2024-01-01 00:00:00", messages[0].timestamp)
+            Assert.assertEquals(MessageType.SYSTEM, messages[0].messageType)
+            Assert.assertEquals(R.string.message_type_system, messages[0].messageTypeString)
+            Assert.assertEquals("AAAAA", messages[0].text)
+            Assert.assertEquals("Some log", messages[0].data)
+
+            Assert.assertEquals("2024-01-01 00:01:00", messages[1].timestamp)
+            Assert.assertEquals(MessageType.PORTFOLIO, messages[1].messageType)
+            Assert.assertEquals(R.string.message_type_portfolio, messages[1].messageTypeString)
+            Assert.assertEquals("BBBBB", messages[1].text)
+            Assert.assertEquals("", messages[1].data)
+
+            Assert.assertEquals("2024-01-01 00:02:00", messages[2].timestamp)
+            Assert.assertEquals(MessageType.HUGE_SELL, messages[2].messageType)
+            Assert.assertEquals(R.string.message_type_huge_sell, messages[2].messageTypeString)
+            Assert.assertEquals("CCCCC", messages[2].text)
+            Assert.assertEquals("", messages[2].data)
+
+            Assert.assertEquals("2024-01-01 00:03:00", messages[3].timestamp)
+            Assert.assertEquals(MessageType.DIVIDENDS, messages[3].messageType)
+            Assert.assertEquals(R.string.message_type_dividends, messages[3].messageTypeString)
+            Assert.assertEquals("DDDDD", messages[3].text)
+            Assert.assertEquals("", messages[3].data)
+
+            Assert.assertEquals("2024-01-01 00:04:00", messages[4].timestamp)
+            Assert.assertEquals(MessageType.PULSE_NEUTRAL, messages[4].messageType)
+            Assert.assertEquals(R.string.message_type_pulse_neutral, messages[4].messageTypeString)
+            Assert.assertEquals("EEEEE", messages[4].text)
+            Assert.assertEquals("", messages[4].data)
+
+            Assert.assertEquals("2024-01-01 00:05:00", messages[5].timestamp)
+            Assert.assertEquals(MessageType.PULSE_BUY, messages[5].messageType)
+            Assert.assertEquals(R.string.message_type_pulse_buy, messages[5].messageTypeString)
+            Assert.assertEquals("FFFFF", messages[5].text)
+            Assert.assertEquals("", messages[5].data)
+
+            Assert.assertEquals("2024-01-01 00:06:00", messages[6].timestamp)
+            Assert.assertEquals(MessageType.PULSE_SELL, messages[6].messageType)
+            Assert.assertEquals(R.string.message_type_pulse_sell, messages[6].messageTypeString)
+            Assert.assertEquals("GGGGG", messages[6].text)
+            Assert.assertEquals("", messages[6].data)
         }
     }
 }

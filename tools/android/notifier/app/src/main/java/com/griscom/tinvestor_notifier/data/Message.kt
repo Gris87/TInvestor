@@ -15,4 +15,5 @@ data class Message(
     var messageType: MessageType,
     var messageTypeString: Int,
     var text: String,
+    var data: String,
 )
