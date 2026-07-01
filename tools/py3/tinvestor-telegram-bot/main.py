@@ -42,6 +42,8 @@ def telegram_bot(args, filter):
 
             sys.exit(1)
 
+        logger.info(f"Found MTPROTO: {mtproxy_server}:{mtproxy_port}")
+
     temp_uuid = uuid.uuid4()
     temp_file_session=f"/tmp/tinvestor-telegram-bot-{temp_uuid}"
 

@@ -9,12 +9,22 @@ import android.content.pm.ServiceInfo
 import android.os.IBinder
 import android.util.Log
 import com.griscom.tinvestor_notifier.R
+import com.griscom.tinvestor_notifier.utils.api_client.ApiClient
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
+import javax.net.ssl.SSLContext
+import javax.net.ssl.X509TrustManager
 import kotlin.time.Duration.Companion.minutes
 
 private const val TAG = "SyncService"
@@ -26,6 +36,42 @@ private val INTERVAL = 1.minutes
 class SyncService : Service() {
     private val serviceJob = SupervisorJob()
     private val serviceScope = CoroutineScope(Dispatchers.IO + serviceJob)
+
+    val httpClient =
+        HttpClient(OkHttp) {
+            engine {
+                val trustManager =
+                    object : X509TrustManager {
+                        override fun checkClientTrusted(
+                            chain: Array<out X509Certificate>?,
+                            authType: String?,
+                        ) {}
+
+                        override fun checkServerTrusted(
+                            chain: Array<out X509Certificate>?,
+                            authType: String?,
+                        ) {}
+
+                        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+                    }
+
+                val sslContext =
+                    SSLContext.getInstance("SSL").apply {
+                        init(null, arrayOf(trustManager), SecureRandom())
+                    }
+
+                // OkHttp engine allows configuration via its native OkHttpClient.Builder
+                config {
+                    sslSocketFactory(sslContext.socketFactory, trustManager)
+                    hostnameVerifier { _, _ -> true }
+                }
+            }
+
+            install(ContentNegotiation) {
+                json()
+            }
+        }
+    val apiClient = ApiClient(httpClient)
 
     override fun onStartCommand(
         intent: Intent?,
@@ -63,6 +109,10 @@ class SyncService : Service() {
 
     private fun fetchData() {
         Log.d(TAG, "fetchData")
+
+        runBlocking {
+            apiClient.getMessages()
+        }
     }
 
     override fun onDestroy() {
