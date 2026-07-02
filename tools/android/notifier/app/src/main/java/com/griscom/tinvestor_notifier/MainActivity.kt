@@ -155,7 +155,7 @@ fun ScrollContent(
             modifier =
                 Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 24.dp),
+                    .padding(bottom = 64.dp),
         ) {
             Button(
                 onClick = {

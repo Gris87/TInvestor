@@ -1,3 +1,9 @@
+Show scroll on Android
+Show dates on Android
+Show notifications on Android status bar
+Settings on Android
+Filter by message type on Android
+Search on Android
 Notifier for Android
 Script for instant huge fall buy (-2%)
 Buy with MM as follower (x1.5-x2)
