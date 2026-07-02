@@ -9,6 +9,9 @@ import android.content.pm.ServiceInfo
 import android.os.IBinder
 import android.util.Log
 import com.griscom.tinvestor_notifier.R
+import com.griscom.tinvestor_notifier.db.NotificationEntity
+import com.griscom.tinvestor_notifier.db.NotificationRepository
+import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
 import com.griscom.tinvestor_notifier.utils.api_client.ApiClient
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -37,7 +40,7 @@ class SyncService : Service() {
     private val serviceJob = SupervisorJob()
     private val serviceScope = CoroutineScope(Dispatchers.IO + serviceJob)
 
-    val httpClient =
+    private val httpClient =
         HttpClient(OkHttp) {
             engine {
                 val trustManager =
@@ -71,7 +74,7 @@ class SyncService : Service() {
                 json()
             }
         }
-    val apiClient = ApiClient(httpClient)
+    private val apiClient = ApiClient(httpClient)
 
     override fun onStartCommand(
         intent: Intent?,
@@ -98,8 +101,10 @@ class SyncService : Service() {
         startForeground(FOREGROUND_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
 
         serviceScope.launch {
+            val repository = NotificationRepository(NotificationRoomDatabase.getInstance(application).NotificationDao())
+
             while (isActive) {
-                fetchData()
+                fetchData(repository)
                 delay(INTERVAL)
             }
         }
@@ -107,11 +112,19 @@ class SyncService : Service() {
         return START_STICKY
     }
 
-    private fun fetchData() {
+    private fun fetchData(repository: NotificationRepository) {
         Log.d(TAG, "fetchData")
 
         runBlocking {
-            apiClient.getMessages()
+            val notifications = apiClient.getNotifications()
+
+            val dbNotifications = mutableListOf<NotificationEntity>()
+
+            for (notification in notifications) {
+                dbNotifications.add(NotificationEntity(notification))
+            }
+
+            repository.insertNotifications(dbNotifications)
         }
     }
 

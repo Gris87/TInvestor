@@ -1,7 +1,5 @@
 package com.griscom.tinvestor_notifier.utils.api_client
 
-import com.griscom.tinvestor_notifier.R
-import com.griscom.tinvestor_notifier.data.MessageType
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -51,51 +49,44 @@ class ApiClientUnitTest {
                 }
 
             val apiClient = ApiClient(httpClient)
-            val messages = apiClient.getMessages()
+            val notifications = apiClient.getNotifications()
 
-            Assert.assertEquals(7, messages.size)
+            Assert.assertEquals(7, notifications.size)
 
-            Assert.assertEquals("2024-01-01 00:00:00", messages[0].timestamp)
-            Assert.assertEquals(MessageType.SYSTEM, messages[0].messageType)
-            Assert.assertEquals(R.string.message_type_system, messages[0].messageTypeString)
-            Assert.assertEquals("AAAAA", messages[0].text)
-            Assert.assertEquals("Some log", messages[0].data)
+            Assert.assertEquals(1704056400000, notifications[0].timestamp)
+            Assert.assertEquals("system", notifications[0].type)
+            Assert.assertEquals("AAAAA", notifications[0].text)
+            Assert.assertEquals("Some log", notifications[0].data)
 
-            Assert.assertEquals("2024-01-01 00:01:00", messages[1].timestamp)
-            Assert.assertEquals(MessageType.PORTFOLIO, messages[1].messageType)
-            Assert.assertEquals(R.string.message_type_portfolio, messages[1].messageTypeString)
-            Assert.assertEquals("BBBBB", messages[1].text)
-            Assert.assertEquals("", messages[1].data)
+            Assert.assertEquals(1704056460000, notifications[1].timestamp)
+            Assert.assertEquals("portfolio", notifications[1].type)
+            Assert.assertEquals("BBBBB", notifications[1].text)
+            Assert.assertEquals("", notifications[1].data)
 
-            Assert.assertEquals("2024-01-01 00:02:00", messages[2].timestamp)
-            Assert.assertEquals(MessageType.HUGE_SELL, messages[2].messageType)
-            Assert.assertEquals(R.string.message_type_huge_sell, messages[2].messageTypeString)
-            Assert.assertEquals("CCCCC", messages[2].text)
-            Assert.assertEquals("", messages[2].data)
+            Assert.assertEquals(1704056520000, notifications[2].timestamp)
+            Assert.assertEquals("huge_sell", notifications[2].type)
+            Assert.assertEquals("CCCCC", notifications[2].text)
+            Assert.assertEquals("", notifications[2].data)
 
-            Assert.assertEquals("2024-01-01 00:03:00", messages[3].timestamp)
-            Assert.assertEquals(MessageType.DIVIDENDS, messages[3].messageType)
-            Assert.assertEquals(R.string.message_type_dividends, messages[3].messageTypeString)
-            Assert.assertEquals("DDDDD", messages[3].text)
-            Assert.assertEquals("", messages[3].data)
+            Assert.assertEquals(1704056580000, notifications[3].timestamp)
+            Assert.assertEquals("dividends", notifications[3].type)
+            Assert.assertEquals("DDDDD", notifications[3].text)
+            Assert.assertEquals("", notifications[3].data)
 
-            Assert.assertEquals("2024-01-01 00:04:00", messages[4].timestamp)
-            Assert.assertEquals(MessageType.PULSE_NEUTRAL, messages[4].messageType)
-            Assert.assertEquals(R.string.message_type_pulse_neutral, messages[4].messageTypeString)
-            Assert.assertEquals("EEEEE", messages[4].text)
-            Assert.assertEquals("", messages[4].data)
+            Assert.assertEquals(1704056640000, notifications[4].timestamp)
+            Assert.assertEquals("pulse_neutral", notifications[4].type)
+            Assert.assertEquals("EEEEE", notifications[4].text)
+            Assert.assertEquals("", notifications[4].data)
 
-            Assert.assertEquals("2024-01-01 00:05:00", messages[5].timestamp)
-            Assert.assertEquals(MessageType.PULSE_BUY, messages[5].messageType)
-            Assert.assertEquals(R.string.message_type_pulse_buy, messages[5].messageTypeString)
-            Assert.assertEquals("FFFFF", messages[5].text)
-            Assert.assertEquals("", messages[5].data)
+            Assert.assertEquals(1704056700000, notifications[5].timestamp)
+            Assert.assertEquals("pulse_buy", notifications[5].type)
+            Assert.assertEquals("FFFFF", notifications[5].text)
+            Assert.assertEquals("", notifications[5].data)
 
-            Assert.assertEquals("2024-01-01 00:06:00", messages[6].timestamp)
-            Assert.assertEquals(MessageType.PULSE_SELL, messages[6].messageType)
-            Assert.assertEquals(R.string.message_type_pulse_sell, messages[6].messageTypeString)
-            Assert.assertEquals("GGGGG", messages[6].text)
-            Assert.assertEquals("", messages[6].data)
+            Assert.assertEquals(1704056760000, notifications[6].timestamp)
+            Assert.assertEquals("pulse_sell", notifications[6].type)
+            Assert.assertEquals("GGGGG", notifications[6].text)
+            Assert.assertEquals("", notifications[6].data)
         }
     }
 }

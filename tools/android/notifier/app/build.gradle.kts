@@ -4,6 +4,7 @@ plugins {
 
     id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
     kotlin("plugin.serialization") version "2.4.0"
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -76,5 +77,8 @@ dependencies {
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.ktor.client.mock)
 }
