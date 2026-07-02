@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 class NotificationRepository(
     private val userDao: NotificationDao,
 ) {
-    val notificationsList: Flow<List<NotificationEntity>> = userDao.getNotifications()
+    val notificationsListReversed: Flow<List<NotificationEntity>> = userDao.getNotificationsReversed()
 
     suspend fun insertNotifications(notifications: List<NotificationEntity>) {
         userDao.insertNotifications(notifications)

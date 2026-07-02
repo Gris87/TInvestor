@@ -10,4 +10,5 @@
     <string name="message_type_pulse_sell">Пульс (Продажа)</string>
     <string name="content_description_search">Поиск</string>
     <string name="content_description_settings">Настройки</string>
+    <string name="content_description_scroll_down">Пролистать вниз</string>
 </resources>

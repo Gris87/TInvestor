@@ -4,7 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,7 +19,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -24,7 +31,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,6 +46,7 @@ import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRepository
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
+import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -65,7 +77,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TInvestorNotifierTheme {
-                val notifications by repository.notificationsList.collectAsState(initial = emptyList())
+                val notifications by repository.notificationsListReversed.collectAsState(initial = emptyList())
 
                 ConversationContent(notifications)
             }
@@ -116,9 +128,53 @@ fun ScrollContent(
     innerPadding: PaddingValues,
     notifications: List<NotificationEntity>,
 ) {
-    LazyColumn(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
-        items(notifications) { notification ->
-            NotificationItem(notification)
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+
+    val showButton by remember {
+        derivedStateOf {
+            listState.canScrollBackward
+        }
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            state = listState,
+            reverseLayout = true,
+            modifier = Modifier.fillMaxSize().padding(innerPadding),
+        ) {
+            items(notifications) { notification ->
+                NotificationItem(notification)
+            }
+        }
+
+        AnimatedVisibility(
+            visible = showButton,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier =
+                Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 24.dp),
+        ) {
+            Button(
+                onClick = {
+                    coroutineScope.launch {
+                        if (notifications.isNotEmpty()) {
+                            listState.animateScrollToItem(0)
+                        }
+                    }
+                },
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_arrow_down),
+                    modifier =
+                        Modifier
+                            .padding(8.dp)
+                            .height(24.dp),
+                    contentDescription = stringResource(R.string.content_description_scroll_down),
+                )
+            }
         }
     }
 }

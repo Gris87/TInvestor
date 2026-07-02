@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NotificationDao {
-    @Query("SELECT * FROM notifications")
-    fun getNotifications(): Flow<List<NotificationEntity>>
+    @Query("SELECT * FROM notifications ORDER BY id DESC")
+    fun getNotificationsReversed(): Flow<List<NotificationEntity>>
 
     @Insert
     suspend fun insertNotifications(notifications: List<NotificationEntity>)
