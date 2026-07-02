@@ -11,5 +11,8 @@ interface NotificationDao {
     fun getNotifications(): Flow<List<NotificationEntity>>
 
     @Insert
-    fun insertNotifications(notifications: List<NotificationEntity>)
+    suspend fun insertNotifications(notifications: List<NotificationEntity>)
+
+    @Query("SELECT MAX(timestamp) FROM notifications")
+    suspend fun getLastNotificationTimestamp(): Long?
 }

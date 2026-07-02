@@ -49,7 +49,7 @@ class ApiClientUnitTest {
                 }
 
             val apiClient = ApiClient(httpClient)
-            val notifications = apiClient.getNotifications()
+            val notifications = apiClient.getNotifications(0)
 
             Assert.assertEquals(7, notifications.size)
 

@@ -116,7 +116,10 @@ class SyncService : Service() {
         Log.d(TAG, "fetchData")
 
         runBlocking {
-            val notifications = apiClient.getNotifications()
+            val lastNotificationTimestamp =
+                repository.getLastNotificationTimestamp()
+
+            val notifications = apiClient.getNotifications(lastNotificationTimestamp + 10)
 
             val dbNotifications = mutableListOf<NotificationEntity>()
 

@@ -116,7 +116,7 @@ fun ScrollContent(
     innerPadding: PaddingValues,
     notifications: List<NotificationEntity>,
 ) {
-    LazyColumn(modifier = Modifier.padding(innerPadding)) {
+    LazyColumn(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
         items(notifications) { notification ->
             NotificationItem(notification)
         }

@@ -21,9 +21,9 @@ data class NotificationsResponse(
 class ApiClient(
     private val httpClient: HttpClient,
 ) {
-    suspend fun getNotifications(): List<Notification> {
+    suspend fun getNotifications(from: Long): List<Notification> {
         val notificationsResponse: NotificationsResponse =
-            httpClient.get("https://88.218.66.61:8041/notifications").body()
+            httpClient.get("https://88.218.66.61:8041/notifications?from=$from").body()
 
         return notificationsResponse.notifications
     }
