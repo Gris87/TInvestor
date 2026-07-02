@@ -101,7 +101,7 @@ class SyncService : Service() {
         startForeground(FOREGROUND_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
 
         serviceScope.launch {
-            val repository = NotificationRepository(NotificationRoomDatabase.getInstance(application).NotificationDao())
+            val repository = NotificationRepository(NotificationRoomDatabase.getInstance(application).notificationDao())
 
             while (isActive) {
                 fetchData(repository)

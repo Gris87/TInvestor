@@ -25,6 +25,13 @@ class NotificationEntity {
 
     constructor() {}
 
+    constructor(timestamp: Long, type: String, text: String, data: String) {
+        this.timestamp = timestamp
+        this.type = type
+        this.text = text
+        this.data = data
+    }
+
     constructor(notification: Notification) {
         timestamp = notification.timestamp
         type = notification.type

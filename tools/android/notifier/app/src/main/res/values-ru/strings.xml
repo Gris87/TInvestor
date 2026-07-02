@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Уведомления Ты ж инвестор</string>
+    <string name="app_name">Ты ж инвестор</string>
     <string name="service_running">Сервис запущен</string>
     <string name="message_type_system">Система</string>
     <string name="message_type_portfolio">Портфолио</string>

@@ -1,8 +1,8 @@
 package com.griscom.tinvestor_notifier.db
 
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class NotificationRepository(
@@ -10,7 +10,7 @@ class NotificationRepository(
 ) {
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
-    val notificationsList: LiveData<List<NotificationEntity>> = userDao.getNotifications()
+    val notificationsList: Flow<List<NotificationEntity>> = userDao.getNotifications()
 
     fun insertNotifications(notifications: List<NotificationEntity>) {
         coroutineScope.launch(Dispatchers.IO) {

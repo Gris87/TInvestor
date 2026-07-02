@@ -23,49 +23,63 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.griscom.tinvestor_notifier.data.Message
-import com.griscom.tinvestor_notifier.data.MessageType
+import com.griscom.tinvestor_notifier.db.NotificationEntity
+import com.griscom.tinvestor_notifier.db.NotificationRepository
+import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 private val ChatBubbleShape = RoundedCornerShape(4.dp, 20.dp, 20.dp, 20.dp)
+
+private val dateTimeformatter =
+    DateTimeFormatter
+        .ofPattern("yyyy-MM-dd HH:mm:ss")
+        .withZone(ZoneId.systemDefault())
+private val messageTypeToStringMap =
+    mapOf(
+        "system" to R.string.message_type_system,
+        "portfolio" to R.string.message_type_portfolio,
+        "huge_sell" to R.string.message_type_huge_sell,
+        "dividends" to R.string.message_type_dividends,
+        "pulse_neutral" to R.string.message_type_pulse_neutral,
+        "pulse_buy" to R.string.message_type_pulse_buy,
+        "pulse_sell" to R.string.message_type_pulse_sell,
+    )
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val exampleMessages =
-            listOf(
-                Message("2026-01-01 10:00:00", MessageType.SYSTEM, R.string.message_type_system, "Hello", "Some log"),
-                Message("2026-01-01 11:00:00", MessageType.PORTFOLIO, R.string.message_type_portfolio, "My", ""),
-                Message("2026-01-01 12:00:00", MessageType.HUGE_SELL, R.string.message_type_huge_sell, "Dear", ""),
-                Message("2026-01-02 10:00:00", MessageType.DIVIDENDS, R.string.message_type_dividends, "Friend", ""),
-                Message("2026-01-03 10:00:00", MessageType.PULSE_NEUTRAL, R.string.message_type_pulse_neutral, "Are", ""),
-                Message("2026-01-03 11:00:00", MessageType.PULSE_BUY, R.string.message_type_pulse_buy, "You", ""),
-                Message("2026-01-04 10:00:00", MessageType.PULSE_SELL, R.string.message_type_pulse_sell, "Clever", ""),
-            )
+        val repository = NotificationRepository(NotificationRoomDatabase.getInstance(application).notificationDao())
 
         setContent {
             TInvestorNotifierTheme {
-                ConversationContent(exampleMessages)
+                val notifications by repository.notificationsList.collectAsState(initial = emptyList())
+
+                ConversationContent(notifications)
             }
         }
     }
 }
 
 @Composable
-fun ConversationContent(messages: List<Message>) {
+fun ConversationContent(notifications: List<NotificationEntity>) {
     Scaffold(
         topBar = { TopBar() },
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
-        ScrollContent(innerPadding, messages)
+        ScrollContent(innerPadding, notifications)
     }
 }
 
@@ -100,17 +114,17 @@ fun TopBar() {
 @Composable
 fun ScrollContent(
     innerPadding: PaddingValues,
-    messages: List<Message>,
+    notifications: List<NotificationEntity>,
 ) {
     LazyColumn(modifier = Modifier.padding(innerPadding)) {
-        items(messages) { message ->
-            MessageItem(message)
+        items(notifications) { notification ->
+            NotificationItem(notification)
         }
     }
 }
 
 @Composable
-fun MessageItem(message: Message) {
+fun NotificationItem(notification: NotificationEntity) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
         shape = ChatBubbleShape,
@@ -127,18 +141,18 @@ fun MessageItem(message: Message) {
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
-                    text = message.timestamp,
+                    text = dateTimeformatter.format(Instant.ofEpochMilli(notification.timestamp)),
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 )
                 Text(
-                    text = stringResource(message.messageTypeString),
+                    text = stringResource(messageTypeToStringMap.getValue(notification.type)),
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 )
             }
             Text(
-                text = message.text,
+                text = notification.text,
                 fontSize = 16.sp,
                 modifier =
                     Modifier
@@ -152,35 +166,34 @@ fun MessageItem(message: Message) {
 @Preview
 @Composable
 fun ConversationContentPreview() {
-    val exampleMessages =
+    val exampleNotifications =
         listOf(
-            Message("2026-01-01 10:00:00", MessageType.SYSTEM, R.string.message_type_system, "Hello", "Some log"),
-            Message("2026-01-01 11:00:00", MessageType.PORTFOLIO, R.string.message_type_portfolio, "My", ""),
-            Message("2026-01-01 12:00:00", MessageType.HUGE_SELL, R.string.message_type_huge_sell, "Dear", ""),
-            Message("2026-01-02 10:00:00", MessageType.DIVIDENDS, R.string.message_type_dividends, "Friend", ""),
-            Message("2026-01-03 10:00:00", MessageType.PULSE_NEUTRAL, R.string.message_type_pulse_neutral, "Are", ""),
-            Message("2026-01-03 11:00:00", MessageType.PULSE_BUY, R.string.message_type_pulse_buy, "You", ""),
-            Message("2026-01-04 10:00:00", MessageType.PULSE_SELL, R.string.message_type_pulse_sell, "Clever", ""),
+            NotificationEntity(1704056400000, "system", "Hello", "Some log"),
+            NotificationEntity(1704056460000, "portfolio", "My", ""),
+            NotificationEntity(1704056520000, "huge_sell", "Dear", ""),
+            NotificationEntity(1704056580000, "dividends", "Friend", ""),
+            NotificationEntity(1704056640000, "pulse_neutral", "Are", ""),
+            NotificationEntity(1704056700000, "pulse_buy", "You", ""),
+            NotificationEntity(1704056760000, "pulse_sell", "Clever", ""),
         )
 
     TInvestorNotifierTheme {
-        ConversationContent(exampleMessages)
+        ConversationContent(exampleNotifications)
     }
 }
 
 @Preview
 @Composable
-fun MessageItemPreview() {
-    val exampleMessage =
-        Message(
-            "2026-01-04 10:00:00",
-            MessageType.PULSE_SELL,
-            R.string.message_type_pulse_sell,
+fun NotificationItemPreview() {
+    val exampleNotification =
+        NotificationEntity(
+            1704056400000,
+            "pulse_sell",
             "\uD83D\uDD34 Probably need to sell\n\u26A0 Attention! Text found in Pulse post: court\n{EUTR} expects for a court today!",
             "",
         )
 
     TInvestorNotifierTheme {
-        MessageItem(exampleMessage)
+        NotificationItem(exampleNotification)
     }
 }
