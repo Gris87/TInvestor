@@ -47,6 +47,8 @@ import com.griscom.tinvestor_notifier.db.NotificationRepository
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
 import kotlinx.coroutines.launch
+import my.nanihadesuka.compose.LazyColumnScrollbar
+import my.nanihadesuka.compose.ScrollbarSettings
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -138,13 +140,18 @@ fun ScrollContent(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
+        LazyColumnScrollbar(
             state = listState,
-            reverseLayout = true,
-            modifier = Modifier.fillMaxSize().padding(innerPadding),
+            settings = ScrollbarSettings.Default,
         ) {
-            items(notifications) { notification ->
-                NotificationItem(notification)
+            LazyColumn(
+                state = listState,
+                reverseLayout = true,
+                modifier = Modifier.fillMaxSize().padding(innerPadding),
+            ) {
+                items(notifications) { notification ->
+                    NotificationItem(notification)
+                }
             }
         }
 
