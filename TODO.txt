@@ -1,4 +1,3 @@
-Show dates on Android
 Show notifications on Android status bar
 Settings on Android
 Filter by message type on Android

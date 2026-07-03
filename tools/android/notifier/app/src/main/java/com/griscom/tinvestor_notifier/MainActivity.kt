@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,10 +56,15 @@ import java.time.format.DateTimeFormatter
 
 private val ChatBubbleShape = RoundedCornerShape(4.dp, 20.dp, 20.dp, 20.dp)
 
+private val dateformatter =
+    DateTimeFormatter
+        .ofPattern("yyyy-MM-dd")
+        .withZone(ZoneId.systemDefault())
 private val dateTimeformatter =
     DateTimeFormatter
         .ofPattern("yyyy-MM-dd HH:mm:ss")
         .withZone(ZoneId.systemDefault())
+
 private val messageTypeToStringMap =
     mapOf(
         "system" to R.string.message_type_system,
@@ -149,8 +155,8 @@ fun ScrollContent(
                 reverseLayout = true,
                 modifier = Modifier.fillMaxSize().padding(innerPadding),
             ) {
-                items(notifications) { notification ->
-                    NotificationItem(notification)
+                itemsIndexed(notifications) { index, notification ->
+                    NotificationItem(notifications.getOrNull(index + 1), notification)
                 }
             }
         }
@@ -187,7 +193,13 @@ fun ScrollContent(
 }
 
 @Composable
-fun NotificationItem(notification: NotificationEntity) {
+fun NotificationItem(
+    previousNotification: NotificationEntity?,
+    notification: NotificationEntity,
+) {
+    val previousDate = if (previousNotification != null) dateformatter.format(Instant.ofEpochMilli(previousNotification.timestamp)) else ""
+    val currentDate = dateformatter.format(Instant.ofEpochMilli(notification.timestamp))
+
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
         shape = ChatBubbleShape,
@@ -224,6 +236,16 @@ fun NotificationItem(notification: NotificationEntity) {
             )
         }
     }
+
+    if (previousDate != currentDate) {
+        Text(
+            text = currentDate,
+            textAlign = TextAlign.Center,
+            fontSize = 12.sp,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
 }
 
 @Preview
@@ -231,13 +253,13 @@ fun NotificationItem(notification: NotificationEntity) {
 fun ConversationContentPreview() {
     val exampleNotifications =
         listOf(
+            NotificationEntity(1704402000000, "pulse_sell", "Clever", ""),
+            NotificationEntity(1704319200000, "pulse_buy", "You", ""),
+            NotificationEntity(1704315600000, "pulse_neutral", "Are", ""),
+            NotificationEntity(1704240000000, "dividends", "Friend", ""),
+            NotificationEntity(1704236400000, "huge_sell", "Dear", ""),
+            NotificationEntity(1704232800000, "portfolio", "My", ""),
             NotificationEntity(1704056400000, "system", "Hello", "Some log"),
-            NotificationEntity(1704056460000, "portfolio", "My", ""),
-            NotificationEntity(1704056520000, "huge_sell", "Dear", ""),
-            NotificationEntity(1704056580000, "dividends", "Friend", ""),
-            NotificationEntity(1704056640000, "pulse_neutral", "Are", ""),
-            NotificationEntity(1704056700000, "pulse_buy", "You", ""),
-            NotificationEntity(1704056760000, "pulse_sell", "Clever", ""),
         )
 
     TInvestorNotifierTheme {
@@ -257,6 +279,6 @@ fun NotificationItemPreview() {
         )
 
     TInvestorNotifierTheme {
-        NotificationItem(exampleNotification)
+        NotificationItem(null, exampleNotification)
     }
 }
