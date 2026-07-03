@@ -23,7 +23,7 @@ from pathlib import Path
 mtproto_regexp = re.compile(r'https:\/\/t.me\/proxy\?server=(.+)&port=(\d+)&secret=(.+)')
 
 
-def telegram_bot(args, filter):
+async def telegram_bot(args, filter):
     _check_running_instance()
     _check_silence_range(args)
 
@@ -35,7 +35,7 @@ def telegram_bot(args, filter):
     bot_token = os.environ["TELEGRAM_TOKEN"]
 
     if mtproxy_server == "" or mtproxy_port == 0 or mtproxy_secret == "":
-        mtproxy_server, mtproxy_port, mtproxy_secret = _get_mtproto(args)
+        mtproxy_server, mtproxy_port, mtproxy_secret = await _get_mtproto(args)
 
         if mtproxy_server == "" or mtproxy_port == 0 or mtproxy_secret == "":
             logger.error("Failed to get MTPROTO")
@@ -117,7 +117,7 @@ def _check_silence_range(args):
                 sys.exit(0)
 
 
-def _get_mtproto(args):
+async def _get_mtproto(args):
     res_server = ""
     res_port = 0
     res_secret = ""
@@ -163,18 +163,8 @@ def _get_mtproto(args):
             good = True
 
             try:
-                client = TelegramClient(
-                    temp_file_session,
-                    api_id,
-                    api_hash,
-                    connection=connection.ConnectionTcpMTProxyRandomizedIntermediate,
-                    proxy=(mtproxy_server, mtproxy_port, mtproxy_secret),
-                    timeout=3,
-                    connection_retries=0
-                ).start(bot_token=bot_token)
-
-                with client:
-                    client.loop.run_until_complete(asyncio.wait_for(_dummy(), timeout=30.0))
+                async with asyncio.timeout(3):
+                    good = await _check_mtproto(temp_file_session, api_id, api_hash, mtproxy_server, mtproxy_port, mtproxy_secret, bot_token)
             except Exception as e:
                 good = False
 
@@ -200,8 +190,20 @@ def _get_mtproto(args):
     return res_server, res_port, res_secret
 
 
-async def _dummy():
-    pass
+async def _check_mtproto(temp_file_session, api_id, api_hash, mtproxy_server, mtproxy_port, mtproxy_secret, bot_token):
+    client = await TelegramClient(
+        temp_file_session,
+        api_id,
+        api_hash,
+        connection=connection.ConnectionTcpMTProxyRandomizedIntermediate,
+        proxy=(mtproxy_server, mtproxy_port, mtproxy_secret),
+        timeout=3,
+        connection_retries=0
+    ).start(bot_token=bot_token)
+
+    client.disconnect()
+
+    return True
 
 
 async def _process_files(args, client, filter):
@@ -325,4 +327,4 @@ def main():
 
             sys.exit(1)
 
-    sys.exit(0 if telegram_bot(args, filter) else 1)
+    asyncio.run(telegram_bot(args, filter))
