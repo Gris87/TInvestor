@@ -241,9 +241,9 @@ async def _build_instruments_for_trading(dest_client, src_instrument_to_cost, de
         delta = expected_cost - dest_portfolio_item["cost"]
         lot_price = dest_portfolio_item["price"] * lot
 
-        if delta < -lot_price:
+        if delta < -lot_price / 2:
             instruments_for_sale[src_instrument_id] = expected_cost
-        elif delta > lot_price:
+        elif delta > lot_price / 2:
             instruments_for_buy[src_instrument_id] = expected_cost
 
     for dest_instrument_id in dest_instrument_to_cost:

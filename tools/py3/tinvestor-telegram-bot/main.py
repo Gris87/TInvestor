@@ -62,7 +62,7 @@ def telegram_bot(args, filter):
         ).start(bot_token=bot_token)
 
         with client:
-            client.loop.run_until_complete(_process_files(args, client, filter))
+            client.loop.run_until_complete(asyncio.wait_for(_process_files(args, client, filter), timeout=30.0))
     except Exception as e:
         res = False
 
@@ -169,12 +169,12 @@ def _get_mtproto(args):
                     api_hash,
                     connection=connection.ConnectionTcpMTProxyRandomizedIntermediate,
                     proxy=(mtproxy_server, mtproxy_port, mtproxy_secret),
-                    timeout=1,
+                    timeout=3,
                     connection_retries=0
                 ).start(bot_token=bot_token)
 
                 with client:
-                    client.loop.run_until_complete(_dummy())
+                    client.loop.run_until_complete(asyncio.wait_for(_dummy(), timeout=30.0))
             except Exception as e:
                 good = False
 
@@ -188,7 +188,7 @@ def _get_mtproto(args):
 
                 break
         else:
-            logger.warning("Failed to parse MTPROTO {new_proxies[index]}")
+            logger.warning(f"Failed to parse MTPROTO {new_proxies[index]}")
 
         index += 1
 

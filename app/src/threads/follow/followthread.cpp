@@ -270,7 +270,7 @@ void FollowThread::buildInstrumentsForTrading(
         const double            delta    = expectedCost - item.cost;
         const double            lotPrice = item.price * lot;
 
-        if (delta < -lotPrice)
+        if (delta < -lotPrice / 2)
         {
             instrumentsForSale[instrumentId] = TradingInfo(
                 ASAP_MODE_IMMEDIATELY_TRADE,
@@ -281,7 +281,7 @@ void FollowThread::buildInstrumentsForTrading(
                     .arg(QString::number(expectedCost, 'f', 2) + " \u20BD", mAnotherAccountName)
             );
         }
-        else if (delta > lotPrice)
+        else if (delta > lotPrice / 2)
         {
             instrumentsForBuy[instrumentId] = TradingInfo(
                 ASAP_MODE_IMMEDIATELY_TRADE,
