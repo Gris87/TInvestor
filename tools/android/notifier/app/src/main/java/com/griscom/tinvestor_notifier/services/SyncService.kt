@@ -4,13 +4,14 @@ import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
 import android.os.IBinder
-import android.util.Log
 import androidx.core.app.ActivityCompat
+import com.griscom.tinvestor_notifier.MainActivity
 import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRepository
@@ -33,11 +34,8 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 import kotlin.time.Duration.Companion.minutes
 
-private const val TAG = "SyncService"
 private const val SYNC_CHANNEL_ID = "SYNC_CHANNEL_ID"
 private const val MESSAGES_CHANNEL_ID = "MESSAGES_CHANNEL_ID"
-private const val FOREGROUND_ID = 1
-private const val NOTIFICATION_ID = 1
 
 private val INTERVAL = 1.minutes
 
@@ -108,15 +106,24 @@ class SyncService : Service() {
             notificationManager.createNotificationChannel(syncChannel)
             notificationManager.createNotificationChannel(messagesChannel)
 
+            val applicationIntent =
+                Intent(applicationContext, MainActivity::class.java).setFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK,
+                )
+            val pendingIntent: PendingIntent =
+                PendingIntent.getActivity(applicationContext, 0, applicationIntent, PendingIntent.FLAG_IMMUTABLE)
+
             val notification =
                 Notification
                     .Builder(applicationContext, SYNC_CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(getString(R.string.app_name))
                     .setContentText(getString(R.string.service_running))
+                    .setContentIntent(pendingIntent)
                     .build()
 
-            startForeground(FOREGROUND_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+            val uniqueNotificationId = (System.currentTimeMillis() and 0xfffffff).toInt()
+            startForeground(uniqueNotificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
 
             val repository = NotificationRepository(NotificationRoomDatabase.getInstance(application).notificationDao())
 
@@ -133,8 +140,6 @@ class SyncService : Service() {
         repository: NotificationRepository,
         notificationManager: NotificationManager,
     ) {
-        Log.d(TAG, "fetchData")
-
         runBlocking {
             val lastNotificationTimestamp =
                 repository.getLastNotificationTimestamp()
@@ -157,6 +162,13 @@ class SyncService : Service() {
                 return@runBlocking
             }
 
+            val applicationIntent =
+                Intent(applicationContext, MainActivity::class.java).setFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK,
+                )
+            val pendingIntent: PendingIntent =
+                PendingIntent.getActivity(applicationContext, 0, applicationIntent, PendingIntent.FLAG_IMMUTABLE)
+
             for (n in notifications) {
                 val notification =
                     Notification
@@ -164,9 +176,16 @@ class SyncService : Service() {
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(getString(R.string.app_name))
                         .setContentText(n.text)
+                        .setStyle(
+                            Notification
+                                .BigTextStyle()
+                                .bigText(n.text),
+                        ).setContentIntent(pendingIntent)
+                        .setAutoCancel(true)
                         .build()
 
-                notificationManager.notify(NOTIFICATION_ID, notification)
+                val uniqueNotificationId = (System.currentTimeMillis() and 0xfffffff).toInt()
+                notificationManager.notify(uniqueNotificationId, notification)
             }
         }
     }

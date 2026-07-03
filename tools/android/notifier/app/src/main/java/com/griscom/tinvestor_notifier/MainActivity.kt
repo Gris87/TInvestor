@@ -1,6 +1,7 @@
 package com.griscom.tinvestor_notifier
 
 import android.Manifest
+import android.app.NotificationManager
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -103,6 +104,13 @@ class MainActivity : ComponentActivity() {
                 ConversationContent(notifications)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val notificationManager = getSystemService(NotificationManager::class.java) as NotificationManager
+        notificationManager.cancelAll()
     }
 }
 
