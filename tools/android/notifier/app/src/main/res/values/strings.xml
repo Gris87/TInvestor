@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">TInvestor</string>
     <string name="service_running">Service running</string>
+    <string name="channel_service_running">Service running</string>
+    <string name="channel_messages">Messages</string>
+    <string name="channel_description_service_running">Channel for a running foreground service</string>
+    <string name="channel_description_messages">Channel for displaying incoming messages</string>
     <string name="message_type_system">System</string>
     <string name="message_type_portfolio">Portfolio</string>
     <string name="message_type_huge_sell">Huge sell</string>

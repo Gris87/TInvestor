@@ -1,5 +1,7 @@
 package com.griscom.tinvestor_notifier
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -43,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRepository
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
@@ -54,18 +57,20 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-private val ChatBubbleShape = RoundedCornerShape(4.dp, 20.dp, 20.dp, 20.dp)
+private const val REQUEST_CODE_POST_NOTIFICATIONS = 1
 
-private val dateformatter =
+private val CHAT_BUBBLE_SHAPE = RoundedCornerShape(4.dp, 20.dp, 20.dp, 20.dp)
+
+private val DATE_FORMATTER =
     DateTimeFormatter
         .ofPattern("yyyy-MM-dd")
         .withZone(ZoneId.systemDefault())
-private val dateTimeformatter =
+private val DATE_TIME_FORMATTER =
     DateTimeFormatter
         .ofPattern("yyyy-MM-dd HH:mm:ss")
         .withZone(ZoneId.systemDefault())
 
-private val messageTypeToStringMap =
+private val MESSAGE_TYPE_TO_STRING_MAP =
     mapOf(
         "system" to R.string.message_type_system,
         "portfolio" to R.string.message_type_portfolio,
@@ -80,6 +85,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_CODE_POST_NOTIFICATIONS)
+        }
 
         val repository = NotificationRepository(NotificationRoomDatabase.getInstance(application).notificationDao())
 
@@ -197,12 +210,12 @@ fun NotificationItem(
     previousNotification: NotificationEntity?,
     notification: NotificationEntity,
 ) {
-    val previousDate = if (previousNotification != null) dateformatter.format(Instant.ofEpochMilli(previousNotification.timestamp)) else ""
-    val currentDate = dateformatter.format(Instant.ofEpochMilli(notification.timestamp))
+    val previousDate = if (previousNotification != null) DATE_FORMATTER.format(Instant.ofEpochMilli(previousNotification.timestamp)) else ""
+    val currentDate = DATE_FORMATTER.format(Instant.ofEpochMilli(notification.timestamp))
 
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
-        shape = ChatBubbleShape,
+        shape = CHAT_BUBBLE_SHAPE,
         modifier = Modifier.padding(8.dp),
     ) {
         Column(
@@ -216,12 +229,12 @@ fun NotificationItem(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
-                    text = dateTimeformatter.format(Instant.ofEpochMilli(notification.timestamp)),
+                    text = DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(notification.timestamp)),
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 )
                 Text(
-                    text = stringResource(messageTypeToStringMap.getValue(notification.type)),
+                    text = stringResource(MESSAGE_TYPE_TO_STRING_MAP.getValue(notification.type)),
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 )

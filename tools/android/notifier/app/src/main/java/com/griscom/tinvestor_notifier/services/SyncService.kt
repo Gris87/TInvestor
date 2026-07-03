@@ -1,13 +1,16 @@
 package com.griscom.tinvestor_notifier.services
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRepository
@@ -31,8 +34,10 @@ import javax.net.ssl.X509TrustManager
 import kotlin.time.Duration.Companion.minutes
 
 private const val TAG = "SyncService"
-private const val CHANNEL_ID = "SYNC_CHANNEL_ID"
+private const val SYNC_CHANNEL_ID = "SYNC_CHANNEL_ID"
+private const val MESSAGES_CHANNEL_ID = "MESSAGES_CHANNEL_ID"
 private const val FOREGROUND_ID = 1
+private const val NOTIFICATION_ID = 1
 
 private val INTERVAL = 1.minutes
 
@@ -81,30 +86,42 @@ class SyncService : Service() {
         flags: Int,
         startId: Int,
     ): Int {
-        val channel =
-            NotificationChannel(
-                CHANNEL_ID,
-                getString(R.string.service_running),
-                NotificationManager.IMPORTANCE_LOW,
-            )
-        val manager = getSystemService(NotificationManager::class.java)
-        manager?.createNotificationChannel(channel)
-
-        val notification =
-            Notification
-                .Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.service_running))
-                .build()
-
-        startForeground(FOREGROUND_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
-
         serviceScope.launch {
+            val syncChannel =
+                NotificationChannel(
+                    SYNC_CHANNEL_ID,
+                    getString(R.string.channel_service_running),
+                    NotificationManager.IMPORTANCE_NONE,
+                ).apply {
+                    description = getString(R.string.channel_description_service_running)
+                }
+            val messagesChannel =
+                NotificationChannel(
+                    MESSAGES_CHANNEL_ID,
+                    getString(R.string.channel_messages),
+                    NotificationManager.IMPORTANCE_HIGH,
+                ).apply {
+                    description = getString(R.string.channel_description_messages)
+                }
+
+            val notificationManager = getSystemService(NotificationManager::class.java) as NotificationManager
+            notificationManager.createNotificationChannel(syncChannel)
+            notificationManager.createNotificationChannel(messagesChannel)
+
+            val notification =
+                Notification
+                    .Builder(applicationContext, SYNC_CHANNEL_ID)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(getString(R.string.app_name))
+                    .setContentText(getString(R.string.service_running))
+                    .build()
+
+            startForeground(FOREGROUND_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+
             val repository = NotificationRepository(NotificationRoomDatabase.getInstance(application).notificationDao())
 
             while (isActive) {
-                fetchData(repository)
+                fetchData(repository, notificationManager)
                 delay(INTERVAL)
             }
         }
@@ -112,7 +129,10 @@ class SyncService : Service() {
         return START_STICKY
     }
 
-    private fun fetchData(repository: NotificationRepository) {
+    private fun fetchData(
+        repository: NotificationRepository,
+        notificationManager: NotificationManager,
+    ) {
         Log.d(TAG, "fetchData")
 
         runBlocking {
@@ -123,11 +143,31 @@ class SyncService : Service() {
 
             val dbNotifications = mutableListOf<NotificationEntity>()
 
-            for (notification in notifications) {
-                dbNotifications.add(NotificationEntity(notification))
+            for (n in notifications) {
+                dbNotifications.add(NotificationEntity(n))
             }
 
             repository.insertNotifications(dbNotifications)
+
+            if (ActivityCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return@runBlocking
+            }
+
+            for (n in notifications) {
+                val notification =
+                    Notification
+                        .Builder(applicationContext, MESSAGES_CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(getString(R.string.app_name))
+                        .setContentText(n.text)
+                        .build()
+
+                notificationManager.notify(NOTIFICATION_ID, notification)
+            }
         }
     }
 
