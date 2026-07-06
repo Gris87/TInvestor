@@ -15,6 +15,9 @@ from datetime import datetime
 from telethon import TelegramClient, connection
 from loguru import logger
 from pathlib import Path
+from requests import Session
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 
 #logging.basicConfig(level=logging.DEBUG)
@@ -137,7 +140,13 @@ async def _get_mtproto(args):
             old_proxies = json.loads(f.read())
 
     logger.info("Getting all_proxies.txt from GitHub")
-    response = requests.get("https://raw.githubusercontent.com/SoliSpirit/mtproto/refs/heads/master/all_proxies.txt")
+
+    retries = Retry(total=10, backoff_factor=0.1, status_forcelist=[429, 500, 502, 503, 504])
+
+    session = Session()
+    session.mount('https://', HTTPAdapter(max_retries=retries))
+
+    response = session.get("https://raw.githubusercontent.com/SoliSpirit/mtproto/refs/heads/master/all_proxies.txt", timeout=5)
 
     proxies = list(filter(None, response.text.split("\n")))
     new_proxies = list(dict.fromkeys(old_proxies + proxies))

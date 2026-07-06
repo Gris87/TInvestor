@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Ты ж инвестор</string>
-    <string name="service_running">Сервис запущен</string>
-    <string name="channel_service_running">Сервис запущен</string>
-    <string name="channel_messages">Сообщения</string>
-    <string name="channel_description_service_running">Канал для запущенного сервиса</string>
-    <string name="channel_description_messages">Канал для отображения входящий сообщений</string>
+    <string name="settings">Настройки</string>
+    <string name="server_address">Адрес сервера</string>
+    <string name="server_port">Порт сервера</string>
+    <string name="show_notifications">Показывать уведомления</string>
+    <string name="filter">Фильтр</string>
     <string name="message_type_system">Система</string>
     <string name="message_type_portfolio">Портфолио</string>
     <string name="message_type_huge_sell">Большая продажа</string>
@@ -12,6 +12,11 @@
     <string name="message_type_pulse_neutral">Пульс (Нейтральный)</string>
     <string name="message_type_pulse_buy">Пульс (Покупка)</string>
     <string name="message_type_pulse_sell">Пульс (Продажа)</string>
+    <string name="service_running">Сервис запущен</string>
+    <string name="channel_service_running">Сервис запущен</string>
+    <string name="channel_messages">Сообщения</string>
+    <string name="channel_description_service_running">Канал для запущенного сервиса</string>
+    <string name="channel_description_messages">Канал для отображения входящий сообщений</string>
     <string name="content_description_search">Поиск</string>
     <string name="content_description_settings">Настройки</string>
     <string name="content_description_scroll_down">Пролистать вниз</string>

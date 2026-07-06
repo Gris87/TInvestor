@@ -11,8 +11,8 @@ import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
 import android.os.IBinder
 import androidx.core.app.ActivityCompat
-import com.griscom.tinvestor_notifier.MainActivity
 import com.griscom.tinvestor_notifier.R
+import com.griscom.tinvestor_notifier.activities.MainActivity
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRepository
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase

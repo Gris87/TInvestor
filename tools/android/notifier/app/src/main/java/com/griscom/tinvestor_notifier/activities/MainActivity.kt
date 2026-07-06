@@ -1,7 +1,8 @@
-package com.griscom.tinvestor_notifier
+package com.griscom.tinvestor_notifier.activities
 
 import android.Manifest
 import android.app.NotificationManager
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -27,6 +28,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -40,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -47,6 +50,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
+import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRepository
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
@@ -126,28 +130,38 @@ fun ConversationContent(notifications: List<NotificationEntity>) {
 
 @Composable
 fun TopBar() {
+    val context = LocalContext.current
+
     @OptIn(ExperimentalMaterial3Api::class)
     TopAppBar(
         title = { Text(text = stringResource(R.string.app_name), fontSize = 24.sp) },
         actions = {
-            Icon(
-                painter = painterResource(R.drawable.ic_search),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier =
-                    Modifier
-                        .padding(8.dp)
-                        .height(24.dp),
-                contentDescription = stringResource(R.string.content_description_search),
-            )
-            Icon(
-                painter = painterResource(R.drawable.ic_settings),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier =
-                    Modifier
-                        .padding(8.dp)
-                        .height(24.dp),
-                contentDescription = stringResource(R.string.content_description_settings),
-            )
+            IconButton(onClick = {
+            }) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_search),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier =
+                        Modifier
+                            .padding(8.dp)
+                            .height(24.dp),
+                    contentDescription = stringResource(R.string.content_description_search),
+                )
+            }
+            IconButton(onClick = {
+                val intent = Intent(context, SettingsActivity::class.java)
+                context.startActivity(intent)
+            }) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_settings),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier =
+                        Modifier
+                            .padding(8.dp)
+                            .height(24.dp),
+                    contentDescription = stringResource(R.string.content_description_settings),
+                )
+            }
         },
     )
 }
@@ -166,7 +180,7 @@ fun ScrollContent(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
         LazyColumnScrollbar(
             state = listState,
             settings = ScrollbarSettings.Default,
@@ -174,7 +188,7 @@ fun ScrollContent(
             LazyColumn(
                 state = listState,
                 reverseLayout = true,
-                modifier = Modifier.fillMaxSize().padding(innerPadding),
+                modifier = Modifier.fillMaxSize(),
             ) {
                 itemsIndexed(notifications) { index, notification ->
                     NotificationItem(notifications.getOrNull(index + 1), notification)
