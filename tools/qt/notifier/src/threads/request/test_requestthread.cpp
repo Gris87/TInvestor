@@ -115,15 +115,19 @@ TEST_F(Test_RequestThread, Test_run)
     notificationsForWrite << notification1 << notification2;
 
     QList<NotificationInfo> notificationsForAppend;
-    NotificationInfo        notification;
+    NotificationInfo        notificationBeforeRemoveAttachment;
+    NotificationInfo        notificationAfterRemoveAttachment;
 
-    notification.requestTimestamp = 1704056580000;
-    notification.timestamp        = 1704056580000;
-    notification.messageType      = MESSAGE_TYPE_PORTFOLIO;
-    notification.text             = "You are rich";
-    notification.data             = "Some log";
+    notificationBeforeRemoveAttachment.requestTimestamp = 0;
+    notificationBeforeRemoveAttachment.timestamp        = 1704056580000;
+    notificationBeforeRemoveAttachment.messageType      = MESSAGE_TYPE_PORTFOLIO;
+    notificationBeforeRemoveAttachment.text             = "You are rich";
+    notificationBeforeRemoveAttachment.data             = "Some log";
 
-    notificationsForAppend << notification;
+    notificationAfterRemoveAttachment      = notificationBeforeRemoveAttachment;
+    notificationAfterRemoveAttachment.data = "+";
+
+    notificationsForAppend << notificationAfterRemoveAttachment;
 
     EXPECT_CALL(*notificationsDatabaseMock, readNotifications()).WillOnce(Return(notifications));
     EXPECT_CALL(*configMock, getServerAddress()).WillOnce(Return("localhost"));
@@ -138,6 +142,7 @@ TEST_F(Test_RequestThread, Test_run)
     EXPECT_CALL(*configMock, getServerPort()).WillOnce(Return(443));
     EXPECT_CALL(*httpClientMock, get(QUrl("https://localhost:443/notifications?from=1704056520010"), IHttpClient::Headers()))
         .WillOnce(Return(httpResult2));
+    EXPECT_CALL(*notificationsDatabaseMock, writeAttachment(notificationBeforeRemoveAttachment));
     EXPECT_CALL(*notificationsDatabaseMock, appendNotifications(IsNotificationsEqWithoutTimestamp(notificationsForAppend)));
 
     thread->run();
