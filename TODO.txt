@@ -1,5 +1,3 @@
-Filter by message type on Android
-Search on Android
 Notifier for Android
 Take 2 or 3 minutes for generating bi-dir info
 Script for instant huge fall buy (-2%)

@@ -52,7 +52,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.griscom.tinvestor_notifier.R
+import com.griscom.tinvestor_notifier.datastore.DataStoreManager
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRepository
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
@@ -124,16 +126,26 @@ class MainActivity : ComponentActivity() {
 fun ConversationContent(notifications: List<NotificationEntity>) {
     val context = LocalContext.current
 
+    val dataStore =
+        remember {
+            DataStoreManager(context)
+        }
+
+    val filter by dataStore.filter.collectAsStateWithLifecycle(listOf("system", "portfolio", "huge_sell", "dividends"))
+
     var isSearchVisible by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
 
     val listState = rememberLazyListState()
 
-    val showButton by remember {
+    val isScrollDownButtonVisible by remember {
         derivedStateOf {
             listState.canScrollBackward
         }
     }
+
+    val filteredNotifications =
+        notifications.filter { it.text.contains(searchText, ignoreCase = true) && it.type in filter }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -199,15 +211,15 @@ fun ConversationContent(notifications: List<NotificationEntity>) {
                         reverseLayout = true,
                         modifier = Modifier.fillMaxSize(),
                     ) {
-                        itemsIndexed(notifications) { index, notification ->
-                            NotificationItem(notifications.getOrNull(index + 1), notification)
+                        itemsIndexed(filteredNotifications) { index, notification ->
+                            NotificationItem(filteredNotifications.getOrNull(index + 1), notification)
                         }
                     }
                 }
             }
 
             AnimatedVisibility(
-                visible = showButton,
+                visible = isScrollDownButtonVisible,
                 enter = fadeIn(),
                 exit = fadeOut(),
                 modifier =
@@ -218,7 +230,7 @@ fun ConversationContent(notifications: List<NotificationEntity>) {
                 Button(
                     onClick = {
                         coroutineScope.launch {
-                            if (notifications.isNotEmpty()) {
+                            if (filteredNotifications.isNotEmpty()) {
                                 listState.animateScrollToItem(0)
                             }
                         }
