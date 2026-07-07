@@ -23,7 +23,7 @@ class NotificationEntity {
     @ColumnInfo(name = "data")
     var data: String = ""
 
-    constructor() {}
+    constructor()
 
     constructor(timestamp: Long, type: String, text: String, data: String) {
         this.timestamp = timestamp

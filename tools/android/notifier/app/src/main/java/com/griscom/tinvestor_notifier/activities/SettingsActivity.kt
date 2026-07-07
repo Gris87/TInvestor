@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,8 +42,6 @@ import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.datastore.DataStoreManager
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
 import kotlinx.coroutines.launch
-import kotlin.text.set
-import kotlin.toString
 
 private val MESSAGE_TYPES_LIST = listOf("system", "portfolio", "huge_sell", "dividends", "pulse_neutral", "pulse_buy", "pulse_sell")
 
@@ -50,16 +50,18 @@ class SettingsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val viewModel = SettingsViewModel(DataStoreManager(this))
+
         setContent {
             TInvestorNotifierTheme {
-                SettingsContent()
+                SettingsContent(viewModel)
             }
         }
     }
 }
 
 @Composable
-fun SettingsContent() {
+fun SettingsContent(viewModel: SettingsViewModel) {
     val context = LocalContext.current
 
     val dataStore =
@@ -67,8 +69,8 @@ fun SettingsContent() {
             DataStoreManager(context)
         }
 
-    val serverAddress by dataStore.serverAddress.collectAsStateWithLifecycle("localhost")
-    val serverPort by dataStore.serverPort.collectAsStateWithLifecycle(8041)
+    val serverAddress by viewModel.serverAddress.collectAsStateWithLifecycle()
+    val serverPort by viewModel.serverPort.collectAsStateWithLifecycle()
     val isShowNotifications by dataStore.isShowNotifications.collectAsStateWithLifecycle(true)
     val filter by dataStore.filter.collectAsStateWithLifecycle(listOf("system", "portfolio", "huge_sell", "dividends"))
 
@@ -99,14 +101,11 @@ fun SettingsContent() {
         },
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
-
         Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState).padding(innerPadding)) {
             TextField(
                 value = serverAddress,
                 onValueChange = { newValue ->
-                    coroutineScope.launch {
-                        dataStore.setServerAddress(newValue)
-                    }
+                    viewModel.updateServerAddress(newValue)
                 },
                 label = { Text(text = stringResource(R.string.server_address), fontSize = 16.sp) },
                 singleLine = true,
@@ -116,10 +115,8 @@ fun SettingsContent() {
             TextField(
                 value = serverPort.toString(),
                 onValueChange = { newValue ->
-                    coroutineScope.launch {
-                        if (newValue.all { it.isDigit() }) {
-                            dataStore.setServerPort(newValue.toIntOrNull() ?: 0)
-                        }
+                    if (newValue.all { it.isDigit() }) {
+                        viewModel.updateServerPort(newValue.toIntOrNull() ?: 0)
                     }
                 },
                 label = { Text(text = stringResource(R.string.server_port), fontSize = 16.sp) },
@@ -182,25 +179,33 @@ fun SettingsContent() {
 
             filterStates.forEachIndexed { index, checked ->
                 Row(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .toggleable(
+                                value = checked,
+                                onValueChange = { isChecked ->
+                                    filterStates[index] = isChecked
+
+                                    val newFilter = mutableListOf<String>()
+
+                                    filterStates.forEachIndexed { index, state ->
+                                        if (state) {
+                                            newFilter.add(MESSAGE_TYPES_LIST[index])
+                                        }
+                                    }
+
+                                    coroutineScope.launch {
+                                        dataStore.setFilter(newFilter)
+                                    }
+                                },
+                                role = Role.Checkbox, // Changes to Role.Switch for a Switch
+                            ).padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Checkbox(
                         checked = checked,
-                        onCheckedChange = { isChecked ->
-                            filterStates[index] = isChecked
-
-                            val newFilter = mutableListOf<String>()
-
-                            filterStates.forEachIndexed { index, state ->
-                                if (state) {
-                                    newFilter.add(MESSAGE_TYPES_LIST[index])
-                                }
-                            }
-
-                            coroutineScope.launch {
-                                dataStore.setFilter(newFilter)
-                            }
-                        },
+                        onCheckedChange = null,
                     )
                     Text(
                         text =
@@ -218,7 +223,9 @@ fun SettingsContent() {
 @Preview
 @Composable
 fun SettingsContentPreview() {
+    val viewModel = SettingsViewModel(DataStoreManager(LocalContext.current))
+
     TInvestorNotifierTheme {
-        SettingsContent()
+        SettingsContent(viewModel)
     }
 }

@@ -1,5 +1,7 @@
-package com.griscom.tinvestor_notifier.db
+package com.griscom.tinvestor_notifier.repositories
 
+import com.griscom.tinvestor_notifier.db.NotificationDao
+import com.griscom.tinvestor_notifier.db.NotificationEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext

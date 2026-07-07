@@ -1,6 +1,7 @@
 package com.griscom.tinvestor_notifier.services
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -15,8 +16,8 @@ import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.activities.MainActivity
 import com.griscom.tinvestor_notifier.datastore.DataStoreManager
 import com.griscom.tinvestor_notifier.db.NotificationEntity
-import com.griscom.tinvestor_notifier.db.NotificationRepository
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
+import com.griscom.tinvestor_notifier.repositories.NotificationRepository
 import com.griscom.tinvestor_notifier.utils.api_client.ApiClient
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -49,12 +50,15 @@ class SyncService : Service() {
         HttpClient(OkHttp) {
             engine {
                 val trustManager =
+                    @SuppressLint("CustomX509TrustManager")
                     object : X509TrustManager {
+                        @SuppressLint("TrustAllX509TrustManager")
                         override fun checkClientTrusted(
                             chain: Array<out X509Certificate>?,
                             authType: String?,
                         ) {}
 
+                        @SuppressLint("TrustAllX509TrustManager")
                         override fun checkServerTrusted(
                             chain: Array<out X509Certificate>?,
                             authType: String?,
