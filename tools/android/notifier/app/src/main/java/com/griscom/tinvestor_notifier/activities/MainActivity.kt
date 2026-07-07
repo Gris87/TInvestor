@@ -15,7 +15,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,13 +32,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -120,59 +122,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ConversationContent(notifications: List<NotificationEntity>) {
-    Scaffold(
-        topBar = { TopBar() },
-        modifier = Modifier.fillMaxSize(),
-    ) { innerPadding ->
-        ScrollContent(innerPadding, notifications)
-    }
-}
-
-@Composable
-fun TopBar() {
     val context = LocalContext.current
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    TopAppBar(
-        title = { Text(text = stringResource(R.string.app_name), fontSize = 24.sp) },
-        actions = {
-            IconButton(onClick = {
-            }) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_search),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier =
-                        Modifier
-                            .padding(8.dp)
-                            .height(24.dp),
-                    contentDescription = stringResource(R.string.content_description_search),
-                )
-            }
-            IconButton(onClick = {
-                val intent = Intent(context, SettingsActivity::class.java)
-                context.startActivity(intent)
-            }) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_settings),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier =
-                        Modifier
-                            .padding(8.dp)
-                            .height(24.dp),
-                    contentDescription = stringResource(R.string.content_description_settings),
-                )
-            }
-        },
-    )
-}
+    var isSearchVisible by remember { mutableStateOf(false) }
+    var searchText by remember { mutableStateOf("") }
 
-@Composable
-fun ScrollContent(
-    innerPadding: PaddingValues,
-    notifications: List<NotificationEntity>,
-) {
     val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
 
     val showButton by remember {
         derivedStateOf {
@@ -180,48 +135,104 @@ fun ScrollContent(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
-        LazyColumnScrollbar(
-            state = listState,
-            settings = ScrollbarSettings.Default,
-        ) {
-            LazyColumn(
-                state = listState,
-                reverseLayout = true,
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                itemsIndexed(notifications) { index, notification ->
-                    NotificationItem(notifications.getOrNull(index + 1), notification)
-                }
-            }
-        }
+    val coroutineScope = rememberCoroutineScope()
 
-        AnimatedVisibility(
-            visible = showButton,
-            enter = fadeIn(),
-            exit = fadeOut(),
-            modifier =
-                Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 16.dp),
-        ) {
-            Button(
-                onClick = {
-                    coroutineScope.launch {
-                        if (notifications.isNotEmpty()) {
-                            listState.animateScrollToItem(0)
-                        }
+    Scaffold(
+        topBar = {
+            @OptIn(ExperimentalMaterial3Api::class)
+            TopAppBar(
+                title = { Text(text = stringResource(R.string.app_name), fontSize = 24.sp) },
+                actions = {
+                    IconButton(onClick = {
+                        isSearchVisible = !isSearchVisible
+                        searchText = ""
+                    }) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_search),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier =
+                                Modifier
+                                    .padding(8.dp)
+                                    .height(24.dp),
+                            contentDescription = stringResource(R.string.content_description_search),
+                        )
+                    }
+                    IconButton(onClick = {
+                        val intent = Intent(context, SettingsActivity::class.java)
+                        context.startActivity(intent)
+                    }) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_settings),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier =
+                                Modifier
+                                    .padding(8.dp)
+                                    .height(24.dp),
+                            contentDescription = stringResource(R.string.content_description_settings),
+                        )
                     }
                 },
+            )
+        },
+        modifier = Modifier.fillMaxSize(),
+    ) { innerPadding ->
+        Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
             ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_arrow_down),
-                    modifier =
-                        Modifier
-                            .padding(8.dp)
-                            .height(24.dp),
-                    contentDescription = stringResource(R.string.content_description_scroll_down),
-                )
+                if (isSearchVisible) {
+                    TextField(
+                        value = searchText,
+                        onValueChange = { searchText = it },
+                        label = { Text(text = stringResource(R.string.search)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+
+                LazyColumnScrollbar(
+                    state = listState,
+                    settings = ScrollbarSettings.Default,
+                ) {
+                    LazyColumn(
+                        state = listState,
+                        reverseLayout = true,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        itemsIndexed(notifications) { index, notification ->
+                            NotificationItem(notifications.getOrNull(index + 1), notification)
+                        }
+                    }
+                }
+            }
+
+            AnimatedVisibility(
+                visible = showButton,
+                enter = fadeIn(),
+                exit = fadeOut(),
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 16.dp),
+            ) {
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            if (notifications.isNotEmpty()) {
+                                listState.animateScrollToItem(0)
+                            }
+                        }
+                    },
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_arrow_down),
+                        modifier =
+                            Modifier
+                                .padding(8.dp)
+                                .height(24.dp),
+                        contentDescription = stringResource(R.string.content_description_scroll_down),
+                    )
+                }
             }
         }
     }

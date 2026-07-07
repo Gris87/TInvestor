@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,6 +40,8 @@ import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.datastore.DataStoreManager
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
 import kotlinx.coroutines.launch
+import kotlin.text.set
+import kotlin.toString
 
 private val MESSAGE_TYPES_LIST = listOf("system", "portfolio", "huge_sell", "dividends", "pulse_neutral", "pulse_buy", "pulse_sell")
 
@@ -59,24 +60,6 @@ class SettingsActivity : ComponentActivity() {
 
 @Composable
 fun SettingsContent() {
-    Scaffold(
-        topBar = { SettingsTopBar() },
-        modifier = Modifier.fillMaxSize(),
-    ) { innerPadding ->
-        ScrollContent(innerPadding)
-    }
-}
-
-@Composable
-fun SettingsTopBar() {
-    @OptIn(ExperimentalMaterial3Api::class)
-    TopAppBar(
-        title = { Text(text = stringResource(R.string.settings), fontSize = 24.sp) },
-    )
-}
-
-@Composable
-fun ScrollContent(innerPadding: PaddingValues) {
     val context = LocalContext.current
 
     val dataStore =
@@ -107,110 +90,126 @@ fun ScrollContent(innerPadding: PaddingValues) {
 
     val coroutineScope = rememberCoroutineScope()
 
-    Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState).padding(innerPadding)) {
-        TextField(
-            value = serverAddress,
-            label = { Text(text = stringResource(R.string.server_address), fontSize = 16.sp) },
-            onValueChange = { newValue ->
-                coroutineScope.launch {
-                    dataStore.setServerAddress(newValue)
-                }
-            },
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
-        )
-
-        TextField(
-            value = serverPort.toString(),
-            label = { Text(text = stringResource(R.string.server_port), fontSize = 16.sp) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            onValueChange = { newValue ->
-                coroutineScope.launch {
-                    if (newValue.all { it.isDigit() }) {
-                        dataStore.setServerPort(newValue.toIntOrNull() ?: 0)
-                    }
-                }
-            },
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
-        )
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.show_notifications),
-                fontSize = 16.sp,
-                modifier = Modifier.padding(0.dp, 0.dp, 8.dp, 0.dp),
+    Scaffold(
+        topBar = {
+            @OptIn(ExperimentalMaterial3Api::class)
+            TopAppBar(
+                title = { Text(text = stringResource(R.string.settings), fontSize = 24.sp) },
             )
-            Switch(
-                checked = isShowNotifications,
-                onCheckedChange = { enabled ->
+        },
+        modifier = Modifier.fillMaxSize(),
+    ) { innerPadding ->
+
+        Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState).padding(innerPadding)) {
+            TextField(
+                value = serverAddress,
+                onValueChange = { newValue ->
                     coroutineScope.launch {
-                        dataStore.setShowNotifications(enabled)
+                        dataStore.setServerAddress(newValue)
                     }
                 },
+                label = { Text(text = stringResource(R.string.server_address), fontSize = 16.sp) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
             )
-        }
 
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.filter),
-                fontSize = 20.sp,
+            TextField(
+                value = serverPort.toString(),
+                onValueChange = { newValue ->
+                    coroutineScope.launch {
+                        if (newValue.all { it.isDigit() }) {
+                            dataStore.setServerPort(newValue.toIntOrNull() ?: 0)
+                        }
+                    }
+                },
+                label = { Text(text = stringResource(R.string.server_port), fontSize = 16.sp) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
             )
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
             ) {
                 Text(
-                    text = stringResource(R.string.select_all),
+                    text = stringResource(R.string.show_notifications),
                     fontSize = 16.sp,
+                    modifier = Modifier.padding(0.dp, 0.dp, 8.dp, 0.dp),
                 )
-                TriStateCheckbox(
-                    state = parentState,
-                    onClick = {
-                        val newState = parentState != ToggleableState.On
-
-                        filterStates.forEachIndexed { index, _ ->
-                            filterStates[index] = newState
-                        }
-
+                Switch(
+                    checked = isShowNotifications,
+                    onCheckedChange = { enabled ->
                         coroutineScope.launch {
-                            dataStore.setFilter(if (newState) MESSAGE_TYPES_LIST else emptyList())
+                            dataStore.setShowNotifications(enabled)
                         }
                     },
                 )
             }
-        }
 
-        filterStates.forEachIndexed { index, checked ->
             Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
             ) {
-                Checkbox(
-                    checked = checked,
-                    onCheckedChange = { isChecked ->
-                        filterStates[index] = isChecked
-
-                        val newFilter = mutableListOf<String>()
-
-                        filterStates.forEachIndexed { index, state ->
-                            if (state) {
-                                newFilter.add(MESSAGE_TYPES_LIST[index])
-                            }
-                        }
-
-                        coroutineScope.launch {
-                            dataStore.setFilter(newFilter)
-                        }
-                    },
-                )
                 Text(
-                    text = stringResource(MESSAGE_TYPE_TO_STRING_MAP.getOrDefault(MESSAGE_TYPES_LIST[index], R.string.message_type_system)),
-                    fontSize = 16.sp,
+                    text = stringResource(R.string.filter),
+                    fontSize = 20.sp,
                 )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(R.string.select_all),
+                        fontSize = 16.sp,
+                    )
+                    TriStateCheckbox(
+                        state = parentState,
+                        onClick = {
+                            val newState = parentState != ToggleableState.On
+
+                            filterStates.forEachIndexed { index, _ ->
+                                filterStates[index] = newState
+                            }
+
+                            coroutineScope.launch {
+                                dataStore.setFilter(if (newState) MESSAGE_TYPES_LIST else emptyList())
+                            }
+                        },
+                    )
+                }
+            }
+
+            filterStates.forEachIndexed { index, checked ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Checkbox(
+                        checked = checked,
+                        onCheckedChange = { isChecked ->
+                            filterStates[index] = isChecked
+
+                            val newFilter = mutableListOf<String>()
+
+                            filterStates.forEachIndexed { index, state ->
+                                if (state) {
+                                    newFilter.add(MESSAGE_TYPES_LIST[index])
+                                }
+                            }
+
+                            coroutineScope.launch {
+                                dataStore.setFilter(newFilter)
+                            }
+                        },
+                    )
+                    Text(
+                        text =
+                            stringResource(
+                                MESSAGE_TYPE_TO_STRING_MAP.getOrDefault(MESSAGE_TYPES_LIST[index], R.string.message_type_system),
+                            ),
+                        fontSize = 16.sp,
+                    )
+                }
             }
         }
     }
