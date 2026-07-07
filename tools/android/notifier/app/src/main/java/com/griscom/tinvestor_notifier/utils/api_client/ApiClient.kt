@@ -21,10 +21,21 @@ data class NotificationsResponse(
 class ApiClient(
     private val httpClient: HttpClient,
 ) {
-    suspend fun getNotifications(from: Long): List<Notification> {
-        val notificationsResponse: NotificationsResponse =
-            httpClient.get("https://88.218.66.61:8041/notifications?from=$from").body()
+    suspend fun getNotifications(
+        serverAddress: String,
+        serverPort: Int,
+        from: Long,
+    ): List<Notification> {
+        var res: List<Notification> = emptyList()
 
-        return notificationsResponse.notifications
+        try {
+            val notificationsResponse: NotificationsResponse =
+                httpClient.get("https://$serverAddress:$serverPort/notifications?from=$from").body()
+
+            res = notificationsResponse.notifications
+        } catch (_: Exception) {
+        }
+
+        return res
     }
 }

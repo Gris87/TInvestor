@@ -13,6 +13,7 @@ import android.os.IBinder
 import androidx.core.app.ActivityCompat
 import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.activities.MainActivity
+import com.griscom.tinvestor_notifier.datastore.DataStoreManager
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRepository
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
@@ -25,6 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -85,6 +87,9 @@ class SyncService : Service() {
         startId: Int,
     ): Int {
         serviceScope.launch {
+            val dataStore =
+                DataStoreManager(applicationContext)
+
             val syncChannel =
                 NotificationChannel(
                     SYNC_CHANNEL_ID,
@@ -128,7 +133,7 @@ class SyncService : Service() {
             val repository = NotificationRepository(NotificationRoomDatabase.getInstance(application).notificationDao())
 
             while (isActive) {
-                fetchData(repository, notificationManager)
+                fetchData(repository, dataStore, notificationManager)
                 delay(INTERVAL)
             }
         }
@@ -138,13 +143,19 @@ class SyncService : Service() {
 
     private fun fetchData(
         repository: NotificationRepository,
+        dataStore: DataStoreManager,
         notificationManager: NotificationManager,
     ) {
         runBlocking {
+            val serverAddress = dataStore.serverAddress.first()
+            val serverPort = dataStore.serverPort.first()
+            val isShowNotifications = dataStore.isShowNotifications.first()
+            val filter = dataStore.filter.first()
+
             val lastNotificationTimestamp =
                 repository.getLastNotificationTimestamp()
 
-            val notifications = apiClient.getNotifications(lastNotificationTimestamp + 10)
+            val notifications = apiClient.getNotifications(serverAddress, serverPort, lastNotificationTimestamp + 10)
 
             val dbNotifications =
                 mutableListOf<NotificationEntity>().apply {
@@ -152,6 +163,10 @@ class SyncService : Service() {
                 }
 
             repository.insertNotifications(dbNotifications)
+
+            if (!isShowNotifications) {
+                return@runBlocking
+            }
 
             if (ActivityCompat.checkSelfPermission(
                     applicationContext,
@@ -169,22 +184,24 @@ class SyncService : Service() {
                 PendingIntent.getActivity(applicationContext, 0, applicationIntent, PendingIntent.FLAG_IMMUTABLE)
 
             for (n in notifications) {
-                val notification =
-                    Notification
-                        .Builder(applicationContext, MESSAGES_CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(getString(R.string.app_name))
-                        .setContentText(n.text)
-                        .setStyle(
-                            Notification
-                                .BigTextStyle()
-                                .bigText(n.text),
-                        ).setContentIntent(pendingIntent)
-                        .setAutoCancel(true)
-                        .build()
+                if (n.type in filter) {
+                    val notification =
+                        Notification
+                            .Builder(applicationContext, MESSAGES_CHANNEL_ID)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle(getString(R.string.app_name))
+                            .setContentText(n.text)
+                            .setStyle(
+                                Notification
+                                    .BigTextStyle()
+                                    .bigText(n.text),
+                            ).setContentIntent(pendingIntent)
+                            .setAutoCancel(true)
+                            .build()
 
-                val uniqueNotificationId = (System.currentTimeMillis() and 0xfffffff).toInt()
-                notificationManager.notify(uniqueNotificationId, notification)
+                    val uniqueNotificationId = (System.currentTimeMillis() and 0xfffffff).toInt()
+                    notificationManager.notify(uniqueNotificationId, notification)
+                }
             }
         }
     }
