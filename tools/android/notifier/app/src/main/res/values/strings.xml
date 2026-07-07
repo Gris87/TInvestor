@@ -12,6 +12,7 @@
     <string name="message_type_pulse_neutral">Pulse (Neutral)</string>
     <string name="message_type_pulse_buy">Pulse (Buy)</string>
     <string name="message_type_pulse_sell">Pulse (Sell)</string>
+    <string name="select_all">Select all</string>
     <string name="service_running">Service running</string>
     <string name="channel_service_running">Service running</string>
     <string name="channel_messages">Messages</string>

@@ -146,11 +146,10 @@ class SyncService : Service() {
 
             val notifications = apiClient.getNotifications(lastNotificationTimestamp + 10)
 
-            val dbNotifications = mutableListOf<NotificationEntity>()
-
-            for (n in notifications) {
-                dbNotifications.add(NotificationEntity(n))
-            }
+            val dbNotifications =
+                mutableListOf<NotificationEntity>().apply {
+                    addAll(notifications.map { NotificationEntity(it) })
+                }
 
             repository.insertNotifications(dbNotifications)
 

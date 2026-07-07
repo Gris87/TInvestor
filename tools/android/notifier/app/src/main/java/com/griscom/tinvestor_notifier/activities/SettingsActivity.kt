@@ -4,27 +4,34 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,6 +41,8 @@ import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.datastore.DataStoreManager
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
 import kotlinx.coroutines.launch
+
+private val MESSAGE_TYPES_LIST = listOf("system", "portfolio", "huge_sell", "dividends", "pulse_neutral", "pulse_buy", "pulse_sell")
 
 class SettingsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,10 +87,27 @@ fun ScrollContent(innerPadding: PaddingValues) {
     val serverAddress by dataStore.serverAddress.collectAsStateWithLifecycle("localhost")
     val serverPort by dataStore.serverPort.collectAsStateWithLifecycle(8041)
     val isShowNotifications by dataStore.isShowNotifications.collectAsStateWithLifecycle(true)
+    val filter by dataStore.filter.collectAsStateWithLifecycle(listOf("system", "portfolio", "huge_sell", "dividends"))
+
+    val filterStates =
+        remember(filter) {
+            mutableStateListOf<Boolean>().apply {
+                addAll(MESSAGE_TYPES_LIST.map { it in filter })
+            }
+        }
+
+    val parentState =
+        when {
+            filterStates.all { it } -> ToggleableState.On
+            filterStates.none { it } -> ToggleableState.Off
+            else -> ToggleableState.Indeterminate
+        }
+
+    val scrollState = rememberScrollState()
 
     val coroutineScope = rememberCoroutineScope()
 
-    Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+    Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState).padding(innerPadding)) {
         TextField(
             value = serverAddress,
             label = { Text(text = stringResource(R.string.server_address), fontSize = 16.sp) },
@@ -92,6 +118,7 @@ fun ScrollContent(innerPadding: PaddingValues) {
             },
             modifier = Modifier.fillMaxWidth().padding(8.dp),
         )
+
         TextField(
             value = serverPort.toString(),
             label = { Text(text = stringResource(R.string.server_port), fontSize = 16.sp) },
@@ -105,6 +132,7 @@ fun ScrollContent(innerPadding: PaddingValues) {
             },
             modifier = Modifier.fillMaxWidth().padding(8.dp),
         )
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth().padding(8.dp),
@@ -123,11 +151,68 @@ fun ScrollContent(innerPadding: PaddingValues) {
                 },
             )
         }
-        Text(
-            text = stringResource(R.string.filter),
-            fontSize = 20.sp,
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth().padding(8.dp),
-        )
+        ) {
+            Text(
+                text = stringResource(R.string.filter),
+                fontSize = 20.sp,
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.select_all),
+                    fontSize = 16.sp,
+                )
+                TriStateCheckbox(
+                    state = parentState,
+                    onClick = {
+                        val newState = parentState != ToggleableState.On
+
+                        filterStates.forEachIndexed { index, _ ->
+                            filterStates[index] = newState
+                        }
+
+                        coroutineScope.launch {
+                            dataStore.setFilter(if (newState) MESSAGE_TYPES_LIST else emptyList())
+                        }
+                    },
+                )
+            }
+        }
+
+        filterStates.forEachIndexed { index, checked ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Checkbox(
+                    checked = checked,
+                    onCheckedChange = { isChecked ->
+                        filterStates[index] = isChecked
+
+                        val newFilter = mutableListOf<String>()
+
+                        filterStates.forEachIndexed { index, state ->
+                            if (state) {
+                                newFilter.add(MESSAGE_TYPES_LIST[index])
+                            }
+                        }
+
+                        coroutineScope.launch {
+                            dataStore.setFilter(newFilter)
+                        }
+                    },
+                )
+                Text(
+                    text = stringResource(MESSAGE_TYPE_TO_STRING_MAP.getOrDefault(MESSAGE_TYPES_LIST[index], R.string.message_type_system)),
+                    fontSize = 16.sp,
+                )
+            }
+        }
     }
 }
 

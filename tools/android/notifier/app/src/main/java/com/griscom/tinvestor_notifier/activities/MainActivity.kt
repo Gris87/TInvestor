@@ -75,7 +75,7 @@ private val DATE_TIME_FORMATTER =
         .ofPattern("yyyy-MM-dd HH:mm:ss")
         .withZone(ZoneId.systemDefault())
 
-private val MESSAGE_TYPE_TO_STRING_MAP =
+val MESSAGE_TYPE_TO_STRING_MAP =
     mapOf(
         "system" to R.string.message_type_system,
         "portfolio" to R.string.message_type_portfolio,
@@ -203,7 +203,7 @@ fun ScrollContent(
             modifier =
                 Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 64.dp),
+                    .padding(bottom = 16.dp),
         ) {
             Button(
                 onClick = {

@@ -5,7 +5,9 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 val Context.preferencesDataStore by preferencesDataStore(name = "user_settings")
@@ -17,31 +19,31 @@ class DataStoreManager(
         val SERVER_ADDRESS = stringPreferencesKey("SERVER_ADDRESS")
         val SERVER_PORT = intPreferencesKey("SERVER_PORT")
         val SHOW_NOTIFICATIONS = booleanPreferencesKey("SHOW_NOTIFICATIONS")
-        val FILTER = stringPreferencesKey("FILTER")
+        val FILTER = stringSetPreferencesKey("FILTER")
     }
 
-    val serverAddress =
+    val serverAddress: Flow<String> =
         context.preferencesDataStore.data
             .map { preferences ->
                 preferences[SERVER_ADDRESS] ?: "localhost"
             }
 
-    val serverPort =
+    val serverPort: Flow<Int> =
         context.preferencesDataStore.data
             .map { preferences ->
                 preferences[SERVER_PORT] ?: 8041
             }
 
-    val isShowNotifications =
+    val isShowNotifications: Flow<Boolean> =
         context.preferencesDataStore.data
             .map { preferences ->
                 preferences[SHOW_NOTIFICATIONS] ?: true
             }
 
-    val filter =
+    val filter: Flow<List<String>> =
         context.preferencesDataStore.data
             .map { preferences ->
-                preferences[FILTER] ?: "system;portfolio;huge_sell;dividends"
+                preferences[FILTER]?.toList() ?: listOf("system", "portfolio", "huge_sell", "dividends")
             }
 
     suspend fun setServerAddress(address: String) {
@@ -62,9 +64,9 @@ class DataStoreManager(
         }
     }
 
-    suspend fun setFilter(filter: String) {
+    suspend fun setFilter(filter: List<String>) {
         context.preferencesDataStore.edit { preferences ->
-            preferences[FILTER] = filter
+            preferences[FILTER] = filter.toSet()
         }
     }
 }
