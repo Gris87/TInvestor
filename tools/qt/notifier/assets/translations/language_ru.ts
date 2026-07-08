@@ -26,52 +26,52 @@
 <context>
     <name>NotificationsTableModel</name>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="34"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="34"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="34"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="41"/>
         <source>System</source>
         <translation>Система</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="41"/>
         <source>Portfolio</source>
         <translation>Портфолио</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="41"/>
         <source>Huge sell</source>
         <translation>Большая продажа</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="41"/>
         <source>Dividends</source>
         <translation>Дивиденды</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="41"/>
         <source>Pulse (Neutral)</source>
         <translation>Пульс (Нейтральный)</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="42"/>
         <source>Pulse (Buy)</source>
         <translation>Пульс (Покупка)</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="42"/>
         <source>Pulse (Sell)</source>
         <translation>Пульс (Продажа)</translation>
     </message>

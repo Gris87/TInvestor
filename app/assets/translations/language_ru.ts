@@ -167,12 +167,12 @@
 <context>
     <name>BiDirTradingThread</name>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="94"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="95"/>
         <source>Reselling completed successfully</source>
         <translation>Перепродажа успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="160"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="161"/>
         <source>Impossible to continue reselling</source>
         <translation>Невозможно продолжать перепродажу</translation>
     </message>
@@ -983,8 +983,8 @@
     <message>
         <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="297"/>
         <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="303"/>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="347"/>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="361"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="358"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="372"/>
         <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="295"/>
         <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="305"/>
         <source>From: %1</source>
@@ -994,6 +994,11 @@
         <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="336"/>
         <source>Average price by WAVG: %1</source>
         <translation>Средняя цена по WAVG: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="347"/>
+        <source>With yield: %1</source>
+        <translation>С учётом дохода: %1</translation>
     </message>
     <message>
         <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="131"/>

@@ -26,52 +26,52 @@
 <context>
     <name>NotificationsTableModel</name>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="34"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="34"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
         <source>Type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="34"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
         <source>Text</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="41"/>
         <source>System</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="41"/>
         <source>Portfolio</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="41"/>
         <source>Huge sell</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="41"/>
         <source>Dividends</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="37"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="41"/>
         <source>Pulse (Neutral)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="42"/>
         <source>Pulse (Buy)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="38"/>
+        <location filename="../../src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.cpp" line="42"/>
         <source>Pulse (Sell)</source>
         <translation></translation>
     </message>

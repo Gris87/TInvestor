@@ -337,6 +337,17 @@ static QVariant itemAvgPriceTooltipRole(bool showMoney, const PortfolioItem& ite
         .arg(showMoney ? QString::number(item.avgPriceWavg, 'f', item.pricePrecision) + " \u20BD" : "*** \u20BD");
 }
 
+static QVariant itemCostTooltipRole(bool showMoney, const PortfolioItem& item)
+{
+    if (!item.showPrices)
+    {
+        return QVariant();
+    }
+
+    return QObject::tr("With yield: %1")
+        .arg(showMoney ? QString::number(item.cost + item.yield, 'f', 2) + " \u20BD" : "*** \u20BD");
+}
+
 static QVariant itemYieldPercentTooltipRole(bool showMoney, const PortfolioItem& item)
 {
     if (!item.showPrices)
@@ -374,7 +385,7 @@ static const ItemTooltipRoleHandler ITEM_TOOLTIP_ROLE_HANDLER[PORTFOLIO_COLUMN_C
     itemNothingTooltipRole,
     itemNothingTooltipRole,
     itemAvgPriceTooltipRole,
-    itemNothingTooltipRole,
+    itemCostTooltipRole,
     itemNothingTooltipRole,
     itemNothingTooltipRole,
     itemYieldPercentTooltipRole,

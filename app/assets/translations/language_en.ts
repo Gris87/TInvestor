@@ -167,12 +167,12 @@
 <context>
     <name>BiDirTradingThread</name>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="94"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="95"/>
         <source>Reselling completed successfully</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="160"/>
+        <location filename="../../src/threads/bidirtrading/bidirtradingthread.cpp" line="161"/>
         <source>Impossible to continue reselling</source>
         <translation></translation>
     </message>
@@ -983,8 +983,8 @@
     <message>
         <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="297"/>
         <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="303"/>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="347"/>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="361"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="358"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="372"/>
         <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="295"/>
         <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="305"/>
         <source>From: %1</source>
@@ -993,6 +993,11 @@
     <message>
         <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="336"/>
         <source>Average price by WAVG: %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="347"/>
+        <source>With yield: %1</source>
         <translation></translation>
     </message>
     <message>

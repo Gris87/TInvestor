@@ -341,7 +341,7 @@ TEST_F(Test_PortfolioTreeModel, Test_data)
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant("Average price by WAVG: 103.000 \u20BD"));
-    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant("With yield: 399895.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::ToolTipRole),           QVariant("From: 102.000 \u20BD"));
@@ -350,7 +350,7 @@ TEST_F(Test_PortfolioTreeModel, Test_data)
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant("Average price by WAVG: 203.0000 \u20BD"));
-    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant("With yield: 500205.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::ToolTipRole),           QVariant("From: 202.0000 \u20BD"));
@@ -1022,7 +1022,7 @@ TEST_F(Test_PortfolioTreeModel, Test_setShowMoney)
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant("Average price by WAVG: *** \u20BD"));
-    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant("With yield: *** \u20BD"));
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::ToolTipRole),           QVariant("From: *** \u20BD"));
@@ -1031,7 +1031,7 @@ TEST_F(Test_PortfolioTreeModel, Test_setShowMoney)
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant("Average price by WAVG: *** \u20BD"));
-    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant("With yield: *** \u20BD"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::ToolTipRole),           QVariant("From: *** \u20BD"));
