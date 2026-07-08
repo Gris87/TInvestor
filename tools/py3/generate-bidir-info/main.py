@@ -19,8 +19,6 @@ from io import TextIOWrapper
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from localization import *
-
 
 PATH_TO_SCRIPT = Path(__file__).parent
 
@@ -34,9 +32,11 @@ ONE_HOUR     = 60 * ONE_MINUTE
 ONE_DAY      = 24 * ONE_HOUR
 ONE_MONTH    = 31 * ONE_DAY
 
-MINIMUM_STEP_DELTA = 2 * ONE_HOUR
-MINIMUM_SPREAD = 0.8
-MAXIMUM_SPREAD = 4.0
+COMBINE_STEP_DELTA = 2 * ONE_MINUTE
+MAXIMUM_STEP_DELTA = 2 * ONE_HOUR
+
+MINIMUM_SPREAD = 1.0
+MAXIMUM_SPREAD = 5.0
 MINIMUM_YIELD_VARIANTS = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
 CSV_FIELD_FIGI = 0
@@ -46,17 +46,6 @@ CSV_FIELD_CLOSE_PRICE = 3
 CSV_FIELD_HIGH_PRICE = 4
 CSV_FIELD_LOW_PRICE = 5
 CSV_FIELD_VOLUME = 6
-
-LOG_LEVEL_DEBUG = 1
-
-DECISION_HUGE_BID = "Huge bid"
-DECISION_HUGE_SPREAD = "Huge spread"
-DECISION_OTHER = "Other"
-
-GOOD_SELL_TIME = 15 * ONE_MINUTE
-GOOD_SELL_YIELD = 0.4
-GOOD_TOTAL_TRADES = 5
-GOOD_SUCCESS_RATE = 95.0
 
 ZIP_FILENAME_REGEXP = re.compile(r".*_(\d{4})(\d{2})(\d{2})\.csv")
 
@@ -254,7 +243,7 @@ def _download_data(args, instrument_id, start_timestamp, end_timestamp):
 
                                     res.append(entry)
 
-    return res
+    return _combine_data(res)
 
 
 def _download_file(params):
@@ -274,6 +263,33 @@ def _download_file(params):
     return None
 
 
+def _combine_data(data):
+    res = []
+
+    for entry in data:
+        if len(res) <= 0:
+            res.append(entry)
+
+            continue
+
+        last_entry = res[-1]
+        last_timestamp = last_entry["timestamp"]
+
+        if entry["timestamp"] - last_timestamp >= COMBINE_STEP_DELTA:
+            res.append(entry)
+
+            continue
+
+        last_entry["openPrice"] = max(last_entry["openPrice"], entry["openPrice"])
+        last_entry["closePrice"] = max(last_entry["closePrice"], entry["closePrice"])
+        last_entry["highPrice"] = max(last_entry["highPrice"], entry["highPrice"])
+        last_entry["lowPrice"] = min(last_entry["lowPrice"], entry["lowPrice"])
+
+        res[-1] = last_entry
+
+    return res
+
+
 def _preprocess_stock(stock, data):
     spreads = []
     max_spread = MINIMUM_SPREAD
@@ -282,14 +298,14 @@ def _preprocess_stock(stock, data):
         cur = data[i]
         next = data[i + 1]
 
-        if next["timestamp"] - cur["timestamp"] < MINIMUM_STEP_DELTA:
+        if next["timestamp"] - cur["timestamp"] < MAXIMUM_STEP_DELTA:
             cur_close_price = cur["closePrice"]
             next_low_price = next["lowPrice"]
 
             spread = HUNDRED_PERCENT - (next_low_price / cur_close_price) * HUNDRED_PERCENT
 
             if spread >= MINIMUM_SPREAD:
-                cur_datetime = datetime.fromtimestamp(cur["timestamp"] / MS_IN_SECOND)
+                cur_datetime = datetime.fromtimestamp(cur["timestamp"] / MS_IN_SECOND, MOSCOW_TZ)
 
                 if _is_working_day(cur_datetime):
                     spreads.append({

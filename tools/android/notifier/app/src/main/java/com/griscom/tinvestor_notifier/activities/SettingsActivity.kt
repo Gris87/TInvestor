@@ -200,12 +200,13 @@ fun SettingsContent(viewModel: SettingsViewModel) {
                                     }
                                 },
                                 role = Role.Checkbox, // Changes to Role.Switch for a Switch
-                            ).padding(8.dp),
+                            ),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Checkbox(
                         checked = checked,
                         onCheckedChange = null,
+                        modifier = Modifier.padding(8.dp),
                     )
                     Text(
                         text =

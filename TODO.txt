@@ -1,6 +1,4 @@
-Take 2 or 3 minutes for generating bi-dir info
 Script for instant huge fall buy (-2%)
-Buy with MM as follower (x1.5-x2)
 Improve coverage
 Create release
 

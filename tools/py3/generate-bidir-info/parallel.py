@@ -12,7 +12,7 @@ MS_IN_SECOND = 1000
 ONE_MINUTE   = 60 * MS_IN_SECOND
 ONE_HOUR     = 60 * ONE_MINUTE
 
-MINIMUM_STEP_DELTA = 2 * ONE_HOUR
+MAXIMUM_STEP_DELTA = 2 * ONE_HOUR
 
 GOOD_COUNT_DOUBLE_CHECK = 3
 BAD_YIELD = -3.0
@@ -82,7 +82,7 @@ def _is_good_to_buy(args, data, index, min_price_increment):
         cur = data[index]
         next = data[index + 1]
 
-        #if next["timestamp"] - cur["timestamp"] >= MINIMUM_STEP_DELTA:
+        #if next["timestamp"] - cur["timestamp"] >= MAXIMUM_STEP_DELTA:
         #    break
 
         if cur["closePrice"] <= bad_sell_price:
