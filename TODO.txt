@@ -1,4 +1,3 @@
-Script for instant huge fall buy (-2%)
 Improve coverage
 Create release
 

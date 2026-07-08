@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 import time
+
 from aiostream import stream
 from decimal import Decimal
 from loguru import logger

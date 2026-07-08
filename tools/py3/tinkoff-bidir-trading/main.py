@@ -4,7 +4,6 @@ import logging
 import sys
 import time
 
-from aiostream import stream
 from datetime import datetime, timedelta
 from decimal import Decimal
 from loguru import logger
@@ -13,7 +12,7 @@ from tinkoff.invest import GetMaxLotsRequest, OrderDirection, OrderExecutionRepo
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
-from tinkoff.invest.schemas import OrderBookInstrument, OrderIdType
+from tinkoff.invest.schemas import OrderIdType
 from tinkoff.invest.utils import quotation_to_decimal
 
 
@@ -392,6 +391,11 @@ def main():
 
     if args.instrument_id == "":
         logger.error("Please specify instrument ID with --instrument-id")
+
+        sys.exit(1)
+
+    if args.spread <= 0:
+        logger.error("Please specify valid spread value with --spread")
 
         sys.exit(1)
 
