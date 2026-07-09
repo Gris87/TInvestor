@@ -15,6 +15,26 @@ import org.junit.Test
 
 class ApiClientUnitTest {
     @Test
+    fun contstructorNotification() {
+        val n = Notification(1704056400000, "system", "AAAAA", "Some log")
+
+        Assert.assertEquals(1704056400000, n.timestamp)
+        Assert.assertEquals("system", n.type)
+        Assert.assertEquals("AAAAA", n.text)
+        Assert.assertEquals("Some log", n.data)
+    }
+
+    @Test
+    fun contstructorNotificationsResponse() {
+        val r = NotificationsResponse(listOf(Notification(1704056400000, "system", "AAAAA", "Some log")))
+
+        Assert.assertEquals(1704056400000, r.notifications[0].timestamp)
+        Assert.assertEquals("system", r.notifications[0].type)
+        Assert.assertEquals("AAAAA", r.notifications[0].text)
+        Assert.assertEquals("Some log", r.notifications[0].data)
+    }
+
+    @Test
     fun getMessages() {
         runBlocking {
             val mockEngine =
@@ -87,6 +107,35 @@ class ApiClientUnitTest {
             Assert.assertEquals("pulse_sell", notifications[6].type)
             Assert.assertEquals("GGGGG", notifications[6].text)
             Assert.assertEquals("", notifications[6].data)
+        }
+    }
+
+    @Test
+    fun getMessagesFailedToParse() {
+        runBlocking {
+            val mockEngine =
+                MockEngine {
+                    respond(
+                        content =
+                            ByteReadChannel(
+                                "{Bad content ::::: 555",
+                            ),
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                    )
+                }
+
+            val httpClient =
+                HttpClient(mockEngine) {
+                    install(ContentNegotiation) {
+                        json()
+                    }
+                }
+
+            val apiClient = ApiClient(httpClient)
+            val notifications = apiClient.getNotifications("localhost", 8041, 0)
+
+            Assert.assertEquals(0, notifications.size)
         }
     }
 }
