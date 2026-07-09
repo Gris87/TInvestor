@@ -23,6 +23,7 @@ public:
     bool isWeekend(qint64 timestamp) override;
     bool isNormalOrEveningSession(qint64 timestamp) override;
     bool isTimeBetween(QTime time, QTime startTime, QTime endTime) override;
+    bool isTimestampMore(qint64 timestamp, qint64 another) override;
 
 private:
     QTimeZone mMoscowTimezone;

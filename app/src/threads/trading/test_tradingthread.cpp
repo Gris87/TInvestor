@@ -12,6 +12,7 @@
 
 
 
+using ::testing::Ge;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -133,10 +134,24 @@ TEST_F(Test_TradingThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*timeUtilsMock, isTimestampMore(Ge(1704056400000), Ge(1704056400000))).WillOnce(Return(true));
+    EXPECT_CALL(
+        *logsThreadMock,
+        addLog(LOG_LEVEL_DEBUG, QString("aaaaa"), QString("Trade interrupted because it fails to buy during 15 minutes"))
+    );
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_VERBOSE, QString("aaaaa"), QString("Trade completed successfully")));
+
+    thread->run();
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*timeUtilsMock, isTimestampMore(Ge(1704056400000), Ge(1704056400000))).WillOnce(Return(false));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20)).WillOnce(Return(nullptr));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(30000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, isTimestampMore(Ge(1704056400000), Ge(1704056400000))).WillOnce(Return(false));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse2));
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20)).WillOnce(Return(nullptr));
@@ -147,6 +162,7 @@ TEST_F(Test_TradingThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*timeUtilsMock, isTimestampMore(Ge(1704056400000), Ge(1704056400000))).WillOnce(Return(false));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(nullptr));
 
@@ -178,6 +194,7 @@ TEST_F(Test_TradingThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*timeUtilsMock, isTimestampMore(Ge(1704056400000), Ge(1704056400000))).WillOnce(Return(false));
     EXPECT_CALL(*grpcRetryClientMock, getValidPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse2));
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaaaa"), 20))

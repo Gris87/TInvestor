@@ -452,6 +452,11 @@ TEST_F(Test_DecisionMakerWidget, Test_refreshOperationsBackground)
     decisionMakerWidget->refreshOperationsBackground();
 }
 
+TEST_F(Test_DecisionMakerWidget, Test_avgMonthlyYieldChanged)
+{
+    decisionMakerWidget->avgMonthlyYieldChanged(5.0);
+}
+
 TEST_F(Test_DecisionMakerWidget, Test_updateLastPrices)
 {
     const InSequence seq;

@@ -154,7 +154,7 @@ bool TradingThread::trade()
 
     while (true)
     {
-        if (QDateTime::currentMSecsSinceEpoch() > limitTimestamp)
+        if (mTimeUtils->isTimestampMore(QDateTime::currentMSecsSinceEpoch(), limitTimestamp))
         {
             mLogsThread->addLog(
                 LOG_LEVEL_DEBUG, mInstrumentId, tr("Trade interrupted because it fails to buy during 15 minutes")

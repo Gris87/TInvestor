@@ -22,4 +22,5 @@ public:
     virtual bool isWeekend(qint64 timestamp)                               = 0;
     virtual bool isNormalOrEveningSession(qint64 timestamp)                = 0;
     virtual bool isTimeBetween(QTime time, QTime startTime, QTime endTime) = 0;
+    virtual bool isTimestampMore(qint64 timestamp, qint64 another)         = 0;
 };

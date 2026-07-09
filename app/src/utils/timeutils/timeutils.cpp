@@ -96,3 +96,8 @@ bool TimeUtils::isTimeBetween(QTime time, QTime startTime, QTime endTime)
 
     return time >= startTime || time < endTime;
 }
+
+bool TimeUtils::isTimestampMore(qint64 timestamp, qint64 another)
+{
+    return timestamp > another;
+}

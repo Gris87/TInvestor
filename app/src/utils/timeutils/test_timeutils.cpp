@@ -43,6 +43,17 @@ TEST_F(Test_TimeUtils, Test_isWorkingHours)
     ASSERT_EQ(timeUtils->isWorkingHours(1704628800000), false); // 15:00 MSK Sun
 }
 
+TEST_F(Test_TimeUtils, Test_isMonday)
+{
+    ASSERT_EQ(timeUtils->isMonday(1704056400000), true);  // 00:00 MSK Mon
+    ASSERT_EQ(timeUtils->isMonday(1704142800000), false); // 00:00 MSK Tue
+    ASSERT_EQ(timeUtils->isMonday(1704229200000), false); // 00:00 MSK Wed
+    ASSERT_EQ(timeUtils->isMonday(1704315600000), false); // 00:00 MSK Thu
+    ASSERT_EQ(timeUtils->isMonday(1704402000000), false); // 00:00 MSK Fri
+    ASSERT_EQ(timeUtils->isMonday(1704488400000), false); // 00:00 MSK Sat
+    ASSERT_EQ(timeUtils->isMonday(1704574800000), false); // 00:00 MSK Sun
+}
+
 TEST_F(Test_TimeUtils, Test_isNormalOrEveningSession)
 {
     ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704056400000), false); // 00:00 MSK
@@ -64,4 +75,11 @@ TEST_F(Test_TimeUtils, Test_isTimeBetween)
     ASSERT_EQ(timeUtils->isTimeBetween(QTime(8, 0), QTime(9, 0), QTime(11, 0)), false);
     ASSERT_EQ(timeUtils->isTimeBetween(QTime(10, 0), QTime(11, 0), QTime(9, 0)), false);
     ASSERT_EQ(timeUtils->isTimeBetween(QTime(8, 0), QTime(11, 0), QTime(9, 0)), true);
+}
+
+TEST_F(Test_TimeUtils, Test_isTimestampMore)
+{
+    ASSERT_EQ(timeUtils->isTimestampMore(1, 2), false);
+    ASSERT_EQ(timeUtils->isTimestampMore(2, 2), false);
+    ASSERT_EQ(timeUtils->isTimestampMore(3, 2), true);
 }
