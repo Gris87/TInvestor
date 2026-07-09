@@ -107,7 +107,7 @@ QString BuyDecision7::makeDecisionBasedOnStockData(
 
     limitTimestamp = currentTimestamp - (duration * ONE_DAY) - ONE_HOUR;
 
-    for (int i = dataIndex; i >= 0 && !parentThread->isInterruptionRequested(); --i)
+    for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
     {
         const qint64 timestamp = stockData[i].timestamp;
 
