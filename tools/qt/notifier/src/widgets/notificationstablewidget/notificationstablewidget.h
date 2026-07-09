@@ -4,6 +4,7 @@
 
 #include "src/widgets/notificationstablewidget/inotificationstablewidget.h"
 
+#include "src/utils/http/ihttpclient.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tablemodels/notificationstablemodel/inotificationstablemodelfactory.h"
 
@@ -23,6 +24,7 @@ class NotificationsTableWidget : public INotificationsTableWidget
 public:
     explicit NotificationsTableWidget(
         INotificationsTableModelFactory* notificationsTableModelFactory,
+        IHttpClient*                     httpClient,
         ISettingsEditor*                 settingsEditor,
         QWidget*                         parent = nullptr
     );
@@ -44,6 +46,7 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
+    IHttpClient*              mHttpClient;
     ISettingsEditor*          mSettingsEditor;
     INotificationsTableModel* mNotificationsTableModel;
 };

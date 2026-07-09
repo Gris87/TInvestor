@@ -27,6 +27,7 @@ MainWindow::MainWindow(
     INotificationsTableModelFactory*  notificationsTableModelFactory,
     ITrayIconFactory*                 trayIconFactory,
     INotifier*                        notifier,
+    IHttpClient*                      httpClient,
     IRequestThread*                   requestThread,
     ISettingsEditor*                  settingsEditor,
     IAutorunEnabler*                  autorunEnabler,
@@ -51,7 +52,7 @@ MainWindow::MainWindow(
     ui->toolBar->show();
 
     mNotificationsTableWidget =
-        notificationsTableWidgetFactory->newInstance(notificationsTableModelFactory, mSettingsEditor, this);
+        notificationsTableWidgetFactory->newInstance(notificationsTableModelFactory, httpClient, mSettingsEditor, this);
     ui->layoutForNotificationsTableWidget->addWidget(mNotificationsTableWidget);
 
     mTrayIcon = trayIconFactory->newInstance(this);

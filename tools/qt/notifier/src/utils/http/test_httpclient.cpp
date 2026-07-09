@@ -62,4 +62,9 @@ TEST_F(Test_HttpClient, Test_get)
         QThread::msleep(5000);
     }
 }
+
+TEST_F(Test_HttpClient, Test_openInBrowser)
+{
+    // Nothing
+}
 // NOLINTEND(readability-magic-numbers)

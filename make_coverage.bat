@@ -89,6 +89,7 @@ OpenCppCoverage ^
     --sources notifier\src\ ^
     --excluded_sources test_* ^
     --excluded_sources *_mock.h ^
+    --excluded_sources httpclient.cpp ^
     --export_type html:..\..\..\..\CoverageReport\notifier_tests ^
     --export_type cobertura:..\..\..\..\CoverageReport\notifier_tests\cobertura.xml ^
     -- ^

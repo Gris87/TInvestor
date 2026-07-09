@@ -18,10 +18,14 @@ const int COLUMN_WIDTHS[NOTIFICATIONS_COLUMN_COUNT] = {145, 123, 1590};
 
 
 NotificationsTableWidget::NotificationsTableWidget(
-    INotificationsTableModelFactory* notificationsTableModelFactory, ISettingsEditor* settingsEditor, QWidget* parent
+    INotificationsTableModelFactory* notificationsTableModelFactory,
+    IHttpClient*                     httpClient,
+    ISettingsEditor*                 settingsEditor,
+    QWidget*                         parent
 ) :
     INotificationsTableWidget(parent),
     ui(new Ui::NotificationsTableWidget),
+    mHttpClient(httpClient),
     mSettingsEditor(settingsEditor),
     mNotificationsTableModel()
 {
@@ -60,7 +64,7 @@ bool NotificationsTableWidget::eventFilter(QObject* object, QEvent* event)
 
             if (event->type() == QEvent::MouseButtonRelease && mouseEvent->button() == Qt::LeftButton)
             {
-                QDesktopServices::openUrl(QUrl(url));
+                mHttpClient->openInBrowser(QUrl(url));
             }
         }
         else

@@ -39,6 +39,7 @@ public:
         INotificationsTableModelFactory*  notificationsTableModelFactory,
         ITrayIconFactory*                 trayIconFactory,
         INotifier*                        notifier,
+        IHttpClient*                      httpClient,
         IRequestThread*                   requestThread,
         ISettingsEditor*                  settingsEditor,
         IAutorunEnabler*                  autorunEnabler,

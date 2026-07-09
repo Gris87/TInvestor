@@ -34,4 +34,5 @@ public:
     IHttpClient& operator=(const IHttpClient& another) = delete;
 
     virtual HttpResult get(const QUrl& url, const Headers& headers) = 0;
+    virtual bool       openInBrowser(const QUrl& url)               = 0;
 };

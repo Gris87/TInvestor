@@ -18,8 +18,11 @@ NotificationsTableWidgetFactory::~NotificationsTableWidgetFactory()
 }
 
 INotificationsTableWidget* NotificationsTableWidgetFactory::newInstance(
-    INotificationsTableModelFactory* notificationsTableModelFactory, ISettingsEditor* settingsEditor, QWidget* parent
+    INotificationsTableModelFactory* notificationsTableModelFactory,
+    IHttpClient*                     httpClient,
+    ISettingsEditor*                 settingsEditor,
+    QWidget*                         parent
 ) const
 {
-    return new NotificationsTableWidget(notificationsTableModelFactory, settingsEditor, parent);
+    return new NotificationsTableWidget(notificationsTableModelFactory, httpClient, settingsEditor, parent);
 }

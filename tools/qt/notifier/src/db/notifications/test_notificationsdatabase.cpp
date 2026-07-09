@@ -253,3 +253,32 @@ TEST_F(Test_NotificationsDatabase, Test_appendNotifications)
 
     database->appendNotifications(notifications);
 }
+
+TEST_F(Test_NotificationsDatabase, Test_writeAttachment)
+{
+    const InSequence seq;
+
+    StrictMock<DirMock>*  dirMock  = new StrictMock<DirMock>();  // Will be deleted in writeAttachment function
+    StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeAttachment function
+
+    NotificationInfo notification;
+
+    notification.requestTimestamp = 1000;
+    notification.timestamp        = 2000;
+    notification.messageType      = MESSAGE_TYPE_SYSTEM;
+    notification.text             = "aaaaa";
+    notification.data             = "bbbbb";
+
+    const QString    attachmentStr   = "bbbbb";
+    const QByteArray attachmentBytes = attachmentStr.toUtf8();
+
+    EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
+    EXPECT_CALL(*dirMock, mkpath(appDir + "/data/attachments")).WillOnce(Return(true));
+    EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/attachments/2000.txt"))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock)));
+    EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock, write(attachmentBytes)).WillOnce(Return(attachmentBytes.size()));
+    EXPECT_CALL(*fileMock, close());
+
+    database->writeAttachment(notification);
+}

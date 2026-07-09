@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tablemodels/notificationstablemodel/inotificationstablemodel_mock.h"
 #include "src/widgets/tablemodels/notificationstablemodel/inotificationstablemodelfactory_mock.h"
@@ -43,6 +44,7 @@ TEST_F(Test_NotificationsTableWidgetFactory, Test_newInstance)
     // const InSequence seq;
 
     StrictMock<NotificationsTableModelFactoryMock> notificationsTableModelFactoryMock;
+    StrictMock<HttpClientMock>                     httpClientMock;
     StrictMock<SettingsEditorMock>                 settingsEditorMock;
 
     StrictMock<NotificationsTableModelMock> notificationsTableModelMock;
@@ -52,7 +54,7 @@ TEST_F(Test_NotificationsTableWidgetFactory, Test_newInstance)
     EXPECT_CALL(notificationsTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
     const INotificationsTableWidget* widget =
-        factory->newInstance(&notificationsTableModelFactoryMock, &settingsEditorMock, nullptr);
+        factory->newInstance(&notificationsTableModelFactoryMock, &httpClientMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

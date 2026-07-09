@@ -162,6 +162,7 @@ static int runApplication(QApplication* app)
         &notificationsTableModelFactory,
         &trayIconFactory,
         &notifier,
+        &httpClient,
         &requestThread,
         &settingsEditor,
         &autorunEnabler

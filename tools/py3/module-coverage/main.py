@@ -47,7 +47,8 @@ def _get_files():
             "app/src/utils/filedialog/filedialog.cp" in file_path or
             "app/src/utils/http/httpclient.cpp" in file_path or
             "app/src/utils/messagebox/messageboxutils.cp" in file_path or
-            "tools/qt/notifier/src/main.cpp" in file_path
+            "tools/qt/notifier/src/main.cpp" in file_path or
+            "tools/qt/notifier/src/utils/http/httpclient.cpp" in file_path
         )
 
         if skip_files:

@@ -16,6 +16,9 @@ public:
     NotificationsTableWidgetFactory& operator=(const NotificationsTableWidgetFactory& another) = delete;
 
     INotificationsTableWidget* newInstance(
-        INotificationsTableModelFactory* notificationsTableModelFactory, ISettingsEditor* settingsEditor, QWidget* parent
+        INotificationsTableModelFactory* notificationsTableModelFactory,
+        IHttpClient*                     httpClient,
+        ISettingsEditor*                 settingsEditor,
+        QWidget*                         parent
     ) const override;
 };

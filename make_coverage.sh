@@ -82,6 +82,7 @@ lcov \
     --include notifier/src/* \
     --exclude */test_* \
     --exclude */*_mock.h \
+    --exclude */httpclient.cpp \
     --directory gen/notifier_tests/objs \
     --output-file lcov.info
 RESULT_CODE=$?

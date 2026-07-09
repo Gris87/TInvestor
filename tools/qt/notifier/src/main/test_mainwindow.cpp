@@ -9,6 +9,7 @@
 #include "src/dialogs/settingsdialog/isettingsdialogfactory_mock.h"
 #include "src/threads/request/irequestthread_mock.h"
 #include "src/utils/autorunenabler/iautorunenabler_mock.h"
+#include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/notifier/inotifier_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/notificationstablewidget/inotificationstablewidget_mock.h"
@@ -52,6 +53,7 @@ protected:
         notificationsTableModelFactoryMock  = new StrictMock<NotificationsTableModelFactoryMock>();
         trayIconFactoryMock                 = new StrictMock<TrayIconFactoryMock>();
         notifierMock                        = new StrictMock<NotifierMock>();
+        httpClientMock                      = new StrictMock<HttpClientMock>();
         requestThreadMock                   = new StrictMock<RequestThreadMock>();
         settingsEditorMock                  = new StrictMock<SettingsEditorMock>();
         autorunEnablerMock                  = new StrictMock<AutorunEnablerMock>();
@@ -59,7 +61,8 @@ protected:
         trayIconMock                        = new StrictMock<TrayIconMock>();
 
         EXPECT_CALL(
-            *notificationsTableWidgetFactoryMock, newInstance(notificationsTableModelFactoryMock, settingsEditorMock, NotNull())
+            *notificationsTableWidgetFactoryMock,
+            newInstance(notificationsTableModelFactoryMock, httpClientMock, settingsEditorMock, NotNull())
         )
             .WillOnce(Return(notificationsTableWidgetMock));
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
@@ -96,6 +99,7 @@ protected:
             notificationsTableModelFactoryMock,
             trayIconFactoryMock,
             notifierMock,
+            httpClientMock,
             requestThreadMock,
             settingsEditorMock,
             autorunEnablerMock
@@ -123,6 +127,7 @@ protected:
         delete notificationsTableModelFactoryMock;
         delete trayIconFactoryMock;
         delete notifierMock;
+        delete httpClientMock;
         delete requestThreadMock;
         delete settingsEditorMock;
         delete autorunEnablerMock;
@@ -141,6 +146,7 @@ protected:
     StrictMock<NotificationsTableModelFactoryMock>*  notificationsTableModelFactoryMock;
     StrictMock<TrayIconFactoryMock>*                 trayIconFactoryMock;
     StrictMock<NotifierMock>*                        notifierMock;
+    StrictMock<HttpClientMock>*                      httpClientMock;
     StrictMock<RequestThreadMock>*                   requestThreadMock;
     StrictMock<SettingsEditorMock>*                  settingsEditorMock;
     StrictMock<AutorunEnablerMock>*                  autorunEnablerMock;

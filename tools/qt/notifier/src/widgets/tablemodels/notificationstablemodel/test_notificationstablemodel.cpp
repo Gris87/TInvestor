@@ -1,7 +1,10 @@
 #include "src/widgets/tablemodels/notificationstablemodel/notificationstablemodel.h"
 
 #include <QBrush>
+#include <QCoreApplication>
 #include <gtest/gtest.h>
+
+#include "src/widgets/tablemodels/modelroles.h"
 
 
 
@@ -111,6 +114,27 @@ TEST_F(Test_NotificationsTableModel, Test_data)
     ASSERT_EQ(model->data(model->index(0, NOTIFICATIONS_TIME_COLUMN), Qt::BackgroundRole),        QVariant(QBrush(QColor("#918A00"))));
     ASSERT_EQ(model->data(model->index(1, NOTIFICATIONS_TIME_COLUMN), Qt::BackgroundRole),        QVariant(QBrush(QColor("#918A00"))));
     ASSERT_EQ(model->data(model->index(2, NOTIFICATIONS_TIME_COLUMN), Qt::BackgroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, NOTIFICATIONS_TIME_COLUMN), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, NOTIFICATIONS_TYPE_COLUMN), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, NOTIFICATIONS_TEXT_COLUMN), Qt::ForegroundRole),        QVariant(QBrush(QColor("#6875FF"))));
+    ASSERT_EQ(model->data(model->index(1, NOTIFICATIONS_TIME_COLUMN), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, NOTIFICATIONS_TYPE_COLUMN), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, NOTIFICATIONS_TEXT_COLUMN), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(2, NOTIFICATIONS_TIME_COLUMN), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(2, NOTIFICATIONS_TYPE_COLUMN), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(2, NOTIFICATIONS_TEXT_COLUMN), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, NOTIFICATIONS_TIME_COLUMN), Qt::FontRole),              QVariant());
+    ASSERT_EQ(model->data(model->index(0, NOTIFICATIONS_TYPE_COLUMN), Qt::FontRole),              QVariant());
+    ASSERT_NE(model->data(model->index(0, NOTIFICATIONS_TEXT_COLUMN), Qt::FontRole),              QVariant());
+    ASSERT_EQ(model->data(model->index(1, NOTIFICATIONS_TIME_COLUMN), Qt::FontRole),              QVariant());
+    ASSERT_EQ(model->data(model->index(1, NOTIFICATIONS_TYPE_COLUMN), Qt::FontRole),              QVariant());
+    ASSERT_EQ(model->data(model->index(1, NOTIFICATIONS_TEXT_COLUMN), Qt::FontRole),              QVariant());
+    ASSERT_EQ(model->data(model->index(2, NOTIFICATIONS_TIME_COLUMN), Qt::FontRole),              QVariant());
+    ASSERT_EQ(model->data(model->index(2, NOTIFICATIONS_TYPE_COLUMN), Qt::FontRole),              QVariant());
+    ASSERT_EQ(model->data(model->index(2, NOTIFICATIONS_TEXT_COLUMN), Qt::FontRole),              QVariant());
+    ASSERT_EQ(model->data(model->index(0, NOTIFICATIONS_TEXT_COLUMN), ROLE_URL),                  QVariant(QString("%1/data/attachments/1704056520000.txt").arg(qApp->applicationDirPath())));
+    ASSERT_EQ(model->data(model->index(1, NOTIFICATIONS_TEXT_COLUMN), ROLE_URL),                  QVariant(""));
+    ASSERT_EQ(model->data(model->index(2, NOTIFICATIONS_TEXT_COLUMN), ROLE_URL),                  QVariant(""));
     ASSERT_EQ(model->data(model->index(0, 0),                         Qt::WhatsThisPropertyRole), QVariant());
     // clang-format on
 }

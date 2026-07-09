@@ -23,7 +23,10 @@ public:
     MOCK_METHOD(
         INotificationsTableWidget*,
         newInstance,
-        (INotificationsTableModelFactory * notificationsTableModelFactory, ISettingsEditor* settingsEditor, QWidget* parent),
+        (INotificationsTableModelFactory * notificationsTableModelFactory,
+         IHttpClient*     httpClient,
+         ISettingsEditor* settingsEditor,
+         QWidget*         parent),
         (const, override)
     );
 };

@@ -3,9 +3,12 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QMouseEvent>
 #include <gtest/gtest.h>
 
+#include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/tablemodels/modelroles.h"
 #include "src/widgets/tablemodels/notificationstablemodel/inotificationstablemodel_mock.h"
 #include "src/widgets/tablemodels/notificationstablemodel/inotificationstablemodelfactory_mock.h"
 
@@ -13,6 +16,7 @@
 
 using ::testing::_;
 using ::testing::InSequence;
+using ::testing::Ne;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -28,27 +32,31 @@ protected:
         // const InSequence seq;
 
         notificationsTableModelFactoryMock = new StrictMock<NotificationsTableModelFactoryMock>();
+        httpClientMock                     = new StrictMock<HttpClientMock>();
         settingsEditorMock                 = new StrictMock<SettingsEditorMock>();
 
         notificationsTableModelMock = new StrictMock<NotificationsTableModelMock>();
 
         EXPECT_CALL(*notificationsTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(notificationsTableModelMock));
-        EXPECT_CALL(*notificationsTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
+        EXPECT_CALL(*notificationsTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(1));
         EXPECT_CALL(*notificationsTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(NOTIFICATIONS_COLUMN_COUNT));
 
-        notificationsTableWidget = new NotificationsTableWidget(notificationsTableModelFactoryMock, settingsEditorMock);
+        notificationsTableWidget =
+            new NotificationsTableWidget(notificationsTableModelFactoryMock, httpClientMock, settingsEditorMock);
     }
 
     void TearDown() override
     {
         delete notificationsTableWidget;
         delete notificationsTableModelFactoryMock;
+        delete httpClientMock;
         delete settingsEditorMock;
         delete notificationsTableModelMock;
     }
 
     NotificationsTableWidget*                       notificationsTableWidget;
     StrictMock<NotificationsTableModelFactoryMock>* notificationsTableModelFactoryMock;
+    StrictMock<HttpClientMock>*                     httpClientMock;
     StrictMock<SettingsEditorMock>*                 settingsEditorMock;
     StrictMock<NotificationsTableModelMock>*        notificationsTableModelMock;
 };
@@ -57,6 +65,32 @@ protected:
 
 TEST_F(Test_NotificationsTableWidget, Test_constructor_and_destructor)
 {
+}
+
+TEST_F(Test_NotificationsTableWidget, Test_eventFilter)
+{
+    const InSequence seq;
+
+    QModelIndex index = notificationsTableModelMock->index(0, NOTIFICATIONS_TEXT_COLUMN);
+
+    EXPECT_CALL(*notificationsTableModelMock, data(_, Ne(ROLE_URL))).WillRepeatedly(Return(QVariant()));
+    EXPECT_CALL(*notificationsTableModelMock, data(index, ROLE_URL)).WillOnce(Return(QVariant("")));
+
+    QMouseEvent mouseEvent(
+        QEvent::MouseButtonRelease,
+        notificationsTableWidget->ui->tableView->visualRect(index).center(),
+        QPointF(0, 0),
+        Qt::LeftButton,
+        Qt::LeftButton,
+        Qt::NoModifier
+    );
+
+    ASSERT_EQ(notificationsTableWidget->eventFilter(notificationsTableWidget->ui->tableView->viewport(), &mouseEvent), false);
+
+    EXPECT_CALL(*notificationsTableModelMock, data(index, ROLE_URL)).WillOnce(Return(QVariant("Some url")));
+    EXPECT_CALL(*httpClientMock, openInBrowser(QUrl("Some url"))).WillOnce(Return(true));
+
+    ASSERT_EQ(notificationsTableWidget->eventFilter(notificationsTableWidget->ui->tableView->viewport(), &mouseEvent), false);
 }
 
 TEST_F(Test_NotificationsTableWidget, Test_setFilter)
