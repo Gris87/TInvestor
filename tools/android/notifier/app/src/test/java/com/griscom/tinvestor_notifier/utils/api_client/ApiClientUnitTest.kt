@@ -15,7 +15,7 @@ import org.junit.Test
 
 class ApiClientUnitTest {
     @Test
-    fun contstructorNotification() {
+    fun constructor_Notification() {
         val n = Notification(1704056400000, "system", "AAAAA", "Some log")
 
         Assert.assertEquals(1704056400000, n.timestamp)
@@ -25,7 +25,7 @@ class ApiClientUnitTest {
     }
 
     @Test
-    fun contstructorNotificationsResponse() {
+    fun constructor_NotificationsResponse() {
         val r = NotificationsResponse(listOf(Notification(1704056400000, "system", "AAAAA", "Some log")))
 
         Assert.assertEquals(1704056400000, r.notifications[0].timestamp)
@@ -111,7 +111,7 @@ class ApiClientUnitTest {
     }
 
     @Test
-    fun getMessagesFailedToParse() {
+    fun getMessages_failed_to_parse() {
         runBlocking {
             val mockEngine =
                 MockEngine {
