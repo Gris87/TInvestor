@@ -40,12 +40,27 @@ android {
             }
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildFeatures {
         compose = true
+    }
+
+    testOptions {
+        unitTests {
+            all {
+                val testTask = it as Test
+                testTask.extensions.configure(JacocoTaskExtension::class.java) {
+                    // Critical for preventing Robolectric crashes during instrumentation
+                    isIncludeNoLocationClasses = true
+                    excludes = listOf("jdk.internal.*")
+                }
+            }
+        }
     }
 }
 
