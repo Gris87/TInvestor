@@ -46,27 +46,23 @@ class DataStoreManager(
                 preferences[FILTER]?.toList() ?: listOf("system", "portfolio", "huge_sell", "dividends")
             }
 
-    suspend fun setServerAddress(address: String) {
+    suspend fun setServerAddress(address: String) =
         context.preferencesDataStore.edit { preferences ->
             preferences[SERVER_ADDRESS] = address
         }
-    }
 
-    suspend fun setServerPort(port: Int) {
+    suspend fun setServerPort(port: Int) =
         context.preferencesDataStore.edit { preferences ->
             preferences[SERVER_PORT] = port
         }
-    }
 
-    suspend fun setShowNotifications(enabled: Boolean) {
+    suspend fun setShowNotifications(enabled: Boolean) =
         context.preferencesDataStore.edit { preferences ->
             preferences[SHOW_NOTIFICATIONS] = enabled
         }
-    }
 
-    suspend fun setFilter(filter: List<String>) {
+    suspend fun setFilter(filter: List<String>) =
         context.preferencesDataStore.edit { preferences ->
             preferences[FILTER] = filter.toSet()
         }
-    }
 }

@@ -1,10 +1,11 @@
-package com.griscom.tinvestor_notifier.db
+package com.griscom.tinvestor_notifier.repositories
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.griscom.tinvestor_notifier.repositories.NotificationRepository
+import com.griscom.tinvestor_notifier.db.NotificationEntity
+import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After

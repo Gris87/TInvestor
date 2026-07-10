@@ -52,6 +52,8 @@ android {
 
     testOptions {
         unitTests {
+            isIncludeAndroidResources = true
+
             all {
                 val testTask = it as Test
                 testTask.extensions.configure(JacocoTaskExtension::class.java) {

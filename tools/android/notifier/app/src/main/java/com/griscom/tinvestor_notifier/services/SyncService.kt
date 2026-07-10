@@ -25,6 +25,7 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -35,6 +36,7 @@ import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
 private const val SYNC_CHANNEL_ID = "SYNC_CHANNEL_ID"
@@ -45,6 +47,8 @@ private val INTERVAL = 1.minutes
 class SyncService : Service() {
     private val serviceJob = SupervisorJob()
     private val serviceScope = CoroutineScope(Dispatchers.IO + serviceJob)
+
+    var isTerminatedForTesting = false
 
     private val httpClient =
         HttpClient(OkHttp) {
@@ -90,7 +94,16 @@ class SyncService : Service() {
         flags: Int,
         startId: Int,
     ): Int {
-        serviceScope.launch {
+        startInScope(serviceScope, INTERVAL)
+
+        return START_STICKY
+    }
+
+    fun startInScope(
+        scope: CoroutineScope,
+        interval: Duration,
+    ): Job =
+        scope.launch {
             val dataStore =
                 DataStoreManager(applicationContext)
 
@@ -111,7 +124,8 @@ class SyncService : Service() {
                     description = getString(R.string.channel_description_messages)
                 }
 
-            val notificationManager = getSystemService(NotificationManager::class.java) as NotificationManager
+            val notificationManager =
+                getSystemService(NotificationManager::class.java) as NotificationManager
             notificationManager.createNotificationChannel(syncChannel)
             notificationManager.createNotificationChannel(messagesChannel)
 
@@ -120,7 +134,12 @@ class SyncService : Service() {
                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK,
                 )
             val pendingIntent: PendingIntent =
-                PendingIntent.getActivity(applicationContext, 0, applicationIntent, PendingIntent.FLAG_IMMUTABLE)
+                PendingIntent.getActivity(
+                    applicationContext,
+                    0,
+                    applicationIntent,
+                    PendingIntent.FLAG_IMMUTABLE,
+                )
 
             val notification =
                 Notification
@@ -132,18 +151,22 @@ class SyncService : Service() {
                     .build()
 
             val uniqueNotificationId = (System.currentTimeMillis() and 0xfffffff).toInt()
-            startForeground(uniqueNotificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+            startForeground(
+                uniqueNotificationId,
+                notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC,
+            )
 
-            val repository = NotificationRepository(NotificationRoomDatabase.getInstance(application).notificationDao())
+            val repository =
+                NotificationRepository(
+                    NotificationRoomDatabase.getInstance(application).notificationDao(),
+                )
 
-            while (isActive) {
+            while (isActive && !isTerminatedForTesting) {
                 fetchData(repository, dataStore, notificationManager)
-                delay(INTERVAL)
+                delay(interval)
             }
         }
-
-        return START_STICKY
-    }
 
     private fun fetchData(
         repository: NotificationRepository,
