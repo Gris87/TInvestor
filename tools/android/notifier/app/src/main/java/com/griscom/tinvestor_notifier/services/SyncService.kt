@@ -159,18 +159,18 @@ class SyncService : Service() {
 
             val repository =
                 NotificationRepository(
-                    NotificationRoomDatabase.getInstance(application).notificationDao(),
+                    NotificationRoomDatabase.getInstance(applicationContext).notificationDao(),
                 )
 
             while (isActive && !isTerminatedForTesting) {
-                fetchData(repository, dataStore, notificationManager)
+                fetchData(dataStore, repository, notificationManager)
                 delay(interval)
             }
         }
 
-    private fun fetchData(
-        repository: NotificationRepository,
+    fun fetchData(
         dataStore: DataStoreManager,
+        repository: NotificationRepository,
         notificationManager: NotificationManager,
     ) {
         runBlocking {

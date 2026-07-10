@@ -1,11 +1,19 @@
 package com.griscom.tinvestor_notifier.db
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.griscom.tinvestor_notifier.utils.api_client.Notification
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
+@RunWith(RobolectricTestRunner::class)
 class NotificationEntityUnitTest {
+    @get:Rule
+    val instantRule = InstantTaskExecutorRule()
+
     @Test
     fun constructor_NotificationEntity_default() =
         runTest {

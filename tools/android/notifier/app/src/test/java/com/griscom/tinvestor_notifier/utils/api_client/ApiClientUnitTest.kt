@@ -1,5 +1,6 @@
 package com.griscom.tinvestor_notifier.utils.api_client
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -12,9 +13,16 @@ import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
+@RunWith(RobolectricTestRunner::class)
 class ApiClientUnitTest {
+    @get:Rule
+    val instantRule = InstantTaskExecutorRule()
+
     @Test
     fun constructor_Notification() =
         runTest {
