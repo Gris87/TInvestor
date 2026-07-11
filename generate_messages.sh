@@ -31,6 +31,7 @@ rm -rf tools/py3/tinkoff-fall-trading/tinkoff
 rm -rf tools/py3/tinkoff-favorite-group/tinkoff
 rm -rf tools/py3/tinkoff-follower/tinkoff
 rm -rf tools/py3/tinkoff-terminate-trading/tinkoff
+rm -rf tools/py3/tinkoff-tmon-weekend-trading/tinkoff
 rm -rf tools/py3/tinvestor-notifier/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-accounts/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-annihilate-mm/tinkoff
@@ -40,6 +41,7 @@ cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-fall-trading/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-favorite-group/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-follower/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-terminate-trading/tinkoff
+cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-tmon-weekend-trading/tinkoff
 cp -r /tmp/invest-python/tinkoff tools/py3/tinvestor-notifier/tinkoff
 rm -rf /tmp/invest-python
 

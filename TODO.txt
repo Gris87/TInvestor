@@ -1,4 +1,5 @@
 Let open log of notification on Android
+Create script for trading TMON at weekend (sell at maximum and buy at maximum - 0.2)
 Improve coverage
 Create release
 
