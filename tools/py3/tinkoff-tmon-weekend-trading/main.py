@@ -1,12 +1,13 @@
 import asyncio
 import argparse
+import datetime as dt
 import logging
 import sys
-import time
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from decimal import Decimal
 from loguru import logger
+from zoneinfo import ZoneInfo
 
 from tinkoff.invest import GetMaxLotsRequest, OrderDirection, OrderExecutionReportStatus, OrderType, PriceType, TimeInForceType
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
@@ -17,6 +18,14 @@ from tinkoff.invest.utils import decimal_to_quotation, quotation_to_decimal
 
 
 #logging.basicConfig(level=logging.DEBUG)
+
+
+MOSCOW_TZ = ZoneInfo("Europe/Moscow")
+
+WORKDAY_START = dt.time(10, 0, tzinfo=MOSCOW_TZ)
+WORKDAY_END   = dt.time(23, 30, tzinfo=MOSCOW_TZ)
+
+TMON_UID = "498ec3ff-ef27-4729-9703-a5aac48d5789"
 
 
 async def tmon_weekend_trading(args):
@@ -38,6 +47,8 @@ async def tmon_weekend_trading(args):
             sys.exit(1)
 
             return
+
+        await _start_orderbook_streaming(client, args.account)
 
 
 def _get_token(token, token_file):
@@ -65,6 +76,34 @@ async def _validate_account(client, account_id):
         return False
 
     return True
+
+
+async def _start_orderbook_streaming(client, account):
+    while True:
+        if not _is_weekend_work_time():
+            logger.info("Terminate because current time is not valid")
+
+            break
+
+        orderbook = await client.market_data.get_order_book(instrument_id=TMON_UID, depth=50)
+        await _handle_orderbook(client, account, orderbook)
+
+        await asyncio.sleep(10)
+
+
+async def _handle_orderbook(client, account, orderbook):
+    print("aaaaaa")
+
+
+def _is_weekend_work_time():
+    d = datetime.now(MOSCOW_TZ)
+
+    if d.isoweekday() < 6:
+        return False
+
+    t = d.timetz()
+
+    return t >= WORKDAY_START and t < WORKDAY_END
 
 
 def main():
@@ -104,34 +143,6 @@ def main():
         default="",
         help="Account ID",
     )
-    parser.add_argument(
-        "--instrument-id",
-        dest="instrument_id",
-        type=str,
-        default="",
-        help="Instrument ID",
-    )
-    parser.add_argument(
-        "--fall",
-        dest="fall",
-        type=float,
-        default=3.0,
-        help="Set buy price on instant fall in percent",
-    )
-    parser.add_argument(
-        "--limit-lots",
-        dest="limit_lots",
-        type=int,
-        default=1,
-        help="Amount of lots to buy",
-    )
-    parser.add_argument(
-        "--limit-by-time",
-        dest="limit_by_time",
-        type=int,
-        default=0,
-        help="Amount of minutes to work (0 - unlimit)",
-    )
     args = parser.parse_args()
 
     if (args.token == "" and args.token_file == "") or (args.token != "" and args.token_file != ""):
@@ -141,26 +152,6 @@ def main():
 
     if args.account == "":
         logger.error("Please specify account ID with --account")
-
-        sys.exit(1)
-
-    if args.instrument_id == "":
-        logger.error("Please specify instrument ID with --instrument-id")
-
-        sys.exit(1)
-
-    if args.fall <= 0:
-        logger.error("Please specify valid fall value with --fall")
-
-        sys.exit(1)
-
-    if args.limit_lots <= 0:
-        logger.error("Invalid --limit-lots")
-
-        sys.exit(1)
-
-    if args.limit_by_time < 0:
-        logger.error("Invalid --limit-by-time")
 
         sys.exit(1)
 
