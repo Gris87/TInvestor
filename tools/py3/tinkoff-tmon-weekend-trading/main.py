@@ -5,7 +5,6 @@ import logging
 import sys
 
 from datetime import datetime
-from decimal import Decimal
 from loguru import logger
 from zoneinfo import ZoneInfo
 
@@ -13,7 +12,6 @@ from tinkoff.invest import GetMaxLotsRequest, OrderDirection, OrderExecutionRepo
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
-from tinkoff.invest.schemas import OrderIdType
 from tinkoff.invest.utils import decimal_to_quotation, quotation_to_decimal
 
 
@@ -26,6 +24,9 @@ WORKDAY_START = dt.time(10, 0, tzinfo=MOSCOW_TZ)
 WORKDAY_END   = dt.time(23, 30, tzinfo=MOSCOW_TZ)
 
 TMON_UID = "498ec3ff-ef27-4729-9703-a5aac48d5789"
+
+QUANTITY_THRESHOLD = 5000000
+BUY_PRICE_OFFSET = 2
 
 
 async def tmon_weekend_trading(args):
@@ -92,7 +93,82 @@ async def _start_orderbook_streaming(client, account):
 
 
 async def _handle_orderbook(client, account, orderbook):
-    print("aaaaaa")
+    bid_found = False
+    ask_found = False
+    prices = []
+
+    for bid in orderbook.bids:
+        if bid.quantity >= QUANTITY_THRESHOLD:
+            bid_found = True
+
+            break
+
+        prices.append(quotation_to_decimal(bid.price))
+
+    for ask in orderbook.asks:
+        if ask.quantity >= QUANTITY_THRESHOLD:
+            ask_found = True
+
+            break
+
+        prices.append(quotation_to_decimal(ask.price))
+
+    if bid_found and ask_found and len(prices) > 0:
+        prices.sort(reverse=True)
+
+        tasks = []
+
+        if len(prices) > BUY_PRICE_OFFSET:
+            tasks.append(_buy(client, account, decimal_to_quotation(prices[BUY_PRICE_OFFSET])))
+
+        tasks.append(_sell(client, account, decimal_to_quotation(prices[0])))
+
+        if len(tasks) > 0:
+            await asyncio.gather(*tasks)
+
+
+async def _buy(client, account, price):
+    req = GetMaxLotsRequest(account_id=account, instrument_id=TMON_UID, price=price)
+    max_lots = await client.orders.get_max_lots(req)
+
+    amount_to_buy = max_lots.buy_limits.buy_max_lots
+
+    if amount_to_buy > 0:
+        resp = await client.orders.post_order(
+            quantity=amount_to_buy,
+            price=price,
+            direction=OrderDirection.ORDER_DIRECTION_BUY,
+            account_id=account,
+            order_type=OrderType.ORDER_TYPE_LIMIT,
+            instrument_id=TMON_UID,
+            time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+            price_type=PriceType.PRICE_TYPE_CURRENCY
+        )
+
+        if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+            logger.info(f"Buy {amount_to_buy} lots with price {quotation_to_decimal(price)}")
+
+
+async def _sell(client, account, price):
+    req = GetMaxLotsRequest(account_id=account, instrument_id=TMON_UID, price=price)
+    max_lots = await client.orders.get_max_lots(req)
+
+    amount_to_sell = max_lots.sell_limits.sell_max_lots
+
+    if amount_to_sell > 0:
+        resp = await client.orders.post_order(
+            quantity=amount_to_sell,
+            price=price,
+            direction=OrderDirection.ORDER_DIRECTION_SELL,
+            account_id=account,
+            order_type=OrderType.ORDER_TYPE_LIMIT,
+            instrument_id=TMON_UID,
+            time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+            price_type=PriceType.PRICE_TYPE_CURRENCY
+        )
+
+        if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+            logger.info(f"Sell {amount_to_sell} lots with price {quotation_to_decimal(price)}")
 
 
 def _is_weekend_work_time():
