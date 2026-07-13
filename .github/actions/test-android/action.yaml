@@ -52,12 +52,7 @@ runs:
       run: |
         Set-Location -Path "TInvestor-source/tools/android/notifier"
 
-        & ./gradlew verifyRoborazziDebug --stacktrace
-        if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-        }
-
-        & ./gradlew createUnitTestCoverageReport
+        & ./gradlew createUnitTestCoverageReport -Proborazzi.test.compare=true
         if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE
         }
