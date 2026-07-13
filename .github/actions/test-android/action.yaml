@@ -51,8 +51,8 @@ runs:
       shell: pwsh
       run: |
         Set-Location -Path "TInvestor-source/tools/android/notifier"
-        & ./gradlew verifyRoborazziDebug --stacktrace
-        & ./gradlew createUnitTestCoverageReport
+        & ./gradlew verifyRoborazziDebug --stacktrace || exit $LASTEXITCODE
+        & ./gradlew createUnitTestCoverageReport || exit $LASTEXITCODE
 
         Rename-Item -Path "app/build/reports/coverage/test/debug/report.xml" -NewName "jacoco-report.xml"
 
