@@ -31,6 +31,8 @@ class DataStoreManagerUnitTest {
             Assert.assertEquals("localhost", dataStore.serverAddress.first())
             dataStore.setServerAddress("yandex.ru")
             Assert.assertEquals("yandex.ru", dataStore.serverAddress.first())
+            dataStore.setServerAddress("localhost")
+            Assert.assertEquals("localhost", dataStore.serverAddress.first())
         }
 
     @Test
@@ -39,6 +41,8 @@ class DataStoreManagerUnitTest {
             Assert.assertEquals(8041, dataStore.serverPort.first())
             dataStore.setServerPort(8888)
             Assert.assertEquals(8888, dataStore.serverPort.first())
+            dataStore.setServerPort(8041)
+            Assert.assertEquals(8041, dataStore.serverPort.first())
         }
 
     @Test
@@ -47,6 +51,8 @@ class DataStoreManagerUnitTest {
             Assert.assertEquals(true, dataStore.isShowNotifications.first())
             dataStore.setShowNotifications(false)
             Assert.assertEquals(false, dataStore.isShowNotifications.first())
+            dataStore.setShowNotifications(true)
+            Assert.assertEquals(true, dataStore.isShowNotifications.first())
         }
 
     @Test
@@ -55,5 +61,7 @@ class DataStoreManagerUnitTest {
             Assert.assertEquals(listOf("system", "portfolio", "huge_sell", "dividends"), dataStore.filter.first())
             dataStore.setFilter(listOf("portfolio"))
             Assert.assertEquals(listOf("portfolio"), dataStore.filter.first())
+            dataStore.setFilter(listOf("system", "portfolio", "huge_sell", "dividends"))
+            Assert.assertEquals(listOf("system", "portfolio", "huge_sell", "dividends"), dataStore.filter.first())
         }
 }

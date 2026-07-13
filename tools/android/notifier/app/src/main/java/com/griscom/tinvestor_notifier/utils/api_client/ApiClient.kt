@@ -29,8 +29,8 @@ class ApiClient(
         var res: List<Notification> = emptyList()
 
         try {
-            val notificationsResponse: NotificationsResponse =
-                httpClient.get("https://$serverAddress:$serverPort/notifications?from=$from").body()
+            val resp = httpClient.get("https://$serverAddress:$serverPort/notifications?from=$from")
+            val notificationsResponse: NotificationsResponse = resp.body()
 
             res = notificationsResponse.notifications
         } catch (_: Exception) {

@@ -104,8 +104,12 @@ dependencies {
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.okhttp.tls)
     testImplementation(libs.ktor.client.mock)
     testImplementation(libs.androidx.room.testing)
     androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.mockwebserver)
+    androidTestImplementation(libs.okhttp.tls)
     androidTestImplementation(libs.androidx.room.testing)
 }

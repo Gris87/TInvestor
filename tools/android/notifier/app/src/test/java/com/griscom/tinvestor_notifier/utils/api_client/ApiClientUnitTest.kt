@@ -69,7 +69,7 @@ class ApiClientUnitTest {
                                     """.trimIndent(),
                                 ),
                             status = HttpStatusCode.OK,
-                            headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                            headers = headersOf(HttpHeaders.ContentType, "application/json; charset=utf-8"),
                         )
                     }
 
@@ -134,7 +134,7 @@ class ApiClientUnitTest {
                                     "{Bad content ::::: 555",
                                 ),
                             status = HttpStatusCode.OK,
-                            headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                            headers = headersOf(HttpHeaders.ContentType, "application/json; charset=utf-8"),
                         )
                     }
 
