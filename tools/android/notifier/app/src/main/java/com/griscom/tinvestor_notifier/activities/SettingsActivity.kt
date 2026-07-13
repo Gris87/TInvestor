@@ -142,6 +142,7 @@ fun SettingsContent(viewModel: SettingsViewModel) {
                             dataStore.setShowNotifications(enabled)
                         }
                     },
+                    modifier = Modifier.testTag("show_notifications_switch"),
                 )
             }
 

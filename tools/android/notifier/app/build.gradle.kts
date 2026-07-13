@@ -74,6 +74,10 @@ ktlint {
     ignoreFailures = false
 }
 
+roborazzi {
+    outputDir.set(file("src/test/screenshots"))
+}
+
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
