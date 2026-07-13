@@ -30,6 +30,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.state.ToggleableState
@@ -109,7 +110,7 @@ fun SettingsContent(viewModel: SettingsViewModel) {
                 },
                 label = { Text(text = stringResource(R.string.server_address), fontSize = 16.sp) },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().padding(8.dp),
+                modifier = Modifier.fillMaxWidth().padding(8.dp).testTag("server_address_field"),
             )
 
             TextField(
@@ -122,7 +123,7 @@ fun SettingsContent(viewModel: SettingsViewModel) {
                 label = { Text(text = stringResource(R.string.server_port), fontSize = 16.sp) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().padding(8.dp),
+                modifier = Modifier.fillMaxWidth().padding(8.dp).testTag("server_port_field"),
             )
 
             Row(

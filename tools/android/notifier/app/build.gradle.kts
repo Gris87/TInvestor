@@ -5,6 +5,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
     kotlin("plugin.serialization") version "2.4.0"
     id("com.google.devtools.ksp")
+    id("io.github.takahirom.roborazzi")
 }
 
 android {
@@ -102,8 +103,12 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.androidx.core)
     testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.androidx.compose.ui.test.junit4)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
+    testImplementation(libs.roborazzi.junit.rule)
     testImplementation(libs.mockwebserver)
     testImplementation(libs.okhttp.tls)
     testImplementation(libs.ktor.client.mock)
