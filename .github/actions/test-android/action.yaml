@@ -74,8 +74,19 @@ runs:
         prefix: TInvestor-Android
 
     # Upload artifacts
-    - name: Upload artifacts
+    - name: Upload artifacts (roborazzi)
       uses: actions/upload-artifact@v7
+      if: ${{ always() }}
+      with:
+        name: screenshot-diff-android
+        path: ./TInvestor-source/tools/android/notifier/app/build/outputs/roborazzi
+        retention-days: 1
+        compression-level: 9
+
+    # Upload artifacts
+    - name: Upload artifacts (reports)
+      uses: actions/upload-artifact@v7
+      if: ${{ always() }}
       with:
         name: coverage-android
         path: ./TInvestor-source/tools/android/notifier/app/build/reports
