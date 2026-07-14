@@ -1,3 +1,5 @@
+import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -57,6 +59,9 @@ android {
 
             all {
                 val testTask = it as Test
+
+                testTask.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
+
                 testTask.extensions.configure(JacocoTaskExtension::class.java) {
                     // Critical for preventing Robolectric crashes during instrumentation
                     isIncludeNoLocationClasses = true
@@ -76,6 +81,13 @@ ktlint {
 
 roborazzi {
     outputDir.set(file("src/test/screenshots"))
+
+    @OptIn(ExperimentalRoborazziApi::class)
+    generateComposePreviewRobolectricTests {
+        enable = true
+        includePrivatePreviews = false
+        packages = listOf("com.griscom.tinvestor_notifier.activities")
+    }
 }
 
 dependencies {
@@ -112,7 +124,8 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.roborazzi)
     testImplementation(libs.roborazzi.compose)
-    testImplementation(libs.roborazzi.junit.rule)
+    testImplementation(libs.roborazzi.previewScanner)
+    testImplementation(libs.composable.previewScanner)
     testImplementation(libs.mockwebserver)
     testImplementation(libs.okhttp.tls)
     testImplementation(libs.ktor.client.mock)

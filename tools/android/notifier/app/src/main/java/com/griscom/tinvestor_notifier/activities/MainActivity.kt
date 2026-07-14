@@ -55,7 +55,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.room.Room
 import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.datastore.DataStoreManager
 import com.griscom.tinvestor_notifier.db.NotificationDao
@@ -64,7 +63,6 @@ import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
 import com.griscom.tinvestor_notifier.repositories.NotificationRepository
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import my.nanihadesuka.compose.LazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSettings
 import java.time.Instant
@@ -131,6 +129,17 @@ fun ConversationContent(
     notificationDao: NotificationDao,
     listState: LazyListState = rememberLazyListState(),
 ) {
+    val repository = NotificationRepository(notificationDao)
+    val notifications by repository.notificationsListReversed.collectAsState(initial = emptyList())
+
+    ConversationContentInternal(notifications, listState)
+}
+
+@Composable
+fun ConversationContentInternal(
+    notifications: List<NotificationEntity>,
+    listState: LazyListState = rememberLazyListState(),
+) {
     val context = LocalContext.current
 
     val dataStore =
@@ -149,8 +158,6 @@ fun ConversationContent(
         }
     }
 
-    val repository = NotificationRepository(notificationDao)
-    val notifications by repository.notificationsListReversed.collectAsState(initial = emptyList())
     val filteredNotifications =
         notifications.filter { it.text.contains(searchText, ignoreCase = true) && it.type in filter }
 
@@ -322,32 +329,20 @@ fun NotificationItem(
 
 @Preview
 @Composable
-fun ConversationContentPreview() {
-    val db =
-        Room
-            .inMemoryDatabaseBuilder(
-                LocalContext.current,
-                NotificationRoomDatabase::class.java,
-            ).allowMainThreadQueries()
-            .build()
-    val notificationDao = db.notificationDao()
-
-    runBlocking {
-        notificationDao.insertNotifications(
-            listOf(
-                NotificationEntity(1704402000000, "pulse_sell", "Clever", ""),
-                NotificationEntity(1704319200000, "pulse_buy", "You", ""),
-                NotificationEntity(1704315600000, "pulse_neutral", "Are", ""),
-                NotificationEntity(1704240000000, "dividends", "Friend", ""),
-                NotificationEntity(1704236400000, "huge_sell", "Dear", ""),
-                NotificationEntity(1704232800000, "portfolio", "My", ""),
-                NotificationEntity(1704056400000, "system", "Hello", "Some log"),
-            ),
+fun ConversationContentInternalPreview() {
+    val exampleNotifications =
+        listOf(
+            NotificationEntity(1704402000000, "pulse_sell", "Clever", ""),
+            NotificationEntity(1704319200000, "pulse_buy", "You", ""),
+            NotificationEntity(1704315600000, "pulse_neutral", "Are", ""),
+            NotificationEntity(1704240000000, "dividends", "Friend", ""),
+            NotificationEntity(1704236400000, "huge_sell", "Dear", ""),
+            NotificationEntity(1704232800000, "portfolio", "My", ""),
+            NotificationEntity(1704056400000, "system", "Hello", "Some log"),
         )
-    }
 
     TInvestorNotifierTheme {
-        ConversationContent(notificationDao)
+        ConversationContentInternal(exampleNotifications)
     }
 }
 
