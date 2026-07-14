@@ -14,9 +14,13 @@ class SettingsViewModel(
 ) : ViewModel() {
     private val _serverAddress = MutableStateFlow("localhost")
     private val _serverPort = MutableStateFlow(8041)
+    private val _isShowNotifications = MutableStateFlow(true)
+    private val _filter = MutableStateFlow(listOf("system", "portfolio", "huge_sell", "dividends"))
 
     val serverAddress: StateFlow<String> = _serverAddress.asStateFlow()
     val serverPort: StateFlow<Int> = _serverPort.asStateFlow()
+    val isShowNotifications: StateFlow<Boolean> = _isShowNotifications.asStateFlow()
+    val filter: StateFlow<List<String>> = _filter.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -25,6 +29,12 @@ class SettingsViewModel(
             }
             dataStoreManager.serverPort.collectLatest { value ->
                 _serverPort.value = value
+            }
+            dataStoreManager.isShowNotifications.collectLatest { value ->
+                _isShowNotifications.value = value
+            }
+            dataStoreManager.filter.collectLatest { value ->
+                _filter.value = value
             }
         }
     }
@@ -42,6 +52,22 @@ class SettingsViewModel(
 
         viewModelScope.launch {
             dataStoreManager.setServerPort(value)
+        }
+    }
+
+    fun updateShowNotifications(value: Boolean) {
+        _isShowNotifications.value = value
+
+        viewModelScope.launch {
+            dataStoreManager.setShowNotifications(value)
+        }
+    }
+
+    fun updateFilter(value: List<String>) {
+        _filter.value = value
+
+        viewModelScope.launch {
+            dataStoreManager.setFilter(value)
         }
     }
 }

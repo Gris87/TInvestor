@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -42,7 +41,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.datastore.DataStoreManager
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
-import kotlinx.coroutines.launch
 
 private val MESSAGE_TYPES_LIST = listOf("system", "portfolio", "huge_sell", "dividends", "pulse_neutral", "pulse_buy", "pulse_sell")
 
@@ -63,17 +61,10 @@ class SettingsActivity : ComponentActivity() {
 
 @Composable
 fun SettingsContent(viewModel: SettingsViewModel) {
-    val context = LocalContext.current
-
-    val dataStore =
-        remember {
-            DataStoreManager(context)
-        }
-
     val serverAddress by viewModel.serverAddress.collectAsStateWithLifecycle()
     val serverPort by viewModel.serverPort.collectAsStateWithLifecycle()
-    val isShowNotifications by dataStore.isShowNotifications.collectAsStateWithLifecycle(true)
-    val filter by dataStore.filter.collectAsStateWithLifecycle(listOf("system", "portfolio", "huge_sell", "dividends"))
+    val isShowNotifications by viewModel.isShowNotifications.collectAsStateWithLifecycle()
+    val filter by viewModel.filter.collectAsStateWithLifecycle()
 
     val filterStates =
         remember(filter) {
@@ -90,8 +81,6 @@ fun SettingsContent(viewModel: SettingsViewModel) {
         }
 
     val scrollState = rememberScrollState()
-
-    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -138,9 +127,7 @@ fun SettingsContent(viewModel: SettingsViewModel) {
                 Switch(
                     checked = isShowNotifications,
                     onCheckedChange = { enabled ->
-                        coroutineScope.launch {
-                            dataStore.setShowNotifications(enabled)
-                        }
+                        viewModel.updateShowNotifications(enabled)
                     },
                     modifier = Modifier.testTag("show_notifications_switch"),
                 )
@@ -171,10 +158,9 @@ fun SettingsContent(viewModel: SettingsViewModel) {
                                 filterStates[index] = newState
                             }
 
-                            coroutineScope.launch {
-                                dataStore.setFilter(if (newState) MESSAGE_TYPES_LIST else emptyList())
-                            }
+                            viewModel.updateFilter(if (newState) MESSAGE_TYPES_LIST else emptyList())
                         },
+                        modifier = Modifier.testTag("filter_select_all_checkbox"),
                     )
                 }
             }
@@ -197,12 +183,10 @@ fun SettingsContent(viewModel: SettingsViewModel) {
                                         }
                                     }
 
-                                    coroutineScope.launch {
-                                        dataStore.setFilter(newFilter)
-                                    }
+                                    viewModel.updateFilter(newFilter)
                                 },
                                 role = Role.Checkbox, // Changes to Role.Switch for a Switch
-                            ),
+                            ).testTag("filter_${MESSAGE_TYPES_LIST[index]}_checkbox"),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Checkbox(
