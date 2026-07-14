@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -54,13 +55,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.room.Room
 import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.datastore.DataStoreManager
+import com.griscom.tinvestor_notifier.db.NotificationDao
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
 import com.griscom.tinvestor_notifier.repositories.NotificationRepository
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import my.nanihadesuka.compose.LazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSettings
 import java.time.Instant
@@ -104,13 +108,12 @@ class MainActivity : ComponentActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_CODE_POST_NOTIFICATIONS)
         }
 
-        val repository = NotificationRepository(NotificationRoomDatabase.getInstance(application).notificationDao())
+        val db = NotificationRoomDatabase.getInstance(application)
+        val notificationDao = db.notificationDao()
 
         setContent {
             TInvestorNotifierTheme {
-                val notifications by repository.notificationsListReversed.collectAsState(initial = emptyList())
-
-                ConversationContent(notifications)
+                ConversationContent(notificationDao)
             }
         }
     }
@@ -124,7 +127,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ConversationContent(notifications: List<NotificationEntity>) {
+fun ConversationContent(
+    notificationDao: NotificationDao,
+    listState: LazyListState = rememberLazyListState(),
+) {
     val context = LocalContext.current
 
     val dataStore =
@@ -137,14 +143,14 @@ fun ConversationContent(notifications: List<NotificationEntity>) {
     var isSearchVisible by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
 
-    val listState = rememberLazyListState()
-
     val isScrollDownButtonVisible by remember {
         derivedStateOf {
             listState.canScrollBackward
         }
     }
 
+    val repository = NotificationRepository(notificationDao)
+    val notifications by repository.notificationsListReversed.collectAsState(initial = emptyList())
     val filteredNotifications =
         notifications.filter { it.text.contains(searchText, ignoreCase = true) && it.type in filter }
 
@@ -205,7 +211,7 @@ fun ConversationContent(notifications: List<NotificationEntity>) {
                         onValueChange = { searchText = it },
                         label = { Text(text = stringResource(R.string.search)) },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().testTag("search_field"),
                     )
                 }
 
@@ -242,6 +248,7 @@ fun ConversationContent(notifications: List<NotificationEntity>) {
                             }
                         }
                     },
+                    modifier = Modifier.testTag("scroll_to_bottom_button"),
                 ) {
                     Image(
                         painter = painterResource(R.drawable.ic_arrow_down),
@@ -316,19 +323,31 @@ fun NotificationItem(
 @Preview
 @Composable
 fun ConversationContentPreview() {
-    val exampleNotifications =
-        listOf(
-            NotificationEntity(1704402000000, "pulse_sell", "Clever", ""),
-            NotificationEntity(1704319200000, "pulse_buy", "You", ""),
-            NotificationEntity(1704315600000, "pulse_neutral", "Are", ""),
-            NotificationEntity(1704240000000, "dividends", "Friend", ""),
-            NotificationEntity(1704236400000, "huge_sell", "Dear", ""),
-            NotificationEntity(1704232800000, "portfolio", "My", ""),
-            NotificationEntity(1704056400000, "system", "Hello", "Some log"),
+    val db =
+        Room
+            .inMemoryDatabaseBuilder(
+                LocalContext.current,
+                NotificationRoomDatabase::class.java,
+            ).allowMainThreadQueries()
+            .build()
+    val notificationDao = db.notificationDao()
+
+    runBlocking {
+        notificationDao.insertNotifications(
+            listOf(
+                NotificationEntity(1704402000000, "pulse_sell", "Clever", ""),
+                NotificationEntity(1704319200000, "pulse_buy", "You", ""),
+                NotificationEntity(1704315600000, "pulse_neutral", "Are", ""),
+                NotificationEntity(1704240000000, "dividends", "Friend", ""),
+                NotificationEntity(1704236400000, "huge_sell", "Dear", ""),
+                NotificationEntity(1704232800000, "portfolio", "My", ""),
+                NotificationEntity(1704056400000, "system", "Hello", "Some log"),
+            ),
         )
+    }
 
     TInvestorNotifierTheme {
-        ConversationContent(exampleNotifications)
+        ConversationContent(notificationDao)
     }
 }
 

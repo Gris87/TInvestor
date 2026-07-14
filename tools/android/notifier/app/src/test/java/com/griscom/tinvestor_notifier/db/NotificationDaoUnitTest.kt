@@ -25,6 +25,7 @@ class NotificationDaoUnitTest {
     @Before
     fun setup() {
         val context = ApplicationProvider.getApplicationContext<Context>()
+
         db =
             Room
                 .inMemoryDatabaseBuilder(
