@@ -45,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -155,10 +156,13 @@ fun ConversationContent(notifications: List<NotificationEntity>) {
             TopAppBar(
                 title = { Text(text = stringResource(R.string.app_name), fontSize = 24.sp) },
                 actions = {
-                    IconButton(onClick = {
-                        isSearchVisible = !isSearchVisible
-                        searchText = ""
-                    }) {
+                    IconButton(
+                        onClick = {
+                            isSearchVisible = !isSearchVisible
+                            searchText = ""
+                        },
+                        modifier = Modifier.testTag("top_bar_action_search"),
+                    ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_search),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -169,10 +173,13 @@ fun ConversationContent(notifications: List<NotificationEntity>) {
                             contentDescription = stringResource(R.string.content_description_search),
                         )
                     }
-                    IconButton(onClick = {
-                        val intent = Intent(context, SettingsActivity::class.java)
-                        context.startActivity(intent)
-                    }) {
+                    IconButton(
+                        onClick = {
+                            val intent = Intent(context, SettingsActivity::class.java)
+                            context.startActivity(intent)
+                        },
+                        modifier = Modifier.testTag("top_bar_action_settings"),
+                    ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_settings),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,

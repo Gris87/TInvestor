@@ -1,7 +1,8 @@
 package com.griscom.tinvestor_notifier.db
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -16,9 +17,9 @@ class NotificationRoomDatabaseUnitTest {
     @Test
     fun getInstance() =
         runTest {
-            val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+            val context = ApplicationProvider.getApplicationContext<Context>()
 
-            val db = NotificationRoomDatabase.getInstance(appContext)
+            val db = NotificationRoomDatabase.getInstance(context)
             db.close()
         }
 }

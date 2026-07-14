@@ -23,6 +23,14 @@ class SettingsActivityUnitTest {
     val composeTestRule = createAndroidComposeRule<SettingsActivity>()
 
     @Test
+    fun init_view() =
+        runTest {
+            composeTestRule
+                .onRoot()
+                .captureRoboImage("SettingsActivityUnitTest/init_view/01_finish.png")
+        }
+
+    @Test
     fun update_preferences() =
         runTest {
             composeTestRule.onRoot().captureRoboImage("SettingsActivityUnitTest/update_preferences/01_start.png")
