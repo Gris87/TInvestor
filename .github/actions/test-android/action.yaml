@@ -51,6 +51,7 @@ runs:
       shell: pwsh
       run: |
         Set-Location -Path "TInvestor-source/tools/android/notifier"
+        & sudo timedatectl set-timezone Europe/Moscow
 
         & ./gradlew verifyRoborazziDebug --stacktrace
         if ($LASTEXITCODE -ne 0) {
