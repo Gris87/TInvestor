@@ -78,7 +78,7 @@ fun LogDisplayContentPreview() {
         LogDisplayContent(
             """
             This is a multiline text block in Jetpack Compose.
-            You can long-press anywhere on this paragraph to bring up 
+            You can long-press anywhere on this paragraph to bring up
             the native selection handles and copy the text.
             It automatically wraps lines based on the available width.
             """.trimIndent().repeat(50),
