@@ -177,6 +177,26 @@ class MainActivityUnitTest2 {
         }
 
     @Test
+    fun notification_log_button() =
+        runTest {
+            composeTestRule.setContent {
+                TInvestorNotifierTheme {
+                    ConversationContent(notificationDao)
+                }
+            }
+
+            composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/notification_log_button/01_start.png")
+
+            fillWithTestData()
+
+            composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/notification_log_button/02_notifications_added.png")
+
+            composeTestRule.onNodeWithTag("notification_3_log_button").performClick()
+
+            composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/notification_log_button/03_finish.png")
+        }
+
+    @Test
     fun top_bar_action_search() =
         runTest {
             composeTestRule.setContent {
@@ -195,7 +215,7 @@ class MainActivityUnitTest2 {
 
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/top_bar_action_search/03_search_clicked.png")
 
-            composeTestRule.onNodeWithTag("search_field").performTextReplacement("BBBBB")
+            composeTestRule.onNodeWithTag("search_field").performTextReplacement("AAAAA")
 
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/top_bar_action_search/04_search_01.png")
 

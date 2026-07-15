@@ -1,4 +1,3 @@
-Let open log of notification on Android
 Improve coverage
 Create release
 
