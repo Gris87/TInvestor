@@ -10,7 +10,10 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextReplacement
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import com.dropbox.differ.SimpleImageComparator
 import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
+import com.github.takahirom.roborazzi.RoborazziOptions
+import com.github.takahirom.roborazzi.RoborazziRule
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.griscom.tinvestor_notifier.db.NotificationDao
 import com.griscom.tinvestor_notifier.db.NotificationEntity
@@ -34,6 +37,27 @@ import org.robolectric.annotation.GraphicsMode
 class MainActivityUnitTest2 {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
+
+    @get:Rule
+    val roborazziRule =
+        RoborazziRule(
+            options =
+                RoborazziRule.Options(
+                    roborazziOptions =
+                        RoborazziOptions(
+                            compareOptions =
+                                RoborazziOptions.CompareOptions(
+                                    changeThreshold = 0.01F,
+                                    imageComparator =
+                                        SimpleImageComparator(
+                                            maxDistance = 0.007F,
+                                            vShift = 2,
+                                            hShift = 2,
+                                        ),
+                                ),
+                        ),
+                ),
+        )
 
     private lateinit var db: NotificationRoomDatabase
     private lateinit var notificationDao: NotificationDao

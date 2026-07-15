@@ -87,6 +87,11 @@ roborazzi {
         enable = true
         includePrivatePreviews = false
         packages = listOf("com.griscom.tinvestor_notifier.activities")
+        robolectricConfig =
+            mapOf(
+                "qualifiers" to "RobolectricDeviceQualifiers.Pixel9ProXL",
+            )
+        testerQualifiedClassName = "com.griscom.tinvestor_notifier.activities.CustomComposePreviewTester"
     }
 }
 
@@ -124,6 +129,7 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.roborazzi)
     testImplementation(libs.roborazzi.compose)
+    testImplementation(libs.roborazzi.junit.rule)
     testImplementation(libs.roborazzi.previewScanner)
     testImplementation(libs.composable.previewScanner)
     testImplementation(libs.mockwebserver)
