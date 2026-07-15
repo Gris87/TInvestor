@@ -18,6 +18,7 @@ import com.github.takahirom.roborazzi.captureRoboImage
 import com.griscom.tinvestor_notifier.db.NotificationDao
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
+import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -82,31 +83,83 @@ class MainActivityUnitTest2 {
     }
 
     @Test
+    fun dynamic_light_theme() =
+        runTest {
+            composeTestRule.setContent {
+                TInvestorNotifierTheme(darkTheme = false, dynamicColor = true) {
+                    ConversationContent(notificationDao)
+                }
+            }
+
+            fillWithTestData()
+
+            composeTestRule.onRoot().captureRoboImage(
+                "MainActivityUnitTest/dynamic_light_theme/01_finish.png",
+            )
+        }
+
+    @Test
+    fun dynamic_dark_theme() =
+        runTest {
+            composeTestRule.setContent {
+                TInvestorNotifierTheme(darkTheme = true, dynamicColor = true) {
+                    ConversationContent(notificationDao)
+                }
+            }
+
+            fillWithTestData()
+
+            composeTestRule.onRoot().captureRoboImage(
+                "MainActivityUnitTest/dynamic_dark_theme/01_finish.png",
+            )
+        }
+
+    @Test
+    fun light_theme() =
+        runTest {
+            composeTestRule.setContent {
+                TInvestorNotifierTheme(darkTheme = false, dynamicColor = false) {
+                    ConversationContent(notificationDao)
+                }
+            }
+
+            fillWithTestData()
+
+            composeTestRule.onRoot().captureRoboImage(
+                "MainActivityUnitTest/light_theme/01_finish.png",
+            )
+        }
+
+    @Test
+    fun dark_theme() =
+        runTest {
+            composeTestRule.setContent {
+                TInvestorNotifierTheme(darkTheme = true, dynamicColor = false) {
+                    ConversationContent(notificationDao)
+                }
+            }
+
+            fillWithTestData()
+
+            composeTestRule.onRoot().captureRoboImage(
+                "MainActivityUnitTest/dark_theme/01_finish.png",
+            )
+        }
+
+    @Test
     fun display_notifications() =
         runTest {
             val listState = LazyListState()
 
             composeTestRule.setContent {
-                ConversationContent(notificationDao, listState)
+                TInvestorNotifierTheme {
+                    ConversationContent(notificationDao, listState)
+                }
             }
 
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/display_notifications/01_start.png")
 
-            notificationDao.insertNotifications(
-                listOf(
-                    NotificationEntity(1704056400000, "portfolio", "Very very long text. I don't care if you read it\n".repeat(100), ""),
-                    NotificationEntity(1704232800000, "system", "AAAAA", "Some log"),
-                    NotificationEntity(1704236400000, "portfolio", "BBBBB", ""),
-                    NotificationEntity(1704240000000, "huge_sell", "CCCCC", ""),
-                    NotificationEntity(1704315600000, "dividends", "DDDDD", ""),
-                    NotificationEntity(1704319200000, "pulse_neutral", "EEEEE", ""),
-                    NotificationEntity(1704402000000, "pulse_buy", "FFFFF", ""),
-                    NotificationEntity(1704402600000, "pulse_sell", "GGGGG", ""),
-                ),
-            )
-
-            val notifications = notificationDao.getNotificationsReversed().first()
-            Assert.assertEquals(8, notifications.size)
+            fillWithTestData()
 
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/display_notifications/02_notifications_added.png")
 
@@ -127,26 +180,14 @@ class MainActivityUnitTest2 {
     fun top_bar_action_search() =
         runTest {
             composeTestRule.setContent {
-                ConversationContent(notificationDao)
+                TInvestorNotifierTheme {
+                    ConversationContent(notificationDao)
+                }
             }
 
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/top_bar_action_search/01_start.png")
 
-            notificationDao.insertNotifications(
-                listOf(
-                    NotificationEntity(1704056400000, "portfolio", "Very very long text. I don't care if you read it\n".repeat(100), ""),
-                    NotificationEntity(1704232800000, "system", "AAAAA", "Some log"),
-                    NotificationEntity(1704236400000, "portfolio", "BBBBB", ""),
-                    NotificationEntity(1704240000000, "huge_sell", "CCCCC", ""),
-                    NotificationEntity(1704315600000, "dividends", "DDDDD", ""),
-                    NotificationEntity(1704319200000, "pulse_neutral", "EEEEE", ""),
-                    NotificationEntity(1704402000000, "pulse_buy", "FFFFF", ""),
-                    NotificationEntity(1704402600000, "pulse_sell", "GGGGG", ""),
-                ),
-            )
-
-            val notifications = notificationDao.getNotificationsReversed().first()
-            Assert.assertEquals(8, notifications.size)
+            fillWithTestData()
 
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/top_bar_action_search/02_notifications_added.png")
 
@@ -166,4 +207,27 @@ class MainActivityUnitTest2 {
 
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/top_bar_action_search/06_finish.png")
         }
+
+    suspend fun fillWithTestData() {
+        notificationDao.insertNotifications(
+            listOf(
+                NotificationEntity(
+                    1704056400000,
+                    "portfolio",
+                    "Very very long text. I don't care if you read it\n".repeat(100),
+                    "",
+                ),
+                NotificationEntity(1704232800000, "system", "AAAAA", "Some log"),
+                NotificationEntity(1704236400000, "portfolio", "BBBBB", ""),
+                NotificationEntity(1704240000000, "huge_sell", "CCCCC", ""),
+                NotificationEntity(1704315600000, "dividends", "DDDDD", ""),
+                NotificationEntity(1704319200000, "pulse_neutral", "EEEEE", ""),
+                NotificationEntity(1704402000000, "pulse_buy", "FFFFF", ""),
+                NotificationEntity(1704402600000, "pulse_sell", "GGGGG", ""),
+            ),
+        )
+
+        val notifications = notificationDao.getNotificationsReversed().first()
+        Assert.assertEquals(8, notifications.size)
+    }
 }

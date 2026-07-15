@@ -15,6 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
@@ -49,9 +50,15 @@ class SettingsActivityUnitTest {
     @Test
     fun init_view() =
         runTest {
-            composeTestRule
-                .onRoot()
-                .captureRoboImage("SettingsActivityUnitTest/init_view/01_finish.png")
+            composeTestRule.onRoot().captureRoboImage("SettingsActivityUnitTest/init_view/01_finish.png")
+        }
+
+    @Test
+    fun dark_theme() =
+        runTest {
+            RuntimeEnvironment.setQualifiers("+night")
+
+            composeTestRule.onRoot().captureRoboImage("SettingsActivityUnitTest/dark_theme/01_finish.png")
         }
 
     @Test
