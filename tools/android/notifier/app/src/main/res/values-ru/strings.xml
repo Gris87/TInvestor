@@ -21,5 +21,6 @@
     <string name="channel_description_messages">Канал для отображения входящий сообщений</string>
     <string name="content_description_search">Поиск</string>
     <string name="content_description_settings">Настройки</string>
+    <string name="content_description_log_file">Файл с логом</string>
     <string name="content_description_scroll_down">Пролистать вниз</string>
 </resources>

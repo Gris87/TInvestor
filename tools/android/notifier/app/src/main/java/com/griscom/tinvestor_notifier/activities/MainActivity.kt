@@ -232,7 +232,7 @@ fun ConversationContentInternal(
                         modifier = Modifier.fillMaxSize(),
                     ) {
                         itemsIndexed(filteredNotifications) { index, notification ->
-                            NotificationItem(filteredNotifications.getOrNull(index + 1), notification)
+                            NotificationItem(index, filteredNotifications.getOrNull(index + 1), notification)
                         }
                     }
                 }
@@ -273,9 +273,12 @@ fun ConversationContentInternal(
 
 @Composable
 fun NotificationItem(
+    index: Int,
     previousNotification: NotificationEntity?,
     notification: NotificationEntity,
 ) {
+    val context = LocalContext.current
+
     val previousDate = if (previousNotification != null) DATE_FORMATTER.format(Instant.ofEpochMilli(previousNotification.timestamp)) else ""
     val currentDate = DATE_FORMATTER.format(Instant.ofEpochMilli(notification.timestamp))
 
@@ -313,6 +316,28 @@ fun NotificationItem(
                         .fillMaxWidth()
                         .padding(top = 8.dp),
             )
+
+            if (notification.data != "") {
+                IconButton(
+                    onClick = {
+                        val intent =
+                            Intent(context, LogDisplayActivity::class.java).apply {
+                                putExtra("LOG_KEY", notification.data)
+                            }
+                        context.startActivity(intent)
+                    },
+                    modifier = Modifier.testTag("notification_${index}_log_button"),
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_file),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier =
+                            Modifier
+                                .height(24.dp),
+                        contentDescription = stringResource(R.string.content_description_log_file),
+                    )
+                }
+            }
         }
     }
 
@@ -354,10 +379,10 @@ fun NotificationItemPreview() {
             1704056400000,
             "pulse_sell",
             "\uD83D\uDD34 Probably need to sell\n\u26A0 Attention! Text found in Pulse post: court\n{EUTR} expects for a court today!",
-            "",
+            "Some log",
         )
 
     TInvestorNotifierTheme {
-        NotificationItem(null, exampleNotification)
+        NotificationItem(0, null, exampleNotification)
     }
 }

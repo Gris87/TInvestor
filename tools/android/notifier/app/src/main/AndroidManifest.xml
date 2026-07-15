@@ -35,6 +35,12 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
 
+        <activity
+            android:name=".activities.LogDisplayActivity"
+            android:theme="@style/Theme.TInvestorNotifier"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+
         <service
             android:name=".services.SyncService"
             android:foregroundServiceType="dataSync"
