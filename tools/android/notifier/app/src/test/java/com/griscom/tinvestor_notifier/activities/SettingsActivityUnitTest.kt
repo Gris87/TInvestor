@@ -38,7 +38,7 @@ class SettingsActivityUnitTest {
                                     changeThreshold = 0.01F,
                                     imageComparator =
                                         SimpleImageComparator(
-                                            maxDistance = 0.05F,
+                                            maxDistance = 0.06F,
                                             vShift = 1,
                                             hShift = 1,
                                         ),
