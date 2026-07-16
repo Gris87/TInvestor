@@ -19,8 +19,10 @@ import com.griscom.tinvestor_notifier.db.NotificationDao
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
@@ -32,6 +34,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = RobolectricDeviceQualifiers.Pixel9ProXL)
@@ -92,6 +95,7 @@ class MainActivityUnitTest2 {
             }
 
             fillWithTestData()
+            runCurrent()
 
             composeTestRule.onRoot().captureRoboImage(
                 "MainActivityUnitTest/dynamic_light_theme/01_finish.png",
@@ -108,6 +112,7 @@ class MainActivityUnitTest2 {
             }
 
             fillWithTestData()
+            runCurrent()
 
             composeTestRule.onRoot().captureRoboImage(
                 "MainActivityUnitTest/dynamic_dark_theme/01_finish.png",
@@ -124,6 +129,7 @@ class MainActivityUnitTest2 {
             }
 
             fillWithTestData()
+            runCurrent()
 
             composeTestRule.onRoot().captureRoboImage(
                 "MainActivityUnitTest/light_theme/01_finish.png",
@@ -140,6 +146,7 @@ class MainActivityUnitTest2 {
             }
 
             fillWithTestData()
+            runCurrent()
 
             composeTestRule.onRoot().captureRoboImage(
                 "MainActivityUnitTest/dark_theme/01_finish.png",
@@ -160,6 +167,7 @@ class MainActivityUnitTest2 {
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/display_notifications/01_start.png")
 
             fillWithTestData()
+            runCurrent()
 
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/display_notifications/02_notifications_added.png")
 
@@ -188,6 +196,7 @@ class MainActivityUnitTest2 {
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/notification_log_button/01_start.png")
 
             fillWithTestData()
+            runCurrent()
 
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/notification_log_button/02_notifications_added.png")
 
@@ -208,6 +217,7 @@ class MainActivityUnitTest2 {
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/top_bar_action_search/01_start.png")
 
             fillWithTestData()
+            runCurrent()
 
             composeTestRule.onRoot().captureRoboImage("MainActivityUnitTest/top_bar_action_search/02_notifications_added.png")
 
