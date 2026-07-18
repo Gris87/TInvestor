@@ -25,7 +25,7 @@ async def asap_trading(args):
     logger.info("Connecting to server")
 
     token = os.environ["TINVEST_TOKEN"]
-    retry_settings = RetryClientSettings(use_retry=True, max_retry_attempt=10)
+    retry_settings = RetryClientSettings(use_retry=True, max_retry_attempt=10000)
 
     async with AsyncRetryingClient(token, settings=retry_settings, target=INVEST_GRPC_API if args.official else INVEST_GRPC_API_SANDBOX) as client:
         await _do_processing(args, client)

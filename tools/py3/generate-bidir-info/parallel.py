@@ -12,10 +12,10 @@ MS_IN_SECOND = 1000
 ONE_MINUTE   = 60 * MS_IN_SECOND
 ONE_HOUR     = 60 * ONE_MINUTE
 
-MAXIMUM_STEP_DELTA = 2 * ONE_HOUR
+MAXIMUM_CHECK_DELTA = 1 * ONE_HOUR
 
 GOOD_COUNT_DOUBLE_CHECK = 3
-BAD_YIELD = -3.0
+BAD_YIELD = -2.0
 COMMISSION = 0.04
 
 
@@ -67,6 +67,8 @@ def _is_good_to_buy(args, data, index, min_price_increment):
     cur = data[index]
     next = data[index + 1]
 
+    start_timestamp = cur["timestamp"]
+
     cur_close_price = cur["closePrice"]
     buy_price = cur_close_price * (1 - (args.spread / HUNDRED_PERCENT))
     buy_price = max(math.floor(buy_price / min_price_increment) * min_price_increment, next["lowPrice"])
@@ -78,12 +80,11 @@ def _is_good_to_buy(args, data, index, min_price_increment):
     index += 1
     good_count = 0
 
-    while index < len(data) - 1:
+    while index < len(data):
         cur = data[index]
-        next = data[index + 1]
 
-        #if next["timestamp"] - cur["timestamp"] >= MAXIMUM_STEP_DELTA:
-        #    break
+        if cur["timestamp"] - start_timestamp >= MAXIMUM_CHECK_DELTA:
+            break
 
         if cur["closePrice"] <= bad_sell_price:
             break
@@ -119,14 +120,14 @@ if __name__ == "__main__":
         "--spread",
         dest="spread",
         type=float,
-        default=0.7,
+        default=1.0,
         help="Keep spread between close price and next low price",
     )
     parser.add_argument(
         "--min-yield",
         dest="min_yield",
         type=float,
-        default=0.1,
+        default=0.7,
         help="Minimum yield",
     )
     args = parser.parse_args()

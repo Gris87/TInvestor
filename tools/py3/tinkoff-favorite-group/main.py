@@ -234,7 +234,7 @@ async def favorite_group(args):
     logger.info("Connecting to server")
 
     token = _get_token(args.token, args.token_file)
-    retry_settings = RetryClientSettings(use_retry=True, max_retry_attempt=10)
+    retry_settings = RetryClientSettings(use_retry=True, max_retry_attempt=10000)
 
     async with AsyncRetryingClient(token, settings=retry_settings, target=INVEST_GRPC_API) as client:
         logger.info("Obtaining user qual investor status")

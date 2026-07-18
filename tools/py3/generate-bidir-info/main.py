@@ -36,8 +36,7 @@ COMBINE_STEP_DELTA = 3 * ONE_MINUTE
 MAXIMUM_STEP_DELTA = 2 * ONE_HOUR
 
 MINIMUM_SPREAD = 1.0
-MAXIMUM_SPREAD = 5.0
-MINIMUM_YIELD_VARIANTS = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+MINIMUM_YIELD_VARIANTS = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5]
 
 CSV_FIELD_FIGI = 0
 CSV_FIELD_TIMESTAMP = 1
@@ -52,7 +51,7 @@ ZIP_FILENAME_REGEXP = re.compile(r".*_(\d{4})(\d{2})(\d{2})\.csv")
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
 
 WORKDAY_START = dt.time(10, 5, tzinfo=MOSCOW_TZ)
-WORKDAY_END   = dt.time(18, 40, tzinfo=MOSCOW_TZ)
+WORKDAY_END   = dt.time(22, 30, tzinfo=MOSCOW_TZ)
 
 GTRK_UID = "9e69afb6-4561-4fc2-b63b-b181e3f9ecdc"
 JETL_UID = "34f51a49-919b-4eb1-9ed0-59c26f4cdc1e"
@@ -313,7 +312,7 @@ def _preprocess_stock(stock, data):
                         "spread": spread
                     })
 
-                    max_spread = min(max(max_spread, spread), MAXIMUM_SPREAD)
+                    max_spread = max(max_spread, spread)
 
     return {
         "minPriceIncrement": float(stock["minPriceIncrement"]),
@@ -389,14 +388,14 @@ def main():
         "--normal-priority",
         dest="normal_priority",
         type=float,
-        default=10.0,
+        default=5.0,
         help="Total yield limit to set normal priority"
     )
     parser.add_argument(
         "--high-priority",
         dest="high_priority",
         type=float,
-        default=20.0,
+        default=10.0,
         help="Total yield limit to set high priority"
     )
     parser.add_argument(

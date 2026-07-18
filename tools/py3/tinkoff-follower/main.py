@@ -34,7 +34,7 @@ async def follow(args):
 
     src_token = _get_token(args.src_token, args.src_token_file)
     dest_token = _get_token(args.dest_token, args.dest_token_file)
-    retry_settings = RetryClientSettings(use_retry=True, max_retry_attempt=10)
+    retry_settings = RetryClientSettings(use_retry=True, max_retry_attempt=10000)
 
     async with AsyncRetryingClient(src_token, settings=retry_settings, target=INVEST_GRPC_API if args.official_src else INVEST_GRPC_API_SANDBOX) as src_client:
         async with AsyncRetryingClient(dest_token, settings=retry_settings, target=INVEST_GRPC_API if args.official_dest else INVEST_GRPC_API_SANDBOX) as dest_client:
