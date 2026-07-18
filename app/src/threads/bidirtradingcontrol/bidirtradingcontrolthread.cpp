@@ -19,15 +19,17 @@ constexpr qint64 DETECTION_INTERVAL         = 15LL * ONE_MINUTE; // 15 minutes
 
 
 BiDirTradingControlThread::BiDirTradingControlThread(
-    IStocksStorage* stocksStorage,
-    IUserStorage*   userStorage,
-    IConfig*        config,
-    ITimeUtils*     timeUtils,
-    IGrpcClient*    grpcClient,
-    QObject*        parent
+    IStocksStorage*     stocksStorage,
+    IBiDirInfosStorage* biDirInfosStorage,
+    IUserStorage*       userStorage,
+    IConfig*            config,
+    ITimeUtils*         timeUtils,
+    IGrpcClient*        grpcClient,
+    QObject*            parent
 ) :
     IBiDirTradingControlThread(parent),
     mStocksStorage(stocksStorage),
+    mBiDirInfosStorage(biDirInfosStorage),
     mUserStorage(userStorage),
     mConfig(config),
     mTimeUtils(timeUtils),
@@ -160,14 +162,18 @@ static BiDirTradingInfo checkStockForHugeBidOrSpread(
 struct DetectStocksForBiDirTradingInfo
 {
     explicit DetectStocksForBiDirTradingInfo(
-        IGrpcClient* _grpcClient,
-        bool         _qualifiedUser,
-        bool         _tradeHugeBid,
-        bool         _tradeHugeSpread,
-        float        _hugeBid,
-        float        _hugeSpread
+        IGrpcClient*        _grpcClient,
+        IBiDirInfosStorage* _biDirInfosStorage,
+        bool                _weekend,
+        bool                _qualifiedUser,
+        bool                _tradeHugeBid,
+        bool                _tradeHugeSpread,
+        float               _hugeBid,
+        float               _hugeSpread
     ) :
         grpcClient(_grpcClient),
+        biDirInfosStorage(_biDirInfosStorage),
+        weekend(_weekend),
         qualifiedUser(_qualifiedUser),
         tradeHugeBid(_tradeHugeBid),
         tradeHugeSpread(_tradeHugeSpread),
@@ -179,6 +185,8 @@ struct DetectStocksForBiDirTradingInfo
     }
 
     IGrpcClient*                      grpcClient;
+    IBiDirInfosStorage*               biDirInfosStorage;
+    bool                              weekend;
     bool                              qualifiedUser;
     bool                              tradeHugeBid;
     bool                              tradeHugeSpread;
@@ -195,13 +203,15 @@ static void detectStocksForBiDirTradingForParallel(
     const DetectStocksForBiDirTradingInfo* detectStocksForBiDirTradingInfo =
         reinterpret_cast<DetectStocksForBiDirTradingInfo*>(additionalArgs);
 
-    IGrpcClient*                grpcClient      = detectStocksForBiDirTradingInfo->grpcClient;
-    const bool                  qualifiedUser   = detectStocksForBiDirTradingInfo->qualifiedUser;
-    const bool                  tradeHugeBid    = detectStocksForBiDirTradingInfo->tradeHugeBid;
-    const bool                  tradeHugeSpread = detectStocksForBiDirTradingInfo->tradeHugeSpread;
-    const float                 hugeBid         = detectStocksForBiDirTradingInfo->hugeBid;
-    const float                 hugeSpread      = detectStocksForBiDirTradingInfo->hugeSpread;
-    InstrumentsForBiDirTrading* resultsArray    = detectStocksForBiDirTradingInfo->resultsArray;
+    IGrpcClient*                grpcClient        = detectStocksForBiDirTradingInfo->grpcClient;
+    IBiDirInfosStorage*         biDirInfosStorage = detectStocksForBiDirTradingInfo->biDirInfosStorage;
+    const bool                  weekend           = detectStocksForBiDirTradingInfo->weekend;
+    const bool                  qualifiedUser     = detectStocksForBiDirTradingInfo->qualifiedUser;
+    const bool                  tradeHugeBid      = detectStocksForBiDirTradingInfo->tradeHugeBid;
+    const bool                  tradeHugeSpread   = detectStocksForBiDirTradingInfo->tradeHugeSpread;
+    const float                 hugeBid           = detectStocksForBiDirTradingInfo->hugeBid;
+    const float                 hugeSpread        = detectStocksForBiDirTradingInfo->hugeSpread;
+    InstrumentsForBiDirTrading* resultsArray      = detectStocksForBiDirTradingInfo->resultsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -209,7 +219,16 @@ static void detectStocksForBiDirTradingForParallel(
 
         stock->readLock();
 
-        if (!stock->meta.ignore && (qualifiedUser || !stock->meta.forQualInvestorFlag))
+        biDirInfosStorage->readLock();
+
+        const BiDirInfos&   biDirInfos = biDirInfosStorage->getBiDirInfos();
+        const BiDirPriority priority   = !weekend && biDirInfos.contains(stock->meta.instrumentId)
+                                             ? biDirInfos.value(stock->meta.instrumentId).priority
+                                             : BIDIR_PRIORITY_NORMAL;
+
+        biDirInfosStorage->readUnlock();
+
+        if (!stock->meta.ignore && priority != BIDIR_PRIORITY_LOW && (qualifiedUser || !stock->meta.forQualInvestorFlag))
         {
             const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
                 grpcClient->getOrderBook(parentThread, stock->meta.instrumentId, ORDER_BOOK_DEPTH);
@@ -241,6 +260,8 @@ void BiDirTradingControlThread::detectStocksForBiDirTrading(qint64 timestamp, bo
     if (mConfig->isTradeInNonWorkingHours() ? mTimeUtils->isNormalOrEveningSession(timestamp)
                                             : mTimeUtils->isWorkingHours(timestamp))
     {
+        const bool weekend = mTimeUtils->isWeekend(timestamp);
+
         mUserStorage->readLock();
         const bool  qualifiedUser = mUserStorage->isQualified();
         const float commission    = mUserStorage->getCommission();
@@ -256,7 +277,7 @@ void BiDirTradingControlThread::detectStocksForBiDirTrading(qint64 timestamp, bo
             const float hugeSpread = mConfig->getHugeSpread();
 
             DetectStocksForBiDirTradingInfo detectStocksForBiDirTradingInfo(
-                mGrpcClient, qualifiedUser, tradeHugeBid, tradeHugeSpread, hugeBid, hugeSpread
+                mGrpcClient, mBiDirInfosStorage, weekend, qualifiedUser, tradeHugeBid, tradeHugeSpread, hugeBid, hugeSpread
             );
             processInParallel(
                 QThread::currentThread(), stocks, detectStocksForBiDirTradingForParallel, &detectStocksForBiDirTradingInfo

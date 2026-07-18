@@ -8,6 +8,7 @@
 
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/storage/bidirinfos/ibidirinfosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/utils/timeutils/itimeutils.h"
@@ -20,12 +21,13 @@ class BiDirTradingControlThread : public IBiDirTradingControlThread
 
 public:
     explicit BiDirTradingControlThread(
-        IStocksStorage* stocksStorage,
-        IUserStorage*   userStorage,
-        IConfig*        config,
-        ITimeUtils*     timeUtils,
-        IGrpcClient*    grpcClient,
-        QObject*        parent = nullptr
+        IStocksStorage*     stocksStorage,
+        IBiDirInfosStorage* biDirInfosStorage,
+        IUserStorage*       userStorage,
+        IConfig*            config,
+        ITimeUtils*         timeUtils,
+        IGrpcClient*        grpcClient,
+        QObject*            parent = nullptr
     );
     ~BiDirTradingControlThread() override;
 
@@ -40,6 +42,7 @@ public:
 
 private:
     IStocksStorage*                   mStocksStorage;
+    IBiDirInfosStorage*               mBiDirInfosStorage;
     IUserStorage*                     mUserStorage;
     IConfig*                          mConfig;
     ITimeUtils*                       mTimeUtils;

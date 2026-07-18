@@ -1,4 +1,3 @@
-Do not start (and terminate) bidir trades if priority is low
 Update defaults
 Improve coverage
 Create release

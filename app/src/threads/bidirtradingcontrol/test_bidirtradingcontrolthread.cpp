@@ -4,6 +4,7 @@
 
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/bidirinfos/ibidirinfosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
@@ -24,31 +25,36 @@ class Test_BiDirTradingControlThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        stocksStorageMock = new StrictMock<StocksStorageMock>();
-        userStorageMock   = new StrictMock<UserStorageMock>();
-        configMock        = new StrictMock<ConfigMock>();
-        timeUtilsMock     = new StrictMock<TimeUtilsMock>();
-        grpcClientMock    = new StrictMock<GrpcClientMock>();
+        stocksStorageMock     = new StrictMock<StocksStorageMock>();
+        biDirInfosStorageMock = new StrictMock<BiDirInfosStorageMock>();
+        userStorageMock       = new StrictMock<UserStorageMock>();
+        configMock            = new StrictMock<ConfigMock>();
+        timeUtilsMock         = new StrictMock<TimeUtilsMock>();
+        grpcClientMock        = new StrictMock<GrpcClientMock>();
 
-        thread = new BiDirTradingControlThread(stocksStorageMock, userStorageMock, configMock, timeUtilsMock, grpcClientMock);
+        thread = new BiDirTradingControlThread(
+            stocksStorageMock, biDirInfosStorageMock, userStorageMock, configMock, timeUtilsMock, grpcClientMock
+        );
     }
 
     void TearDown() override
     {
         delete thread;
         delete stocksStorageMock;
+        delete biDirInfosStorageMock;
         delete userStorageMock;
         delete configMock;
         delete timeUtilsMock;
         delete grpcClientMock;
     }
 
-    BiDirTradingControlThread*     thread;
-    StrictMock<StocksStorageMock>* stocksStorageMock;
-    StrictMock<UserStorageMock>*   userStorageMock;
-    StrictMock<ConfigMock>*        configMock;
-    StrictMock<TimeUtilsMock>*     timeUtilsMock;
-    StrictMock<GrpcClientMock>*    grpcClientMock;
+    BiDirTradingControlThread*         thread;
+    StrictMock<StocksStorageMock>*     stocksStorageMock;
+    StrictMock<BiDirInfosStorageMock>* biDirInfosStorageMock;
+    StrictMock<UserStorageMock>*       userStorageMock;
+    StrictMock<ConfigMock>*            configMock;
+    StrictMock<TimeUtilsMock>*         timeUtilsMock;
+    StrictMock<GrpcClientMock>*        grpcClientMock;
 };
 
 
@@ -80,6 +86,8 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectStocksForBiDirTrading)
 
     stocks << &stock;
 
+    BiDirInfos biDirInfos;
+
     const std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBookResponse(new tinkoff::GetOrderBookResponse());
 
     tinkoff::Order* bid = getOrderBookResponse->add_bids(); // getOrderBookResponse will take ownership
@@ -100,6 +108,7 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectStocksForBiDirTrading)
 
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
     EXPECT_CALL(*timeUtilsMock, isWorkingHours(Ge(1704092400000))).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isWeekend(Ge(1704092400000))).WillOnce(Return(false));
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(true));
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -109,6 +118,9 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectStocksForBiDirTrading)
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*configMock, getHugeBid()).WillOnce(Return(2.0f));
     EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.3f));
+    EXPECT_CALL(*biDirInfosStorageMock, readLock());
+    EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+    EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
     EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("aaa-aaa"), 20))
         .WillOnce(Return(getOrderBookResponse));
 
@@ -120,6 +132,7 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectStocksForBiDirTrading)
     {
         EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(false));
         EXPECT_CALL(*timeUtilsMock, isWorkingHours(Ge(1704092400000))).WillOnce(Return(true));
+        EXPECT_CALL(*timeUtilsMock, isWeekend(Ge(1704092400000))).WillOnce(Return(false));
         EXPECT_CALL(*userStorageMock, readLock());
         EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(true));
         EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
@@ -129,6 +142,9 @@ TEST_F(Test_BiDirTradingControlThread, Test_detectStocksForBiDirTrading)
         EXPECT_CALL(*stocksStorageMock, readUnlock());
         EXPECT_CALL(*configMock, getHugeBid()).WillOnce(Return(2.0f));
         EXPECT_CALL(*configMock, getHugeSpread()).WillOnce(Return(0.3f));
+        EXPECT_CALL(*biDirInfosStorageMock, readLock());
+        EXPECT_CALL(*biDirInfosStorageMock, getBiDirInfos()).WillOnce(ReturnRef(biDirInfos));
+        EXPECT_CALL(*biDirInfosStorageMock, readUnlock());
         EXPECT_CALL(*grpcClientMock, getOrderBook(QThread::currentThread(), QString("bbb-bbb"), 20))
             .WillOnce(Return(getOrderBookResponse));
 

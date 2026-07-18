@@ -11,7 +11,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 constexpr float  HUNDRED_PERCENT       = 100.0f;
 constexpr float  MINIMUM_YIELD_PERCENT = 0.40f;
 constexpr float  SPREAD_FOR_HUGE_BID   = 1.00f;
-constexpr float  TRIPLE_PRICE_RAISE    = 2.00f;
+constexpr float  TRIPLE_PRICE_RAISE    = 3.00f;
 constexpr float  TRIPLE_SAFE_SPREAD    = 10.00f;
 constexpr int    ORDER_BOOK_DEPTH      = 50;
 constexpr int    HOURS_TO_TRIPLE_CHECK = 5;
@@ -576,6 +576,8 @@ Quotation BiDirTradingThread::calculateBuyPriceInternal(const tinkoff::GetOrderB
     {
         spread    = qMax(spread, TRIPLE_SAFE_SPREAD);
         mPriority = BIDIR_PRIORITY_LOW;
+
+        terminateTrading(false);
     }
 
     const float additionalGap = mConfig->isAdditionalGap() ? mConfig->getAdditionalGapPercent() : 0;
