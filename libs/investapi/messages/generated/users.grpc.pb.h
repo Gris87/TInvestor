@@ -95,6 +95,24 @@ class UsersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>> PrepareAsyncCurrencyTransfer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>>(PrepareAsyncCurrencyTransferRaw(context, request, cq));
     }
+    // PayIn — пополнение брокерского счета
+    // Пополнить брокерский счёт с банковского
+    virtual ::grpc::Status PayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>> AsyncPayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>>(AsyncPayInRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>> PrepareAsyncPayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>>(PrepareAsyncPayInRaw(context, request, cq));
+    }
+    // GetAccountValues — дополнительные показатели счетов
+    // Метод предназначен для получения дополнительных показателей счетов
+    virtual ::grpc::Status GetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>> AsyncGetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>>(AsyncGetAccountValuesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>> PrepareAsyncGetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>>(PrepareAsyncGetAccountValuesRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -122,6 +140,14 @@ class UsersService final {
       // Перевести денежные средства между брокерскими счетами
       virtual void CurrencyTransfer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void CurrencyTransfer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // PayIn — пополнение брокерского счета
+      // Пополнить брокерский счёт с банковского
+      virtual void PayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void PayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // GetAccountValues — дополнительные показатели счетов
+      // Метод предназначен для получения дополнительных показателей счетов
+      virtual void GetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -139,6 +165,10 @@ class UsersService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse>* PrepareAsyncGetBankAccountsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>* AsyncCurrencyTransferRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>* PrepareAsyncCurrencyTransferRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>* AsyncPayInRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>* PrepareAsyncPayInRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>* AsyncGetAccountValuesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>* PrepareAsyncGetAccountValuesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -185,6 +215,20 @@ class UsersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>> PrepareAsyncCurrencyTransfer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>>(PrepareAsyncCurrencyTransferRaw(context, request, cq));
     }
+    ::grpc::Status PayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>> AsyncPayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>>(AsyncPayInRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>> PrepareAsyncPayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>>(PrepareAsyncPayInRaw(context, request, cq));
+    }
+    ::grpc::Status GetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>> AsyncGetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>>(AsyncGetAccountValuesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>> PrepareAsyncGetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>>(PrepareAsyncGetAccountValuesRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -200,6 +244,10 @@ class UsersService final {
       void GetBankAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void CurrencyTransfer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* response, std::function<void(::grpc::Status)>) override;
       void CurrencyTransfer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void PayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response, std::function<void(::grpc::Status)>) override;
+      void PayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -223,12 +271,18 @@ class UsersService final {
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsResponse>* PrepareAsyncGetBankAccountsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBankAccountsRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>* AsyncCurrencyTransferRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>* PrepareAsyncCurrencyTransferRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>* AsyncPayInRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>* PrepareAsyncPayInRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>* AsyncGetAccountValuesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>* PrepareAsyncGetAccountValuesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_GetAccounts_;
     const ::grpc::internal::RpcMethod rpcmethod_GetMarginAttributes_;
     const ::grpc::internal::RpcMethod rpcmethod_GetUserTariff_;
     const ::grpc::internal::RpcMethod rpcmethod_GetInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_GetBankAccounts_;
     const ::grpc::internal::RpcMethod rpcmethod_CurrencyTransfer_;
+    const ::grpc::internal::RpcMethod rpcmethod_PayIn_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetAccountValues_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -254,6 +308,12 @@ class UsersService final {
     // CurrencyTransfer — перевод денежных средств между счетами
     // Перевести денежные средства между брокерскими счетами
     virtual ::grpc::Status CurrencyTransfer(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* response);
+    // PayIn — пополнение брокерского счета
+    // Пополнить брокерский счёт с банковского
+    virtual ::grpc::Status PayIn(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response);
+    // GetAccountValues — дополнительные показатели счетов
+    // Метод предназначен для получения дополнительных показателей счетов
+    virtual ::grpc::Status GetAccountValues(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_GetAccounts : public BaseClass {
@@ -375,7 +435,47 @@ class UsersService final {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_GetAccounts<WithAsyncMethod_GetMarginAttributes<WithAsyncMethod_GetUserTariff<WithAsyncMethod_GetInfo<WithAsyncMethod_GetBankAccounts<WithAsyncMethod_CurrencyTransfer<Service > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_PayIn : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_PayIn() {
+      ::grpc::Service::MarkMethodAsync(6);
+    }
+    ~WithAsyncMethod_PayIn() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PayIn(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestPayIn(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::PayInRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetAccountValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetAccountValues() {
+      ::grpc::Service::MarkMethodAsync(7);
+    }
+    ~WithAsyncMethod_GetAccountValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetAccountValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetAccountValues(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_GetAccounts<WithAsyncMethod_GetMarginAttributes<WithAsyncMethod_GetUserTariff<WithAsyncMethod_GetInfo<WithAsyncMethod_GetBankAccounts<WithAsyncMethod_CurrencyTransfer<WithAsyncMethod_PayIn<WithAsyncMethod_GetAccountValues<Service > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_GetAccounts : public BaseClass {
    private:
@@ -538,7 +638,61 @@ class UsersService final {
     virtual ::grpc::ServerUnaryReactor* CurrencyTransfer(
       ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_GetAccounts<WithCallbackMethod_GetMarginAttributes<WithCallbackMethod_GetUserTariff<WithCallbackMethod_GetInfo<WithCallbackMethod_GetBankAccounts<WithCallbackMethod_CurrencyTransfer<Service > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_PayIn : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_PayIn() {
+      ::grpc::Service::MarkMethodCallback(6,
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::PayInRequest, ::tinkoff::public_::invest::api::contract::v1::PayInResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response) { return this->PayIn(context, request, response); }));}
+    void SetMessageAllocatorFor_PayIn(
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::PayInRequest, ::tinkoff::public_::invest::api::contract::v1::PayInResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::PayInRequest, ::tinkoff::public_::invest::api::contract::v1::PayInResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_PayIn() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PayIn(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* PayIn(
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_GetAccountValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetAccountValues() {
+      ::grpc::Service::MarkMethodCallback(7,
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response) { return this->GetAccountValues(context, request, response); }));}
+    void SetMessageAllocatorFor_GetAccountValues(
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetAccountValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetAccountValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetAccountValues(
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_GetAccounts<WithCallbackMethod_GetMarginAttributes<WithCallbackMethod_GetUserTariff<WithCallbackMethod_GetInfo<WithCallbackMethod_GetBankAccounts<WithCallbackMethod_CurrencyTransfer<WithCallbackMethod_PayIn<WithCallbackMethod_GetAccountValues<Service > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_GetAccounts : public BaseClass {
@@ -638,6 +792,40 @@ class UsersService final {
     }
     // disable synchronous version of this method
     ::grpc::Status CurrencyTransfer(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_PayIn : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_PayIn() {
+      ::grpc::Service::MarkMethodGeneric(6);
+    }
+    ~WithGenericMethod_PayIn() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PayIn(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetAccountValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetAccountValues() {
+      ::grpc::Service::MarkMethodGeneric(7);
+    }
+    ~WithGenericMethod_GetAccountValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetAccountValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -760,6 +948,46 @@ class UsersService final {
     }
     void RequestCurrencyTransfer(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_PayIn : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_PayIn() {
+      ::grpc::Service::MarkMethodRaw(6);
+    }
+    ~WithRawMethod_PayIn() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PayIn(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestPayIn(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetAccountValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetAccountValues() {
+      ::grpc::Service::MarkMethodRaw(7);
+    }
+    ~WithRawMethod_GetAccountValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetAccountValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetAccountValues(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -892,6 +1120,50 @@ class UsersService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* CurrencyTransfer(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_PayIn : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_PayIn() {
+      ::grpc::Service::MarkMethodRawCallback(6,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->PayIn(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_PayIn() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PayIn(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* PayIn(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetAccountValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetAccountValues() {
+      ::grpc::Service::MarkMethodRawCallback(7,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetAccountValues(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetAccountValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetAccountValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetAccountValues(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1056,9 +1328,63 @@ class UsersService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedCurrencyTransfer(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest,::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_GetAccounts<WithStreamedUnaryMethod_GetMarginAttributes<WithStreamedUnaryMethod_GetUserTariff<WithStreamedUnaryMethod_GetInfo<WithStreamedUnaryMethod_GetBankAccounts<WithStreamedUnaryMethod_CurrencyTransfer<Service > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_PayIn : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_PayIn() {
+      ::grpc::Service::MarkMethodStreamed(6,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::tinkoff::public_::invest::api::contract::v1::PayInRequest, ::tinkoff::public_::invest::api::contract::v1::PayInResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::tinkoff::public_::invest::api::contract::v1::PayInRequest, ::tinkoff::public_::invest::api::contract::v1::PayInResponse>* streamer) {
+                       return this->StreamedPayIn(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_PayIn() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status PayIn(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedPayIn(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::PayInRequest,::tinkoff::public_::invest::api::contract::v1::PayInResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetAccountValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetAccountValues() {
+      ::grpc::Service::MarkMethodStreamed(7,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>* streamer) {
+                       return this->StreamedGetAccountValues(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetAccountValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetAccountValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetAccountValues(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest,::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_GetAccounts<WithStreamedUnaryMethod_GetMarginAttributes<WithStreamedUnaryMethod_GetUserTariff<WithStreamedUnaryMethod_GetInfo<WithStreamedUnaryMethod_GetBankAccounts<WithStreamedUnaryMethod_CurrencyTransfer<WithStreamedUnaryMethod_PayIn<WithStreamedUnaryMethod_GetAccountValues<Service > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_GetAccounts<WithStreamedUnaryMethod_GetMarginAttributes<WithStreamedUnaryMethod_GetUserTariff<WithStreamedUnaryMethod_GetInfo<WithStreamedUnaryMethod_GetBankAccounts<WithStreamedUnaryMethod_CurrencyTransfer<Service > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_GetAccounts<WithStreamedUnaryMethod_GetMarginAttributes<WithStreamedUnaryMethod_GetUserTariff<WithStreamedUnaryMethod_GetInfo<WithStreamedUnaryMethod_GetBankAccounts<WithStreamedUnaryMethod_CurrencyTransfer<WithStreamedUnaryMethod_PayIn<WithStreamedUnaryMethod_GetAccountValues<Service > > > > > > > > StreamedService;
 };
 // С помощью сервиса можно получить: <br/> 1.
 // список счетов пользователя; <br/> 2. маржинальные показатели по счeту.

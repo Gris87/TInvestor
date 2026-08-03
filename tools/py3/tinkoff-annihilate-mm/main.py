@@ -6,11 +6,11 @@ import sys
 from decimal import Decimal, ROUND_CEILING
 from loguru import logger
 
-from tinkoff.invest import GetMaxLotsRequest, OrderDirection, OrderExecutionReportStatus, OrderType, PriceType, TimeInForceType
-from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
-from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
-from tinkoff.invest.retrying.settings import RetryClientSettings
-from tinkoff.invest.utils import quotation_to_decimal
+from t_tech.invest import GetMaxLotsRequest, OrderDirection, OrderExecutionReportStatus, OrderType, PriceType, TimeInForceType
+from t_tech.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
+from t_tech.invest.retrying.aio.client import AsyncRetryingClient
+from t_tech.invest.retrying.settings import RetryClientSettings
+from t_tech.invest.utils import quotation_to_decimal
 
 
 #logging.basicConfig(level=logging.DEBUG)

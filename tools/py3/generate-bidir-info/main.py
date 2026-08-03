@@ -22,7 +22,7 @@ from zoneinfo import ZoneInfo
 
 PATH_TO_SCRIPT = Path(__file__).parent
 
-HISTORY_DATA_URL = "https://invest-public-api.tinkoff.ru/history-data"
+HISTORY_DATA_URL = "https://invest-public-api.tbank.ru/history-data"
 
 HUNDRED_PERCENT = 100
 

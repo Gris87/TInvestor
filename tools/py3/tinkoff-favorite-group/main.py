@@ -4,10 +4,10 @@ import logging
 import sys
 from loguru import logger
 
-from tinkoff.invest.constants import INVEST_GRPC_API
-from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
-from tinkoff.invest.retrying.settings import RetryClientSettings
-from tinkoff.invest.schemas import CreateFavoriteGroupRequest, DeleteFavoriteGroupRequest, EditFavoritesActionType, EditFavoritesRequestInstrument, GetFavoriteGroupsRequest
+from t_tech.invest.constants import INVEST_GRPC_API
+from t_tech.invest.retrying.aio.client import AsyncRetryingClient
+from t_tech.invest.retrying.settings import RetryClientSettings
+from t_tech.invest.schemas import CreateFavoriteGroupRequest, DeleteFavoriteGroupRequest, EditFavoritesActionType, EditFavoritesRequestInstrument, GetFavoriteGroupsRequest
 
 from localization import *
 

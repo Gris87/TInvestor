@@ -10,10 +10,10 @@ from pathlib import Path
 
 from localization import *
 from messaging import store_message
-from tinkoff.invest import Client, GetOperationsByCursorRequest
-from tinkoff.invest.constants import INVEST_GRPC_API
-from tinkoff.invest.schemas import OperationState
-from tinkoff.invest.utils import quotation_to_decimal
+from t_tech.invest import Client, GetOperationsByCursorRequest
+from t_tech.invest.constants import INVEST_GRPC_API
+from t_tech.invest.schemas import OperationState
+from t_tech.invest.utils import quotation_to_decimal
 
 
 PATH_TO_SCRIPT = Path(__file__).parent

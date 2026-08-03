@@ -864,7 +864,7 @@ static void getCandlesWithHttp(
 
         if (year == endYear || !stockDataFile->exists())
         {
-            QUrl url = QUrl("https://invest-public-api.tinkoff.ru/history-data");
+            QUrl url = QUrl("https://invest-public-api.tbank.ru/history-data");
 
             QUrlQuery query;
 

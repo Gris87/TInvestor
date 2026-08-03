@@ -41,7 +41,7 @@ class OperationsService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // GetOperations — список операций по счету
+    // Deprecated GetOperations — список операций по счету
     // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
     virtual ::grpc::Status GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest& request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsResponse>> AsyncGetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest& request, ::grpc::CompletionQueue* cq) {
@@ -102,7 +102,7 @@ class OperationsService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // GetOperations — список операций по счету
+      // Deprecated GetOperations — список операций по счету
       // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
       virtual void GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
@@ -253,7 +253,7 @@ class OperationsService final {
    public:
     Service();
     virtual ~Service();
-    // GetOperations — список операций по счету
+    // Deprecated GetOperations — список операций по счету
     // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
     virtual ::grpc::Status GetOperations(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response);
     // GetPortfolio — портфель по счету
@@ -1240,6 +1240,16 @@ class OperationsStreamService final {
     std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>> PrepareAsyncPositionsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>>(PrepareAsyncPositionsStreamRaw(context, request, cq));
     }
+    // OperationsStream — стрим обновлений операций
+    std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>> OperationsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>>(OperationsStreamRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>> AsyncOperationsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>>(AsyncOperationsStreamRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>> PrepareAsyncOperationsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>>(PrepareAsyncOperationsStreamRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -1247,6 +1257,8 @@ class OperationsStreamService final {
       virtual void PortfolioStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* reactor) = 0;
       // PositionsStream — стрим обновлений информации по изменению позиций портфеля
       virtual void PositionsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* reactor) = 0;
+      // OperationsStream — стрим обновлений операций
+      virtual void OperationsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -1258,6 +1270,9 @@ class OperationsStreamService final {
     virtual ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* PositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* AsyncPositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* PrepareAsyncPositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* OperationsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* AsyncOperationsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* PrepareAsyncOperationsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -1280,11 +1295,21 @@ class OperationsStreamService final {
     std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>> PrepareAsyncPositionsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>>(PrepareAsyncPositionsStreamRaw(context, request, cq));
     }
+    std::unique_ptr< ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>> OperationsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>>(OperationsStreamRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>> AsyncOperationsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>>(AsyncOperationsStreamRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>> PrepareAsyncOperationsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>>(PrepareAsyncOperationsStreamRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
       void PortfolioStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* reactor) override;
       void PositionsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* reactor) override;
+      void OperationsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -1302,8 +1327,12 @@ class OperationsStreamService final {
     ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* PositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request) override;
     ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* AsyncPositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* PrepareAsyncPositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* OperationsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request) override;
+    ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* AsyncOperationsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* PrepareAsyncOperationsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_PortfolioStream_;
     const ::grpc::internal::RpcMethod rpcmethod_PositionsStream_;
+    const ::grpc::internal::RpcMethod rpcmethod_OperationsStream_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -1315,6 +1344,8 @@ class OperationsStreamService final {
     virtual ::grpc::Status PortfolioStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* writer);
     // PositionsStream — стрим обновлений информации по изменению позиций портфеля
     virtual ::grpc::Status PositionsStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* writer);
+    // OperationsStream — стрим обновлений операций
+    virtual ::grpc::Status OperationsStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* writer);
   };
   template <class BaseClass>
   class WithAsyncMethod_PortfolioStream : public BaseClass {
@@ -1356,7 +1387,27 @@ class OperationsStreamService final {
       ::grpc::Service::RequestAsyncServerStreaming(1, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_PortfolioStream<WithAsyncMethod_PositionsStream<Service > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_OperationsStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_OperationsStream() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_OperationsStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status OperationsStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestOperationsStream(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* request, ::grpc::ServerAsyncWriter< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(2, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_PortfolioStream<WithAsyncMethod_PositionsStream<WithAsyncMethod_OperationsStream<Service > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_PortfolioStream : public BaseClass {
    private:
@@ -1401,7 +1452,29 @@ class OperationsStreamService final {
     virtual ::grpc::ServerWriteReactor< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* PositionsStream(
       ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* /*request*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_PortfolioStream<WithCallbackMethod_PositionsStream<Service > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_OperationsStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_OperationsStream() {
+      ::grpc::Service::MarkMethodCallback(2,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest, ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* request) { return this->OperationsStream(context, request); }));
+    }
+    ~WithCallbackMethod_OperationsStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status OperationsStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerWriteReactor< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* OperationsStream(
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* /*request*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_PortfolioStream<WithCallbackMethod_PositionsStream<WithCallbackMethod_OperationsStream<Service > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_PortfolioStream : public BaseClass {
@@ -1433,6 +1506,23 @@ class OperationsStreamService final {
     }
     // disable synchronous version of this method
     ::grpc::Status PositionsStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_OperationsStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_OperationsStream() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_OperationsStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status OperationsStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1478,6 +1568,26 @@ class OperationsStreamService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_OperationsStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_OperationsStream() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_OperationsStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status OperationsStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestOperationsStream(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(2, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_PortfolioStream : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -1519,6 +1629,28 @@ class OperationsStreamService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* PositionsStream(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_OperationsStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_OperationsStream() {
+      ::grpc::Service::MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->OperationsStream(context, request); }));
+    }
+    ~WithRawCallbackMethod_OperationsStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status OperationsStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* OperationsStream(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
   };
   typedef Service StreamedUnaryService;
@@ -1576,8 +1708,35 @@ class OperationsStreamService final {
     // replace default version of method with split streamed
     virtual ::grpc::Status StreamedPositionsStream(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest,::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* server_split_streamer) = 0;
   };
-  typedef WithSplitStreamingMethod_PortfolioStream<WithSplitStreamingMethod_PositionsStream<Service > > SplitStreamedService;
-  typedef WithSplitStreamingMethod_PortfolioStream<WithSplitStreamingMethod_PositionsStream<Service > > StreamedService;
+  template <class BaseClass>
+  class WithSplitStreamingMethod_OperationsStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithSplitStreamingMethod_OperationsStream() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest, ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerSplitStreamer<
+                     ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest, ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* streamer) {
+                       return this->StreamedOperationsStream(context,
+                         streamer);
+                  }));
+    }
+    ~WithSplitStreamingMethod_OperationsStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status OperationsStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with split streamed
+    virtual ::grpc::Status StreamedOperationsStream(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest,::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* server_split_streamer) = 0;
+  };
+  typedef WithSplitStreamingMethod_PortfolioStream<WithSplitStreamingMethod_PositionsStream<WithSplitStreamingMethod_OperationsStream<Service > > > SplitStreamedService;
+  typedef WithSplitStreamingMethod_PortfolioStream<WithSplitStreamingMethod_PositionsStream<WithSplitStreamingMethod_OperationsStream<Service > > > StreamedService;
 };
 
 }  // namespace v1

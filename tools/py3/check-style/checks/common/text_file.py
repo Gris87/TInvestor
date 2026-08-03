@@ -251,16 +251,16 @@ def is_file_skipped(file_path):
         "/build/" in file_path or
         "/libs/investapi/messages/" in file_path or
         "/libs/simdjson/src/simdjson/" in file_path or
-        "/tools/py3/tinkoff-accounts/tinkoff/" in file_path or
-        "/tools/py3/tinkoff-annihilate-mm/tinkoff/" in file_path or
-        "/tools/py3/tinkoff-asap-trading/tinkoff/" in file_path or
-        "/tools/py3/tinkoff-bidir-trading/tinkoff/" in file_path or
-        "/tools/py3/tinkoff-fall-trading/tinkoff/" in file_path or
-        "/tools/py3/tinkoff-favorite-group/tinkoff/" in file_path or
-        "/tools/py3/tinkoff-follower/tinkoff/" in file_path or
-        "/tools/py3/tinkoff-terminate-trading/tinkoff/" in file_path or
-        "/tools/py3/tinkoff-tmon-weekend-trading/tinkoff/" in file_path or
-        "/tools/py3/tinvestor-notifier/tinkoff/" in file_path or
+        "/tools/py3/tinkoff-accounts/t_tech/" in file_path or
+        "/tools/py3/tinkoff-annihilate-mm/t_tech/" in file_path or
+        "/tools/py3/tinkoff-asap-trading/t_tech/" in file_path or
+        "/tools/py3/tinkoff-bidir-trading/t_tech/" in file_path or
+        "/tools/py3/tinkoff-fall-trading/t_tech/" in file_path or
+        "/tools/py3/tinkoff-favorite-group/t_tech/" in file_path or
+        "/tools/py3/tinkoff-follower/t_tech/" in file_path or
+        "/tools/py3/tinkoff-terminate-trading/t_tech/" in file_path or
+        "/tools/py3/tinkoff-tmon-weekend-trading/t_tech/" in file_path or
+        "/tools/py3/tinvestor-notifier/t_tech/" in file_path or
         "/TInvestor.pro.user" in file_path
     )
 

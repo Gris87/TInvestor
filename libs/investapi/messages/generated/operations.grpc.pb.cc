@@ -343,6 +343,7 @@ OperationsService::Service::~Service() {
 static const char* OperationsStreamService_method_names[] = {
   "/tinkoff.public.invest.api.contract.v1.OperationsStreamService/PortfolioStream",
   "/tinkoff.public.invest.api.contract.v1.OperationsStreamService/PositionsStream",
+  "/tinkoff.public.invest.api.contract.v1.OperationsStreamService/OperationsStream",
 };
 
 std::unique_ptr< OperationsStreamService::Stub> OperationsStreamService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -354,6 +355,7 @@ std::unique_ptr< OperationsStreamService::Stub> OperationsStreamService::NewStub
 OperationsStreamService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_PortfolioStream_(OperationsStreamService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_PositionsStream_(OperationsStreamService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_OperationsStream_(OperationsStreamService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
 ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* OperationsStreamService::Stub::PortfolioStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest& request) {
@@ -388,6 +390,22 @@ void OperationsStreamService::Stub::async::PositionsStream(::grpc::ClientContext
   return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>::Create(channel_.get(), cq, rpcmethod_PositionsStream_, context, request, false, nullptr);
 }
 
+::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* OperationsStreamService::Stub::OperationsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request) {
+  return ::grpc::internal::ClientReaderFactory< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>::Create(channel_.get(), rpcmethod_OperationsStream_, context, request);
+}
+
+void OperationsStreamService::Stub::async::OperationsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_OperationsStream_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* OperationsStreamService::Stub::AsyncOperationsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>::Create(channel_.get(), cq, rpcmethod_OperationsStream_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* OperationsStreamService::Stub::PrepareAsyncOperationsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>::Create(channel_.get(), cq, rpcmethod_OperationsStream_, context, request, false, nullptr);
+}
+
 OperationsStreamService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OperationsStreamService_method_names[0],
@@ -409,6 +427,16 @@ OperationsStreamService::Service::Service() {
              ::grpc::ServerWriter<::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* writer) {
                return service->PositionsStream(ctx, req, writer);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      OperationsStreamService_method_names[2],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< OperationsStreamService::Service, ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest, ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>(
+          [](OperationsStreamService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* req,
+             ::grpc::ServerWriter<::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* writer) {
+               return service->OperationsStream(ctx, req, writer);
+             }, this)));
 }
 
 OperationsStreamService::Service::~Service() {
@@ -422,6 +450,13 @@ OperationsStreamService::Service::~Service() {
 }
 
 ::grpc::Status OperationsStreamService::Service::PositionsStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status OperationsStreamService::Service::OperationsStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse>* writer) {
   (void) context;
   (void) request;
   (void) writer;

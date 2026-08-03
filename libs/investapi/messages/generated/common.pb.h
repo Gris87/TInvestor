@@ -159,6 +159,7 @@ enum InstrumentType : int {
   INSTRUMENT_TYPE_CLEARING_CERTIFICATE = 8,
   INSTRUMENT_TYPE_INDEX = 9,
   INSTRUMENT_TYPE_COMMODITY = 10,
+  INSTRUMENT_TYPE_DFA = 11,
   InstrumentType_INT_MIN_SENTINEL_DO_NOT_USE_ =
       ::std::numeric_limits<::int32_t>::min(),
   InstrumentType_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -169,11 +170,11 @@ extern const uint32_t InstrumentType_internal_data_[];
 inline constexpr InstrumentType InstrumentType_MIN =
     static_cast<InstrumentType>(0);
 inline constexpr InstrumentType InstrumentType_MAX =
-    static_cast<InstrumentType>(10);
+    static_cast<InstrumentType>(11);
 inline bool InstrumentType_IsValid(int value) {
-  return 0 <= value && value <= 10;
+  return 0 <= value && value <= 11;
 }
-inline constexpr int InstrumentType_ARRAYSIZE = 10 + 1;
+inline constexpr int InstrumentType_ARRAYSIZE = 11 + 1;
 const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL InstrumentType_descriptor();
 template <typename T>
 const ::std::string& InstrumentType_Name(T value) {
@@ -184,7 +185,7 @@ const ::std::string& InstrumentType_Name(T value) {
 }
 template <>
 inline const ::std::string& InstrumentType_Name(InstrumentType value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<InstrumentType_descriptor, 0, 10>(
+  return ::google::protobuf::internal::NameOfDenseEnum<InstrumentType_descriptor, 0, 11>(
       static_cast<int>(value));
 }
 inline bool InstrumentType_Parse(
@@ -247,6 +248,7 @@ enum SecurityTradingStatus : int {
   SECURITY_TRADING_STATUS_DEALER_NORMAL_TRADING = 14,
   SECURITY_TRADING_STATUS_DEALER_BREAK_IN_TRADING = 15,
   SECURITY_TRADING_STATUS_DEALER_NOT_AVAILABLE_FOR_TRADING = 16,
+  SECURITY_TRADING_STATUS_STABILIZATION_AUCTION = 17,
   SecurityTradingStatus_INT_MIN_SENTINEL_DO_NOT_USE_ =
       ::std::numeric_limits<::int32_t>::min(),
   SecurityTradingStatus_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -257,11 +259,11 @@ extern const uint32_t SecurityTradingStatus_internal_data_[];
 inline constexpr SecurityTradingStatus SecurityTradingStatus_MIN =
     static_cast<SecurityTradingStatus>(0);
 inline constexpr SecurityTradingStatus SecurityTradingStatus_MAX =
-    static_cast<SecurityTradingStatus>(16);
+    static_cast<SecurityTradingStatus>(17);
 inline bool SecurityTradingStatus_IsValid(int value) {
-  return 0 <= value && value <= 16;
+  return 0 <= value && value <= 17;
 }
-inline constexpr int SecurityTradingStatus_ARRAYSIZE = 16 + 1;
+inline constexpr int SecurityTradingStatus_ARRAYSIZE = 17 + 1;
 const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL SecurityTradingStatus_descriptor();
 template <typename T>
 const ::std::string& SecurityTradingStatus_Name(T value) {
@@ -272,7 +274,7 @@ const ::std::string& SecurityTradingStatus_Name(T value) {
 }
 template <>
 inline const ::std::string& SecurityTradingStatus_Name(SecurityTradingStatus value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<SecurityTradingStatus_descriptor, 0, 16>(
+  return ::google::protobuf::internal::NameOfDenseEnum<SecurityTradingStatus_descriptor, 0, 17>(
       static_cast<int>(value));
 }
 inline bool SecurityTradingStatus_Parse(

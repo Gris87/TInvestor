@@ -248,8 +248,9 @@ inline constexpr ReplaceOrderRequest::Impl_::Impl_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         price_{nullptr},
-        quantity_{::int64_t{0}},
+        order_id_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::OrderIdType >(0)},
         price_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::PriceType >(0)},
+        quantity_{::int64_t{0}},
         confirm_margin_trade_{false} {}
 
 template <typename>
@@ -384,6 +385,51 @@ struct OrderTradeDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OrderTradeDefaultTypeInternal _OrderTrade_default_instance_;
+
+inline constexpr OrderStateStreamResponse_StopOrderState::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        stop_order_id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        account_id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        instrument_uid_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        ticker_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        class_code_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        created_at_{nullptr},
+        price_{nullptr},
+        stop_price_{nullptr},
+        direction_{static_cast< ::tinkoff::public_::invest::api::contract::v1::OrderDirection >(0)},
+        order_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::OrderType >(0)},
+        status_{static_cast< ::tinkoff::public_::invest::api::contract::v1::StopOrderStatusOption >(0)} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR OrderStateStreamResponse_StopOrderState::OrderStateStreamResponse_StopOrderState(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(OrderStateStreamResponse_StopOrderState_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct OrderStateStreamResponse_StopOrderStateDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR OrderStateStreamResponse_StopOrderStateDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~OrderStateStreamResponse_StopOrderStateDefaultTypeInternal() {}
+  union {
+    OrderStateStreamResponse_StopOrderState _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OrderStateStreamResponse_StopOrderStateDefaultTypeInternal _OrderStateStreamResponse_StopOrderState_default_instance_;
 
 inline constexpr OrderStage::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -703,6 +749,9 @@ inline constexpr OrderStateStreamResponse_OrderState::Impl_::Impl_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         account_id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        trade_order_id_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         currency_(
@@ -1270,8 +1319,9 @@ const ::uint32_t
         2,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, _impl_._has_bits_),
-        10, // hasbit index offset
+        11, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, _impl_.account_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, _impl_.order_id_type_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, _impl_.order_id_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, _impl_.idempotency_key_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, _impl_.quantity_),
@@ -1279,12 +1329,13 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, _impl_.price_type_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, _impl_.confirm_margin_trade_),
         0,
+        4,
         1,
         2,
-        4,
+        6,
         3,
         5,
-        6,
+        7,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest, _impl_._has_bits_),
         6, // hasbit index offset
@@ -1391,7 +1442,7 @@ const ::uint32_t
         3,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_._has_bits_),
-        30, // hasbit index offset
+        31, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_.order_id_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_.order_request_id_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_.client_code_),
@@ -1405,6 +1456,7 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_.time_in_force_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_.order_type_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_.account_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_.trade_order_id_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_.initial_order_price_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_.order_price_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState, _impl_.amount_),
@@ -1422,32 +1474,59 @@ const ::uint32_t
         1,
         2,
         3,
-        10,
-        16,
+        11,
         17,
+        18,
         4,
         5,
-        18,
         19,
         20,
         21,
+        22,
         6,
-        11,
+        7,
         12,
         13,
         14,
-        7,
-        22,
+        15,
+        8,
         23,
         24,
         25,
         26,
+        27,
         0,
-        15,
-        8,
+        16,
         9,
+        10,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_._has_bits_),
+        14, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.stop_order_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.account_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.created_at_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.direction_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.price_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.stop_price_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.order_type_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.instrument_uid_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.ticker_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.class_code_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState, _impl_.status_),
+        0,
+        1,
+        5,
+        8,
+        6,
+        7,
+        9,
+        2,
+        3,
+        4,
+        10,
         0x004, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse, _impl_._oneof_case_[0]),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse, _impl_.payload_),
@@ -1473,18 +1552,19 @@ static const ::_pbi::MigrationSchema
         {191, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderState)},
         {238, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStage)},
         {249, sizeof(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest)},
-        {266, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest)},
-        {275, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse_BuyLimitsView)},
-        {284, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse_SellLimitsView)},
-        {289, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse)},
-        {302, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest)},
-        {315, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse_ExtraBond)},
-        {322, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse_ExtraFuture)},
-        {327, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse)},
-        {350, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest)},
-        {357, sizeof(::tinkoff::public_::invest::api::contract::v1::SubscriptionResponse)},
-        {370, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState)},
-        {427, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse)},
+        {268, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest)},
+        {277, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse_BuyLimitsView)},
+        {286, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse_SellLimitsView)},
+        {291, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse)},
+        {304, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest)},
+        {317, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse_ExtraBond)},
+        {324, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse_ExtraFuture)},
+        {329, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse)},
+        {352, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest)},
+        {359, sizeof(::tinkoff::public_::invest::api::contract::v1::SubscriptionResponse)},
+        {372, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState)},
+        {431, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState)},
+        {456, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::tinkoff::public_::invest::api::contract::v1::_TradesStreamRequest_default_instance_._instance,
@@ -1515,351 +1595,372 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::tinkoff::public_::invest::api::contract::v1::_OrderStateStreamRequest_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_SubscriptionResponse_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_OrderStateStreamResponse_OrderState_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_OrderStateStreamResponse_StopOrderState_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_OrderStateStreamResponse_default_instance_._instance,
 };
 const char descriptor_table_protodef_orders_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
     "\n\014orders.proto\022%tinkoff.public.invest.ap"
-    "i.contract.v1\032\014common.proto\032\037google/prot"
-    "obuf/timestamp.proto\032\037google/api/field_b"
-    "ehavior.proto\"U\n\023TradesStreamRequest\022\020\n\010"
-    "accounts\030\001 \003(\t\022\032\n\rping_delay_ms\030\017 \001(\005H\000\210"
-    "\001\001B\020\n\016_ping_delay_ms\"\377\001\n\024TradesStreamRes"
-    "ponse\022J\n\014order_trades\030\001 \001(\01322.tinkoff.pu"
-    "blic.invest.api.contract.v1.OrderTradesH"
-    "\000\022;\n\004ping\030\002 \001(\0132+.tinkoff.public.invest."
-    "api.contract.v1.PingH\000\022S\n\014subscription\030\003"
-    " \001(\0132;.tinkoff.public.invest.api.contrac"
-    "t.v1.SubscriptionResponseH\000B\t\n\007payload\"\226"
-    "\002\n\013OrderTrades\022\020\n\010order_id\030\001 \001(\t\022.\n\ncrea"
-    "ted_at\030\002 \001(\0132\032.google.protobuf.Timestamp"
-    "\022H\n\tdirection\030\003 \001(\01625.tinkoff.public.inv"
-    "est.api.contract.v1.OrderDirection\022\014\n\004fi"
-    "gi\030\004 \001(\t\022A\n\006trades\030\005 \003(\01321.tinkoff.publi"
-    "c.invest.api.contract.v1.OrderTrade\022\022\n\na"
-    "ccount_id\030\006 \001(\t\022\026\n\016instrument_uid\030\007 \001(\t\""
-    "\240\001\n\nOrderTrade\022-\n\tdate_time\030\001 \001(\0132\032.goog"
-    "le.protobuf.Timestamp\022\?\n\005price\030\002 \001(\01320.t"
-    "inkoff.public.invest.api.contract.v1.Quo"
-    "tation\022\020\n\010quantity\030\003 \001(\003\022\020\n\010trade_id\030\004 \001"
-    "(\t\"\262\004\n\020PostOrderRequest\022\025\n\004figi\030\001 \001(\tB\002\030"
-    "\001H\000\210\001\001\022\026\n\010quantity\030\002 \001(\003B\004\342A\001\002\022D\n\005price\030"
-    "\003 \001(\01320.tinkoff.public.invest.api.contra"
-    "ct.v1.QuotationH\001\210\001\001\022N\n\tdirection\030\004 \001(\0162"
-    "5.tinkoff.public.invest.api.contract.v1."
-    "OrderDirectionB\004\342A\001\002\022\030\n\naccount_id\030\005 \001(\t"
-    "B\004\342A\001\002\022J\n\norder_type\030\006 \001(\01620.tinkoff.pub"
-    "lic.invest.api.contract.v1.OrderTypeB\004\342A"
-    "\001\002\022\026\n\010order_id\030\007 \001(\tB\004\342A\001\002\022\025\n\rinstrument"
-    "_id\030\010 \001(\t\022M\n\rtime_in_force\030\t \001(\01626.tinko"
-    "ff.public.invest.api.contract.v1.TimeInF"
-    "orceType\022D\n\nprice_type\030\n \001(\01620.tinkoff.p"
-    "ublic.invest.api.contract.v1.PriceType\022\034"
-    "\n\024confirm_margin_trade\030\013 \001(\010B\007\n\005_figiB\010\n"
-    "\006_price\"\214\t\n\021PostOrderResponse\022\020\n\010order_i"
-    "d\030\001 \001(\t\022b\n\027execution_report_status\030\002 \001(\016"
-    "2A.tinkoff.public.invest.api.contract.v1"
-    ".OrderExecutionReportStatus\022\026\n\016lots_requ"
-    "ested\030\003 \001(\003\022\025\n\rlots_executed\030\004 \001(\003\022N\n\023in"
-    "itial_order_price\030\005 \001(\01321.tinkoff.public"
-    ".invest.api.contract.v1.MoneyValue\022O\n\024ex"
-    "ecuted_order_price\030\006 \001(\01321.tinkoff.publi"
-    "c.invest.api.contract.v1.MoneyValue\022M\n\022t"
-    "otal_order_amount\030\007 \001(\01321.tinkoff.public"
-    ".invest.api.contract.v1.MoneyValue\022M\n\022in"
-    "itial_commission\030\010 \001(\01321.tinkoff.public."
-    "invest.api.contract.v1.MoneyValue\022N\n\023exe"
-    "cuted_commission\030\t \001(\01321.tinkoff.public."
-    "invest.api.contract.v1.MoneyValue\022D\n\taci"
-    "_value\030\n \001(\01321.tinkoff.public.invest.api"
-    ".contract.v1.MoneyValue\022\014\n\004figi\030\013 \001(\t\022H\n"
-    "\tdirection\030\014 \001(\01625.tinkoff.public.invest"
-    ".api.contract.v1.OrderDirection\022Q\n\026initi"
-    "al_security_price\030\r \001(\01321.tinkoff.public"
-    ".invest.api.contract.v1.MoneyValue\022D\n\nor"
-    "der_type\030\016 \001(\01620.tinkoff.public.invest.a"
-    "pi.contract.v1.OrderType\022\017\n\007message\030\017 \001("
-    "\t\022P\n\026initial_order_price_pt\030\020 \001(\01320.tink"
-    "off.public.invest.api.contract.v1.Quotat"
-    "ion\022\026\n\016instrument_uid\030\021 \001(\t\022\016\n\006ticker\030\022 "
-    "\001(\t\022\022\n\nclass_code\030\023 \001(\t\022\030\n\020order_request"
-    "_id\030\024 \001(\t\022S\n\021response_metadata\030\376\001 \001(\01327."
-    "tinkoff.public.invest.api.contract.v1.Re"
-    "sponseMetadata\"\310\004\n\025PostOrderAsyncRequest"
-    "\022\033\n\rinstrument_id\030\001 \001(\tB\004\342A\001\002\022\026\n\010quantit"
-    "y\030\002 \001(\003B\004\342A\001\002\022D\n\005price\030\003 \001(\01320.tinkoff.p"
-    "ublic.invest.api.contract.v1.QuotationH\000"
-    "\210\001\001\022N\n\tdirection\030\004 \001(\01625.tinkoff.public."
-    "invest.api.contract.v1.OrderDirectionB\004\342"
-    "A\001\002\022\030\n\naccount_id\030\005 \001(\tB\004\342A\001\002\022J\n\norder_t"
-    "ype\030\006 \001(\01620.tinkoff.public.invest.api.co"
-    "ntract.v1.OrderTypeB\004\342A\001\002\022\026\n\010order_id\030\007 "
-    "\001(\tB\004\342A\001\002\022R\n\rtime_in_force\030\010 \001(\01626.tinko"
-    "ff.public.invest.api.contract.v1.TimeInF"
-    "orceTypeH\001\210\001\001\022I\n\nprice_type\030\t \001(\01620.tink"
-    "off.public.invest.api.contract.v1.PriceT"
-    "ypeH\002\210\001\001\022\034\n\024confirm_margin_trade\030\n \001(\010B\010"
-    "\n\006_priceB\020\n\016_time_in_forceB\r\n\013_price_typ"
-    "e\"\324\001\n\026PostOrderAsyncResponse\022\036\n\020order_re"
-    "quest_id\030\001 \001(\tB\004\342A\001\002\022h\n\027execution_report"
-    "_status\030\002 \001(\0162A.tinkoff.public.invest.ap"
-    "i.contract.v1.OrderExecutionReportStatus"
-    "B\004\342A\001\002\022\034\n\017trade_intent_id\030\003 \001(\tH\000\210\001\001B\022\n\020"
-    "_trade_intent_id\"\250\001\n\022CancelOrderRequest\022"
-    "\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022\026\n\010order_id\030\002 "
-    "\001(\tB\004\342A\001\002\022N\n\rorder_id_type\030\003 \001(\01622.tinko"
-    "ff.public.invest.api.contract.v1.OrderId"
-    "TypeH\000\210\001\001B\020\n\016_order_id_type\"\224\001\n\023CancelOr"
-    "derResponse\022(\n\004time\030\001 \001(\0132\032.google.proto"
-    "buf.Timestamp\022S\n\021response_metadata\030\376\001 \001("
-    "\01327.tinkoff.public.invest.api.contract.v"
-    "1.ResponseMetadata\"\360\001\n\024GetOrderStateRequ"
-    "est\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022\026\n\010order_i"
-    "d\030\002 \001(\tB\004\342A\001\002\022D\n\nprice_type\030\003 \001(\01620.tink"
-    "off.public.invest.api.contract.v1.PriceT"
-    "ype\022N\n\rorder_id_type\030\004 \001(\01622.tinkoff.pub"
-    "lic.invest.api.contract.v1.OrderIdTypeH\000"
-    "\210\001\001B\020\n\016_order_id_type\"\226\003\n\020GetOrdersReque"
-    "st\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022n\n\020advanced"
-    "_filters\030\002 \001(\0132O.tinkoff.public.invest.a"
-    "pi.contract.v1.GetOrdersRequest.GetOrder"
-    "sRequestFiltersH\000\210\001\001\032\342\001\n\027GetOrdersReques"
-    "tFilters\022-\n\004from\030\001 \001(\0132\032.google.protobuf"
-    ".TimestampH\000\210\001\001\022+\n\002to\030\002 \001(\0132\032.google.pro"
-    "tobuf.TimestampH\001\210\001\001\022[\n\020execution_status"
-    "\030\003 \003(\0162A.tinkoff.public.invest.api.contr"
-    "act.v1.OrderExecutionReportStatusB\007\n\005_fr"
-    "omB\005\n\003_toB\023\n\021_advanced_filters\"V\n\021GetOrd"
-    "ersResponse\022A\n\006orders\030\001 \003(\01321.tinkoff.pu"
-    "blic.invest.api.contract.v1.OrderState\"\256"
-    "\t\n\nOrderState\022\020\n\010order_id\030\001 \001(\t\022b\n\027execu"
-    "tion_report_status\030\002 \001(\0162A.tinkoff.publi"
-    "c.invest.api.contract.v1.OrderExecutionR"
-    "eportStatus\022\026\n\016lots_requested\030\003 \001(\003\022\025\n\rl"
-    "ots_executed\030\004 \001(\003\022N\n\023initial_order_pric"
-    "e\030\005 \001(\01321.tinkoff.public.invest.api.cont"
-    "ract.v1.MoneyValue\022O\n\024executed_order_pri"
-    "ce\030\006 \001(\01321.tinkoff.public.invest.api.con"
-    "tract.v1.MoneyValue\022M\n\022total_order_amoun"
-    "t\030\007 \001(\01321.tinkoff.public.invest.api.cont"
-    "ract.v1.MoneyValue\022Q\n\026average_position_p"
-    "rice\030\010 \001(\01321.tinkoff.public.invest.api.c"
-    "ontract.v1.MoneyValue\022M\n\022initial_commiss"
-    "ion\030\t \001(\01321.tinkoff.public.invest.api.co"
-    "ntract.v1.MoneyValue\022N\n\023executed_commiss"
-    "ion\030\n \001(\01321.tinkoff.public.invest.api.co"
-    "ntract.v1.MoneyValue\022\014\n\004figi\030\013 \001(\t\022H\n\tdi"
-    "rection\030\014 \001(\01625.tinkoff.public.invest.ap"
-    "i.contract.v1.OrderDirection\022Q\n\026initial_"
-    "security_price\030\r \001(\01321.tinkoff.public.in"
-    "vest.api.contract.v1.MoneyValue\022A\n\006stage"
-    "s\030\016 \003(\01321.tinkoff.public.invest.api.cont"
-    "ract.v1.OrderStage\022M\n\022service_commission"
-    "\030\017 \001(\01321.tinkoff.public.invest.api.contr"
-    "act.v1.MoneyValue\022\020\n\010currency\030\020 \001(\t\022D\n\no"
-    "rder_type\030\021 \001(\01620.tinkoff.public.invest."
-    "api.contract.v1.OrderType\022.\n\norder_date\030"
-    "\022 \001(\0132\032.google.protobuf.Timestamp\022\026\n\016ins"
-    "trument_uid\030\023 \001(\t\022\030\n\020order_request_id\030\024 "
-    "\001(\t\022\016\n\006ticker\030\025 \001(\t\022\022\n\nclass_code\030\026 \001(\t\""
-    "\246\001\n\nOrderStage\022@\n\005price\030\001 \001(\01321.tinkoff."
-    "public.invest.api.contract.v1.MoneyValue"
-    "\022\020\n\010quantity\030\002 \001(\003\022\020\n\010trade_id\030\003 \001(\t\0222\n\016"
-    "execution_time\030\005 \001(\0132\032.google.protobuf.T"
-    "imestamp\"\306\002\n\023ReplaceOrderRequest\022\030\n\nacco"
-    "unt_id\030\001 \001(\tB\004\342A\001\002\022\026\n\010order_id\030\006 \001(\tB\004\342A"
-    "\001\002\022\035\n\017idempotency_key\030\007 \001(\tB\004\342A\001\002\022\026\n\010qua"
-    "ntity\030\013 \001(\003B\004\342A\001\002\022D\n\005price\030\014 \001(\01320.tinko"
-    "ff.public.invest.api.contract.v1.Quotati"
-    "onH\000\210\001\001\022I\n\nprice_type\030\r \001(\01620.tinkoff.pu"
-    "blic.invest.api.contract.v1.PriceTypeH\001\210"
-    "\001\001\022\034\n\024confirm_margin_trade\030\016 \001(\010B\010\n\006_pri"
-    "ceB\r\n\013_price_type\"\232\001\n\021GetMaxLotsRequest\022"
-    "\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022\033\n\rinstrument_"
-    "id\030\002 \001(\tB\004\342A\001\002\022D\n\005price\030\003 \001(\01320.tinkoff."
-    "public.invest.api.contract.v1.QuotationH"
-    "\000\210\001\001B\010\n\006_price\"\346\004\n\022GetMaxLotsResponse\022\020\n"
-    "\010currency\030\001 \001(\t\022[\n\nbuy_limits\030\002 \001(\0132G.ti"
-    "nkoff.public.invest.api.contract.v1.GetM"
-    "axLotsResponse.BuyLimitsView\022b\n\021buy_marg"
-    "in_limits\030\003 \001(\0132G.tinkoff.public.invest."
-    "api.contract.v1.GetMaxLotsResponse.BuyLi"
-    "mitsView\022]\n\013sell_limits\030\004 \001(\0132H.tinkoff."
-    "public.invest.api.contract.v1.GetMaxLots"
-    "Response.SellLimitsView\022d\n\022sell_margin_l"
-    "imits\030\005 \001(\0132H.tinkoff.public.invest.api."
-    "contract.v1.GetMaxLotsResponse.SellLimit"
-    "sView\032\216\001\n\rBuyLimitsView\022J\n\020buy_money_amo"
-    "unt\030\001 \001(\01320.tinkoff.public.invest.api.co"
-    "ntract.v1.Quotation\022\024\n\014buy_max_lots\030\002 \001("
-    "\003\022\033\n\023buy_max_market_lots\030\003 \001(\003\032\'\n\016SellLi"
-    "mitsView\022\025\n\rsell_max_lots\030\001 \001(\003\"\336\001\n\024GetO"
-    "rderPriceRequest\022\022\n\naccount_id\030\001 \001(\t\022\025\n\r"
-    "instrument_id\030\002 \001(\t\022\?\n\005price\030\003 \001(\01320.tin"
-    "koff.public.invest.api.contract.v1.Quota"
-    "tion\022H\n\tdirection\030\014 \001(\01625.tinkoff.public"
-    ".invest.api.contract.v1.OrderDirection\022\020"
-    "\n\010quantity\030\r \001(\003\"\343\007\n\025GetOrderPriceRespon"
-    "se\022M\n\022total_order_amount\030\001 \001(\01321.tinkoff"
+    "i.contract.v1\032\014common.proto\032\020stoporders."
+    "proto\032\037google/protobuf/timestamp.proto\032\037"
+    "google/api/field_behavior.proto\"U\n\023Trade"
+    "sStreamRequest\022\020\n\010accounts\030\001 \003(\t\022\032\n\rping"
+    "_delay_ms\030\017 \001(\005H\000\210\001\001B\020\n\016_ping_delay_ms\"\377"
+    "\001\n\024TradesStreamResponse\022J\n\014order_trades\030"
+    "\001 \001(\01322.tinkoff.public.invest.api.contra"
+    "ct.v1.OrderTradesH\000\022;\n\004ping\030\002 \001(\0132+.tink"
+    "off.public.invest.api.contract.v1.PingH\000"
+    "\022S\n\014subscription\030\003 \001(\0132;.tinkoff.public."
+    "invest.api.contract.v1.SubscriptionRespo"
+    "nseH\000B\t\n\007payload\"\226\002\n\013OrderTrades\022\020\n\010orde"
+    "r_id\030\001 \001(\t\022.\n\ncreated_at\030\002 \001(\0132\032.google."
+    "protobuf.Timestamp\022H\n\tdirection\030\003 \001(\01625."
+    "tinkoff.public.invest.api.contract.v1.Or"
+    "derDirection\022\014\n\004figi\030\004 \001(\t\022A\n\006trades\030\005 \003"
+    "(\01321.tinkoff.public.invest.api.contract."
+    "v1.OrderTrade\022\022\n\naccount_id\030\006 \001(\t\022\026\n\016ins"
+    "trument_uid\030\007 \001(\t\"\240\001\n\nOrderTrade\022-\n\tdate"
+    "_time\030\001 \001(\0132\032.google.protobuf.Timestamp\022"
+    "\?\n\005price\030\002 \001(\01320.tinkoff.public.invest.a"
+    "pi.contract.v1.Quotation\022\020\n\010quantity\030\003 \001"
+    "(\003\022\020\n\010trade_id\030\004 \001(\t\"\262\004\n\020PostOrderReques"
+    "t\022\025\n\004figi\030\001 \001(\tB\002\030\001H\000\210\001\001\022\026\n\010quantity\030\002 \001"
+    "(\003B\004\342A\001\002\022D\n\005price\030\003 \001(\01320.tinkoff.public"
+    ".invest.api.contract.v1.QuotationH\001\210\001\001\022N"
+    "\n\tdirection\030\004 \001(\01625.tinkoff.public.inves"
+    "t.api.contract.v1.OrderDirectionB\004\342A\001\002\022\030"
+    "\n\naccount_id\030\005 \001(\tB\004\342A\001\002\022J\n\norder_type\030\006"
+    " \001(\01620.tinkoff.public.invest.api.contrac"
+    "t.v1.OrderTypeB\004\342A\001\002\022\026\n\010order_id\030\007 \001(\tB\004"
+    "\342A\001\002\022\025\n\rinstrument_id\030\010 \001(\t\022M\n\rtime_in_f"
+    "orce\030\t \001(\01626.tinkoff.public.invest.api.c"
+    "ontract.v1.TimeInForceType\022D\n\nprice_type"
+    "\030\n \001(\01620.tinkoff.public.invest.api.contr"
+    "act.v1.PriceType\022\034\n\024confirm_margin_trade"
+    "\030\013 \001(\010B\007\n\005_figiB\010\n\006_price\"\214\t\n\021PostOrderR"
+    "esponse\022\020\n\010order_id\030\001 \001(\t\022b\n\027execution_r"
+    "eport_status\030\002 \001(\0162A.tinkoff.public.inve"
+    "st.api.contract.v1.OrderExecutionReportS"
+    "tatus\022\026\n\016lots_requested\030\003 \001(\003\022\025\n\rlots_ex"
+    "ecuted\030\004 \001(\003\022N\n\023initial_order_price\030\005 \001("
+    "\01321.tinkoff.public.invest.api.contract.v"
+    "1.MoneyValue\022O\n\024executed_order_price\030\006 \001"
+    "(\01321.tinkoff.public.invest.api.contract."
+    "v1.MoneyValue\022M\n\022total_order_amount\030\007 \001("
+    "\01321.tinkoff.public.invest.api.contract.v"
+    "1.MoneyValue\022M\n\022initial_commission\030\010 \001(\013"
+    "21.tinkoff.public.invest.api.contract.v1"
+    ".MoneyValue\022N\n\023executed_commission\030\t \001(\013"
+    "21.tinkoff.public.invest.api.contract.v1"
+    ".MoneyValue\022D\n\taci_value\030\n \001(\01321.tinkoff"
     ".public.invest.api.contract.v1.MoneyValu"
-    "e\022O\n\024initial_order_amount\030\005 \001(\01321.tinkof"
-    "f.public.invest.api.contract.v1.MoneyVal"
-    "ue\022\026\n\016lots_requested\030\003 \001(\003\022N\n\023executed_c"
-    "ommission\030\007 \001(\01321.tinkoff.public.invest."
-    "api.contract.v1.MoneyValue\022R\n\027executed_c"
-    "ommission_rub\030\010 \001(\01321.tinkoff.public.inv"
-    "est.api.contract.v1.MoneyValue\022M\n\022servic"
-    "e_commission\030\t \001(\01321.tinkoff.public.inve"
-    "st.api.contract.v1.MoneyValue\022J\n\017deal_co"
-    "mmission\030\n \001(\01321.tinkoff.public.invest.a"
-    "pi.contract.v1.MoneyValue\022\\\n\nextra_bond\030"
-    "\014 \001(\0132F.tinkoff.public.invest.api.contra"
-    "ct.v1.GetOrderPriceResponse.ExtraBondH\000\022"
-    "`\n\014extra_future\030\r \001(\0132H.tinkoff.public.i"
-    "nvest.api.contract.v1.GetOrderPriceRespo"
-    "nse.ExtraFutureH\000\032\244\001\n\tExtraBond\022D\n\taci_v"
-    "alue\030\002 \001(\01321.tinkoff.public.invest.api.c"
-    "ontract.v1.MoneyValue\022Q\n\027nominal_convers"
-    "ion_rate\030\003 \001(\01320.tinkoff.public.invest.a"
-    "pi.contract.v1.Quotation\032X\n\013ExtraFuture\022"
-    "I\n\016initial_margin\030\002 \001(\01321.tinkoff.public"
-    ".invest.api.contract.v1.MoneyValueB\022\n\020in"
-    "strument_extra\"a\n\027OrderStateStreamReques"
-    "t\022\020\n\010accounts\030\001 \003(\t\022\036\n\021ping_delay_millis"
-    "\030\017 \001(\005H\000\210\001\001B\024\n\022_ping_delay_millis\"\363\001\n\024Su"
-    "bscriptionResponse\022\023\n\013tracking_id\030\001 \001(\t\022"
-    "O\n\006status\030\002 \001(\0162\?.tinkoff.public.invest."
-    "api.contract.v1.ResultSubscriptionStatus"
-    "\022\021\n\tstream_id\030\004 \001(\t\022\020\n\010accounts\030\005 \003(\t\022F\n"
-    "\005error\030\007 \001(\01322.tinkoff.public.invest.api"
-    ".contract.v1.ErrorDetailH\000\210\001\001B\010\n\006_error\""
-    "\272\020\n\030OrderStateStreamResponse\022a\n\013order_st"
-    "ate\030\001 \001(\0132J.tinkoff.public.invest.api.co"
-    "ntract.v1.OrderStateStreamResponse.Order"
-    "StateH\000\022;\n\004ping\030\002 \001(\0132+.tinkoff.public.i"
-    "nvest.api.contract.v1.PingH\000\022S\n\014subscrip"
-    "tion\030\003 \001(\0132;.tinkoff.public.invest.api.c"
-    "ontract.v1.SubscriptionResponseH\000\032\325\n\n\nOr"
-    "derState\022\020\n\010order_id\030\001 \001(\t\022\035\n\020order_requ"
-    "est_id\030\002 \001(\tH\000\210\001\001\022\023\n\013client_code\030\003 \001(\t\022."
-    "\n\ncreated_at\030\004 \001(\0132\032.google.protobuf.Tim"
-    "estamp\022b\n\027execution_report_status\030\005 \001(\0162"
-    "A.tinkoff.public.invest.api.contract.v1."
-    "OrderExecutionReportStatus\022i\n\013status_inf"
-    "o\030\006 \001(\0162O.tinkoff.public.invest.api.cont"
-    "ract.v1.OrderStateStreamResponse.StatusC"
-    "auseInfoH\001\210\001\001\022\016\n\006ticker\030\007 \001(\t\022\022\n\nclass_c"
-    "ode\030\010 \001(\t\022\020\n\010lot_size\030\t \001(\005\022H\n\tdirection"
-    "\030\n \001(\01625.tinkoff.public.invest.api.contr"
-    "act.v1.OrderDirection\022M\n\rtime_in_force\030\013"
-    " \001(\01626.tinkoff.public.invest.api.contrac"
-    "t.v1.TimeInForceType\022D\n\norder_type\030\014 \001(\016"
-    "20.tinkoff.public.invest.api.contract.v1"
-    ".OrderType\022\022\n\naccount_id\030\r \001(\t\022N\n\023initia"
-    "l_order_price\030\026 \001(\01321.tinkoff.public.inv"
-    "est.api.contract.v1.MoneyValue\022F\n\013order_"
-    "price\030\027 \001(\01321.tinkoff.public.invest.api."
-    "contract.v1.MoneyValue\022F\n\006amount\030\030 \001(\01321"
+    "e\022\014\n\004figi\030\013 \001(\t\022H\n\tdirection\030\014 \001(\01625.tin"
+    "koff.public.invest.api.contract.v1.Order"
+    "Direction\022Q\n\026initial_security_price\030\r \001("
+    "\01321.tinkoff.public.invest.api.contract.v"
+    "1.MoneyValue\022D\n\norder_type\030\016 \001(\01620.tinko"
+    "ff.public.invest.api.contract.v1.OrderTy"
+    "pe\022\017\n\007message\030\017 \001(\t\022P\n\026initial_order_pri"
+    "ce_pt\030\020 \001(\01320.tinkoff.public.invest.api."
+    "contract.v1.Quotation\022\026\n\016instrument_uid\030"
+    "\021 \001(\t\022\016\n\006ticker\030\022 \001(\t\022\022\n\nclass_code\030\023 \001("
+    "\t\022\030\n\020order_request_id\030\024 \001(\t\022S\n\021response_"
+    "metadata\030\376\001 \001(\01327.tinkoff.public.invest."
+    "api.contract.v1.ResponseMetadata\"\310\004\n\025Pos"
+    "tOrderAsyncRequest\022\033\n\rinstrument_id\030\001 \001("
+    "\tB\004\342A\001\002\022\026\n\010quantity\030\002 \001(\003B\004\342A\001\002\022D\n\005price"
+    "\030\003 \001(\01320.tinkoff.public.invest.api.contr"
+    "act.v1.QuotationH\000\210\001\001\022N\n\tdirection\030\004 \001(\016"
+    "25.tinkoff.public.invest.api.contract.v1"
+    ".OrderDirectionB\004\342A\001\002\022\030\n\naccount_id\030\005 \001("
+    "\tB\004\342A\001\002\022J\n\norder_type\030\006 \001(\01620.tinkoff.pu"
+    "blic.invest.api.contract.v1.OrderTypeB\004\342"
+    "A\001\002\022\026\n\010order_id\030\007 \001(\tB\004\342A\001\002\022R\n\rtime_in_f"
+    "orce\030\010 \001(\01626.tinkoff.public.invest.api.c"
+    "ontract.v1.TimeInForceTypeH\001\210\001\001\022I\n\nprice"
+    "_type\030\t \001(\01620.tinkoff.public.invest.api."
+    "contract.v1.PriceTypeH\002\210\001\001\022\034\n\024confirm_ma"
+    "rgin_trade\030\n \001(\010B\010\n\006_priceB\020\n\016_time_in_f"
+    "orceB\r\n\013_price_type\"\324\001\n\026PostOrderAsyncRe"
+    "sponse\022\036\n\020order_request_id\030\001 \001(\tB\004\342A\001\002\022h"
+    "\n\027execution_report_status\030\002 \001(\0162A.tinkof"
+    "f.public.invest.api.contract.v1.OrderExe"
+    "cutionReportStatusB\004\342A\001\002\022\034\n\017trade_intent"
+    "_id\030\003 \001(\tH\000\210\001\001B\022\n\020_trade_intent_id\"\250\001\n\022C"
+    "ancelOrderRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342"
+    "A\001\002\022\026\n\010order_id\030\002 \001(\tB\004\342A\001\002\022N\n\rorder_id_"
+    "type\030\003 \001(\01622.tinkoff.public.invest.api.c"
+    "ontract.v1.OrderIdTypeH\000\210\001\001B\020\n\016_order_id"
+    "_type\"\224\001\n\023CancelOrderResponse\022(\n\004time\030\001 "
+    "\001(\0132\032.google.protobuf.Timestamp\022S\n\021respo"
+    "nse_metadata\030\376\001 \001(\01327.tinkoff.public.inv"
+    "est.api.contract.v1.ResponseMetadata\"\360\001\n"
+    "\024GetOrderStateRequest\022\030\n\naccount_id\030\001 \001("
+    "\tB\004\342A\001\002\022\026\n\010order_id\030\002 \001(\tB\004\342A\001\002\022D\n\nprice"
+    "_type\030\003 \001(\01620.tinkoff.public.invest.api."
+    "contract.v1.PriceType\022N\n\rorder_id_type\030\004"
+    " \001(\01622.tinkoff.public.invest.api.contrac"
+    "t.v1.OrderIdTypeH\000\210\001\001B\020\n\016_order_id_type\""
+    "\226\003\n\020GetOrdersRequest\022\030\n\naccount_id\030\001 \001(\t"
+    "B\004\342A\001\002\022n\n\020advanced_filters\030\002 \001(\0132O.tinko"
+    "ff.public.invest.api.contract.v1.GetOrde"
+    "rsRequest.GetOrdersRequestFiltersH\000\210\001\001\032\342"
+    "\001\n\027GetOrdersRequestFilters\022-\n\004from\030\001 \001(\013"
+    "2\032.google.protobuf.TimestampH\000\210\001\001\022+\n\002to\030"
+    "\002 \001(\0132\032.google.protobuf.TimestampH\001\210\001\001\022["
+    "\n\020execution_status\030\003 \003(\0162A.tinkoff.publi"
+    "c.invest.api.contract.v1.OrderExecutionR"
+    "eportStatusB\007\n\005_fromB\005\n\003_toB\023\n\021_advanced"
+    "_filters\"V\n\021GetOrdersResponse\022A\n\006orders\030"
+    "\001 \003(\01321.tinkoff.public.invest.api.contra"
+    "ct.v1.OrderState\"\256\t\n\nOrderState\022\020\n\010order"
+    "_id\030\001 \001(\t\022b\n\027execution_report_status\030\002 \001"
+    "(\0162A.tinkoff.public.invest.api.contract."
+    "v1.OrderExecutionReportStatus\022\026\n\016lots_re"
+    "quested\030\003 \001(\003\022\025\n\rlots_executed\030\004 \001(\003\022N\n\023"
+    "initial_order_price\030\005 \001(\01321.tinkoff.publ"
+    "ic.invest.api.contract.v1.MoneyValue\022O\n\024"
+    "executed_order_price\030\006 \001(\01321.tinkoff.pub"
+    "lic.invest.api.contract.v1.MoneyValue\022M\n"
+    "\022total_order_amount\030\007 \001(\01321.tinkoff.publ"
+    "ic.invest.api.contract.v1.MoneyValue\022Q\n\026"
+    "average_position_price\030\010 \001(\01321.tinkoff.p"
+    "ublic.invest.api.contract.v1.MoneyValue\022"
+    "M\n\022initial_commission\030\t \001(\01321.tinkoff.pu"
+    "blic.invest.api.contract.v1.MoneyValue\022N"
+    "\n\023executed_commission\030\n \001(\01321.tinkoff.pu"
+    "blic.invest.api.contract.v1.MoneyValue\022\014"
+    "\n\004figi\030\013 \001(\t\022H\n\tdirection\030\014 \001(\01625.tinkof"
+    "f.public.invest.api.contract.v1.OrderDir"
+    "ection\022Q\n\026initial_security_price\030\r \001(\01321"
     ".tinkoff.public.invest.api.contract.v1.M"
-    "oneyValueH\002\210\001\001\022O\n\024executed_order_price\030\031"
-    " \001(\01321.tinkoff.public.invest.api.contrac"
-    "t.v1.MoneyValue\022\020\n\010currency\030\032 \001(\t\022\026\n\016lot"
-    "s_requested\030\033 \001(\003\022\025\n\rlots_executed\030\034 \001(\003"
-    "\022\021\n\tlots_left\030\035 \001(\003\022\026\n\016lots_cancelled\030\036 "
-    "\001(\003\022_\n\006marker\030\037 \001(\0162J.tinkoff.public.inv"
-    "est.api.contract.v1.OrderStateStreamResp"
-    "onse.MarkerTypeH\003\210\001\001\022A\n\006trades\030! \003(\01321.t"
+    "oneyValue\022A\n\006stages\030\016 \003(\01321.tinkoff.publ"
+    "ic.invest.api.contract.v1.OrderStage\022M\n\022"
+    "service_commission\030\017 \001(\01321.tinkoff.publi"
+    "c.invest.api.contract.v1.MoneyValue\022\020\n\010c"
+    "urrency\030\020 \001(\t\022D\n\norder_type\030\021 \001(\01620.tink"
+    "off.public.invest.api.contract.v1.OrderT"
+    "ype\022.\n\norder_date\030\022 \001(\0132\032.google.protobu"
+    "f.Timestamp\022\026\n\016instrument_uid\030\023 \001(\t\022\030\n\020o"
+    "rder_request_id\030\024 \001(\t\022\016\n\006ticker\030\025 \001(\t\022\022\n"
+    "\nclass_code\030\026 \001(\t\"\246\001\n\nOrderStage\022@\n\005pric"
+    "e\030\001 \001(\01321.tinkoff.public.invest.api.cont"
+    "ract.v1.MoneyValue\022\020\n\010quantity\030\002 \001(\003\022\020\n\010"
+    "trade_id\030\003 \001(\t\0222\n\016execution_time\030\005 \001(\0132\032"
+    ".google.protobuf.Timestamp\"\250\003\n\023ReplaceOr"
+    "derRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022N\n\r"
+    "order_id_type\030\005 \001(\01622.tinkoff.public.inv"
+    "est.api.contract.v1.OrderIdTypeH\000\210\001\001\022\026\n\010"
+    "order_id\030\006 \001(\tB\004\342A\001\002\022\035\n\017idempotency_key\030"
+    "\007 \001(\tB\004\342A\001\002\022\026\n\010quantity\030\013 \001(\003B\004\342A\001\002\022D\n\005p"
+    "rice\030\014 \001(\01320.tinkoff.public.invest.api.c"
+    "ontract.v1.QuotationH\001\210\001\001\022I\n\nprice_type\030"
+    "\r \001(\01620.tinkoff.public.invest.api.contra"
+    "ct.v1.PriceTypeH\002\210\001\001\022\034\n\024confirm_margin_t"
+    "rade\030\016 \001(\010B\020\n\016_order_id_typeB\010\n\006_priceB\r"
+    "\n\013_price_type\"\232\001\n\021GetMaxLotsRequest\022\030\n\na"
+    "ccount_id\030\001 \001(\tB\004\342A\001\002\022\033\n\rinstrument_id\030\002"
+    " \001(\tB\004\342A\001\002\022D\n\005price\030\003 \001(\01320.tinkoff.publ"
+    "ic.invest.api.contract.v1.QuotationH\000\210\001\001"
+    "B\010\n\006_price\"\346\004\n\022GetMaxLotsResponse\022\020\n\010cur"
+    "rency\030\001 \001(\t\022[\n\nbuy_limits\030\002 \001(\0132G.tinkof"
+    "f.public.invest.api.contract.v1.GetMaxLo"
+    "tsResponse.BuyLimitsView\022b\n\021buy_margin_l"
+    "imits\030\003 \001(\0132G.tinkoff.public.invest.api."
+    "contract.v1.GetMaxLotsResponse.BuyLimits"
+    "View\022]\n\013sell_limits\030\004 \001(\0132H.tinkoff.publ"
+    "ic.invest.api.contract.v1.GetMaxLotsResp"
+    "onse.SellLimitsView\022d\n\022sell_margin_limit"
+    "s\030\005 \001(\0132H.tinkoff.public.invest.api.cont"
+    "ract.v1.GetMaxLotsResponse.SellLimitsVie"
+    "w\032\216\001\n\rBuyLimitsView\022J\n\020buy_money_amount\030"
+    "\001 \001(\01320.tinkoff.public.invest.api.contra"
+    "ct.v1.Quotation\022\024\n\014buy_max_lots\030\002 \001(\003\022\033\n"
+    "\023buy_max_market_lots\030\003 \001(\003\032\'\n\016SellLimits"
+    "View\022\025\n\rsell_max_lots\030\001 \001(\003\"\336\001\n\024GetOrder"
+    "PriceRequest\022\022\n\naccount_id\030\001 \001(\t\022\025\n\rinst"
+    "rument_id\030\002 \001(\t\022\?\n\005price\030\003 \001(\01320.tinkoff"
+    ".public.invest.api.contract.v1.Quotation"
+    "\022H\n\tdirection\030\014 \001(\01625.tinkoff.public.inv"
+    "est.api.contract.v1.OrderDirection\022\020\n\010qu"
+    "antity\030\r \001(\003\"\343\007\n\025GetOrderPriceResponse\022M"
+    "\n\022total_order_amount\030\001 \001(\01321.tinkoff.pub"
+    "lic.invest.api.contract.v1.MoneyValue\022O\n"
+    "\024initial_order_amount\030\005 \001(\01321.tinkoff.pu"
+    "blic.invest.api.contract.v1.MoneyValue\022\026"
+    "\n\016lots_requested\030\003 \001(\003\022N\n\023executed_commi"
+    "ssion\030\007 \001(\01321.tinkoff.public.invest.api."
+    "contract.v1.MoneyValue\022R\n\027executed_commi"
+    "ssion_rub\030\010 \001(\01321.tinkoff.public.invest."
+    "api.contract.v1.MoneyValue\022M\n\022service_co"
+    "mmission\030\t \001(\01321.tinkoff.public.invest.a"
+    "pi.contract.v1.MoneyValue\022J\n\017deal_commis"
+    "sion\030\n \001(\01321.tinkoff.public.invest.api.c"
+    "ontract.v1.MoneyValue\022\\\n\nextra_bond\030\014 \001("
+    "\0132F.tinkoff.public.invest.api.contract.v"
+    "1.GetOrderPriceResponse.ExtraBondH\000\022`\n\014e"
+    "xtra_future\030\r \001(\0132H.tinkoff.public.inves"
+    "t.api.contract.v1.GetOrderPriceResponse."
+    "ExtraFutureH\000\032\244\001\n\tExtraBond\022D\n\taci_value"
+    "\030\002 \001(\01321.tinkoff.public.invest.api.contr"
+    "act.v1.MoneyValue\022Q\n\027nominal_conversion_"
+    "rate\030\003 \001(\01320.tinkoff.public.invest.api.c"
+    "ontract.v1.Quotation\032X\n\013ExtraFuture\022I\n\016i"
+    "nitial_margin\030\002 \001(\01321.tinkoff.public.inv"
+    "est.api.contract.v1.MoneyValueB\022\n\020instru"
+    "ment_extra\"a\n\027OrderStateStreamRequest\022\020\n"
+    "\010accounts\030\001 \003(\t\022\036\n\021ping_delay_millis\030\017 \001"
+    "(\005H\000\210\001\001B\024\n\022_ping_delay_millis\"\363\001\n\024Subscr"
+    "iptionResponse\022\023\n\013tracking_id\030\001 \001(\t\022O\n\006s"
+    "tatus\030\002 \001(\0162\?.tinkoff.public.invest.api."
+    "contract.v1.ResultSubscriptionStatus\022\021\n\t"
+    "stream_id\030\004 \001(\t\022\020\n\010accounts\030\005 \003(\t\022F\n\005err"
+    "or\030\007 \001(\01322.tinkoff.public.invest.api.con"
+    "tract.v1.ErrorDetailH\000\210\001\001B\010\n\006_error\"\325\025\n\030"
+    "OrderStateStreamResponse\022a\n\013order_state\030"
+    "\001 \001(\0132J.tinkoff.public.invest.api.contra"
+    "ct.v1.OrderStateStreamResponse.OrderStat"
+    "eH\000\022;\n\004ping\030\002 \001(\0132+.tinkoff.public.inves"
+    "t.api.contract.v1.PingH\000\022S\n\014subscription"
+    "\030\003 \001(\0132;.tinkoff.public.invest.api.contr"
+    "act.v1.SubscriptionResponseH\000\022j\n\020stop_or"
+    "der_state\030\004 \001(\0132N.tinkoff.public.invest."
+    "api.contract.v1.OrderStateStreamResponse"
+    ".StopOrderStateH\000\032\363\n\n\nOrderState\022\020\n\010orde"
+    "r_id\030\001 \001(\t\022\035\n\020order_request_id\030\002 \001(\tH\000\210\001"
+    "\001\022\023\n\013client_code\030\003 \001(\t\022.\n\ncreated_at\030\004 \001"
+    "(\0132\032.google.protobuf.Timestamp\022b\n\027execut"
+    "ion_report_status\030\005 \001(\0162A.tinkoff.public"
+    ".invest.api.contract.v1.OrderExecutionRe"
+    "portStatus\022i\n\013status_info\030\006 \001(\0162O.tinkof"
+    "f.public.invest.api.contract.v1.OrderSta"
+    "teStreamResponse.StatusCauseInfoH\001\210\001\001\022\016\n"
+    "\006ticker\030\007 \001(\t\022\022\n\nclass_code\030\010 \001(\t\022\020\n\010lot"
+    "_size\030\t \001(\005\022H\n\tdirection\030\n \001(\01625.tinkoff"
+    ".public.invest.api.contract.v1.OrderDire"
+    "ction\022M\n\rtime_in_force\030\013 \001(\01626.tinkoff.p"
+    "ublic.invest.api.contract.v1.TimeInForce"
+    "Type\022D\n\norder_type\030\014 \001(\01620.tinkoff.publi"
+    "c.invest.api.contract.v1.OrderType\022\022\n\nac"
+    "count_id\030\r \001(\t\022\034\n\016trade_order_id\030\016 \001(\tB\004"
+    "\342A\001\002\022N\n\023initial_order_price\030\026 \001(\01321.tink"
+    "off.public.invest.api.contract.v1.MoneyV"
+    "alue\022F\n\013order_price\030\027 \001(\01321.tinkoff.publ"
+    "ic.invest.api.contract.v1.MoneyValue\022F\n\006"
+    "amount\030\030 \001(\01321.tinkoff.public.invest.api"
+    ".contract.v1.MoneyValueH\002\210\001\001\022O\n\024executed"
+    "_order_price\030\031 \001(\01321.tinkoff.public.inve"
+    "st.api.contract.v1.MoneyValue\022\020\n\010currenc"
+    "y\030\032 \001(\t\022\026\n\016lots_requested\030\033 \001(\003\022\025\n\rlots_"
+    "executed\030\034 \001(\003\022\021\n\tlots_left\030\035 \001(\003\022\026\n\016lot"
+    "s_cancelled\030\036 \001(\003\022_\n\006marker\030\037 \001(\0162J.tink"
+    "off.public.invest.api.contract.v1.OrderS"
+    "tateStreamResponse.MarkerTypeH\003\210\001\001\022A\n\006tr"
+    "ades\030! \003(\01321.tinkoff.public.invest.api.c"
+    "ontract.v1.OrderTrade\0223\n\017completion_time"
+    "\030# \001(\0132\032.google.protobuf.Timestamp\022\020\n\010ex"
+    "change\030$ \001(\t\022\026\n\016instrument_uid\030) \001(\tB\023\n\021"
+    "_order_request_idB\016\n\014_status_infoB\t\n\007_am"
+    "ountB\t\n\007_marker\032\216\004\n\016StopOrderState\022\025\n\rst"
+    "op_order_id\030\001 \001(\t\022\022\n\naccount_id\030\002 \001(\t\022.\n"
+    "\ncreated_at\030\003 \001(\0132\032.google.protobuf.Time"
+    "stamp\022H\n\tdirection\030\004 \001(\01625.tinkoff.publi"
+    "c.invest.api.contract.v1.OrderDirection\022"
+    "@\n\005price\030\005 \001(\01321.tinkoff.public.invest.a"
+    "pi.contract.v1.MoneyValue\022E\n\nstop_price\030"
+    "\006 \001(\01321.tinkoff.public.invest.api.contra"
+    "ct.v1.MoneyValue\022D\n\norder_type\030\007 \001(\01620.t"
     "inkoff.public.invest.api.contract.v1.Ord"
-    "erTrade\0223\n\017completion_time\030# \001(\0132\032.googl"
-    "e.protobuf.Timestamp\022\020\n\010exchange\030$ \001(\t\022\026"
-    "\n\016instrument_uid\030) \001(\tB\023\n\021_order_request"
-    "_idB\016\n\014_status_infoB\t\n\007_amountB\t\n\007_marke"
-    "r\"\257\001\n\nMarkerType\022\022\n\016MARKER_UNKNOWN\020\000\022\021\n\r"
-    "MARKER_BROKER\020\001\022\017\n\013MARKER_CHAT\020\002\022\020\n\014MARK"
-    "ER_PAPER\020\003\022\021\n\rMARKER_MARGIN\020\004\022\020\n\014MARKER_"
-    "TKBNM\020\005\022\020\n\014MARKER_SHORT\020\006\022\021\n\rMARKER_SPEC"
-    "MM\020\007\022\r\n\tMARKER_PO\020\010\"\223\002\n\017StatusCauseInfo\022"
-    "\025\n\021CAUSE_UNSPECIFIED\020\000\022\035\n\031CAUSE_CANCELLE"
-    "D_BY_CLIENT\020\017\022\037\n\033CAUSE_CANCELLED_BY_EXCH"
-    "ANGE\020\001\022\'\n#CAUSE_CANCELLED_NOT_ENOUGH_POS"
-    "ITION\020\002\022#\n\037CAUSE_CANCELLED_BY_CLIENT_BLO"
-    "CK\020\003\022\034\n\030CAUSE_REJECTED_BY_BROKER\020\004\022\036\n\032CA"
-    "USE_REJECTED_BY_EXCHANGE\020\005\022\035\n\031CAUSE_CANC"
-    "ELLED_BY_BROKER\020\006B\t\n\007payload*d\n\016OrderDir"
-    "ection\022\037\n\033ORDER_DIRECTION_UNSPECIFIED\020\000\022"
-    "\027\n\023ORDER_DIRECTION_BUY\020\001\022\030\n\024ORDER_DIRECT"
-    "ION_SELL\020\002*n\n\tOrderType\022\032\n\026ORDER_TYPE_UN"
-    "SPECIFIED\020\000\022\024\n\020ORDER_TYPE_LIMIT\020\001\022\025\n\021ORD"
-    "ER_TYPE_MARKET\020\002\022\030\n\024ORDER_TYPE_BESTPRICE"
-    "\020\003*\200\002\n\032OrderExecutionReportStatus\022\'\n#EXE"
-    "CUTION_REPORT_STATUS_UNSPECIFIED\020\000\022 \n\034EX"
-    "ECUTION_REPORT_STATUS_FILL\020\001\022$\n EXECUTIO"
-    "N_REPORT_STATUS_REJECTED\020\002\022%\n!EXECUTION_"
-    "REPORT_STATUS_CANCELLED\020\003\022\037\n\033EXECUTION_R"
-    "EPORT_STATUS_NEW\020\004\022)\n%EXECUTION_REPORT_S"
-    "TATUS_PARTIALLYFILL\020\005*\210\001\n\017TimeInForceTyp"
-    "e\022\035\n\031TIME_IN_FORCE_UNSPECIFIED\020\000\022\025\n\021TIME"
-    "_IN_FORCE_DAY\020\001\022\037\n\033TIME_IN_FORCE_FILL_AN"
-    "D_KILL\020\002\022\036\n\032TIME_IN_FORCE_FILL_OR_KILL\020\003"
-    "*c\n\013OrderIdType\022\035\n\031ORDER_ID_TYPE_UNSPECI"
-    "FIED\020\000\022\032\n\026ORDER_ID_TYPE_EXCHANGE\020\001\022\031\n\025OR"
-    "DER_ID_TYPE_REQUEST\020\0022\271\002\n\023OrdersStreamSe"
-    "rvice\022\211\001\n\014TradesStream\022:.tinkoff.public."
-    "invest.api.contract.v1.TradesStreamReque"
-    "st\032;.tinkoff.public.invest.api.contract."
-    "v1.TradesStreamResponse0\001\022\225\001\n\020OrderState"
-    "Stream\022>.tinkoff.public.invest.api.contr"
-    "act.v1.OrderStateStreamRequest\032\?.tinkoff"
-    ".public.invest.api.contract.v1.OrderStat"
-    "eStreamResponse0\0012\277\010\n\rOrdersService\022~\n\tP"
-    "ostOrder\0227.tinkoff.public.invest.api.con"
-    "tract.v1.PostOrderRequest\0328.tinkoff.publ"
-    "ic.invest.api.contract.v1.PostOrderRespo"
-    "nse\022\215\001\n\016PostOrderAsync\022<.tinkoff.public."
-    "invest.api.contract.v1.PostOrderAsyncReq"
-    "uest\032=.tinkoff.public.invest.api.contrac"
-    "t.v1.PostOrderAsyncResponse\022\204\001\n\013CancelOr"
-    "der\0229.tinkoff.public.invest.api.contract"
-    ".v1.CancelOrderRequest\032:.tinkoff.public."
-    "invest.api.contract.v1.CancelOrderRespon"
-    "se\022\177\n\rGetOrderState\022;.tinkoff.public.inv"
-    "est.api.contract.v1.GetOrderStateRequest"
-    "\0321.tinkoff.public.invest.api.contract.v1"
-    ".OrderState\022~\n\tGetOrders\0227.tinkoff.publi"
-    "c.invest.api.contract.v1.GetOrdersReques"
-    "t\0328.tinkoff.public.invest.api.contract.v"
-    "1.GetOrdersResponse\022\204\001\n\014ReplaceOrder\022:.t"
-    "inkoff.public.invest.api.contract.v1.Rep"
-    "laceOrderRequest\0328.tinkoff.public.invest"
-    ".api.contract.v1.PostOrderResponse\022\201\001\n\nG"
-    "etMaxLots\0228.tinkoff.public.invest.api.co"
-    "ntract.v1.GetMaxLotsRequest\0329.tinkoff.pu"
-    "blic.invest.api.contract.v1.GetMaxLotsRe"
-    "sponse\022\212\001\n\rGetOrderPrice\022;.tinkoff.publi"
-    "c.invest.api.contract.v1.GetOrderPriceRe"
-    "quest\032<.tinkoff.public.invest.api.contra"
-    "ct.v1.GetOrderPriceResponseBa\n\034ru.tinkof"
-    "f.piapi.contract.v1P\001Z\014./;investapi\242\002\005TI"
-    "API\252\002\024Tinkoff.InvestApi.V1\312\002\021Tinkoff\\Inv"
-    "est\\V1b\006proto3"
+    "erType\022\026\n\016instrument_uid\030\010 \001(\t\022\016\n\006ticker"
+    "\030\t \001(\t\022\022\n\nclass_code\030\n \001(\t\022L\n\006status\030\013 \001"
+    "(\0162<.tinkoff.public.invest.api.contract."
+    "v1.StopOrderStatusOption\"\257\001\n\nMarkerType\022"
+    "\022\n\016MARKER_UNKNOWN\020\000\022\021\n\rMARKER_BROKER\020\001\022\017"
+    "\n\013MARKER_CHAT\020\002\022\020\n\014MARKER_PAPER\020\003\022\021\n\rMAR"
+    "KER_MARGIN\020\004\022\020\n\014MARKER_TKBNM\020\005\022\020\n\014MARKER"
+    "_SHORT\020\006\022\021\n\rMARKER_SPECMM\020\007\022\r\n\tMARKER_PO"
+    "\020\010\"\223\002\n\017StatusCauseInfo\022\025\n\021CAUSE_UNSPECIF"
+    "IED\020\000\022\035\n\031CAUSE_CANCELLED_BY_CLIENT\020\017\022\037\n\033"
+    "CAUSE_CANCELLED_BY_EXCHANGE\020\001\022\'\n#CAUSE_C"
+    "ANCELLED_NOT_ENOUGH_POSITION\020\002\022#\n\037CAUSE_"
+    "CANCELLED_BY_CLIENT_BLOCK\020\003\022\034\n\030CAUSE_REJ"
+    "ECTED_BY_BROKER\020\004\022\036\n\032CAUSE_REJECTED_BY_E"
+    "XCHANGE\020\005\022\035\n\031CAUSE_CANCELLED_BY_BROKER\020\006"
+    "B\t\n\007payload*d\n\016OrderDirection\022\037\n\033ORDER_D"
+    "IRECTION_UNSPECIFIED\020\000\022\027\n\023ORDER_DIRECTIO"
+    "N_BUY\020\001\022\030\n\024ORDER_DIRECTION_SELL\020\002*n\n\tOrd"
+    "erType\022\032\n\026ORDER_TYPE_UNSPECIFIED\020\000\022\024\n\020OR"
+    "DER_TYPE_LIMIT\020\001\022\025\n\021ORDER_TYPE_MARKET\020\002\022"
+    "\030\n\024ORDER_TYPE_BESTPRICE\020\003*\200\002\n\032OrderExecu"
+    "tionReportStatus\022\'\n#EXECUTION_REPORT_STA"
+    "TUS_UNSPECIFIED\020\000\022 \n\034EXECUTION_REPORT_ST"
+    "ATUS_FILL\020\001\022$\n EXECUTION_REPORT_STATUS_R"
+    "EJECTED\020\002\022%\n!EXECUTION_REPORT_STATUS_CAN"
+    "CELLED\020\003\022\037\n\033EXECUTION_REPORT_STATUS_NEW\020"
+    "\004\022)\n%EXECUTION_REPORT_STATUS_PARTIALLYFI"
+    "LL\020\005*\210\001\n\017TimeInForceType\022\035\n\031TIME_IN_FORC"
+    "E_UNSPECIFIED\020\000\022\025\n\021TIME_IN_FORCE_DAY\020\001\022\037"
+    "\n\033TIME_IN_FORCE_FILL_AND_KILL\020\002\022\036\n\032TIME_"
+    "IN_FORCE_FILL_OR_KILL\020\003*c\n\013OrderIdType\022\035"
+    "\n\031ORDER_ID_TYPE_UNSPECIFIED\020\000\022\032\n\026ORDER_I"
+    "D_TYPE_EXCHANGE\020\001\022\031\n\025ORDER_ID_TYPE_REQUE"
+    "ST\020\0022\271\002\n\023OrdersStreamService\022\211\001\n\014TradesS"
+    "tream\022:.tinkoff.public.invest.api.contra"
+    "ct.v1.TradesStreamRequest\032;.tinkoff.publ"
+    "ic.invest.api.contract.v1.TradesStreamRe"
+    "sponse0\001\022\225\001\n\020OrderStateStream\022>.tinkoff."
+    "public.invest.api.contract.v1.OrderState"
+    "StreamRequest\032\?.tinkoff.public.invest.ap"
+    "i.contract.v1.OrderStateStreamResponse0\001"
+    "2\277\010\n\rOrdersService\022~\n\tPostOrder\0227.tinkof"
+    "f.public.invest.api.contract.v1.PostOrde"
+    "rRequest\0328.tinkoff.public.invest.api.con"
+    "tract.v1.PostOrderResponse\022\215\001\n\016PostOrder"
+    "Async\022<.tinkoff.public.invest.api.contra"
+    "ct.v1.PostOrderAsyncRequest\032=.tinkoff.pu"
+    "blic.invest.api.contract.v1.PostOrderAsy"
+    "ncResponse\022\204\001\n\013CancelOrder\0229.tinkoff.pub"
+    "lic.invest.api.contract.v1.CancelOrderRe"
+    "quest\032:.tinkoff.public.invest.api.contra"
+    "ct.v1.CancelOrderResponse\022\177\n\rGetOrderSta"
+    "te\022;.tinkoff.public.invest.api.contract."
+    "v1.GetOrderStateRequest\0321.tinkoff.public"
+    ".invest.api.contract.v1.OrderState\022~\n\tGe"
+    "tOrders\0227.tinkoff.public.invest.api.cont"
+    "ract.v1.GetOrdersRequest\0328.tinkoff.publi"
+    "c.invest.api.contract.v1.GetOrdersRespon"
+    "se\022\204\001\n\014ReplaceOrder\022:.tinkoff.public.inv"
+    "est.api.contract.v1.ReplaceOrderRequest\032"
+    "8.tinkoff.public.invest.api.contract.v1."
+    "PostOrderResponse\022\201\001\n\nGetMaxLots\0228.tinko"
+    "ff.public.invest.api.contract.v1.GetMaxL"
+    "otsRequest\0329.tinkoff.public.invest.api.c"
+    "ontract.v1.GetMaxLotsResponse\022\212\001\n\rGetOrd"
+    "erPrice\022;.tinkoff.public.invest.api.cont"
+    "ract.v1.GetOrderPriceRequest\032<.tinkoff.p"
+    "ublic.invest.api.contract.v1.GetOrderPri"
+    "ceResponseBa\n\034ru.tinkoff.piapi.contract."
+    "v1P\001Z\014./;investapi\242\002\005TIAPI\252\002\024Tinkoff.Inv"
+    "estApi.V1\312\002\021Tinkoff\\Invest\\V1b\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
-    descriptor_table_orders_2eproto_deps[3] = {
+    descriptor_table_orders_2eproto_deps[4] = {
         &::descriptor_table_common_2eproto,
         &::descriptor_table_google_2fapi_2ffield_5fbehavior_2eproto,
         &::descriptor_table_google_2fprotobuf_2ftimestamp_2eproto,
+        &::descriptor_table_stoporders_2eproto,
 };
 static ::absl::once_flag descriptor_table_orders_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_orders_2eproto = {
     false,
     false,
-    12894,
+    13677,
     descriptor_table_protodef_orders_2eproto,
     "orders.proto",
     &descriptor_table_orders_2eproto_once,
     descriptor_table_orders_2eproto_deps,
-    3,
-    29,
+    4,
+    30,
     schemas,
     file_default_instances,
     TableStruct_orders_2eproto::offsets,
@@ -9875,11 +9976,11 @@ ReplaceOrderRequest::ReplaceOrderRequest(
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.price_)
                 : nullptr;
   ::memcpy(reinterpret_cast<char*>(&_impl_) +
-               offsetof(Impl_, quantity_),
+               offsetof(Impl_, order_id_type_),
            reinterpret_cast<const char*>(&from._impl_) +
-               offsetof(Impl_, quantity_),
+               offsetof(Impl_, order_id_type_),
            offsetof(Impl_, confirm_margin_trade_) -
-               offsetof(Impl_, quantity_) +
+               offsetof(Impl_, order_id_type_) +
                sizeof(Impl_::confirm_margin_trade_));
 
   // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest)
@@ -9962,16 +10063,16 @@ ReplaceOrderRequest::GetClassData() const {
   return ReplaceOrderRequest_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 7, 1, 99, 2>
+const ::_pbi::TcParseTable<4, 8, 1, 107, 2>
 ReplaceOrderRequest::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_._has_bits_),
     0, // no _extensions_
-    14, 56,  // max_field_number, fast_idx_mask
+    14, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294951838,  // skipmap
+    4294951822,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    7,  // num_field_entries
+    8,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     ReplaceOrderRequest_class_data_.base(),
@@ -9987,9 +10088,26 @@ ReplaceOrderRequest::_table_ = {
      {10, 0, 0,
       PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.account_id_)}},
     {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    // optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ReplaceOrderRequest, _impl_.order_id_type_), 4>(),
+     {40, 4, 0,
+      PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.order_id_type_)}},
+    // string order_id = 6 [(.google.api.field_behavior) = REQUIRED];
+    {::_pbi::TcParser::FastUS1,
+     {50, 1, 0,
+      PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.order_id_)}},
+    // string idempotency_key = 7 [(.google.api.field_behavior) = REQUIRED];
+    {::_pbi::TcParser::FastUS1,
+     {58, 2, 0,
+      PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.idempotency_key_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
     // int64 quantity = 11 [(.google.api.field_behavior) = REQUIRED];
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(ReplaceOrderRequest, _impl_.quantity_), 4>(),
-     {88, 4, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(ReplaceOrderRequest, _impl_.quantity_), 6>(),
+     {88, 6, 0,
       PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.quantity_)}},
     // optional .tinkoff.public.invest.api.contract.v1.Quotation price = 12;
     {::_pbi::TcParser::FastMtS1,
@@ -9999,37 +10117,36 @@ ReplaceOrderRequest::_table_ = {
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ReplaceOrderRequest, _impl_.price_type_), 5>(),
      {104, 5, 0,
       PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.price_type_)}},
-    // string order_id = 6 [(.google.api.field_behavior) = REQUIRED];
-    {::_pbi::TcParser::FastUS1,
-     {50, 1, 0,
-      PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.order_id_)}},
-    // string idempotency_key = 7 [(.google.api.field_behavior) = REQUIRED];
-    {::_pbi::TcParser::FastUS1,
-     {58, 2, 0,
-      PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.idempotency_key_)}},
+    // bool confirm_margin_trade = 14;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(ReplaceOrderRequest, _impl_.confirm_margin_trade_), 7>(),
+     {112, 7, 0,
+      PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.confirm_margin_trade_)}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
     // string account_id = 1 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.account_id_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 5;
+    {PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.order_id_type_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // string order_id = 6 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.order_id_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string idempotency_key = 7 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.idempotency_key_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // int64 quantity = 11 [(.google.api.field_behavior) = REQUIRED];
-    {PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.quantity_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
+    {PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.quantity_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
     // optional .tinkoff.public.invest.api.contract.v1.Quotation price = 12;
     {PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.price_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // optional .tinkoff.public.invest.api.contract.v1.PriceType price_type = 13;
     {PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.price_type_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // bool confirm_margin_trade = 14;
-    {PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.confirm_margin_trade_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(ReplaceOrderRequest, _impl_.confirm_margin_trade_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
   }},
   {{
-    "\71\12\10\17\0\0\0\0"
+    "\71\12\0\10\17\0\0\0\0\0\0\0\0\0\0\0"
     "tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest"
     "account_id"
     "order_id"
@@ -10059,10 +10176,10 @@ PROTOBUF_NOINLINE void ReplaceOrderRequest::Clear() {
       _impl_.price_->Clear();
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000070U)) {
-    ::memset(&_impl_.quantity_, 0, static_cast<::size_t>(
+  if (BatchCheckHasBit(cached_has_bits, 0x000000f0U)) {
+    ::memset(&_impl_.order_id_type_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.confirm_margin_trade_) -
-        reinterpret_cast<char*>(&_impl_.quantity_)) + sizeof(_impl_.confirm_margin_trade_));
+        reinterpret_cast<char*>(&_impl_.order_id_type_)) + sizeof(_impl_.confirm_margin_trade_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -10097,6 +10214,13 @@ PROTOBUF_NOINLINE void ReplaceOrderRequest::Clear() {
     }
   }
 
+  // optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+        5, this_._internal_order_id_type(), target);
+  }
+
   // string order_id = 6 [(.google.api.field_behavior) = REQUIRED];
   if (CheckHasBit(cached_has_bits, 0x00000002U)) {
     if (!this_._internal_order_id().empty()) {
@@ -10118,7 +10242,7 @@ PROTOBUF_NOINLINE void ReplaceOrderRequest::Clear() {
   }
 
   // int64 quantity = 11 [(.google.api.field_behavior) = REQUIRED];
-  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
     if (this_._internal_quantity() != 0) {
       target =
           ::google::protobuf::internal::WireFormatLite::WriteInt64ToArrayWithField<11>(
@@ -10141,7 +10265,7 @@ PROTOBUF_NOINLINE void ReplaceOrderRequest::Clear() {
   }
 
   // bool confirm_margin_trade = 14;
-  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
     if (this_._internal_confirm_margin_trade() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -10174,7 +10298,7 @@ PROTOBUF_NOINLINE void ReplaceOrderRequest::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
     // string account_id = 1 [(.google.api.field_behavior) = REQUIRED];
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       if (!this_._internal_account_id().empty()) {
@@ -10201,20 +10325,25 @@ PROTOBUF_NOINLINE void ReplaceOrderRequest::Clear() {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.price_);
     }
-    // int64 quantity = 11 [(.google.api.field_behavior) = REQUIRED];
+    // optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 5;
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      if (this_._internal_quantity() != 0) {
-        total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
-            this_._internal_quantity());
-      }
+      total_size += 1 +
+                    ::_pbi::WireFormatLite::EnumSize(this_._internal_order_id_type());
     }
     // optional .tinkoff.public.invest.api.contract.v1.PriceType price_type = 13;
     if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this_._internal_price_type());
     }
-    // bool confirm_margin_trade = 14;
+    // int64 quantity = 11 [(.google.api.field_behavior) = REQUIRED];
     if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      if (this_._internal_quantity() != 0) {
+        total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+            this_._internal_quantity());
+      }
+    }
+    // bool confirm_margin_trade = 14;
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
       if (this_._internal_confirm_margin_trade() != 0) {
         total_size += 2;
       }
@@ -10239,7 +10368,7 @@ void ReplaceOrderRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       if (!from._internal_account_id().empty()) {
         _this->_internal_set_account_id(from._internal_account_id());
@@ -10276,14 +10405,17 @@ void ReplaceOrderRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      if (from._internal_quantity() != 0) {
-        _this->_impl_.quantity_ = from._impl_.quantity_;
-      }
+      _this->_impl_.order_id_type_ = from._impl_.order_id_type_;
     }
     if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       _this->_impl_.price_type_ = from._impl_.price_type_;
     }
     if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      if (from._internal_quantity() != 0) {
+        _this->_impl_.quantity_ = from._impl_.quantity_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
       if (from._internal_confirm_margin_trade() != 0) {
         _this->_impl_.confirm_margin_trade_ = from._impl_.confirm_margin_trade_;
       }
@@ -14253,37 +14385,37 @@ void OrderStateStreamResponse_OrderState::clear_created_at() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.created_at_ != nullptr) _impl_.created_at_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000400U);
+                  0x00000800U);
 }
 void OrderStateStreamResponse_OrderState::clear_initial_order_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.initial_order_price_ != nullptr) _impl_.initial_order_price_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000800U);
+                  0x00001000U);
 }
 void OrderStateStreamResponse_OrderState::clear_order_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.order_price_ != nullptr) _impl_.order_price_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00001000U);
+                  0x00002000U);
 }
 void OrderStateStreamResponse_OrderState::clear_amount() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.amount_ != nullptr) _impl_.amount_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00002000U);
+                  0x00004000U);
 }
 void OrderStateStreamResponse_OrderState::clear_executed_order_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.executed_order_price_ != nullptr) _impl_.executed_order_price_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00004000U);
+                  0x00008000U);
 }
 void OrderStateStreamResponse_OrderState::clear_completion_time() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.completion_time_ != nullptr) _impl_.completion_time_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00008000U);
+                  0x00010000U);
 }
 OrderStateStreamResponse_OrderState::OrderStateStreamResponse_OrderState(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
@@ -14307,6 +14439,7 @@ PROTOBUF_NDEBUG_INLINE OrderStateStreamResponse_OrderState::Impl_::Impl_(
         ticker_(arena, from.ticker_),
         class_code_(arena, from.class_code_),
         account_id_(arena, from.account_id_),
+        trade_order_id_(arena, from.trade_order_id_),
         currency_(arena, from.currency_),
         exchange_(arena, from.exchange_),
         instrument_uid_(arena, from.instrument_uid_) {}
@@ -14325,22 +14458,22 @@ OrderStateStreamResponse_OrderState::OrderStateStreamResponse_OrderState(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.created_at_ = (CheckHasBit(cached_has_bits, 0x00000400U))
+  _impl_.created_at_ = (CheckHasBit(cached_has_bits, 0x00000800U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.created_at_)
                 : nullptr;
-  _impl_.initial_order_price_ = (CheckHasBit(cached_has_bits, 0x00000800U))
+  _impl_.initial_order_price_ = (CheckHasBit(cached_has_bits, 0x00001000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.initial_order_price_)
                 : nullptr;
-  _impl_.order_price_ = (CheckHasBit(cached_has_bits, 0x00001000U))
+  _impl_.order_price_ = (CheckHasBit(cached_has_bits, 0x00002000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.order_price_)
                 : nullptr;
-  _impl_.amount_ = (CheckHasBit(cached_has_bits, 0x00002000U))
+  _impl_.amount_ = (CheckHasBit(cached_has_bits, 0x00004000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.amount_)
                 : nullptr;
-  _impl_.executed_order_price_ = (CheckHasBit(cached_has_bits, 0x00004000U))
+  _impl_.executed_order_price_ = (CheckHasBit(cached_has_bits, 0x00008000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.executed_order_price_)
                 : nullptr;
-  _impl_.completion_time_ = (CheckHasBit(cached_has_bits, 0x00008000U))
+  _impl_.completion_time_ = (CheckHasBit(cached_has_bits, 0x00010000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.completion_time_)
                 : nullptr;
   ::memcpy(reinterpret_cast<char*>(&_impl_) +
@@ -14364,6 +14497,7 @@ PROTOBUF_NDEBUG_INLINE OrderStateStreamResponse_OrderState::Impl_::Impl_(
         ticker_(arena),
         class_code_(arena),
         account_id_(arena),
+        trade_order_id_(arena),
         currency_(arena),
         exchange_(arena),
         instrument_uid_(arena) {}
@@ -14394,6 +14528,7 @@ inline void OrderStateStreamResponse_OrderState::SharedDtor(MessageLite& self) {
   this_._impl_.ticker_.Destroy();
   this_._impl_.class_code_.Destroy();
   this_._impl_.account_id_.Destroy();
+  this_._impl_.trade_order_id_.Destroy();
   this_._impl_.currency_.Destroy();
   this_._impl_.exchange_.Destroy();
   this_._impl_.instrument_uid_.Destroy();
@@ -14461,16 +14596,16 @@ OrderStateStreamResponse_OrderState::GetClassData() const {
   return OrderStateStreamResponse_OrderState_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<5, 27, 7, 197, 7>
+const ::_pbi::TcParseTable<5, 28, 7, 211, 7>
 OrderStateStreamResponse_OrderState::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_._has_bits_),
     0, // no _extensions_
     41, 248,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    2149572608,  // skipmap
+    2149564416,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    27,  // num_field_entries
+    28,  // num_field_entries
     7,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     OrderStateStreamResponse_OrderState_class_data_.base(),
@@ -14495,15 +14630,15 @@ OrderStateStreamResponse_OrderState::_table_ = {
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.client_code_)}},
     // .google.protobuf.Timestamp created_at = 4;
     {::_pbi::TcParser::FastMtS1,
-     {34, 10, 0,
+     {34, 11, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.created_at_)}},
     // .tinkoff.public.invest.api.contract.v1.OrderExecutionReportStatus execution_report_status = 5;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.execution_report_status_), 16>(),
-     {40, 16, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.execution_report_status_), 17>(),
+     {40, 17, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.execution_report_status_)}},
     // optional .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StatusCauseInfo status_info = 6;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.status_info_), 17>(),
-     {48, 17, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.status_info_), 18>(),
+     {48, 18, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.status_info_)}},
     // string ticker = 7;
     {::_pbi::TcParser::FastUS1,
@@ -14514,26 +14649,29 @@ OrderStateStreamResponse_OrderState::_table_ = {
      {66, 5, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.class_code_)}},
     // int32 lot_size = 9;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.lot_size_), 18>(),
-     {72, 18, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.lot_size_), 19>(),
+     {72, 19, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lot_size_)}},
     // .tinkoff.public.invest.api.contract.v1.OrderDirection direction = 10;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.direction_), 19>(),
-     {80, 19, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.direction_), 20>(),
+     {80, 20, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.direction_)}},
     // .tinkoff.public.invest.api.contract.v1.TimeInForceType time_in_force = 11;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.time_in_force_), 20>(),
-     {88, 20, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.time_in_force_), 21>(),
+     {88, 21, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.time_in_force_)}},
     // .tinkoff.public.invest.api.contract.v1.OrderType order_type = 12;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.order_type_), 21>(),
-     {96, 21, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_OrderState, _impl_.order_type_), 22>(),
+     {96, 22, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.order_type_)}},
     // string account_id = 13;
     {::_pbi::TcParser::FastUS1,
      {106, 6, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.account_id_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+    // string trade_order_id = 14 [(.google.api.field_behavior) = REQUIRED];
+    {::_pbi::TcParser::FastUS1,
+     {114, 7, 0,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.trade_order_id_)}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     // repeated .tinkoff.public.invest.api.contract.v1.OrderTrade trades = 33;
@@ -14543,56 +14681,56 @@ OrderStateStreamResponse_OrderState::_table_ = {
     {::_pbi::TcParser::MiniParse, {}},
     // .google.protobuf.Timestamp completion_time = 35;
     {::_pbi::TcParser::FastMtS2,
-     {666, 15, 6,
+     {666, 16, 6,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.completion_time_)}},
     // string exchange = 36;
     {::_pbi::TcParser::FastUS2,
-     {674, 8, 0,
+     {674, 9, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.exchange_)}},
     {::_pbi::TcParser::MiniParse, {}},
     // .tinkoff.public.invest.api.contract.v1.MoneyValue initial_order_price = 22;
     {::_pbi::TcParser::FastMtS2,
-     {434, 11, 1,
+     {434, 12, 1,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.initial_order_price_)}},
     // .tinkoff.public.invest.api.contract.v1.MoneyValue order_price = 23;
     {::_pbi::TcParser::FastMtS2,
-     {442, 12, 2,
+     {442, 13, 2,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.order_price_)}},
     // optional .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 24;
     {::_pbi::TcParser::FastMtS2,
-     {450, 13, 3,
+     {450, 14, 3,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.amount_)}},
     // .tinkoff.public.invest.api.contract.v1.MoneyValue executed_order_price = 25;
     {::_pbi::TcParser::FastMtS2,
-     {458, 14, 4,
+     {458, 15, 4,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.executed_order_price_)}},
     // string currency = 26;
     {::_pbi::TcParser::FastUS2,
-     {466, 7, 0,
+     {466, 8, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.currency_)}},
     // int64 lots_requested = 27;
     {::_pbi::TcParser::FastV64S2,
-     {472, 22, 0,
+     {472, 23, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_requested_)}},
     // int64 lots_executed = 28;
     {::_pbi::TcParser::FastV64S2,
-     {480, 23, 0,
+     {480, 24, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_executed_)}},
     // int64 lots_left = 29;
     {::_pbi::TcParser::FastV64S2,
-     {488, 24, 0,
+     {488, 25, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_left_)}},
     // int64 lots_cancelled = 30;
     {::_pbi::TcParser::FastV64S2,
-     {496, 25, 0,
+     {496, 26, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_cancelled_)}},
     // optional .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.MarkerType marker = 31;
     {::_pbi::TcParser::FastV32S2,
-     {504, 26, 0,
+     {504, 27, 0,
       PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.marker_)}},
   }}, {{
     33, 0, 1,
-    65266, 23,
+    65266, 24,
     65535, 65535
   }}, {{
     // string order_id = 1;
@@ -14602,53 +14740,55 @@ OrderStateStreamResponse_OrderState::_table_ = {
     // string client_code = 3;
     {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.client_code_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // .google.protobuf.Timestamp created_at = 4;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.created_at_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.created_at_), _Internal::kHasBitsOffset + 11, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.OrderExecutionReportStatus execution_report_status = 5;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.execution_report_status_), _Internal::kHasBitsOffset + 16, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.execution_report_status_), _Internal::kHasBitsOffset + 17, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StatusCauseInfo status_info = 6;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.status_info_), _Internal::kHasBitsOffset + 17, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.status_info_), _Internal::kHasBitsOffset + 18, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // string ticker = 7;
     {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.ticker_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string class_code = 8;
     {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.class_code_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // int32 lot_size = 9;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lot_size_), _Internal::kHasBitsOffset + 18, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lot_size_), _Internal::kHasBitsOffset + 19, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
     // .tinkoff.public.invest.api.contract.v1.OrderDirection direction = 10;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.direction_), _Internal::kHasBitsOffset + 19, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.direction_), _Internal::kHasBitsOffset + 20, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // .tinkoff.public.invest.api.contract.v1.TimeInForceType time_in_force = 11;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.time_in_force_), _Internal::kHasBitsOffset + 20, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.time_in_force_), _Internal::kHasBitsOffset + 21, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // .tinkoff.public.invest.api.contract.v1.OrderType order_type = 12;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.order_type_), _Internal::kHasBitsOffset + 21, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.order_type_), _Internal::kHasBitsOffset + 22, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // string account_id = 13;
     {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.account_id_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string trade_order_id = 14 [(.google.api.field_behavior) = REQUIRED];
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.trade_order_id_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // .tinkoff.public.invest.api.contract.v1.MoneyValue initial_order_price = 22;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.initial_order_price_), _Internal::kHasBitsOffset + 11, 1, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.initial_order_price_), _Internal::kHasBitsOffset + 12, 1, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.MoneyValue order_price = 23;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.order_price_), _Internal::kHasBitsOffset + 12, 2, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.order_price_), _Internal::kHasBitsOffset + 13, 2, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // optional .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 24;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.amount_), _Internal::kHasBitsOffset + 13, 3, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.amount_), _Internal::kHasBitsOffset + 14, 3, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.MoneyValue executed_order_price = 25;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.executed_order_price_), _Internal::kHasBitsOffset + 14, 4, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.executed_order_price_), _Internal::kHasBitsOffset + 15, 4, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // string currency = 26;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.currency_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.currency_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // int64 lots_requested = 27;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_requested_), _Internal::kHasBitsOffset + 22, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_requested_), _Internal::kHasBitsOffset + 23, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
     // int64 lots_executed = 28;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_executed_), _Internal::kHasBitsOffset + 23, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_executed_), _Internal::kHasBitsOffset + 24, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
     // int64 lots_left = 29;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_left_), _Internal::kHasBitsOffset + 24, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_left_), _Internal::kHasBitsOffset + 25, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
     // int64 lots_cancelled = 30;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_cancelled_), _Internal::kHasBitsOffset + 25, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.lots_cancelled_), _Internal::kHasBitsOffset + 26, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
     // optional .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.MarkerType marker = 31;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.marker_), _Internal::kHasBitsOffset + 26, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.marker_), _Internal::kHasBitsOffset + 27, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // repeated .tinkoff.public.invest.api.contract.v1.OrderTrade trades = 33;
     {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.trades_), _Internal::kHasBitsOffset + 0, 5, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
     // .google.protobuf.Timestamp completion_time = 35;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.completion_time_), _Internal::kHasBitsOffset + 15, 6, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.completion_time_), _Internal::kHasBitsOffset + 16, 6, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // string exchange = 36;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.exchange_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.exchange_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string instrument_uid = 41;
-    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.instrument_uid_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_OrderState, _impl_.instrument_uid_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
@@ -14660,7 +14800,7 @@ OrderStateStreamResponse_OrderState::_table_ = {
       {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
   }},
   {{
-    "\111\10\20\13\0\0\0\6\12\0\0\0\0\12\0\0\0\0\10\0\0\0\0\0\0\0\10\16\0\0\0\0"
+    "\111\10\20\13\0\0\0\6\12\0\0\0\0\12\16\0\0\0\0\10\0\0\0\0\0\0\0\10\16\0\0\0"
     "tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState"
     "order_id"
     "order_request_id"
@@ -14668,6 +14808,7 @@ OrderStateStreamResponse_OrderState::_table_ = {
     "ticker"
     "class_code"
     "account_id"
+    "trade_order_id"
     "currency"
     "exchange"
     "instrument_uid"
@@ -14704,50 +14845,53 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
       _impl_.account_id_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000080U)) {
-      _impl_.currency_.ClearNonDefaultToEmpty();
+      _impl_.trade_order_id_.ClearNonDefaultToEmpty();
     }
   }
   if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
     if (CheckHasBit(cached_has_bits, 0x00000100U)) {
-      _impl_.exchange_.ClearNonDefaultToEmpty();
+      _impl_.currency_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000200U)) {
-      _impl_.instrument_uid_.ClearNonDefaultToEmpty();
+      _impl_.exchange_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      _impl_.instrument_uid_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
       ABSL_DCHECK(_impl_.created_at_ != nullptr);
       _impl_.created_at_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
       ABSL_DCHECK(_impl_.initial_order_price_ != nullptr);
       _impl_.initial_order_price_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
       ABSL_DCHECK(_impl_.order_price_ != nullptr);
       _impl_.order_price_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
       ABSL_DCHECK(_impl_.amount_ != nullptr);
       _impl_.amount_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
       ABSL_DCHECK(_impl_.executed_order_price_ != nullptr);
       _impl_.executed_order_price_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
-      ABSL_DCHECK(_impl_.completion_time_ != nullptr);
-      _impl_.completion_time_->Clear();
-    }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+    ABSL_DCHECK(_impl_.completion_time_ != nullptr);
+    _impl_.completion_time_->Clear();
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00fe0000U)) {
     ::memset(&_impl_.execution_report_status_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.lots_executed_) -
-        reinterpret_cast<char*>(&_impl_.execution_report_status_)) + sizeof(_impl_.lots_executed_));
+        reinterpret_cast<char*>(&_impl_.lots_requested_) -
+        reinterpret_cast<char*>(&_impl_.execution_report_status_)) + sizeof(_impl_.lots_requested_));
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x07000000U)) {
-    ::memset(&_impl_.lots_left_, 0, static_cast<::size_t>(
+  if (BatchCheckHasBit(cached_has_bits, 0x0f000000U)) {
+    ::memset(&_impl_.lots_executed_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.marker_) -
-        reinterpret_cast<char*>(&_impl_.lots_left_)) + sizeof(_impl_.marker_));
+        reinterpret_cast<char*>(&_impl_.lots_executed_)) + sizeof(_impl_.marker_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -14801,14 +14945,14 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // .google.protobuf.Timestamp created_at = 4;
-  if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000800U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         4, *this_._impl_.created_at_, this_._impl_.created_at_->GetCachedSize(), target,
         stream);
   }
 
   // .tinkoff.public.invest.api.contract.v1.OrderExecutionReportStatus execution_report_status = 5;
-  if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00020000U)) {
     if (this_._internal_execution_report_status() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -14817,7 +14961,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // optional .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StatusCauseInfo status_info = 6;
-  if (CheckHasBit(cached_has_bits, 0x00020000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00040000U)) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         6, this_._internal_status_info(), target);
@@ -14844,7 +14988,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // int32 lot_size = 9;
-  if (CheckHasBit(cached_has_bits, 0x00040000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00080000U)) {
     if (this_._internal_lot_size() != 0) {
       target =
           ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<9>(
@@ -14853,7 +14997,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // .tinkoff.public.invest.api.contract.v1.OrderDirection direction = 10;
-  if (CheckHasBit(cached_has_bits, 0x00080000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00100000U)) {
     if (this_._internal_direction() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -14862,7 +15006,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // .tinkoff.public.invest.api.contract.v1.TimeInForceType time_in_force = 11;
-  if (CheckHasBit(cached_has_bits, 0x00100000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00200000U)) {
     if (this_._internal_time_in_force() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -14871,7 +15015,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // .tinkoff.public.invest.api.contract.v1.OrderType order_type = 12;
-  if (CheckHasBit(cached_has_bits, 0x00200000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00400000U)) {
     if (this_._internal_order_type() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -14889,36 +15033,46 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
     }
   }
 
+  // string trade_order_id = 14 [(.google.api.field_behavior) = REQUIRED];
+  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+    if (!this_._internal_trade_order_id().empty()) {
+      const ::std::string& _s = this_._internal_trade_order_id();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.trade_order_id");
+      target = stream->WriteStringMaybeAliased(14, _s, target);
+    }
+  }
+
   // .tinkoff.public.invest.api.contract.v1.MoneyValue initial_order_price = 22;
-  if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+  if (CheckHasBit(cached_has_bits, 0x00001000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         22, *this_._impl_.initial_order_price_, this_._impl_.initial_order_price_->GetCachedSize(), target,
         stream);
   }
 
   // .tinkoff.public.invest.api.contract.v1.MoneyValue order_price = 23;
-  if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00002000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         23, *this_._impl_.order_price_, this_._impl_.order_price_->GetCachedSize(), target,
         stream);
   }
 
   // optional .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 24;
-  if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00004000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         24, *this_._impl_.amount_, this_._impl_.amount_->GetCachedSize(), target,
         stream);
   }
 
   // .tinkoff.public.invest.api.contract.v1.MoneyValue executed_order_price = 25;
-  if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00008000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         25, *this_._impl_.executed_order_price_, this_._impl_.executed_order_price_->GetCachedSize(), target,
         stream);
   }
 
   // string currency = 26;
-  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
     if (!this_._internal_currency().empty()) {
       const ::std::string& _s = this_._internal_currency();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -14928,7 +15082,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // int64 lots_requested = 27;
-  if (CheckHasBit(cached_has_bits, 0x00400000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00800000U)) {
     if (this_._internal_lots_requested() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteInt64ToArray(
@@ -14937,7 +15091,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // int64 lots_executed = 28;
-  if (CheckHasBit(cached_has_bits, 0x00800000U)) {
+  if (CheckHasBit(cached_has_bits, 0x01000000U)) {
     if (this_._internal_lots_executed() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteInt64ToArray(
@@ -14946,7 +15100,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // int64 lots_left = 29;
-  if (CheckHasBit(cached_has_bits, 0x01000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x02000000U)) {
     if (this_._internal_lots_left() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteInt64ToArray(
@@ -14955,7 +15109,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // int64 lots_cancelled = 30;
-  if (CheckHasBit(cached_has_bits, 0x02000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x04000000U)) {
     if (this_._internal_lots_cancelled() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteInt64ToArray(
@@ -14964,7 +15118,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // optional .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.MarkerType marker = 31;
-  if (CheckHasBit(cached_has_bits, 0x04000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x08000000U)) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         31, this_._internal_marker(), target);
@@ -14984,14 +15138,14 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // .google.protobuf.Timestamp completion_time = 35;
-  if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00010000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         35, *this_._impl_.completion_time_, this_._impl_.completion_time_->GetCachedSize(), target,
         stream);
   }
 
   // string exchange = 36;
-  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000200U)) {
     if (!this_._internal_exchange().empty()) {
       const ::std::string& _s = this_._internal_exchange();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -15001,7 +15155,7 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
   }
 
   // string instrument_uid = 41;
-  if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000400U)) {
     if (!this_._internal_instrument_uid().empty()) {
       const ::std::string& _s = this_._internal_instrument_uid();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -15083,133 +15237,140 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse_OrderState::Clear() {
                                         this_._internal_account_id());
       }
     }
-    // string currency = 26;
+    // string trade_order_id = 14 [(.google.api.field_behavior) = REQUIRED];
     if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      if (!this_._internal_trade_order_id().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_trade_order_id());
+      }
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
+    // string currency = 26;
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (!this_._internal_currency().empty()) {
         total_size += 2 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_currency());
       }
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
     // string exchange = 36;
-    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
       if (!this_._internal_exchange().empty()) {
         total_size += 2 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_exchange());
       }
     }
     // string instrument_uid = 41;
-    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
       if (!this_._internal_instrument_uid().empty()) {
         total_size += 2 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_instrument_uid());
       }
     }
     // .google.protobuf.Timestamp created_at = 4;
-    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.created_at_);
     }
     // .tinkoff.public.invest.api.contract.v1.MoneyValue initial_order_price = 22;
-    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.initial_order_price_);
     }
     // .tinkoff.public.invest.api.contract.v1.MoneyValue order_price = 23;
-    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.order_price_);
     }
     // optional .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 24;
-    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.amount_);
     }
     // .tinkoff.public.invest.api.contract.v1.MoneyValue executed_order_price = 25;
-    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.executed_order_price_);
     }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
     // .google.protobuf.Timestamp completion_time = 35;
-    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.completion_time_);
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
     // .tinkoff.public.invest.api.contract.v1.OrderExecutionReportStatus execution_report_status = 5;
-    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
       if (this_._internal_execution_report_status() != 0) {
         total_size += 1 +
                       ::_pbi::WireFormatLite::EnumSize(this_._internal_execution_report_status());
       }
     }
     // optional .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StatusCauseInfo status_info = 6;
-    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this_._internal_status_info());
     }
     // int32 lot_size = 9;
-    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
       if (this_._internal_lot_size() != 0) {
         total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
             this_._internal_lot_size());
       }
     }
     // .tinkoff.public.invest.api.contract.v1.OrderDirection direction = 10;
-    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
       if (this_._internal_direction() != 0) {
         total_size += 1 +
                       ::_pbi::WireFormatLite::EnumSize(this_._internal_direction());
       }
     }
     // .tinkoff.public.invest.api.contract.v1.TimeInForceType time_in_force = 11;
-    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
       if (this_._internal_time_in_force() != 0) {
         total_size += 1 +
                       ::_pbi::WireFormatLite::EnumSize(this_._internal_time_in_force());
       }
     }
     // .tinkoff.public.invest.api.contract.v1.OrderType order_type = 12;
-    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00400000U)) {
       if (this_._internal_order_type() != 0) {
         total_size += 1 +
                       ::_pbi::WireFormatLite::EnumSize(this_._internal_order_type());
       }
     }
     // int64 lots_requested = 27;
-    if (CheckHasBit(cached_has_bits, 0x00400000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00800000U)) {
       if (this_._internal_lots_requested() != 0) {
         total_size += 2 + ::_pbi::WireFormatLite::Int64Size(
                                         this_._internal_lots_requested());
       }
     }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0f000000U)) {
     // int64 lots_executed = 28;
-    if (CheckHasBit(cached_has_bits, 0x00800000U)) {
+    if (CheckHasBit(cached_has_bits, 0x01000000U)) {
       if (this_._internal_lots_executed() != 0) {
         total_size += 2 + ::_pbi::WireFormatLite::Int64Size(
                                         this_._internal_lots_executed());
       }
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x07000000U)) {
     // int64 lots_left = 29;
-    if (CheckHasBit(cached_has_bits, 0x01000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x02000000U)) {
       if (this_._internal_lots_left() != 0) {
         total_size += 2 + ::_pbi::WireFormatLite::Int64Size(
                                         this_._internal_lots_left());
       }
     }
     // int64 lots_cancelled = 30;
-    if (CheckHasBit(cached_has_bits, 0x02000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x04000000U)) {
       if (this_._internal_lots_cancelled() != 0) {
         total_size += 2 + ::_pbi::WireFormatLite::Int64Size(
                                         this_._internal_lots_cancelled());
       }
     }
     // optional .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.MarkerType marker = 31;
-    if (CheckHasBit(cached_has_bits, 0x04000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x08000000U)) {
       total_size += 2 +
                     ::_pbi::WireFormatLite::EnumSize(this_._internal_marker());
     }
@@ -15288,6 +15449,17 @@ void OrderStateStreamResponse_OrderState::MergeImpl(::google::protobuf::MessageL
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      if (!from._internal_trade_order_id().empty()) {
+        _this->_internal_set_trade_order_id(from._internal_trade_order_id());
+      } else {
+        if (_this->_impl_.trade_order_id_.IsDefault()) {
+          _this->_internal_set_trade_order_id("");
+        }
+      }
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (!from._internal_currency().empty()) {
         _this->_internal_set_currency(from._internal_currency());
       } else {
@@ -15296,9 +15468,7 @@ void OrderStateStreamResponse_OrderState::MergeImpl(::google::protobuf::MessageL
         }
       }
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
-    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
       if (!from._internal_exchange().empty()) {
         _this->_internal_set_exchange(from._internal_exchange());
       } else {
@@ -15307,7 +15477,7 @@ void OrderStateStreamResponse_OrderState::MergeImpl(::google::protobuf::MessageL
         }
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
       if (!from._internal_instrument_uid().empty()) {
         _this->_internal_set_instrument_uid(from._internal_instrument_uid());
       } else {
@@ -15316,7 +15486,7 @@ void OrderStateStreamResponse_OrderState::MergeImpl(::google::protobuf::MessageL
         }
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
       ABSL_DCHECK(from._impl_.created_at_ != nullptr);
       if (_this->_impl_.created_at_ == nullptr) {
         _this->_impl_.created_at_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.created_at_);
@@ -15324,7 +15494,7 @@ void OrderStateStreamResponse_OrderState::MergeImpl(::google::protobuf::MessageL
         _this->_impl_.created_at_->MergeFrom(*from._impl_.created_at_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
       ABSL_DCHECK(from._impl_.initial_order_price_ != nullptr);
       if (_this->_impl_.initial_order_price_ == nullptr) {
         _this->_impl_.initial_order_price_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.initial_order_price_);
@@ -15332,7 +15502,7 @@ void OrderStateStreamResponse_OrderState::MergeImpl(::google::protobuf::MessageL
         _this->_impl_.initial_order_price_->MergeFrom(*from._impl_.initial_order_price_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
       ABSL_DCHECK(from._impl_.order_price_ != nullptr);
       if (_this->_impl_.order_price_ == nullptr) {
         _this->_impl_.order_price_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.order_price_);
@@ -15340,7 +15510,7 @@ void OrderStateStreamResponse_OrderState::MergeImpl(::google::protobuf::MessageL
         _this->_impl_.order_price_->MergeFrom(*from._impl_.order_price_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
       ABSL_DCHECK(from._impl_.amount_ != nullptr);
       if (_this->_impl_.amount_ == nullptr) {
         _this->_impl_.amount_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.amount_);
@@ -15348,7 +15518,7 @@ void OrderStateStreamResponse_OrderState::MergeImpl(::google::protobuf::MessageL
         _this->_impl_.amount_->MergeFrom(*from._impl_.amount_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
       ABSL_DCHECK(from._impl_.executed_order_price_ != nullptr);
       if (_this->_impl_.executed_order_price_ == nullptr) {
         _this->_impl_.executed_order_price_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.executed_order_price_);
@@ -15356,7 +15526,9 @@ void OrderStateStreamResponse_OrderState::MergeImpl(::google::protobuf::MessageL
         _this->_impl_.executed_order_price_->MergeFrom(*from._impl_.executed_order_price_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
       ABSL_DCHECK(from._impl_.completion_time_ != nullptr);
       if (_this->_impl_.completion_time_ == nullptr) {
         _this->_impl_.completion_time_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.completion_time_);
@@ -15364,59 +15536,57 @@ void OrderStateStreamResponse_OrderState::MergeImpl(::google::protobuf::MessageL
         _this->_impl_.completion_time_->MergeFrom(*from._impl_.completion_time_);
       }
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
-    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
       if (from._internal_execution_report_status() != 0) {
         _this->_impl_.execution_report_status_ = from._impl_.execution_report_status_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
       _this->_impl_.status_info_ = from._impl_.status_info_;
     }
-    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
       if (from._internal_lot_size() != 0) {
         _this->_impl_.lot_size_ = from._impl_.lot_size_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
       if (from._internal_direction() != 0) {
         _this->_impl_.direction_ = from._impl_.direction_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
       if (from._internal_time_in_force() != 0) {
         _this->_impl_.time_in_force_ = from._impl_.time_in_force_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00400000U)) {
       if (from._internal_order_type() != 0) {
         _this->_impl_.order_type_ = from._impl_.order_type_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00400000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00800000U)) {
       if (from._internal_lots_requested() != 0) {
         _this->_impl_.lots_requested_ = from._impl_.lots_requested_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00800000U)) {
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0f000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x01000000U)) {
       if (from._internal_lots_executed() != 0) {
         _this->_impl_.lots_executed_ = from._impl_.lots_executed_;
       }
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x07000000U)) {
-    if (CheckHasBit(cached_has_bits, 0x01000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x02000000U)) {
       if (from._internal_lots_left() != 0) {
         _this->_impl_.lots_left_ = from._impl_.lots_left_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x02000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x04000000U)) {
       if (from._internal_lots_cancelled() != 0) {
         _this->_impl_.lots_cancelled_ = from._impl_.lots_cancelled_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x04000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x08000000U)) {
       _this->_impl_.marker_ = from._impl_.marker_;
     }
   }
@@ -15446,6 +15616,7 @@ void OrderStateStreamResponse_OrderState::InternalSwap(OrderStateStreamResponse_
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ticker_, &other->_impl_.ticker_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.class_code_, &other->_impl_.class_code_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.account_id_, &other->_impl_.account_id_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.trade_order_id_, &other->_impl_.trade_order_id_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.currency_, &other->_impl_.currency_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.exchange_, &other->_impl_.exchange_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.instrument_uid_, &other->_impl_.instrument_uid_, arena);
@@ -15458,6 +15629,686 @@ void OrderStateStreamResponse_OrderState::InternalSwap(OrderStateStreamResponse_
 }
 
 ::google::protobuf::Metadata OrderStateStreamResponse_OrderState::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class OrderStateStreamResponse_StopOrderState::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<OrderStateStreamResponse_StopOrderState>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_._has_bits_);
+};
+
+void OrderStateStreamResponse_StopOrderState::clear_created_at() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.created_at_ != nullptr) _impl_.created_at_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000020U);
+}
+void OrderStateStreamResponse_StopOrderState::clear_price() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.price_ != nullptr) _impl_.price_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000040U);
+}
+void OrderStateStreamResponse_StopOrderState::clear_stop_price() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.stop_price_ != nullptr) _impl_.stop_price_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000080U);
+}
+OrderStateStreamResponse_StopOrderState::OrderStateStreamResponse_StopOrderState(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, OrderStateStreamResponse_StopOrderState_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState)
+}
+PROTOBUF_NDEBUG_INLINE OrderStateStreamResponse_StopOrderState::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        stop_order_id_(arena, from.stop_order_id_),
+        account_id_(arena, from.account_id_),
+        instrument_uid_(arena, from.instrument_uid_),
+        ticker_(arena, from.ticker_),
+        class_code_(arena, from.class_code_) {}
+
+OrderStateStreamResponse_StopOrderState::OrderStateStreamResponse_StopOrderState(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const OrderStateStreamResponse_StopOrderState& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, OrderStateStreamResponse_StopOrderState_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  OrderStateStreamResponse_StopOrderState* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.created_at_ = (CheckHasBit(cached_has_bits, 0x00000020U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.created_at_)
+                : nullptr;
+  _impl_.price_ = (CheckHasBit(cached_has_bits, 0x00000040U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.price_)
+                : nullptr;
+  _impl_.stop_price_ = (CheckHasBit(cached_has_bits, 0x00000080U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.stop_price_)
+                : nullptr;
+  ::memcpy(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, direction_),
+           reinterpret_cast<const char*>(&from._impl_) +
+               offsetof(Impl_, direction_),
+           offsetof(Impl_, status_) -
+               offsetof(Impl_, direction_) +
+               sizeof(Impl_::status_));
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState)
+}
+PROTOBUF_NDEBUG_INLINE OrderStateStreamResponse_StopOrderState::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        stop_order_id_(arena),
+        account_id_(arena),
+        instrument_uid_(arena),
+        ticker_(arena),
+        class_code_(arena) {}
+
+inline void OrderStateStreamResponse_StopOrderState::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, created_at_),
+           0,
+           offsetof(Impl_, status_) -
+               offsetof(Impl_, created_at_) +
+               sizeof(Impl_::status_));
+}
+OrderStateStreamResponse_StopOrderState::~OrderStateStreamResponse_StopOrderState() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState)
+  SharedDtor(*this);
+}
+inline void OrderStateStreamResponse_StopOrderState::SharedDtor(MessageLite& self) {
+  OrderStateStreamResponse_StopOrderState& this_ = static_cast<OrderStateStreamResponse_StopOrderState&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.stop_order_id_.Destroy();
+  this_._impl_.account_id_.Destroy();
+  this_._impl_.instrument_uid_.Destroy();
+  this_._impl_.ticker_.Destroy();
+  this_._impl_.class_code_.Destroy();
+  delete this_._impl_.created_at_;
+  delete this_._impl_.price_;
+  delete this_._impl_.stop_price_;
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) OrderStateStreamResponse_StopOrderState(arena);
+}
+constexpr auto OrderStateStreamResponse_StopOrderState::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(OrderStateStreamResponse_StopOrderState),
+                                            alignof(OrderStateStreamResponse_StopOrderState));
+}
+constexpr auto OrderStateStreamResponse_StopOrderState::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_OrderStateStreamResponse_StopOrderState_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &OrderStateStreamResponse_StopOrderState::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<OrderStateStreamResponse_StopOrderState>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &OrderStateStreamResponse_StopOrderState::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<OrderStateStreamResponse_StopOrderState>(), &OrderStateStreamResponse_StopOrderState::ByteSizeLong,
+              &OrderStateStreamResponse_StopOrderState::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_._cached_size_),
+          false,
+      },
+      &OrderStateStreamResponse_StopOrderState::kDescriptorMethods,
+      &descriptor_table_orders_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull OrderStateStreamResponse_StopOrderState_class_data_ =
+        OrderStateStreamResponse_StopOrderState::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+OrderStateStreamResponse_StopOrderState::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&OrderStateStreamResponse_StopOrderState_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(OrderStateStreamResponse_StopOrderState_class_data_.tc_table);
+  return OrderStateStreamResponse_StopOrderState_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 11, 3, 147, 2>
+OrderStateStreamResponse_StopOrderState::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_._has_bits_),
+    0, // no _extensions_
+    11, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294965248,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    11,  // num_field_entries
+    3,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    OrderStateStreamResponse_StopOrderState_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string stop_order_id = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 0, 0,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.stop_order_id_)}},
+    // string account_id = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 1, 0,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.account_id_)}},
+    // .google.protobuf.Timestamp created_at = 3;
+    {::_pbi::TcParser::FastMtS1,
+     {26, 5, 0,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.created_at_)}},
+    // .tinkoff.public.invest.api.contract.v1.OrderDirection direction = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_StopOrderState, _impl_.direction_), 8>(),
+     {32, 8, 0,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.direction_)}},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue price = 5;
+    {::_pbi::TcParser::FastMtS1,
+     {42, 6, 1,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.price_)}},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue stop_price = 6;
+    {::_pbi::TcParser::FastMtS1,
+     {50, 7, 2,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.stop_price_)}},
+    // .tinkoff.public.invest.api.contract.v1.OrderType order_type = 7;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_StopOrderState, _impl_.order_type_), 9>(),
+     {56, 9, 0,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.order_type_)}},
+    // string instrument_uid = 8;
+    {::_pbi::TcParser::FastUS1,
+     {66, 2, 0,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.instrument_uid_)}},
+    // string ticker = 9;
+    {::_pbi::TcParser::FastUS1,
+     {74, 3, 0,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.ticker_)}},
+    // string class_code = 10;
+    {::_pbi::TcParser::FastUS1,
+     {82, 4, 0,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.class_code_)}},
+    // .tinkoff.public.invest.api.contract.v1.StopOrderStatusOption status = 11;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(OrderStateStreamResponse_StopOrderState, _impl_.status_), 10>(),
+     {88, 10, 0,
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.status_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string stop_order_id = 1;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.stop_order_id_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string account_id = 2;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.account_id_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // .google.protobuf.Timestamp created_at = 3;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.created_at_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.OrderDirection direction = 4;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.direction_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue price = 5;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.price_), _Internal::kHasBitsOffset + 6, 1, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue stop_price = 6;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.stop_price_), _Internal::kHasBitsOffset + 7, 2, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.OrderType order_type = 7;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.order_type_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // string instrument_uid = 8;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.instrument_uid_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string ticker = 9;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.ticker_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string class_code = 10;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.class_code_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // .tinkoff.public.invest.api.contract.v1.StopOrderStatusOption status = 11;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.status_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
+  }},
+  {{
+    "\115\15\12\0\0\0\0\0\16\6\12\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState"
+    "stop_order_id"
+    "account_id"
+    "instrument_uid"
+    "ticker"
+    "class_code"
+  }},
+};
+PROTOBUF_NOINLINE void OrderStateStreamResponse_StopOrderState::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _impl_.stop_order_id_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _impl_.account_id_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _impl_.instrument_uid_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      _impl_.ticker_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      _impl_.class_code_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      ABSL_DCHECK(_impl_.created_at_ != nullptr);
+      _impl_.created_at_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      ABSL_DCHECK(_impl_.price_ != nullptr);
+      _impl_.price_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      ABSL_DCHECK(_impl_.stop_price_ != nullptr);
+      _impl_.stop_price_->Clear();
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+    ::memset(&_impl_.direction_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.status_) -
+        reinterpret_cast<char*>(&_impl_.direction_)) + sizeof(_impl_.status_));
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const OrderStateStreamResponse_StopOrderState& this_ = static_cast<const OrderStateStreamResponse_StopOrderState&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const OrderStateStreamResponse_StopOrderState& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // string stop_order_id = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!this_._internal_stop_order_id().empty()) {
+      const ::std::string& _s = this_._internal_stop_order_id();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_order_id");
+      target = stream->WriteStringMaybeAliased(1, _s, target);
+    }
+  }
+
+  // string account_id = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (!this_._internal_account_id().empty()) {
+      const ::std::string& _s = this_._internal_account_id();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.account_id");
+      target = stream->WriteStringMaybeAliased(2, _s, target);
+    }
+  }
+
+  // .google.protobuf.Timestamp created_at = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        3, *this_._impl_.created_at_, this_._impl_.created_at_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.OrderDirection direction = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    if (this_._internal_direction() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteEnumToArray(
+          4, this_._internal_direction(), target);
+    }
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue price = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        5, *this_._impl_.price_, this_._impl_.price_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue stop_price = 6;
+  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        6, *this_._impl_.stop_price_, this_._impl_.stop_price_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.OrderType order_type = 7;
+  if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+    if (this_._internal_order_type() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteEnumToArray(
+          7, this_._internal_order_type(), target);
+    }
+  }
+
+  // string instrument_uid = 8;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (!this_._internal_instrument_uid().empty()) {
+      const ::std::string& _s = this_._internal_instrument_uid();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.instrument_uid");
+      target = stream->WriteStringMaybeAliased(8, _s, target);
+    }
+  }
+
+  // string ticker = 9;
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (!this_._internal_ticker().empty()) {
+      const ::std::string& _s = this_._internal_ticker();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.ticker");
+      target = stream->WriteStringMaybeAliased(9, _s, target);
+    }
+  }
+
+  // string class_code = 10;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (!this_._internal_class_code().empty()) {
+      const ::std::string& _s = this_._internal_class_code();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.class_code");
+      target = stream->WriteStringMaybeAliased(10, _s, target);
+    }
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.StopOrderStatusOption status = 11;
+  if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+    if (this_._internal_status() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteEnumToArray(
+          11, this_._internal_status(), target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t OrderStateStreamResponse_StopOrderState::ByteSizeLong(const MessageLite& base) {
+  const OrderStateStreamResponse_StopOrderState& this_ = static_cast<const OrderStateStreamResponse_StopOrderState&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t OrderStateStreamResponse_StopOrderState::ByteSizeLong() const {
+  const OrderStateStreamResponse_StopOrderState& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    // string stop_order_id = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!this_._internal_stop_order_id().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_stop_order_id());
+      }
+    }
+    // string account_id = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (!this_._internal_account_id().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_account_id());
+      }
+    }
+    // string instrument_uid = 8;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!this_._internal_instrument_uid().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_instrument_uid());
+      }
+    }
+    // string ticker = 9;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      if (!this_._internal_ticker().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_ticker());
+      }
+    }
+    // string class_code = 10;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (!this_._internal_class_code().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_class_code());
+      }
+    }
+    // .google.protobuf.Timestamp created_at = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.created_at_);
+    }
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue price = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.price_);
+    }
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue stop_price = 6;
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.stop_price_);
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+    // .tinkoff.public.invest.api.contract.v1.OrderDirection direction = 4;
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      if (this_._internal_direction() != 0) {
+        total_size += 1 +
+                      ::_pbi::WireFormatLite::EnumSize(this_._internal_direction());
+      }
+    }
+    // .tinkoff.public.invest.api.contract.v1.OrderType order_type = 7;
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      if (this_._internal_order_type() != 0) {
+        total_size += 1 +
+                      ::_pbi::WireFormatLite::EnumSize(this_._internal_order_type());
+      }
+    }
+    // .tinkoff.public.invest.api.contract.v1.StopOrderStatusOption status = 11;
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      if (this_._internal_status() != 0) {
+        total_size += 1 +
+                      ::_pbi::WireFormatLite::EnumSize(this_._internal_status());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void OrderStateStreamResponse_StopOrderState::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<OrderStateStreamResponse_StopOrderState*>(&to_msg);
+  auto& from = static_cast<const OrderStateStreamResponse_StopOrderState&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  ::google::protobuf::Arena* arena = _this->GetArena();
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!from._internal_stop_order_id().empty()) {
+        _this->_internal_set_stop_order_id(from._internal_stop_order_id());
+      } else {
+        if (_this->_impl_.stop_order_id_.IsDefault()) {
+          _this->_internal_set_stop_order_id("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (!from._internal_account_id().empty()) {
+        _this->_internal_set_account_id(from._internal_account_id());
+      } else {
+        if (_this->_impl_.account_id_.IsDefault()) {
+          _this->_internal_set_account_id("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!from._internal_instrument_uid().empty()) {
+        _this->_internal_set_instrument_uid(from._internal_instrument_uid());
+      } else {
+        if (_this->_impl_.instrument_uid_.IsDefault()) {
+          _this->_internal_set_instrument_uid("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      if (!from._internal_ticker().empty()) {
+        _this->_internal_set_ticker(from._internal_ticker());
+      } else {
+        if (_this->_impl_.ticker_.IsDefault()) {
+          _this->_internal_set_ticker("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (!from._internal_class_code().empty()) {
+        _this->_internal_set_class_code(from._internal_class_code());
+      } else {
+        if (_this->_impl_.class_code_.IsDefault()) {
+          _this->_internal_set_class_code("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      ABSL_DCHECK(from._impl_.created_at_ != nullptr);
+      if (_this->_impl_.created_at_ == nullptr) {
+        _this->_impl_.created_at_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.created_at_);
+      } else {
+        _this->_impl_.created_at_->MergeFrom(*from._impl_.created_at_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      ABSL_DCHECK(from._impl_.price_ != nullptr);
+      if (_this->_impl_.price_ == nullptr) {
+        _this->_impl_.price_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.price_);
+      } else {
+        _this->_impl_.price_->MergeFrom(*from._impl_.price_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      ABSL_DCHECK(from._impl_.stop_price_ != nullptr);
+      if (_this->_impl_.stop_price_ == nullptr) {
+        _this->_impl_.stop_price_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.stop_price_);
+      } else {
+        _this->_impl_.stop_price_->MergeFrom(*from._impl_.stop_price_);
+      }
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      if (from._internal_direction() != 0) {
+        _this->_impl_.direction_ = from._impl_.direction_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      if (from._internal_order_type() != 0) {
+        _this->_impl_.order_type_ = from._impl_.order_type_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      if (from._internal_status() != 0) {
+        _this->_impl_.status_ = from._impl_.status_;
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void OrderStateStreamResponse_StopOrderState::CopyFrom(const OrderStateStreamResponse_StopOrderState& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void OrderStateStreamResponse_StopOrderState::InternalSwap(OrderStateStreamResponse_StopOrderState* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.stop_order_id_, &other->_impl_.stop_order_id_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.account_id_, &other->_impl_.account_id_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.instrument_uid_, &other->_impl_.instrument_uid_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ticker_, &other->_impl_.ticker_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.class_code_, &other->_impl_.class_code_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.status_)
+      + sizeof(OrderStateStreamResponse_StopOrderState::_impl_.status_)
+      - PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse_StopOrderState, _impl_.created_at_)>(
+          reinterpret_cast<char*>(&_impl_.created_at_),
+          reinterpret_cast<char*>(&other->_impl_.created_at_));
+}
+
+::google::protobuf::Metadata OrderStateStreamResponse_StopOrderState::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
@@ -15518,6 +16369,19 @@ void OrderStateStreamResponse::set_allocated_subscription(::tinkoff::public_::in
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.subscription)
 }
+void OrderStateStreamResponse::set_allocated_stop_order_state(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NULLABLE stop_order_state) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  clear_payload();
+  if (stop_order_state) {
+    ::google::protobuf::Arena* submessage_arena = stop_order_state->GetArena();
+    if (message_arena != submessage_arena) {
+      stop_order_state = ::google::protobuf::internal::GetOwnedMessage(message_arena, stop_order_state, submessage_arena);
+    }
+    set_has_stop_order_state();
+    _impl_.payload_.stop_order_state_ = stop_order_state;
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.stop_order_state)
+}
 OrderStateStreamResponse::OrderStateStreamResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, OrderStateStreamResponse_class_data_.base()) {
@@ -15559,6 +16423,9 @@ OrderStateStreamResponse::OrderStateStreamResponse(
         break;
       case kSubscription:
         _impl_.payload_.subscription_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.subscription_);
+        break;
+      case kStopOrderState:
+        _impl_.payload_.stop_order_state_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.stop_order_state_);
         break;
   }
 
@@ -15619,6 +16486,14 @@ void OrderStateStreamResponse::clear_payload() {
       }
       break;
     }
+    case kStopOrderState: {
+      if (GetArena() == nullptr) {
+        delete _impl_.payload_.stop_order_state_;
+      } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+        ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.stop_order_state_);
+      }
+      break;
+    }
     case PAYLOAD_NOT_SET: {
       break;
     }
@@ -15670,17 +16545,17 @@ OrderStateStreamResponse::GetClassData() const {
   return OrderStateStreamResponse_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 3, 3, 0, 2>
+const ::_pbi::TcParseTable<0, 4, 4, 0, 2>
 OrderStateStreamResponse::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    3, 0,  // max_field_number, fast_idx_mask
+    4, 0,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967288,  // skipmap
+    4294967280,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    3,  // num_field_entries
-    3,  // num_aux_entries
+    4,  // num_field_entries
+    4,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     OrderStateStreamResponse_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -15699,11 +16574,14 @@ OrderStateStreamResponse::_table_ = {
     {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse, _impl_.payload_.ping_), _Internal::kOneofCaseOffset + 0, 1, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.SubscriptionResponse subscription = 3;
     {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse, _impl_.payload_.subscription_), _Internal::kOneofCaseOffset + 0, 2, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState stop_order_state = 4;
+    {PROTOBUF_FIELD_OFFSET(OrderStateStreamResponse, _impl_.payload_.stop_order_state_), _Internal::kOneofCaseOffset + 0, 3, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState>()},
       {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Ping>()},
       {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::SubscriptionResponse>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState>()},
   }},
   {{
   }},
@@ -15756,6 +16634,12 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse::Clear() {
           stream);
       break;
     }
+    case kStopOrderState: {
+      target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+          4, *this_._impl_.payload_.stop_order_state_, this_._impl_.payload_.stop_order_state_->GetCachedSize(), target,
+          stream);
+      break;
+    }
     default:
       break;
   }
@@ -15799,6 +16683,12 @@ PROTOBUF_NOINLINE void OrderStateStreamResponse::Clear() {
     case kSubscription: {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.subscription_);
+      break;
+    }
+    // .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState stop_order_state = 4;
+    case kStopOrderState: {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.stop_order_state_);
       break;
     }
     case PAYLOAD_NOT_SET: {
@@ -15856,6 +16746,14 @@ void OrderStateStreamResponse::MergeImpl(::google::protobuf::MessageLite& to_msg
           _this->_impl_.payload_.subscription_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.subscription_);
         } else {
           _this->_impl_.payload_.subscription_->MergeFrom(*from._impl_.payload_.subscription_);
+        }
+        break;
+      }
+      case kStopOrderState: {
+        if (oneof_needs_init) {
+          _this->_impl_.payload_.stop_order_state_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.stop_order_state_);
+        } else {
+          _this->_impl_.payload_.stop_order_state_->MergeFrom(*from._impl_.payload_.stop_order_state_);
         }
         break;
       }

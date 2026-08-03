@@ -31,6 +31,33 @@ namespace api {
 namespace contract {
 namespace v1 {
 
+inline constexpr Table::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        table_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()) {}
+
+template <typename>
+PROTOBUF_CONSTEXPR Table::Table(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(Table_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct TableDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR TableDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~TableDefaultTypeInternal() {}
+  union {
+    Table _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TableDefaultTypeInternal _Table_default_instance_;
+
 inline constexpr RiskRatesRequest::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -55,6 +82,65 @@ struct RiskRatesRequestDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RiskRatesRequestDefaultTypeInternal _RiskRatesRequest_default_instance_;
+
+inline constexpr NewsRequest::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        cursor_{::int64_t{0}},
+        limit_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR NewsRequest::NewsRequest(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(NewsRequest_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct NewsRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR NewsRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~NewsRequestDefaultTypeInternal() {}
+  union {
+    NewsRequest _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 NewsRequestDefaultTypeInternal _NewsRequest_default_instance_;
+
+inline constexpr NewsInstrumentInfo::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        instrument_uid_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        ticker_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        class_code_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()) {}
+
+template <typename>
+PROTOBUF_CONSTEXPR NewsInstrumentInfo::NewsInstrumentInfo(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(NewsInstrumentInfo_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct NewsInstrumentInfoDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR NewsInstrumentInfoDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~NewsInstrumentInfoDefaultTypeInternal() {}
+  union {
+    NewsInstrumentInfo _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 NewsInstrumentInfoDefaultTypeInternal _NewsInstrumentInfo_default_instance_;
 
 inline constexpr InstrumentsRequest::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -160,54 +246,6 @@ struct IndicativesRequestDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 IndicativesRequestDefaultTypeInternal _IndicativesRequest_default_instance_;
-
-inline constexpr IndicativeResponse::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        figi_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        ticker_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        class_code_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        currency_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        name_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        exchange_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        uid_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        instrument_kind_{static_cast< ::tinkoff::public_::invest::api::contract::v1::InstrumentType >(0)},
-        sell_available_flag_{false},
-        buy_available_flag_{false} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR IndicativeResponse::IndicativeResponse(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(IndicativeResponse_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct IndicativeResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR IndicativeResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~IndicativeResponseDefaultTypeInternal() {}
-  union {
-    IndicativeResponse _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 IndicativeResponseDefaultTypeInternal _IndicativeResponse_default_instance_;
 
 inline constexpr GetInsiderDealsRequest::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -492,6 +530,9 @@ inline constexpr FilterOptionsRequest::Impl_::Impl_(
             ::_pbi::ConstantInitialized()),
         basic_asset_position_uid_(
             &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        basic_instrument_id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()) {}
 
 template <typename>
@@ -591,6 +632,51 @@ struct EditFavoritesRequestInstrumentDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EditFavoritesRequestInstrumentDefaultTypeInternal _EditFavoritesRequestInstrument_default_instance_;
+template <typename>
+PROTOBUF_CONSTEXPR DfasRequest::DfasRequest(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::internal::ZeroFieldsBase(DfasRequest_class_data_.base()){}
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::internal::ZeroFieldsBase() {
+}
+#endif  // PROTOBUF_CUSTOM_VTABLE
+struct DfasRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DfasRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DfasRequestDefaultTypeInternal() {}
+  union {
+    DfasRequest _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DfasRequestDefaultTypeInternal _DfasRequest_default_instance_;
+
+inline constexpr DfaResponse_BasicAsset::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        uid_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()) {}
+
+template <typename>
+PROTOBUF_CONSTEXPR DfaResponse_BasicAsset::DfaResponse_BasicAsset(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(DfaResponse_BasicAsset_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct DfaResponse_BasicAssetDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DfaResponse_BasicAssetDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DfaResponse_BasicAssetDefaultTypeInternal() {}
+  union {
+    DfaResponse_BasicAsset _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DfaResponse_BasicAssetDefaultTypeInternal _DfaResponse_BasicAsset_default_instance_;
 template <typename>
 PROTOBUF_CONSTEXPR DeleteFavoriteGroupResponse::DeleteFavoriteGroupResponse(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
@@ -1198,6 +1284,31 @@ struct OptionDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OptionDefaultTypeInternal _Option_default_instance_;
 
+inline constexpr NewsInstrument::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        instrument_{nullptr} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR NewsInstrument::NewsInstrument(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(NewsInstrument_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct NewsInstrumentDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR NewsInstrumentDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~NewsInstrumentDefaultTypeInternal() {}
+  union {
+    NewsInstrument _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 NewsInstrumentDefaultTypeInternal _NewsInstrument_default_instance_;
+
 inline constexpr InstrumentShort::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -1344,30 +1455,33 @@ struct InstrumentDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 InstrumentDefaultTypeInternal _Instrument_default_instance_;
 
-inline constexpr IndicativesResponse::Impl_::Impl_(
+inline constexpr IndexInstrument::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
-        instruments_{} {}
+        uid_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        weight_{nullptr} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR IndicativesResponse::IndicativesResponse(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR IndexInstrument::IndexInstrument(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(IndicativesResponse_class_data_.base()),
+    : ::google::protobuf::Message(IndexInstrument_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct IndicativesResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR IndicativesResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~IndicativesResponseDefaultTypeInternal() {}
+struct IndexInstrumentDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR IndexInstrumentDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~IndexInstrumentDefaultTypeInternal() {}
   union {
-    IndicativesResponse _instance;
+    IndexInstrument _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 IndicativesResponseDefaultTypeInternal _IndicativesResponse_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 IndexInstrumentDefaultTypeInternal _IndexInstrument_default_instance_;
 
 inline constexpr GetInsiderDealsResponse_InsiderDeal::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -2348,6 +2462,32 @@ struct DividendDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DividendDefaultTypeInternal _Dividend_default_instance_;
 
+inline constexpr DfaResponse_ForecastYield::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        min_value_{nullptr},
+        max_value_{nullptr} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR DfaResponse_ForecastYield::DfaResponse_ForecastYield(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(DfaResponse_ForecastYield_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct DfaResponse_ForecastYieldDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DfaResponse_ForecastYieldDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DfaResponse_ForecastYieldDefaultTypeInternal() {}
+  union {
+    DfaResponse_ForecastYield _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DfaResponse_ForecastYieldDefaultTypeInternal _DfaResponse_ForecastYield_default_instance_;
+
 inline constexpr Currency::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -2386,6 +2526,9 @@ inline constexpr Currency::Impl_::Impl_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         position_uid_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        asset_uid_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         klong_{nullptr},
@@ -3187,6 +3330,47 @@ struct OptionResponseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OptionResponseDefaultTypeInternal _OptionResponse_default_instance_;
 
+inline constexpr NewsItem::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        tables_{},
+        instrument_id_{},
+        source_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        title_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        content_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        summary_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        ts_{nullptr},
+        id_{::int64_t{0}},
+        priority_{false} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR NewsItem::NewsItem(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(NewsItem_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct NewsItemDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR NewsItemDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~NewsItemDefaultTypeInternal() {}
+  union {
+    NewsItem _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 NewsItemDefaultTypeInternal _NewsItem_default_instance_;
+
 inline constexpr InstrumentResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -3211,6 +3395,55 @@ struct InstrumentResponseDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 InstrumentResponseDefaultTypeInternal _InstrumentResponse_default_instance_;
+
+inline constexpr IndicativeResponse::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        index_composition_{},
+        figi_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        ticker_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        class_code_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        currency_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        name_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        exchange_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        uid_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        instrument_kind_{static_cast< ::tinkoff::public_::invest::api::contract::v1::InstrumentType >(0)},
+        sell_available_flag_{false},
+        buy_available_flag_{false} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR IndicativeResponse::IndicativeResponse(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(IndicativeResponse_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct IndicativeResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR IndicativeResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~IndicativeResponseDefaultTypeInternal() {}
+  union {
+    IndicativeResponse _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 IndicativeResponseDefaultTypeInternal _IndicativeResponse_default_instance_;
 
 inline constexpr GetInsiderDealsResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -3567,6 +3800,68 @@ struct EtfResponseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EtfResponseDefaultTypeInternal _EtfResponse_default_instance_;
 
+inline constexpr DfaResponse::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        basic_assets_{},
+        uid_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        ticker_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        name_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        position_uid_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        currency_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        type_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        min_price_increment_{nullptr},
+        nominal_{nullptr},
+        maturity_date_{nullptr},
+        forecast_yield_{nullptr},
+        yield_to_maturity_{nullptr},
+        coupon_value_{nullptr},
+        coupon_payment_date_{nullptr},
+        aci_value_{nullptr},
+        lot_{0},
+        short_enabled_flag_{false},
+        api_trade_available_flag_{false},
+        buy_available_flag_{false},
+        sell_available_flag_{false},
+        limit_order_available_flag_{false},
+        market_order_available_flag_{false},
+        bestprice_order_available_flag_{false},
+        for_iis_flag_{false},
+        for_qual_investor_flag_{false},
+        coupon_payment_frequency_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR DfaResponse::DfaResponse(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(DfaResponse_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct DfaResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DfaResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DfaResponseDefaultTypeInternal() {}
+  union {
+    DfaResponse _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DfaResponseDefaultTypeInternal _DfaResponse_default_instance_;
+
 inline constexpr CurrencyResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -3847,6 +4142,83 @@ struct RiskRatesResponseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RiskRatesResponseDefaultTypeInternal _RiskRatesResponse_default_instance_;
 
+inline constexpr NewsResponse::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        items_{},
+        next_cursor_{::int64_t{0}},
+        has_next_{false} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR NewsResponse::NewsResponse(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(NewsResponse_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct NewsResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR NewsResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~NewsResponseDefaultTypeInternal() {}
+  union {
+    NewsResponse _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 NewsResponseDefaultTypeInternal _NewsResponse_default_instance_;
+
+inline constexpr IndicativesResponse::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        instruments_{} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR IndicativesResponse::IndicativesResponse(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(IndicativesResponse_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct IndicativesResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR IndicativesResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~IndicativesResponseDefaultTypeInternal() {}
+  union {
+    IndicativesResponse _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 IndicativesResponseDefaultTypeInternal _IndicativesResponse_default_instance_;
+
+inline constexpr DfasResponse::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        instruments_{} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR DfasResponse::DfasResponse(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(DfasResponse_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct DfasResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DfasResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DfasResponseDefaultTypeInternal() {}
+  union {
+    DfasResponse _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DfasResponseDefaultTypeInternal _DfasResponse_default_instance_;
+
 inline constexpr AssetsResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -4098,9 +4470,18 @@ const ::uint32_t
         1,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest, _impl_._has_bits_),
-        5, // hasbit index offset
+        6, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest, _impl_.basic_asset_uid_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest, _impl_.basic_asset_position_uid_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest, _impl_.basic_instrument_id_),
+        0,
+        1,
+        2,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsRequest, _impl_._has_bits_),
+        5, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsRequest, _impl_.cursor_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsRequest, _impl_.limit_),
         0,
         1,
         0x081, // bitmap
@@ -4371,6 +4752,55 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse, _impl_.instruments_),
         0,
         0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsResponse, _impl_._has_bits_),
+        6, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsResponse, _impl_.has_next_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsResponse, _impl_.next_cursor_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsResponse, _impl_.items_),
+        2,
+        1,
+        0,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsItem, _impl_._has_bits_),
+        12, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsItem, _impl_.id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsItem, _impl_.source_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsItem, _impl_.title_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsItem, _impl_.content_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsItem, _impl_.summary_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsItem, _impl_.tables_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsItem, _impl_.instrument_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsItem, _impl_.priority_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsItem, _impl_.ts_),
+        7,
+        2,
+        3,
+        4,
+        5,
+        0,
+        1,
+        8,
+        6,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Table, _impl_._has_bits_),
+        4, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Table, _impl_.table_),
+        0,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsInstrument, _impl_._has_bits_),
+        4, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsInstrument, _impl_.instrument_),
+        0,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsInstrumentInfo, _impl_._has_bits_),
+        6, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsInstrumentInfo, _impl_.instrument_uid_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsInstrumentInfo, _impl_.ticker_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::NewsInstrumentInfo, _impl_.class_code_),
+        0,
+        1,
+        2,
+        0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Bond, _impl_._has_bits_),
         60, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Bond, _impl_.figi_),
@@ -4489,7 +4919,7 @@ const ::uint32_t
         40,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_._has_bits_),
-        41, // hasbit index offset
+        42, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_.figi_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_.ticker_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_.class_code_),
@@ -4519,6 +4949,7 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_.real_exchange_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_.position_uid_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_.required_tests_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_.asset_uid_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_.for_iis_flag_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_.for_qual_investor_flag_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Currency, _impl_.weekend_flag_),
@@ -4532,40 +4963,41 @@ const ::uint32_t
         2,
         3,
         4,
-        21,
+        22,
         5,
-        13,
         14,
         15,
         16,
         17,
         18,
-        22,
+        19,
+        23,
         6,
         7,
-        19,
+        20,
         8,
         9,
-        26,
-        23,
+        27,
         24,
         25,
+        26,
         10,
-        20,
-        27,
-        11,
+        21,
         28,
+        11,
+        29,
         12,
         0,
-        34,
+        13,
         35,
         36,
         37,
-        29,
+        38,
         30,
         31,
         32,
         33,
+        34,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Etf, _impl_._has_bits_),
         48, // hasbit index offset
@@ -5589,7 +6021,7 @@ const ::uint32_t
         0,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndicativeResponse, _impl_._has_bits_),
-        13, // hasbit index offset
+        14, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndicativeResponse, _impl_.figi_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndicativeResponse, _impl_.ticker_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndicativeResponse, _impl_.class_code_),
@@ -5600,16 +6032,25 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndicativeResponse, _impl_.uid_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndicativeResponse, _impl_.buy_available_flag_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndicativeResponse, _impl_.sell_available_flag_),
-        0,
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndicativeResponse, _impl_.index_composition_),
         1,
         2,
         3,
-        7,
         4,
+        8,
         5,
         6,
+        7,
+        10,
         9,
-        8,
+        0,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndexInstrument, _impl_._has_bits_),
+        5, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndexInstrument, _impl_.uid_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::IndexInstrument, _impl_.weight_),
+        0,
+        1,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::CountryResponse, _impl_._has_bits_),
         7, // hasbit index offset
@@ -6033,6 +6474,79 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse, _impl_.next_cursor_),
         0,
         1,
+        0x000, // bitmap
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse_BasicAsset, _impl_._has_bits_),
+        4, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse_BasicAsset, _impl_.uid_),
+        0,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse_ForecastYield, _impl_._has_bits_),
+        5, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse_ForecastYield, _impl_.min_value_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse_ForecastYield, _impl_.max_value_),
+        0,
+        1,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_._has_bits_),
+        29, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.uid_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.ticker_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.name_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.position_uid_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.min_price_increment_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.lot_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.nominal_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.currency_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.maturity_date_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.short_enabled_flag_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.api_trade_available_flag_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.buy_available_flag_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.sell_available_flag_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.limit_order_available_flag_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.market_order_available_flag_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.bestprice_order_available_flag_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.for_iis_flag_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.for_qual_investor_flag_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.type_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.basic_assets_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.forecast_yield_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.yield_to_maturity_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.coupon_value_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.coupon_payment_frequency_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.coupon_payment_date_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfaResponse, _impl_.aci_value_),
+        1,
+        2,
+        3,
+        4,
+        7,
+        15,
+        8,
+        5,
+        9,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        6,
+        0,
+        10,
+        11,
+        12,
+        25,
+        13,
+        14,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfasResponse, _impl_._has_bits_),
+        4, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::DfasResponse, _impl_.instruments_),
+        0,
 };
 
 static const ::_pbi::MigrationSchema
@@ -6044,108 +6558,120 @@ static const ::_pbi::MigrationSchema
         {56, sizeof(::tinkoff::public_::invest::api::contract::v1::InstrumentRequest)},
         {65, sizeof(::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest)},
         {72, sizeof(::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest)},
-        {79, sizeof(::tinkoff::public_::invest::api::contract::v1::BondResponse)},
-        {84, sizeof(::tinkoff::public_::invest::api::contract::v1::BondsResponse)},
-        {89, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBondCouponsRequest)},
-        {100, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBondCouponsResponse)},
-        {105, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBondEventsRequest)},
-        {116, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse_BondEvent)},
-        {161, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse)},
-        {166, sizeof(::tinkoff::public_::invest::api::contract::v1::Coupon)},
-        {187, sizeof(::tinkoff::public_::invest::api::contract::v1::CurrencyResponse)},
-        {192, sizeof(::tinkoff::public_::invest::api::contract::v1::CurrenciesResponse)},
-        {197, sizeof(::tinkoff::public_::invest::api::contract::v1::EtfResponse)},
-        {202, sizeof(::tinkoff::public_::invest::api::contract::v1::EtfsResponse)},
-        {207, sizeof(::tinkoff::public_::invest::api::contract::v1::FutureResponse)},
-        {212, sizeof(::tinkoff::public_::invest::api::contract::v1::FuturesResponse)},
-        {217, sizeof(::tinkoff::public_::invest::api::contract::v1::OptionResponse)},
-        {222, sizeof(::tinkoff::public_::invest::api::contract::v1::OptionsResponse)},
-        {227, sizeof(::tinkoff::public_::invest::api::contract::v1::Option)},
-        {326, sizeof(::tinkoff::public_::invest::api::contract::v1::ShareResponse)},
-        {331, sizeof(::tinkoff::public_::invest::api::contract::v1::SharesResponse)},
-        {336, sizeof(::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse)},
-        {341, sizeof(::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse)},
-        {346, sizeof(::tinkoff::public_::invest::api::contract::v1::Bond)},
-        {463, sizeof(::tinkoff::public_::invest::api::contract::v1::Currency)},
-        {542, sizeof(::tinkoff::public_::invest::api::contract::v1::Etf)},
-        {635, sizeof(::tinkoff::public_::invest::api::contract::v1::Future)},
-        {732, sizeof(::tinkoff::public_::invest::api::contract::v1::Share)},
-        {827, sizeof(::tinkoff::public_::invest::api::contract::v1::StructuredNote_BasicAsset)},
-        {836, sizeof(::tinkoff::public_::invest::api::contract::v1::StructuredNote_Yield)},
-        {843, sizeof(::tinkoff::public_::invest::api::contract::v1::StructuredNote)},
-        {952, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsRequest)},
-        {963, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse)},
-        {968, sizeof(::tinkoff::public_::invest::api::contract::v1::AccruedInterest)},
-        {979, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginRequest)},
-        {986, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse)},
-        {997, sizeof(::tinkoff::public_::invest::api::contract::v1::InstrumentResponse)},
-        {1002, sizeof(::tinkoff::public_::invest::api::contract::v1::Instrument)},
-        {1083, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsRequest)},
-        {1094, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse)},
-        {1099, sizeof(::tinkoff::public_::invest::api::contract::v1::Dividend)},
-        {1122, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetRequest)},
-        {1127, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetResponse)},
-        {1132, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetsRequest)},
-        {1139, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetsResponse)},
-        {1144, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetFull)},
-        {1185, sizeof(::tinkoff::public_::invest::api::contract::v1::Asset)},
-        {1196, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetCurrency)},
-        {1201, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetSecurity)},
-        {1222, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetShare)},
-        {1255, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetBond)},
-        {1300, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetStructuredProduct)},
-        {1329, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetEtf)},
-        {1394, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetClearingCertificate)},
-        {1401, sizeof(::tinkoff::public_::invest::api::contract::v1::Brand)},
-        {1420, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetInstrument)},
-        {1439, sizeof(::tinkoff::public_::invest::api::contract::v1::InstrumentLink)},
-        {1446, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFavoritesRequest)},
-        {1451, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse)},
-        {1458, sizeof(::tinkoff::public_::invest::api::contract::v1::FavoriteInstrument)},
-        {1481, sizeof(::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequest)},
-        {1490, sizeof(::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequestInstrument)},
-        {1497, sizeof(::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse)},
-        {1504, sizeof(::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest)},
-        {1513, sizeof(::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse)},
-        {1520, sizeof(::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest)},
-        {1525, sizeof(::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse)},
-        {1526, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest)},
-        {1533, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse_FavoriteGroup)},
-        {1546, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse)},
-        {1551, sizeof(::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest)},
-        {1552, sizeof(::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse)},
-        {1557, sizeof(::tinkoff::public_::invest::api::contract::v1::IndicativesRequest)},
-        {1558, sizeof(::tinkoff::public_::invest::api::contract::v1::IndicativesResponse)},
-        {1563, sizeof(::tinkoff::public_::invest::api::contract::v1::IndicativeResponse)},
-        {1586, sizeof(::tinkoff::public_::invest::api::contract::v1::CountryResponse)},
-        {1597, sizeof(::tinkoff::public_::invest::api::contract::v1::FindInstrumentRequest)},
-        {1606, sizeof(::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse)},
-        {1611, sizeof(::tinkoff::public_::invest::api::contract::v1::InstrumentShort)},
-        {1648, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBrandsRequest)},
-        {1653, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBrandRequest)},
-        {1658, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse)},
-        {1665, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsRequest)},
-        {1670, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse_StatisticResponse)},
-        {1785, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse)},
-        {1790, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetReportsRequest)},
-        {1799, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse_GetAssetReportsEvent)},
-        {1814, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse)},
-        {1819, sizeof(::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsRequest)},
-        {1824, sizeof(::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse_ConsensusForecastsItem)},
-        {1851, sizeof(::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse)},
-        {1858, sizeof(::tinkoff::public_::invest::api::contract::v1::GetForecastRequest)},
-        {1863, sizeof(::tinkoff::public_::invest::api::contract::v1::GetForecastResponse_TargetItem)},
-        {1888, sizeof(::tinkoff::public_::invest::api::contract::v1::GetForecastResponse_ConsensusItem)},
-        {1911, sizeof(::tinkoff::public_::invest::api::contract::v1::GetForecastResponse)},
-        {1918, sizeof(::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest)},
-        {1923, sizeof(::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse_RiskRateResult)},
-        {1938, sizeof(::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse_RiskRate)},
-        {1945, sizeof(::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse)},
-        {1950, sizeof(::tinkoff::public_::invest::api::contract::v1::TradingInterval_TimeInterval)},
-        {1957, sizeof(::tinkoff::public_::invest::api::contract::v1::TradingInterval)},
-        {1964, sizeof(::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest)},
-        {1973, sizeof(::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse_InsiderDeal)},
-        {2002, sizeof(::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse)},
+        {81, sizeof(::tinkoff::public_::invest::api::contract::v1::NewsRequest)},
+        {88, sizeof(::tinkoff::public_::invest::api::contract::v1::BondResponse)},
+        {93, sizeof(::tinkoff::public_::invest::api::contract::v1::BondsResponse)},
+        {98, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBondCouponsRequest)},
+        {109, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBondCouponsResponse)},
+        {114, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBondEventsRequest)},
+        {125, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse_BondEvent)},
+        {170, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse)},
+        {175, sizeof(::tinkoff::public_::invest::api::contract::v1::Coupon)},
+        {196, sizeof(::tinkoff::public_::invest::api::contract::v1::CurrencyResponse)},
+        {201, sizeof(::tinkoff::public_::invest::api::contract::v1::CurrenciesResponse)},
+        {206, sizeof(::tinkoff::public_::invest::api::contract::v1::EtfResponse)},
+        {211, sizeof(::tinkoff::public_::invest::api::contract::v1::EtfsResponse)},
+        {216, sizeof(::tinkoff::public_::invest::api::contract::v1::FutureResponse)},
+        {221, sizeof(::tinkoff::public_::invest::api::contract::v1::FuturesResponse)},
+        {226, sizeof(::tinkoff::public_::invest::api::contract::v1::OptionResponse)},
+        {231, sizeof(::tinkoff::public_::invest::api::contract::v1::OptionsResponse)},
+        {236, sizeof(::tinkoff::public_::invest::api::contract::v1::Option)},
+        {335, sizeof(::tinkoff::public_::invest::api::contract::v1::ShareResponse)},
+        {340, sizeof(::tinkoff::public_::invest::api::contract::v1::SharesResponse)},
+        {345, sizeof(::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse)},
+        {350, sizeof(::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse)},
+        {355, sizeof(::tinkoff::public_::invest::api::contract::v1::NewsResponse)},
+        {364, sizeof(::tinkoff::public_::invest::api::contract::v1::NewsItem)},
+        {385, sizeof(::tinkoff::public_::invest::api::contract::v1::Table)},
+        {390, sizeof(::tinkoff::public_::invest::api::contract::v1::NewsInstrument)},
+        {395, sizeof(::tinkoff::public_::invest::api::contract::v1::NewsInstrumentInfo)},
+        {404, sizeof(::tinkoff::public_::invest::api::contract::v1::Bond)},
+        {521, sizeof(::tinkoff::public_::invest::api::contract::v1::Currency)},
+        {602, sizeof(::tinkoff::public_::invest::api::contract::v1::Etf)},
+        {695, sizeof(::tinkoff::public_::invest::api::contract::v1::Future)},
+        {792, sizeof(::tinkoff::public_::invest::api::contract::v1::Share)},
+        {887, sizeof(::tinkoff::public_::invest::api::contract::v1::StructuredNote_BasicAsset)},
+        {896, sizeof(::tinkoff::public_::invest::api::contract::v1::StructuredNote_Yield)},
+        {903, sizeof(::tinkoff::public_::invest::api::contract::v1::StructuredNote)},
+        {1012, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsRequest)},
+        {1023, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse)},
+        {1028, sizeof(::tinkoff::public_::invest::api::contract::v1::AccruedInterest)},
+        {1039, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginRequest)},
+        {1046, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse)},
+        {1057, sizeof(::tinkoff::public_::invest::api::contract::v1::InstrumentResponse)},
+        {1062, sizeof(::tinkoff::public_::invest::api::contract::v1::Instrument)},
+        {1143, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsRequest)},
+        {1154, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse)},
+        {1159, sizeof(::tinkoff::public_::invest::api::contract::v1::Dividend)},
+        {1182, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetRequest)},
+        {1187, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetResponse)},
+        {1192, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetsRequest)},
+        {1199, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetsResponse)},
+        {1204, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetFull)},
+        {1245, sizeof(::tinkoff::public_::invest::api::contract::v1::Asset)},
+        {1256, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetCurrency)},
+        {1261, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetSecurity)},
+        {1282, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetShare)},
+        {1315, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetBond)},
+        {1360, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetStructuredProduct)},
+        {1389, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetEtf)},
+        {1454, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetClearingCertificate)},
+        {1461, sizeof(::tinkoff::public_::invest::api::contract::v1::Brand)},
+        {1480, sizeof(::tinkoff::public_::invest::api::contract::v1::AssetInstrument)},
+        {1499, sizeof(::tinkoff::public_::invest::api::contract::v1::InstrumentLink)},
+        {1506, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFavoritesRequest)},
+        {1511, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse)},
+        {1518, sizeof(::tinkoff::public_::invest::api::contract::v1::FavoriteInstrument)},
+        {1541, sizeof(::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequest)},
+        {1550, sizeof(::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequestInstrument)},
+        {1557, sizeof(::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse)},
+        {1564, sizeof(::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest)},
+        {1573, sizeof(::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse)},
+        {1580, sizeof(::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest)},
+        {1585, sizeof(::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse)},
+        {1586, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest)},
+        {1593, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse_FavoriteGroup)},
+        {1606, sizeof(::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse)},
+        {1611, sizeof(::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest)},
+        {1612, sizeof(::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse)},
+        {1617, sizeof(::tinkoff::public_::invest::api::contract::v1::IndicativesRequest)},
+        {1618, sizeof(::tinkoff::public_::invest::api::contract::v1::IndicativesResponse)},
+        {1623, sizeof(::tinkoff::public_::invest::api::contract::v1::IndicativeResponse)},
+        {1648, sizeof(::tinkoff::public_::invest::api::contract::v1::IndexInstrument)},
+        {1655, sizeof(::tinkoff::public_::invest::api::contract::v1::CountryResponse)},
+        {1666, sizeof(::tinkoff::public_::invest::api::contract::v1::FindInstrumentRequest)},
+        {1675, sizeof(::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse)},
+        {1680, sizeof(::tinkoff::public_::invest::api::contract::v1::InstrumentShort)},
+        {1717, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBrandsRequest)},
+        {1722, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBrandRequest)},
+        {1727, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse)},
+        {1734, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsRequest)},
+        {1739, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse_StatisticResponse)},
+        {1854, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse)},
+        {1859, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetReportsRequest)},
+        {1868, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse_GetAssetReportsEvent)},
+        {1883, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse)},
+        {1888, sizeof(::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsRequest)},
+        {1893, sizeof(::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse_ConsensusForecastsItem)},
+        {1920, sizeof(::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse)},
+        {1927, sizeof(::tinkoff::public_::invest::api::contract::v1::GetForecastRequest)},
+        {1932, sizeof(::tinkoff::public_::invest::api::contract::v1::GetForecastResponse_TargetItem)},
+        {1957, sizeof(::tinkoff::public_::invest::api::contract::v1::GetForecastResponse_ConsensusItem)},
+        {1980, sizeof(::tinkoff::public_::invest::api::contract::v1::GetForecastResponse)},
+        {1987, sizeof(::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest)},
+        {1992, sizeof(::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse_RiskRateResult)},
+        {2007, sizeof(::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse_RiskRate)},
+        {2014, sizeof(::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse)},
+        {2019, sizeof(::tinkoff::public_::invest::api::contract::v1::TradingInterval_TimeInterval)},
+        {2026, sizeof(::tinkoff::public_::invest::api::contract::v1::TradingInterval)},
+        {2033, sizeof(::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest)},
+        {2042, sizeof(::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse_InsiderDeal)},
+        {2071, sizeof(::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse)},
+        {2078, sizeof(::tinkoff::public_::invest::api::contract::v1::DfasRequest)},
+        {2079, sizeof(::tinkoff::public_::invest::api::contract::v1::DfaResponse_BasicAsset)},
+        {2084, sizeof(::tinkoff::public_::invest::api::contract::v1::DfaResponse_ForecastYield)},
+        {2091, sizeof(::tinkoff::public_::invest::api::contract::v1::DfaResponse)},
+        {2146, sizeof(::tinkoff::public_::invest::api::contract::v1::DfasResponse)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::tinkoff::public_::invest::api::contract::v1::_TradingSchedulesRequest_default_instance_._instance,
@@ -6155,6 +6681,7 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::tinkoff::public_::invest::api::contract::v1::_InstrumentRequest_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_InstrumentsRequest_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_FilterOptionsRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_NewsRequest_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_BondResponse_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_BondsResponse_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_GetBondCouponsRequest_default_instance_._instance,
@@ -6176,6 +6703,11 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::tinkoff::public_::invest::api::contract::v1::_SharesResponse_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_StructuredNoteResponse_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_StructuredNotesResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_NewsResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_NewsItem_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_Table_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_NewsInstrument_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_NewsInstrumentInfo_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_Bond_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_Currency_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_Etf_default_instance_._instance,
@@ -6228,6 +6760,7 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::tinkoff::public_::invest::api::contract::v1::_IndicativesRequest_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_IndicativesResponse_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_IndicativeResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_IndexInstrument_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_CountryResponse_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_FindInstrumentRequest_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_FindInstrumentResponse_default_instance_._instance,
@@ -6257,6 +6790,11 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::tinkoff::public_::invest::api::contract::v1::_GetInsiderDealsRequest_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_GetInsiderDealsResponse_InsiderDeal_default_instance_._instance,
     &::tinkoff::public_::invest::api::contract::v1::_GetInsiderDealsResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_DfasRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_DfaResponse_BasicAsset_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_DfaResponse_ForecastYield_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_DfaResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_DfasResponse_default_instance_._instance,
 };
 const char descriptor_table_protodef_instruments_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
@@ -6306,1148 +6844,1216 @@ const char descriptor_table_protodef_instruments_2eproto[] ABSL_ATTRIBUTE_SECTIO
     "ent_exchange\030\002 \001(\0162=.tinkoff.public.inve"
     "st.api.contract.v1.InstrumentExchangeTyp"
     "eH\001\210\001\001B\024\n\022_instrument_statusB\026\n\024_instrum"
-    "ent_exchange\"\214\001\n\024FilterOptionsRequest\022\034\n"
+    "ent_exchange\"\306\001\n\024FilterOptionsRequest\022\034\n"
     "\017basic_asset_uid\030\001 \001(\tH\000\210\001\001\022%\n\030basic_ass"
-    "et_position_uid\030\002 \001(\tH\001\210\001\001B\022\n\020_basic_ass"
-    "et_uidB\033\n\031_basic_asset_position_uid\"O\n\014B"
-    "ondResponse\022\?\n\ninstrument\030\001 \001(\0132+.tinkof"
-    "f.public.invest.api.contract.v1.Bond\"Q\n\r"
-    "BondsResponse\022@\n\013instruments\030\001 \003(\0132+.tin"
-    "koff.public.invest.api.contract.v1.Bond\""
-    "\262\001\n\025GetBondCouponsRequest\022\020\n\004figi\030\001 \001(\tB"
-    "\002\030\001\022-\n\004from\030\002 \001(\0132\032.google.protobuf.Time"
-    "stampH\000\210\001\001\022+\n\002to\030\003 \001(\0132\032.google.protobuf"
-    ".TimestampH\001\210\001\001\022\033\n\rinstrument_id\030\004 \001(\tB\004"
-    "\342A\001\002B\007\n\005_fromB\005\n\003_to\"W\n\026GetBondCouponsRe"
-    "sponse\022=\n\006events\030\001 \003(\0132-.tinkoff.public."
-    "invest.api.contract.v1.Coupon\"\357\002\n\024GetBon"
-    "dEventsRequest\022-\n\004from\030\002 \001(\0132\032.google.pr"
-    "otobuf.TimestampH\000\210\001\001\022+\n\002to\030\003 \001(\0132\032.goog"
-    "le.protobuf.TimestampH\001\210\001\001\022\033\n\rinstrument"
-    "_id\030\004 \001(\tB\004\342A\001\002\022S\n\004type\030\005 \001(\0162E.tinkoff."
-    "public.invest.api.contract.v1.GetBondEve"
-    "ntsRequest.EventType\"y\n\tEventType\022\032\n\026EVE"
-    "NT_TYPE_UNSPECIFIED\020\000\022\022\n\016EVENT_TYPE_CPN\020"
-    "\001\022\023\n\017EVENT_TYPE_CALL\020\002\022\022\n\016EVENT_TYPE_MTY"
-    "\020\003\022\023\n\017EVENT_TYPE_CONV\020\004B\007\n\005_fromB\005\n\003_to\""
-    "\361\010\n\025GetBondEventsResponse\022V\n\006events\030\001 \003("
-    "\0132F.tinkoff.public.invest.api.contract.v"
-    "1.GetBondEventsResponse.BondEvent\032\377\007\n\tBo"
-    "ndEvent\022\025\n\rinstrument_id\030\002 \001(\t\022\024\n\014event_"
-    "number\030\003 \001(\005\022.\n\nevent_date\030\004 \001(\0132\032.googl"
-    "e.protobuf.Timestamp\022Y\n\nevent_type\030\005 \001(\016"
-    "2E.tinkoff.public.invest.api.contract.v1"
-    ".GetBondEventsRequest.EventType\022I\n\017event"
-    "_total_vol\030\006 \001(\01320.tinkoff.public.invest"
-    ".api.contract.v1.Quotation\022,\n\010fix_date\030\007"
-    " \001(\0132\032.google.protobuf.Timestamp\022-\n\trate"
-    "_date\030\010 \001(\0132\032.google.protobuf.Timestamp\022"
-    "0\n\014default_date\030\t \001(\0132\032.google.protobuf."
-    "Timestamp\0221\n\rreal_pay_date\030\n \001(\0132\032.googl"
-    "e.protobuf.Timestamp\022,\n\010pay_date\030\013 \001(\0132\032"
-    ".google.protobuf.Timestamp\022G\n\014pay_one_bo"
-    "nd\030\014 \001(\01321.tinkoff.public.invest.api.con"
-    "tract.v1.MoneyValue\022I\n\016money_flow_val\030\r "
-    "\001(\01321.tinkoff.public.invest.api.contract"
-    ".v1.MoneyValue\022\021\n\texecution\030\016 \001(\t\022\026\n\016ope"
-    "ration_type\030\017 \001(\t\022\?\n\005value\030\020 \001(\01320.tinko"
-    "ff.public.invest.api.contract.v1.Quotati"
-    "on\022\014\n\004note\030\021 \001(\t\022\036\n\026convert_to_fin_tool_"
-    "id\030\022 \001(\t\0225\n\021coupon_start_date\030\023 \001(\0132\032.go"
-    "ogle.protobuf.Timestamp\0223\n\017coupon_end_da"
-    "te\030\024 \001(\0132\032.google.protobuf.Timestamp\022\025\n\r"
-    "coupon_period\030\025 \001(\005\022N\n\024coupon_interest_r"
-    "ate\030\026 \001(\01320.tinkoff.public.invest.api.co"
-    "ntract.v1.Quotation\"\240\003\n\006Coupon\022\014\n\004figi\030\001"
-    " \001(\t\022/\n\013coupon_date\030\002 \001(\0132\032.google.proto"
-    "buf.Timestamp\022\025\n\rcoupon_number\030\003 \001(\003\022,\n\010"
-    "fix_date\030\004 \001(\0132\032.google.protobuf.Timesta"
-    "mp\022G\n\014pay_one_bond\030\005 \001(\01321.tinkoff.publi"
-    "c.invest.api.contract.v1.MoneyValue\022F\n\013c"
-    "oupon_type\030\006 \001(\01621.tinkoff.public.invest"
-    ".api.contract.v1.CouponType\0225\n\021coupon_st"
-    "art_date\030\007 \001(\0132\032.google.protobuf.Timesta"
-    "mp\0223\n\017coupon_end_date\030\010 \001(\0132\032.google.pro"
-    "tobuf.Timestamp\022\025\n\rcoupon_period\030\t \001(\005\"W"
-    "\n\020CurrencyResponse\022C\n\ninstrument\030\001 \001(\0132/"
-    ".tinkoff.public.invest.api.contract.v1.C"
-    "urrency\"Z\n\022CurrenciesResponse\022D\n\013instrum"
-    "ents\030\001 \003(\0132/.tinkoff.public.invest.api.c"
-    "ontract.v1.Currency\"M\n\013EtfResponse\022>\n\nin"
-    "strument\030\001 \001(\0132*.tinkoff.public.invest.a"
-    "pi.contract.v1.Etf\"O\n\014EtfsResponse\022\?\n\013in"
-    "struments\030\001 \003(\0132*.tinkoff.public.invest."
-    "api.contract.v1.Etf\"S\n\016FutureResponse\022A\n"
-    "\ninstrument\030\001 \001(\0132-.tinkoff.public.inves"
-    "t.api.contract.v1.Future\"U\n\017FuturesRespo"
-    "nse\022B\n\013instruments\030\001 \003(\0132-.tinkoff.publi"
-    "c.invest.api.contract.v1.Future\"S\n\016Optio"
-    "nResponse\022A\n\ninstrument\030\001 \001(\0132-.tinkoff."
-    "public.invest.api.contract.v1.Option\"U\n\017"
-    "OptionsResponse\022B\n\013instruments\030\001 \003(\0132-.t"
-    "inkoff.public.invest.api.contract.v1.Opt"
-    "ion\"\243\021\n\006Option\022\013\n\003uid\030\001 \001(\t\022\024\n\014position_"
-    "uid\030\002 \001(\t\022\016\n\006ticker\030\003 \001(\t\022\022\n\nclass_code\030"
-    "\004 \001(\t\022 \n\030basic_asset_position_uid\030\005 \001(\t\022"
-    "T\n\016trading_status\030\025 \001(\0162<.tinkoff.public"
-    ".invest.api.contract.v1.SecurityTradingS"
-    "tatus\022J\n\rreal_exchange\030\037 \001(\01623.tinkoff.p"
-    "ublic.invest.api.contract.v1.RealExchang"
-    "e\022I\n\tdirection\030) \001(\01626.tinkoff.public.in"
-    "vest.api.contract.v1.OptionDirection\022N\n\014"
-    "payment_type\030* \001(\01628.tinkoff.public.inve"
-    "st.api.contract.v1.OptionPaymentType\022A\n\005"
-    "style\030+ \001(\01622.tinkoff.public.invest.api."
-    "contract.v1.OptionStyle\022T\n\017settlement_ty"
-    "pe\030, \001(\0162;.tinkoff.public.invest.api.con"
-    "tract.v1.OptionSettlementType\022\014\n\004name\030e "
-    "\001(\t\022\020\n\010currency\030o \001(\t\022\033\n\023settlement_curr"
-    "ency\030p \001(\t\022\023\n\nasset_type\030\203\001 \001(\t\022\024\n\013basic"
-    "_asset\030\204\001 \001(\t\022\021\n\010exchange\030\215\001 \001(\t\022\030\n\017coun"
-    "try_of_risk\030\227\001 \001(\t\022\035\n\024country_of_risk_na"
-    "me\030\230\001 \001(\t\022\017\n\006sector\030\241\001 \001(\t\022@\n\005brand\030\242\001 \001"
-    "(\01320.tinkoff.public.invest.api.contract."
-    "v1.BrandData\022\014\n\003lot\030\311\001 \001(\005\022K\n\020basic_asse"
-    "t_size\030\323\001 \001(\01320.tinkoff.public.invest.ap"
-    "i.contract.v1.Quotation\022D\n\005klong\030\335\001 \001(\0132"
-    "0.tinkoff.public.invest.api.contract.v1."
-    "QuotationB\002\030\001\022E\n\006kshort\030\336\001 \001(\01320.tinkoff"
-    ".public.invest.api.contract.v1.Quotation"
-    "B\002\030\001\022@\n\005dlong\030\337\001 \001(\01320.tinkoff.public.in"
-    "vest.api.contract.v1.Quotation\022A\n\006dshort"
-    "\030\340\001 \001(\01320.tinkoff.public.invest.api.cont"
-    "ract.v1.Quotation\022D\n\tdlong_min\030\341\001 \001(\01320."
-    "tinkoff.public.invest.api.contract.v1.Qu"
-    "otation\022E\n\ndshort_min\030\342\001 \001(\01320.tinkoff.p"
-    "ublic.invest.api.contract.v1.Quotation\022N"
-    "\n\023min_price_increment\030\347\001 \001(\01320.tinkoff.p"
-    "ublic.invest.api.contract.v1.Quotation\022H"
-    "\n\014strike_price\030\361\001 \001(\01321.tinkoff.public.i"
-    "nvest.api.contract.v1.MoneyValue\022G\n\014dlon"
-    "g_client\030\242\002 \001(\01320.tinkoff.public.invest."
-    "api.contract.v1.Quotation\022H\n\rdshort_clie"
-    "nt\030\243\002 \001(\01320.tinkoff.public.invest.api.co"
-    "ntract.v1.Quotation\0224\n\017expiration_date\030\255"
-    "\002 \001(\0132\032.google.protobuf.Timestamp\0225\n\020fir"
-    "st_trade_date\030\267\002 \001(\0132\032.google.protobuf.T"
-    "imestamp\0224\n\017last_trade_date\030\270\002 \001(\0132\032.goo"
-    "gle.protobuf.Timestamp\022;\n\026first_1min_can"
-    "dle_date\030\301\002 \001(\0132\032.google.protobuf.Timest"
-    "amp\022;\n\026first_1day_candle_date\030\302\002 \001(\0132\032.g"
-    "oogle.protobuf.Timestamp\022\033\n\022short_enable"
-    "d_flag\030\221\003 \001(\010\022\025\n\014for_iis_flag\030\222\003 \001(\010\022\021\n\010"
-    "otc_flag\030\223\003 \001(\010\022\033\n\022buy_available_flag\030\224\003"
-    " \001(\010\022\034\n\023sell_available_flag\030\225\003 \001(\010\022\037\n\026fo"
-    "r_qual_investor_flag\030\226\003 \001(\010\022\025\n\014weekend_f"
-    "lag\030\227\003 \001(\010\022\031\n\020blocked_tca_flag\030\230\003 \001(\010\022!\n"
-    "\030api_trade_available_flag\030\231\003 \001(\010\022\027\n\016requ"
-    "ired_tests\030\232\003 \003(\t\"Q\n\rShareResponse\022@\n\nin"
-    "strument\030\001 \001(\0132,.tinkoff.public.invest.a"
-    "pi.contract.v1.Share\"S\n\016SharesResponse\022A"
-    "\n\013instruments\030\001 \003(\0132,.tinkoff.public.inv"
-    "est.api.contract.v1.Share\"c\n\026StructuredN"
-    "oteResponse\022I\n\ninstrument\030\001 \001(\01325.tinkof"
-    "f.public.invest.api.contract.v1.Structur"
-    "edNote\"e\n\027StructuredNotesResponse\022J\n\013ins"
-    "truments\030\001 \003(\01325.tinkoff.public.invest.a"
-    "pi.contract.v1.StructuredNote\"\272\022\n\004Bond\022\014"
-    "\n\004figi\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\022\n\nclass_co"
-    "de\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\013\n\003lot\030\005 \001(\005\022\020\n\010c"
-    "urrency\030\006 \001(\t\022C\n\005klong\030\007 \001(\01320.tinkoff.p"
-    "ublic.invest.api.contract.v1.QuotationB\002"
-    "\030\001\022D\n\006kshort\030\010 \001(\01320.tinkoff.public.inve"
-    "st.api.contract.v1.QuotationB\002\030\001\022\?\n\005dlon"
-    "g\030\t \001(\01320.tinkoff.public.invest.api.cont"
-    "ract.v1.Quotation\022@\n\006dshort\030\n \001(\01320.tink"
-    "off.public.invest.api.contract.v1.Quotat"
-    "ion\022C\n\tdlong_min\030\013 \001(\01320.tinkoff.public."
-    "invest.api.contract.v1.Quotation\022D\n\ndsho"
-    "rt_min\030\014 \001(\01320.tinkoff.public.invest.api"
-    ".contract.v1.Quotation\022\032\n\022short_enabled_"
-    "flag\030\r \001(\010\022\014\n\004name\030\017 \001(\t\022\020\n\010exchange\030\020 \001"
-    "(\t\022 \n\030coupon_quantity_per_year\030\021 \001(\005\0221\n\r"
-    "maturity_date\030\022 \001(\0132\032.google.protobuf.Ti"
-    "mestamp\022B\n\007nominal\030\023 \001(\01321.tinkoff.publi"
-    "c.invest.api.contract.v1.MoneyValue\022J\n\017i"
-    "nitial_nominal\030\024 \001(\01321.tinkoff.public.in"
-    "vest.api.contract.v1.MoneyValue\0222\n\016state"
-    "_reg_date\030\025 \001(\0132\032.google.protobuf.Timest"
-    "amp\0222\n\016placement_date\030\026 \001(\0132\032.google.pro"
-    "tobuf.Timestamp\022J\n\017placement_price\030\027 \001(\013"
-    "21.tinkoff.public.invest.api.contract.v1"
-    ".MoneyValue\022D\n\taci_value\030\030 \001(\01321.tinkoff"
-    ".public.invest.api.contract.v1.MoneyValu"
-    "e\022\027\n\017country_of_risk\030\031 \001(\t\022\034\n\024country_of"
-    "_risk_name\030\032 \001(\t\022\016\n\006sector\030\033 \001(\t\022\022\n\nissu"
-    "e_kind\030\034 \001(\t\022\022\n\nissue_size\030\035 \001(\003\022\027\n\017issu"
-    "e_size_plan\030\036 \001(\003\022T\n\016trading_status\030\037 \001("
-    "\0162<.tinkoff.public.invest.api.contract.v"
-    "1.SecurityTradingStatus\022\020\n\010otc_flag\030  \001("
-    "\010\022\032\n\022buy_available_flag\030! \001(\010\022\033\n\023sell_av"
-    "ailable_flag\030\" \001(\010\022\034\n\024floating_coupon_fl"
-    "ag\030# \001(\010\022\026\n\016perpetual_flag\030$ \001(\010\022\031\n\021amor"
-    "tization_flag\030% \001(\010\022M\n\023min_price_increme"
-    "nt\030& \001(\01320.tinkoff.public.invest.api.con"
-    "tract.v1.Quotation\022 \n\030api_trade_availabl"
-    "e_flag\030\' \001(\010\022\013\n\003uid\030( \001(\t\022J\n\rreal_exchan"
-    "ge\030) \001(\01623.tinkoff.public.invest.api.con"
-    "tract.v1.RealExchange\022\024\n\014position_uid\030* "
-    "\001(\t\022\021\n\tasset_uid\030+ \001(\t\022\026\n\016required_tests"
-    "\030, \003(\t\022\024\n\014for_iis_flag\0303 \001(\010\022\036\n\026for_qual"
-    "_investor_flag\0304 \001(\010\022\024\n\014weekend_flag\0305 \001"
-    "(\010\022\030\n\020blocked_tca_flag\0306 \001(\010\022\031\n\021subordin"
-    "ated_flag\0307 \001(\010\022\026\n\016liquidity_flag\0308 \001(\010\022"
-    ":\n\026first_1min_candle_date\030= \001(\0132\032.google"
-    ".protobuf.Timestamp\022:\n\026first_1day_candle"
-    "_date\030> \001(\0132\032.google.protobuf.Timestamp\022"
-    "D\n\nrisk_level\030\? \001(\01620.tinkoff.public.inv"
-    "est.api.contract.v1.RiskLevel\022\?\n\005brand\030@"
-    " \001(\01320.tinkoff.public.invest.api.contrac"
-    "t.v1.BrandData\022B\n\tbond_type\030A \001(\0162/.tink"
-    "off.public.invest.api.contract.v1.BondTy"
-    "pe\022-\n\tcall_date\030E \001(\0132\032.google.protobuf."
-    "Timestamp\022F\n\014dlong_client\030Z \001(\01320.tinkof"
+    "et_position_uid\030\002 \001(\tH\001\210\001\001\022 \n\023basic_inst"
+    "rument_id\030\003 \001(\tH\002\210\001\001B\022\n\020_basic_asset_uid"
+    "B\033\n\031_basic_asset_position_uidB\026\n\024_basic_"
+    "instrument_id\"K\n\013NewsRequest\022\023\n\006cursor\030\001"
+    " \001(\003H\000\210\001\001\022\022\n\005limit\030\002 \001(\005H\001\210\001\001B\t\n\007_cursor"
+    "B\010\n\006_limit\"O\n\014BondResponse\022\?\n\ninstrument"
+    "\030\001 \001(\0132+.tinkoff.public.invest.api.contr"
+    "act.v1.Bond\"Q\n\rBondsResponse\022@\n\013instrume"
+    "nts\030\001 \003(\0132+.tinkoff.public.invest.api.co"
+    "ntract.v1.Bond\"\262\001\n\025GetBondCouponsRequest"
+    "\022\020\n\004figi\030\001 \001(\tB\002\030\001\022-\n\004from\030\002 \001(\0132\032.googl"
+    "e.protobuf.TimestampH\000\210\001\001\022+\n\002to\030\003 \001(\0132\032."
+    "google.protobuf.TimestampH\001\210\001\001\022\033\n\rinstru"
+    "ment_id\030\004 \001(\tB\004\342A\001\002B\007\n\005_fromB\005\n\003_to\"W\n\026G"
+    "etBondCouponsResponse\022=\n\006events\030\001 \003(\0132-."
+    "tinkoff.public.invest.api.contract.v1.Co"
+    "upon\"\357\002\n\024GetBondEventsRequest\022-\n\004from\030\002 "
+    "\001(\0132\032.google.protobuf.TimestampH\000\210\001\001\022+\n\002"
+    "to\030\003 \001(\0132\032.google.protobuf.TimestampH\001\210\001"
+    "\001\022\033\n\rinstrument_id\030\004 \001(\tB\004\342A\001\002\022S\n\004type\030\005"
+    " \001(\0162E.tinkoff.public.invest.api.contrac"
+    "t.v1.GetBondEventsRequest.EventType\"y\n\tE"
+    "ventType\022\032\n\026EVENT_TYPE_UNSPECIFIED\020\000\022\022\n\016"
+    "EVENT_TYPE_CPN\020\001\022\023\n\017EVENT_TYPE_CALL\020\002\022\022\n"
+    "\016EVENT_TYPE_MTY\020\003\022\023\n\017EVENT_TYPE_CONV\020\004B\007"
+    "\n\005_fromB\005\n\003_to\"\361\010\n\025GetBondEventsResponse"
+    "\022V\n\006events\030\001 \003(\0132F.tinkoff.public.invest"
+    ".api.contract.v1.GetBondEventsResponse.B"
+    "ondEvent\032\377\007\n\tBondEvent\022\025\n\rinstrument_id\030"
+    "\002 \001(\t\022\024\n\014event_number\030\003 \001(\005\022.\n\nevent_dat"
+    "e\030\004 \001(\0132\032.google.protobuf.Timestamp\022Y\n\ne"
+    "vent_type\030\005 \001(\0162E.tinkoff.public.invest."
+    "api.contract.v1.GetBondEventsRequest.Eve"
+    "ntType\022I\n\017event_total_vol\030\006 \001(\01320.tinkof"
     "f.public.invest.api.contract.v1.Quotatio"
-    "n\022G\n\rdshort_client\030[ \001(\01320.tinkoff.publi"
-    "c.invest.api.contract.v1.Quotation\"\235\014\n\010C"
-    "urrency\022\014\n\004figi\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\022\n"
-    "\nclass_code\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\013\n\003lot\030\005"
-    " \001(\005\022\020\n\010currency\030\006 \001(\t\022C\n\005klong\030\007 \001(\01320."
-    "tinkoff.public.invest.api.contract.v1.Qu"
-    "otationB\002\030\001\022D\n\006kshort\030\010 \001(\01320.tinkoff.pu"
-    "blic.invest.api.contract.v1.QuotationB\002\030"
-    "\001\022\?\n\005dlong\030\t \001(\01320.tinkoff.public.invest"
-    ".api.contract.v1.Quotation\022@\n\006dshort\030\n \001"
-    "(\01320.tinkoff.public.invest.api.contract."
-    "v1.Quotation\022C\n\tdlong_min\030\013 \001(\01320.tinkof"
-    "f.public.invest.api.contract.v1.Quotatio"
-    "n\022D\n\ndshort_min\030\014 \001(\01320.tinkoff.public.i"
-    "nvest.api.contract.v1.Quotation\022\032\n\022short"
-    "_enabled_flag\030\r \001(\010\022\014\n\004name\030\017 \001(\t\022\020\n\010exc"
-    "hange\030\020 \001(\t\022B\n\007nominal\030\021 \001(\01321.tinkoff.p"
-    "ublic.invest.api.contract.v1.MoneyValue\022"
-    "\027\n\017country_of_risk\030\022 \001(\t\022\034\n\024country_of_r"
-    "isk_name\030\023 \001(\t\022T\n\016trading_status\030\024 \001(\0162<"
+    "n\022,\n\010fix_date\030\007 \001(\0132\032.google.protobuf.Ti"
+    "mestamp\022-\n\trate_date\030\010 \001(\0132\032.google.prot"
+    "obuf.Timestamp\0220\n\014default_date\030\t \001(\0132\032.g"
+    "oogle.protobuf.Timestamp\0221\n\rreal_pay_dat"
+    "e\030\n \001(\0132\032.google.protobuf.Timestamp\022,\n\010p"
+    "ay_date\030\013 \001(\0132\032.google.protobuf.Timestam"
+    "p\022G\n\014pay_one_bond\030\014 \001(\01321.tinkoff.public"
+    ".invest.api.contract.v1.MoneyValue\022I\n\016mo"
+    "ney_flow_val\030\r \001(\01321.tinkoff.public.inve"
+    "st.api.contract.v1.MoneyValue\022\021\n\texecuti"
+    "on\030\016 \001(\t\022\026\n\016operation_type\030\017 \001(\t\022\?\n\005valu"
+    "e\030\020 \001(\01320.tinkoff.public.invest.api.cont"
+    "ract.v1.Quotation\022\014\n\004note\030\021 \001(\t\022\036\n\026conve"
+    "rt_to_fin_tool_id\030\022 \001(\t\0225\n\021coupon_start_"
+    "date\030\023 \001(\0132\032.google.protobuf.Timestamp\0223"
+    "\n\017coupon_end_date\030\024 \001(\0132\032.google.protobu"
+    "f.Timestamp\022\025\n\rcoupon_period\030\025 \001(\005\022N\n\024co"
+    "upon_interest_rate\030\026 \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\"\240\003\n\006C"
+    "oupon\022\014\n\004figi\030\001 \001(\t\022/\n\013coupon_date\030\002 \001(\013"
+    "2\032.google.protobuf.Timestamp\022\025\n\rcoupon_n"
+    "umber\030\003 \001(\003\022,\n\010fix_date\030\004 \001(\0132\032.google.p"
+    "rotobuf.Timestamp\022G\n\014pay_one_bond\030\005 \001(\0132"
+    "1.tinkoff.public.invest.api.contract.v1."
+    "MoneyValue\022F\n\013coupon_type\030\006 \001(\01621.tinkof"
+    "f.public.invest.api.contract.v1.CouponTy"
+    "pe\0225\n\021coupon_start_date\030\007 \001(\0132\032.google.p"
+    "rotobuf.Timestamp\0223\n\017coupon_end_date\030\010 \001"
+    "(\0132\032.google.protobuf.Timestamp\022\025\n\rcoupon"
+    "_period\030\t \001(\005\"W\n\020CurrencyResponse\022C\n\nins"
+    "trument\030\001 \001(\0132/.tinkoff.public.invest.ap"
+    "i.contract.v1.Currency\"Z\n\022CurrenciesResp"
+    "onse\022D\n\013instruments\030\001 \003(\0132/.tinkoff.publ"
+    "ic.invest.api.contract.v1.Currency\"M\n\013Et"
+    "fResponse\022>\n\ninstrument\030\001 \001(\0132*.tinkoff."
+    "public.invest.api.contract.v1.Etf\"O\n\014Etf"
+    "sResponse\022\?\n\013instruments\030\001 \003(\0132*.tinkoff"
+    ".public.invest.api.contract.v1.Etf\"S\n\016Fu"
+    "tureResponse\022A\n\ninstrument\030\001 \001(\0132-.tinko"
+    "ff.public.invest.api.contract.v1.Future\""
+    "U\n\017FuturesResponse\022B\n\013instruments\030\001 \003(\0132"
+    "-.tinkoff.public.invest.api.contract.v1."
+    "Future\"S\n\016OptionResponse\022A\n\ninstrument\030\001"
+    " \001(\0132-.tinkoff.public.invest.api.contrac"
+    "t.v1.Option\"U\n\017OptionsResponse\022B\n\013instru"
+    "ments\030\001 \003(\0132-.tinkoff.public.invest.api."
+    "contract.v1.Option\"\243\021\n\006Option\022\013\n\003uid\030\001 \001"
+    "(\t\022\024\n\014position_uid\030\002 \001(\t\022\016\n\006ticker\030\003 \001(\t"
+    "\022\022\n\nclass_code\030\004 \001(\t\022 \n\030basic_asset_posi"
+    "tion_uid\030\005 \001(\t\022T\n\016trading_status\030\025 \001(\0162<"
     ".tinkoff.public.invest.api.contract.v1.S"
-    "ecurityTradingStatus\022\020\n\010otc_flag\030\025 \001(\010\022\032"
-    "\n\022buy_available_flag\030\026 \001(\010\022\033\n\023sell_avail"
-    "able_flag\030\027 \001(\010\022\031\n\021iso_currency_name\030\030 \001"
-    "(\t\022M\n\023min_price_increment\030\031 \001(\01320.tinkof"
-    "f.public.invest.api.contract.v1.Quotatio"
-    "n\022 \n\030api_trade_available_flag\030\032 \001(\010\022\013\n\003u"
-    "id\030\033 \001(\t\022J\n\rreal_exchange\030\034 \001(\01623.tinkof"
-    "f.public.invest.api.contract.v1.RealExch"
-    "ange\022\024\n\014position_uid\030\035 \001(\t\022\026\n\016required_t"
-    "ests\030\036 \003(\t\022\024\n\014for_iis_flag\030) \001(\010\022\036\n\026for_"
-    "qual_investor_flag\0304 \001(\010\022\024\n\014weekend_flag"
-    "\0305 \001(\010\022\030\n\020blocked_tca_flag\0306 \001(\010\022:\n\026firs"
-    "t_1min_candle_date\0308 \001(\0132\032.google.protob"
-    "uf.Timestamp\022:\n\026first_1day_candle_date\0309"
-    " \001(\0132\032.google.protobuf.Timestamp\022\?\n\005bran"
-    "d\030< \001(\01320.tinkoff.public.invest.api.cont"
-    "ract.v1.BrandData\022F\n\014dlong_client\030Z \001(\0132"
-    "0.tinkoff.public.invest.api.contract.v1."
-    "Quotation\022G\n\rdshort_client\030[ \001(\01320.tinko"
-    "ff.public.invest.api.contract.v1.Quotati"
-    "on\"\303\016\n\003Etf\022\014\n\004figi\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t"
-    "\022\022\n\nclass_code\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\013\n\003lo"
-    "t\030\005 \001(\005\022\020\n\010currency\030\006 \001(\t\022C\n\005klong\030\007 \001(\013"
-    "20.tinkoff.public.invest.api.contract.v1"
-    ".QuotationB\002\030\001\022D\n\006kshort\030\010 \001(\01320.tinkoff"
+    "ecurityTradingStatus\022J\n\rreal_exchange\030\037 "
+    "\001(\01623.tinkoff.public.invest.api.contract"
+    ".v1.RealExchange\022I\n\tdirection\030) \001(\01626.ti"
+    "nkoff.public.invest.api.contract.v1.Opti"
+    "onDirection\022N\n\014payment_type\030* \001(\01628.tink"
+    "off.public.invest.api.contract.v1.Option"
+    "PaymentType\022A\n\005style\030+ \001(\01622.tinkoff.pub"
+    "lic.invest.api.contract.v1.OptionStyle\022T"
+    "\n\017settlement_type\030, \001(\0162;.tinkoff.public"
+    ".invest.api.contract.v1.OptionSettlement"
+    "Type\022\014\n\004name\030e \001(\t\022\020\n\010currency\030o \001(\t\022\033\n\023"
+    "settlement_currency\030p \001(\t\022\023\n\nasset_type\030"
+    "\203\001 \001(\t\022\024\n\013basic_asset\030\204\001 \001(\t\022\021\n\010exchange"
+    "\030\215\001 \001(\t\022\030\n\017country_of_risk\030\227\001 \001(\t\022\035\n\024cou"
+    "ntry_of_risk_name\030\230\001 \001(\t\022\017\n\006sector\030\241\001 \001("
+    "\t\022@\n\005brand\030\242\001 \001(\01320.tinkoff.public.inves"
+    "t.api.contract.v1.BrandData\022\014\n\003lot\030\311\001 \001("
+    "\005\022K\n\020basic_asset_size\030\323\001 \001(\01320.tinkoff.p"
+    "ublic.invest.api.contract.v1.Quotation\022D"
+    "\n\005klong\030\335\001 \001(\01320.tinkoff.public.invest.a"
+    "pi.contract.v1.QuotationB\002\030\001\022E\n\006kshort\030\336"
+    "\001 \001(\01320.tinkoff.public.invest.api.contra"
+    "ct.v1.QuotationB\002\030\001\022@\n\005dlong\030\337\001 \001(\01320.ti"
+    "nkoff.public.invest.api.contract.v1.Quot"
+    "ation\022A\n\006dshort\030\340\001 \001(\01320.tinkoff.public."
+    "invest.api.contract.v1.Quotation\022D\n\tdlon"
+    "g_min\030\341\001 \001(\01320.tinkoff.public.invest.api"
+    ".contract.v1.Quotation\022E\n\ndshort_min\030\342\001 "
+    "\001(\01320.tinkoff.public.invest.api.contract"
+    ".v1.Quotation\022N\n\023min_price_increment\030\347\001 "
+    "\001(\01320.tinkoff.public.invest.api.contract"
+    ".v1.Quotation\022H\n\014strike_price\030\361\001 \001(\01321.t"
+    "inkoff.public.invest.api.contract.v1.Mon"
+    "eyValue\022G\n\014dlong_client\030\242\002 \001(\01320.tinkoff"
     ".public.invest.api.contract.v1.Quotation"
-    "B\002\030\001\022\?\n\005dlong\030\t \001(\01320.tinkoff.public.inv"
-    "est.api.contract.v1.Quotation\022@\n\006dshort\030"
-    "\n \001(\01320.tinkoff.public.invest.api.contra"
-    "ct.v1.Quotation\022C\n\tdlong_min\030\013 \001(\01320.tin"
-    "koff.public.invest.api.contract.v1.Quota"
-    "tion\022D\n\ndshort_min\030\014 \001(\01320.tinkoff.publi"
-    "c.invest.api.contract.v1.Quotation\022\032\n\022sh"
-    "ort_enabled_flag\030\r \001(\010\022\014\n\004name\030\017 \001(\t\022\020\n\010"
-    "exchange\030\020 \001(\t\022J\n\020fixed_commission\030\021 \001(\013"
+    "\022H\n\rdshort_client\030\243\002 \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\0224\n\017ex"
+    "piration_date\030\255\002 \001(\0132\032.google.protobuf.T"
+    "imestamp\0225\n\020first_trade_date\030\267\002 \001(\0132\032.go"
+    "ogle.protobuf.Timestamp\0224\n\017last_trade_da"
+    "te\030\270\002 \001(\0132\032.google.protobuf.Timestamp\022;\n"
+    "\026first_1min_candle_date\030\301\002 \001(\0132\032.google."
+    "protobuf.Timestamp\022;\n\026first_1day_candle_"
+    "date\030\302\002 \001(\0132\032.google.protobuf.Timestamp\022"
+    "\033\n\022short_enabled_flag\030\221\003 \001(\010\022\025\n\014for_iis_"
+    "flag\030\222\003 \001(\010\022\021\n\010otc_flag\030\223\003 \001(\010\022\033\n\022buy_av"
+    "ailable_flag\030\224\003 \001(\010\022\034\n\023sell_available_fl"
+    "ag\030\225\003 \001(\010\022\037\n\026for_qual_investor_flag\030\226\003 \001"
+    "(\010\022\025\n\014weekend_flag\030\227\003 \001(\010\022\031\n\020blocked_tca"
+    "_flag\030\230\003 \001(\010\022!\n\030api_trade_available_flag"
+    "\030\231\003 \001(\010\022\027\n\016required_tests\030\232\003 \003(\t\"Q\n\rShar"
+    "eResponse\022@\n\ninstrument\030\001 \001(\0132,.tinkoff."
+    "public.invest.api.contract.v1.Share\"S\n\016S"
+    "haresResponse\022A\n\013instruments\030\001 \003(\0132,.tin"
+    "koff.public.invest.api.contract.v1.Share"
+    "\"c\n\026StructuredNoteResponse\022I\n\ninstrument"
+    "\030\001 \001(\01325.tinkoff.public.invest.api.contr"
+    "act.v1.StructuredNote\"e\n\027StructuredNotes"
+    "Response\022J\n\013instruments\030\001 \003(\01325.tinkoff."
+    "public.invest.api.contract.v1.Structured"
+    "Note\"\212\001\n\014NewsResponse\022\020\n\010has_next\030\001 \001(\010\022"
+    "\030\n\013next_cursor\030\002 \001(\003H\000\210\001\001\022>\n\005items\030\003 \003(\013"
+    "2/.tinkoff.public.invest.api.contract.v1"
+    ".NewsItemB\016\n\014_next_cursor\"\256\002\n\010NewsItem\022\n"
+    "\n\002id\030\001 \001(\003\022\016\n\006source\030\002 \001(\t\022\r\n\005title\030\003 \001("
+    "\t\022\017\n\007content\030\004 \001(\t\022\024\n\007summary\030\005 \001(\tH\000\210\001\001"
+    "\022<\n\006tables\030\006 \003(\0132,.tinkoff.public.invest"
+    ".api.contract.v1.Table\022L\n\rinstrument_id\030"
+    "\007 \003(\01325.tinkoff.public.invest.api.contra"
+    "ct.v1.NewsInstrument\022\020\n\010priority\030\010 \001(\010\022&"
+    "\n\002ts\030\t \001(\0132\032.google.protobuf.TimestampB\n"
+    "\n\010_summary\"\026\n\005Table\022\r\n\005table\030\001 \001(\t\"_\n\016Ne"
+    "wsInstrument\022M\n\ninstrument\030\001 \001(\01329.tinko"
+    "ff.public.invest.api.contract.v1.NewsIns"
+    "trumentInfo\"P\n\022NewsInstrumentInfo\022\026\n\016ins"
+    "trument_uid\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\022\n\ncla"
+    "ss_code\030\003 \001(\t\"\272\022\n\004Bond\022\014\n\004figi\030\001 \001(\t\022\016\n\006"
+    "ticker\030\002 \001(\t\022\022\n\nclass_code\030\003 \001(\t\022\014\n\004isin"
+    "\030\004 \001(\t\022\013\n\003lot\030\005 \001(\005\022\020\n\010currency\030\006 \001(\t\022C\n"
+    "\005klong\030\007 \001(\01320.tinkoff.public.invest.api"
+    ".contract.v1.QuotationB\002\030\001\022D\n\006kshort\030\010 \001"
+    "(\01320.tinkoff.public.invest.api.contract."
+    "v1.QuotationB\002\030\001\022\?\n\005dlong\030\t \001(\01320.tinkof"
+    "f.public.invest.api.contract.v1.Quotatio"
+    "n\022@\n\006dshort\030\n \001(\01320.tinkoff.public.inves"
+    "t.api.contract.v1.Quotation\022C\n\tdlong_min"
+    "\030\013 \001(\01320.tinkoff.public.invest.api.contr"
+    "act.v1.Quotation\022D\n\ndshort_min\030\014 \001(\01320.t"
+    "inkoff.public.invest.api.contract.v1.Quo"
+    "tation\022\032\n\022short_enabled_flag\030\r \001(\010\022\014\n\004na"
+    "me\030\017 \001(\t\022\020\n\010exchange\030\020 \001(\t\022 \n\030coupon_qua"
+    "ntity_per_year\030\021 \001(\005\0221\n\rmaturity_date\030\022 "
+    "\001(\0132\032.google.protobuf.Timestamp\022B\n\007nomin"
+    "al\030\023 \001(\01321.tinkoff.public.invest.api.con"
+    "tract.v1.MoneyValue\022J\n\017initial_nominal\030\024"
+    " \001(\01321.tinkoff.public.invest.api.contrac"
+    "t.v1.MoneyValue\0222\n\016state_reg_date\030\025 \001(\0132"
+    "\032.google.protobuf.Timestamp\0222\n\016placement"
+    "_date\030\026 \001(\0132\032.google.protobuf.Timestamp\022"
+    "J\n\017placement_price\030\027 \001(\01321.tinkoff.publi"
+    "c.invest.api.contract.v1.MoneyValue\022D\n\ta"
+    "ci_value\030\030 \001(\01321.tinkoff.public.invest.a"
+    "pi.contract.v1.MoneyValue\022\027\n\017country_of_"
+    "risk\030\031 \001(\t\022\034\n\024country_of_risk_name\030\032 \001(\t"
+    "\022\016\n\006sector\030\033 \001(\t\022\022\n\nissue_kind\030\034 \001(\t\022\022\n\n"
+    "issue_size\030\035 \001(\003\022\027\n\017issue_size_plan\030\036 \001("
+    "\003\022T\n\016trading_status\030\037 \001(\0162<.tinkoff.publ"
+    "ic.invest.api.contract.v1.SecurityTradin"
+    "gStatus\022\020\n\010otc_flag\030  \001(\010\022\032\n\022buy_availab"
+    "le_flag\030! \001(\010\022\033\n\023sell_available_flag\030\" \001"
+    "(\010\022\034\n\024floating_coupon_flag\030# \001(\010\022\026\n\016perp"
+    "etual_flag\030$ \001(\010\022\031\n\021amortization_flag\030% "
+    "\001(\010\022M\n\023min_price_increment\030& \001(\01320.tinko"
+    "ff.public.invest.api.contract.v1.Quotati"
+    "on\022 \n\030api_trade_available_flag\030\' \001(\010\022\013\n\003"
+    "uid\030( \001(\t\022J\n\rreal_exchange\030) \001(\01623.tinko"
+    "ff.public.invest.api.contract.v1.RealExc"
+    "hange\022\024\n\014position_uid\030* \001(\t\022\021\n\tasset_uid"
+    "\030+ \001(\t\022\026\n\016required_tests\030, \003(\t\022\024\n\014for_ii"
+    "s_flag\0303 \001(\010\022\036\n\026for_qual_investor_flag\0304"
+    " \001(\010\022\024\n\014weekend_flag\0305 \001(\010\022\030\n\020blocked_tc"
+    "a_flag\0306 \001(\010\022\031\n\021subordinated_flag\0307 \001(\010\022"
+    "\026\n\016liquidity_flag\0308 \001(\010\022:\n\026first_1min_ca"
+    "ndle_date\030= \001(\0132\032.google.protobuf.Timest"
+    "amp\022:\n\026first_1day_candle_date\030> \001(\0132\032.go"
+    "ogle.protobuf.Timestamp\022D\n\nrisk_level\030\? "
+    "\001(\01620.tinkoff.public.invest.api.contract"
+    ".v1.RiskLevel\022\?\n\005brand\030@ \001(\01320.tinkoff.p"
+    "ublic.invest.api.contract.v1.BrandData\022B"
+    "\n\tbond_type\030A \001(\0162/.tinkoff.public.inves"
+    "t.api.contract.v1.BondType\022-\n\tcall_date\030"
+    "E \001(\0132\032.google.protobuf.Timestamp\022F\n\014dlo"
+    "ng_client\030Z \001(\01320.tinkoff.public.invest."
+    "api.contract.v1.Quotation\022G\n\rdshort_clie"
+    "nt\030[ \001(\01320.tinkoff.public.invest.api.con"
+    "tract.v1.Quotation\"\260\014\n\010Currency\022\014\n\004figi\030"
+    "\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\022\n\nclass_code\030\003 \001("
+    "\t\022\014\n\004isin\030\004 \001(\t\022\013\n\003lot\030\005 \001(\005\022\020\n\010currency"
+    "\030\006 \001(\t\022C\n\005klong\030\007 \001(\01320.tinkoff.public.i"
+    "nvest.api.contract.v1.QuotationB\002\030\001\022D\n\006k"
+    "short\030\010 \001(\01320.tinkoff.public.invest.api."
+    "contract.v1.QuotationB\002\030\001\022\?\n\005dlong\030\t \001(\013"
     "20.tinkoff.public.invest.api.contract.v1"
-    ".Quotation\022\022\n\nfocus_type\030\022 \001(\t\0221\n\rreleas"
-    "ed_date\030\023 \001(\0132\032.google.protobuf.Timestam"
-    "p\022D\n\nnum_shares\030\024 \001(\01320.tinkoff.public.i"
-    "nvest.api.contract.v1.Quotation\022\027\n\017count"
-    "ry_of_risk\030\025 \001(\t\022\034\n\024country_of_risk_name"
-    "\030\026 \001(\t\022\016\n\006sector\030\027 \001(\t\022\030\n\020rebalancing_fr"
-    "eq\030\030 \001(\t\022T\n\016trading_status\030\031 \001(\0162<.tinko"
+    ".Quotation\022@\n\006dshort\030\n \001(\01320.tinkoff.pub"
+    "lic.invest.api.contract.v1.Quotation\022C\n\t"
+    "dlong_min\030\013 \001(\01320.tinkoff.public.invest."
+    "api.contract.v1.Quotation\022D\n\ndshort_min\030"
+    "\014 \001(\01320.tinkoff.public.invest.api.contra"
+    "ct.v1.Quotation\022\032\n\022short_enabled_flag\030\r "
+    "\001(\010\022\014\n\004name\030\017 \001(\t\022\020\n\010exchange\030\020 \001(\t\022B\n\007n"
+    "ominal\030\021 \001(\01321.tinkoff.public.invest.api"
+    ".contract.v1.MoneyValue\022\027\n\017country_of_ri"
+    "sk\030\022 \001(\t\022\034\n\024country_of_risk_name\030\023 \001(\t\022T"
+    "\n\016trading_status\030\024 \001(\0162<.tinkoff.public."
+    "invest.api.contract.v1.SecurityTradingSt"
+    "atus\022\020\n\010otc_flag\030\025 \001(\010\022\032\n\022buy_available_"
+    "flag\030\026 \001(\010\022\033\n\023sell_available_flag\030\027 \001(\010\022"
+    "\031\n\021iso_currency_name\030\030 \001(\t\022M\n\023min_price_"
+    "increment\030\031 \001(\01320.tinkoff.public.invest."
+    "api.contract.v1.Quotation\022 \n\030api_trade_a"
+    "vailable_flag\030\032 \001(\010\022\013\n\003uid\030\033 \001(\t\022J\n\rreal"
+    "_exchange\030\034 \001(\01623.tinkoff.public.invest."
+    "api.contract.v1.RealExchange\022\024\n\014position"
+    "_uid\030\035 \001(\t\022\026\n\016required_tests\030\036 \003(\t\022\021\n\tas"
+    "set_uid\030\037 \001(\t\022\024\n\014for_iis_flag\030) \001(\010\022\036\n\026f"
+    "or_qual_investor_flag\0304 \001(\010\022\024\n\014weekend_f"
+    "lag\0305 \001(\010\022\030\n\020blocked_tca_flag\0306 \001(\010\022:\n\026f"
+    "irst_1min_candle_date\0308 \001(\0132\032.google.pro"
+    "tobuf.Timestamp\022:\n\026first_1day_candle_dat"
+    "e\0309 \001(\0132\032.google.protobuf.Timestamp\022\?\n\005b"
+    "rand\030< \001(\01320.tinkoff.public.invest.api.c"
+    "ontract.v1.BrandData\022F\n\014dlong_client\030Z \001"
+    "(\01320.tinkoff.public.invest.api.contract."
+    "v1.Quotation\022G\n\rdshort_client\030[ \001(\01320.ti"
+    "nkoff.public.invest.api.contract.v1.Quot"
+    "ation\"\303\016\n\003Etf\022\014\n\004figi\030\001 \001(\t\022\016\n\006ticker\030\002 "
+    "\001(\t\022\022\n\nclass_code\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\013\n"
+    "\003lot\030\005 \001(\005\022\020\n\010currency\030\006 \001(\t\022C\n\005klong\030\007 "
+    "\001(\01320.tinkoff.public.invest.api.contract"
+    ".v1.QuotationB\002\030\001\022D\n\006kshort\030\010 \001(\01320.tink"
+    "off.public.invest.api.contract.v1.Quotat"
+    "ionB\002\030\001\022\?\n\005dlong\030\t \001(\01320.tinkoff.public."
+    "invest.api.contract.v1.Quotation\022@\n\006dsho"
+    "rt\030\n \001(\01320.tinkoff.public.invest.api.con"
+    "tract.v1.Quotation\022C\n\tdlong_min\030\013 \001(\01320."
+    "tinkoff.public.invest.api.contract.v1.Qu"
+    "otation\022D\n\ndshort_min\030\014 \001(\01320.tinkoff.pu"
+    "blic.invest.api.contract.v1.Quotation\022\032\n"
+    "\022short_enabled_flag\030\r \001(\010\022\014\n\004name\030\017 \001(\t\022"
+    "\020\n\010exchange\030\020 \001(\t\022J\n\020fixed_commission\030\021 "
+    "\001(\01320.tinkoff.public.invest.api.contract"
+    ".v1.Quotation\022\022\n\nfocus_type\030\022 \001(\t\0221\n\rrel"
+    "eased_date\030\023 \001(\0132\032.google.protobuf.Times"
+    "tamp\022D\n\nnum_shares\030\024 \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\022\027\n\017co"
+    "untry_of_risk\030\025 \001(\t\022\034\n\024country_of_risk_n"
+    "ame\030\026 \001(\t\022\016\n\006sector\030\027 \001(\t\022\030\n\020rebalancing"
+    "_freq\030\030 \001(\t\022T\n\016trading_status\030\031 \001(\0162<.ti"
+    "nkoff.public.invest.api.contract.v1.Secu"
+    "rityTradingStatus\022\020\n\010otc_flag\030\032 \001(\010\022\032\n\022b"
+    "uy_available_flag\030\033 \001(\010\022\033\n\023sell_availabl"
+    "e_flag\030\034 \001(\010\022M\n\023min_price_increment\030\035 \001("
+    "\01320.tinkoff.public.invest.api.contract.v"
+    "1.Quotation\022 \n\030api_trade_available_flag\030"
+    "\036 \001(\010\022\013\n\003uid\030\037 \001(\t\022J\n\rreal_exchange\030  \001("
+    "\01623.tinkoff.public.invest.api.contract.v"
+    "1.RealExchange\022\024\n\014position_uid\030! \001(\t\022\021\n\t"
+    "asset_uid\030\" \001(\t\022Z\n\023instrument_exchange\030#"
+    " \001(\0162=.tinkoff.public.invest.api.contrac"
+    "t.v1.InstrumentExchangeType\022\026\n\016required_"
+    "tests\030$ \003(\t\022\024\n\014for_iis_flag\030) \001(\010\022\036\n\026for"
+    "_qual_investor_flag\030* \001(\010\022\024\n\014weekend_fla"
+    "g\030+ \001(\010\022\030\n\020blocked_tca_flag\030, \001(\010\022\026\n\016liq"
+    "uidity_flag\030- \001(\010\022:\n\026first_1min_candle_d"
+    "ate\0308 \001(\0132\032.google.protobuf.Timestamp\022:\n"
+    "\026first_1day_candle_date\0309 \001(\0132\032.google.p"
+    "rotobuf.Timestamp\022\?\n\005brand\030< \001(\01320.tinko"
+    "ff.public.invest.api.contract.v1.BrandDa"
+    "ta\022F\n\014dlong_client\030Z \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\022G\n\rds"
+    "hort_client\030[ \001(\01320.tinkoff.public.inves"
+    "t.api.contract.v1.Quotation\"\206\020\n\006Future\022\014"
+    "\n\004figi\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\022\n\nclass_co"
+    "de\030\003 \001(\t\022\013\n\003lot\030\004 \001(\005\022\020\n\010currency\030\005 \001(\t\022"
+    "C\n\005klong\030\006 \001(\01320.tinkoff.public.invest.a"
+    "pi.contract.v1.QuotationB\002\030\001\022D\n\006kshort\030\007"
+    " \001(\01320.tinkoff.public.invest.api.contrac"
+    "t.v1.QuotationB\002\030\001\022\?\n\005dlong\030\010 \001(\01320.tink"
+    "off.public.invest.api.contract.v1.Quotat"
+    "ion\022@\n\006dshort\030\t \001(\01320.tinkoff.public.inv"
+    "est.api.contract.v1.Quotation\022C\n\tdlong_m"
+    "in\030\n \001(\01320.tinkoff.public.invest.api.con"
+    "tract.v1.Quotation\022D\n\ndshort_min\030\013 \001(\01320"
+    ".tinkoff.public.invest.api.contract.v1.Q"
+    "uotation\022\032\n\022short_enabled_flag\030\014 \001(\010\022\014\n\004"
+    "name\030\r \001(\t\022\020\n\010exchange\030\016 \001(\t\0224\n\020first_tr"
+    "ade_date\030\017 \001(\0132\032.google.protobuf.Timesta"
+    "mp\0223\n\017last_trade_date\030\020 \001(\0132\032.google.pro"
+    "tobuf.Timestamp\022\024\n\014futures_type\030\021 \001(\t\022\022\n"
+    "\nasset_type\030\022 \001(\t\022\023\n\013basic_asset\030\023 \001(\t\022J"
+    "\n\020basic_asset_size\030\024 \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\022\027\n\017co"
+    "untry_of_risk\030\025 \001(\t\022\034\n\024country_of_risk_n"
+    "ame\030\026 \001(\t\022\016\n\006sector\030\027 \001(\t\0223\n\017expiration_"
+    "date\030\030 \001(\0132\032.google.protobuf.Timestamp\022T"
+    "\n\016trading_status\030\031 \001(\0162<.tinkoff.public."
+    "invest.api.contract.v1.SecurityTradingSt"
+    "atus\022\020\n\010otc_flag\030\032 \001(\010\022\032\n\022buy_available_"
+    "flag\030\033 \001(\010\022\033\n\023sell_available_flag\030\034 \001(\010\022"
+    "M\n\023min_price_increment\030\035 \001(\01320.tinkoff.p"
+    "ublic.invest.api.contract.v1.Quotation\022 "
+    "\n\030api_trade_available_flag\030\036 \001(\010\022\013\n\003uid\030"
+    "\037 \001(\t\022J\n\rreal_exchange\030  \001(\01623.tinkoff.p"
+    "ublic.invest.api.contract.v1.RealExchang"
+    "e\022\024\n\014position_uid\030! \001(\t\022 \n\030basic_asset_p"
+    "osition_uid\030\" \001(\t\022\026\n\016required_tests\030# \003("
+    "\t\022\024\n\014for_iis_flag\030) \001(\010\022\036\n\026for_qual_inve"
+    "stor_flag\030* \001(\010\022\024\n\014weekend_flag\030+ \001(\010\022\030\n"
+    "\020blocked_tca_flag\030, \001(\010\022:\n\026first_1min_ca"
+    "ndle_date\0308 \001(\0132\032.google.protobuf.Timest"
+    "amp\022:\n\026first_1day_candle_date\0309 \001(\0132\032.go"
+    "ogle.protobuf.Timestamp\022P\n\025initial_margi"
+    "n_on_buy\030= \001(\01321.tinkoff.public.invest.a"
+    "pi.contract.v1.MoneyValue\022Q\n\026initial_mar"
+    "gin_on_sell\030> \001(\01321.tinkoff.public.inves"
+    "t.api.contract.v1.MoneyValue\022T\n\032min_pric"
+    "e_increment_amount\030\? \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\022\?\n\005br"
+    "and\030@ \001(\01320.tinkoff.public.invest.api.co"
+    "ntract.v1.BrandData\022F\n\014dlong_client\030Z \001("
+    "\01320.tinkoff.public.invest.api.contract.v"
+    "1.Quotation\022G\n\rdshort_client\030[ \001(\01320.tin"
+    "koff.public.invest.api.contract.v1.Quota"
+    "tion\"\317\016\n\005Share\022\014\n\004figi\030\001 \001(\t\022\016\n\006ticker\030\002"
+    " \001(\t\022\022\n\nclass_code\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\013"
+    "\n\003lot\030\005 \001(\005\022\020\n\010currency\030\006 \001(\t\022C\n\005klong\030\007"
+    " \001(\01320.tinkoff.public.invest.api.contrac"
+    "t.v1.QuotationB\002\030\001\022D\n\006kshort\030\010 \001(\01320.tin"
+    "koff.public.invest.api.contract.v1.Quota"
+    "tionB\002\030\001\022\?\n\005dlong\030\t \001(\01320.tinkoff.public"
+    ".invest.api.contract.v1.Quotation\022@\n\006dsh"
+    "ort\030\n \001(\01320.tinkoff.public.invest.api.co"
+    "ntract.v1.Quotation\022C\n\tdlong_min\030\013 \001(\01320"
+    ".tinkoff.public.invest.api.contract.v1.Q"
+    "uotation\022D\n\ndshort_min\030\014 \001(\01320.tinkoff.p"
+    "ublic.invest.api.contract.v1.Quotation\022\032"
+    "\n\022short_enabled_flag\030\r \001(\010\022\014\n\004name\030\017 \001(\t"
+    "\022\020\n\010exchange\030\020 \001(\t\022,\n\010ipo_date\030\021 \001(\0132\032.g"
+    "oogle.protobuf.Timestamp\022\022\n\nissue_size\030\022"
+    " \001(\003\022\027\n\017country_of_risk\030\023 \001(\t\022\034\n\024country"
+    "_of_risk_name\030\024 \001(\t\022\016\n\006sector\030\025 \001(\t\022\027\n\017i"
+    "ssue_size_plan\030\026 \001(\003\022B\n\007nominal\030\027 \001(\01321."
+    "tinkoff.public.invest.api.contract.v1.Mo"
+    "neyValue\022T\n\016trading_status\030\031 \001(\0162<.tinko"
     "ff.public.invest.api.contract.v1.Securit"
     "yTradingStatus\022\020\n\010otc_flag\030\032 \001(\010\022\032\n\022buy_"
     "available_flag\030\033 \001(\010\022\033\n\023sell_available_f"
-    "lag\030\034 \001(\010\022M\n\023min_price_increment\030\035 \001(\01320"
-    ".tinkoff.public.invest.api.contract.v1.Q"
-    "uotation\022 \n\030api_trade_available_flag\030\036 \001"
-    "(\010\022\013\n\003uid\030\037 \001(\t\022J\n\rreal_exchange\030  \001(\01623"
-    ".tinkoff.public.invest.api.contract.v1.R"
-    "ealExchange\022\024\n\014position_uid\030! \001(\t\022\021\n\tass"
-    "et_uid\030\" \001(\t\022Z\n\023instrument_exchange\030# \001("
-    "\0162=.tinkoff.public.invest.api.contract.v"
-    "1.InstrumentExchangeType\022\026\n\016required_tes"
-    "ts\030$ \003(\t\022\024\n\014for_iis_flag\030) \001(\010\022\036\n\026for_qu"
-    "al_investor_flag\030* \001(\010\022\024\n\014weekend_flag\030+"
-    " \001(\010\022\030\n\020blocked_tca_flag\030, \001(\010\022\026\n\016liquid"
-    "ity_flag\030- \001(\010\022:\n\026first_1min_candle_date"
+    "lag\030\034 \001(\010\022\026\n\016div_yield_flag\030\035 \001(\010\022D\n\nsha"
+    "re_type\030\036 \001(\01620.tinkoff.public.invest.ap"
+    "i.contract.v1.ShareType\022M\n\023min_price_inc"
+    "rement\030\037 \001(\01320.tinkoff.public.invest.api"
+    ".contract.v1.Quotation\022 \n\030api_trade_avai"
+    "lable_flag\030  \001(\010\022\013\n\003uid\030! \001(\t\022J\n\rreal_ex"
+    "change\030\" \001(\01623.tinkoff.public.invest.api"
+    ".contract.v1.RealExchange\022\024\n\014position_ui"
+    "d\030# \001(\t\022\021\n\tasset_uid\030$ \001(\t\022Z\n\023instrument"
+    "_exchange\030% \001(\0162=.tinkoff.public.invest."
+    "api.contract.v1.InstrumentExchangeType\022\026"
+    "\n\016required_tests\030& \003(\t\022\024\n\014for_iis_flag\030."
+    " \001(\010\022\036\n\026for_qual_investor_flag\030/ \001(\010\022\024\n\014"
+    "weekend_flag\0300 \001(\010\022\030\n\020blocked_tca_flag\0301"
+    " \001(\010\022\026\n\016liquidity_flag\0302 \001(\010\022:\n\026first_1m"
+    "in_candle_date\0308 \001(\0132\032.google.protobuf.T"
+    "imestamp\022:\n\026first_1day_candle_date\0309 \001(\013"
+    "2\032.google.protobuf.Timestamp\022\?\n\005brand\030< "
+    "\001(\01320.tinkoff.public.invest.api.contract"
+    ".v1.BrandData\022F\n\014dlong_client\030Z \001(\01320.ti"
+    "nkoff.public.invest.api.contract.v1.Quot"
+    "ation\022G\n\rdshort_client\030[ \001(\01320.tinkoff.p"
+    "ublic.invest.api.contract.v1.Quotation\"\201"
+    "\027\n\016StructuredNote\022\013\n\003uid\030\001 \001(\t\022\014\n\004figi\030\002"
+    " \001(\t\022\016\n\006ticker\030\003 \001(\t\022\022\n\nclass_code\030\004 \001(\t"
+    "\022\014\n\004isin\030\005 \001(\t\022\014\n\004name\030\006 \001(\t\022\021\n\tasset_ui"
+    "d\030\007 \001(\t\022\024\n\014position_uid\030\010 \001(\t\022M\n\023min_pri"
+    "ce_increment\030\t \001(\01320.tinkoff.public.inve"
+    "st.api.contract.v1.Quotation\022\013\n\003lot\030\n \001("
+    "\005\022B\n\007nominal\030\013 \001(\01321.tinkoff.public.inve"
+    "st.api.contract.v1.MoneyValue\022\020\n\010currenc"
+    "y\030\014 \001(\t\0221\n\rmaturity_date\030\r \001(\0132\032.google."
+    "protobuf.Timestamp\0222\n\016placement_date\030\016 \001"
+    "(\0132\032.google.protobuf.Timestamp\022\022\n\nissue_"
+    "kind\030\017 \001(\t\022\022\n\nissue_size\030\020 \001(\005\022\027\n\017issue_"
+    "size_plan\030\021 \001(\005\022F\n\014dlong_client\030\022 \001(\01320."
+    "tinkoff.public.invest.api.contract.v1.Qu"
+    "otation\022G\n\rdshort_client\030\023 \001(\01320.tinkoff"
+    ".public.invest.api.contract.v1.Quotation"
+    "\022\032\n\022short_enabled_flag\030\024 \001(\010\022\020\n\010exchange"
+    "\030\025 \001(\t\022T\n\016trading_status\030\026 \001(\0162<.tinkoff"
+    ".public.invest.api.contract.v1.SecurityT"
+    "radingStatus\022 \n\030api_trade_available_flag"
+    "\030\027 \001(\010\022\032\n\022buy_available_flag\030\030 \001(\010\022\033\n\023se"
+    "ll_available_flag\030\031 \001(\010\022\"\n\032limit_order_a"
+    "vailable_flag\030\032 \001(\010\022#\n\033market_order_avai"
+    "lable_flag\030\033 \001(\010\022&\n\036bestprice_order_avai"
+    "lable_flag\030\034 \001(\010\022\024\n\014weekend_flag\030\035 \001(\010\022\026"
+    "\n\016liquidity_flag\030\036 \001(\010\022\024\n\014for_iis_flag\030\037"
+    " \001(\010\022\036\n\026for_qual_investor_flag\030  \001(\010\022\032\n\022"
+    "pawnshop_list_flag\030! \001(\010\022J\n\rreal_exchang"
+    "e\030\" \001(\01623.tinkoff.public.invest.api.cont"
+    "ract.v1.RealExchange\022:\n\026first_1min_candl"
+    "e_date\030# \001(\0132\032.google.protobuf.Timestamp"
+    "\022:\n\026first_1day_candle_date\030$ \001(\0132\032.googl"
+    "e.protobuf.Timestamp\022\023\n\013borrow_name\030% \001("
+    "\t\022\014\n\004type\030& \001(\t\022]\n\017logic_portfolio\030\' \001(\016"
+    "2D.tinkoff.public.invest.api.contract.v1"
+    ".StructuredNote.LogicPortfolio\022D\n\nasset_"
+    "type\030( \001(\01620.tinkoff.public.invest.api.c"
+    "ontract.v1.AssetType\022V\n\014basic_assets\030) \003"
+    "(\0132@.tinkoff.public.invest.api.contract."
+    "v1.StructuredNote.BasicAsset\022H\n\016safety_b"
+    "arrier\030* \001(\01320.tinkoff.public.invest.api"
+    ".contract.v1.Quotation\022\032\n\022coupon_period_"
+    "base\030+ \001(\t\022i\n\025observation_principle\030, \001("
+    "\0162J.tinkoff.public.invest.api.contract.v"
+    "1.StructuredNote.ObservationPrinciple\022\035\n"
+    "\025observation_frequency\030- \001(\t\022=\n\031initial_"
+    "price_fixing_date\030. \001(\0132\032.google.protobu"
+    "f.Timestamp\022J\n\005yield\030/ \003(\0132;.tinkoff.pub"
+    "lic.invest.api.contract.v1.StructuredNot"
+    "e.Yield\022\032\n\022coupon_saving_flag\0300 \001(\010\022\016\n\006s"
+    "ector\0301 \001(\t\022\027\n\017country_of_risk\0302 \001(\t\022\034\n\024"
+    "country_of_risk_name\0303 \001(\t\022\021\n\tlogo_name\030"
+    "4 \001(\t\022\026\n\016required_tests\0305 \003(\t\032\242\001\n\nBasicA"
+    "sset\022\013\n\003uid\030\001 \001(\t\022>\n\004type\030\002 \001(\01620.tinkof"
+    "f.public.invest.api.contract.v1.AssetTyp"
+    "e\022G\n\rinitial_price\030\003 \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\032\227\001\n\005Y"
+    "ield\022M\n\004type\030\001 \001(\0162\?.tinkoff.public.inve"
+    "st.api.contract.v1.StructuredNote.YieldT"
+    "ype\022\?\n\005value\030\002 \001(\01320.tinkoff.public.inve"
+    "st.api.contract.v1.Quotation\"r\n\016LogicPor"
+    "tfolio\022\037\n\033LOGIC_PORTFOLIO_UNSPECIFIED\020\000\022"
+    "\036\n\032LOGIC_PORTFOLIO_VOLATILITY\020\001\022\037\n\033LOGIC"
+    "_PORTFOLIO_CORRELATION\020\002\"\203\002\n\024Observation"
+    "Principle\022%\n!OBSERVATION_PRINCIPLE_UNSPE"
+    "CIFIED\020\000\022+\n\'OBSERVATION_PRINCIPLE_WORST_"
+    "BASIC_ASSET\020\001\022*\n&OBSERVATION_PRINCIPLE_B"
+    "EST_BASIC_ASSET\020\002\0221\n-OBSERVATION_PRINCIP"
+    "LE_AVERAGE_OF_BASIC_ASSETS\020\003\0228\n4OBSERVAT"
+    "ION_PRINCIPLE_SINGLE_BASIC_ASSET_PERFORM"
+    "ANCE\020\004\"\211\001\n\tYieldType\022\032\n\026YIELD_TYPE_UNSPE"
+    "CIFIED\020\000\022\037\n\033YIELD_TYPE_GUARANTED_COUPON\020"
+    "\001\022!\n\035YIELD_TYPE_CONDITIONAL_COUPON\020\002\022\034\n\030"
+    "YIELD_TYPE_PARTICIPATION\020\003\"\251\001\n\032GetAccrue"
+    "dInterestsRequest\022\020\n\004figi\030\001 \001(\tB\002\030\001\022.\n\004f"
+    "rom\030\002 \001(\0132\032.google.protobuf.TimestampB\004\342"
+    "A\001\002\022,\n\002to\030\003 \001(\0132\032.google.protobuf.Timest"
+    "ampB\004\342A\001\002\022\033\n\rinstrument_id\030\004 \001(\tB\004\342A\001\002\"p"
+    "\n\033GetAccruedInterestsResponse\022Q\n\021accrued"
+    "_interests\030\001 \003(\01326.tinkoff.public.invest"
+    ".api.contract.v1.AccruedInterest\"\210\002\n\017Acc"
+    "ruedInterest\022(\n\004date\030\001 \001(\0132\032.google.prot"
+    "obuf.Timestamp\022\?\n\005value\030\002 \001(\01320.tinkoff."
+    "public.invest.api.contract.v1.Quotation\022"
+    "G\n\rvalue_percent\030\003 \001(\01320.tinkoff.public."
+    "invest.api.contract.v1.Quotation\022A\n\007nomi"
+    "nal\030\004 \001(\01320.tinkoff.public.invest.api.co"
+    "ntract.v1.Quotation\"H\n\027GetFuturesMarginR"
+    "equest\022\020\n\004figi\030\001 \001(\tB\002\030\001\022\033\n\rinstrument_i"
+    "d\030\004 \001(\tB\004\342A\001\002\"\344\002\n\030GetFuturesMarginRespon"
+    "se\022P\n\025initial_margin_on_buy\030\001 \001(\01321.tink"
+    "off.public.invest.api.contract.v1.MoneyV"
+    "alue\022Q\n\026initial_margin_on_sell\030\002 \001(\01321.t"
+    "inkoff.public.invest.api.contract.v1.Mon"
+    "eyValue\022M\n\023min_price_increment\030\003 \001(\01320.t"
+    "inkoff.public.invest.api.contract.v1.Quo"
+    "tation\022T\n\032min_price_increment_amount\030\004 \001"
+    "(\01320.tinkoff.public.invest.api.contract."
+    "v1.Quotation\"[\n\022InstrumentResponse\022E\n\nin"
+    "strument\030\001 \001(\01321.tinkoff.public.invest.a"
+    "pi.contract.v1.Instrument\"\276\014\n\nInstrument"
+    "\022\014\n\004figi\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\022\n\nclass_"
+    "code\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\013\n\003lot\030\005 \001(\005\022\020\n"
+    "\010currency\030\006 \001(\t\022C\n\005klong\030\007 \001(\01320.tinkoff"
+    ".public.invest.api.contract.v1.Quotation"
+    "B\002\030\001\022D\n\006kshort\030\010 \001(\01320.tinkoff.public.in"
+    "vest.api.contract.v1.QuotationB\002\030\001\022\?\n\005dl"
+    "ong\030\t \001(\01320.tinkoff.public.invest.api.co"
+    "ntract.v1.Quotation\022@\n\006dshort\030\n \001(\01320.ti"
+    "nkoff.public.invest.api.contract.v1.Quot"
+    "ation\022C\n\tdlong_min\030\013 \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\022D\n\nds"
+    "hort_min\030\014 \001(\01320.tinkoff.public.invest.a"
+    "pi.contract.v1.Quotation\022\032\n\022short_enable"
+    "d_flag\030\r \001(\010\022\014\n\004name\030\016 \001(\t\022\020\n\010exchange\030\017"
+    " \001(\t\022\027\n\017country_of_risk\030\020 \001(\t\022\034\n\024country"
+    "_of_risk_name\030\021 \001(\t\022\027\n\017instrument_type\030\022"
+    " \001(\t\022T\n\016trading_status\030\023 \001(\0162<.tinkoff.p"
+    "ublic.invest.api.contract.v1.SecurityTra"
+    "dingStatus\022\020\n\010otc_flag\030\024 \001(\010\022\032\n\022buy_avai"
+    "lable_flag\030\025 \001(\010\022\033\n\023sell_available_flag\030"
+    "\026 \001(\010\022M\n\023min_price_increment\030\027 \001(\01320.tin"
+    "koff.public.invest.api.contract.v1.Quota"
+    "tion\022 \n\030api_trade_available_flag\030\030 \001(\010\022\013"
+    "\n\003uid\030\031 \001(\t\022J\n\rreal_exchange\030\032 \001(\01623.tin"
+    "koff.public.invest.api.contract.v1.RealE"
+    "xchange\022\024\n\014position_uid\030\033 \001(\t\022\021\n\tasset_u"
+    "id\030\034 \001(\t\022\026\n\016required_tests\030\035 \003(\t\022\024\n\014for_"
+    "iis_flag\030$ \001(\010\022\036\n\026for_qual_investor_flag"
+    "\030% \001(\010\022\024\n\014weekend_flag\030& \001(\010\022\030\n\020blocked_"
+    "tca_flag\030\' \001(\010\022N\n\017instrument_kind\030( \001(\0162"
+    "5.tinkoff.public.invest.api.contract.v1."
+    "InstrumentType\022:\n\026first_1min_candle_date"
     "\0308 \001(\0132\032.google.protobuf.Timestamp\022:\n\026fi"
     "rst_1day_candle_date\0309 \001(\0132\032.google.prot"
     "obuf.Timestamp\022\?\n\005brand\030< \001(\01320.tinkoff."
     "public.invest.api.contract.v1.BrandData\022"
-    "F\n\014dlong_client\030Z \001(\01320.tinkoff.public.i"
-    "nvest.api.contract.v1.Quotation\022G\n\rdshor"
-    "t_client\030[ \001(\01320.tinkoff.public.invest.a"
-    "pi.contract.v1.Quotation\"\206\020\n\006Future\022\014\n\004f"
-    "igi\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\022\n\nclass_code\030"
-    "\003 \001(\t\022\013\n\003lot\030\004 \001(\005\022\020\n\010currency\030\005 \001(\t\022C\n\005"
-    "klong\030\006 \001(\01320.tinkoff.public.invest.api."
-    "contract.v1.QuotationB\002\030\001\022D\n\006kshort\030\007 \001("
-    "\01320.tinkoff.public.invest.api.contract.v"
-    "1.QuotationB\002\030\001\022\?\n\005dlong\030\010 \001(\01320.tinkoff"
-    ".public.invest.api.contract.v1.Quotation"
-    "\022@\n\006dshort\030\t \001(\01320.tinkoff.public.invest"
-    ".api.contract.v1.Quotation\022C\n\tdlong_min\030"
-    "\n \001(\01320.tinkoff.public.invest.api.contra"
-    "ct.v1.Quotation\022D\n\ndshort_min\030\013 \001(\01320.ti"
-    "nkoff.public.invest.api.contract.v1.Quot"
-    "ation\022\032\n\022short_enabled_flag\030\014 \001(\010\022\014\n\004nam"
-    "e\030\r \001(\t\022\020\n\010exchange\030\016 \001(\t\0224\n\020first_trade"
-    "_date\030\017 \001(\0132\032.google.protobuf.Timestamp\022"
-    "3\n\017last_trade_date\030\020 \001(\0132\032.google.protob"
-    "uf.Timestamp\022\024\n\014futures_type\030\021 \001(\t\022\022\n\nas"
-    "set_type\030\022 \001(\t\022\023\n\013basic_asset\030\023 \001(\t\022J\n\020b"
-    "asic_asset_size\030\024 \001(\01320.tinkoff.public.i"
-    "nvest.api.contract.v1.Quotation\022\027\n\017count"
-    "ry_of_risk\030\025 \001(\t\022\034\n\024country_of_risk_name"
-    "\030\026 \001(\t\022\016\n\006sector\030\027 \001(\t\0223\n\017expiration_dat"
-    "e\030\030 \001(\0132\032.google.protobuf.Timestamp\022T\n\016t"
-    "rading_status\030\031 \001(\0162<.tinkoff.public.inv"
-    "est.api.contract.v1.SecurityTradingStatu"
-    "s\022\020\n\010otc_flag\030\032 \001(\010\022\032\n\022buy_available_fla"
-    "g\030\033 \001(\010\022\033\n\023sell_available_flag\030\034 \001(\010\022M\n\023"
-    "min_price_increment\030\035 \001(\01320.tinkoff.publ"
-    "ic.invest.api.contract.v1.Quotation\022 \n\030a"
-    "pi_trade_available_flag\030\036 \001(\010\022\013\n\003uid\030\037 \001"
-    "(\t\022J\n\rreal_exchange\030  \001(\01623.tinkoff.publ"
-    "ic.invest.api.contract.v1.RealExchange\022\024"
-    "\n\014position_uid\030! \001(\t\022 \n\030basic_asset_posi"
-    "tion_uid\030\" \001(\t\022\026\n\016required_tests\030# \003(\t\022\024"
-    "\n\014for_iis_flag\030) \001(\010\022\036\n\026for_qual_investo"
-    "r_flag\030* \001(\010\022\024\n\014weekend_flag\030+ \001(\010\022\030\n\020bl"
-    "ocked_tca_flag\030, \001(\010\022:\n\026first_1min_candl"
-    "e_date\0308 \001(\0132\032.google.protobuf.Timestamp"
-    "\022:\n\026first_1day_candle_date\0309 \001(\0132\032.googl"
-    "e.protobuf.Timestamp\022P\n\025initial_margin_o"
-    "n_buy\030= \001(\01321.tinkoff.public.invest.api."
-    "contract.v1.MoneyValue\022Q\n\026initial_margin"
-    "_on_sell\030> \001(\01321.tinkoff.public.invest.a"
-    "pi.contract.v1.MoneyValue\022T\n\032min_price_i"
-    "ncrement_amount\030\? \001(\01320.tinkoff.public.i"
-    "nvest.api.contract.v1.Quotation\022\?\n\005brand"
-    "\030@ \001(\01320.tinkoff.public.invest.api.contr"
-    "act.v1.BrandData\022F\n\014dlong_client\030Z \001(\01320"
-    ".tinkoff.public.invest.api.contract.v1.Q"
-    "uotation\022G\n\rdshort_client\030[ \001(\01320.tinkof"
-    "f.public.invest.api.contract.v1.Quotatio"
-    "n\"\317\016\n\005Share\022\014\n\004figi\030\001 \001(\t\022\016\n\006ticker\030\002 \001("
-    "\t\022\022\n\nclass_code\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\013\n\003l"
-    "ot\030\005 \001(\005\022\020\n\010currency\030\006 \001(\t\022C\n\005klong\030\007 \001("
-    "\01320.tinkoff.public.invest.api.contract.v"
-    "1.QuotationB\002\030\001\022D\n\006kshort\030\010 \001(\01320.tinkof"
-    "f.public.invest.api.contract.v1.Quotatio"
-    "nB\002\030\001\022\?\n\005dlong\030\t \001(\01320.tinkoff.public.in"
-    "vest.api.contract.v1.Quotation\022@\n\006dshort"
-    "\030\n \001(\01320.tinkoff.public.invest.api.contr"
-    "act.v1.Quotation\022C\n\tdlong_min\030\013 \001(\01320.ti"
-    "nkoff.public.invest.api.contract.v1.Quot"
-    "ation\022D\n\ndshort_min\030\014 \001(\01320.tinkoff.publ"
-    "ic.invest.api.contract.v1.Quotation\022\032\n\022s"
-    "hort_enabled_flag\030\r \001(\010\022\014\n\004name\030\017 \001(\t\022\020\n"
-    "\010exchange\030\020 \001(\t\022,\n\010ipo_date\030\021 \001(\0132\032.goog"
-    "le.protobuf.Timestamp\022\022\n\nissue_size\030\022 \001("
-    "\003\022\027\n\017country_of_risk\030\023 \001(\t\022\034\n\024country_of"
-    "_risk_name\030\024 \001(\t\022\016\n\006sector\030\025 \001(\t\022\027\n\017issu"
-    "e_size_plan\030\026 \001(\003\022B\n\007nominal\030\027 \001(\01321.tin"
-    "koff.public.invest.api.contract.v1.Money"
-    "Value\022T\n\016trading_status\030\031 \001(\0162<.tinkoff."
-    "public.invest.api.contract.v1.SecurityTr"
-    "adingStatus\022\020\n\010otc_flag\030\032 \001(\010\022\032\n\022buy_ava"
-    "ilable_flag\030\033 \001(\010\022\033\n\023sell_available_flag"
-    "\030\034 \001(\010\022\026\n\016div_yield_flag\030\035 \001(\010\022D\n\nshare_"
-    "type\030\036 \001(\01620.tinkoff.public.invest.api.c"
-    "ontract.v1.ShareType\022M\n\023min_price_increm"
-    "ent\030\037 \001(\01320.tinkoff.public.invest.api.co"
-    "ntract.v1.Quotation\022 \n\030api_trade_availab"
-    "le_flag\030  \001(\010\022\013\n\003uid\030! \001(\t\022J\n\rreal_excha"
-    "nge\030\" \001(\01623.tinkoff.public.invest.api.co"
-    "ntract.v1.RealExchange\022\024\n\014position_uid\030#"
-    " \001(\t\022\021\n\tasset_uid\030$ \001(\t\022Z\n\023instrument_ex"
-    "change\030% \001(\0162=.tinkoff.public.invest.api"
-    ".contract.v1.InstrumentExchangeType\022\026\n\016r"
-    "equired_tests\030& \003(\t\022\024\n\014for_iis_flag\030. \001("
-    "\010\022\036\n\026for_qual_investor_flag\030/ \001(\010\022\024\n\014wee"
-    "kend_flag\0300 \001(\010\022\030\n\020blocked_tca_flag\0301 \001("
-    "\010\022\026\n\016liquidity_flag\0302 \001(\010\022:\n\026first_1min_"
-    "candle_date\0308 \001(\0132\032.google.protobuf.Time"
-    "stamp\022:\n\026first_1day_candle_date\0309 \001(\0132\032."
-    "google.protobuf.Timestamp\022\?\n\005brand\030< \001(\013"
+    "G\n\014dlong_client\030\352\003 \001(\01320.tinkoff.public."
+    "invest.api.contract.v1.Quotation\022H\n\rdsho"
+    "rt_client\030\353\003 \001(\01320.tinkoff.public.invest"
+    ".api.contract.v1.Quotation\"\260\001\n\023GetDivide"
+    "ndsRequest\022\020\n\004figi\030\001 \001(\tB\002\030\001\022-\n\004from\030\002 \001"
+    "(\0132\032.google.protobuf.TimestampH\000\210\001\001\022+\n\002t"
+    "o\030\003 \001(\0132\032.google.protobuf.TimestampH\001\210\001\001"
+    "\022\033\n\rinstrument_id\030\004 \001(\tB\004\342A\001\002B\007\n\005_fromB\005"
+    "\n\003_to\"Z\n\024GetDividendsResponse\022B\n\tdividen"
+    "ds\030\001 \003(\0132/.tinkoff.public.invest.api.con"
+    "tract.v1.Dividend\"\206\004\n\010Dividend\022G\n\014divide"
+    "nd_net\030\001 \001(\01321.tinkoff.public.invest.api"
+    ".contract.v1.MoneyValue\0220\n\014payment_date\030"
+    "\002 \001(\0132\032.google.protobuf.Timestamp\0221\n\rdec"
+    "lared_date\030\003 \001(\0132\032.google.protobuf.Times"
+    "tamp\0221\n\rlast_buy_date\030\004 \001(\0132\032.google.pro"
+    "tobuf.Timestamp\022\025\n\rdividend_type\030\005 \001(\t\022/"
+    "\n\013record_date\030\006 \001(\0132\032.google.protobuf.Ti"
+    "mestamp\022\022\n\nregularity\030\007 \001(\t\022F\n\013close_pri"
+    "ce\030\010 \001(\01321.tinkoff.public.invest.api.con"
+    "tract.v1.MoneyValue\022E\n\013yield_value\030\t \001(\013"
     "20.tinkoff.public.invest.api.contract.v1"
-    ".BrandData\022F\n\014dlong_client\030Z \001(\01320.tinko"
-    "ff.public.invest.api.contract.v1.Quotati"
-    "on\022G\n\rdshort_client\030[ \001(\01320.tinkoff.publ"
-    "ic.invest.api.contract.v1.Quotation\"\201\027\n\016"
-    "StructuredNote\022\013\n\003uid\030\001 \001(\t\022\014\n\004figi\030\002 \001("
-    "\t\022\016\n\006ticker\030\003 \001(\t\022\022\n\nclass_code\030\004 \001(\t\022\014\n"
-    "\004isin\030\005 \001(\t\022\014\n\004name\030\006 \001(\t\022\021\n\tasset_uid\030\007"
-    " \001(\t\022\024\n\014position_uid\030\010 \001(\t\022M\n\023min_price_"
-    "increment\030\t \001(\01320.tinkoff.public.invest."
-    "api.contract.v1.Quotation\022\013\n\003lot\030\n \001(\005\022B"
-    "\n\007nominal\030\013 \001(\01321.tinkoff.public.invest."
-    "api.contract.v1.MoneyValue\022\020\n\010currency\030\014"
-    " \001(\t\0221\n\rmaturity_date\030\r \001(\0132\032.google.pro"
-    "tobuf.Timestamp\0222\n\016placement_date\030\016 \001(\0132"
-    "\032.google.protobuf.Timestamp\022\022\n\nissue_kin"
-    "d\030\017 \001(\t\022\022\n\nissue_size\030\020 \001(\005\022\027\n\017issue_siz"
-    "e_plan\030\021 \001(\005\022F\n\014dlong_client\030\022 \001(\01320.tin"
-    "koff.public.invest.api.contract.v1.Quota"
-    "tion\022G\n\rdshort_client\030\023 \001(\01320.tinkoff.pu"
-    "blic.invest.api.contract.v1.Quotation\022\032\n"
-    "\022short_enabled_flag\030\024 \001(\010\022\020\n\010exchange\030\025 "
-    "\001(\t\022T\n\016trading_status\030\026 \001(\0162<.tinkoff.pu"
-    "blic.invest.api.contract.v1.SecurityTrad"
-    "ingStatus\022 \n\030api_trade_available_flag\030\027 "
-    "\001(\010\022\032\n\022buy_available_flag\030\030 \001(\010\022\033\n\023sell_"
-    "available_flag\030\031 \001(\010\022\"\n\032limit_order_avai"
-    "lable_flag\030\032 \001(\010\022#\n\033market_order_availab"
-    "le_flag\030\033 \001(\010\022&\n\036bestprice_order_availab"
-    "le_flag\030\034 \001(\010\022\024\n\014weekend_flag\030\035 \001(\010\022\026\n\016l"
-    "iquidity_flag\030\036 \001(\010\022\024\n\014for_iis_flag\030\037 \001("
-    "\010\022\036\n\026for_qual_investor_flag\030  \001(\010\022\032\n\022paw"
-    "nshop_list_flag\030! \001(\010\022J\n\rreal_exchange\030\""
-    " \001(\01623.tinkoff.public.invest.api.contrac"
-    "t.v1.RealExchange\022:\n\026first_1min_candle_d"
-    "ate\030# \001(\0132\032.google.protobuf.Timestamp\022:\n"
-    "\026first_1day_candle_date\030$ \001(\0132\032.google.p"
-    "rotobuf.Timestamp\022\023\n\013borrow_name\030% \001(\t\022\014"
-    "\n\004type\030& \001(\t\022]\n\017logic_portfolio\030\' \001(\0162D."
-    "tinkoff.public.invest.api.contract.v1.St"
-    "ructuredNote.LogicPortfolio\022D\n\nasset_typ"
-    "e\030( \001(\01620.tinkoff.public.invest.api.cont"
-    "ract.v1.AssetType\022V\n\014basic_assets\030) \003(\0132"
-    "@.tinkoff.public.invest.api.contract.v1."
-    "StructuredNote.BasicAsset\022H\n\016safety_barr"
-    "ier\030* \001(\01320.tinkoff.public.invest.api.co"
-    "ntract.v1.Quotation\022\032\n\022coupon_period_bas"
-    "e\030+ \001(\t\022i\n\025observation_principle\030, \001(\0162J"
-    ".tinkoff.public.invest.api.contract.v1.S"
-    "tructuredNote.ObservationPrinciple\022\035\n\025ob"
-    "servation_frequency\030- \001(\t\022=\n\031initial_pri"
-    "ce_fixing_date\030. \001(\0132\032.google.protobuf.T"
-    "imestamp\022J\n\005yield\030/ \003(\0132;.tinkoff.public"
-    ".invest.api.contract.v1.StructuredNote.Y"
-    "ield\022\032\n\022coupon_saving_flag\0300 \001(\010\022\016\n\006sect"
-    "or\0301 \001(\t\022\027\n\017country_of_risk\0302 \001(\t\022\034\n\024cou"
-    "ntry_of_risk_name\0303 \001(\t\022\021\n\tlogo_name\0304 \001"
-    "(\t\022\026\n\016required_tests\0305 \003(\t\032\242\001\n\nBasicAsse"
-    "t\022\013\n\003uid\030\001 \001(\t\022>\n\004type\030\002 \001(\01620.tinkoff.p"
-    "ublic.invest.api.contract.v1.AssetType\022G"
-    "\n\rinitial_price\030\003 \001(\01320.tinkoff.public.i"
-    "nvest.api.contract.v1.Quotation\032\227\001\n\005Yiel"
-    "d\022M\n\004type\030\001 \001(\0162\?.tinkoff.public.invest."
-    "api.contract.v1.StructuredNote.YieldType"
-    "\022\?\n\005value\030\002 \001(\01320.tinkoff.public.invest."
-    "api.contract.v1.Quotation\"r\n\016LogicPortfo"
-    "lio\022\037\n\033LOGIC_PORTFOLIO_UNSPECIFIED\020\000\022\036\n\032"
-    "LOGIC_PORTFOLIO_VOLATILITY\020\001\022\037\n\033LOGIC_PO"
-    "RTFOLIO_CORRELATION\020\002\"\203\002\n\024ObservationPri"
-    "nciple\022%\n!OBSERVATION_PRINCIPLE_UNSPECIF"
-    "IED\020\000\022+\n\'OBSERVATION_PRINCIPLE_WORST_BAS"
-    "IC_ASSET\020\001\022*\n&OBSERVATION_PRINCIPLE_BEST"
-    "_BASIC_ASSET\020\002\0221\n-OBSERVATION_PRINCIPLE_"
-    "AVERAGE_OF_BASIC_ASSETS\020\003\0228\n4OBSERVATION"
-    "_PRINCIPLE_SINGLE_BASIC_ASSET_PERFORMANC"
-    "E\020\004\"\211\001\n\tYieldType\022\032\n\026YIELD_TYPE_UNSPECIF"
-    "IED\020\000\022\037\n\033YIELD_TYPE_GUARANTED_COUPON\020\001\022!"
-    "\n\035YIELD_TYPE_CONDITIONAL_COUPON\020\002\022\034\n\030YIE"
-    "LD_TYPE_PARTICIPATION\020\003\"\251\001\n\032GetAccruedIn"
-    "terestsRequest\022\020\n\004figi\030\001 \001(\tB\002\030\001\022.\n\004from"
-    "\030\002 \001(\0132\032.google.protobuf.TimestampB\004\342A\001\002"
-    "\022,\n\002to\030\003 \001(\0132\032.google.protobuf.Timestamp"
-    "B\004\342A\001\002\022\033\n\rinstrument_id\030\004 \001(\tB\004\342A\001\002\"p\n\033G"
-    "etAccruedInterestsResponse\022Q\n\021accrued_in"
-    "terests\030\001 \003(\01326.tinkoff.public.invest.ap"
-    "i.contract.v1.AccruedInterest\"\210\002\n\017Accrue"
-    "dInterest\022(\n\004date\030\001 \001(\0132\032.google.protobu"
-    "f.Timestamp\022\?\n\005value\030\002 \001(\01320.tinkoff.pub"
-    "lic.invest.api.contract.v1.Quotation\022G\n\r"
-    "value_percent\030\003 \001(\01320.tinkoff.public.inv"
-    "est.api.contract.v1.Quotation\022A\n\007nominal"
-    "\030\004 \001(\01320.tinkoff.public.invest.api.contr"
-    "act.v1.Quotation\"H\n\027GetFuturesMarginRequ"
-    "est\022\020\n\004figi\030\001 \001(\tB\002\030\001\022\033\n\rinstrument_id\030\004"
-    " \001(\tB\004\342A\001\002\"\344\002\n\030GetFuturesMarginResponse\022"
-    "P\n\025initial_margin_on_buy\030\001 \001(\01321.tinkoff"
-    ".public.invest.api.contract.v1.MoneyValu"
-    "e\022Q\n\026initial_margin_on_sell\030\002 \001(\01321.tink"
-    "off.public.invest.api.contract.v1.MoneyV"
-    "alue\022M\n\023min_price_increment\030\003 \001(\01320.tink"
-    "off.public.invest.api.contract.v1.Quotat"
-    "ion\022T\n\032min_price_increment_amount\030\004 \001(\0132"
-    "0.tinkoff.public.invest.api.contract.v1."
-    "Quotation\"[\n\022InstrumentResponse\022E\n\ninstr"
-    "ument\030\001 \001(\01321.tinkoff.public.invest.api."
-    "contract.v1.Instrument\"\276\014\n\nInstrument\022\014\n"
-    "\004figi\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\022\n\nclass_cod"
-    "e\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\013\n\003lot\030\005 \001(\005\022\020\n\010cu"
-    "rrency\030\006 \001(\t\022C\n\005klong\030\007 \001(\01320.tinkoff.pu"
-    "blic.invest.api.contract.v1.QuotationB\002\030"
-    "\001\022D\n\006kshort\030\010 \001(\01320.tinkoff.public.inves"
-    "t.api.contract.v1.QuotationB\002\030\001\022\?\n\005dlong"
-    "\030\t \001(\01320.tinkoff.public.invest.api.contr"
-    "act.v1.Quotation\022@\n\006dshort\030\n \001(\01320.tinko"
-    "ff.public.invest.api.contract.v1.Quotati"
-    "on\022C\n\tdlong_min\030\013 \001(\01320.tinkoff.public.i"
-    "nvest.api.contract.v1.Quotation\022D\n\ndshor"
-    "t_min\030\014 \001(\01320.tinkoff.public.invest.api."
-    "contract.v1.Quotation\022\032\n\022short_enabled_f"
-    "lag\030\r \001(\010\022\014\n\004name\030\016 \001(\t\022\020\n\010exchange\030\017 \001("
-    "\t\022\027\n\017country_of_risk\030\020 \001(\t\022\034\n\024country_of"
-    "_risk_name\030\021 \001(\t\022\027\n\017instrument_type\030\022 \001("
-    "\t\022T\n\016trading_status\030\023 \001(\0162<.tinkoff.publ"
-    "ic.invest.api.contract.v1.SecurityTradin"
-    "gStatus\022\020\n\010otc_flag\030\024 \001(\010\022\032\n\022buy_availab"
-    "le_flag\030\025 \001(\010\022\033\n\023sell_available_flag\030\026 \001"
-    "(\010\022M\n\023min_price_increment\030\027 \001(\01320.tinkof"
-    "f.public.invest.api.contract.v1.Quotatio"
-    "n\022 \n\030api_trade_available_flag\030\030 \001(\010\022\013\n\003u"
-    "id\030\031 \001(\t\022J\n\rreal_exchange\030\032 \001(\01623.tinkof"
-    "f.public.invest.api.contract.v1.RealExch"
-    "ange\022\024\n\014position_uid\030\033 \001(\t\022\021\n\tasset_uid\030"
-    "\034 \001(\t\022\026\n\016required_tests\030\035 \003(\t\022\024\n\014for_iis"
-    "_flag\030$ \001(\010\022\036\n\026for_qual_investor_flag\030% "
-    "\001(\010\022\024\n\014weekend_flag\030& \001(\010\022\030\n\020blocked_tca"
-    "_flag\030\' \001(\010\022N\n\017instrument_kind\030( \001(\01625.t"
-    "inkoff.public.invest.api.contract.v1.Ins"
-    "trumentType\022:\n\026first_1min_candle_date\0308 "
-    "\001(\0132\032.google.protobuf.Timestamp\022:\n\026first"
-    "_1day_candle_date\0309 \001(\0132\032.google.protobu"
-    "f.Timestamp\022\?\n\005brand\030< \001(\01320.tinkoff.pub"
-    "lic.invest.api.contract.v1.BrandData\022G\n\014"
-    "dlong_client\030\352\003 \001(\01320.tinkoff.public.inv"
-    "est.api.contract.v1.Quotation\022H\n\rdshort_"
-    "client\030\353\003 \001(\01320.tinkoff.public.invest.ap"
-    "i.contract.v1.Quotation\"\260\001\n\023GetDividends"
-    "Request\022\020\n\004figi\030\001 \001(\tB\002\030\001\022-\n\004from\030\002 \001(\0132"
-    "\032.google.protobuf.TimestampH\000\210\001\001\022+\n\002to\030\003"
-    " \001(\0132\032.google.protobuf.TimestampH\001\210\001\001\022\033\n"
-    "\rinstrument_id\030\004 \001(\tB\004\342A\001\002B\007\n\005_fromB\005\n\003_"
-    "to\"Z\n\024GetDividendsResponse\022B\n\tdividends\030"
-    "\001 \003(\0132/.tinkoff.public.invest.api.contra"
-    "ct.v1.Dividend\"\206\004\n\010Dividend\022G\n\014dividend_"
-    "net\030\001 \001(\01321.tinkoff.public.invest.api.co"
-    "ntract.v1.MoneyValue\0220\n\014payment_date\030\002 \001"
-    "(\0132\032.google.protobuf.Timestamp\0221\n\rdeclar"
-    "ed_date\030\003 \001(\0132\032.google.protobuf.Timestam"
-    "p\0221\n\rlast_buy_date\030\004 \001(\0132\032.google.protob"
-    "uf.Timestamp\022\025\n\rdividend_type\030\005 \001(\t\022/\n\013r"
-    "ecord_date\030\006 \001(\0132\032.google.protobuf.Times"
-    "tamp\022\022\n\nregularity\030\007 \001(\t\022F\n\013close_price\030"
-    "\010 \001(\01321.tinkoff.public.invest.api.contra"
-    "ct.v1.MoneyValue\022E\n\013yield_value\030\t \001(\01320."
-    "tinkoff.public.invest.api.contract.v1.Qu"
-    "otation\022.\n\ncreated_at\030\n \001(\0132\032.google.pro"
-    "tobuf.Timestamp\" \n\014AssetRequest\022\020\n\002id\030\001 "
-    "\001(\tB\004\342A\001\002\"P\n\rAssetResponse\022\?\n\005asset\030\001 \001("
-    "\01320.tinkoff.public.invest.api.contract.v"
-    "1.AssetFull\"\347\001\n\rAssetsRequest\022S\n\017instrum"
-    "ent_type\030\001 \001(\01625.tinkoff.public.invest.a"
-    "pi.contract.v1.InstrumentTypeH\000\210\001\001\022W\n\021in"
-    "strument_status\030\002 \001(\01627.tinkoff.public.i"
-    "nvest.api.contract.v1.InstrumentStatusH\001"
-    "\210\001\001B\022\n\020_instrument_typeB\024\n\022_instrument_s"
-    "tatus\"N\n\016AssetsResponse\022<\n\006assets\030\001 \003(\0132"
-    ",.tinkoff.public.invest.api.contract.v1."
-    "Asset\"\230\005\n\tAssetFull\022\013\n\003uid\030\001 \001(\t\022>\n\004type"
-    "\030\002 \001(\01620.tinkoff.public.invest.api.contr"
-    "act.v1.AssetType\022\014\n\004name\030\003 \001(\t\022\022\n\nname_b"
-    "rief\030\004 \001(\t\022\023\n\013description\030\005 \001(\t\022.\n\ndelet"
-    "ed_at\030\006 \001(\0132\032.google.protobuf.Timestamp\022"
-    "\026\n\016required_tests\030\007 \003(\t\022H\n\010currency\030\010 \001("
-    "\01324.tinkoff.public.invest.api.contract.v"
-    "1.AssetCurrencyH\000\022H\n\010security\030\t \001(\01324.ti"
-    "nkoff.public.invest.api.contract.v1.Asse"
-    "tSecurityH\000\022\024\n\014gos_reg_code\030\n \001(\t\022\013\n\003cfi"
-    "\030\013 \001(\t\022\020\n\010code_nsd\030\014 \001(\t\022\016\n\006status\030\r \001(\t"
-    "\022;\n\005brand\030\016 \001(\0132,.tinkoff.public.invest."
-    "api.contract.v1.Brand\022.\n\nupdated_at\030\017 \001("
-    "\0132\032.google.protobuf.Timestamp\022\017\n\007br_code"
-    "\030\020 \001(\t\022\024\n\014br_code_name\030\021 \001(\t\022K\n\013instrume"
-    "nts\030\022 \003(\01326.tinkoff.public.invest.api.co"
-    "ntract.v1.AssetInstrumentB\005\n\003ext\"\257\001\n\005Ass"
-    "et\022\013\n\003uid\030\001 \001(\t\022>\n\004type\030\002 \001(\01620.tinkoff."
-    "public.invest.api.contract.v1.AssetType\022"
-    "\014\n\004name\030\003 \001(\t\022K\n\013instruments\030\004 \003(\01326.tin"
-    "koff.public.invest.api.contract.v1.Asset"
-    "Instrument\"&\n\rAssetCurrency\022\025\n\rbase_curr"
-    "ency\030\001 \001(\t\"\366\003\n\rAssetSecurity\022\014\n\004isin\030\001 \001"
-    "(\t\022\014\n\004type\030\002 \001(\t\022N\n\017instrument_kind\030\n \001("
-    "\01625.tinkoff.public.invest.api.contract.v"
-    "1.InstrumentType\022B\n\005share\030\003 \001(\01321.tinkof"
-    "f.public.invest.api.contract.v1.AssetSha"
-    "reH\000\022@\n\004bond\030\004 \001(\01320.tinkoff.public.inve"
-    "st.api.contract.v1.AssetBondH\000\022K\n\002sp\030\005 \001"
-    "(\0132=.tinkoff.public.invest.api.contract."
-    "v1.AssetStructuredProductH\000\022>\n\003etf\030\006 \001(\013"
-    "2/.tinkoff.public.invest.api.contract.v1"
-    ".AssetEtfH\000\022_\n\024clearing_certificate\030\007 \001("
-    "\0132\?.tinkoff.public.invest.api.contract.v"
-    "1.AssetClearingCertificateH\000B\005\n\003ext\"\325\005\n\n"
-    "AssetShare\022>\n\004type\030\001 \001(\01620.tinkoff.publi"
-    "c.invest.api.contract.v1.ShareType\022D\n\nis"
-    "sue_size\030\002 \001(\01320.tinkoff.public.invest.a"
-    "pi.contract.v1.Quotation\022A\n\007nominal\030\003 \001("
-    "\01320.tinkoff.public.invest.api.contract.v"
-    "1.Quotation\022\030\n\020nominal_currency\030\004 \001(\t\022\025\n"
-    "\rprimary_index\030\005 \001(\t\022G\n\rdividend_rate\030\006 "
-    "\001(\01320.tinkoff.public.invest.api.contract"
-    ".v1.Quotation\022\034\n\024preferred_share_type\030\007 "
-    "\001(\t\022,\n\010ipo_date\030\010 \001(\0132\032.google.protobuf."
-    "Timestamp\0221\n\rregistry_date\030\t \001(\0132\032.googl"
-    "e.protobuf.Timestamp\022\026\n\016div_yield_flag\030\n"
-    " \001(\010\022\022\n\nissue_kind\030\013 \001(\t\0222\n\016placement_da"
-    "te\030\014 \001(\0132\032.google.protobuf.Timestamp\022\023\n\013"
-    "repres_isin\030\r \001(\t\022I\n\017issue_size_plan\030\016 \001"
-    "(\01320.tinkoff.public.invest.api.contract."
-    "v1.Quotation\022E\n\013total_float\030\017 \001(\01320.tink"
-    "off.public.invest.api.contract.v1.Quotat"
-    "ion\"\340\006\n\tAssetBond\022I\n\017current_nominal\030\001 \001"
-    "(\01320.tinkoff.public.invest.api.contract."
-    "v1.Quotation\022\023\n\013borrow_name\030\002 \001(\t\022D\n\niss"
-    "ue_size\030\003 \001(\01320.tinkoff.public.invest.ap"
-    "i.contract.v1.Quotation\022A\n\007nominal\030\004 \001(\013"
-    "20.tinkoff.public.invest.api.contract.v1"
-    ".Quotation\022\030\n\020nominal_currency\030\005 \001(\t\022\022\n\n"
-    "issue_kind\030\006 \001(\t\022\025\n\rinterest_kind\030\007 \001(\t\022"
-    " \n\030coupon_quantity_per_year\030\010 \001(\005\022\034\n\024ind"
-    "exed_nominal_flag\030\t \001(\010\022\031\n\021subordinated_"
-    "flag\030\n \001(\010\022\027\n\017collateral_flag\030\013 \001(\010\022\025\n\rt"
-    "ax_free_flag\030\014 \001(\010\022\031\n\021amortization_flag\030"
-    "\r \001(\010\022\034\n\024floating_coupon_flag\030\016 \001(\010\022\026\n\016p"
-    "erpetual_flag\030\017 \001(\010\0221\n\rmaturity_date\030\020 \001"
-    "(\0132\032.google.protobuf.Timestamp\022\030\n\020return"
-    "_condition\030\021 \001(\t\0222\n\016state_reg_date\030\022 \001(\013"
-    "2\032.google.protobuf.Timestamp\0222\n\016placemen"
-    "t_date\030\023 \001(\0132\032.google.protobuf.Timestamp"
-    "\022I\n\017placement_price\030\024 \001(\01320.tinkoff.publ"
-    "ic.invest.api.contract.v1.Quotation\022I\n\017i"
-    "ssue_size_plan\030\025 \001(\01320.tinkoff.public.in"
-    "vest.api.contract.v1.Quotation\"\240\005\n\026Asset"
-    "StructuredProduct\022\023\n\013borrow_name\030\001 \001(\t\022A"
-    "\n\007nominal\030\002 \001(\01320.tinkoff.public.invest."
-    "api.contract.v1.Quotation\022\030\n\020nominal_cur"
-    "rency\030\003 \001(\t\022J\n\004type\030\004 \001(\0162<.tinkoff.publ"
-    "ic.invest.api.contract.v1.StructuredProd"
-    "uctType\022\027\n\017logic_portfolio\030\005 \001(\t\022D\n\nasse"
-    "t_type\030\006 \001(\01620.tinkoff.public.invest.api"
-    ".contract.v1.AssetType\022\023\n\013basic_asset\030\007 "
-    "\001(\t\022H\n\016safety_barrier\030\010 \001(\01320.tinkoff.pu"
-    "blic.invest.api.contract.v1.Quotation\0221\n"
-    "\rmaturity_date\030\t \001(\0132\032.google.protobuf.T"
-    "imestamp\022I\n\017issue_size_plan\030\n \001(\01320.tink"
-    "off.public.invest.api.contract.v1.Quotat"
-    "ion\022D\n\nissue_size\030\013 \001(\01320.tinkoff.public"
-    ".invest.api.contract.v1.Quotation\0222\n\016pla"
-    "cement_date\030\014 \001(\0132\032.google.protobuf.Time"
-    "stamp\022\022\n\nissue_kind\030\r \001(\t\"\330\n\n\010AssetEtf\022G"
-    "\n\rtotal_expense\030\001 \001(\01320.tinkoff.public.i"
-    "nvest.api.contract.v1.Quotation\022E\n\013hurdl"
-    "e_rate\030\002 \001(\01320.tinkoff.public.invest.api"
-    ".contract.v1.Quotation\022I\n\017performance_fe"
-    "e\030\003 \001(\01320.tinkoff.public.invest.api.cont"
-    "ract.v1.Quotation\022J\n\020fixed_commission\030\004 "
-    "\001(\01320.tinkoff.public.invest.api.contract"
-    ".v1.Quotation\022\024\n\014payment_type\030\005 \001(\t\022\026\n\016w"
-    "atermark_flag\030\006 \001(\010\022E\n\013buy_premium\030\007 \001(\013"
-    "20.tinkoff.public.invest.api.contract.v1"
-    ".Quotation\022G\n\rsell_discount\030\010 \001(\01320.tink"
-    "off.public.invest.api.contract.v1.Quotat"
-    "ion\022\030\n\020rebalancing_flag\030\t \001(\010\022\030\n\020rebalan"
-    "cing_freq\030\n \001(\t\022\027\n\017management_type\030\013 \001(\t"
-    "\022\025\n\rprimary_index\030\014 \001(\t\022\022\n\nfocus_type\030\r "
-    "\001(\t\022\026\n\016leveraged_flag\030\016 \001(\010\022C\n\tnum_share"
-    "\030\017 \001(\01320.tinkoff.public.invest.api.contr"
-    "act.v1.Quotation\022\022\n\nucits_flag\030\020 \001(\010\0221\n\r"
-    "released_date\030\021 \001(\0132\032.google.protobuf.Ti"
-    "mestamp\022\023\n\013description\030\022 \001(\t\022!\n\031primary_"
-    "index_description\030\023 \001(\t\022\035\n\025primary_index"
-    "_company\030\024 \001(\t\022O\n\025index_recovery_period\030"
-    "\025 \001(\01320.tinkoff.public.invest.api.contra"
-    "ct.v1.Quotation\022\021\n\tinav_code\030\026 \001(\t\022\026\n\016di"
-    "v_yield_flag\030\027 \001(\010\022L\n\022expense_commission"
-    "\030\030 \001(\01320.tinkoff.public.invest.api.contr"
-    "act.v1.Quotation\022V\n\034primary_index_tracki"
-    "ng_error\030\031 \001(\01320.tinkoff.public.invest.a"
-    "pi.contract.v1.Quotation\022\030\n\020rebalancing_"
-    "plan\030\032 \001(\t\022\020\n\010tax_rate\030\033 \001(\t\0225\n\021rebalanc"
-    "ing_dates\030\034 \003(\0132\032.google.protobuf.Timest"
-    "amp\022\022\n\nissue_kind\030\035 \001(\t\022A\n\007nominal\030\036 \001(\013"
-    "20.tinkoff.public.invest.api.contract.v1"
-    ".Quotation\022\030\n\020nominal_currency\030\037 \001(\t\"w\n\030"
-    "AssetClearingCertificate\022A\n\007nominal\030\001 \001("
-    "\01320.tinkoff.public.invest.api.contract.v"
-    "1.Quotation\022\030\n\020nominal_currency\030\002 \001(\t\"\235\001"
-    "\n\005Brand\022\013\n\003uid\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\023\n\013de"
-    "scription\030\003 \001(\t\022\014\n\004info\030\004 \001(\t\022\017\n\007company"
-    "\030\005 \001(\t\022\016\n\006sector\030\006 \001(\t\022\027\n\017country_of_ris"
-    "k\030\007 \001(\t\022\034\n\024country_of_risk_name\030\010 \001(\t\"\225\002"
-    "\n\017AssetInstrument\022\013\n\003uid\030\001 \001(\t\022\014\n\004figi\030\002"
-    " \001(\t\022\027\n\017instrument_type\030\003 \001(\t\022\016\n\006ticker\030"
-    "\004 \001(\t\022\022\n\nclass_code\030\005 \001(\t\022D\n\005links\030\006 \003(\013"
-    "25.tinkoff.public.invest.api.contract.v1"
-    ".InstrumentLink\022N\n\017instrument_kind\030\n \001(\016"
-    "25.tinkoff.public.invest.api.contract.v1"
-    ".InstrumentType\022\024\n\014position_uid\030\013 \001(\t\"6\n"
-    "\016InstrumentLink\022\014\n\004type\030\001 \001(\t\022\026\n\016instrum"
-    "ent_uid\030\002 \001(\t\"9\n\023GetFavoritesRequest\022\025\n\010"
-    "group_id\030\001 \001(\tH\000\210\001\001B\013\n\t_group_id\"\223\001\n\024Get"
-    "FavoritesResponse\022W\n\024favorite_instrument"
-    "s\030\001 \003(\01329.tinkoff.public.invest.api.cont"
-    "ract.v1.FavoriteInstrument\022\025\n\010group_id\030\002"
-    " \001(\tH\000\210\001\001B\013\n\t_group_id\"\214\002\n\022FavoriteInstr"
-    "ument\022\014\n\004figi\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\022\n\nc"
-    "lass_code\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\027\n\017instrum"
-    "ent_type\030\013 \001(\t\022\014\n\004name\030\014 \001(\t\022\013\n\003uid\030\r \001("
-    "\t\022\020\n\010otc_flag\030\020 \001(\010\022 \n\030api_trade_availab"
-    "le_flag\030\021 \001(\010\022N\n\017instrument_kind\030\022 \001(\01625"
-    ".tinkoff.public.invest.api.contract.v1.I"
-    "nstrumentType\"\367\001\n\024EditFavoritesRequest\022`"
-    "\n\013instruments\030\001 \003(\0132E.tinkoff.public.inv"
-    "est.api.contract.v1.EditFavoritesRequest"
-    "InstrumentB\004\342A\001\002\022Y\n\013action_type\030\006 \001(\0162>."
-    "tinkoff.public.invest.api.contract.v1.Ed"
-    "itFavoritesActionTypeB\004\342A\001\002\022\025\n\010group_id\030"
-    "\007 \001(\tH\000\210\001\001B\013\n\t_group_id\"]\n\036EditFavorites"
-    "RequestInstrument\022\025\n\004figi\030\001 \001(\tB\002\030\001H\000\210\001\001"
-    "\022\033\n\rinstrument_id\030\002 \001(\tB\004\342A\001\002B\007\n\005_figi\"\224"
-    "\001\n\025EditFavoritesResponse\022W\n\024favorite_ins"
-    "truments\030\001 \003(\01329.tinkoff.public.invest.a"
-    "pi.contract.v1.FavoriteInstrument\022\025\n\010gro"
-    "up_id\030\002 \001(\tH\000\210\001\001B\013\n\t_group_id\"m\n\032CreateF"
-    "avoriteGroupRequest\022\030\n\ngroup_name\030\001 \001(\tB"
-    "\004\342A\001\002\022\031\n\013group_color\030\002 \001(\tB\004\342A\001\002\022\021\n\004note"
-    "\030\003 \001(\tH\000\210\001\001B\007\n\005_note\"C\n\033CreateFavoriteGr"
-    "oupResponse\022\020\n\010group_id\030\001 \001(\t\022\022\n\ngroup_n"
-    "ame\030\002 \001(\t\"4\n\032DeleteFavoriteGroupRequest\022"
-    "\026\n\010group_id\030\001 \001(\tB\004\342A\001\002\"\035\n\033DeleteFavorit"
-    "eGroupResponse\"L\n\030GetFavoriteGroupsReque"
-    "st\022\025\n\rinstrument_id\030\001 \003(\t\022\031\n\021excluded_gr"
-    "oup_id\030\002 \003(\t\"\242\002\n\031GetFavoriteGroupsRespon"
-    "se\022^\n\006groups\030\001 \003(\0132N.tinkoff.public.inve"
-    "st.api.contract.v1.GetFavoriteGroupsResp"
-    "onse.FavoriteGroup\032\244\001\n\rFavoriteGroup\022\026\n\010"
-    "group_id\030\001 \001(\tB\004\342A\001\002\022\030\n\ngroup_name\030\002 \001(\t"
-    "B\004\342A\001\002\022\023\n\005color\030\003 \001(\tB\004\342A\001\002\022\022\n\004size\030\004 \001("
-    "\005B\004\342A\001\002\022 \n\023contains_instrument\030\005 \001(\010H\000\210\001"
-    "\001B\026\n\024_contains_instrument\"\025\n\023GetCountrie"
-    "sRequest\"a\n\024GetCountriesResponse\022I\n\tcoun"
-    "tries\030\001 \003(\01326.tinkoff.public.invest.api."
-    "contract.v1.CountryResponse\"\024\n\022Indicativ"
-    "esRequest\"e\n\023IndicativesResponse\022N\n\013inst"
-    "ruments\030\001 \003(\01329.tinkoff.public.invest.ap"
-    "i.contract.v1.IndicativeResponse\"\220\002\n\022Ind"
-    "icativeResponse\022\014\n\004figi\030\001 \001(\t\022\016\n\006ticker\030"
-    "\002 \001(\t\022\022\n\nclass_code\030\003 \001(\t\022\020\n\010currency\030\004 "
-    "\001(\t\022N\n\017instrument_kind\030\n \001(\01625.tinkoff.p"
-    "ublic.invest.api.contract.v1.InstrumentT"
-    "ype\022\014\n\004name\030\014 \001(\t\022\020\n\010exchange\030\r \001(\t\022\013\n\003u"
-    "id\030\016 \001(\t\022\033\n\022buy_available_flag\030\224\003 \001(\010\022\034\n"
-    "\023sell_available_flag\030\225\003 \001(\010\"Y\n\017CountryRe"
-    "sponse\022\020\n\010alfa_two\030\001 \001(\t\022\022\n\nalfa_three\030\002"
-    " \001(\t\022\014\n\004name\030\003 \001(\t\022\022\n\nname_brief\030\004 \001(\t\"\331"
-    "\001\n\025FindInstrumentRequest\022\023\n\005query\030\001 \001(\tB"
-    "\004\342A\001\002\022S\n\017instrument_kind\030\002 \001(\01625.tinkoff"
-    ".public.invest.api.contract.v1.Instrumen"
-    "tTypeH\000\210\001\001\022%\n\030api_trade_available_flag\030\003"
-    " \001(\010H\001\210\001\001B\022\n\020_instrument_kindB\033\n\031_api_tr"
-    "ade_available_flag\"e\n\026FindInstrumentResp"
-    "onse\022K\n\013instruments\030\001 \003(\01326.tinkoff.publ"
-    "ic.invest.api.contract.v1.InstrumentShor"
-    "t\"\370\003\n\017InstrumentShort\022\014\n\004isin\030\001 \001(\t\022\014\n\004f"
-    "igi\030\002 \001(\t\022\016\n\006ticker\030\003 \001(\t\022\022\n\nclass_code\030"
-    "\004 \001(\t\022\027\n\017instrument_type\030\005 \001(\t\022\014\n\004name\030\006"
-    " \001(\t\022\013\n\003uid\030\007 \001(\t\022\024\n\014position_uid\030\010 \001(\t\022"
-    "N\n\017instrument_kind\030\n \001(\01625.tinkoff.publi"
-    "c.invest.api.contract.v1.InstrumentType\022"
-    " \n\030api_trade_available_flag\030\013 \001(\010\022\024\n\014for"
-    "_iis_flag\030\014 \001(\010\022:\n\026first_1min_candle_dat"
-    "e\030\032 \001(\0132\032.google.protobuf.Timestamp\022:\n\026f"
-    "irst_1day_candle_date\030\033 \001(\0132\032.google.pro"
-    "tobuf.Timestamp\022\036\n\026for_qual_investor_fla"
-    "g\030\034 \001(\010\022\024\n\014weekend_flag\030\035 \001(\010\022\030\n\020blocked"
-    "_tca_flag\030\036 \001(\010\022\013\n\003lot\030\037 \001(\005\"O\n\020GetBrand"
-    "sRequest\022;\n\006paging\030\001 \001(\0132+.tinkoff.publi"
-    "c.invest.api.contract.v1.Page\"#\n\017GetBran"
-    "dRequest\022\020\n\002id\030\001 \001(\tB\004\342A\001\002\"\226\001\n\021GetBrands"
-    "Response\022<\n\006brands\030\001 \003(\0132,.tinkoff.publi"
-    "c.invest.api.contract.v1.Brand\022C\n\006paging"
-    "\030\002 \001(\01323.tinkoff.public.invest.api.contr"
-    "act.v1.PageResponse\"3\n\033GetAssetFundament"
-    "alsRequest\022\024\n\006assets\030\001 \003(\tB\004\342A\001\002\"\375\016\n\034Get"
-    "AssetFundamentalsResponse\022k\n\014fundamental"
-    "s\030\001 \003(\0132U.tinkoff.public.invest.api.cont"
-    "ract.v1.GetAssetFundamentalsResponse.Sta"
-    "tisticResponse\032\357\r\n\021StatisticResponse\022\021\n\t"
-    "asset_uid\030\001 \001(\t\022\020\n\010currency\030\002 \001(\t\022\035\n\025mar"
-    "ket_capitalization\030\003 \001(\001\022 \n\030high_price_l"
-    "ast_52_weeks\030\004 \001(\001\022\037\n\027low_price_last_52_"
-    "weeks\030\005 \001(\001\022)\n!average_daily_volume_last"
-    "_10_days\030\006 \001(\001\022)\n!average_daily_volume_l"
-    "ast_4_weeks\030\007 \001(\001\022\014\n\004beta\030\010 \001(\001\022\022\n\nfree_"
-    "float\030\t \001(\001\022%\n\035forward_annual_dividend_y"
-    "ield\030\n \001(\001\022\032\n\022shares_outstanding\030\013 \001(\001\022\023"
-    "\n\013revenue_ttm\030\014 \001(\001\022\022\n\nebitda_ttm\030\r \001(\001\022"
-    "\026\n\016net_income_ttm\030\016 \001(\001\022\017\n\007eps_ttm\030\017 \001(\001"
-    "\022\027\n\017diluted_eps_ttm\030\020 \001(\001\022\032\n\022free_cash_f"
-    "low_ttm\030\021 \001(\001\022,\n$five_year_annual_revenu"
-    "e_growth_rate\030\022 \001(\001\022-\n%three_year_annual"
-    "_revenue_growth_rate\030\023 \001(\001\022\024\n\014pe_ratio_t"
-    "tm\030\024 \001(\001\022\032\n\022price_to_sales_ttm\030\025 \001(\001\022\031\n\021"
-    "price_to_book_ttm\030\026 \001(\001\022#\n\033price_to_free"
-    "_cash_flow_ttm\030\027 \001(\001\022\"\n\032total_enterprise"
-    "_value_mrq\030\030 \001(\001\022\030\n\020ev_to_ebitda_mrq\030\031 \001"
-    "(\001\022\026\n\016net_margin_mrq\030\032 \001(\001\022\037\n\027net_intere"
-    "st_margin_mrq\030\033 \001(\001\022\013\n\003roe\030\034 \001(\001\022\013\n\003roa\030"
-    "\035 \001(\001\022\014\n\004roic\030\036 \001(\001\022\026\n\016total_debt_mrq\030\037 "
-    "\001(\001\022 \n\030total_debt_to_equity_mrq\030  \001(\001\022 \n"
-    "\030total_debt_to_ebitda_mrq\030! \001(\001\022\037\n\027free_"
-    "cash_flow_to_price\030\" \001(\001\022\032\n\022net_debt_to_"
-    "ebitda\030# \001(\001\022\031\n\021current_ratio_mrq\030$ \001(\001\022"
-    "&\n\036fixed_charge_coverage_ratio_fy\030% \001(\001\022"
-    " \n\030dividend_yield_daily_ttm\030& \001(\001\022\031\n\021div"
-    "idend_rate_ttm\030\' \001(\001\022\033\n\023dividends_per_sh"
-    "are\030( \001(\001\022)\n!five_years_average_dividend"
-    "_yield\030) \001(\001\022-\n%five_year_annual_dividen"
-    "d_growth_rate\030* \001(\001\022 \n\030dividend_payout_r"
-    "atio_fy\030+ \001(\001\022\024\n\014buy_back_ttm\030, \001(\001\022+\n#o"
-    "ne_year_annual_revenue_growth_rate\030- \001(\001"
-    "\022\037\n\027domicile_indicator_code\030. \001(\t\022!\n\031adr"
-    "_to_common_share_ratio\030/ \001(\001\022\033\n\023number_o"
-    "f_employees\0300 \001(\001\0224\n\020ex_dividend_date\0301 "
-    "\001(\0132\032.google.protobuf.Timestamp\022<\n\030fisca"
-    "l_period_start_date\0302 \001(\0132\032.google.proto"
-    "buf.Timestamp\022:\n\026fiscal_period_end_date\030"
-    "3 \001(\0132\032.google.protobuf.Timestamp\022!\n\031rev"
-    "enue_change_five_years\0305 \001(\001\022\035\n\025eps_chan"
-    "ge_five_years\0306 \001(\001\022 \n\030ebitda_change_fiv"
-    "e_years\0307 \001(\001\022$\n\034total_debt_change_five_"
-    "years\0308 \001(\001\022\023\n\013ev_to_sales\0309 \001(\001\"\241\001\n\026Get"
-    "AssetReportsRequest\022\033\n\rinstrument_id\030\001 \001"
-    "(\tB\004\342A\001\002\022-\n\004from\030\002 \001(\0132\032.google.protobuf"
-    ".TimestampH\000\210\001\001\022+\n\002to\030\003 \001(\0132\032.google.pro"
-    "tobuf.TimestampH\001\210\001\001B\007\n\005_fromB\005\n\003_to\"\247\004\n"
-    "\027GetAssetReportsResponse\022c\n\006events\030\001 \003(\013"
-    "2S.tinkoff.public.invest.api.contract.v1"
-    ".GetAssetReportsResponse.GetAssetReports"
-    "Event\032\242\002\n\024GetAssetReportsEvent\022\025\n\rinstru"
-    "ment_id\030\001 \001(\t\022/\n\013report_date\030\002 \001(\0132\032.goo"
-    "gle.protobuf.Timestamp\022\023\n\013period_year\030\003 "
-    "\001(\005\022\022\n\nperiod_num\030\004 \001(\005\022i\n\013period_type\030\005"
-    " \001(\0162T.tinkoff.public.invest.api.contrac"
-    "t.v1.GetAssetReportsResponse.AssetReport"
-    "PeriodType\022.\n\ncreated_at\030\006 \001(\0132\032.google."
-    "protobuf.Timestamp\"\201\001\n\025AssetReportPeriod"
-    "Type\022\033\n\027PERIOD_TYPE_UNSPECIFIED\020\000\022\027\n\023PER"
-    "IOD_TYPE_QUARTER\020\001\022\032\n\026PERIOD_TYPE_SEMIAN"
-    "NUAL\020\002\022\026\n\022PERIOD_TYPE_ANNUAL\020\003\"k\n\034GetCon"
-    "sensusForecastsRequest\022@\n\006paging\030\001 \001(\0132+"
-    ".tinkoff.public.invest.api.contract.v1.P"
-    "ageH\000\210\001\001B\t\n\007_paging\"\206\006\n\035GetConsensusFore"
-    "castsResponse\022j\n\005items\030\001 \003(\0132[.tinkoff.p"
-    "ublic.invest.api.contract.v1.GetConsensu"
-    "sForecastsResponse.ConsensusForecastsIte"
-    "m\022A\n\004page\030\002 \001(\01323.tinkoff.public.invest."
-    "api.contract.v1.PageResponse\032\265\004\n\026Consens"
-    "usForecastsItem\022\013\n\003uid\030\001 \001(\t\022\021\n\tasset_ui"
-    "d\030\002 \001(\t\022.\n\ncreated_at\030\003 \001(\0132\032.google.pro"
-    "tobuf.Timestamp\022K\n\021best_target_price\030\004 \001"
-    "(\01320.tinkoff.public.invest.api.contract."
-    "v1.Quotation\022I\n\017best_target_low\030\005 \001(\01320."
-    "tinkoff.public.invest.api.contract.v1.Qu"
-    "otation\022J\n\020best_target_high\030\006 \001(\01320.tink"
-    "off.public.invest.api.contract.v1.Quotat"
-    "ion\022\033\n\023total_buy_recommend\030\007 \001(\005\022\034\n\024tota"
-    "l_hold_recommend\030\010 \001(\005\022\034\n\024total_sell_rec"
-    "ommend\030\t \001(\005\022\020\n\010currency\030\n \001(\t\022H\n\tconsen"
-    "sus\030\013 \001(\01625.tinkoff.public.invest.api.co"
-    "ntract.v1.Recommendation\0222\n\016prognosis_da"
-    "te\030\014 \001(\0132\032.google.protobuf.Timestamp\"+\n\022"
-    "GetForecastRequest\022\025\n\rinstrument_id\030\001 \001("
-    "\t\"\227\n\n\023GetForecastResponse\022V\n\007targets\030\001 \003"
-    "(\0132E.tinkoff.public.invest.api.contract."
-    "v1.GetForecastResponse.TargetItem\022[\n\tcon"
-    "sensus\030\002 \001(\0132H.tinkoff.public.invest.api"
-    ".contract.v1.GetForecastResponse.Consens"
-    "usItem\032\214\004\n\nTargetItem\022\013\n\003uid\030\001 \001(\t\022\016\n\006ti"
-    "cker\030\002 \001(\t\022\017\n\007company\030\003 \001(\t\022M\n\016recommend"
-    "ation\030\004 \001(\01625.tinkoff.public.invest.api."
-    "contract.v1.Recommendation\0227\n\023recommenda"
-    "tion_date\030\005 \001(\0132\032.google.protobuf.Timest"
-    "amp\022\020\n\010currency\030\006 \001(\t\022G\n\rcurrent_price\030\007"
+    ".Quotation\022.\n\ncreated_at\030\n \001(\0132\032.google."
+    "protobuf.Timestamp\" \n\014AssetRequest\022\020\n\002id"
+    "\030\001 \001(\tB\004\342A\001\002\"P\n\rAssetResponse\022\?\n\005asset\030\001"
     " \001(\01320.tinkoff.public.invest.api.contrac"
-    "t.v1.Quotation\022F\n\014target_price\030\010 \001(\01320.t"
-    "inkoff.public.invest.api.contract.v1.Quo"
-    "tation\022F\n\014price_change\030\t \001(\01320.tinkoff.p"
-    "ublic.invest.api.contract.v1.Quotation\022J"
-    "\n\020price_change_rel\030\n \001(\01320.tinkoff.publi"
-    "c.invest.api.contract.v1.Quotation\022\021\n\tsh"
-    "ow_name\030\013 \001(\t\032\273\004\n\rConsensusItem\022\013\n\003uid\030\001"
-    " \001(\t\022\016\n\006ticker\030\002 \001(\t\022M\n\016recommendation\030\003"
+    "t.v1.AssetFull\"\347\001\n\rAssetsRequest\022S\n\017inst"
+    "rument_type\030\001 \001(\01625.tinkoff.public.inves"
+    "t.api.contract.v1.InstrumentTypeH\000\210\001\001\022W\n"
+    "\021instrument_status\030\002 \001(\01627.tinkoff.publi"
+    "c.invest.api.contract.v1.InstrumentStatu"
+    "sH\001\210\001\001B\022\n\020_instrument_typeB\024\n\022_instrumen"
+    "t_status\"N\n\016AssetsResponse\022<\n\006assets\030\001 \003"
+    "(\0132,.tinkoff.public.invest.api.contract."
+    "v1.Asset\"\230\005\n\tAssetFull\022\013\n\003uid\030\001 \001(\t\022>\n\004t"
+    "ype\030\002 \001(\01620.tinkoff.public.invest.api.co"
+    "ntract.v1.AssetType\022\014\n\004name\030\003 \001(\t\022\022\n\nnam"
+    "e_brief\030\004 \001(\t\022\023\n\013description\030\005 \001(\t\022.\n\nde"
+    "leted_at\030\006 \001(\0132\032.google.protobuf.Timesta"
+    "mp\022\026\n\016required_tests\030\007 \003(\t\022H\n\010currency\030\010"
+    " \001(\01324.tinkoff.public.invest.api.contrac"
+    "t.v1.AssetCurrencyH\000\022H\n\010security\030\t \001(\01324"
+    ".tinkoff.public.invest.api.contract.v1.A"
+    "ssetSecurityH\000\022\024\n\014gos_reg_code\030\n \001(\t\022\013\n\003"
+    "cfi\030\013 \001(\t\022\020\n\010code_nsd\030\014 \001(\t\022\016\n\006status\030\r "
+    "\001(\t\022;\n\005brand\030\016 \001(\0132,.tinkoff.public.inve"
+    "st.api.contract.v1.Brand\022.\n\nupdated_at\030\017"
+    " \001(\0132\032.google.protobuf.Timestamp\022\017\n\007br_c"
+    "ode\030\020 \001(\t\022\024\n\014br_code_name\030\021 \001(\t\022K\n\013instr"
+    "uments\030\022 \003(\01326.tinkoff.public.invest.api"
+    ".contract.v1.AssetInstrumentB\005\n\003ext\"\257\001\n\005"
+    "Asset\022\013\n\003uid\030\001 \001(\t\022>\n\004type\030\002 \001(\01620.tinko"
+    "ff.public.invest.api.contract.v1.AssetTy"
+    "pe\022\014\n\004name\030\003 \001(\t\022K\n\013instruments\030\004 \003(\01326."
+    "tinkoff.public.invest.api.contract.v1.As"
+    "setInstrument\"&\n\rAssetCurrency\022\025\n\rbase_c"
+    "urrency\030\001 \001(\t\"\366\003\n\rAssetSecurity\022\014\n\004isin\030"
+    "\001 \001(\t\022\014\n\004type\030\002 \001(\t\022N\n\017instrument_kind\030\n"
     " \001(\01625.tinkoff.public.invest.api.contrac"
-    "t.v1.Recommendation\022\020\n\010currency\030\004 \001(\t\022G\n"
-    "\rcurrent_price\030\005 \001(\01320.tinkoff.public.in"
-    "vest.api.contract.v1.Quotation\022C\n\tconsen"
-    "sus\030\006 \001(\01320.tinkoff.public.invest.api.co"
-    "ntract.v1.Quotation\022D\n\nmin_target\030\007 \001(\0132"
-    "0.tinkoff.public.invest.api.contract.v1."
-    "Quotation\022D\n\nmax_target\030\010 \001(\01320.tinkoff."
-    "public.invest.api.contract.v1.Quotation\022"
-    "F\n\014price_change\030\t \001(\01320.tinkoff.public.i"
-    "nvest.api.contract.v1.Quotation\022J\n\020price"
-    "_change_rel\030\n \001(\01320.tinkoff.public.inves"
-    "t.api.contract.v1.Quotation\")\n\020RiskRates"
-    "Request\022\025\n\rinstrument_id\030\001 \003(\t\"\313\005\n\021RiskR"
-    "atesResponse\022f\n\025instrument_risk_rates\030\001 "
-    "\003(\0132G.tinkoff.public.invest.api.contract"
-    ".v1.RiskRatesResponse.RiskRateResult\032\347\003\n"
-    "\016RiskRateResult\022\026\n\016instrument_uid\030\001 \001(\t\022"
-    "_\n\017short_risk_rate\030\002 \001(\0132A.tinkoff.publi"
-    "c.invest.api.contract.v1.RiskRatesRespon"
-    "se.RiskRateH\000\210\001\001\022^\n\016long_risk_rate\030\003 \001(\013"
-    "2A.tinkoff.public.invest.api.contract.v1"
-    ".RiskRatesResponse.RiskRateH\001\210\001\001\022[\n\020shor"
-    "t_risk_rates\030\005 \003(\0132A.tinkoff.public.inve"
-    "st.api.contract.v1.RiskRatesResponse.Ris"
-    "kRate\022Z\n\017long_risk_rates\030\006 \003(\0132A.tinkoff"
-    ".public.invest.api.contract.v1.RiskRates"
-    "Response.RiskRate\022\022\n\005error\030\t \001(\tH\002\210\001\001B\022\n"
-    "\020_short_risk_rateB\021\n\017_long_risk_rateB\010\n\006"
-    "_error\032d\n\010RiskRate\022\027\n\017risk_level_code\030\002 "
-    "\001(\t\022\?\n\005value\030\005 \001(\01320.tinkoff.public.inve"
-    "st.api.contract.v1.Quotation\"\340\001\n\017Trading"
-    "Interval\022\014\n\004type\030\001 \001(\t\022U\n\010interval\030\002 \001(\013"
-    "2C.tinkoff.public.invest.api.contract.v1"
-    ".TradingInterval.TimeInterval\032h\n\014TimeInt"
-    "erval\022,\n\010start_ts\030\001 \001(\0132\032.google.protobu"
-    "f.Timestamp\022*\n\006end_ts\030\002 \001(\0132\032.google.pro"
-    "tobuf.Timestamp\"h\n\026GetInsiderDealsReques"
-    "t\022\025\n\rinstrument_id\030\001 \001(\t\022\r\n\005limit\030\002 \001(\005\022"
-    "\030\n\013next_cursor\030\003 \001(\tH\000\210\001\001B\016\n\014_next_curso"
-    "r\"\234\006\n\027GetInsiderDealsResponse\022a\n\rinsider"
-    "_deals\030\001 \003(\0132J.tinkoff.public.invest.api"
-    ".contract.v1.GetInsiderDealsResponse.Ins"
-    "iderDeal\022\030\n\013next_cursor\030\002 \001(\tH\000\210\001\001\032\320\003\n\013I"
-    "nsiderDeal\022\020\n\010trade_id\030\001 \001(\003\022`\n\tdirectio"
-    "n\030\002 \001(\0162M.tinkoff.public.invest.api.cont"
-    "ract.v1.GetInsiderDealsResponse.TradeDir"
-    "ection\022\020\n\010currency\030\003 \001(\t\022(\n\004date\030\004 \001(\0132\032"
-    ".google.protobuf.Timestamp\022\020\n\010quantity\030\005"
-    " \001(\003\022\?\n\005price\030\006 \001(\01320.tinkoff.public.inv"
-    "est.api.contract.v1.Quotation\022\026\n\016instrum"
-    "ent_uid\030\007 \001(\t\022\016\n\006ticker\030\010 \001(\t\022\025\n\rinvesto"
-    "r_name\030\t \001(\t\022\031\n\021investor_position\030\n \001(\t\022"
-    "\022\n\npercentage\030\013 \001(\002\022\033\n\023is_option_executi"
-    "on\030\014 \001(\010\0223\n\017disclosure_date\030\r \001(\0132\032.goog"
-    "le.protobuf.Timestamp\"\240\001\n\016TradeDirection"
-    "\022\037\n\033TRADE_DIRECTION_UNSPECIFIED\020\000\022\027\n\023TRA"
-    "DE_DIRECTION_BUY\020\001\022\030\n\024TRADE_DIRECTION_SE"
-    "LL\020\002\022\034\n\030TRADE_DIRECTION_INCREASE\020\003\022\034\n\030TR"
-    "ADE_DIRECTION_DECREASE\020\004B\016\n\014_next_cursor"
-    "*\327\001\n\nCouponType\022\033\n\027COUPON_TYPE_UNSPECIFI"
-    "ED\020\000\022\030\n\024COUPON_TYPE_CONSTANT\020\001\022\030\n\024COUPON"
-    "_TYPE_FLOATING\020\002\022\030\n\024COUPON_TYPE_DISCOUNT"
-    "\020\003\022\030\n\024COUPON_TYPE_MORTGAGE\020\004\022\023\n\017COUPON_T"
-    "YPE_FIX\020\005\022\030\n\024COUPON_TYPE_VARIABLE\020\006\022\025\n\021C"
-    "OUPON_TYPE_OTHER\020\007*h\n\017OptionDirection\022 \n"
-    "\034OPTION_DIRECTION_UNSPECIFIED\020\000\022\030\n\024OPTIO"
-    "N_DIRECTION_PUT\020\001\022\031\n\025OPTION_DIRECTION_CA"
-    "LL\020\002*{\n\021OptionPaymentType\022#\n\037OPTION_PAYM"
-    "ENT_TYPE_UNSPECIFIED\020\000\022\037\n\033OPTION_PAYMENT"
-    "_TYPE_PREMIUM\020\001\022 \n\034OPTION_PAYMENT_TYPE_M"
-    "ARGINAL\020\002*a\n\013OptionStyle\022\034\n\030OPTION_STYLE"
-    "_UNSPECIFIED\020\000\022\031\n\025OPTION_STYLE_AMERICAN\020"
-    "\001\022\031\n\025OPTION_STYLE_EUROPEAN\020\002*\225\001\n\024OptionS"
-    "ettlementType\022%\n!OPTION_EXECUTION_TYPE_U"
-    "NSPECIFIED\020\000\022+\n\'OPTION_EXECUTION_TYPE_PH"
-    "YSICAL_DELIVERY\020\001\022)\n%OPTION_EXECUTION_TY"
-    "PE_CASH_SETTLEMENT\020\002*\256\001\n\020InstrumentIdTyp"
-    "e\022\035\n\031INSTRUMENT_ID_UNSPECIFIED\020\000\022\033\n\027INST"
-    "RUMENT_ID_TYPE_FIGI\020\001\022\035\n\031INSTRUMENT_ID_T"
-    "YPE_TICKER\020\002\022\032\n\026INSTRUMENT_ID_TYPE_UID\020\003"
-    "\022#\n\037INSTRUMENT_ID_TYPE_POSITION_UID\020\004*\345\001"
-    "\n\tShareType\022\032\n\026SHARE_TYPE_UNSPECIFIED\020\000\022"
-    "\025\n\021SHARE_TYPE_COMMON\020\001\022\030\n\024SHARE_TYPE_PRE"
-    "FERRED\020\002\022\022\n\016SHARE_TYPE_ADR\020\003\022\022\n\016SHARE_TY"
-    "PE_GDR\020\004\022\022\n\016SHARE_TYPE_MLP\020\005\022\032\n\026SHARE_TY"
-    "PE_NY_REG_SHRS\020\006\022\036\n\032SHARE_TYPE_CLOSED_EN"
-    "D_FUND\020\007\022\023\n\017SHARE_TYPE_REIT\020\010*\211\001\n\tAssetT"
-    "ype\022\032\n\026ASSET_TYPE_UNSPECIFIED\020\000\022\027\n\023ASSET"
-    "_TYPE_CURRENCY\020\001\022\030\n\024ASSET_TYPE_COMMODITY"
-    "\020\002\022\024\n\020ASSET_TYPE_INDEX\020\003\022\027\n\023ASSET_TYPE_S"
-    "ECURITY\020\004*f\n\025StructuredProductType\022\027\n\023SP"
-    "_TYPE_UNSPECIFIED\020\000\022\027\n\023SP_TYPE_DELIVERAB"
-    "LE\020\001\022\033\n\027SP_TYPE_NON_DELIVERABLE\020\002*\215\001\n\027Ed"
-    "itFavoritesActionType\022*\n&EDIT_FAVORITES_"
-    "ACTION_TYPE_UNSPECIFIED\020\000\022\"\n\036EDIT_FAVORI"
-    "TES_ACTION_TYPE_ADD\020\001\022\"\n\036EDIT_FAVORITES_"
-    "ACTION_TYPE_DEL\020\002*z\n\016Recommendation\022\036\n\032R"
-    "ECOMMENDATION_UNSPECIFIED\020\000\022\026\n\022RECOMMEND"
-    "ATION_BUY\020\001\022\027\n\023RECOMMENDATION_HOLD\020\002\022\027\n\023"
-    "RECOMMENDATION_SELL\020\003*i\n\tRiskLevel\022\032\n\026RI"
-    "SK_LEVEL_UNSPECIFIED\020\000\022\022\n\016RISK_LEVEL_LOW"
-    "\020\001\022\027\n\023RISK_LEVEL_MODERATE\020\002\022\023\n\017RISK_LEVE"
-    "L_HIGH\020\003*=\n\010BondType\022\031\n\025BOND_TYPE_UNSPEC"
-    "IFIED\020\000\022\026\n\022BOND_TYPE_REPLACED\020\001*]\n\026Instr"
-    "umentExchangeType\022#\n\037INSTRUMENT_EXCHANGE"
-    "_UNSPECIFIED\020\000\022\036\n\032INSTRUMENT_EXCHANGE_DE"
-    "ALER\020\0012\372*\n\022InstrumentsService\022\223\001\n\020Tradin"
-    "gSchedules\022>.tinkoff.public.invest.api.c"
-    "ontract.v1.TradingSchedulesRequest\032\?.tin"
-    "koff.public.invest.api.contract.v1.Tradi"
-    "ngSchedulesResponse\022w\n\006BondBy\0228.tinkoff."
-    "public.invest.api.contract.v1.Instrument"
-    "Request\0323.tinkoff.public.invest.api.cont"
-    "ract.v1.BondResponse\022x\n\005Bonds\0229.tinkoff."
-    "public.invest.api.contract.v1.Instrument"
-    "sRequest\0324.tinkoff.public.invest.api.con"
-    "tract.v1.BondsResponse\022\215\001\n\016GetBondCoupon"
-    "s\022<.tinkoff.public.invest.api.contract.v"
-    "1.GetBondCouponsRequest\032=.tinkoff.public"
-    ".invest.api.contract.v1.GetBondCouponsRe"
-    "sponse\022\212\001\n\rGetBondEvents\022;.tinkoff.publi"
-    "c.invest.api.contract.v1.GetBondEventsRe"
-    "quest\032<.tinkoff.public.invest.api.contra"
-    "ct.v1.GetBondEventsResponse\022\177\n\nCurrencyB"
-    "y\0228.tinkoff.public.invest.api.contract.v"
-    "1.InstrumentRequest\0327.tinkoff.public.inv"
-    "est.api.contract.v1.CurrencyResponse\022\202\001\n"
-    "\nCurrencies\0229.tinkoff.public.invest.api."
-    "contract.v1.InstrumentsRequest\0329.tinkoff"
-    ".public.invest.api.contract.v1.Currencie"
-    "sResponse\022u\n\005EtfBy\0228.tinkoff.public.inve"
-    "st.api.contract.v1.InstrumentRequest\0322.t"
-    "inkoff.public.invest.api.contract.v1.Etf"
-    "Response\022v\n\004Etfs\0229.tinkoff.public.invest"
-    ".api.contract.v1.InstrumentsRequest\0323.ti"
-    "nkoff.public.invest.api.contract.v1.Etfs"
-    "Response\022{\n\010FutureBy\0228.tinkoff.public.in"
-    "vest.api.contract.v1.InstrumentRequest\0325"
-    ".tinkoff.public.invest.api.contract.v1.F"
-    "utureResponse\022|\n\007Futures\0229.tinkoff.publi"
-    "c.invest.api.contract.v1.InstrumentsRequ"
-    "est\0326.tinkoff.public.invest.api.contract"
-    ".v1.FuturesResponse\022{\n\010OptionBy\0228.tinkof"
+    "t.v1.InstrumentType\022B\n\005share\030\003 \001(\01321.tin"
+    "koff.public.invest.api.contract.v1.Asset"
+    "ShareH\000\022@\n\004bond\030\004 \001(\01320.tinkoff.public.i"
+    "nvest.api.contract.v1.AssetBondH\000\022K\n\002sp\030"
+    "\005 \001(\0132=.tinkoff.public.invest.api.contra"
+    "ct.v1.AssetStructuredProductH\000\022>\n\003etf\030\006 "
+    "\001(\0132/.tinkoff.public.invest.api.contract"
+    ".v1.AssetEtfH\000\022_\n\024clearing_certificate\030\007"
+    " \001(\0132\?.tinkoff.public.invest.api.contrac"
+    "t.v1.AssetClearingCertificateH\000B\005\n\003ext\"\325"
+    "\005\n\nAssetShare\022>\n\004type\030\001 \001(\01620.tinkoff.pu"
+    "blic.invest.api.contract.v1.ShareType\022D\n"
+    "\nissue_size\030\002 \001(\01320.tinkoff.public.inves"
+    "t.api.contract.v1.Quotation\022A\n\007nominal\030\003"
+    " \001(\01320.tinkoff.public.invest.api.contrac"
+    "t.v1.Quotation\022\030\n\020nominal_currency\030\004 \001(\t"
+    "\022\025\n\rprimary_index\030\005 \001(\t\022G\n\rdividend_rate"
+    "\030\006 \001(\01320.tinkoff.public.invest.api.contr"
+    "act.v1.Quotation\022\034\n\024preferred_share_type"
+    "\030\007 \001(\t\022,\n\010ipo_date\030\010 \001(\0132\032.google.protob"
+    "uf.Timestamp\0221\n\rregistry_date\030\t \001(\0132\032.go"
+    "ogle.protobuf.Timestamp\022\026\n\016div_yield_fla"
+    "g\030\n \001(\010\022\022\n\nissue_kind\030\013 \001(\t\0222\n\016placement"
+    "_date\030\014 \001(\0132\032.google.protobuf.Timestamp\022"
+    "\023\n\013repres_isin\030\r \001(\t\022I\n\017issue_size_plan\030"
+    "\016 \001(\01320.tinkoff.public.invest.api.contra"
+    "ct.v1.Quotation\022E\n\013total_float\030\017 \001(\01320.t"
+    "inkoff.public.invest.api.contract.v1.Quo"
+    "tation\"\340\006\n\tAssetBond\022I\n\017current_nominal\030"
+    "\001 \001(\01320.tinkoff.public.invest.api.contra"
+    "ct.v1.Quotation\022\023\n\013borrow_name\030\002 \001(\t\022D\n\n"
+    "issue_size\030\003 \001(\01320.tinkoff.public.invest"
+    ".api.contract.v1.Quotation\022A\n\007nominal\030\004 "
+    "\001(\01320.tinkoff.public.invest.api.contract"
+    ".v1.Quotation\022\030\n\020nominal_currency\030\005 \001(\t\022"
+    "\022\n\nissue_kind\030\006 \001(\t\022\025\n\rinterest_kind\030\007 \001"
+    "(\t\022 \n\030coupon_quantity_per_year\030\010 \001(\005\022\034\n\024"
+    "indexed_nominal_flag\030\t \001(\010\022\031\n\021subordinat"
+    "ed_flag\030\n \001(\010\022\027\n\017collateral_flag\030\013 \001(\010\022\025"
+    "\n\rtax_free_flag\030\014 \001(\010\022\031\n\021amortization_fl"
+    "ag\030\r \001(\010\022\034\n\024floating_coupon_flag\030\016 \001(\010\022\026"
+    "\n\016perpetual_flag\030\017 \001(\010\0221\n\rmaturity_date\030"
+    "\020 \001(\0132\032.google.protobuf.Timestamp\022\030\n\020ret"
+    "urn_condition\030\021 \001(\t\0222\n\016state_reg_date\030\022 "
+    "\001(\0132\032.google.protobuf.Timestamp\0222\n\016place"
+    "ment_date\030\023 \001(\0132\032.google.protobuf.Timest"
+    "amp\022I\n\017placement_price\030\024 \001(\01320.tinkoff.p"
+    "ublic.invest.api.contract.v1.Quotation\022I"
+    "\n\017issue_size_plan\030\025 \001(\01320.tinkoff.public"
+    ".invest.api.contract.v1.Quotation\"\240\005\n\026As"
+    "setStructuredProduct\022\023\n\013borrow_name\030\001 \001("
+    "\t\022A\n\007nominal\030\002 \001(\01320.tinkoff.public.inve"
+    "st.api.contract.v1.Quotation\022\030\n\020nominal_"
+    "currency\030\003 \001(\t\022J\n\004type\030\004 \001(\0162<.tinkoff.p"
+    "ublic.invest.api.contract.v1.StructuredP"
+    "roductType\022\027\n\017logic_portfolio\030\005 \001(\t\022D\n\na"
+    "sset_type\030\006 \001(\01620.tinkoff.public.invest."
+    "api.contract.v1.AssetType\022\023\n\013basic_asset"
+    "\030\007 \001(\t\022H\n\016safety_barrier\030\010 \001(\01320.tinkoff"
+    ".public.invest.api.contract.v1.Quotation"
+    "\0221\n\rmaturity_date\030\t \001(\0132\032.google.protobu"
+    "f.Timestamp\022I\n\017issue_size_plan\030\n \001(\01320.t"
+    "inkoff.public.invest.api.contract.v1.Quo"
+    "tation\022D\n\nissue_size\030\013 \001(\01320.tinkoff.pub"
+    "lic.invest.api.contract.v1.Quotation\0222\n\016"
+    "placement_date\030\014 \001(\0132\032.google.protobuf.T"
+    "imestamp\022\022\n\nissue_kind\030\r \001(\t\"\330\n\n\010AssetEt"
+    "f\022G\n\rtotal_expense\030\001 \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\022E\n\013hu"
+    "rdle_rate\030\002 \001(\01320.tinkoff.public.invest."
+    "api.contract.v1.Quotation\022I\n\017performance"
+    "_fee\030\003 \001(\01320.tinkoff.public.invest.api.c"
+    "ontract.v1.Quotation\022J\n\020fixed_commission"
+    "\030\004 \001(\01320.tinkoff.public.invest.api.contr"
+    "act.v1.Quotation\022\024\n\014payment_type\030\005 \001(\t\022\026"
+    "\n\016watermark_flag\030\006 \001(\010\022E\n\013buy_premium\030\007 "
+    "\001(\01320.tinkoff.public.invest.api.contract"
+    ".v1.Quotation\022G\n\rsell_discount\030\010 \001(\01320.t"
+    "inkoff.public.invest.api.contract.v1.Quo"
+    "tation\022\030\n\020rebalancing_flag\030\t \001(\010\022\030\n\020reba"
+    "lancing_freq\030\n \001(\t\022\027\n\017management_type\030\013 "
+    "\001(\t\022\025\n\rprimary_index\030\014 \001(\t\022\022\n\nfocus_type"
+    "\030\r \001(\t\022\026\n\016leveraged_flag\030\016 \001(\010\022C\n\tnum_sh"
+    "are\030\017 \001(\01320.tinkoff.public.invest.api.co"
+    "ntract.v1.Quotation\022\022\n\nucits_flag\030\020 \001(\010\022"
+    "1\n\rreleased_date\030\021 \001(\0132\032.google.protobuf"
+    ".Timestamp\022\023\n\013description\030\022 \001(\t\022!\n\031prima"
+    "ry_index_description\030\023 \001(\t\022\035\n\025primary_in"
+    "dex_company\030\024 \001(\t\022O\n\025index_recovery_peri"
+    "od\030\025 \001(\01320.tinkoff.public.invest.api.con"
+    "tract.v1.Quotation\022\021\n\tinav_code\030\026 \001(\t\022\026\n"
+    "\016div_yield_flag\030\027 \001(\010\022L\n\022expense_commiss"
+    "ion\030\030 \001(\01320.tinkoff.public.invest.api.co"
+    "ntract.v1.Quotation\022V\n\034primary_index_tra"
+    "cking_error\030\031 \001(\01320.tinkoff.public.inves"
+    "t.api.contract.v1.Quotation\022\030\n\020rebalanci"
+    "ng_plan\030\032 \001(\t\022\020\n\010tax_rate\030\033 \001(\t\0225\n\021rebal"
+    "ancing_dates\030\034 \003(\0132\032.google.protobuf.Tim"
+    "estamp\022\022\n\nissue_kind\030\035 \001(\t\022A\n\007nominal\030\036 "
+    "\001(\01320.tinkoff.public.invest.api.contract"
+    ".v1.Quotation\022\030\n\020nominal_currency\030\037 \001(\t\""
+    "w\n\030AssetClearingCertificate\022A\n\007nominal\030\001"
+    " \001(\01320.tinkoff.public.invest.api.contrac"
+    "t.v1.Quotation\022\030\n\020nominal_currency\030\002 \001(\t"
+    "\"\235\001\n\005Brand\022\013\n\003uid\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\023\n"
+    "\013description\030\003 \001(\t\022\014\n\004info\030\004 \001(\t\022\017\n\007comp"
+    "any\030\005 \001(\t\022\016\n\006sector\030\006 \001(\t\022\027\n\017country_of_"
+    "risk\030\007 \001(\t\022\034\n\024country_of_risk_name\030\010 \001(\t"
+    "\"\225\002\n\017AssetInstrument\022\013\n\003uid\030\001 \001(\t\022\014\n\004fig"
+    "i\030\002 \001(\t\022\027\n\017instrument_type\030\003 \001(\t\022\016\n\006tick"
+    "er\030\004 \001(\t\022\022\n\nclass_code\030\005 \001(\t\022D\n\005links\030\006 "
+    "\003(\01325.tinkoff.public.invest.api.contract"
+    ".v1.InstrumentLink\022N\n\017instrument_kind\030\n "
+    "\001(\01625.tinkoff.public.invest.api.contract"
+    ".v1.InstrumentType\022\024\n\014position_uid\030\013 \001(\t"
+    "\"6\n\016InstrumentLink\022\014\n\004type\030\001 \001(\t\022\026\n\016inst"
+    "rument_uid\030\002 \001(\t\"9\n\023GetFavoritesRequest\022"
+    "\025\n\010group_id\030\001 \001(\tH\000\210\001\001B\013\n\t_group_id\"\223\001\n\024"
+    "GetFavoritesResponse\022W\n\024favorite_instrum"
+    "ents\030\001 \003(\01329.tinkoff.public.invest.api.c"
+    "ontract.v1.FavoriteInstrument\022\025\n\010group_i"
+    "d\030\002 \001(\tH\000\210\001\001B\013\n\t_group_id\"\214\002\n\022FavoriteIn"
+    "strument\022\014\n\004figi\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\022"
+    "\n\nclass_code\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\027\n\017inst"
+    "rument_type\030\013 \001(\t\022\014\n\004name\030\014 \001(\t\022\013\n\003uid\030\r"
+    " \001(\t\022\020\n\010otc_flag\030\020 \001(\010\022 \n\030api_trade_avai"
+    "lable_flag\030\021 \001(\010\022N\n\017instrument_kind\030\022 \001("
+    "\01625.tinkoff.public.invest.api.contract.v"
+    "1.InstrumentType\"\367\001\n\024EditFavoritesReques"
+    "t\022`\n\013instruments\030\001 \003(\0132E.tinkoff.public."
+    "invest.api.contract.v1.EditFavoritesRequ"
+    "estInstrumentB\004\342A\001\002\022Y\n\013action_type\030\006 \001(\016"
+    "2>.tinkoff.public.invest.api.contract.v1"
+    ".EditFavoritesActionTypeB\004\342A\001\002\022\025\n\010group_"
+    "id\030\007 \001(\tH\000\210\001\001B\013\n\t_group_id\"]\n\036EditFavori"
+    "tesRequestInstrument\022\025\n\004figi\030\001 \001(\tB\002\030\001H\000"
+    "\210\001\001\022\033\n\rinstrument_id\030\002 \001(\tB\004\342A\001\002B\007\n\005_fig"
+    "i\"\224\001\n\025EditFavoritesResponse\022W\n\024favorite_"
+    "instruments\030\001 \003(\01329.tinkoff.public.inves"
+    "t.api.contract.v1.FavoriteInstrument\022\025\n\010"
+    "group_id\030\002 \001(\tH\000\210\001\001B\013\n\t_group_id\"m\n\032Crea"
+    "teFavoriteGroupRequest\022\030\n\ngroup_name\030\001 \001"
+    "(\tB\004\342A\001\002\022\031\n\013group_color\030\002 \001(\tB\004\342A\001\002\022\021\n\004n"
+    "ote\030\003 \001(\tH\000\210\001\001B\007\n\005_note\"C\n\033CreateFavorit"
+    "eGroupResponse\022\020\n\010group_id\030\001 \001(\t\022\022\n\ngrou"
+    "p_name\030\002 \001(\t\"4\n\032DeleteFavoriteGroupReque"
+    "st\022\026\n\010group_id\030\001 \001(\tB\004\342A\001\002\"\035\n\033DeleteFavo"
+    "riteGroupResponse\"L\n\030GetFavoriteGroupsRe"
+    "quest\022\025\n\rinstrument_id\030\001 \003(\t\022\031\n\021excluded"
+    "_group_id\030\002 \003(\t\"\242\002\n\031GetFavoriteGroupsRes"
+    "ponse\022^\n\006groups\030\001 \003(\0132N.tinkoff.public.i"
+    "nvest.api.contract.v1.GetFavoriteGroupsR"
+    "esponse.FavoriteGroup\032\244\001\n\rFavoriteGroup\022"
+    "\026\n\010group_id\030\001 \001(\tB\004\342A\001\002\022\030\n\ngroup_name\030\002 "
+    "\001(\tB\004\342A\001\002\022\023\n\005color\030\003 \001(\tB\004\342A\001\002\022\022\n\004size\030\004"
+    " \001(\005B\004\342A\001\002\022 \n\023contains_instrument\030\005 \001(\010H"
+    "\000\210\001\001B\026\n\024_contains_instrument\"\025\n\023GetCount"
+    "riesRequest\"a\n\024GetCountriesResponse\022I\n\tc"
+    "ountries\030\001 \003(\01326.tinkoff.public.invest.a"
+    "pi.contract.v1.CountryResponse\"\024\n\022Indica"
+    "tivesRequest\"e\n\023IndicativesResponse\022N\n\013i"
+    "nstruments\030\001 \003(\01329.tinkoff.public.invest"
+    ".api.contract.v1.IndicativeResponse\"\344\002\n\022"
+    "IndicativeResponse\022\014\n\004figi\030\001 \001(\t\022\016\n\006tick"
+    "er\030\002 \001(\t\022\022\n\nclass_code\030\003 \001(\t\022\020\n\010currency"
+    "\030\004 \001(\t\022N\n\017instrument_kind\030\n \001(\01625.tinkof"
     "f.public.invest.api.contract.v1.Instrume"
-    "ntRequest\0325.tinkoff.public.invest.api.co"
-    "ntract.v1.OptionResponse\022\201\001\n\007Options\0229.t"
-    "inkoff.public.invest.api.contract.v1.Ins"
-    "trumentsRequest\0326.tinkoff.public.invest."
-    "api.contract.v1.OptionsResponse\"\003\210\002\001\022\200\001\n"
-    "\tOptionsBy\022;.tinkoff.public.invest.api.c"
-    "ontract.v1.FilterOptionsRequest\0326.tinkof"
-    "f.public.invest.api.contract.v1.OptionsR"
-    "esponse\022y\n\007ShareBy\0228.tinkoff.public.inve"
-    "st.api.contract.v1.InstrumentRequest\0324.t"
-    "inkoff.public.invest.api.contract.v1.Sha"
-    "reResponse\022z\n\006Shares\0229.tinkoff.public.in"
-    "vest.api.contract.v1.InstrumentsRequest\032"
-    "5.tinkoff.public.invest.api.contract.v1."
-    "SharesResponse\022\204\001\n\013Indicatives\0229.tinkoff"
-    ".public.invest.api.contract.v1.Indicativ"
-    "esRequest\032:.tinkoff.public.invest.api.co"
-    "ntract.v1.IndicativesResponse\022\234\001\n\023GetAcc"
-    "ruedInterests\022A.tinkoff.public.invest.ap"
-    "i.contract.v1.GetAccruedInterestsRequest"
-    "\032B.tinkoff.public.invest.api.contract.v1"
-    ".GetAccruedInterestsResponse\022\223\001\n\020GetFutu"
-    "resMargin\022>.tinkoff.public.invest.api.co"
-    "ntract.v1.GetFuturesMarginRequest\032\?.tink"
-    "off.public.invest.api.contract.v1.GetFut"
-    "uresMarginResponse\022\206\001\n\017GetInstrumentBy\0228"
-    ".tinkoff.public.invest.api.contract.v1.I"
-    "nstrumentRequest\0329.tinkoff.public.invest"
-    ".api.contract.v1.InstrumentResponse\022\207\001\n\014"
-    "GetDividends\022:.tinkoff.public.invest.api"
-    ".contract.v1.GetDividendsRequest\032;.tinko"
-    "ff.public.invest.api.contract.v1.GetDivi"
-    "dendsResponse\022w\n\nGetAssetBy\0223.tinkoff.pu"
-    "blic.invest.api.contract.v1.AssetRequest"
-    "\0324.tinkoff.public.invest.api.contract.v1"
-    ".AssetResponse\022x\n\tGetAssets\0224.tinkoff.pu"
-    "blic.invest.api.contract.v1.AssetsReques"
-    "t\0325.tinkoff.public.invest.api.contract.v"
-    "1.AssetsResponse\022\207\001\n\014GetFavorites\022:.tink"
-    "off.public.invest.api.contract.v1.GetFav"
-    "oritesRequest\032;.tinkoff.public.invest.ap"
-    "i.contract.v1.GetFavoritesResponse\022\212\001\n\rE"
-    "ditFavorites\022;.tinkoff.public.invest.api"
-    ".contract.v1.EditFavoritesRequest\032<.tink"
-    "off.public.invest.api.contract.v1.EditFa"
-    "voritesResponse\022\234\001\n\023CreateFavoriteGroup\022"
-    "A.tinkoff.public.invest.api.contract.v1."
-    "CreateFavoriteGroupRequest\032B.tinkoff.pub"
-    "lic.invest.api.contract.v1.CreateFavorit"
-    "eGroupResponse\022\234\001\n\023DeleteFavoriteGroup\022A"
-    ".tinkoff.public.invest.api.contract.v1.D"
-    "eleteFavoriteGroupRequest\032B.tinkoff.publ"
-    "ic.invest.api.contract.v1.DeleteFavorite"
-    "GroupResponse\022\226\001\n\021GetFavoriteGroups\022\?.ti"
-    "nkoff.public.invest.api.contract.v1.GetF"
-    "avoriteGroupsRequest\032@.tinkoff.public.in"
-    "vest.api.contract.v1.GetFavoriteGroupsRe"
-    "sponse\022\207\001\n\014GetCountries\022:.tinkoff.public"
-    ".invest.api.contract.v1.GetCountriesRequ"
-    "est\032;.tinkoff.public.invest.api.contract"
-    ".v1.GetCountriesResponse\022\215\001\n\016FindInstrum"
-    "ent\022<.tinkoff.public.invest.api.contract"
-    ".v1.FindInstrumentRequest\032=.tinkoff.publ"
-    "ic.invest.api.contract.v1.FindInstrument"
-    "Response\022~\n\tGetBrands\0227.tinkoff.public.i"
-    "nvest.api.contract.v1.GetBrandsRequest\0328"
-    ".tinkoff.public.invest.api.contract.v1.G"
-    "etBrandsResponse\022r\n\nGetBrandBy\0226.tinkoff"
-    ".public.invest.api.contract.v1.GetBrandR"
-    "equest\032,.tinkoff.public.invest.api.contr"
-    "act.v1.Brand\022\237\001\n\024GetAssetFundamentals\022B."
+    "ntType\022\014\n\004name\030\014 \001(\t\022\020\n\010exchange\030\r \001(\t\022\013"
+    "\n\003uid\030\016 \001(\t\022\033\n\022buy_available_flag\030\224\003 \001(\010"
+    "\022\034\n\023sell_available_flag\030\225\003 \001(\010\022R\n\021index_"
+    "composition\030\226\003 \003(\01326.tinkoff.public.inve"
+    "st.api.contract.v1.IndexInstrument\"`\n\017In"
+    "dexInstrument\022\013\n\003uid\030\001 \001(\t\022@\n\006weight\030\002 \001"
+    "(\01320.tinkoff.public.invest.api.contract."
+    "v1.Quotation\"Y\n\017CountryResponse\022\020\n\010alfa_"
+    "two\030\001 \001(\t\022\022\n\nalfa_three\030\002 \001(\t\022\014\n\004name\030\003 "
+    "\001(\t\022\022\n\nname_brief\030\004 \001(\t\"\331\001\n\025FindInstrume"
+    "ntRequest\022\023\n\005query\030\001 \001(\tB\004\342A\001\002\022S\n\017instru"
+    "ment_kind\030\002 \001(\01625.tinkoff.public.invest."
+    "api.contract.v1.InstrumentTypeH\000\210\001\001\022%\n\030a"
+    "pi_trade_available_flag\030\003 \001(\010H\001\210\001\001B\022\n\020_i"
+    "nstrument_kindB\033\n\031_api_trade_available_f"
+    "lag\"e\n\026FindInstrumentResponse\022K\n\013instrum"
+    "ents\030\001 \003(\01326.tinkoff.public.invest.api.c"
+    "ontract.v1.InstrumentShort\"\370\003\n\017Instrumen"
+    "tShort\022\014\n\004isin\030\001 \001(\t\022\014\n\004figi\030\002 \001(\t\022\016\n\006ti"
+    "cker\030\003 \001(\t\022\022\n\nclass_code\030\004 \001(\t\022\027\n\017instru"
+    "ment_type\030\005 \001(\t\022\014\n\004name\030\006 \001(\t\022\013\n\003uid\030\007 \001"
+    "(\t\022\024\n\014position_uid\030\010 \001(\t\022N\n\017instrument_k"
+    "ind\030\n \001(\01625.tinkoff.public.invest.api.co"
+    "ntract.v1.InstrumentType\022 \n\030api_trade_av"
+    "ailable_flag\030\013 \001(\010\022\024\n\014for_iis_flag\030\014 \001(\010"
+    "\022:\n\026first_1min_candle_date\030\032 \001(\0132\032.googl"
+    "e.protobuf.Timestamp\022:\n\026first_1day_candl"
+    "e_date\030\033 \001(\0132\032.google.protobuf.Timestamp"
+    "\022\036\n\026for_qual_investor_flag\030\034 \001(\010\022\024\n\014week"
+    "end_flag\030\035 \001(\010\022\030\n\020blocked_tca_flag\030\036 \001(\010"
+    "\022\013\n\003lot\030\037 \001(\005\"O\n\020GetBrandsRequest\022;\n\006pag"
+    "ing\030\001 \001(\0132+.tinkoff.public.invest.api.co"
+    "ntract.v1.Page\"#\n\017GetBrandRequest\022\020\n\002id\030"
+    "\001 \001(\tB\004\342A\001\002\"\226\001\n\021GetBrandsResponse\022<\n\006bra"
+    "nds\030\001 \003(\0132,.tinkoff.public.invest.api.co"
+    "ntract.v1.Brand\022C\n\006paging\030\002 \001(\01323.tinkof"
+    "f.public.invest.api.contract.v1.PageResp"
+    "onse\"3\n\033GetAssetFundamentalsRequest\022\024\n\006a"
+    "ssets\030\001 \003(\tB\004\342A\001\002\"\375\016\n\034GetAssetFundamenta"
+    "lsResponse\022k\n\014fundamentals\030\001 \003(\0132U.tinko"
+    "ff.public.invest.api.contract.v1.GetAsse"
+    "tFundamentalsResponse.StatisticResponse\032"
+    "\357\r\n\021StatisticResponse\022\021\n\tasset_uid\030\001 \001(\t"
+    "\022\020\n\010currency\030\002 \001(\t\022\035\n\025market_capitalizat"
+    "ion\030\003 \001(\001\022 \n\030high_price_last_52_weeks\030\004 "
+    "\001(\001\022\037\n\027low_price_last_52_weeks\030\005 \001(\001\022)\n!"
+    "average_daily_volume_last_10_days\030\006 \001(\001\022"
+    ")\n!average_daily_volume_last_4_weeks\030\007 \001"
+    "(\001\022\014\n\004beta\030\010 \001(\001\022\022\n\nfree_float\030\t \001(\001\022%\n\035"
+    "forward_annual_dividend_yield\030\n \001(\001\022\032\n\022s"
+    "hares_outstanding\030\013 \001(\001\022\023\n\013revenue_ttm\030\014"
+    " \001(\001\022\022\n\nebitda_ttm\030\r \001(\001\022\026\n\016net_income_t"
+    "tm\030\016 \001(\001\022\017\n\007eps_ttm\030\017 \001(\001\022\027\n\017diluted_eps"
+    "_ttm\030\020 \001(\001\022\032\n\022free_cash_flow_ttm\030\021 \001(\001\022,"
+    "\n$five_year_annual_revenue_growth_rate\030\022"
+    " \001(\001\022-\n%three_year_annual_revenue_growth"
+    "_rate\030\023 \001(\001\022\024\n\014pe_ratio_ttm\030\024 \001(\001\022\032\n\022pri"
+    "ce_to_sales_ttm\030\025 \001(\001\022\031\n\021price_to_book_t"
+    "tm\030\026 \001(\001\022#\n\033price_to_free_cash_flow_ttm\030"
+    "\027 \001(\001\022\"\n\032total_enterprise_value_mrq\030\030 \001("
+    "\001\022\030\n\020ev_to_ebitda_mrq\030\031 \001(\001\022\026\n\016net_margi"
+    "n_mrq\030\032 \001(\001\022\037\n\027net_interest_margin_mrq\030\033"
+    " \001(\001\022\013\n\003roe\030\034 \001(\001\022\013\n\003roa\030\035 \001(\001\022\014\n\004roic\030\036"
+    " \001(\001\022\026\n\016total_debt_mrq\030\037 \001(\001\022 \n\030total_de"
+    "bt_to_equity_mrq\030  \001(\001\022 \n\030total_debt_to_"
+    "ebitda_mrq\030! \001(\001\022\037\n\027free_cash_flow_to_pr"
+    "ice\030\" \001(\001\022\032\n\022net_debt_to_ebitda\030# \001(\001\022\031\n"
+    "\021current_ratio_mrq\030$ \001(\001\022&\n\036fixed_charge"
+    "_coverage_ratio_fy\030% \001(\001\022 \n\030dividend_yie"
+    "ld_daily_ttm\030& \001(\001\022\031\n\021dividend_rate_ttm\030"
+    "\' \001(\001\022\033\n\023dividends_per_share\030( \001(\001\022)\n!fi"
+    "ve_years_average_dividend_yield\030) \001(\001\022-\n"
+    "%five_year_annual_dividend_growth_rate\030*"
+    " \001(\001\022 \n\030dividend_payout_ratio_fy\030+ \001(\001\022\024"
+    "\n\014buy_back_ttm\030, \001(\001\022+\n#one_year_annual_"
+    "revenue_growth_rate\030- \001(\001\022\037\n\027domicile_in"
+    "dicator_code\030. \001(\t\022!\n\031adr_to_common_shar"
+    "e_ratio\030/ \001(\001\022\033\n\023number_of_employees\0300 \001"
+    "(\001\0224\n\020ex_dividend_date\0301 \001(\0132\032.google.pr"
+    "otobuf.Timestamp\022<\n\030fiscal_period_start_"
+    "date\0302 \001(\0132\032.google.protobuf.Timestamp\022:"
+    "\n\026fiscal_period_end_date\0303 \001(\0132\032.google."
+    "protobuf.Timestamp\022!\n\031revenue_change_fiv"
+    "e_years\0305 \001(\001\022\035\n\025eps_change_five_years\0306"
+    " \001(\001\022 \n\030ebitda_change_five_years\0307 \001(\001\022$"
+    "\n\034total_debt_change_five_years\0308 \001(\001\022\023\n\013"
+    "ev_to_sales\0309 \001(\001\"\241\001\n\026GetAssetReportsReq"
+    "uest\022\033\n\rinstrument_id\030\001 \001(\tB\004\342A\001\002\022-\n\004fro"
+    "m\030\002 \001(\0132\032.google.protobuf.TimestampH\000\210\001\001"
+    "\022+\n\002to\030\003 \001(\0132\032.google.protobuf.Timestamp"
+    "H\001\210\001\001B\007\n\005_fromB\005\n\003_to\"\247\004\n\027GetAssetReport"
+    "sResponse\022c\n\006events\030\001 \003(\0132S.tinkoff.publ"
+    "ic.invest.api.contract.v1.GetAssetReport"
+    "sResponse.GetAssetReportsEvent\032\242\002\n\024GetAs"
+    "setReportsEvent\022\025\n\rinstrument_id\030\001 \001(\t\022/"
+    "\n\013report_date\030\002 \001(\0132\032.google.protobuf.Ti"
+    "mestamp\022\023\n\013period_year\030\003 \001(\005\022\022\n\nperiod_n"
+    "um\030\004 \001(\005\022i\n\013period_type\030\005 \001(\0162T.tinkoff."
+    "public.invest.api.contract.v1.GetAssetRe"
+    "portsResponse.AssetReportPeriodType\022.\n\nc"
+    "reated_at\030\006 \001(\0132\032.google.protobuf.Timest"
+    "amp\"\201\001\n\025AssetReportPeriodType\022\033\n\027PERIOD_"
+    "TYPE_UNSPECIFIED\020\000\022\027\n\023PERIOD_TYPE_QUARTE"
+    "R\020\001\022\032\n\026PERIOD_TYPE_SEMIANNUAL\020\002\022\026\n\022PERIO"
+    "D_TYPE_ANNUAL\020\003\"k\n\034GetConsensusForecasts"
+    "Request\022@\n\006paging\030\001 \001(\0132+.tinkoff.public"
+    ".invest.api.contract.v1.PageH\000\210\001\001B\t\n\007_pa"
+    "ging\"\206\006\n\035GetConsensusForecastsResponse\022j"
+    "\n\005items\030\001 \003(\0132[.tinkoff.public.invest.ap"
+    "i.contract.v1.GetConsensusForecastsRespo"
+    "nse.ConsensusForecastsItem\022A\n\004page\030\002 \001(\013"
+    "23.tinkoff.public.invest.api.contract.v1"
+    ".PageResponse\032\265\004\n\026ConsensusForecastsItem"
+    "\022\013\n\003uid\030\001 \001(\t\022\021\n\tasset_uid\030\002 \001(\t\022.\n\ncrea"
+    "ted_at\030\003 \001(\0132\032.google.protobuf.Timestamp"
+    "\022K\n\021best_target_price\030\004 \001(\01320.tinkoff.pu"
+    "blic.invest.api.contract.v1.Quotation\022I\n"
+    "\017best_target_low\030\005 \001(\01320.tinkoff.public."
+    "invest.api.contract.v1.Quotation\022J\n\020best"
+    "_target_high\030\006 \001(\01320.tinkoff.public.inve"
+    "st.api.contract.v1.Quotation\022\033\n\023total_bu"
+    "y_recommend\030\007 \001(\005\022\034\n\024total_hold_recommen"
+    "d\030\010 \001(\005\022\034\n\024total_sell_recommend\030\t \001(\005\022\020\n"
+    "\010currency\030\n \001(\t\022H\n\tconsensus\030\013 \001(\01625.tin"
+    "koff.public.invest.api.contract.v1.Recom"
+    "mendation\0222\n\016prognosis_date\030\014 \001(\0132\032.goog"
+    "le.protobuf.Timestamp\"+\n\022GetForecastRequ"
+    "est\022\025\n\rinstrument_id\030\001 \001(\t\"\227\n\n\023GetForeca"
+    "stResponse\022V\n\007targets\030\001 \003(\0132E.tinkoff.pu"
+    "blic.invest.api.contract.v1.GetForecastR"
+    "esponse.TargetItem\022[\n\tconsensus\030\002 \001(\0132H."
     "tinkoff.public.invest.api.contract.v1.Ge"
-    "tAssetFundamentalsRequest\032C.tinkoff.publ"
-    "ic.invest.api.contract.v1.GetAssetFundam"
-    "entalsResponse\022\220\001\n\017GetAssetReports\022=.tin"
-    "koff.public.invest.api.contract.v1.GetAs"
-    "setReportsRequest\032>.tinkoff.public.inves"
-    "t.api.contract.v1.GetAssetReportsRespons"
-    "e\022\242\001\n\025GetConsensusForecasts\022C.tinkoff.pu"
-    "blic.invest.api.contract.v1.GetConsensus"
-    "ForecastsRequest\032D.tinkoff.public.invest"
-    ".api.contract.v1.GetConsensusForecastsRe"
-    "sponse\022\206\001\n\rGetForecastBy\0229.tinkoff.publi"
-    "c.invest.api.contract.v1.GetForecastRequ"
-    "est\032:.tinkoff.public.invest.api.contract"
-    ".v1.GetForecastResponse\022\201\001\n\014GetRiskRates"
-    "\0227.tinkoff.public.invest.api.contract.v1"
-    ".RiskRatesRequest\0328.tinkoff.public.inves"
-    "t.api.contract.v1.RiskRatesResponse\022\220\001\n\017"
-    "GetInsiderDeals\022=.tinkoff.public.invest."
-    "api.contract.v1.GetInsiderDealsRequest\032>"
+    "tForecastResponse.ConsensusItem\032\214\004\n\nTarg"
+    "etItem\022\013\n\003uid\030\001 \001(\t\022\016\n\006ticker\030\002 \001(\t\022\017\n\007c"
+    "ompany\030\003 \001(\t\022M\n\016recommendation\030\004 \001(\01625.t"
+    "inkoff.public.invest.api.contract.v1.Rec"
+    "ommendation\0227\n\023recommendation_date\030\005 \001(\013"
+    "2\032.google.protobuf.Timestamp\022\020\n\010currency"
+    "\030\006 \001(\t\022G\n\rcurrent_price\030\007 \001(\01320.tinkoff."
+    "public.invest.api.contract.v1.Quotation\022"
+    "F\n\014target_price\030\010 \001(\01320.tinkoff.public.i"
+    "nvest.api.contract.v1.Quotation\022F\n\014price"
+    "_change\030\t \001(\01320.tinkoff.public.invest.ap"
+    "i.contract.v1.Quotation\022J\n\020price_change_"
+    "rel\030\n \001(\01320.tinkoff.public.invest.api.co"
+    "ntract.v1.Quotation\022\021\n\tshow_name\030\013 \001(\t\032\273"
+    "\004\n\rConsensusItem\022\013\n\003uid\030\001 \001(\t\022\016\n\006ticker\030"
+    "\002 \001(\t\022M\n\016recommendation\030\003 \001(\01625.tinkoff."
+    "public.invest.api.contract.v1.Recommenda"
+    "tion\022\020\n\010currency\030\004 \001(\t\022G\n\rcurrent_price\030"
+    "\005 \001(\01320.tinkoff.public.invest.api.contra"
+    "ct.v1.Quotation\022C\n\tconsensus\030\006 \001(\01320.tin"
+    "koff.public.invest.api.contract.v1.Quota"
+    "tion\022D\n\nmin_target\030\007 \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\022D\n\nma"
+    "x_target\030\010 \001(\01320.tinkoff.public.invest.a"
+    "pi.contract.v1.Quotation\022F\n\014price_change"
+    "\030\t \001(\01320.tinkoff.public.invest.api.contr"
+    "act.v1.Quotation\022J\n\020price_change_rel\030\n \001"
+    "(\01320.tinkoff.public.invest.api.contract."
+    "v1.Quotation\")\n\020RiskRatesRequest\022\025\n\rinst"
+    "rument_id\030\001 \003(\t\"\313\005\n\021RiskRatesResponse\022f\n"
+    "\025instrument_risk_rates\030\001 \003(\0132G.tinkoff.p"
+    "ublic.invest.api.contract.v1.RiskRatesRe"
+    "sponse.RiskRateResult\032\347\003\n\016RiskRateResult"
+    "\022\026\n\016instrument_uid\030\001 \001(\t\022_\n\017short_risk_r"
+    "ate\030\002 \001(\0132A.tinkoff.public.invest.api.co"
+    "ntract.v1.RiskRatesResponse.RiskRateH\000\210\001"
+    "\001\022^\n\016long_risk_rate\030\003 \001(\0132A.tinkoff.publ"
+    "ic.invest.api.contract.v1.RiskRatesRespo"
+    "nse.RiskRateH\001\210\001\001\022[\n\020short_risk_rates\030\005 "
+    "\003(\0132A.tinkoff.public.invest.api.contract"
+    ".v1.RiskRatesResponse.RiskRate\022Z\n\017long_r"
+    "isk_rates\030\006 \003(\0132A.tinkoff.public.invest."
+    "api.contract.v1.RiskRatesResponse.RiskRa"
+    "te\022\022\n\005error\030\t \001(\tH\002\210\001\001B\022\n\020_short_risk_ra"
+    "teB\021\n\017_long_risk_rateB\010\n\006_error\032d\n\010RiskR"
+    "ate\022\027\n\017risk_level_code\030\002 \001(\t\022\?\n\005value\030\005 "
+    "\001(\01320.tinkoff.public.invest.api.contract"
+    ".v1.Quotation\"\340\001\n\017TradingInterval\022\014\n\004typ"
+    "e\030\001 \001(\t\022U\n\010interval\030\002 \001(\0132C.tinkoff.publ"
+    "ic.invest.api.contract.v1.TradingInterva"
+    "l.TimeInterval\032h\n\014TimeInterval\022,\n\010start_"
+    "ts\030\001 \001(\0132\032.google.protobuf.Timestamp\022*\n\006"
+    "end_ts\030\002 \001(\0132\032.google.protobuf.Timestamp"
+    "\"h\n\026GetInsiderDealsRequest\022\025\n\rinstrument"
+    "_id\030\001 \001(\t\022\r\n\005limit\030\002 \001(\005\022\030\n\013next_cursor\030"
+    "\003 \001(\tH\000\210\001\001B\016\n\014_next_cursor\"\234\006\n\027GetInside"
+    "rDealsResponse\022a\n\rinsider_deals\030\001 \003(\0132J."
+    "tinkoff.public.invest.api.contract.v1.Ge"
+    "tInsiderDealsResponse.InsiderDeal\022\030\n\013nex"
+    "t_cursor\030\002 \001(\tH\000\210\001\001\032\320\003\n\013InsiderDeal\022\020\n\010t"
+    "rade_id\030\001 \001(\003\022`\n\tdirection\030\002 \001(\0162M.tinko"
+    "ff.public.invest.api.contract.v1.GetInsi"
+    "derDealsResponse.TradeDirection\022\020\n\010curre"
+    "ncy\030\003 \001(\t\022(\n\004date\030\004 \001(\0132\032.google.protobu"
+    "f.Timestamp\022\020\n\010quantity\030\005 \001(\003\022\?\n\005price\030\006"
+    " \001(\01320.tinkoff.public.invest.api.contrac"
+    "t.v1.Quotation\022\026\n\016instrument_uid\030\007 \001(\t\022\016"
+    "\n\006ticker\030\010 \001(\t\022\025\n\rinvestor_name\030\t \001(\t\022\031\n"
+    "\021investor_position\030\n \001(\t\022\022\n\npercentage\030\013"
+    " \001(\002\022\033\n\023is_option_execution\030\014 \001(\010\0223\n\017dis"
+    "closure_date\030\r \001(\0132\032.google.protobuf.Tim"
+    "estamp\"\240\001\n\016TradeDirection\022\037\n\033TRADE_DIREC"
+    "TION_UNSPECIFIED\020\000\022\027\n\023TRADE_DIRECTION_BU"
+    "Y\020\001\022\030\n\024TRADE_DIRECTION_SELL\020\002\022\034\n\030TRADE_D"
+    "IRECTION_INCREASE\020\003\022\034\n\030TRADE_DIRECTION_D"
+    "ECREASE\020\004B\016\n\014_next_cursor\"\r\n\013DfasRequest"
+    "\"\372\t\n\013DfaResponse\022\013\n\003uid\030\001 \001(\t\022\016\n\006ticker\030"
+    "\002 \001(\t\022\014\n\004name\030\003 \001(\t\022\024\n\014position_uid\030\004 \001("
+    "\t\022M\n\023min_price_increment\030\005 \001(\01320.tinkoff"
+    ".public.invest.api.contract.v1.Quotation"
+    "\022\013\n\003lot\030\006 \001(\005\022B\n\007nominal\030\007 \001(\01321.tinkoff"
+    ".public.invest.api.contract.v1.MoneyValu"
+    "e\022\020\n\010currency\030\010 \001(\t\0221\n\rmaturity_date\030\t \001"
+    "(\0132\032.google.protobuf.Timestamp\022\032\n\022short_"
+    "enabled_flag\030\n \001(\010\022 \n\030api_trade_availabl"
+    "e_flag\030\013 \001(\010\022\032\n\022buy_available_flag\030\014 \001(\010"
+    "\022\033\n\023sell_available_flag\030\r \001(\010\022\"\n\032limit_o"
+    "rder_available_flag\030\016 \001(\010\022#\n\033market_orde"
+    "r_available_flag\030\017 \001(\010\022&\n\036bestprice_orde"
+    "r_available_flag\030\020 \001(\010\022\024\n\014for_iis_flag\030\021"
+    " \001(\010\022\036\n\026for_qual_investor_flag\030\022 \001(\010\022\014\n\004"
+    "type\030\023 \001(\t\022S\n\014basic_assets\030\024 \003(\0132=.tinko"
+    "ff.public.invest.api.contract.v1.DfaResp"
+    "onse.BasicAsset\022X\n\016forecast_yield\030\025 \001(\0132"
+    "@.tinkoff.public.invest.api.contract.v1."
+    "DfaResponse.ForecastYield\022K\n\021yield_to_ma"
+    "turity\030\026 \001(\01320.tinkoff.public.invest.api"
+    ".contract.v1.Quotation\022F\n\014coupon_value\030\027"
+    " \001(\01320.tinkoff.public.invest.api.contrac"
+    "t.v1.Quotation\022 \n\030coupon_payment_frequen"
+    "cy\030\030 \001(\005\0227\n\023coupon_payment_date\030\031 \001(\0132\032."
+    "google.protobuf.Timestamp\022C\n\taci_value\030\032"
+    " \001(\01320.tinkoff.public.invest.api.contrac"
+    "t.v1.Quotation\032\031\n\nBasicAsset\022\013\n\003uid\030\001 \001("
+    "\t\032\231\001\n\rForecastYield\022C\n\tmin_value\030\001 \001(\01320"
+    ".tinkoff.public.invest.api.contract.v1.Q"
+    "uotation\022C\n\tmax_value\030\002 \001(\01320.tinkoff.pu"
+    "blic.invest.api.contract.v1.Quotation\"W\n"
+    "\014DfasResponse\022G\n\013instruments\030\001 \003(\01322.tin"
+    "koff.public.invest.api.contract.v1.DfaRe"
+    "sponse*\327\001\n\nCouponType\022\033\n\027COUPON_TYPE_UNS"
+    "PECIFIED\020\000\022\030\n\024COUPON_TYPE_CONSTANT\020\001\022\030\n\024"
+    "COUPON_TYPE_FLOATING\020\002\022\030\n\024COUPON_TYPE_DI"
+    "SCOUNT\020\003\022\030\n\024COUPON_TYPE_MORTGAGE\020\004\022\023\n\017CO"
+    "UPON_TYPE_FIX\020\005\022\030\n\024COUPON_TYPE_VARIABLE\020"
+    "\006\022\025\n\021COUPON_TYPE_OTHER\020\007*h\n\017OptionDirect"
+    "ion\022 \n\034OPTION_DIRECTION_UNSPECIFIED\020\000\022\030\n"
+    "\024OPTION_DIRECTION_PUT\020\001\022\031\n\025OPTION_DIRECT"
+    "ION_CALL\020\002*{\n\021OptionPaymentType\022#\n\037OPTIO"
+    "N_PAYMENT_TYPE_UNSPECIFIED\020\000\022\037\n\033OPTION_P"
+    "AYMENT_TYPE_PREMIUM\020\001\022 \n\034OPTION_PAYMENT_"
+    "TYPE_MARGINAL\020\002*a\n\013OptionStyle\022\034\n\030OPTION"
+    "_STYLE_UNSPECIFIED\020\000\022\031\n\025OPTION_STYLE_AME"
+    "RICAN\020\001\022\031\n\025OPTION_STYLE_EUROPEAN\020\002*\225\001\n\024O"
+    "ptionSettlementType\022%\n!OPTION_EXECUTION_"
+    "TYPE_UNSPECIFIED\020\000\022+\n\'OPTION_EXECUTION_T"
+    "YPE_PHYSICAL_DELIVERY\020\001\022)\n%OPTION_EXECUT"
+    "ION_TYPE_CASH_SETTLEMENT\020\002*\311\001\n\020Instrumen"
+    "tIdType\022\035\n\031INSTRUMENT_ID_UNSPECIFIED\020\000\022\033"
+    "\n\027INSTRUMENT_ID_TYPE_FIGI\020\001\022\035\n\031INSTRUMEN"
+    "T_ID_TYPE_TICKER\020\002\022\032\n\026INSTRUMENT_ID_TYPE"
+    "_UID\020\003\022#\n\037INSTRUMENT_ID_TYPE_POSITION_UI"
+    "D\020\004\022\031\n\025INSTRUMENT_ID_TYPE_ID\020\005*\345\001\n\tShare"
+    "Type\022\032\n\026SHARE_TYPE_UNSPECIFIED\020\000\022\025\n\021SHAR"
+    "E_TYPE_COMMON\020\001\022\030\n\024SHARE_TYPE_PREFERRED\020"
+    "\002\022\022\n\016SHARE_TYPE_ADR\020\003\022\022\n\016SHARE_TYPE_GDR\020"
+    "\004\022\022\n\016SHARE_TYPE_MLP\020\005\022\032\n\026SHARE_TYPE_NY_R"
+    "EG_SHRS\020\006\022\036\n\032SHARE_TYPE_CLOSED_END_FUND\020"
+    "\007\022\023\n\017SHARE_TYPE_REIT\020\010*\211\001\n\tAssetType\022\032\n\026"
+    "ASSET_TYPE_UNSPECIFIED\020\000\022\027\n\023ASSET_TYPE_C"
+    "URRENCY\020\001\022\030\n\024ASSET_TYPE_COMMODITY\020\002\022\024\n\020A"
+    "SSET_TYPE_INDEX\020\003\022\027\n\023ASSET_TYPE_SECURITY"
+    "\020\004*f\n\025StructuredProductType\022\027\n\023SP_TYPE_U"
+    "NSPECIFIED\020\000\022\027\n\023SP_TYPE_DELIVERABLE\020\001\022\033\n"
+    "\027SP_TYPE_NON_DELIVERABLE\020\002*\215\001\n\027EditFavor"
+    "itesActionType\022*\n&EDIT_FAVORITES_ACTION_"
+    "TYPE_UNSPECIFIED\020\000\022\"\n\036EDIT_FAVORITES_ACT"
+    "ION_TYPE_ADD\020\001\022\"\n\036EDIT_FAVORITES_ACTION_"
+    "TYPE_DEL\020\002*z\n\016Recommendation\022\036\n\032RECOMMEN"
+    "DATION_UNSPECIFIED\020\000\022\026\n\022RECOMMENDATION_B"
+    "UY\020\001\022\027\n\023RECOMMENDATION_HOLD\020\002\022\027\n\023RECOMME"
+    "NDATION_SELL\020\003*i\n\tRiskLevel\022\032\n\026RISK_LEVE"
+    "L_UNSPECIFIED\020\000\022\022\n\016RISK_LEVEL_LOW\020\001\022\027\n\023R"
+    "ISK_LEVEL_MODERATE\020\002\022\023\n\017RISK_LEVEL_HIGH\020"
+    "\003*=\n\010BondType\022\031\n\025BOND_TYPE_UNSPECIFIED\020\000"
+    "\022\026\n\022BOND_TYPE_REPLACED\020\001*]\n\026InstrumentEx"
+    "changeType\022#\n\037INSTRUMENT_EXCHANGE_UNSPEC"
+    "IFIED\020\000\022\036\n\032INSTRUMENT_EXCHANGE_DEALER\020\0012"
+    "\323-\n\022InstrumentsService\022\223\001\n\020TradingSchedu"
+    "les\022>.tinkoff.public.invest.api.contract"
+    ".v1.TradingSchedulesRequest\032\?.tinkoff.pu"
+    "blic.invest.api.contract.v1.TradingSched"
+    "ulesResponse\022w\n\006BondBy\0228.tinkoff.public."
+    "invest.api.contract.v1.InstrumentRequest"
+    "\0323.tinkoff.public.invest.api.contract.v1"
+    ".BondResponse\022x\n\005Bonds\0229.tinkoff.public."
+    "invest.api.contract.v1.InstrumentsReques"
+    "t\0324.tinkoff.public.invest.api.contract.v"
+    "1.BondsResponse\022\215\001\n\016GetBondCoupons\022<.tin"
+    "koff.public.invest.api.contract.v1.GetBo"
+    "ndCouponsRequest\032=.tinkoff.public.invest"
+    ".api.contract.v1.GetBondCouponsResponse\022"
+    "\212\001\n\rGetBondEvents\022;.tinkoff.public.inves"
+    "t.api.contract.v1.GetBondEventsRequest\032<"
     ".tinkoff.public.invest.api.contract.v1.G"
-    "etInsiderDealsResponse\022\213\001\n\020StructuredNot"
-    "eBy\0228.tinkoff.public.invest.api.contract"
-    ".v1.InstrumentRequest\032=.tinkoff.public.i"
-    "nvest.api.contract.v1.StructuredNoteResp"
-    "onse\022\214\001\n\017StructuredNotes\0229.tinkoff.publi"
-    "c.invest.api.contract.v1.InstrumentsRequ"
-    "est\032>.tinkoff.public.invest.api.contract"
-    ".v1.StructuredNotesResponseBa\n\034ru.tinkof"
-    "f.piapi.contract.v1P\001Z\014./;investapi\242\002\005TI"
-    "API\252\002\024Tinkoff.InvestApi.V1\312\002\021Tinkoff\\Inv"
-    "est\\V1b\006proto3"
+    "etBondEventsResponse\022\177\n\nCurrencyBy\0228.tin"
+    "koff.public.invest.api.contract.v1.Instr"
+    "umentRequest\0327.tinkoff.public.invest.api"
+    ".contract.v1.CurrencyResponse\022\202\001\n\nCurren"
+    "cies\0229.tinkoff.public.invest.api.contrac"
+    "t.v1.InstrumentsRequest\0329.tinkoff.public"
+    ".invest.api.contract.v1.CurrenciesRespon"
+    "se\022u\n\005EtfBy\0228.tinkoff.public.invest.api."
+    "contract.v1.InstrumentRequest\0322.tinkoff."
+    "public.invest.api.contract.v1.EtfRespons"
+    "e\022v\n\004Etfs\0229.tinkoff.public.invest.api.co"
+    "ntract.v1.InstrumentsRequest\0323.tinkoff.p"
+    "ublic.invest.api.contract.v1.EtfsRespons"
+    "e\022{\n\010FutureBy\0228.tinkoff.public.invest.ap"
+    "i.contract.v1.InstrumentRequest\0325.tinkof"
+    "f.public.invest.api.contract.v1.FutureRe"
+    "sponse\022|\n\007Futures\0229.tinkoff.public.inves"
+    "t.api.contract.v1.InstrumentsRequest\0326.t"
+    "inkoff.public.invest.api.contract.v1.Fut"
+    "uresResponse\022{\n\010OptionBy\0228.tinkoff.publi"
+    "c.invest.api.contract.v1.InstrumentReque"
+    "st\0325.tinkoff.public.invest.api.contract."
+    "v1.OptionResponse\022\201\001\n\007Options\0229.tinkoff."
+    "public.invest.api.contract.v1.Instrument"
+    "sRequest\0326.tinkoff.public.invest.api.con"
+    "tract.v1.OptionsResponse\"\003\210\002\001\022\200\001\n\tOption"
+    "sBy\022;.tinkoff.public.invest.api.contract"
+    ".v1.FilterOptionsRequest\0326.tinkoff.publi"
+    "c.invest.api.contract.v1.OptionsResponse"
+    "\022y\n\007ShareBy\0228.tinkoff.public.invest.api."
+    "contract.v1.InstrumentRequest\0324.tinkoff."
+    "public.invest.api.contract.v1.ShareRespo"
+    "nse\022z\n\006Shares\0229.tinkoff.public.invest.ap"
+    "i.contract.v1.InstrumentsRequest\0325.tinko"
+    "ff.public.invest.api.contract.v1.SharesR"
+    "esponse\022u\n\005DfaBy\0228.tinkoff.public.invest"
+    ".api.contract.v1.InstrumentRequest\0322.tin"
+    "koff.public.invest.api.contract.v1.DfaRe"
+    "sponse\022o\n\004Dfas\0222.tinkoff.public.invest.a"
+    "pi.contract.v1.DfasRequest\0323.tinkoff.pub"
+    "lic.invest.api.contract.v1.DfasResponse\022"
+    "\204\001\n\013Indicatives\0229.tinkoff.public.invest."
+    "api.contract.v1.IndicativesRequest\032:.tin"
+    "koff.public.invest.api.contract.v1.Indic"
+    "ativesResponse\022\234\001\n\023GetAccruedInterests\022A"
+    ".tinkoff.public.invest.api.contract.v1.G"
+    "etAccruedInterestsRequest\032B.tinkoff.publ"
+    "ic.invest.api.contract.v1.GetAccruedInte"
+    "restsResponse\022\223\001\n\020GetFuturesMargin\022>.tin"
+    "koff.public.invest.api.contract.v1.GetFu"
+    "turesMarginRequest\032\?.tinkoff.public.inve"
+    "st.api.contract.v1.GetFuturesMarginRespo"
+    "nse\022\206\001\n\017GetInstrumentBy\0228.tinkoff.public"
+    ".invest.api.contract.v1.InstrumentReques"
+    "t\0329.tinkoff.public.invest.api.contract.v"
+    "1.InstrumentResponse\022\207\001\n\014GetDividends\022:."
+    "tinkoff.public.invest.api.contract.v1.Ge"
+    "tDividendsRequest\032;.tinkoff.public.inves"
+    "t.api.contract.v1.GetDividendsResponse\022w"
+    "\n\nGetAssetBy\0223.tinkoff.public.invest.api"
+    ".contract.v1.AssetRequest\0324.tinkoff.publ"
+    "ic.invest.api.contract.v1.AssetResponse\022"
+    "x\n\tGetAssets\0224.tinkoff.public.invest.api"
+    ".contract.v1.AssetsRequest\0325.tinkoff.pub"
+    "lic.invest.api.contract.v1.AssetsRespons"
+    "e\022\207\001\n\014GetFavorites\022:.tinkoff.public.inve"
+    "st.api.contract.v1.GetFavoritesRequest\032;"
+    ".tinkoff.public.invest.api.contract.v1.G"
+    "etFavoritesResponse\022\212\001\n\rEditFavorites\022;."
+    "tinkoff.public.invest.api.contract.v1.Ed"
+    "itFavoritesRequest\032<.tinkoff.public.inve"
+    "st.api.contract.v1.EditFavoritesResponse"
+    "\022\234\001\n\023CreateFavoriteGroup\022A.tinkoff.publi"
+    "c.invest.api.contract.v1.CreateFavoriteG"
+    "roupRequest\032B.tinkoff.public.invest.api."
+    "contract.v1.CreateFavoriteGroupResponse\022"
+    "\234\001\n\023DeleteFavoriteGroup\022A.tinkoff.public"
+    ".invest.api.contract.v1.DeleteFavoriteGr"
+    "oupRequest\032B.tinkoff.public.invest.api.c"
+    "ontract.v1.DeleteFavoriteGroupResponse\022\226"
+    "\001\n\021GetFavoriteGroups\022\?.tinkoff.public.in"
+    "vest.api.contract.v1.GetFavoriteGroupsRe"
+    "quest\032@.tinkoff.public.invest.api.contra"
+    "ct.v1.GetFavoriteGroupsResponse\022\207\001\n\014GetC"
+    "ountries\022:.tinkoff.public.invest.api.con"
+    "tract.v1.GetCountriesRequest\032;.tinkoff.p"
+    "ublic.invest.api.contract.v1.GetCountrie"
+    "sResponse\022\215\001\n\016FindInstrument\022<.tinkoff.p"
+    "ublic.invest.api.contract.v1.FindInstrum"
+    "entRequest\032=.tinkoff.public.invest.api.c"
+    "ontract.v1.FindInstrumentResponse\022~\n\tGet"
+    "Brands\0227.tinkoff.public.invest.api.contr"
+    "act.v1.GetBrandsRequest\0328.tinkoff.public"
+    ".invest.api.contract.v1.GetBrandsRespons"
+    "e\022r\n\nGetBrandBy\0226.tinkoff.public.invest."
+    "api.contract.v1.GetBrandRequest\032,.tinkof"
+    "f.public.invest.api.contract.v1.Brand\022\237\001"
+    "\n\024GetAssetFundamentals\022B.tinkoff.public."
+    "invest.api.contract.v1.GetAssetFundament"
+    "alsRequest\032C.tinkoff.public.invest.api.c"
+    "ontract.v1.GetAssetFundamentalsResponse\022"
+    "\220\001\n\017GetAssetReports\022=.tinkoff.public.inv"
+    "est.api.contract.v1.GetAssetReportsReque"
+    "st\032>.tinkoff.public.invest.api.contract."
+    "v1.GetAssetReportsResponse\022\242\001\n\025GetConsen"
+    "susForecasts\022C.tinkoff.public.invest.api"
+    ".contract.v1.GetConsensusForecastsReques"
+    "t\032D.tinkoff.public.invest.api.contract.v"
+    "1.GetConsensusForecastsResponse\022\206\001\n\rGetF"
+    "orecastBy\0229.tinkoff.public.invest.api.co"
+    "ntract.v1.GetForecastRequest\032:.tinkoff.p"
+    "ublic.invest.api.contract.v1.GetForecast"
+    "Response\022\201\001\n\014GetRiskRates\0227.tinkoff.publ"
+    "ic.invest.api.contract.v1.RiskRatesReque"
+    "st\0328.tinkoff.public.invest.api.contract."
+    "v1.RiskRatesResponse\022\220\001\n\017GetInsiderDeals"
+    "\022=.tinkoff.public.invest.api.contract.v1"
+    ".GetInsiderDealsRequest\032>.tinkoff.public"
+    ".invest.api.contract.v1.GetInsiderDealsR"
+    "esponse\022\213\001\n\020StructuredNoteBy\0228.tinkoff.p"
+    "ublic.invest.api.contract.v1.InstrumentR"
+    "equest\032=.tinkoff.public.invest.api.contr"
+    "act.v1.StructuredNoteResponse\022\214\001\n\017Struct"
+    "uredNotes\0229.tinkoff.public.invest.api.co"
+    "ntract.v1.InstrumentsRequest\032>.tinkoff.p"
+    "ublic.invest.api.contract.v1.StructuredN"
+    "otesResponse\022o\n\004News\0222.tinkoff.public.in"
+    "vest.api.contract.v1.NewsRequest\0323.tinko"
+    "ff.public.invest.api.contract.v1.NewsRes"
+    "ponseBa\n\034ru.tinkoff.piapi.contract.v1P\001Z"
+    "\014./;investapi\242\002\005TIAPI\252\002\024Tinkoff.InvestAp"
+    "i.V1\312\002\021Tinkoff\\Invest\\V1b\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_instruments_2eproto_deps[3] = {
@@ -7459,13 +8065,13 @@ static ::absl::once_flag descriptor_table_instruments_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_instruments_2eproto = {
     false,
     false,
-    47494,
+    50232,
     descriptor_table_protodef_instruments_2eproto,
     "instruments.proto",
     &descriptor_table_instruments_2eproto_once,
     descriptor_table_instruments_2eproto_deps,
     3,
-    109,
+    121,
     schemas,
     file_default_instances,
     TableStruct_instruments_2eproto::offsets,
@@ -7549,7 +8155,7 @@ const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL InstrumentIdType_desc
   return file_level_enum_descriptors_instruments_2eproto[11];
 }
 PROTOBUF_CONSTINIT const uint32_t InstrumentIdType_internal_data_[] = {
-    327680u, 0u, };
+    393216u, 0u, };
 const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL ShareType_descriptor() {
   ::google::protobuf::internal::AssignDescriptors(&descriptor_table_instruments_2eproto);
   return file_level_enum_descriptors_instruments_2eproto[12];
@@ -10156,7 +10762,8 @@ PROTOBUF_NDEBUG_INLINE FilterOptionsRequest::Impl_::Impl_(
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         basic_asset_uid_(arena, from.basic_asset_uid_),
-        basic_asset_position_uid_(arena, from.basic_asset_position_uid_) {}
+        basic_asset_position_uid_(arena, from.basic_asset_position_uid_),
+        basic_instrument_id_(arena, from.basic_instrument_id_) {}
 
 FilterOptionsRequest::FilterOptionsRequest(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
@@ -10179,7 +10786,8 @@ PROTOBUF_NDEBUG_INLINE FilterOptionsRequest::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
         basic_asset_uid_(arena),
-        basic_asset_position_uid_(arena) {}
+        basic_asset_position_uid_(arena),
+        basic_instrument_id_(arena) {}
 
 inline void FilterOptionsRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
@@ -10197,6 +10805,7 @@ inline void FilterOptionsRequest::SharedDtor(MessageLite& self) {
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.basic_asset_uid_.Destroy();
   this_._impl_.basic_asset_position_uid_.Destroy();
+  this_._impl_.basic_instrument_id_.Destroy();
   this_._impl_.~Impl_();
 }
 
@@ -10243,16 +10852,16 @@ FilterOptionsRequest::GetClassData() const {
   return FilterOptionsRequest_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 0, 106, 2>
+const ::_pbi::TcParseTable<2, 3, 0, 125, 2>
 FilterOptionsRequest::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(FilterOptionsRequest, _impl_._has_bits_),
     0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
+    3, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
+    4294967288,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
+    3,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     FilterOptionsRequest_class_data_.base(),
@@ -10262,14 +10871,19 @@ FilterOptionsRequest::_table_ = {
     ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // optional string basic_asset_position_uid = 2;
-    {::_pbi::TcParser::FastUS1,
-     {18, 1, 0,
-      PROTOBUF_FIELD_OFFSET(FilterOptionsRequest, _impl_.basic_asset_position_uid_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // optional string basic_asset_uid = 1;
     {::_pbi::TcParser::FastUS1,
      {10, 0, 0,
       PROTOBUF_FIELD_OFFSET(FilterOptionsRequest, _impl_.basic_asset_uid_)}},
+    // optional string basic_asset_position_uid = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 1, 0,
+      PROTOBUF_FIELD_OFFSET(FilterOptionsRequest, _impl_.basic_asset_position_uid_)}},
+    // optional string basic_instrument_id = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 2, 0,
+      PROTOBUF_FIELD_OFFSET(FilterOptionsRequest, _impl_.basic_instrument_id_)}},
   }}, {{
     65535, 65535
   }}, {{
@@ -10277,13 +10891,16 @@ FilterOptionsRequest::_table_ = {
     {PROTOBUF_FIELD_OFFSET(FilterOptionsRequest, _impl_.basic_asset_uid_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // optional string basic_asset_position_uid = 2;
     {PROTOBUF_FIELD_OFFSET(FilterOptionsRequest, _impl_.basic_asset_position_uid_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // optional string basic_instrument_id = 3;
+    {PROTOBUF_FIELD_OFFSET(FilterOptionsRequest, _impl_.basic_instrument_id_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   // no aux_entries
   {{
-    "\72\17\30\0\0\0\0\0"
+    "\72\17\30\23\0\0\0\0"
     "tinkoff.public.invest.api.contract.v1.FilterOptionsRequest"
     "basic_asset_uid"
     "basic_asset_position_uid"
+    "basic_instrument_id"
   }},
 };
 PROTOBUF_NOINLINE void FilterOptionsRequest::Clear() {
@@ -10294,12 +10911,15 @@ PROTOBUF_NOINLINE void FilterOptionsRequest::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       _impl_.basic_asset_uid_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       _impl_.basic_asset_position_uid_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _impl_.basic_instrument_id_.ClearNonDefaultToEmpty();
     }
   }
   _impl_._has_bits_.Clear();
@@ -10341,6 +10961,14 @@ PROTOBUF_NOINLINE void FilterOptionsRequest::Clear() {
     target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
+  // optional string basic_instrument_id = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    const ::std::string& _s = this_._internal_basic_instrument_id();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.FilterOptionsRequest.basic_instrument_id");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
+  }
+
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -10366,7 +10994,7 @@ PROTOBUF_NOINLINE void FilterOptionsRequest::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
     // optional string basic_asset_uid = 1;
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -10376,6 +11004,11 @@ PROTOBUF_NOINLINE void FilterOptionsRequest::Clear() {
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                       this_._internal_basic_asset_position_uid());
+    }
+    // optional string basic_instrument_id = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                      this_._internal_basic_instrument_id());
     }
   }
   return this_.MaybeComputeUnknownFieldsSize(total_size,
@@ -10396,12 +11029,15 @@ void FilterOptionsRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       _this->_internal_set_basic_asset_uid(from._internal_basic_asset_uid());
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       _this->_internal_set_basic_asset_position_uid(from._internal_basic_asset_position_uid());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _this->_internal_set_basic_instrument_id(from._internal_basic_instrument_id());
     }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
@@ -10425,9 +11061,291 @@ void FilterOptionsRequest::InternalSwap(FilterOptionsRequest* PROTOBUF_RESTRICT 
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.basic_asset_uid_, &other->_impl_.basic_asset_uid_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.basic_asset_position_uid_, &other->_impl_.basic_asset_position_uid_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.basic_instrument_id_, &other->_impl_.basic_instrument_id_, arena);
 }
 
 ::google::protobuf::Metadata FilterOptionsRequest::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class NewsRequest::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<NewsRequest>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(NewsRequest, _impl_._has_bits_);
+};
+
+NewsRequest::NewsRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, NewsRequest_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.NewsRequest)
+}
+NewsRequest::NewsRequest(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const NewsRequest& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, NewsRequest_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+PROTOBUF_NDEBUG_INLINE NewsRequest::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0} {}
+
+inline void NewsRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, cursor_),
+           0,
+           offsetof(Impl_, limit_) -
+               offsetof(Impl_, cursor_) +
+               sizeof(Impl_::limit_));
+}
+NewsRequest::~NewsRequest() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.NewsRequest)
+  SharedDtor(*this);
+}
+inline void NewsRequest::SharedDtor(MessageLite& self) {
+  NewsRequest& this_ = static_cast<NewsRequest&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL NewsRequest::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) NewsRequest(arena);
+}
+constexpr auto NewsRequest::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(NewsRequest),
+                                            alignof(NewsRequest));
+}
+constexpr auto NewsRequest::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_NewsRequest_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &NewsRequest::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<NewsRequest>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &NewsRequest::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<NewsRequest>(), &NewsRequest::ByteSizeLong,
+              &NewsRequest::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(NewsRequest, _impl_._cached_size_),
+          false,
+      },
+      &NewsRequest::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull NewsRequest_class_data_ =
+        NewsRequest::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+NewsRequest::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&NewsRequest_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(NewsRequest_class_data_.tc_table);
+  return NewsRequest_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 0, 0, 2>
+NewsRequest::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(NewsRequest, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    NewsRequest_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::NewsRequest>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // optional int32 limit = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(NewsRequest, _impl_.limit_), 1>(),
+     {16, 1, 0,
+      PROTOBUF_FIELD_OFFSET(NewsRequest, _impl_.limit_)}},
+    // optional int64 cursor = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(NewsRequest, _impl_.cursor_), 0>(),
+     {8, 0, 0,
+      PROTOBUF_FIELD_OFFSET(NewsRequest, _impl_.cursor_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // optional int64 cursor = 1;
+    {PROTOBUF_FIELD_OFFSET(NewsRequest, _impl_.cursor_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
+    // optional int32 limit = 2;
+    {PROTOBUF_FIELD_OFFSET(NewsRequest, _impl_.limit_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+PROTOBUF_NOINLINE void NewsRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.NewsRequest)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    ::memset(&_impl_.cursor_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.limit_) -
+        reinterpret_cast<char*>(&_impl_.cursor_)) + sizeof(_impl_.limit_));
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL NewsRequest::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const NewsRequest& this_ = static_cast<const NewsRequest&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL NewsRequest::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const NewsRequest& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.NewsRequest)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // optional int64 cursor = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    target =
+        ::google::protobuf::internal::WireFormatLite::WriteInt64ToArrayWithField<1>(
+            stream, this_._internal_cursor(), target);
+  }
+
+  // optional int32 limit = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    target =
+        ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<2>(
+            stream, this_._internal_limit(), target);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.NewsRequest)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t NewsRequest::ByteSizeLong(const MessageLite& base) {
+  const NewsRequest& this_ = static_cast<const NewsRequest&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t NewsRequest::ByteSizeLong() const {
+  const NewsRequest& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.NewsRequest)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    // optional int64 cursor = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+          this_._internal_cursor());
+    }
+    // optional int32 limit = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+          this_._internal_limit());
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void NewsRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<NewsRequest*>(&to_msg);
+  auto& from = static_cast<const NewsRequest&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.NewsRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _this->_impl_.cursor_ = from._impl_.cursor_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _this->_impl_.limit_ = from._impl_.limit_;
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void NewsRequest::CopyFrom(const NewsRequest& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.NewsRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void NewsRequest::InternalSwap(NewsRequest* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(NewsRequest, _impl_.limit_)
+      + sizeof(NewsRequest::_impl_.limit_)
+      - PROTOBUF_FIELD_OFFSET(NewsRequest, _impl_.cursor_)>(
+          reinterpret_cast<char*>(&_impl_.cursor_),
+          reinterpret_cast<char*>(&other->_impl_.cursor_));
+}
+
+::google::protobuf::Metadata NewsRequest::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
@@ -19406,6 +20324,1880 @@ void StructuredNotesResponse::InternalSwap(StructuredNotesResponse* PROTOBUF_RES
 }
 // ===================================================================
 
+class NewsResponse::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<NewsResponse>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_._has_bits_);
+};
+
+NewsResponse::NewsResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, NewsResponse_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.NewsResponse)
+}
+PROTOBUF_NDEBUG_INLINE NewsResponse::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::NewsResponse& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        items_{visibility, arena, from.items_} {}
+
+NewsResponse::NewsResponse(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const NewsResponse& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, NewsResponse_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  NewsResponse* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::memcpy(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, next_cursor_),
+           reinterpret_cast<const char*>(&from._impl_) +
+               offsetof(Impl_, next_cursor_),
+           offsetof(Impl_, has_next_) -
+               offsetof(Impl_, next_cursor_) +
+               sizeof(Impl_::has_next_));
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.NewsResponse)
+}
+PROTOBUF_NDEBUG_INLINE NewsResponse::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        items_{visibility, arena} {}
+
+inline void NewsResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, next_cursor_),
+           0,
+           offsetof(Impl_, has_next_) -
+               offsetof(Impl_, next_cursor_) +
+               sizeof(Impl_::has_next_));
+}
+NewsResponse::~NewsResponse() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.NewsResponse)
+  SharedDtor(*this);
+}
+inline void NewsResponse::SharedDtor(MessageLite& self) {
+  NewsResponse& this_ = static_cast<NewsResponse&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL NewsResponse::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) NewsResponse(arena);
+}
+constexpr auto NewsResponse::InternalNewImpl_() {
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_.items_) +
+          decltype(NewsResponse::_impl_.items_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::ZeroInit(
+        sizeof(NewsResponse), alignof(NewsResponse), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&NewsResponse::PlacementNew_,
+                                 sizeof(NewsResponse),
+                                 alignof(NewsResponse));
+  }
+}
+constexpr auto NewsResponse::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_NewsResponse_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &NewsResponse::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<NewsResponse>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &NewsResponse::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<NewsResponse>(), &NewsResponse::ByteSizeLong,
+              &NewsResponse::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_._cached_size_),
+          false,
+      },
+      &NewsResponse::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull NewsResponse_class_data_ =
+        NewsResponse::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+NewsResponse::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&NewsResponse_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(NewsResponse_class_data_.tc_table);
+  return NewsResponse_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 1, 0, 2>
+NewsResponse::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_._has_bits_),
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    NewsResponse_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::NewsResponse>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // bool has_next = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(NewsResponse, _impl_.has_next_), 2>(),
+     {8, 2, 0,
+      PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_.has_next_)}},
+    // optional int64 next_cursor = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(NewsResponse, _impl_.next_cursor_), 1>(),
+     {16, 1, 0,
+      PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_.next_cursor_)}},
+    // repeated .tinkoff.public.invest.api.contract.v1.NewsItem items = 3;
+    {::_pbi::TcParser::FastMtR1,
+     {26, 0, 0,
+      PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_.items_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // bool has_next = 1;
+    {PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_.has_next_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // optional int64 next_cursor = 2;
+    {PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_.next_cursor_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
+    // repeated .tinkoff.public.invest.api.contract.v1.NewsItem items = 3;
+    {PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_.items_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::NewsItem>()},
+  }},
+  {{
+  }},
+};
+PROTOBUF_NOINLINE void NewsResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.NewsResponse)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+    _impl_.items_.Clear();
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00000006U)) {
+    ::memset(&_impl_.next_cursor_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.has_next_) -
+        reinterpret_cast<char*>(&_impl_.next_cursor_)) + sizeof(_impl_.has_next_));
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL NewsResponse::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const NewsResponse& this_ = static_cast<const NewsResponse&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL NewsResponse::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const NewsResponse& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.NewsResponse)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // bool has_next = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (this_._internal_has_next() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          1, this_._internal_has_next(), target);
+    }
+  }
+
+  // optional int64 next_cursor = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    target =
+        ::google::protobuf::internal::WireFormatLite::WriteInt64ToArrayWithField<2>(
+            stream, this_._internal_next_cursor(), target);
+  }
+
+  // repeated .tinkoff.public.invest.api.contract.v1.NewsItem items = 3;
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+    for (unsigned i = 0, n = static_cast<unsigned>(
+                             this_._internal_items_size());
+         i < n; i++) {
+      const auto& repfield = this_._internal_items().Get(i);
+      target =
+          ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+              3, repfield, repfield.GetCachedSize(),
+              target, stream);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.NewsResponse)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t NewsResponse::ByteSizeLong(const MessageLite& base) {
+  const NewsResponse& this_ = static_cast<const NewsResponse&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t NewsResponse::ByteSizeLong() const {
+  const NewsResponse& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.NewsResponse)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    // repeated .tinkoff.public.invest.api.contract.v1.NewsItem items = 3;
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      total_size += 1UL * this_._internal_items_size();
+      for (const auto& msg : this_._internal_items()) {
+        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+      }
+    }
+    // optional int64 next_cursor = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+          this_._internal_next_cursor());
+    }
+    // bool has_next = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (this_._internal_has_next() != 0) {
+        total_size += 2;
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void NewsResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<NewsResponse*>(&to_msg);
+  auto& from = static_cast<const NewsResponse&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  ::google::protobuf::Arena* arena = _this->GetArena();
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.NewsResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      _this->_internal_mutable_items()->InternalMergeFromWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), arena,
+          from._internal_items());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _this->_impl_.next_cursor_ = from._impl_.next_cursor_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (from._internal_has_next() != 0) {
+        _this->_impl_.has_next_ = from._impl_.has_next_;
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void NewsResponse::CopyFrom(const NewsResponse& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.NewsResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void NewsResponse::InternalSwap(NewsResponse* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  _impl_.items_.InternalSwap(&other->_impl_.items_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_.has_next_)
+      + sizeof(NewsResponse::_impl_.has_next_)
+      - PROTOBUF_FIELD_OFFSET(NewsResponse, _impl_.next_cursor_)>(
+          reinterpret_cast<char*>(&_impl_.next_cursor_),
+          reinterpret_cast<char*>(&other->_impl_.next_cursor_));
+}
+
+::google::protobuf::Metadata NewsResponse::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class NewsItem::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<NewsItem>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(NewsItem, _impl_._has_bits_);
+};
+
+void NewsItem::clear_ts() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.ts_ != nullptr) _impl_.ts_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000040U);
+}
+NewsItem::NewsItem(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, NewsItem_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.NewsItem)
+}
+PROTOBUF_NDEBUG_INLINE NewsItem::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::NewsItem& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        tables_{visibility, arena, from.tables_},
+        instrument_id_{visibility, arena, from.instrument_id_},
+        source_(arena, from.source_),
+        title_(arena, from.title_),
+        content_(arena, from.content_),
+        summary_(arena, from.summary_) {}
+
+NewsItem::NewsItem(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const NewsItem& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, NewsItem_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  NewsItem* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.ts_ = (CheckHasBit(cached_has_bits, 0x00000040U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.ts_)
+                : nullptr;
+  ::memcpy(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, id_),
+           reinterpret_cast<const char*>(&from._impl_) +
+               offsetof(Impl_, id_),
+           offsetof(Impl_, priority_) -
+               offsetof(Impl_, id_) +
+               sizeof(Impl_::priority_));
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.NewsItem)
+}
+PROTOBUF_NDEBUG_INLINE NewsItem::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        tables_{visibility, arena},
+        instrument_id_{visibility, arena},
+        source_(arena),
+        title_(arena),
+        content_(arena),
+        summary_(arena) {}
+
+inline void NewsItem::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, ts_),
+           0,
+           offsetof(Impl_, priority_) -
+               offsetof(Impl_, ts_) +
+               sizeof(Impl_::priority_));
+}
+NewsItem::~NewsItem() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.NewsItem)
+  SharedDtor(*this);
+}
+inline void NewsItem::SharedDtor(MessageLite& self) {
+  NewsItem& this_ = static_cast<NewsItem&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.source_.Destroy();
+  this_._impl_.title_.Destroy();
+  this_._impl_.content_.Destroy();
+  this_._impl_.summary_.Destroy();
+  delete this_._impl_.ts_;
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL NewsItem::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) NewsItem(arena);
+}
+constexpr auto NewsItem::InternalNewImpl_() {
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.tables_) +
+          decltype(NewsItem::_impl_.tables_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.instrument_id_) +
+          decltype(NewsItem::_impl_.instrument_id_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::CopyInit(
+        sizeof(NewsItem), alignof(NewsItem), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&NewsItem::PlacementNew_,
+                                 sizeof(NewsItem),
+                                 alignof(NewsItem));
+  }
+}
+constexpr auto NewsItem::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_NewsItem_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &NewsItem::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<NewsItem>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &NewsItem::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<NewsItem>(), &NewsItem::ByteSizeLong,
+              &NewsItem::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(NewsItem, _impl_._cached_size_),
+          false,
+      },
+      &NewsItem::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull NewsItem_class_data_ =
+        NewsItem::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+NewsItem::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&NewsItem_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(NewsItem_class_data_.tc_table);
+  return NewsItem_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 9, 3, 88, 2>
+NewsItem::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(NewsItem, _impl_._has_bits_),
+    0, // no _extensions_
+    9, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294966784,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    9,  // num_field_entries
+    3,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    NewsItem_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::NewsItem>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // int64 id = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(NewsItem, _impl_.id_), 7>(),
+     {8, 7, 0,
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.id_)}},
+    // string source = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 2, 0,
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.source_)}},
+    // string title = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 3, 0,
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.title_)}},
+    // string content = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 4, 0,
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.content_)}},
+    // optional string summary = 5;
+    {::_pbi::TcParser::FastUS1,
+     {42, 5, 0,
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.summary_)}},
+    // repeated .tinkoff.public.invest.api.contract.v1.Table tables = 6;
+    {::_pbi::TcParser::FastMtR1,
+     {50, 0, 0,
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.tables_)}},
+    // repeated .tinkoff.public.invest.api.contract.v1.NewsInstrument instrument_id = 7;
+    {::_pbi::TcParser::FastMtR1,
+     {58, 1, 1,
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.instrument_id_)}},
+    // bool priority = 8;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(NewsItem, _impl_.priority_), 8>(),
+     {64, 8, 0,
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.priority_)}},
+    // .google.protobuf.Timestamp ts = 9;
+    {::_pbi::TcParser::FastMtS1,
+     {74, 6, 2,
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.ts_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int64 id = 1;
+    {PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.id_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt64)},
+    // string source = 2;
+    {PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.source_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string title = 3;
+    {PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.title_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string content = 4;
+    {PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.content_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // optional string summary = 5;
+    {PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.summary_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // repeated .tinkoff.public.invest.api.contract.v1.Table tables = 6;
+    {PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.tables_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // repeated .tinkoff.public.invest.api.contract.v1.NewsInstrument instrument_id = 7;
+    {PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.instrument_id_), _Internal::kHasBitsOffset + 1, 1, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // bool priority = 8;
+    {PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.priority_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // .google.protobuf.Timestamp ts = 9;
+    {PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.ts_), _Internal::kHasBitsOffset + 6, 2, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Table>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::NewsInstrument>()},
+      {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
+  }},
+  {{
+    "\56\0\6\5\7\7\0\0\0\0\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.NewsItem"
+    "source"
+    "title"
+    "content"
+    "summary"
+  }},
+};
+PROTOBUF_NOINLINE void NewsItem::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.NewsItem)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      _impl_.tables_.Clear();
+    }
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
+      _impl_.instrument_id_.Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _impl_.source_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      _impl_.title_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      _impl_.content_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      _impl_.summary_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      ABSL_DCHECK(_impl_.ts_ != nullptr);
+      _impl_.ts_->Clear();
+    }
+  }
+  _impl_.id_ = ::int64_t{0};
+  _impl_.priority_ = false;
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL NewsItem::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const NewsItem& this_ = static_cast<const NewsItem&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL NewsItem::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const NewsItem& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.NewsItem)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // int64 id = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+    if (this_._internal_id() != 0) {
+      target =
+          ::google::protobuf::internal::WireFormatLite::WriteInt64ToArrayWithField<1>(
+              stream, this_._internal_id(), target);
+    }
+  }
+
+  // string source = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (!this_._internal_source().empty()) {
+      const ::std::string& _s = this_._internal_source();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.NewsItem.source");
+      target = stream->WriteStringMaybeAliased(2, _s, target);
+    }
+  }
+
+  // string title = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (!this_._internal_title().empty()) {
+      const ::std::string& _s = this_._internal_title();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.NewsItem.title");
+      target = stream->WriteStringMaybeAliased(3, _s, target);
+    }
+  }
+
+  // string content = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (!this_._internal_content().empty()) {
+      const ::std::string& _s = this_._internal_content();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.NewsItem.content");
+      target = stream->WriteStringMaybeAliased(4, _s, target);
+    }
+  }
+
+  // optional string summary = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    const ::std::string& _s = this_._internal_summary();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.NewsItem.summary");
+    target = stream->WriteStringMaybeAliased(5, _s, target);
+  }
+
+  // repeated .tinkoff.public.invest.api.contract.v1.Table tables = 6;
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+    for (unsigned i = 0, n = static_cast<unsigned>(
+                             this_._internal_tables_size());
+         i < n; i++) {
+      const auto& repfield = this_._internal_tables().Get(i);
+      target =
+          ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+              6, repfield, repfield.GetCachedSize(),
+              target, stream);
+    }
+  }
+
+  // repeated .tinkoff.public.invest.api.contract.v1.NewsInstrument instrument_id = 7;
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
+    for (unsigned i = 0, n = static_cast<unsigned>(
+                             this_._internal_instrument_id_size());
+         i < n; i++) {
+      const auto& repfield = this_._internal_instrument_id().Get(i);
+      target =
+          ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+              7, repfield, repfield.GetCachedSize(),
+              target, stream);
+    }
+  }
+
+  // bool priority = 8;
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    if (this_._internal_priority() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          8, this_._internal_priority(), target);
+    }
+  }
+
+  // .google.protobuf.Timestamp ts = 9;
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        9, *this_._impl_.ts_, this_._impl_.ts_->GetCachedSize(), target,
+        stream);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.NewsItem)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t NewsItem::ByteSizeLong(const MessageLite& base) {
+  const NewsItem& this_ = static_cast<const NewsItem&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t NewsItem::ByteSizeLong() const {
+  const NewsItem& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.NewsItem)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    // repeated .tinkoff.public.invest.api.contract.v1.Table tables = 6;
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      total_size += 1UL * this_._internal_tables_size();
+      for (const auto& msg : this_._internal_tables()) {
+        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+      }
+    }
+    // repeated .tinkoff.public.invest.api.contract.v1.NewsInstrument instrument_id = 7;
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
+      total_size += 1UL * this_._internal_instrument_id_size();
+      for (const auto& msg : this_._internal_instrument_id()) {
+        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+      }
+    }
+    // string source = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!this_._internal_source().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_source());
+      }
+    }
+    // string title = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      if (!this_._internal_title().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_title());
+      }
+    }
+    // string content = 4;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (!this_._internal_content().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_content());
+      }
+    }
+    // optional string summary = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                      this_._internal_summary());
+    }
+    // .google.protobuf.Timestamp ts = 9;
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.ts_);
+    }
+    // int64 id = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      if (this_._internal_id() != 0) {
+        total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(
+            this_._internal_id());
+      }
+    }
+  }
+   {
+    // bool priority = 8;
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      if (this_._internal_priority() != 0) {
+        total_size += 2;
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void NewsItem::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<NewsItem*>(&to_msg);
+  auto& from = static_cast<const NewsItem&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  ::google::protobuf::Arena* arena = _this->GetArena();
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.NewsItem)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      _this->_internal_mutable_tables()->InternalMergeFromWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), arena,
+          from._internal_tables());
+    }
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
+      _this->_internal_mutable_instrument_id()->InternalMergeFromWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), arena,
+          from._internal_instrument_id());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!from._internal_source().empty()) {
+        _this->_internal_set_source(from._internal_source());
+      } else {
+        if (_this->_impl_.source_.IsDefault()) {
+          _this->_internal_set_source("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      if (!from._internal_title().empty()) {
+        _this->_internal_set_title(from._internal_title());
+      } else {
+        if (_this->_impl_.title_.IsDefault()) {
+          _this->_internal_set_title("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (!from._internal_content().empty()) {
+        _this->_internal_set_content(from._internal_content());
+      } else {
+        if (_this->_impl_.content_.IsDefault()) {
+          _this->_internal_set_content("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      _this->_internal_set_summary(from._internal_summary());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      ABSL_DCHECK(from._impl_.ts_ != nullptr);
+      if (_this->_impl_.ts_ == nullptr) {
+        _this->_impl_.ts_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.ts_);
+      } else {
+        _this->_impl_.ts_->MergeFrom(*from._impl_.ts_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      if (from._internal_id() != 0) {
+        _this->_impl_.id_ = from._impl_.id_;
+      }
+    }
+  }
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    if (from._internal_priority() != 0) {
+      _this->_impl_.priority_ = from._impl_.priority_;
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void NewsItem::CopyFrom(const NewsItem& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.NewsItem)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void NewsItem::InternalSwap(NewsItem* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  _impl_.tables_.InternalSwap(&other->_impl_.tables_);
+  _impl_.instrument_id_.InternalSwap(&other->_impl_.instrument_id_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.source_, &other->_impl_.source_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.title_, &other->_impl_.title_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.content_, &other->_impl_.content_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.summary_, &other->_impl_.summary_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.priority_)
+      + sizeof(NewsItem::_impl_.priority_)
+      - PROTOBUF_FIELD_OFFSET(NewsItem, _impl_.ts_)>(
+          reinterpret_cast<char*>(&_impl_.ts_),
+          reinterpret_cast<char*>(&other->_impl_.ts_));
+}
+
+::google::protobuf::Metadata NewsItem::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class Table::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<Table>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(Table, _impl_._has_bits_);
+};
+
+Table::Table(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, Table_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.Table)
+}
+PROTOBUF_NDEBUG_INLINE Table::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::Table& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        table_(arena, from.table_) {}
+
+Table::Table(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const Table& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, Table_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  Table* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.Table)
+}
+PROTOBUF_NDEBUG_INLINE Table::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        table_(arena) {}
+
+inline void Table::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+Table::~Table() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.Table)
+  SharedDtor(*this);
+}
+inline void Table::SharedDtor(MessageLite& self) {
+  Table& this_ = static_cast<Table&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.table_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL Table::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) Table(arena);
+}
+constexpr auto Table::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(Table),
+                                            alignof(Table));
+}
+constexpr auto Table::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_Table_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &Table::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<Table>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &Table::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<Table>(), &Table::ByteSizeLong,
+              &Table::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(Table, _impl_._cached_size_),
+          false,
+      },
+      &Table::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull Table_class_data_ =
+        Table::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+Table::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&Table_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(Table_class_data_.tc_table);
+  return Table_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 57, 2>
+Table::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(Table, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    Table_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Table>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // string table = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 0, 0,
+      PROTOBUF_FIELD_OFFSET(Table, _impl_.table_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string table = 1;
+    {PROTOBUF_FIELD_OFFSET(Table, _impl_.table_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\53\5\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.Table"
+    "table"
+  }},
+};
+PROTOBUF_NOINLINE void Table::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.Table)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    _impl_.table_.ClearNonDefaultToEmpty();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL Table::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const Table& this_ = static_cast<const Table&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL Table::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const Table& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.Table)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // string table = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!this_._internal_table().empty()) {
+      const ::std::string& _s = this_._internal_table();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Table.table");
+      target = stream->WriteStringMaybeAliased(1, _s, target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.Table)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t Table::ByteSizeLong(const MessageLite& base) {
+  const Table& this_ = static_cast<const Table&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t Table::ByteSizeLong() const {
+  const Table& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.Table)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+   {
+    // string table = 1;
+    cached_has_bits = this_._impl_._has_bits_[0];
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!this_._internal_table().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_table());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void Table::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<Table*>(&to_msg);
+  auto& from = static_cast<const Table&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.Table)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!from._internal_table().empty()) {
+      _this->_internal_set_table(from._internal_table());
+    } else {
+      if (_this->_impl_.table_.IsDefault()) {
+        _this->_internal_set_table("");
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void Table::CopyFrom(const Table& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.Table)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void Table::InternalSwap(Table* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.table_, &other->_impl_.table_, arena);
+}
+
+::google::protobuf::Metadata Table::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class NewsInstrument::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<NewsInstrument>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(NewsInstrument, _impl_._has_bits_);
+};
+
+NewsInstrument::NewsInstrument(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, NewsInstrument_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.NewsInstrument)
+}
+PROTOBUF_NDEBUG_INLINE NewsInstrument::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::NewsInstrument& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0} {}
+
+NewsInstrument::NewsInstrument(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const NewsInstrument& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, NewsInstrument_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  NewsInstrument* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.instrument_ = (CheckHasBit(cached_has_bits, 0x00000001U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.instrument_)
+                : nullptr;
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.NewsInstrument)
+}
+PROTOBUF_NDEBUG_INLINE NewsInstrument::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0} {}
+
+inline void NewsInstrument::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  _impl_.instrument_ = {};
+}
+NewsInstrument::~NewsInstrument() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.NewsInstrument)
+  SharedDtor(*this);
+}
+inline void NewsInstrument::SharedDtor(MessageLite& self) {
+  NewsInstrument& this_ = static_cast<NewsInstrument&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  delete this_._impl_.instrument_;
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL NewsInstrument::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) NewsInstrument(arena);
+}
+constexpr auto NewsInstrument::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(NewsInstrument),
+                                            alignof(NewsInstrument));
+}
+constexpr auto NewsInstrument::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_NewsInstrument_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &NewsInstrument::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<NewsInstrument>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &NewsInstrument::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<NewsInstrument>(), &NewsInstrument::ByteSizeLong,
+              &NewsInstrument::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(NewsInstrument, _impl_._cached_size_),
+          false,
+      },
+      &NewsInstrument::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull NewsInstrument_class_data_ =
+        NewsInstrument::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+NewsInstrument::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&NewsInstrument_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(NewsInstrument_class_data_.tc_table);
+  return NewsInstrument_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2>
+NewsInstrument::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(NewsInstrument, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    NewsInstrument_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::NewsInstrument>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // .tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo instrument = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0,
+      PROTOBUF_FIELD_OFFSET(NewsInstrument, _impl_.instrument_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo instrument = 1;
+    {PROTOBUF_FIELD_OFFSET(NewsInstrument, _impl_.instrument_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::NewsInstrumentInfo>()},
+  }},
+  {{
+  }},
+};
+PROTOBUF_NOINLINE void NewsInstrument::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.NewsInstrument)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    ABSL_DCHECK(_impl_.instrument_ != nullptr);
+    _impl_.instrument_->Clear();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL NewsInstrument::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const NewsInstrument& this_ = static_cast<const NewsInstrument&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL NewsInstrument::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const NewsInstrument& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.NewsInstrument)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // .tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo instrument = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        1, *this_._impl_.instrument_, this_._impl_.instrument_->GetCachedSize(), target,
+        stream);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.NewsInstrument)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t NewsInstrument::ByteSizeLong(const MessageLite& base) {
+  const NewsInstrument& this_ = static_cast<const NewsInstrument&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t NewsInstrument::ByteSizeLong() const {
+  const NewsInstrument& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.NewsInstrument)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+   {
+    // .tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo instrument = 1;
+    cached_has_bits = this_._impl_._has_bits_[0];
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.instrument_);
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void NewsInstrument::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<NewsInstrument*>(&to_msg);
+  auto& from = static_cast<const NewsInstrument&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  ::google::protobuf::Arena* arena = _this->GetArena();
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.NewsInstrument)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    ABSL_DCHECK(from._impl_.instrument_ != nullptr);
+    if (_this->_impl_.instrument_ == nullptr) {
+      _this->_impl_.instrument_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.instrument_);
+    } else {
+      _this->_impl_.instrument_->MergeFrom(*from._impl_.instrument_);
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void NewsInstrument::CopyFrom(const NewsInstrument& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.NewsInstrument)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void NewsInstrument::InternalSwap(NewsInstrument* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  swap(_impl_.instrument_, other->_impl_.instrument_);
+}
+
+::google::protobuf::Metadata NewsInstrument::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class NewsInstrumentInfo::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<NewsInstrumentInfo>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(NewsInstrumentInfo, _impl_._has_bits_);
+};
+
+NewsInstrumentInfo::NewsInstrumentInfo(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, NewsInstrumentInfo_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo)
+}
+PROTOBUF_NDEBUG_INLINE NewsInstrumentInfo::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::NewsInstrumentInfo& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        instrument_uid_(arena, from.instrument_uid_),
+        ticker_(arena, from.ticker_),
+        class_code_(arena, from.class_code_) {}
+
+NewsInstrumentInfo::NewsInstrumentInfo(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const NewsInstrumentInfo& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, NewsInstrumentInfo_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  NewsInstrumentInfo* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo)
+}
+PROTOBUF_NDEBUG_INLINE NewsInstrumentInfo::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        instrument_uid_(arena),
+        ticker_(arena),
+        class_code_(arena) {}
+
+inline void NewsInstrumentInfo::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+NewsInstrumentInfo::~NewsInstrumentInfo() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo)
+  SharedDtor(*this);
+}
+inline void NewsInstrumentInfo::SharedDtor(MessageLite& self) {
+  NewsInstrumentInfo& this_ = static_cast<NewsInstrumentInfo&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.instrument_uid_.Destroy();
+  this_._impl_.ticker_.Destroy();
+  this_._impl_.class_code_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL NewsInstrumentInfo::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) NewsInstrumentInfo(arena);
+}
+constexpr auto NewsInstrumentInfo::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(NewsInstrumentInfo),
+                                            alignof(NewsInstrumentInfo));
+}
+constexpr auto NewsInstrumentInfo::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_NewsInstrumentInfo_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &NewsInstrumentInfo::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<NewsInstrumentInfo>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &NewsInstrumentInfo::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<NewsInstrumentInfo>(), &NewsInstrumentInfo::ByteSizeLong,
+              &NewsInstrumentInfo::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(NewsInstrumentInfo, _impl_._cached_size_),
+          false,
+      },
+      &NewsInstrumentInfo::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull NewsInstrumentInfo_class_data_ =
+        NewsInstrumentInfo::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+NewsInstrumentInfo::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&NewsInstrumentInfo_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(NewsInstrumentInfo_class_data_.tc_table);
+  return NewsInstrumentInfo_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 95, 2>
+NewsInstrumentInfo::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(NewsInstrumentInfo, _impl_._has_bits_),
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    NewsInstrumentInfo_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::NewsInstrumentInfo>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string instrument_uid = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 0, 0,
+      PROTOBUF_FIELD_OFFSET(NewsInstrumentInfo, _impl_.instrument_uid_)}},
+    // string ticker = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 1, 0,
+      PROTOBUF_FIELD_OFFSET(NewsInstrumentInfo, _impl_.ticker_)}},
+    // string class_code = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 2, 0,
+      PROTOBUF_FIELD_OFFSET(NewsInstrumentInfo, _impl_.class_code_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string instrument_uid = 1;
+    {PROTOBUF_FIELD_OFFSET(NewsInstrumentInfo, _impl_.instrument_uid_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string ticker = 2;
+    {PROTOBUF_FIELD_OFFSET(NewsInstrumentInfo, _impl_.ticker_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string class_code = 3;
+    {PROTOBUF_FIELD_OFFSET(NewsInstrumentInfo, _impl_.class_code_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\70\16\6\12\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo"
+    "instrument_uid"
+    "ticker"
+    "class_code"
+  }},
+};
+PROTOBUF_NOINLINE void NewsInstrumentInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _impl_.instrument_uid_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _impl_.ticker_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _impl_.class_code_.ClearNonDefaultToEmpty();
+    }
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL NewsInstrumentInfo::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const NewsInstrumentInfo& this_ = static_cast<const NewsInstrumentInfo&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL NewsInstrumentInfo::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const NewsInstrumentInfo& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // string instrument_uid = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!this_._internal_instrument_uid().empty()) {
+      const ::std::string& _s = this_._internal_instrument_uid();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo.instrument_uid");
+      target = stream->WriteStringMaybeAliased(1, _s, target);
+    }
+  }
+
+  // string ticker = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (!this_._internal_ticker().empty()) {
+      const ::std::string& _s = this_._internal_ticker();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo.ticker");
+      target = stream->WriteStringMaybeAliased(2, _s, target);
+    }
+  }
+
+  // string class_code = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (!this_._internal_class_code().empty()) {
+      const ::std::string& _s = this_._internal_class_code();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo.class_code");
+      target = stream->WriteStringMaybeAliased(3, _s, target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t NewsInstrumentInfo::ByteSizeLong(const MessageLite& base) {
+  const NewsInstrumentInfo& this_ = static_cast<const NewsInstrumentInfo&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t NewsInstrumentInfo::ByteSizeLong() const {
+  const NewsInstrumentInfo& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    // string instrument_uid = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!this_._internal_instrument_uid().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_instrument_uid());
+      }
+    }
+    // string ticker = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (!this_._internal_ticker().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_ticker());
+      }
+    }
+    // string class_code = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!this_._internal_class_code().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_class_code());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void NewsInstrumentInfo::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<NewsInstrumentInfo*>(&to_msg);
+  auto& from = static_cast<const NewsInstrumentInfo&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!from._internal_instrument_uid().empty()) {
+        _this->_internal_set_instrument_uid(from._internal_instrument_uid());
+      } else {
+        if (_this->_impl_.instrument_uid_.IsDefault()) {
+          _this->_internal_set_instrument_uid("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (!from._internal_ticker().empty()) {
+        _this->_internal_set_ticker(from._internal_ticker());
+      } else {
+        if (_this->_impl_.ticker_.IsDefault()) {
+          _this->_internal_set_ticker("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!from._internal_class_code().empty()) {
+        _this->_internal_set_class_code(from._internal_class_code());
+      } else {
+        if (_this->_impl_.class_code_.IsDefault()) {
+          _this->_internal_set_class_code("");
+        }
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void NewsInstrumentInfo::CopyFrom(const NewsInstrumentInfo& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.NewsInstrumentInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void NewsInstrumentInfo::InternalSwap(NewsInstrumentInfo* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.instrument_uid_, &other->_impl_.instrument_uid_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ticker_, &other->_impl_.ticker_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.class_code_, &other->_impl_.class_code_, arena);
+}
+
+::google::protobuf::Metadata NewsInstrumentInfo::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
 class Bond::_Internal {
  public:
   using HasBits =
@@ -21665,79 +24457,79 @@ void Currency::clear_klong() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.klong_ != nullptr) _impl_.klong_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00002000U);
+                  0x00004000U);
 }
 void Currency::clear_kshort() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.kshort_ != nullptr) _impl_.kshort_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00004000U);
+                  0x00008000U);
 }
 void Currency::clear_dlong() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.dlong_ != nullptr) _impl_.dlong_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00008000U);
+                  0x00010000U);
 }
 void Currency::clear_dshort() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.dshort_ != nullptr) _impl_.dshort_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00010000U);
+                  0x00020000U);
 }
 void Currency::clear_dlong_min() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.dlong_min_ != nullptr) _impl_.dlong_min_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00020000U);
+                  0x00040000U);
 }
 void Currency::clear_dshort_min() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.dshort_min_ != nullptr) _impl_.dshort_min_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00040000U);
+                  0x00080000U);
 }
 void Currency::clear_nominal() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.nominal_ != nullptr) _impl_.nominal_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00080000U);
+                  0x00100000U);
 }
 void Currency::clear_min_price_increment() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.min_price_increment_ != nullptr) _impl_.min_price_increment_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00100000U);
+                  0x00200000U);
 }
 void Currency::clear_first_1min_candle_date() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.first_1min_candle_date_ != nullptr) _impl_.first_1min_candle_date_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x20000000U);
+                  0x40000000U);
 }
 void Currency::clear_first_1day_candle_date() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.first_1day_candle_date_ != nullptr) _impl_.first_1day_candle_date_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x40000000U);
+                  0x80000000U);
 }
 void Currency::clear_brand() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.brand_ != nullptr) _impl_.brand_->Clear();
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x80000000U);
+  ClearHasBit(_impl_._has_bits_[1],
+                  0x00000001U);
 }
 void Currency::clear_dlong_client() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.dlong_client_ != nullptr) _impl_.dlong_client_->Clear();
   ClearHasBit(_impl_._has_bits_[1],
-                  0x00000001U);
+                  0x00000002U);
 }
 void Currency::clear_dshort_client() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.dshort_client_ != nullptr) _impl_.dshort_client_->Clear();
   ClearHasBit(_impl_._has_bits_[1],
-                  0x00000002U);
+                  0x00000004U);
 }
 Currency::Currency(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
@@ -21766,7 +24558,8 @@ PROTOBUF_NDEBUG_INLINE Currency::Impl_::Impl_(
         country_of_risk_name_(arena, from.country_of_risk_name_),
         iso_currency_name_(arena, from.iso_currency_name_),
         uid_(arena, from.uid_),
-        position_uid_(arena, from.position_uid_) {}
+        position_uid_(arena, from.position_uid_),
+        asset_uid_(arena, from.asset_uid_) {}
 
 Currency::Currency(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
@@ -21782,28 +24575,28 @@ Currency::Currency(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.klong_ = (CheckHasBit(cached_has_bits, 0x00002000U))
+  _impl_.klong_ = (CheckHasBit(cached_has_bits, 0x00004000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.klong_)
                 : nullptr;
-  _impl_.kshort_ = (CheckHasBit(cached_has_bits, 0x00004000U))
+  _impl_.kshort_ = (CheckHasBit(cached_has_bits, 0x00008000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.kshort_)
                 : nullptr;
-  _impl_.dlong_ = (CheckHasBit(cached_has_bits, 0x00008000U))
+  _impl_.dlong_ = (CheckHasBit(cached_has_bits, 0x00010000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dlong_)
                 : nullptr;
-  _impl_.dshort_ = (CheckHasBit(cached_has_bits, 0x00010000U))
+  _impl_.dshort_ = (CheckHasBit(cached_has_bits, 0x00020000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dshort_)
                 : nullptr;
-  _impl_.dlong_min_ = (CheckHasBit(cached_has_bits, 0x00020000U))
+  _impl_.dlong_min_ = (CheckHasBit(cached_has_bits, 0x00040000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dlong_min_)
                 : nullptr;
-  _impl_.dshort_min_ = (CheckHasBit(cached_has_bits, 0x00040000U))
+  _impl_.dshort_min_ = (CheckHasBit(cached_has_bits, 0x00080000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dshort_min_)
                 : nullptr;
-  _impl_.nominal_ = (CheckHasBit(cached_has_bits, 0x00080000U))
+  _impl_.nominal_ = (CheckHasBit(cached_has_bits, 0x00100000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.nominal_)
                 : nullptr;
-  _impl_.min_price_increment_ = (CheckHasBit(cached_has_bits, 0x00100000U))
+  _impl_.min_price_increment_ = (CheckHasBit(cached_has_bits, 0x00200000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.min_price_increment_)
                 : nullptr;
   ::memcpy(reinterpret_cast<char*>(&_impl_) +
@@ -21813,20 +24606,20 @@ Currency::Currency(
            offsetof(Impl_, real_exchange_) -
                offsetof(Impl_, lot_) +
                sizeof(Impl_::real_exchange_));
-  _impl_.first_1min_candle_date_ = (CheckHasBit(cached_has_bits, 0x20000000U))
+  _impl_.first_1min_candle_date_ = (CheckHasBit(cached_has_bits, 0x40000000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.first_1min_candle_date_)
                 : nullptr;
-  _impl_.first_1day_candle_date_ = (CheckHasBit(cached_has_bits, 0x40000000U))
+  _impl_.first_1day_candle_date_ = (CheckHasBit(cached_has_bits, 0x80000000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.first_1day_candle_date_)
                 : nullptr;
-  _impl_.brand_ = (CheckHasBit(cached_has_bits, 0x80000000U))
+  cached_has_bits = _impl_._has_bits_[1];
+  _impl_.brand_ = (CheckHasBit(cached_has_bits, 0x00000001U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.brand_)
                 : nullptr;
-  cached_has_bits = _impl_._has_bits_[1];
-  _impl_.dlong_client_ = (CheckHasBit(cached_has_bits, 0x00000001U))
+  _impl_.dlong_client_ = (CheckHasBit(cached_has_bits, 0x00000002U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dlong_client_)
                 : nullptr;
-  _impl_.dshort_client_ = (CheckHasBit(cached_has_bits, 0x00000002U))
+  _impl_.dshort_client_ = (CheckHasBit(cached_has_bits, 0x00000004U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dshort_client_)
                 : nullptr;
   ::memcpy(reinterpret_cast<char*>(&_impl_) +
@@ -21855,7 +24648,8 @@ PROTOBUF_NDEBUG_INLINE Currency::Impl_::Impl_(
         country_of_risk_name_(arena),
         iso_currency_name_(arena),
         uid_(arena),
-        position_uid_(arena) {}
+        position_uid_(arena),
+        asset_uid_(arena) {}
 
 inline void Currency::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
@@ -21889,6 +24683,7 @@ inline void Currency::SharedDtor(MessageLite& self) {
   this_._impl_.iso_currency_name_.Destroy();
   this_._impl_.uid_.Destroy();
   this_._impl_.position_uid_.Destroy();
+  this_._impl_.asset_uid_.Destroy();
   delete this_._impl_.klong_;
   delete this_._impl_.kshort_;
   delete this_._impl_.dlong_;
@@ -21960,16 +24755,16 @@ Currency::GetClassData() const {
   return Currency_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<5, 38, 13, 212, 13>
+const ::_pbi::TcParseTable<5, 39, 13, 221, 13>
 Currency::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(Currency, _impl_._has_bits_),
     0, // no _extensions_
     91, 248,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    3221233664,  // skipmap
+    2147491840,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    38,  // num_field_entries
+    39,  // num_field_entries
     13,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     Currency_class_data_.base(),
@@ -21997,8 +24792,8 @@ Currency::_table_ = {
      {34, 4, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.isin_)}},
     // int32 lot = 5;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Currency, _impl_.lot_), 21>(),
-     {40, 21, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Currency, _impl_.lot_), 22>(),
+     {40, 22, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.lot_)}},
     // string currency = 6;
     {::_pbi::TcParser::FastUS1,
@@ -22006,31 +24801,31 @@ Currency::_table_ = {
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.currency_)}},
     // .tinkoff.public.invest.api.contract.v1.Quotation klong = 7 [deprecated = true];
     {::_pbi::TcParser::FastMtS1,
-     {58, 13, 0,
+     {58, 14, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.klong_)}},
     // .tinkoff.public.invest.api.contract.v1.Quotation kshort = 8 [deprecated = true];
     {::_pbi::TcParser::FastMtS1,
-     {66, 14, 1,
+     {66, 15, 1,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.kshort_)}},
     // .tinkoff.public.invest.api.contract.v1.Quotation dlong = 9;
     {::_pbi::TcParser::FastMtS1,
-     {74, 15, 2,
+     {74, 16, 2,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.dlong_)}},
     // .tinkoff.public.invest.api.contract.v1.Quotation dshort = 10;
     {::_pbi::TcParser::FastMtS1,
-     {82, 16, 3,
+     {82, 17, 3,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.dshort_)}},
     // .tinkoff.public.invest.api.contract.v1.Quotation dlong_min = 11;
     {::_pbi::TcParser::FastMtS1,
-     {90, 17, 4,
+     {90, 18, 4,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.dlong_min_)}},
     // .tinkoff.public.invest.api.contract.v1.Quotation dshort_min = 12;
     {::_pbi::TcParser::FastMtS1,
-     {98, 18, 5,
+     {98, 19, 5,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.dshort_min_)}},
     // bool short_enabled_flag = 13;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(Currency, _impl_.short_enabled_flag_), 22>(),
-     {104, 22, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(Currency, _impl_.short_enabled_flag_), 23>(),
+     {104, 23, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.short_enabled_flag_)}},
     {::_pbi::TcParser::MiniParse, {}},
     // string name = 15;
@@ -22043,7 +24838,7 @@ Currency::_table_ = {
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.exchange_)}},
     // .tinkoff.public.invest.api.contract.v1.MoneyValue nominal = 17;
     {::_pbi::TcParser::FastMtS2,
-     {394, 19, 6,
+     {394, 20, 6,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.nominal_)}},
     // string country_of_risk = 18;
     {::_pbi::TcParser::FastUS2,
@@ -22055,19 +24850,19 @@ Currency::_table_ = {
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.country_of_risk_name_)}},
     // .tinkoff.public.invest.api.contract.v1.SecurityTradingStatus trading_status = 20;
     {::_pbi::TcParser::FastV32S2,
-     {416, 26, 0,
+     {416, 27, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.trading_status_)}},
     // bool otc_flag = 21;
     {::_pbi::TcParser::FastV8S2,
-     {424, 23, 0,
+     {424, 24, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.otc_flag_)}},
     // bool buy_available_flag = 22;
     {::_pbi::TcParser::FastV8S2,
-     {432, 24, 0,
+     {432, 25, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.buy_available_flag_)}},
     // bool sell_available_flag = 23;
     {::_pbi::TcParser::FastV8S2,
-     {440, 25, 0,
+     {440, 26, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.sell_available_flag_)}},
     // string iso_currency_name = 24;
     {::_pbi::TcParser::FastUS2,
@@ -22075,11 +24870,11 @@ Currency::_table_ = {
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.iso_currency_name_)}},
     // .tinkoff.public.invest.api.contract.v1.Quotation min_price_increment = 25;
     {::_pbi::TcParser::FastMtS2,
-     {458, 20, 7,
+     {458, 21, 7,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.min_price_increment_)}},
     // bool api_trade_available_flag = 26;
     {::_pbi::TcParser::FastV8S2,
-     {464, 27, 0,
+     {464, 28, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.api_trade_available_flag_)}},
     // string uid = 27;
     {::_pbi::TcParser::FastUS2,
@@ -22087,7 +24882,7 @@ Currency::_table_ = {
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.uid_)}},
     // .tinkoff.public.invest.api.contract.v1.RealExchange real_exchange = 28;
     {::_pbi::TcParser::FastV32S2,
-     {480, 28, 0,
+     {480, 29, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.real_exchange_)}},
     // string position_uid = 29;
     {::_pbi::TcParser::FastUS2,
@@ -22097,13 +24892,16 @@ Currency::_table_ = {
     {::_pbi::TcParser::FastUR2,
      {498, 0, 0,
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.required_tests_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+    // string asset_uid = 31;
+    {::_pbi::TcParser::FastUS2,
+     {506, 13, 0,
+      PROTOBUF_FIELD_OFFSET(Currency, _impl_.asset_uid_)}},
   }}, {{
     41, 0, 4,
-    18430, 29,
-    65526, 34,
-    65535, 36,
-    65529, 36,
+    18430, 30,
+    65526, 35,
+    65535, 37,
+    65529, 37,
     65535, 65535
   }}, {{
     // string figi = 1;
@@ -22115,73 +24913,75 @@ Currency::_table_ = {
     // string isin = 4;
     {PROTOBUF_FIELD_OFFSET(Currency, _impl_.isin_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // int32 lot = 5;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.lot_), _Internal::kHasBitsOffset + 21, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.lot_), _Internal::kHasBitsOffset + 22, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
     // string currency = 6;
     {PROTOBUF_FIELD_OFFSET(Currency, _impl_.currency_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // .tinkoff.public.invest.api.contract.v1.Quotation klong = 7 [deprecated = true];
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.klong_), _Internal::kHasBitsOffset + 13, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.klong_), _Internal::kHasBitsOffset + 14, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.Quotation kshort = 8 [deprecated = true];
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.kshort_), _Internal::kHasBitsOffset + 14, 1, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.kshort_), _Internal::kHasBitsOffset + 15, 1, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.Quotation dlong = 9;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dlong_), _Internal::kHasBitsOffset + 15, 2, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dlong_), _Internal::kHasBitsOffset + 16, 2, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.Quotation dshort = 10;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dshort_), _Internal::kHasBitsOffset + 16, 3, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dshort_), _Internal::kHasBitsOffset + 17, 3, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.Quotation dlong_min = 11;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dlong_min_), _Internal::kHasBitsOffset + 17, 4, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dlong_min_), _Internal::kHasBitsOffset + 18, 4, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.Quotation dshort_min = 12;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dshort_min_), _Internal::kHasBitsOffset + 18, 5, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dshort_min_), _Internal::kHasBitsOffset + 19, 5, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // bool short_enabled_flag = 13;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.short_enabled_flag_), _Internal::kHasBitsOffset + 22, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.short_enabled_flag_), _Internal::kHasBitsOffset + 23, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // string name = 15;
     {PROTOBUF_FIELD_OFFSET(Currency, _impl_.name_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string exchange = 16;
     {PROTOBUF_FIELD_OFFSET(Currency, _impl_.exchange_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // .tinkoff.public.invest.api.contract.v1.MoneyValue nominal = 17;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.nominal_), _Internal::kHasBitsOffset + 19, 6, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.nominal_), _Internal::kHasBitsOffset + 20, 6, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // string country_of_risk = 18;
     {PROTOBUF_FIELD_OFFSET(Currency, _impl_.country_of_risk_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string country_of_risk_name = 19;
     {PROTOBUF_FIELD_OFFSET(Currency, _impl_.country_of_risk_name_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // .tinkoff.public.invest.api.contract.v1.SecurityTradingStatus trading_status = 20;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.trading_status_), _Internal::kHasBitsOffset + 26, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.trading_status_), _Internal::kHasBitsOffset + 27, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // bool otc_flag = 21;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.otc_flag_), _Internal::kHasBitsOffset + 23, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.otc_flag_), _Internal::kHasBitsOffset + 24, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // bool buy_available_flag = 22;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.buy_available_flag_), _Internal::kHasBitsOffset + 24, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.buy_available_flag_), _Internal::kHasBitsOffset + 25, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // bool sell_available_flag = 23;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.sell_available_flag_), _Internal::kHasBitsOffset + 25, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.sell_available_flag_), _Internal::kHasBitsOffset + 26, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // string iso_currency_name = 24;
     {PROTOBUF_FIELD_OFFSET(Currency, _impl_.iso_currency_name_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // .tinkoff.public.invest.api.contract.v1.Quotation min_price_increment = 25;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.min_price_increment_), _Internal::kHasBitsOffset + 20, 7, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.min_price_increment_), _Internal::kHasBitsOffset + 21, 7, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // bool api_trade_available_flag = 26;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.api_trade_available_flag_), _Internal::kHasBitsOffset + 27, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.api_trade_available_flag_), _Internal::kHasBitsOffset + 28, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // string uid = 27;
     {PROTOBUF_FIELD_OFFSET(Currency, _impl_.uid_), _Internal::kHasBitsOffset + 11, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // .tinkoff.public.invest.api.contract.v1.RealExchange real_exchange = 28;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.real_exchange_), _Internal::kHasBitsOffset + 28, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.real_exchange_), _Internal::kHasBitsOffset + 29, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // string position_uid = 29;
     {PROTOBUF_FIELD_OFFSET(Currency, _impl_.position_uid_), _Internal::kHasBitsOffset + 12, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // repeated string required_tests = 30;
     {PROTOBUF_FIELD_OFFSET(Currency, _impl_.required_tests_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kUtf8String | ::_fl::kRepSString)},
+    // string asset_uid = 31;
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.asset_uid_), _Internal::kHasBitsOffset + 13, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // bool for_iis_flag = 41;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.for_iis_flag_), _Internal::kHasBitsOffset + 34, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.for_iis_flag_), _Internal::kHasBitsOffset + 35, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // bool for_qual_investor_flag = 52;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.for_qual_investor_flag_), _Internal::kHasBitsOffset + 35, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.for_qual_investor_flag_), _Internal::kHasBitsOffset + 36, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // bool weekend_flag = 53;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.weekend_flag_), _Internal::kHasBitsOffset + 36, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.weekend_flag_), _Internal::kHasBitsOffset + 37, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // bool blocked_tca_flag = 54;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.blocked_tca_flag_), _Internal::kHasBitsOffset + 37, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.blocked_tca_flag_), _Internal::kHasBitsOffset + 38, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // .google.protobuf.Timestamp first_1min_candle_date = 56;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.first_1min_candle_date_), _Internal::kHasBitsOffset + 29, 8, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.first_1min_candle_date_), _Internal::kHasBitsOffset + 30, 8, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .google.protobuf.Timestamp first_1day_candle_date = 57;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.first_1day_candle_date_), _Internal::kHasBitsOffset + 30, 9, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.first_1day_candle_date_), _Internal::kHasBitsOffset + 31, 9, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.BrandData brand = 60;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.brand_), _Internal::kHasBitsOffset + 31, 10, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.brand_), _Internal::kHasBitsOffset + 32, 10, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.Quotation dlong_client = 90;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dlong_client_), _Internal::kHasBitsOffset + 32, 11, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dlong_client_), _Internal::kHasBitsOffset + 33, 11, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.Quotation dshort_client = 91;
-    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dshort_client_), _Internal::kHasBitsOffset + 33, 12, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(Currency, _impl_.dshort_client_), _Internal::kHasBitsOffset + 34, 12, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
@@ -22199,7 +24999,7 @@ Currency::_table_ = {
       {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
   }},
   {{
-    "\56\4\6\12\4\0\10\0\0\0\0\0\0\0\4\10\0\17\24\0\0\0\0\21\0\0\3\0\14\16\0\0\0\0\0\0\0\0\0\0"
+    "\56\4\6\12\4\0\10\0\0\0\0\0\0\0\4\10\0\17\24\0\0\0\0\21\0\0\3\0\14\16\11\0\0\0\0\0\0\0\0\0"
     "tinkoff.public.invest.api.contract.v1.Currency"
     "figi"
     "ticker"
@@ -22214,6 +25014,7 @@ Currency::_table_ = {
     "uid"
     "position_uid"
     "required_tests"
+    "asset_uid"
   }},
 };
 PROTOBUF_NOINLINE void Currency::Clear() {
@@ -22267,74 +25068,77 @@ PROTOBUF_NOINLINE void Currency::Clear() {
       _impl_.position_uid_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+      _impl_.asset_uid_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
       ABSL_DCHECK(_impl_.klong_ != nullptr);
       _impl_.klong_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
       ABSL_DCHECK(_impl_.kshort_ != nullptr);
       _impl_.kshort_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x003f0000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
       ABSL_DCHECK(_impl_.dlong_ != nullptr);
       _impl_.dlong_->Clear();
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x001f0000U)) {
-    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
       ABSL_DCHECK(_impl_.dshort_ != nullptr);
       _impl_.dshort_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
       ABSL_DCHECK(_impl_.dlong_min_ != nullptr);
       _impl_.dlong_min_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
       ABSL_DCHECK(_impl_.dshort_min_ != nullptr);
       _impl_.dshort_min_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
       ABSL_DCHECK(_impl_.nominal_ != nullptr);
       _impl_.nominal_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
       ABSL_DCHECK(_impl_.min_price_increment_ != nullptr);
       _impl_.min_price_increment_->Clear();
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00e00000U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00c00000U)) {
     ::memset(&_impl_.lot_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.otc_flag_) -
-        reinterpret_cast<char*>(&_impl_.lot_)) + sizeof(_impl_.otc_flag_));
+        reinterpret_cast<char*>(&_impl_.short_enabled_flag_) -
+        reinterpret_cast<char*>(&_impl_.lot_)) + sizeof(_impl_.short_enabled_flag_));
   }
   if (BatchCheckHasBit(cached_has_bits, 0xff000000U)) {
-    ::memset(&_impl_.buy_available_flag_, 0, static_cast<::size_t>(
+    ::memset(&_impl_.otc_flag_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.real_exchange_) -
-        reinterpret_cast<char*>(&_impl_.buy_available_flag_)) + sizeof(_impl_.real_exchange_));
-    if (CheckHasBit(cached_has_bits, 0x20000000U)) {
+        reinterpret_cast<char*>(&_impl_.otc_flag_)) + sizeof(_impl_.real_exchange_));
+    if (CheckHasBit(cached_has_bits, 0x40000000U)) {
       ABSL_DCHECK(_impl_.first_1min_candle_date_ != nullptr);
       _impl_.first_1min_candle_date_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x40000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x80000000U)) {
       ABSL_DCHECK(_impl_.first_1day_candle_date_ != nullptr);
       _impl_.first_1day_candle_date_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x80000000U)) {
+  }
+  cached_has_bits = _impl_._has_bits_[1];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       ABSL_DCHECK(_impl_.brand_ != nullptr);
       _impl_.brand_->Clear();
     }
-  }
-  cached_has_bits = _impl_._has_bits_[1];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       ABSL_DCHECK(_impl_.dlong_client_ != nullptr);
       _impl_.dlong_client_->Clear();
     }
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       ABSL_DCHECK(_impl_.dshort_client_ != nullptr);
       _impl_.dshort_client_->Clear();
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003cU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000078U)) {
     ::memset(&_impl_.for_iis_flag_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.blocked_tca_flag_) -
         reinterpret_cast<char*>(&_impl_.for_iis_flag_)) + sizeof(_impl_.blocked_tca_flag_));
@@ -22403,7 +25207,7 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // int32 lot = 5;
-  if (CheckHasBit(cached_has_bits, 0x00200000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00400000U)) {
     if (this_._internal_lot() != 0) {
       target =
           ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<5>(
@@ -22422,49 +25226,49 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // .tinkoff.public.invest.api.contract.v1.Quotation klong = 7 [deprecated = true];
-  if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00004000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         7, *this_._impl_.klong_, this_._impl_.klong_->GetCachedSize(), target,
         stream);
   }
 
   // .tinkoff.public.invest.api.contract.v1.Quotation kshort = 8 [deprecated = true];
-  if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00008000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         8, *this_._impl_.kshort_, this_._impl_.kshort_->GetCachedSize(), target,
         stream);
   }
 
   // .tinkoff.public.invest.api.contract.v1.Quotation dlong = 9;
-  if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00010000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         9, *this_._impl_.dlong_, this_._impl_.dlong_->GetCachedSize(), target,
         stream);
   }
 
   // .tinkoff.public.invest.api.contract.v1.Quotation dshort = 10;
-  if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00020000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         10, *this_._impl_.dshort_, this_._impl_.dshort_->GetCachedSize(), target,
         stream);
   }
 
   // .tinkoff.public.invest.api.contract.v1.Quotation dlong_min = 11;
-  if (CheckHasBit(cached_has_bits, 0x00020000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00040000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         11, *this_._impl_.dlong_min_, this_._impl_.dlong_min_->GetCachedSize(), target,
         stream);
   }
 
   // .tinkoff.public.invest.api.contract.v1.Quotation dshort_min = 12;
-  if (CheckHasBit(cached_has_bits, 0x00040000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00080000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         12, *this_._impl_.dshort_min_, this_._impl_.dshort_min_->GetCachedSize(), target,
         stream);
   }
 
   // bool short_enabled_flag = 13;
-  if (CheckHasBit(cached_has_bits, 0x00400000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00800000U)) {
     if (this_._internal_short_enabled_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -22493,7 +25297,7 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // .tinkoff.public.invest.api.contract.v1.MoneyValue nominal = 17;
-  if (CheckHasBit(cached_has_bits, 0x00080000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00100000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         17, *this_._impl_.nominal_, this_._impl_.nominal_->GetCachedSize(), target,
         stream);
@@ -22520,7 +25324,7 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // .tinkoff.public.invest.api.contract.v1.SecurityTradingStatus trading_status = 20;
-  if (CheckHasBit(cached_has_bits, 0x04000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x08000000U)) {
     if (this_._internal_trading_status() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -22529,7 +25333,7 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // bool otc_flag = 21;
-  if (CheckHasBit(cached_has_bits, 0x00800000U)) {
+  if (CheckHasBit(cached_has_bits, 0x01000000U)) {
     if (this_._internal_otc_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -22538,7 +25342,7 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // bool buy_available_flag = 22;
-  if (CheckHasBit(cached_has_bits, 0x01000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x02000000U)) {
     if (this_._internal_buy_available_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -22547,7 +25351,7 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // bool sell_available_flag = 23;
-  if (CheckHasBit(cached_has_bits, 0x02000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x04000000U)) {
     if (this_._internal_sell_available_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -22566,14 +25370,14 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // .tinkoff.public.invest.api.contract.v1.Quotation min_price_increment = 25;
-  if (CheckHasBit(cached_has_bits, 0x00100000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00200000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         25, *this_._impl_.min_price_increment_, this_._impl_.min_price_increment_->GetCachedSize(), target,
         stream);
   }
 
   // bool api_trade_available_flag = 26;
-  if (CheckHasBit(cached_has_bits, 0x08000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x10000000U)) {
     if (this_._internal_api_trade_available_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -22592,7 +25396,7 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // .tinkoff.public.invest.api.contract.v1.RealExchange real_exchange = 28;
-  if (CheckHasBit(cached_has_bits, 0x10000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x20000000U)) {
     if (this_._internal_real_exchange() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -22620,9 +25424,19 @@ PROTOBUF_NOINLINE void Currency::Clear() {
     }
   }
 
+  // string asset_uid = 31;
+  if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+    if (!this_._internal_asset_uid().empty()) {
+      const ::std::string& _s = this_._internal_asset_uid();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Currency.asset_uid");
+      target = stream->WriteStringMaybeAliased(31, _s, target);
+    }
+  }
+
   cached_has_bits = this_._impl_._has_bits_[1];
   // bool for_iis_flag = 41;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
     if (this_._internal_for_iis_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -22631,7 +25445,7 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // bool for_qual_investor_flag = 52;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
     if (this_._internal_for_qual_investor_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -22640,7 +25454,7 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // bool weekend_flag = 53;
-  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
     if (this_._internal_weekend_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -22649,7 +25463,7 @@ PROTOBUF_NOINLINE void Currency::Clear() {
   }
 
   // bool blocked_tca_flag = 54;
-  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
     if (this_._internal_blocked_tca_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -22659,36 +25473,36 @@ PROTOBUF_NOINLINE void Currency::Clear() {
 
   cached_has_bits = this_._impl_._has_bits_[0];
   // .google.protobuf.Timestamp first_1min_candle_date = 56;
-  if (CheckHasBit(cached_has_bits, 0x20000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x40000000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         56, *this_._impl_.first_1min_candle_date_, this_._impl_.first_1min_candle_date_->GetCachedSize(), target,
         stream);
   }
 
   // .google.protobuf.Timestamp first_1day_candle_date = 57;
-  if (CheckHasBit(cached_has_bits, 0x40000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x80000000U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         57, *this_._impl_.first_1day_candle_date_, this_._impl_.first_1day_candle_date_->GetCachedSize(), target,
         stream);
   }
 
+  cached_has_bits = this_._impl_._has_bits_[1];
   // .tinkoff.public.invest.api.contract.v1.BrandData brand = 60;
-  if (CheckHasBit(cached_has_bits, 0x80000000U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         60, *this_._impl_.brand_, this_._impl_.brand_->GetCachedSize(), target,
         stream);
   }
 
-  cached_has_bits = this_._impl_._has_bits_[1];
   // .tinkoff.public.invest.api.contract.v1.Quotation dlong_client = 90;
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         90, *this_._impl_.dlong_client_, this_._impl_.dlong_client_->GetCachedSize(), target,
         stream);
   }
 
   // .tinkoff.public.invest.api.contract.v1.Quotation dshort_client = 91;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         91, *this_._impl_.dshort_client_, this_._impl_.dshort_client_->GetCachedSize(), target,
         stream);
@@ -22815,149 +25629,156 @@ PROTOBUF_NOINLINE void Currency::Clear() {
                                         this_._internal_position_uid());
       }
     }
-    // .tinkoff.public.invest.api.contract.v1.Quotation klong = 7 [deprecated = true];
+    // string asset_uid = 31;
     if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+      if (!this_._internal_asset_uid().empty()) {
+        total_size += 2 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_asset_uid());
+      }
+    }
+    // .tinkoff.public.invest.api.contract.v1.Quotation klong = 7 [deprecated = true];
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.klong_);
     }
     // .tinkoff.public.invest.api.contract.v1.Quotation kshort = 8 [deprecated = true];
-    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.kshort_);
     }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
     // .tinkoff.public.invest.api.contract.v1.Quotation dlong = 9;
-    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.dlong_);
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
     // .tinkoff.public.invest.api.contract.v1.Quotation dshort = 10;
-    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.dshort_);
     }
     // .tinkoff.public.invest.api.contract.v1.Quotation dlong_min = 11;
-    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.dlong_min_);
     }
     // .tinkoff.public.invest.api.contract.v1.Quotation dshort_min = 12;
-    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.dshort_min_);
     }
     // .tinkoff.public.invest.api.contract.v1.MoneyValue nominal = 17;
-    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.nominal_);
     }
     // .tinkoff.public.invest.api.contract.v1.Quotation min_price_increment = 25;
-    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.min_price_increment_);
     }
     // int32 lot = 5;
-    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00400000U)) {
       if (this_._internal_lot() != 0) {
         total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
             this_._internal_lot());
       }
     }
     // bool short_enabled_flag = 13;
-    if (CheckHasBit(cached_has_bits, 0x00400000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00800000U)) {
       if (this_._internal_short_enabled_flag() != 0) {
         total_size += 2;
       }
     }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0xff000000U)) {
     // bool otc_flag = 21;
-    if (CheckHasBit(cached_has_bits, 0x00800000U)) {
+    if (CheckHasBit(cached_has_bits, 0x01000000U)) {
       if (this_._internal_otc_flag() != 0) {
         total_size += 3;
       }
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0xff000000U)) {
     // bool buy_available_flag = 22;
-    if (CheckHasBit(cached_has_bits, 0x01000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x02000000U)) {
       if (this_._internal_buy_available_flag() != 0) {
         total_size += 3;
       }
     }
     // bool sell_available_flag = 23;
-    if (CheckHasBit(cached_has_bits, 0x02000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x04000000U)) {
       if (this_._internal_sell_available_flag() != 0) {
         total_size += 3;
       }
     }
     // .tinkoff.public.invest.api.contract.v1.SecurityTradingStatus trading_status = 20;
-    if (CheckHasBit(cached_has_bits, 0x04000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x08000000U)) {
       if (this_._internal_trading_status() != 0) {
         total_size += 2 +
                       ::_pbi::WireFormatLite::EnumSize(this_._internal_trading_status());
       }
     }
     // bool api_trade_available_flag = 26;
-    if (CheckHasBit(cached_has_bits, 0x08000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x10000000U)) {
       if (this_._internal_api_trade_available_flag() != 0) {
         total_size += 3;
       }
     }
     // .tinkoff.public.invest.api.contract.v1.RealExchange real_exchange = 28;
-    if (CheckHasBit(cached_has_bits, 0x10000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x20000000U)) {
       if (this_._internal_real_exchange() != 0) {
         total_size += 2 +
                       ::_pbi::WireFormatLite::EnumSize(this_._internal_real_exchange());
       }
     }
     // .google.protobuf.Timestamp first_1min_candle_date = 56;
-    if (CheckHasBit(cached_has_bits, 0x20000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x40000000U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.first_1min_candle_date_);
     }
     // .google.protobuf.Timestamp first_1day_candle_date = 57;
-    if (CheckHasBit(cached_has_bits, 0x40000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x80000000U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.first_1day_candle_date_);
     }
+  }
+  cached_has_bits = this_._impl_._has_bits_[1];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
     // .tinkoff.public.invest.api.contract.v1.BrandData brand = 60;
-    if (CheckHasBit(cached_has_bits, 0x80000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.brand_);
     }
-  }
-  cached_has_bits = this_._impl_._has_bits_[1];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
     // .tinkoff.public.invest.api.contract.v1.Quotation dlong_client = 90;
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.dlong_client_);
     }
     // .tinkoff.public.invest.api.contract.v1.Quotation dshort_client = 91;
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.dshort_client_);
     }
     // bool for_iis_flag = 41;
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (this_._internal_for_iis_flag() != 0) {
         total_size += 3;
       }
     }
     // bool for_qual_investor_flag = 52;
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       if (this_._internal_for_qual_investor_flag() != 0) {
         total_size += 3;
       }
     }
     // bool weekend_flag = 53;
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       if (this_._internal_weekend_flag() != 0) {
         total_size += 3;
       }
     }
     // bool blocked_tca_flag = 54;
-    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       if (this_._internal_blocked_tca_flag() != 0) {
         total_size += 3;
       }
@@ -23099,6 +25920,15 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+      if (!from._internal_asset_uid().empty()) {
+        _this->_internal_set_asset_uid(from._internal_asset_uid());
+      } else {
+        if (_this->_impl_.asset_uid_.IsDefault()) {
+          _this->_internal_set_asset_uid("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
       ABSL_DCHECK(from._impl_.klong_ != nullptr);
       if (_this->_impl_.klong_ == nullptr) {
         _this->_impl_.klong_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.klong_);
@@ -23106,7 +25936,7 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.klong_->MergeFrom(*from._impl_.klong_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
       ABSL_DCHECK(from._impl_.kshort_ != nullptr);
       if (_this->_impl_.kshort_ == nullptr) {
         _this->_impl_.kshort_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.kshort_);
@@ -23114,7 +25944,9 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.kshort_->MergeFrom(*from._impl_.kshort_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
       ABSL_DCHECK(from._impl_.dlong_ != nullptr);
       if (_this->_impl_.dlong_ == nullptr) {
         _this->_impl_.dlong_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dlong_);
@@ -23122,9 +25954,7 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.dlong_->MergeFrom(*from._impl_.dlong_);
       }
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
-    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
       ABSL_DCHECK(from._impl_.dshort_ != nullptr);
       if (_this->_impl_.dshort_ == nullptr) {
         _this->_impl_.dshort_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dshort_);
@@ -23132,7 +25962,7 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.dshort_->MergeFrom(*from._impl_.dshort_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
       ABSL_DCHECK(from._impl_.dlong_min_ != nullptr);
       if (_this->_impl_.dlong_min_ == nullptr) {
         _this->_impl_.dlong_min_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dlong_min_);
@@ -23140,7 +25970,7 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.dlong_min_->MergeFrom(*from._impl_.dlong_min_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
       ABSL_DCHECK(from._impl_.dshort_min_ != nullptr);
       if (_this->_impl_.dshort_min_ == nullptr) {
         _this->_impl_.dshort_min_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dshort_min_);
@@ -23148,7 +25978,7 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.dshort_min_->MergeFrom(*from._impl_.dshort_min_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
       ABSL_DCHECK(from._impl_.nominal_ != nullptr);
       if (_this->_impl_.nominal_ == nullptr) {
         _this->_impl_.nominal_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.nominal_);
@@ -23156,7 +25986,7 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.nominal_->MergeFrom(*from._impl_.nominal_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
       ABSL_DCHECK(from._impl_.min_price_increment_ != nullptr);
       if (_this->_impl_.min_price_increment_ == nullptr) {
         _this->_impl_.min_price_increment_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.min_price_increment_);
@@ -23164,49 +25994,49 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.min_price_increment_->MergeFrom(*from._impl_.min_price_increment_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00400000U)) {
       if (from._internal_lot() != 0) {
         _this->_impl_.lot_ = from._impl_.lot_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00400000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00800000U)) {
       if (from._internal_short_enabled_flag() != 0) {
         _this->_impl_.short_enabled_flag_ = from._impl_.short_enabled_flag_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00800000U)) {
-      if (from._internal_otc_flag() != 0) {
-        _this->_impl_.otc_flag_ = from._impl_.otc_flag_;
       }
     }
   }
   if (BatchCheckHasBit(cached_has_bits, 0xff000000U)) {
     if (CheckHasBit(cached_has_bits, 0x01000000U)) {
+      if (from._internal_otc_flag() != 0) {
+        _this->_impl_.otc_flag_ = from._impl_.otc_flag_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x02000000U)) {
       if (from._internal_buy_available_flag() != 0) {
         _this->_impl_.buy_available_flag_ = from._impl_.buy_available_flag_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x02000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x04000000U)) {
       if (from._internal_sell_available_flag() != 0) {
         _this->_impl_.sell_available_flag_ = from._impl_.sell_available_flag_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x04000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x08000000U)) {
       if (from._internal_trading_status() != 0) {
         _this->_impl_.trading_status_ = from._impl_.trading_status_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x08000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x10000000U)) {
       if (from._internal_api_trade_available_flag() != 0) {
         _this->_impl_.api_trade_available_flag_ = from._impl_.api_trade_available_flag_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x10000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x20000000U)) {
       if (from._internal_real_exchange() != 0) {
         _this->_impl_.real_exchange_ = from._impl_.real_exchange_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x20000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x40000000U)) {
       ABSL_DCHECK(from._impl_.first_1min_candle_date_ != nullptr);
       if (_this->_impl_.first_1min_candle_date_ == nullptr) {
         _this->_impl_.first_1min_candle_date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.first_1min_candle_date_);
@@ -23214,7 +26044,7 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.first_1min_candle_date_->MergeFrom(*from._impl_.first_1min_candle_date_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x40000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x80000000U)) {
       ABSL_DCHECK(from._impl_.first_1day_candle_date_ != nullptr);
       if (_this->_impl_.first_1day_candle_date_ == nullptr) {
         _this->_impl_.first_1day_candle_date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.first_1day_candle_date_);
@@ -23222,7 +26052,10 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.first_1day_candle_date_->MergeFrom(*from._impl_.first_1day_candle_date_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x80000000U)) {
+  }
+  cached_has_bits = from._impl_._has_bits_[1];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       ABSL_DCHECK(from._impl_.brand_ != nullptr);
       if (_this->_impl_.brand_ == nullptr) {
         _this->_impl_.brand_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.brand_);
@@ -23230,10 +26063,7 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.brand_->MergeFrom(*from._impl_.brand_);
       }
     }
-  }
-  cached_has_bits = from._impl_._has_bits_[1];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       ABSL_DCHECK(from._impl_.dlong_client_ != nullptr);
       if (_this->_impl_.dlong_client_ == nullptr) {
         _this->_impl_.dlong_client_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dlong_client_);
@@ -23241,7 +26071,7 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.dlong_client_->MergeFrom(*from._impl_.dlong_client_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       ABSL_DCHECK(from._impl_.dshort_client_ != nullptr);
       if (_this->_impl_.dshort_client_ == nullptr) {
         _this->_impl_.dshort_client_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.dshort_client_);
@@ -23249,22 +26079,22 @@ void Currency::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.dshort_client_->MergeFrom(*from._impl_.dshort_client_);
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (from._internal_for_iis_flag() != 0) {
         _this->_impl_.for_iis_flag_ = from._impl_.for_iis_flag_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       if (from._internal_for_qual_investor_flag() != 0) {
         _this->_impl_.for_qual_investor_flag_ = from._impl_.for_qual_investor_flag_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       if (from._internal_weekend_flag() != 0) {
         _this->_impl_.weekend_flag_ = from._impl_.weekend_flag_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       if (from._internal_blocked_tca_flag() != 0) {
         _this->_impl_.blocked_tca_flag_ = from._impl_.blocked_tca_flag_;
       }
@@ -23303,6 +26133,7 @@ void Currency::InternalSwap(Currency* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) 
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.iso_currency_name_, &other->_impl_.iso_currency_name_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.uid_, &other->_impl_.uid_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.position_uid_, &other->_impl_.position_uid_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.asset_uid_, &other->_impl_.asset_uid_, arena);
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Currency, _impl_.blocked_tca_flag_)
       + sizeof(Currency::_impl_.blocked_tca_flag_)
@@ -51655,6 +54486,7 @@ PROTOBUF_NDEBUG_INLINE IndicativeResponse::Impl_::Impl_(
     [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::IndicativeResponse& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
+        index_composition_{visibility, arena, from.index_composition_},
         figi_(arena, from.figi_),
         ticker_(arena, from.ticker_),
         class_code_(arena, from.class_code_),
@@ -51690,6 +54522,7 @@ PROTOBUF_NDEBUG_INLINE IndicativeResponse::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
+        index_composition_{visibility, arena},
         figi_(arena),
         ticker_(arena),
         class_code_(arena),
@@ -51734,8 +54567,20 @@ inline void* PROTOBUF_NONNULL IndicativeResponse::PlacementNew_(
   return ::new (mem) IndicativeResponse(arena);
 }
 constexpr auto IndicativeResponse::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(IndicativeResponse),
-                                            alignof(IndicativeResponse));
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.index_composition_) +
+          decltype(IndicativeResponse::_impl_.index_composition_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::CopyInit(
+        sizeof(IndicativeResponse), alignof(IndicativeResponse), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&IndicativeResponse::PlacementNew_,
+                                 sizeof(IndicativeResponse),
+                                 alignof(IndicativeResponse));
+  }
 }
 constexpr auto IndicativeResponse::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
@@ -51771,18 +54616,18 @@ IndicativeResponse::GetClassData() const {
   return IndicativeResponse_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 10, 0, 116, 7>
+const ::_pbi::TcParseTable<4, 11, 1, 116, 7>
 IndicativeResponse::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_._has_bits_),
     0, // no _extensions_
-    405, 120,  // max_field_number, fast_idx_mask
+    406, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
     4294952432,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    10,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
+    11,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
     IndicativeResponse_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
@@ -51793,73 +54638,80 @@ IndicativeResponse::_table_ = {
     {::_pbi::TcParser::MiniParse, {}},
     // string figi = 1;
     {::_pbi::TcParser::FastUS1,
-     {10, 0, 0,
+     {10, 1, 0,
       PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.figi_)}},
     // string ticker = 2;
     {::_pbi::TcParser::FastUS1,
-     {18, 1, 0,
+     {18, 2, 0,
       PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.ticker_)}},
     // string class_code = 3;
     {::_pbi::TcParser::FastUS1,
-     {26, 2, 0,
+     {26, 3, 0,
       PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.class_code_)}},
     // string currency = 4;
     {::_pbi::TcParser::FastUS1,
-     {34, 3, 0,
+     {34, 4, 0,
       PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.currency_)}},
     // bool sell_available_flag = 405;
     {::_pbi::TcParser::FastV8S2,
-     {6568, 8, 0,
+     {6568, 9, 0,
       PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.sell_available_flag_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+    // repeated .tinkoff.public.invest.api.contract.v1.IndexInstrument index_composition = 406;
+    {::_pbi::TcParser::FastMtR2,
+     {6578, 0, 0,
+      PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.index_composition_)}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     // .tinkoff.public.invest.api.contract.v1.InstrumentType instrument_kind = 10;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(IndicativeResponse, _impl_.instrument_kind_), 7>(),
-     {80, 7, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(IndicativeResponse, _impl_.instrument_kind_), 8>(),
+     {80, 8, 0,
       PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.instrument_kind_)}},
     {::_pbi::TcParser::MiniParse, {}},
     // string name = 12;
     {::_pbi::TcParser::FastUS1,
-     {98, 4, 0,
+     {98, 5, 0,
       PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.name_)}},
     // string exchange = 13;
     {::_pbi::TcParser::FastUS1,
-     {106, 5, 0,
+     {106, 6, 0,
       PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.exchange_)}},
     // string uid = 14;
     {::_pbi::TcParser::FastUS1,
-     {114, 6, 0,
+     {114, 7, 0,
       PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.uid_)}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     404, 0, 1,
-    65532, 8,
+    65528, 8,
     65535, 65535
   }}, {{
     // string figi = 1;
-    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.figi_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.figi_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string ticker = 2;
-    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.ticker_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.ticker_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string class_code = 3;
-    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.class_code_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.class_code_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string currency = 4;
-    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.currency_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.currency_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // .tinkoff.public.invest.api.contract.v1.InstrumentType instrument_kind = 10;
-    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.instrument_kind_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.instrument_kind_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // string name = 12;
-    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.name_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.name_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string exchange = 13;
-    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.exchange_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.exchange_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string uid = 14;
-    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.uid_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.uid_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // bool buy_available_flag = 404;
-    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.buy_available_flag_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.buy_available_flag_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // bool sell_available_flag = 405;
-    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.sell_available_flag_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.sell_available_flag_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // repeated .tinkoff.public.invest.api.contract.v1.IndexInstrument index_composition = 406;
+    {PROTOBUF_FIELD_OFFSET(IndicativeResponse, _impl_.index_composition_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
-  // no aux_entries
+  {{
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::IndexInstrument>()},
+  }},
   {{
     "\70\4\6\12\10\0\4\10\3\0\0\0\0\0\0\0"
     "tinkoff.public.invest.api.contract.v1.IndicativeResponse"
@@ -51880,34 +54732,36 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      _impl_.figi_.ClearNonDefaultToEmpty();
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      _impl_.index_composition_.Clear();
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      _impl_.ticker_.ClearNonDefaultToEmpty();
+      _impl_.figi_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      _impl_.class_code_.ClearNonDefaultToEmpty();
+      _impl_.ticker_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      _impl_.currency_.ClearNonDefaultToEmpty();
+      _impl_.class_code_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      _impl_.name_.ClearNonDefaultToEmpty();
+      _impl_.currency_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000020U)) {
-      _impl_.exchange_.ClearNonDefaultToEmpty();
+      _impl_.name_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      _impl_.exchange_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
       _impl_.uid_.ClearNonDefaultToEmpty();
     }
   }
-  _impl_.instrument_kind_ = 0;
-  if (BatchCheckHasBit(cached_has_bits, 0x00000300U)) {
-    ::memset(&_impl_.sell_available_flag_, 0, static_cast<::size_t>(
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+    ::memset(&_impl_.instrument_kind_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.buy_available_flag_) -
-        reinterpret_cast<char*>(&_impl_.sell_available_flag_)) + sizeof(_impl_.buy_available_flag_));
+        reinterpret_cast<char*>(&_impl_.instrument_kind_)) + sizeof(_impl_.buy_available_flag_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -51933,7 +54787,7 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
 
   cached_has_bits = this_._impl_._has_bits_[0];
   // string figi = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
     if (!this_._internal_figi().empty()) {
       const ::std::string& _s = this_._internal_figi();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -51943,7 +54797,7 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   }
 
   // string ticker = 2;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
     if (!this_._internal_ticker().empty()) {
       const ::std::string& _s = this_._internal_ticker();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -51953,7 +54807,7 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   }
 
   // string class_code = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
     if (!this_._internal_class_code().empty()) {
       const ::std::string& _s = this_._internal_class_code();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -51963,7 +54817,7 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   }
 
   // string currency = 4;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
     if (!this_._internal_currency().empty()) {
       const ::std::string& _s = this_._internal_currency();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -51973,7 +54827,7 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   }
 
   // .tinkoff.public.invest.api.contract.v1.InstrumentType instrument_kind = 10;
-  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
     if (this_._internal_instrument_kind() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -51982,7 +54836,7 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   }
 
   // string name = 12;
-  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
     if (!this_._internal_name().empty()) {
       const ::std::string& _s = this_._internal_name();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -51992,7 +54846,7 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   }
 
   // string exchange = 13;
-  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
     if (!this_._internal_exchange().empty()) {
       const ::std::string& _s = this_._internal_exchange();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -52002,7 +54856,7 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   }
 
   // string uid = 14;
-  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
     if (!this_._internal_uid().empty()) {
       const ::std::string& _s = this_._internal_uid();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -52012,7 +54866,7 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   }
 
   // bool buy_available_flag = 404;
-  if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000400U)) {
     if (this_._internal_buy_available_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -52021,11 +54875,24 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   }
 
   // bool sell_available_flag = 405;
-  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000200U)) {
     if (this_._internal_sell_available_flag() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
           405, this_._internal_sell_available_flag(), target);
+    }
+  }
+
+  // repeated .tinkoff.public.invest.api.contract.v1.IndexInstrument index_composition = 406;
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+    for (unsigned i = 0, n = static_cast<unsigned>(
+                             this_._internal_index_composition_size());
+         i < n; i++) {
+      const auto& repfield = this_._internal_index_composition().Get(i);
+      target =
+          ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+              406, repfield, repfield.GetCachedSize(),
+              target, stream);
     }
   }
 
@@ -52055,72 +54922,79 @@ PROTOBUF_NOINLINE void IndicativeResponse::Clear() {
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
   if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    // repeated .tinkoff.public.invest.api.contract.v1.IndexInstrument index_composition = 406;
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      total_size += 2UL * this_._internal_index_composition_size();
+      for (const auto& msg : this_._internal_index_composition()) {
+        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+      }
+    }
     // string figi = 1;
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       if (!this_._internal_figi().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_figi());
       }
     }
     // string ticker = 2;
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       if (!this_._internal_ticker().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_ticker());
       }
     }
     // string class_code = 3;
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (!this_._internal_class_code().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_class_code());
       }
     }
     // string currency = 4;
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       if (!this_._internal_currency().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_currency());
       }
     }
     // string name = 12;
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       if (!this_._internal_name().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_name());
       }
     }
     // string exchange = 13;
-    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       if (!this_._internal_exchange().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_exchange());
       }
     }
     // string uid = 14;
-    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
       if (!this_._internal_uid().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_uid());
       }
     }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
     // .tinkoff.public.invest.api.contract.v1.InstrumentType instrument_kind = 10;
-    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (this_._internal_instrument_kind() != 0) {
         total_size += 1 +
                       ::_pbi::WireFormatLite::EnumSize(this_._internal_instrument_kind());
       }
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000300U)) {
     // bool sell_available_flag = 405;
-    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
       if (this_._internal_sell_available_flag() != 0) {
         total_size += 3;
       }
     }
     // bool buy_available_flag = 404;
-    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
       if (this_._internal_buy_available_flag() != 0) {
         total_size += 3;
       }
@@ -52138,6 +55012,7 @@ void IndicativeResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
+  ::google::protobuf::Arena* arena = _this->GetArena();
   // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.IndicativeResponse)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
@@ -52145,7 +55020,12 @@ void IndicativeResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
 
   cached_has_bits = from._impl_._has_bits_[0];
   if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      _this->_internal_mutable_index_composition()->InternalMergeFromWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), arena,
+          from._internal_index_composition());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       if (!from._internal_figi().empty()) {
         _this->_internal_set_figi(from._internal_figi());
       } else {
@@ -52154,7 +55034,7 @@ void IndicativeResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       if (!from._internal_ticker().empty()) {
         _this->_internal_set_ticker(from._internal_ticker());
       } else {
@@ -52163,7 +55043,7 @@ void IndicativeResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (!from._internal_class_code().empty()) {
         _this->_internal_set_class_code(from._internal_class_code());
       } else {
@@ -52172,7 +55052,7 @@ void IndicativeResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       if (!from._internal_currency().empty()) {
         _this->_internal_set_currency(from._internal_currency());
       } else {
@@ -52181,7 +55061,7 @@ void IndicativeResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       if (!from._internal_name().empty()) {
         _this->_internal_set_name(from._internal_name());
       } else {
@@ -52190,7 +55070,7 @@ void IndicativeResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       if (!from._internal_exchange().empty()) {
         _this->_internal_set_exchange(from._internal_exchange());
       } else {
@@ -52199,7 +55079,7 @@ void IndicativeResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
       if (!from._internal_uid().empty()) {
         _this->_internal_set_uid(from._internal_uid());
       } else {
@@ -52208,19 +55088,19 @@ void IndicativeResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (from._internal_instrument_kind() != 0) {
         _this->_impl_.instrument_kind_ = from._impl_.instrument_kind_;
       }
     }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000300U)) {
-    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
       if (from._internal_sell_available_flag() != 0) {
         _this->_impl_.sell_available_flag_ = from._impl_.sell_available_flag_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
       if (from._internal_buy_available_flag() != 0) {
         _this->_impl_.buy_available_flag_ = from._impl_.buy_available_flag_;
       }
@@ -52245,6 +55125,7 @@ void IndicativeResponse::InternalSwap(IndicativeResponse* PROTOBUF_RESTRICT PROT
   ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  _impl_.index_composition_.InternalSwap(&other->_impl_.index_composition_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.figi_, &other->_impl_.figi_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ticker_, &other->_impl_.ticker_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.class_code_, &other->_impl_.class_code_, arena);
@@ -52261,6 +55142,332 @@ void IndicativeResponse::InternalSwap(IndicativeResponse* PROTOBUF_RESTRICT PROT
 }
 
 ::google::protobuf::Metadata IndicativeResponse::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class IndexInstrument::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<IndexInstrument>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(IndexInstrument, _impl_._has_bits_);
+};
+
+void IndexInstrument::clear_weight() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.weight_ != nullptr) _impl_.weight_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+IndexInstrument::IndexInstrument(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, IndexInstrument_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.IndexInstrument)
+}
+PROTOBUF_NDEBUG_INLINE IndexInstrument::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::IndexInstrument& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        uid_(arena, from.uid_) {}
+
+IndexInstrument::IndexInstrument(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const IndexInstrument& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, IndexInstrument_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  IndexInstrument* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.weight_ = (CheckHasBit(cached_has_bits, 0x00000002U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.weight_)
+                : nullptr;
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.IndexInstrument)
+}
+PROTOBUF_NDEBUG_INLINE IndexInstrument::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        uid_(arena) {}
+
+inline void IndexInstrument::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  _impl_.weight_ = {};
+}
+IndexInstrument::~IndexInstrument() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.IndexInstrument)
+  SharedDtor(*this);
+}
+inline void IndexInstrument::SharedDtor(MessageLite& self) {
+  IndexInstrument& this_ = static_cast<IndexInstrument&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.uid_.Destroy();
+  delete this_._impl_.weight_;
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL IndexInstrument::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) IndexInstrument(arena);
+}
+constexpr auto IndexInstrument::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(IndexInstrument),
+                                            alignof(IndexInstrument));
+}
+constexpr auto IndexInstrument::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_IndexInstrument_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &IndexInstrument::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<IndexInstrument>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &IndexInstrument::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<IndexInstrument>(), &IndexInstrument::ByteSizeLong,
+              &IndexInstrument::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(IndexInstrument, _impl_._cached_size_),
+          false,
+      },
+      &IndexInstrument::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull IndexInstrument_class_data_ =
+        IndexInstrument::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+IndexInstrument::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&IndexInstrument_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(IndexInstrument_class_data_.tc_table);
+  return IndexInstrument_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 1, 65, 2>
+IndexInstrument::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(IndexInstrument, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    IndexInstrument_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::IndexInstrument>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // .tinkoff.public.invest.api.contract.v1.Quotation weight = 2;
+    {::_pbi::TcParser::FastMtS1,
+     {18, 1, 0,
+      PROTOBUF_FIELD_OFFSET(IndexInstrument, _impl_.weight_)}},
+    // string uid = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 0, 0,
+      PROTOBUF_FIELD_OFFSET(IndexInstrument, _impl_.uid_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string uid = 1;
+    {PROTOBUF_FIELD_OFFSET(IndexInstrument, _impl_.uid_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // .tinkoff.public.invest.api.contract.v1.Quotation weight = 2;
+    {PROTOBUF_FIELD_OFFSET(IndexInstrument, _impl_.weight_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+  }},
+  {{
+    "\65\3\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.IndexInstrument"
+    "uid"
+  }},
+};
+PROTOBUF_NOINLINE void IndexInstrument::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.IndexInstrument)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _impl_.uid_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      ABSL_DCHECK(_impl_.weight_ != nullptr);
+      _impl_.weight_->Clear();
+    }
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL IndexInstrument::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const IndexInstrument& this_ = static_cast<const IndexInstrument&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL IndexInstrument::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const IndexInstrument& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.IndexInstrument)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // string uid = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!this_._internal_uid().empty()) {
+      const ::std::string& _s = this_._internal_uid();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.IndexInstrument.uid");
+      target = stream->WriteStringMaybeAliased(1, _s, target);
+    }
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.Quotation weight = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        2, *this_._impl_.weight_, this_._impl_.weight_->GetCachedSize(), target,
+        stream);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.IndexInstrument)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t IndexInstrument::ByteSizeLong(const MessageLite& base) {
+  const IndexInstrument& this_ = static_cast<const IndexInstrument&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t IndexInstrument::ByteSizeLong() const {
+  const IndexInstrument& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.IndexInstrument)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    // string uid = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!this_._internal_uid().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_uid());
+      }
+    }
+    // .tinkoff.public.invest.api.contract.v1.Quotation weight = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.weight_);
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void IndexInstrument::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<IndexInstrument*>(&to_msg);
+  auto& from = static_cast<const IndexInstrument&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  ::google::protobuf::Arena* arena = _this->GetArena();
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.IndexInstrument)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!from._internal_uid().empty()) {
+        _this->_internal_set_uid(from._internal_uid());
+      } else {
+        if (_this->_impl_.uid_.IsDefault()) {
+          _this->_internal_set_uid("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      ABSL_DCHECK(from._impl_.weight_ != nullptr);
+      if (_this->_impl_.weight_ == nullptr) {
+        _this->_impl_.weight_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.weight_);
+      } else {
+        _this->_impl_.weight_->MergeFrom(*from._impl_.weight_);
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void IndexInstrument::CopyFrom(const IndexInstrument& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.IndexInstrument)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void IndexInstrument::InternalSwap(IndexInstrument* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.uid_, &other->_impl_.uid_, arena);
+  swap(_impl_.weight_, other->_impl_.weight_);
+}
+
+::google::protobuf::Metadata IndexInstrument::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
@@ -65250,6 +68457,2200 @@ void GetInsiderDealsResponse::InternalSwap(GetInsiderDealsResponse* PROTOBUF_RES
 }
 
 ::google::protobuf::Metadata GetInsiderDealsResponse::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class DfasRequest::_Internal {
+ public:
+};
+
+DfasRequest::DfasRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::internal::ZeroFieldsBase(arena, DfasRequest_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.DfasRequest)
+}
+DfasRequest::DfasRequest(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const DfasRequest& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::internal::ZeroFieldsBase(arena, DfasRequest_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  DfasRequest* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.DfasRequest)
+}
+
+inline void* PROTOBUF_NONNULL DfasRequest::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) DfasRequest(arena);
+}
+constexpr auto DfasRequest::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(DfasRequest),
+                                            alignof(DfasRequest));
+}
+constexpr auto DfasRequest::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_DfasRequest_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &DfasRequest::MergeImpl,
+          ::google::protobuf::internal::ZeroFieldsBase::GetNewImpl<DfasRequest>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &DfasRequest::SharedDtor,
+          ::google::protobuf::internal::ZeroFieldsBase::GetClearImpl<DfasRequest>(), &DfasRequest::ByteSizeLong,
+              &DfasRequest::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(DfasRequest, _impl_._cached_size_),
+          false,
+      },
+      &DfasRequest::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull DfasRequest_class_data_ =
+        DfasRequest::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+DfasRequest::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&DfasRequest_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(DfasRequest_class_data_.tc_table);
+  return DfasRequest_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 0, 0, 0, 2>
+DfasRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    0, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967295,  // skipmap
+    offsetof(decltype(_table_), field_names),  // no field_entries
+    0,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    DfasRequest_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::DfasRequest>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, // no field_entries, or aux_entries
+  {{
+  }},
+};
+
+
+
+
+
+
+
+::google::protobuf::Metadata DfasRequest::GetMetadata() const {
+  return ::google::protobuf::internal::ZeroFieldsBase::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class DfaResponse_BasicAsset::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<DfaResponse_BasicAsset>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(DfaResponse_BasicAsset, _impl_._has_bits_);
+};
+
+DfaResponse_BasicAsset::DfaResponse_BasicAsset(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, DfaResponse_BasicAsset_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset)
+}
+PROTOBUF_NDEBUG_INLINE DfaResponse_BasicAsset::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::DfaResponse_BasicAsset& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        uid_(arena, from.uid_) {}
+
+DfaResponse_BasicAsset::DfaResponse_BasicAsset(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const DfaResponse_BasicAsset& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, DfaResponse_BasicAsset_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  DfaResponse_BasicAsset* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset)
+}
+PROTOBUF_NDEBUG_INLINE DfaResponse_BasicAsset::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        uid_(arena) {}
+
+inline void DfaResponse_BasicAsset::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+DfaResponse_BasicAsset::~DfaResponse_BasicAsset() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset)
+  SharedDtor(*this);
+}
+inline void DfaResponse_BasicAsset::SharedDtor(MessageLite& self) {
+  DfaResponse_BasicAsset& this_ = static_cast<DfaResponse_BasicAsset&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.uid_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL DfaResponse_BasicAsset::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) DfaResponse_BasicAsset(arena);
+}
+constexpr auto DfaResponse_BasicAsset::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(DfaResponse_BasicAsset),
+                                            alignof(DfaResponse_BasicAsset));
+}
+constexpr auto DfaResponse_BasicAsset::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_DfaResponse_BasicAsset_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &DfaResponse_BasicAsset::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<DfaResponse_BasicAsset>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &DfaResponse_BasicAsset::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<DfaResponse_BasicAsset>(), &DfaResponse_BasicAsset::ByteSizeLong,
+              &DfaResponse_BasicAsset::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(DfaResponse_BasicAsset, _impl_._cached_size_),
+          false,
+      },
+      &DfaResponse_BasicAsset::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull DfaResponse_BasicAsset_class_data_ =
+        DfaResponse_BasicAsset::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+DfaResponse_BasicAsset::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&DfaResponse_BasicAsset_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(DfaResponse_BasicAsset_class_data_.tc_table);
+  return DfaResponse_BasicAsset_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 72, 2>
+DfaResponse_BasicAsset::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(DfaResponse_BasicAsset, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    DfaResponse_BasicAsset_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::DfaResponse_BasicAsset>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // string uid = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 0, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse_BasicAsset, _impl_.uid_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string uid = 1;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse_BasicAsset, _impl_.uid_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\74\3\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset"
+    "uid"
+  }},
+};
+PROTOBUF_NOINLINE void DfaResponse_BasicAsset::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    _impl_.uid_.ClearNonDefaultToEmpty();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL DfaResponse_BasicAsset::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const DfaResponse_BasicAsset& this_ = static_cast<const DfaResponse_BasicAsset&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL DfaResponse_BasicAsset::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const DfaResponse_BasicAsset& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // string uid = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!this_._internal_uid().empty()) {
+      const ::std::string& _s = this_._internal_uid();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset.uid");
+      target = stream->WriteStringMaybeAliased(1, _s, target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t DfaResponse_BasicAsset::ByteSizeLong(const MessageLite& base) {
+  const DfaResponse_BasicAsset& this_ = static_cast<const DfaResponse_BasicAsset&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t DfaResponse_BasicAsset::ByteSizeLong() const {
+  const DfaResponse_BasicAsset& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+   {
+    // string uid = 1;
+    cached_has_bits = this_._impl_._has_bits_[0];
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!this_._internal_uid().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_uid());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void DfaResponse_BasicAsset::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<DfaResponse_BasicAsset*>(&to_msg);
+  auto& from = static_cast<const DfaResponse_BasicAsset&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!from._internal_uid().empty()) {
+      _this->_internal_set_uid(from._internal_uid());
+    } else {
+      if (_this->_impl_.uid_.IsDefault()) {
+        _this->_internal_set_uid("");
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void DfaResponse_BasicAsset::CopyFrom(const DfaResponse_BasicAsset& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void DfaResponse_BasicAsset::InternalSwap(DfaResponse_BasicAsset* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.uid_, &other->_impl_.uid_, arena);
+}
+
+::google::protobuf::Metadata DfaResponse_BasicAsset::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class DfaResponse_ForecastYield::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<DfaResponse_ForecastYield>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(DfaResponse_ForecastYield, _impl_._has_bits_);
+};
+
+void DfaResponse_ForecastYield::clear_min_value() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.min_value_ != nullptr) _impl_.min_value_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+void DfaResponse_ForecastYield::clear_max_value() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.max_value_ != nullptr) _impl_.max_value_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+DfaResponse_ForecastYield::DfaResponse_ForecastYield(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, DfaResponse_ForecastYield_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield)
+}
+PROTOBUF_NDEBUG_INLINE DfaResponse_ForecastYield::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::DfaResponse_ForecastYield& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0} {}
+
+DfaResponse_ForecastYield::DfaResponse_ForecastYield(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const DfaResponse_ForecastYield& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, DfaResponse_ForecastYield_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  DfaResponse_ForecastYield* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.min_value_ = (CheckHasBit(cached_has_bits, 0x00000001U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.min_value_)
+                : nullptr;
+  _impl_.max_value_ = (CheckHasBit(cached_has_bits, 0x00000002U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.max_value_)
+                : nullptr;
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield)
+}
+PROTOBUF_NDEBUG_INLINE DfaResponse_ForecastYield::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0} {}
+
+inline void DfaResponse_ForecastYield::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, min_value_),
+           0,
+           offsetof(Impl_, max_value_) -
+               offsetof(Impl_, min_value_) +
+               sizeof(Impl_::max_value_));
+}
+DfaResponse_ForecastYield::~DfaResponse_ForecastYield() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield)
+  SharedDtor(*this);
+}
+inline void DfaResponse_ForecastYield::SharedDtor(MessageLite& self) {
+  DfaResponse_ForecastYield& this_ = static_cast<DfaResponse_ForecastYield&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  delete this_._impl_.min_value_;
+  delete this_._impl_.max_value_;
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL DfaResponse_ForecastYield::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) DfaResponse_ForecastYield(arena);
+}
+constexpr auto DfaResponse_ForecastYield::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(DfaResponse_ForecastYield),
+                                            alignof(DfaResponse_ForecastYield));
+}
+constexpr auto DfaResponse_ForecastYield::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_DfaResponse_ForecastYield_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &DfaResponse_ForecastYield::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<DfaResponse_ForecastYield>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &DfaResponse_ForecastYield::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<DfaResponse_ForecastYield>(), &DfaResponse_ForecastYield::ByteSizeLong,
+              &DfaResponse_ForecastYield::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(DfaResponse_ForecastYield, _impl_._cached_size_),
+          false,
+      },
+      &DfaResponse_ForecastYield::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull DfaResponse_ForecastYield_class_data_ =
+        DfaResponse_ForecastYield::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+DfaResponse_ForecastYield::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&DfaResponse_ForecastYield_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(DfaResponse_ForecastYield_class_data_.tc_table);
+  return DfaResponse_ForecastYield_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 2, 0, 2>
+DfaResponse_ForecastYield::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(DfaResponse_ForecastYield, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    2,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    DfaResponse_ForecastYield_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::DfaResponse_ForecastYield>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // .tinkoff.public.invest.api.contract.v1.Quotation max_value = 2;
+    {::_pbi::TcParser::FastMtS1,
+     {18, 1, 1,
+      PROTOBUF_FIELD_OFFSET(DfaResponse_ForecastYield, _impl_.max_value_)}},
+    // .tinkoff.public.invest.api.contract.v1.Quotation min_value = 1;
+    {::_pbi::TcParser::FastMtS1,
+     {10, 0, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse_ForecastYield, _impl_.min_value_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // .tinkoff.public.invest.api.contract.v1.Quotation min_value = 1;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse_ForecastYield, _impl_.min_value_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.Quotation max_value = 2;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse_ForecastYield, _impl_.max_value_), _Internal::kHasBitsOffset + 1, 1, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+  }},
+  {{
+  }},
+};
+PROTOBUF_NOINLINE void DfaResponse_ForecastYield::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      ABSL_DCHECK(_impl_.min_value_ != nullptr);
+      _impl_.min_value_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      ABSL_DCHECK(_impl_.max_value_ != nullptr);
+      _impl_.max_value_->Clear();
+    }
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL DfaResponse_ForecastYield::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const DfaResponse_ForecastYield& this_ = static_cast<const DfaResponse_ForecastYield&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL DfaResponse_ForecastYield::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const DfaResponse_ForecastYield& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // .tinkoff.public.invest.api.contract.v1.Quotation min_value = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        1, *this_._impl_.min_value_, this_._impl_.min_value_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.Quotation max_value = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        2, *this_._impl_.max_value_, this_._impl_.max_value_->GetCachedSize(), target,
+        stream);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t DfaResponse_ForecastYield::ByteSizeLong(const MessageLite& base) {
+  const DfaResponse_ForecastYield& this_ = static_cast<const DfaResponse_ForecastYield&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t DfaResponse_ForecastYield::ByteSizeLong() const {
+  const DfaResponse_ForecastYield& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    // .tinkoff.public.invest.api.contract.v1.Quotation min_value = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.min_value_);
+    }
+    // .tinkoff.public.invest.api.contract.v1.Quotation max_value = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.max_value_);
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void DfaResponse_ForecastYield::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<DfaResponse_ForecastYield*>(&to_msg);
+  auto& from = static_cast<const DfaResponse_ForecastYield&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  ::google::protobuf::Arena* arena = _this->GetArena();
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      ABSL_DCHECK(from._impl_.min_value_ != nullptr);
+      if (_this->_impl_.min_value_ == nullptr) {
+        _this->_impl_.min_value_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.min_value_);
+      } else {
+        _this->_impl_.min_value_->MergeFrom(*from._impl_.min_value_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      ABSL_DCHECK(from._impl_.max_value_ != nullptr);
+      if (_this->_impl_.max_value_ == nullptr) {
+        _this->_impl_.max_value_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.max_value_);
+      } else {
+        _this->_impl_.max_value_->MergeFrom(*from._impl_.max_value_);
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void DfaResponse_ForecastYield::CopyFrom(const DfaResponse_ForecastYield& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void DfaResponse_ForecastYield::InternalSwap(DfaResponse_ForecastYield* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(DfaResponse_ForecastYield, _impl_.max_value_)
+      + sizeof(DfaResponse_ForecastYield::_impl_.max_value_)
+      - PROTOBUF_FIELD_OFFSET(DfaResponse_ForecastYield, _impl_.min_value_)>(
+          reinterpret_cast<char*>(&_impl_.min_value_),
+          reinterpret_cast<char*>(&other->_impl_.min_value_));
+}
+
+::google::protobuf::Metadata DfaResponse_ForecastYield::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class DfaResponse::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<DfaResponse>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_._has_bits_);
+};
+
+void DfaResponse::clear_min_price_increment() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.min_price_increment_ != nullptr) _impl_.min_price_increment_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000080U);
+}
+void DfaResponse::clear_nominal() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.nominal_ != nullptr) _impl_.nominal_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000100U);
+}
+void DfaResponse::clear_maturity_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.maturity_date_ != nullptr) _impl_.maturity_date_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000200U);
+}
+void DfaResponse::clear_yield_to_maturity() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.yield_to_maturity_ != nullptr) _impl_.yield_to_maturity_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000800U);
+}
+void DfaResponse::clear_coupon_value() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.coupon_value_ != nullptr) _impl_.coupon_value_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00001000U);
+}
+void DfaResponse::clear_coupon_payment_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.coupon_payment_date_ != nullptr) _impl_.coupon_payment_date_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00002000U);
+}
+void DfaResponse::clear_aci_value() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.aci_value_ != nullptr) _impl_.aci_value_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00004000U);
+}
+DfaResponse::DfaResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, DfaResponse_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.DfaResponse)
+}
+PROTOBUF_NDEBUG_INLINE DfaResponse::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::DfaResponse& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        basic_assets_{visibility, arena, from.basic_assets_},
+        uid_(arena, from.uid_),
+        ticker_(arena, from.ticker_),
+        name_(arena, from.name_),
+        position_uid_(arena, from.position_uid_),
+        currency_(arena, from.currency_),
+        type_(arena, from.type_) {}
+
+DfaResponse::DfaResponse(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const DfaResponse& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, DfaResponse_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  DfaResponse* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.min_price_increment_ = (CheckHasBit(cached_has_bits, 0x00000080U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.min_price_increment_)
+                : nullptr;
+  _impl_.nominal_ = (CheckHasBit(cached_has_bits, 0x00000100U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.nominal_)
+                : nullptr;
+  _impl_.maturity_date_ = (CheckHasBit(cached_has_bits, 0x00000200U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.maturity_date_)
+                : nullptr;
+  _impl_.forecast_yield_ = (CheckHasBit(cached_has_bits, 0x00000400U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.forecast_yield_)
+                : nullptr;
+  _impl_.yield_to_maturity_ = (CheckHasBit(cached_has_bits, 0x00000800U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.yield_to_maturity_)
+                : nullptr;
+  _impl_.coupon_value_ = (CheckHasBit(cached_has_bits, 0x00001000U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.coupon_value_)
+                : nullptr;
+  _impl_.coupon_payment_date_ = (CheckHasBit(cached_has_bits, 0x00002000U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.coupon_payment_date_)
+                : nullptr;
+  _impl_.aci_value_ = (CheckHasBit(cached_has_bits, 0x00004000U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.aci_value_)
+                : nullptr;
+  ::memcpy(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, lot_),
+           reinterpret_cast<const char*>(&from._impl_) +
+               offsetof(Impl_, lot_),
+           offsetof(Impl_, coupon_payment_frequency_) -
+               offsetof(Impl_, lot_) +
+               sizeof(Impl_::coupon_payment_frequency_));
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.DfaResponse)
+}
+PROTOBUF_NDEBUG_INLINE DfaResponse::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        basic_assets_{visibility, arena},
+        uid_(arena),
+        ticker_(arena),
+        name_(arena),
+        position_uid_(arena),
+        currency_(arena),
+        type_(arena) {}
+
+inline void DfaResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, min_price_increment_),
+           0,
+           offsetof(Impl_, coupon_payment_frequency_) -
+               offsetof(Impl_, min_price_increment_) +
+               sizeof(Impl_::coupon_payment_frequency_));
+}
+DfaResponse::~DfaResponse() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.DfaResponse)
+  SharedDtor(*this);
+}
+inline void DfaResponse::SharedDtor(MessageLite& self) {
+  DfaResponse& this_ = static_cast<DfaResponse&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.uid_.Destroy();
+  this_._impl_.ticker_.Destroy();
+  this_._impl_.name_.Destroy();
+  this_._impl_.position_uid_.Destroy();
+  this_._impl_.currency_.Destroy();
+  this_._impl_.type_.Destroy();
+  delete this_._impl_.min_price_increment_;
+  delete this_._impl_.nominal_;
+  delete this_._impl_.maturity_date_;
+  delete this_._impl_.forecast_yield_;
+  delete this_._impl_.yield_to_maturity_;
+  delete this_._impl_.coupon_value_;
+  delete this_._impl_.coupon_payment_date_;
+  delete this_._impl_.aci_value_;
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL DfaResponse::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) DfaResponse(arena);
+}
+constexpr auto DfaResponse::InternalNewImpl_() {
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.basic_assets_) +
+          decltype(DfaResponse::_impl_.basic_assets_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::CopyInit(
+        sizeof(DfaResponse), alignof(DfaResponse), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&DfaResponse::PlacementNew_,
+                                 sizeof(DfaResponse),
+                                 alignof(DfaResponse));
+  }
+}
+constexpr auto DfaResponse::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_DfaResponse_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &DfaResponse::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<DfaResponse>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &DfaResponse::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<DfaResponse>(), &DfaResponse::ByteSizeLong,
+              &DfaResponse::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_._cached_size_),
+          false,
+      },
+      &DfaResponse::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull DfaResponse_class_data_ =
+        DfaResponse::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+DfaResponse::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&DfaResponse_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(DfaResponse_class_data_.tc_table);
+  return DfaResponse_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<5, 26, 9, 119, 2>
+DfaResponse::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_._has_bits_),
+    0, // no _extensions_
+    26, 248,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4227858432,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    26,  // num_field_entries
+    9,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    DfaResponse_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::DfaResponse>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string uid = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 1, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.uid_)}},
+    // string ticker = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 2, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.ticker_)}},
+    // string name = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 3, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.name_)}},
+    // string position_uid = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 4, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.position_uid_)}},
+    // .tinkoff.public.invest.api.contract.v1.Quotation min_price_increment = 5;
+    {::_pbi::TcParser::FastMtS1,
+     {42, 7, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.min_price_increment_)}},
+    // int32 lot = 6;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DfaResponse, _impl_.lot_), 15>(),
+     {48, 15, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.lot_)}},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue nominal = 7;
+    {::_pbi::TcParser::FastMtS1,
+     {58, 8, 1,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.nominal_)}},
+    // string currency = 8;
+    {::_pbi::TcParser::FastUS1,
+     {66, 5, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.currency_)}},
+    // .google.protobuf.Timestamp maturity_date = 9;
+    {::_pbi::TcParser::FastMtS1,
+     {74, 9, 2,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.maturity_date_)}},
+    // bool short_enabled_flag = 10;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(DfaResponse, _impl_.short_enabled_flag_), 16>(),
+     {80, 16, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.short_enabled_flag_)}},
+    // bool api_trade_available_flag = 11;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(DfaResponse, _impl_.api_trade_available_flag_), 17>(),
+     {88, 17, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.api_trade_available_flag_)}},
+    // bool buy_available_flag = 12;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(DfaResponse, _impl_.buy_available_flag_), 18>(),
+     {96, 18, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.buy_available_flag_)}},
+    // bool sell_available_flag = 13;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(DfaResponse, _impl_.sell_available_flag_), 19>(),
+     {104, 19, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.sell_available_flag_)}},
+    // bool limit_order_available_flag = 14;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(DfaResponse, _impl_.limit_order_available_flag_), 20>(),
+     {112, 20, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.limit_order_available_flag_)}},
+    // bool market_order_available_flag = 15;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(DfaResponse, _impl_.market_order_available_flag_), 21>(),
+     {120, 21, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.market_order_available_flag_)}},
+    // bool bestprice_order_available_flag = 16;
+    {::_pbi::TcParser::FastV8S2,
+     {384, 22, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.bestprice_order_available_flag_)}},
+    // bool for_iis_flag = 17;
+    {::_pbi::TcParser::FastV8S2,
+     {392, 23, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.for_iis_flag_)}},
+    // bool for_qual_investor_flag = 18;
+    {::_pbi::TcParser::FastV8S2,
+     {400, 24, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.for_qual_investor_flag_)}},
+    // string type = 19;
+    {::_pbi::TcParser::FastUS2,
+     {410, 6, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.type_)}},
+    // repeated .tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset basic_assets = 20;
+    {::_pbi::TcParser::FastMtR2,
+     {418, 0, 3,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.basic_assets_)}},
+    // .tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield forecast_yield = 21;
+    {::_pbi::TcParser::FastMtS2,
+     {426, 10, 4,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.forecast_yield_)}},
+    // .tinkoff.public.invest.api.contract.v1.Quotation yield_to_maturity = 22;
+    {::_pbi::TcParser::FastMtS2,
+     {434, 11, 5,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.yield_to_maturity_)}},
+    // .tinkoff.public.invest.api.contract.v1.Quotation coupon_value = 23;
+    {::_pbi::TcParser::FastMtS2,
+     {442, 12, 6,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.coupon_value_)}},
+    // int32 coupon_payment_frequency = 24;
+    {::_pbi::TcParser::FastV32S2,
+     {448, 25, 0,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.coupon_payment_frequency_)}},
+    // .google.protobuf.Timestamp coupon_payment_date = 25;
+    {::_pbi::TcParser::FastMtS2,
+     {458, 13, 7,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.coupon_payment_date_)}},
+    // .tinkoff.public.invest.api.contract.v1.Quotation aci_value = 26;
+    {::_pbi::TcParser::FastMtS2,
+     {466, 14, 8,
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.aci_value_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string uid = 1;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.uid_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string ticker = 2;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.ticker_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string name = 3;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.name_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string position_uid = 4;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.position_uid_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // .tinkoff.public.invest.api.contract.v1.Quotation min_price_increment = 5;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.min_price_increment_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // int32 lot = 6;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.lot_), _Internal::kHasBitsOffset + 15, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue nominal = 7;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.nominal_), _Internal::kHasBitsOffset + 8, 1, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // string currency = 8;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.currency_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // .google.protobuf.Timestamp maturity_date = 9;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.maturity_date_), _Internal::kHasBitsOffset + 9, 2, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // bool short_enabled_flag = 10;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.short_enabled_flag_), _Internal::kHasBitsOffset + 16, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // bool api_trade_available_flag = 11;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.api_trade_available_flag_), _Internal::kHasBitsOffset + 17, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // bool buy_available_flag = 12;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.buy_available_flag_), _Internal::kHasBitsOffset + 18, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // bool sell_available_flag = 13;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.sell_available_flag_), _Internal::kHasBitsOffset + 19, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // bool limit_order_available_flag = 14;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.limit_order_available_flag_), _Internal::kHasBitsOffset + 20, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // bool market_order_available_flag = 15;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.market_order_available_flag_), _Internal::kHasBitsOffset + 21, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // bool bestprice_order_available_flag = 16;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.bestprice_order_available_flag_), _Internal::kHasBitsOffset + 22, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // bool for_iis_flag = 17;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.for_iis_flag_), _Internal::kHasBitsOffset + 23, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // bool for_qual_investor_flag = 18;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.for_qual_investor_flag_), _Internal::kHasBitsOffset + 24, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // string type = 19;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.type_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // repeated .tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset basic_assets = 20;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.basic_assets_), _Internal::kHasBitsOffset + 0, 3, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield forecast_yield = 21;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.forecast_yield_), _Internal::kHasBitsOffset + 10, 4, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.Quotation yield_to_maturity = 22;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.yield_to_maturity_), _Internal::kHasBitsOffset + 11, 5, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.Quotation coupon_value = 23;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.coupon_value_), _Internal::kHasBitsOffset + 12, 6, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // int32 coupon_payment_frequency = 24;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.coupon_payment_frequency_), _Internal::kHasBitsOffset + 25, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    // .google.protobuf.Timestamp coupon_payment_date = 25;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.coupon_payment_date_), _Internal::kHasBitsOffset + 13, 7, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.Quotation aci_value = 26;
+    {PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.aci_value_), _Internal::kHasBitsOffset + 14, 8, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
+      {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::DfaResponse_BasicAsset>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::DfaResponse_ForecastYield>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+      {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+  }},
+  {{
+    "\61\3\6\4\14\0\0\0\10\0\0\0\0\0\0\0\0\0\0\4\0\0\0\0\0\0\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.DfaResponse"
+    "uid"
+    "ticker"
+    "name"
+    "position_uid"
+    "currency"
+    "type"
+  }},
+};
+PROTOBUF_NOINLINE void DfaResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.DfaResponse)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      _impl_.basic_assets_.Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _impl_.uid_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _impl_.ticker_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      _impl_.name_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      _impl_.position_uid_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      _impl_.currency_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      _impl_.type_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      ABSL_DCHECK(_impl_.min_price_increment_ != nullptr);
+      _impl_.min_price_increment_->Clear();
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00007f00U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      ABSL_DCHECK(_impl_.nominal_ != nullptr);
+      _impl_.nominal_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      ABSL_DCHECK(_impl_.maturity_date_ != nullptr);
+      _impl_.maturity_date_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      ABSL_DCHECK(_impl_.forecast_yield_ != nullptr);
+      _impl_.forecast_yield_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+      ABSL_DCHECK(_impl_.yield_to_maturity_ != nullptr);
+      _impl_.yield_to_maturity_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+      ABSL_DCHECK(_impl_.coupon_value_ != nullptr);
+      _impl_.coupon_value_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+      ABSL_DCHECK(_impl_.coupon_payment_date_ != nullptr);
+      _impl_.coupon_payment_date_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+      ABSL_DCHECK(_impl_.aci_value_ != nullptr);
+      _impl_.aci_value_->Clear();
+    }
+  }
+  _impl_.lot_ = 0;
+  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
+    ::memset(&_impl_.short_enabled_flag_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.for_iis_flag_) -
+        reinterpret_cast<char*>(&_impl_.short_enabled_flag_)) + sizeof(_impl_.for_iis_flag_));
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x03000000U)) {
+    ::memset(&_impl_.for_qual_investor_flag_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.coupon_payment_frequency_) -
+        reinterpret_cast<char*>(&_impl_.for_qual_investor_flag_)) + sizeof(_impl_.coupon_payment_frequency_));
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL DfaResponse::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const DfaResponse& this_ = static_cast<const DfaResponse&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL DfaResponse::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const DfaResponse& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.DfaResponse)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // string uid = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (!this_._internal_uid().empty()) {
+      const ::std::string& _s = this_._internal_uid();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.DfaResponse.uid");
+      target = stream->WriteStringMaybeAliased(1, _s, target);
+    }
+  }
+
+  // string ticker = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (!this_._internal_ticker().empty()) {
+      const ::std::string& _s = this_._internal_ticker();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.DfaResponse.ticker");
+      target = stream->WriteStringMaybeAliased(2, _s, target);
+    }
+  }
+
+  // string name = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (!this_._internal_name().empty()) {
+      const ::std::string& _s = this_._internal_name();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.DfaResponse.name");
+      target = stream->WriteStringMaybeAliased(3, _s, target);
+    }
+  }
+
+  // string position_uid = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (!this_._internal_position_uid().empty()) {
+      const ::std::string& _s = this_._internal_position_uid();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.DfaResponse.position_uid");
+      target = stream->WriteStringMaybeAliased(4, _s, target);
+    }
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.Quotation min_price_increment = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        5, *this_._impl_.min_price_increment_, this_._impl_.min_price_increment_->GetCachedSize(), target,
+        stream);
+  }
+
+  // int32 lot = 6;
+  if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+    if (this_._internal_lot() != 0) {
+      target =
+          ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<6>(
+              stream, this_._internal_lot(), target);
+    }
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue nominal = 7;
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        7, *this_._impl_.nominal_, this_._impl_.nominal_->GetCachedSize(), target,
+        stream);
+  }
+
+  // string currency = 8;
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    if (!this_._internal_currency().empty()) {
+      const ::std::string& _s = this_._internal_currency();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.DfaResponse.currency");
+      target = stream->WriteStringMaybeAliased(8, _s, target);
+    }
+  }
+
+  // .google.protobuf.Timestamp maturity_date = 9;
+  if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        9, *this_._impl_.maturity_date_, this_._impl_.maturity_date_->GetCachedSize(), target,
+        stream);
+  }
+
+  // bool short_enabled_flag = 10;
+  if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+    if (this_._internal_short_enabled_flag() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          10, this_._internal_short_enabled_flag(), target);
+    }
+  }
+
+  // bool api_trade_available_flag = 11;
+  if (CheckHasBit(cached_has_bits, 0x00020000U)) {
+    if (this_._internal_api_trade_available_flag() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          11, this_._internal_api_trade_available_flag(), target);
+    }
+  }
+
+  // bool buy_available_flag = 12;
+  if (CheckHasBit(cached_has_bits, 0x00040000U)) {
+    if (this_._internal_buy_available_flag() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          12, this_._internal_buy_available_flag(), target);
+    }
+  }
+
+  // bool sell_available_flag = 13;
+  if (CheckHasBit(cached_has_bits, 0x00080000U)) {
+    if (this_._internal_sell_available_flag() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          13, this_._internal_sell_available_flag(), target);
+    }
+  }
+
+  // bool limit_order_available_flag = 14;
+  if (CheckHasBit(cached_has_bits, 0x00100000U)) {
+    if (this_._internal_limit_order_available_flag() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          14, this_._internal_limit_order_available_flag(), target);
+    }
+  }
+
+  // bool market_order_available_flag = 15;
+  if (CheckHasBit(cached_has_bits, 0x00200000U)) {
+    if (this_._internal_market_order_available_flag() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          15, this_._internal_market_order_available_flag(), target);
+    }
+  }
+
+  // bool bestprice_order_available_flag = 16;
+  if (CheckHasBit(cached_has_bits, 0x00400000U)) {
+    if (this_._internal_bestprice_order_available_flag() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          16, this_._internal_bestprice_order_available_flag(), target);
+    }
+  }
+
+  // bool for_iis_flag = 17;
+  if (CheckHasBit(cached_has_bits, 0x00800000U)) {
+    if (this_._internal_for_iis_flag() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          17, this_._internal_for_iis_flag(), target);
+    }
+  }
+
+  // bool for_qual_investor_flag = 18;
+  if (CheckHasBit(cached_has_bits, 0x01000000U)) {
+    if (this_._internal_for_qual_investor_flag() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          18, this_._internal_for_qual_investor_flag(), target);
+    }
+  }
+
+  // string type = 19;
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    if (!this_._internal_type().empty()) {
+      const ::std::string& _s = this_._internal_type();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.DfaResponse.type");
+      target = stream->WriteStringMaybeAliased(19, _s, target);
+    }
+  }
+
+  // repeated .tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset basic_assets = 20;
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+    for (unsigned i = 0, n = static_cast<unsigned>(
+                             this_._internal_basic_assets_size());
+         i < n; i++) {
+      const auto& repfield = this_._internal_basic_assets().Get(i);
+      target =
+          ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+              20, repfield, repfield.GetCachedSize(),
+              target, stream);
+    }
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield forecast_yield = 21;
+  if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        21, *this_._impl_.forecast_yield_, this_._impl_.forecast_yield_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.Quotation yield_to_maturity = 22;
+  if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        22, *this_._impl_.yield_to_maturity_, this_._impl_.yield_to_maturity_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.Quotation coupon_value = 23;
+  if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        23, *this_._impl_.coupon_value_, this_._impl_.coupon_value_->GetCachedSize(), target,
+        stream);
+  }
+
+  // int32 coupon_payment_frequency = 24;
+  if (CheckHasBit(cached_has_bits, 0x02000000U)) {
+    if (this_._internal_coupon_payment_frequency() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteInt32ToArray(
+          24, this_._internal_coupon_payment_frequency(), target);
+    }
+  }
+
+  // .google.protobuf.Timestamp coupon_payment_date = 25;
+  if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        25, *this_._impl_.coupon_payment_date_, this_._impl_.coupon_payment_date_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.Quotation aci_value = 26;
+  if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        26, *this_._impl_.aci_value_, this_._impl_.aci_value_->GetCachedSize(), target,
+        stream);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.DfaResponse)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t DfaResponse::ByteSizeLong(const MessageLite& base) {
+  const DfaResponse& this_ = static_cast<const DfaResponse&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t DfaResponse::ByteSizeLong() const {
+  const DfaResponse& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.DfaResponse)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    // repeated .tinkoff.public.invest.api.contract.v1.DfaResponse.BasicAsset basic_assets = 20;
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      total_size += 2UL * this_._internal_basic_assets_size();
+      for (const auto& msg : this_._internal_basic_assets()) {
+        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+      }
+    }
+    // string uid = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (!this_._internal_uid().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_uid());
+      }
+    }
+    // string ticker = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!this_._internal_ticker().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_ticker());
+      }
+    }
+    // string name = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      if (!this_._internal_name().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_name());
+      }
+    }
+    // string position_uid = 4;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (!this_._internal_position_uid().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_position_uid());
+      }
+    }
+    // string currency = 8;
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      if (!this_._internal_currency().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_currency());
+      }
+    }
+    // string type = 19;
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      if (!this_._internal_type().empty()) {
+        total_size += 2 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_type());
+      }
+    }
+    // .tinkoff.public.invest.api.contract.v1.Quotation min_price_increment = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.min_price_increment_);
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue nominal = 7;
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.nominal_);
+    }
+    // .google.protobuf.Timestamp maturity_date = 9;
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.maturity_date_);
+    }
+    // .tinkoff.public.invest.api.contract.v1.DfaResponse.ForecastYield forecast_yield = 21;
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      total_size += 2 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.forecast_yield_);
+    }
+    // .tinkoff.public.invest.api.contract.v1.Quotation yield_to_maturity = 22;
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+      total_size += 2 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.yield_to_maturity_);
+    }
+    // .tinkoff.public.invest.api.contract.v1.Quotation coupon_value = 23;
+    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+      total_size += 2 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.coupon_value_);
+    }
+    // .google.protobuf.Timestamp coupon_payment_date = 25;
+    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+      total_size += 2 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.coupon_payment_date_);
+    }
+    // .tinkoff.public.invest.api.contract.v1.Quotation aci_value = 26;
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+      total_size += 2 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.aci_value_);
+    }
+    // int32 lot = 6;
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+      if (this_._internal_lot() != 0) {
+        total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+            this_._internal_lot());
+      }
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
+    // bool short_enabled_flag = 10;
+    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+      if (this_._internal_short_enabled_flag() != 0) {
+        total_size += 2;
+      }
+    }
+    // bool api_trade_available_flag = 11;
+    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
+      if (this_._internal_api_trade_available_flag() != 0) {
+        total_size += 2;
+      }
+    }
+    // bool buy_available_flag = 12;
+    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
+      if (this_._internal_buy_available_flag() != 0) {
+        total_size += 2;
+      }
+    }
+    // bool sell_available_flag = 13;
+    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
+      if (this_._internal_sell_available_flag() != 0) {
+        total_size += 2;
+      }
+    }
+    // bool limit_order_available_flag = 14;
+    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
+      if (this_._internal_limit_order_available_flag() != 0) {
+        total_size += 2;
+      }
+    }
+    // bool market_order_available_flag = 15;
+    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
+      if (this_._internal_market_order_available_flag() != 0) {
+        total_size += 2;
+      }
+    }
+    // bool bestprice_order_available_flag = 16;
+    if (CheckHasBit(cached_has_bits, 0x00400000U)) {
+      if (this_._internal_bestprice_order_available_flag() != 0) {
+        total_size += 3;
+      }
+    }
+    // bool for_iis_flag = 17;
+    if (CheckHasBit(cached_has_bits, 0x00800000U)) {
+      if (this_._internal_for_iis_flag() != 0) {
+        total_size += 3;
+      }
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x03000000U)) {
+    // bool for_qual_investor_flag = 18;
+    if (CheckHasBit(cached_has_bits, 0x01000000U)) {
+      if (this_._internal_for_qual_investor_flag() != 0) {
+        total_size += 3;
+      }
+    }
+    // int32 coupon_payment_frequency = 24;
+    if (CheckHasBit(cached_has_bits, 0x02000000U)) {
+      if (this_._internal_coupon_payment_frequency() != 0) {
+        total_size += 2 + ::_pbi::WireFormatLite::Int32Size(
+                                        this_._internal_coupon_payment_frequency());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void DfaResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<DfaResponse*>(&to_msg);
+  auto& from = static_cast<const DfaResponse&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  ::google::protobuf::Arena* arena = _this->GetArena();
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.DfaResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      _this->_internal_mutable_basic_assets()->InternalMergeFromWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), arena,
+          from._internal_basic_assets());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (!from._internal_uid().empty()) {
+        _this->_internal_set_uid(from._internal_uid());
+      } else {
+        if (_this->_impl_.uid_.IsDefault()) {
+          _this->_internal_set_uid("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!from._internal_ticker().empty()) {
+        _this->_internal_set_ticker(from._internal_ticker());
+      } else {
+        if (_this->_impl_.ticker_.IsDefault()) {
+          _this->_internal_set_ticker("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      if (!from._internal_name().empty()) {
+        _this->_internal_set_name(from._internal_name());
+      } else {
+        if (_this->_impl_.name_.IsDefault()) {
+          _this->_internal_set_name("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (!from._internal_position_uid().empty()) {
+        _this->_internal_set_position_uid(from._internal_position_uid());
+      } else {
+        if (_this->_impl_.position_uid_.IsDefault()) {
+          _this->_internal_set_position_uid("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      if (!from._internal_currency().empty()) {
+        _this->_internal_set_currency(from._internal_currency());
+      } else {
+        if (_this->_impl_.currency_.IsDefault()) {
+          _this->_internal_set_currency("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      if (!from._internal_type().empty()) {
+        _this->_internal_set_type(from._internal_type());
+      } else {
+        if (_this->_impl_.type_.IsDefault()) {
+          _this->_internal_set_type("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      ABSL_DCHECK(from._impl_.min_price_increment_ != nullptr);
+      if (_this->_impl_.min_price_increment_ == nullptr) {
+        _this->_impl_.min_price_increment_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.min_price_increment_);
+      } else {
+        _this->_impl_.min_price_increment_->MergeFrom(*from._impl_.min_price_increment_);
+      }
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      ABSL_DCHECK(from._impl_.nominal_ != nullptr);
+      if (_this->_impl_.nominal_ == nullptr) {
+        _this->_impl_.nominal_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.nominal_);
+      } else {
+        _this->_impl_.nominal_->MergeFrom(*from._impl_.nominal_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      ABSL_DCHECK(from._impl_.maturity_date_ != nullptr);
+      if (_this->_impl_.maturity_date_ == nullptr) {
+        _this->_impl_.maturity_date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.maturity_date_);
+      } else {
+        _this->_impl_.maturity_date_->MergeFrom(*from._impl_.maturity_date_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      ABSL_DCHECK(from._impl_.forecast_yield_ != nullptr);
+      if (_this->_impl_.forecast_yield_ == nullptr) {
+        _this->_impl_.forecast_yield_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.forecast_yield_);
+      } else {
+        _this->_impl_.forecast_yield_->MergeFrom(*from._impl_.forecast_yield_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+      ABSL_DCHECK(from._impl_.yield_to_maturity_ != nullptr);
+      if (_this->_impl_.yield_to_maturity_ == nullptr) {
+        _this->_impl_.yield_to_maturity_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.yield_to_maturity_);
+      } else {
+        _this->_impl_.yield_to_maturity_->MergeFrom(*from._impl_.yield_to_maturity_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+      ABSL_DCHECK(from._impl_.coupon_value_ != nullptr);
+      if (_this->_impl_.coupon_value_ == nullptr) {
+        _this->_impl_.coupon_value_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.coupon_value_);
+      } else {
+        _this->_impl_.coupon_value_->MergeFrom(*from._impl_.coupon_value_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+      ABSL_DCHECK(from._impl_.coupon_payment_date_ != nullptr);
+      if (_this->_impl_.coupon_payment_date_ == nullptr) {
+        _this->_impl_.coupon_payment_date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.coupon_payment_date_);
+      } else {
+        _this->_impl_.coupon_payment_date_->MergeFrom(*from._impl_.coupon_payment_date_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+      ABSL_DCHECK(from._impl_.aci_value_ != nullptr);
+      if (_this->_impl_.aci_value_ == nullptr) {
+        _this->_impl_.aci_value_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.aci_value_);
+      } else {
+        _this->_impl_.aci_value_->MergeFrom(*from._impl_.aci_value_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+      if (from._internal_lot() != 0) {
+        _this->_impl_.lot_ = from._impl_.lot_;
+      }
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00ff0000U)) {
+    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+      if (from._internal_short_enabled_flag() != 0) {
+        _this->_impl_.short_enabled_flag_ = from._impl_.short_enabled_flag_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00020000U)) {
+      if (from._internal_api_trade_available_flag() != 0) {
+        _this->_impl_.api_trade_available_flag_ = from._impl_.api_trade_available_flag_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00040000U)) {
+      if (from._internal_buy_available_flag() != 0) {
+        _this->_impl_.buy_available_flag_ = from._impl_.buy_available_flag_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00080000U)) {
+      if (from._internal_sell_available_flag() != 0) {
+        _this->_impl_.sell_available_flag_ = from._impl_.sell_available_flag_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00100000U)) {
+      if (from._internal_limit_order_available_flag() != 0) {
+        _this->_impl_.limit_order_available_flag_ = from._impl_.limit_order_available_flag_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00200000U)) {
+      if (from._internal_market_order_available_flag() != 0) {
+        _this->_impl_.market_order_available_flag_ = from._impl_.market_order_available_flag_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00400000U)) {
+      if (from._internal_bestprice_order_available_flag() != 0) {
+        _this->_impl_.bestprice_order_available_flag_ = from._impl_.bestprice_order_available_flag_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00800000U)) {
+      if (from._internal_for_iis_flag() != 0) {
+        _this->_impl_.for_iis_flag_ = from._impl_.for_iis_flag_;
+      }
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x03000000U)) {
+    if (CheckHasBit(cached_has_bits, 0x01000000U)) {
+      if (from._internal_for_qual_investor_flag() != 0) {
+        _this->_impl_.for_qual_investor_flag_ = from._impl_.for_qual_investor_flag_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x02000000U)) {
+      if (from._internal_coupon_payment_frequency() != 0) {
+        _this->_impl_.coupon_payment_frequency_ = from._impl_.coupon_payment_frequency_;
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void DfaResponse::CopyFrom(const DfaResponse& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.DfaResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void DfaResponse::InternalSwap(DfaResponse* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  _impl_.basic_assets_.InternalSwap(&other->_impl_.basic_assets_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.uid_, &other->_impl_.uid_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ticker_, &other->_impl_.ticker_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, &other->_impl_.name_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.position_uid_, &other->_impl_.position_uid_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.currency_, &other->_impl_.currency_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.type_, &other->_impl_.type_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.coupon_payment_frequency_)
+      + sizeof(DfaResponse::_impl_.coupon_payment_frequency_)
+      - PROTOBUF_FIELD_OFFSET(DfaResponse, _impl_.min_price_increment_)>(
+          reinterpret_cast<char*>(&_impl_.min_price_increment_),
+          reinterpret_cast<char*>(&other->_impl_.min_price_increment_));
+}
+
+::google::protobuf::Metadata DfaResponse::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class DfasResponse::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<DfasResponse>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(DfasResponse, _impl_._has_bits_);
+};
+
+DfasResponse::DfasResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, DfasResponse_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.DfasResponse)
+}
+PROTOBUF_NDEBUG_INLINE DfasResponse::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::tinkoff::public_::invest::api::contract::v1::DfasResponse& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        instruments_{visibility, arena, from.instruments_} {}
+
+DfasResponse::DfasResponse(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const DfasResponse& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, DfasResponse_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  DfasResponse* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.DfasResponse)
+}
+PROTOBUF_NDEBUG_INLINE DfasResponse::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        instruments_{visibility, arena} {}
+
+inline void DfasResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+DfasResponse::~DfasResponse() {
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.DfasResponse)
+  SharedDtor(*this);
+}
+inline void DfasResponse::SharedDtor(MessageLite& self) {
+  DfasResponse& this_ = static_cast<DfasResponse&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL DfasResponse::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) DfasResponse(arena);
+}
+constexpr auto DfasResponse::InternalNewImpl_() {
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(DfasResponse, _impl_.instruments_) +
+          decltype(DfasResponse::_impl_.instruments_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::ZeroInit(
+        sizeof(DfasResponse), alignof(DfasResponse), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&DfasResponse::PlacementNew_,
+                                 sizeof(DfasResponse),
+                                 alignof(DfasResponse));
+  }
+}
+constexpr auto DfasResponse::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_DfasResponse_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &DfasResponse::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<DfasResponse>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &DfasResponse::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<DfasResponse>(), &DfasResponse::ByteSizeLong,
+              &DfasResponse::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(DfasResponse, _impl_._cached_size_),
+          false,
+      },
+      &DfasResponse::kDescriptorMethods,
+      &descriptor_table_instruments_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull DfasResponse_class_data_ =
+        DfasResponse::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+DfasResponse::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&DfasResponse_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(DfasResponse_class_data_.tc_table);
+  return DfasResponse_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2>
+DfasResponse::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(DfasResponse, _impl_._has_bits_),
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    DfasResponse_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::DfasResponse>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // repeated .tinkoff.public.invest.api.contract.v1.DfaResponse instruments = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 0, 0,
+      PROTOBUF_FIELD_OFFSET(DfasResponse, _impl_.instruments_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated .tinkoff.public.invest.api.contract.v1.DfaResponse instruments = 1;
+    {PROTOBUF_FIELD_OFFSET(DfasResponse, _impl_.instruments_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::DfaResponse>()},
+  }},
+  {{
+  }},
+};
+PROTOBUF_NOINLINE void DfasResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.DfasResponse)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+    _impl_.instruments_.Clear();
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL DfasResponse::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const DfasResponse& this_ = static_cast<const DfasResponse&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL DfasResponse::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const DfasResponse& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.DfasResponse)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // repeated .tinkoff.public.invest.api.contract.v1.DfaResponse instruments = 1;
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+    for (unsigned i = 0, n = static_cast<unsigned>(
+                             this_._internal_instruments_size());
+         i < n; i++) {
+      const auto& repfield = this_._internal_instruments().Get(i);
+      target =
+          ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+              1, repfield, repfield.GetCachedSize(),
+              target, stream);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.DfasResponse)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t DfasResponse::ByteSizeLong(const MessageLite& base) {
+  const DfasResponse& this_ = static_cast<const DfasResponse&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t DfasResponse::ByteSizeLong() const {
+  const DfasResponse& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.DfasResponse)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+   {
+    // repeated .tinkoff.public.invest.api.contract.v1.DfaResponse instruments = 1;
+    cached_has_bits = this_._impl_._has_bits_[0];
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      total_size += 1UL * this_._internal_instruments_size();
+      for (const auto& msg : this_._internal_instruments()) {
+        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void DfasResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<DfasResponse*>(&to_msg);
+  auto& from = static_cast<const DfasResponse&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  ::google::protobuf::Arena* arena = _this->GetArena();
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.DfasResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+    _this->_internal_mutable_instruments()->InternalMergeFromWithArena(
+        ::google::protobuf::MessageLite::internal_visibility(), arena,
+        from._internal_instruments());
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void DfasResponse::CopyFrom(const DfasResponse& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.DfasResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void DfasResponse::InternalSwap(DfasResponse* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  _impl_.instruments_.InternalSwap(&other->_impl_.instruments_);
+}
+
+::google::protobuf::Metadata DfasResponse::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // @@protoc_insertion_point(namespace_scope)

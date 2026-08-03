@@ -44,6 +44,8 @@ static const char* InstrumentsService_method_names[] = {
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/OptionsBy",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/ShareBy",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/Shares",
+  "/tinkoff.public.invest.api.contract.v1.InstrumentsService/DfaBy",
+  "/tinkoff.public.invest.api.contract.v1.InstrumentsService/Dfas",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/Indicatives",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetAccruedInterests",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetFuturesMargin",
@@ -68,6 +70,7 @@ static const char* InstrumentsService_method_names[] = {
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetInsiderDeals",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/StructuredNoteBy",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/StructuredNotes",
+  "/tinkoff.public.invest.api.contract.v1.InstrumentsService/News",
 };
 
 std::unique_ptr< InstrumentsService::Stub> InstrumentsService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -93,30 +96,33 @@ InstrumentsService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>&
   , rpcmethod_OptionsBy_(InstrumentsService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ShareBy_(InstrumentsService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_Shares_(InstrumentsService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_Indicatives_(InstrumentsService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAccruedInterests_(InstrumentsService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetFuturesMargin_(InstrumentsService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetInstrumentBy_(InstrumentsService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetDividends_(InstrumentsService_method_names[20], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssetBy_(InstrumentsService_method_names[21], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssets_(InstrumentsService_method_names[22], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetFavorites_(InstrumentsService_method_names[23], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_EditFavorites_(InstrumentsService_method_names[24], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CreateFavoriteGroup_(InstrumentsService_method_names[25], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_DeleteFavoriteGroup_(InstrumentsService_method_names[26], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetFavoriteGroups_(InstrumentsService_method_names[27], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetCountries_(InstrumentsService_method_names[28], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_FindInstrument_(InstrumentsService_method_names[29], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBrands_(InstrumentsService_method_names[30], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBrandBy_(InstrumentsService_method_names[31], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssetFundamentals_(InstrumentsService_method_names[32], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssetReports_(InstrumentsService_method_names[33], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetConsensusForecasts_(InstrumentsService_method_names[34], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetForecastBy_(InstrumentsService_method_names[35], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetRiskRates_(InstrumentsService_method_names[36], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetInsiderDeals_(InstrumentsService_method_names[37], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_StructuredNoteBy_(InstrumentsService_method_names[38], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_StructuredNotes_(InstrumentsService_method_names[39], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DfaBy_(InstrumentsService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Dfas_(InstrumentsService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Indicatives_(InstrumentsService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAccruedInterests_(InstrumentsService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetFuturesMargin_(InstrumentsService_method_names[20], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetInstrumentBy_(InstrumentsService_method_names[21], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetDividends_(InstrumentsService_method_names[22], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssetBy_(InstrumentsService_method_names[23], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssets_(InstrumentsService_method_names[24], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetFavorites_(InstrumentsService_method_names[25], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_EditFavorites_(InstrumentsService_method_names[26], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CreateFavoriteGroup_(InstrumentsService_method_names[27], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DeleteFavoriteGroup_(InstrumentsService_method_names[28], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetFavoriteGroups_(InstrumentsService_method_names[29], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetCountries_(InstrumentsService_method_names[30], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_FindInstrument_(InstrumentsService_method_names[31], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBrands_(InstrumentsService_method_names[32], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBrandBy_(InstrumentsService_method_names[33], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssetFundamentals_(InstrumentsService_method_names[34], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssetReports_(InstrumentsService_method_names[35], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetConsensusForecasts_(InstrumentsService_method_names[36], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetForecastBy_(InstrumentsService_method_names[37], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetRiskRates_(InstrumentsService_method_names[38], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetInsiderDeals_(InstrumentsService_method_names[39], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_StructuredNoteBy_(InstrumentsService_method_names[40], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_StructuredNotes_(InstrumentsService_method_names[41], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_News_(InstrumentsService_method_names[42], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status InstrumentsService::Stub::TradingSchedules(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesRequest& request, ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse* response) {
@@ -483,6 +489,52 @@ void InstrumentsService::Stub::async::Shares(::grpc::ClientContext* context, con
 ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::SharesResponse>* InstrumentsService::Stub::AsyncSharesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncSharesRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status InstrumentsService::Stub::DfaBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::tinkoff::public_::invest::api::contract::v1::DfaResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest, ::tinkoff::public_::invest::api::contract::v1::DfaResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DfaBy_, context, request, response);
+}
+
+void InstrumentsService::Stub::async::DfaBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::DfaResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest, ::tinkoff::public_::invest::api::contract::v1::DfaResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DfaBy_, context, request, response, std::move(f));
+}
+
+void InstrumentsService::Stub::async::DfaBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::DfaResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DfaBy_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::DfaResponse>* InstrumentsService::Stub::PrepareAsyncDfaByRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::DfaResponse, ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DfaBy_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::DfaResponse>* InstrumentsService::Stub::AsyncDfaByRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncDfaByRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status InstrumentsService::Stub::Dfas(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DfasRequest& request, ::tinkoff::public_::invest::api::contract::v1::DfasResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::DfasRequest, ::tinkoff::public_::invest::api::contract::v1::DfasResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Dfas_, context, request, response);
+}
+
+void InstrumentsService::Stub::async::Dfas(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DfasRequest* request, ::tinkoff::public_::invest::api::contract::v1::DfasResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::DfasRequest, ::tinkoff::public_::invest::api::contract::v1::DfasResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Dfas_, context, request, response, std::move(f));
+}
+
+void InstrumentsService::Stub::async::Dfas(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DfasRequest* request, ::tinkoff::public_::invest::api::contract::v1::DfasResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Dfas_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::DfasResponse>* InstrumentsService::Stub::PrepareAsyncDfasRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DfasRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::DfasResponse, ::tinkoff::public_::invest::api::contract::v1::DfasRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_Dfas_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::DfasResponse>* InstrumentsService::Stub::AsyncDfasRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DfasRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncDfasRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -1039,6 +1091,29 @@ void InstrumentsService::Stub::async::StructuredNotes(::grpc::ClientContext* con
   return result;
 }
 
+::grpc::Status InstrumentsService::Stub::News(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::NewsRequest& request, ::tinkoff::public_::invest::api::contract::v1::NewsResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::NewsRequest, ::tinkoff::public_::invest::api::contract::v1::NewsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_News_, context, request, response);
+}
+
+void InstrumentsService::Stub::async::News(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::NewsRequest* request, ::tinkoff::public_::invest::api::contract::v1::NewsResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::NewsRequest, ::tinkoff::public_::invest::api::contract::v1::NewsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_News_, context, request, response, std::move(f));
+}
+
+void InstrumentsService::Stub::async::News(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::NewsRequest* request, ::tinkoff::public_::invest::api::contract::v1::NewsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_News_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::NewsResponse>* InstrumentsService::Stub::PrepareAsyncNewsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::NewsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::NewsResponse, ::tinkoff::public_::invest::api::contract::v1::NewsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_News_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::NewsResponse>* InstrumentsService::Stub::AsyncNewsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::NewsRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncNewsRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 InstrumentsService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InstrumentsService_method_names[0],
@@ -1203,6 +1278,26 @@ InstrumentsService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InstrumentsService_method_names[16],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest, ::tinkoff::public_::invest::api::contract::v1::DfaResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InstrumentsService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::DfaResponse* resp) {
+               return service->DfaBy(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InstrumentsService_method_names[17],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::DfasRequest, ::tinkoff::public_::invest::api::contract::v1::DfasResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InstrumentsService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::DfasRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::DfasResponse* resp) {
+               return service->Dfas(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InstrumentsService_method_names[18],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::IndicativesRequest, ::tinkoff::public_::invest::api::contract::v1::IndicativesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -1211,7 +1306,7 @@ InstrumentsService::Service::Service() {
                return service->Indicatives(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[17],
+      InstrumentsService_method_names[19],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1221,7 +1316,7 @@ InstrumentsService::Service::Service() {
                return service->GetAccruedInterests(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[18],
+      InstrumentsService_method_names[20],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginRequest, ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1231,7 +1326,7 @@ InstrumentsService::Service::Service() {
                return service->GetFuturesMargin(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[19],
+      InstrumentsService_method_names[21],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest, ::tinkoff::public_::invest::api::contract::v1::InstrumentResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1241,7 +1336,7 @@ InstrumentsService::Service::Service() {
                return service->GetInstrumentBy(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[20],
+      InstrumentsService_method_names[22],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetDividendsRequest, ::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1251,7 +1346,7 @@ InstrumentsService::Service::Service() {
                return service->GetDividends(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[21],
+      InstrumentsService_method_names[23],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::AssetRequest, ::tinkoff::public_::invest::api::contract::v1::AssetResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1261,7 +1356,7 @@ InstrumentsService::Service::Service() {
                return service->GetAssetBy(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[22],
+      InstrumentsService_method_names[24],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::AssetsRequest, ::tinkoff::public_::invest::api::contract::v1::AssetsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1271,7 +1366,7 @@ InstrumentsService::Service::Service() {
                return service->GetAssets(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[23],
+      InstrumentsService_method_names[25],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetFavoritesRequest, ::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1281,7 +1376,7 @@ InstrumentsService::Service::Service() {
                return service->GetFavorites(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[24],
+      InstrumentsService_method_names[26],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequest, ::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1291,7 +1386,7 @@ InstrumentsService::Service::Service() {
                return service->EditFavorites(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[25],
+      InstrumentsService_method_names[27],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1301,7 +1396,7 @@ InstrumentsService::Service::Service() {
                return service->CreateFavoriteGroup(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[26],
+      InstrumentsService_method_names[28],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1311,7 +1406,7 @@ InstrumentsService::Service::Service() {
                return service->DeleteFavoriteGroup(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[27],
+      InstrumentsService_method_names[29],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1321,7 +1416,7 @@ InstrumentsService::Service::Service() {
                return service->GetFavoriteGroups(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[28],
+      InstrumentsService_method_names[30],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest, ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1331,7 +1426,7 @@ InstrumentsService::Service::Service() {
                return service->GetCountries(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[29],
+      InstrumentsService_method_names[31],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::FindInstrumentRequest, ::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1341,7 +1436,7 @@ InstrumentsService::Service::Service() {
                return service->FindInstrument(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[30],
+      InstrumentsService_method_names[32],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetBrandsRequest, ::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1351,7 +1446,7 @@ InstrumentsService::Service::Service() {
                return service->GetBrands(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[31],
+      InstrumentsService_method_names[33],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetBrandRequest, ::tinkoff::public_::invest::api::contract::v1::Brand, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1361,7 +1456,7 @@ InstrumentsService::Service::Service() {
                return service->GetBrandBy(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[32],
+      InstrumentsService_method_names[34],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsRequest, ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1371,7 +1466,7 @@ InstrumentsService::Service::Service() {
                return service->GetAssetFundamentals(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[33],
+      InstrumentsService_method_names[35],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsRequest, ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1381,7 +1476,7 @@ InstrumentsService::Service::Service() {
                return service->GetAssetReports(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[34],
+      InstrumentsService_method_names[36],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsRequest, ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1391,7 +1486,7 @@ InstrumentsService::Service::Service() {
                return service->GetConsensusForecasts(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[35],
+      InstrumentsService_method_names[37],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest, ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1401,7 +1496,7 @@ InstrumentsService::Service::Service() {
                return service->GetForecastBy(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[36],
+      InstrumentsService_method_names[38],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1411,7 +1506,7 @@ InstrumentsService::Service::Service() {
                return service->GetRiskRates(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[37],
+      InstrumentsService_method_names[39],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsRequest, ::tinkoff::public_::invest::api::contract::v1::GetInsiderDealsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1421,7 +1516,7 @@ InstrumentsService::Service::Service() {
                return service->GetInsiderDeals(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[38],
+      InstrumentsService_method_names[40],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest, ::tinkoff::public_::invest::api::contract::v1::StructuredNoteResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1431,7 +1526,7 @@ InstrumentsService::Service::Service() {
                return service->StructuredNoteBy(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[39],
+      InstrumentsService_method_names[41],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest, ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1439,6 +1534,16 @@ InstrumentsService::Service::Service() {
              const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* req,
              ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse* resp) {
                return service->StructuredNotes(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InstrumentsService_method_names[42],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::NewsRequest, ::tinkoff::public_::invest::api::contract::v1::NewsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InstrumentsService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::NewsRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::NewsResponse* resp) {
+               return service->News(ctx, req, resp);
              }, this)));
 }
 
@@ -1551,6 +1656,20 @@ InstrumentsService::Service::~Service() {
 }
 
 ::grpc::Status InstrumentsService::Service::Shares(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::SharesResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InstrumentsService::Service::DfaBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::DfaResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InstrumentsService::Service::Dfas(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::DfasRequest* request, ::tinkoff::public_::invest::api::contract::v1::DfasResponse* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -1719,6 +1838,13 @@ InstrumentsService::Service::~Service() {
 }
 
 ::grpc::Status InstrumentsService::Service::StructuredNotes(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::StructuredNotesResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InstrumentsService::Service::News(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::NewsRequest* request, ::tinkoff::public_::invest::api::contract::v1::NewsResponse* response) {
   (void) context;
   (void) request;
   (void) response;

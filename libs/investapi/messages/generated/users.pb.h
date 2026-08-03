@@ -69,10 +69,16 @@ enum AccountStatus : int;
 extern const uint32_t AccountStatus_internal_data_[];
 enum AccountType : int;
 extern const uint32_t AccountType_internal_data_[];
+enum AccountValue : int;
+extern const uint32_t AccountValue_internal_data_[];
 class Account;
 struct AccountDefaultTypeInternal;
 extern AccountDefaultTypeInternal _Account_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull Account_class_data_;
+class AccountValuesWithParameters;
+struct AccountValuesWithParametersDefaultTypeInternal;
+extern AccountValuesWithParametersDefaultTypeInternal _AccountValuesWithParameters_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull AccountValuesWithParameters_class_data_;
 class BankAccount;
 struct BankAccountDefaultTypeInternal;
 extern BankAccountDefaultTypeInternal _BankAccount_default_instance_;
@@ -85,6 +91,14 @@ class CurrencyTransferResponse;
 struct CurrencyTransferResponseDefaultTypeInternal;
 extern CurrencyTransferResponseDefaultTypeInternal _CurrencyTransferResponse_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull CurrencyTransferResponse_class_data_;
+class GetAccountValuesRequest;
+struct GetAccountValuesRequestDefaultTypeInternal;
+extern GetAccountValuesRequestDefaultTypeInternal _GetAccountValuesRequest_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull GetAccountValuesRequest_class_data_;
+class GetAccountValuesResponse;
+struct GetAccountValuesResponseDefaultTypeInternal;
+extern GetAccountValuesResponseDefaultTypeInternal _GetAccountValuesResponse_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull GetAccountValuesResponse_class_data_;
 class GetAccountsRequest;
 struct GetAccountsRequestDefaultTypeInternal;
 extern GetAccountsRequestDefaultTypeInternal _GetAccountsRequest_default_instance_;
@@ -125,6 +139,18 @@ class GetUserTariffResponse;
 struct GetUserTariffResponseDefaultTypeInternal;
 extern GetUserTariffResponseDefaultTypeInternal _GetUserTariffResponse_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull GetUserTariffResponse_class_data_;
+class InstrumentParameter;
+struct InstrumentParameterDefaultTypeInternal;
+extern InstrumentParameterDefaultTypeInternal _InstrumentParameter_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull InstrumentParameter_class_data_;
+class PayInRequest;
+struct PayInRequestDefaultTypeInternal;
+extern PayInRequestDefaultTypeInternal _PayInRequest_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull PayInRequest_class_data_;
+class PayInResponse;
+struct PayInResponseDefaultTypeInternal;
+extern PayInResponseDefaultTypeInternal _PayInResponse_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull PayInResponse_class_data_;
 class StreamLimit;
 struct StreamLimitDefaultTypeInternal;
 extern StreamLimitDefaultTypeInternal _StreamLimit_default_instance_;
@@ -150,6 +176,9 @@ internal::EnumTraitsT<::tinkoff::public_::invest::api::contract::v1::AccountStat
 template <>
 internal::EnumTraitsT<::tinkoff::public_::invest::api::contract::v1::AccountType_internal_data_>
     internal::EnumTraitsImpl::value<::tinkoff::public_::invest::api::contract::v1::AccountType>;
+template <>
+internal::EnumTraitsT<::tinkoff::public_::invest::api::contract::v1::AccountValue_internal_data_>
+    internal::EnumTraitsImpl::value<::tinkoff::public_::invest::api::contract::v1::AccountValue>;
 }  // namespace protobuf
 }  // namespace google
 
@@ -167,6 +196,7 @@ enum AccountType : int {
   ACCOUNT_TYPE_INVEST_FUND = 4,
   ACCOUNT_TYPE_DEBIT = 5,
   ACCOUNT_TYPE_SAVING = 6,
+  ACCOUNT_TYPE_DFA = 7,
   AccountType_INT_MIN_SENTINEL_DO_NOT_USE_ =
       ::std::numeric_limits<::int32_t>::min(),
   AccountType_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -177,11 +207,11 @@ extern const uint32_t AccountType_internal_data_[];
 inline constexpr AccountType AccountType_MIN =
     static_cast<AccountType>(0);
 inline constexpr AccountType AccountType_MAX =
-    static_cast<AccountType>(6);
+    static_cast<AccountType>(7);
 inline bool AccountType_IsValid(int value) {
-  return 0 <= value && value <= 6;
+  return 0 <= value && value <= 7;
 }
-inline constexpr int AccountType_ARRAYSIZE = 6 + 1;
+inline constexpr int AccountType_ARRAYSIZE = 7 + 1;
 const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL AccountType_descriptor();
 template <typename T>
 const ::std::string& AccountType_Name(T value) {
@@ -192,7 +222,7 @@ const ::std::string& AccountType_Name(T value) {
 }
 template <>
 inline const ::std::string& AccountType_Name(AccountType value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<AccountType_descriptor, 0, 6>(
+  return ::google::protobuf::internal::NameOfDenseEnum<AccountType_descriptor, 0, 7>(
       static_cast<int>(value));
 }
 inline bool AccountType_Parse(
@@ -275,6 +305,43 @@ inline const ::std::string& AccessLevel_Name(AccessLevel value) {
 inline bool AccessLevel_Parse(
     ::absl::string_view name, AccessLevel* PROTOBUF_NONNULL value) {
   return ::google::protobuf::internal::ParseNamedEnum<AccessLevel>(AccessLevel_descriptor(), name,
+                                           value);
+}
+enum AccountValue : int {
+  ACCOUNT_VALUE_UNSPECIFIED = 0,
+  ACCOUNT_VALUE_MARGIN_FEE = 1,
+  ACCOUNT_VALUE_AMOUNT_WITHOUT_EXTRA_FEE = 2,
+  AccountValue_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::min(),
+  AccountValue_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::max(),
+};
+
+extern const uint32_t AccountValue_internal_data_[];
+inline constexpr AccountValue AccountValue_MIN =
+    static_cast<AccountValue>(0);
+inline constexpr AccountValue AccountValue_MAX =
+    static_cast<AccountValue>(2);
+inline bool AccountValue_IsValid(int value) {
+  return 0 <= value && value <= 2;
+}
+inline constexpr int AccountValue_ARRAYSIZE = 2 + 1;
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL AccountValue_descriptor();
+template <typename T>
+const ::std::string& AccountValue_Name(T value) {
+  static_assert(::std::is_same<T, AccountValue>::value ||
+                    ::std::is_integral<T>::value,
+                "Incorrect type passed to AccountValue_Name().");
+  return AccountValue_Name(static_cast<AccountValue>(value));
+}
+template <>
+inline const ::std::string& AccountValue_Name(AccountValue value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<AccountValue_descriptor, 0, 2>(
+      static_cast<int>(value));
+}
+inline bool AccountValue_Parse(
+    ::absl::string_view name, AccountValue* PROTOBUF_NONNULL value) {
+  return ::google::protobuf::internal::ParseNamedEnum<AccountValue>(AccountValue_descriptor(), name,
                                            value);
 }
 
@@ -734,6 +801,140 @@ class StreamLimit final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull StreamLimit_class_data_;
+// -------------------------------------------------------------------
+
+class PayInResponse final : public ::google::protobuf::internal::ZeroFieldsBase
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.PayInResponse) */ {
+ public:
+  inline PayInResponse() : PayInResponse(nullptr) {}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(PayInResponse* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(PayInResponse));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR PayInResponse(::google::protobuf::internal::ConstantInitialized);
+
+  inline PayInResponse(const PayInResponse& from) : PayInResponse(nullptr, from) {}
+  inline PayInResponse(PayInResponse&& from) noexcept
+      : PayInResponse(nullptr, ::std::move(from)) {}
+  inline PayInResponse& operator=(const PayInResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PayInResponse& operator=(PayInResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PayInResponse& default_instance() {
+    return *reinterpret_cast<const PayInResponse*>(
+        &_PayInResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 17;
+  friend void swap(PayInResponse& a, PayInResponse& b) { a.Swap(&b); }
+  inline void Swap(PayInResponse* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PayInResponse* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PayInResponse* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::internal::ZeroFieldsBase::DefaultConstruct<PayInResponse>(arena);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const PayInResponse& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const PayInResponse& from) {
+    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.PayInResponse"; }
+
+  explicit PayInResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  PayInResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PayInResponse& from);
+  PayInResponse(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PayInResponse&& from) noexcept
+      : PayInResponse(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.PayInResponse)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 0,
+                                   0, 0,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  friend struct ::TableStruct_users_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull PayInResponse_class_data_;
 // -------------------------------------------------------------------
 
 class GetUserTariffRequest final : public ::google::protobuf::internal::ZeroFieldsBase
@@ -1801,6 +2002,230 @@ class GetAccountsRequest final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull GetAccountsRequest_class_data_;
 // -------------------------------------------------------------------
 
+class GetAccountValuesRequest final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest) */ {
+ public:
+  inline GetAccountValuesRequest() : GetAccountValuesRequest(nullptr) {}
+  ~GetAccountValuesRequest() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(GetAccountValuesRequest* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(GetAccountValuesRequest));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR GetAccountValuesRequest(::google::protobuf::internal::ConstantInitialized);
+
+  inline GetAccountValuesRequest(const GetAccountValuesRequest& from) : GetAccountValuesRequest(nullptr, from) {}
+  inline GetAccountValuesRequest(GetAccountValuesRequest&& from) noexcept
+      : GetAccountValuesRequest(nullptr, ::std::move(from)) {}
+  inline GetAccountValuesRequest& operator=(const GetAccountValuesRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetAccountValuesRequest& operator=(GetAccountValuesRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetAccountValuesRequest& default_instance() {
+    return *reinterpret_cast<const GetAccountValuesRequest*>(
+        &_GetAccountValuesRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 18;
+  friend void swap(GetAccountValuesRequest& a, GetAccountValuesRequest& b) { a.Swap(&b); }
+  inline void Swap(GetAccountValuesRequest* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetAccountValuesRequest* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetAccountValuesRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<GetAccountValuesRequest>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const GetAccountValuesRequest& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const GetAccountValuesRequest& from) { GetAccountValuesRequest::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(GetAccountValuesRequest* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest"; }
+
+  explicit GetAccountValuesRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  GetAccountValuesRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const GetAccountValuesRequest& from);
+  GetAccountValuesRequest(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, GetAccountValuesRequest&& from) noexcept
+      : GetAccountValuesRequest(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kAccountsFieldNumber = 1,
+    kValuesFieldNumber = 2,
+  };
+  // repeated string accounts = 1;
+  int accounts_size() const;
+  private:
+  int _internal_accounts_size() const;
+
+  public:
+  void clear_accounts() ;
+  const ::std::string& accounts(int index) const;
+  ::std::string* PROTOBUF_NONNULL mutable_accounts(int index);
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_accounts(int index, Arg_&& value, Args_... args);
+  ::std::string* PROTOBUF_NONNULL add_accounts();
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void add_accounts(Arg_&& value, Args_... args);
+  const ::google::protobuf::RepeatedPtrField<::std::string>& accounts() const;
+  ::google::protobuf::RepeatedPtrField<::std::string>* PROTOBUF_NONNULL mutable_accounts();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::std::string>& _internal_accounts() const;
+  ::google::protobuf::RepeatedPtrField<::std::string>* PROTOBUF_NONNULL _internal_mutable_accounts();
+
+  public:
+  // repeated .tinkoff.public.invest.api.contract.v1.AccountValue values = 2;
+  int values_size() const;
+  private:
+  int _internal_values_size() const;
+
+  public:
+  void clear_values() ;
+  public:
+  ::tinkoff::public_::invest::api::contract::v1::AccountValue values(int index) const;
+  void set_values(int index, ::tinkoff::public_::invest::api::contract::v1::AccountValue value);
+  void add_values(::tinkoff::public_::invest::api::contract::v1::AccountValue value);
+  const ::google::protobuf::RepeatedField<int>& values() const;
+  ::google::protobuf::RepeatedField<int>* PROTOBUF_NONNULL mutable_values();
+
+  private:
+  const ::google::protobuf::RepeatedField<int>& _internal_values() const;
+  ::google::protobuf::RepeatedField<int>* PROTOBUF_NONNULL _internal_mutable_values();
+
+  public:
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2,
+                                   0, 78,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const GetAccountValuesRequest& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField<::std::string> accounts_;
+    ::google::protobuf::RepeatedField<int> values_;
+    ::google::protobuf::internal::CachedSize _values_cached_byte_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_users_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull GetAccountValuesRequest_class_data_;
+// -------------------------------------------------------------------
+
 class CurrencyTransferResponse final : public ::google::protobuf::internal::ZeroFieldsBase
 /* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.CurrencyTransferResponse) */ {
  public:
@@ -1933,6 +2358,442 @@ class CurrencyTransferResponse final : public ::google::protobuf::internal::Zero
 };
 
 extern const ::google::protobuf::internal::ClassDataFull CurrencyTransferResponse_class_data_;
+// -------------------------------------------------------------------
+
+class PayInRequest final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.PayInRequest) */ {
+ public:
+  inline PayInRequest() : PayInRequest(nullptr) {}
+  ~PayInRequest() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(PayInRequest* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(PayInRequest));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR PayInRequest(::google::protobuf::internal::ConstantInitialized);
+
+  inline PayInRequest(const PayInRequest& from) : PayInRequest(nullptr, from) {}
+  inline PayInRequest(PayInRequest&& from) noexcept
+      : PayInRequest(nullptr, ::std::move(from)) {}
+  inline PayInRequest& operator=(const PayInRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PayInRequest& operator=(PayInRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PayInRequest& default_instance() {
+    return *reinterpret_cast<const PayInRequest*>(
+        &_PayInRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 16;
+  friend void swap(PayInRequest& a, PayInRequest& b) { a.Swap(&b); }
+  inline void Swap(PayInRequest* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PayInRequest* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PayInRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<PayInRequest>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const PayInRequest& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const PayInRequest& from) { PayInRequest::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(PayInRequest* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.PayInRequest"; }
+
+  explicit PayInRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  PayInRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PayInRequest& from);
+  PayInRequest(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PayInRequest&& from) noexcept
+      : PayInRequest(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kFromAccountIdFieldNumber = 1,
+    kToAccountIdFieldNumber = 2,
+    kAmountFieldNumber = 3,
+  };
+  // string from_account_id = 1 [(.google.api.field_behavior) = REQUIRED];
+  void clear_from_account_id() ;
+  const ::std::string& from_account_id() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_from_account_id(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_from_account_id();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_from_account_id();
+  void set_allocated_from_account_id(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_from_account_id() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_from_account_id(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_from_account_id();
+
+  public:
+  // string to_account_id = 2 [(.google.api.field_behavior) = REQUIRED];
+  void clear_to_account_id() ;
+  const ::std::string& to_account_id() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_to_account_id(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_to_account_id();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_to_account_id();
+  void set_allocated_to_account_id(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_to_account_id() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_to_account_id(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_to_account_id();
+
+  public:
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 3 [(.google.api.field_behavior) = REQUIRED];
+  bool has_amount() const;
+  void clear_amount() ;
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& amount() const;
+  [[nodiscard]] ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE release_amount();
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL mutable_amount();
+  void set_allocated_amount(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_amount(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE unsafe_arena_release_amount();
+
+  private:
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& _internal_amount() const;
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL _internal_mutable_amount();
+
+  public:
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.PayInRequest)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 3,
+                                   1, 87,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const PayInRequest& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr from_account_id_;
+    ::google::protobuf::internal::ArenaStringPtr to_account_id_;
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE amount_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_users_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull PayInRequest_class_data_;
+// -------------------------------------------------------------------
+
+class InstrumentParameter final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.InstrumentParameter) */ {
+ public:
+  inline InstrumentParameter() : InstrumentParameter(nullptr) {}
+  ~InstrumentParameter() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(InstrumentParameter* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(InstrumentParameter));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR InstrumentParameter(::google::protobuf::internal::ConstantInitialized);
+
+  inline InstrumentParameter(const InstrumentParameter& from) : InstrumentParameter(nullptr, from) {}
+  inline InstrumentParameter(InstrumentParameter&& from) noexcept
+      : InstrumentParameter(nullptr, ::std::move(from)) {}
+  inline InstrumentParameter& operator=(const InstrumentParameter& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline InstrumentParameter& operator=(InstrumentParameter&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const InstrumentParameter& default_instance() {
+    return *reinterpret_cast<const InstrumentParameter*>(
+        &_InstrumentParameter_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 21;
+  friend void swap(InstrumentParameter& a, InstrumentParameter& b) { a.Swap(&b); }
+  inline void Swap(InstrumentParameter* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(InstrumentParameter* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  InstrumentParameter* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<InstrumentParameter>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const InstrumentParameter& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const InstrumentParameter& from) { InstrumentParameter::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(InstrumentParameter* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.InstrumentParameter"; }
+
+  explicit InstrumentParameter(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  InstrumentParameter(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const InstrumentParameter& from);
+  InstrumentParameter(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, InstrumentParameter&& from) noexcept
+      : InstrumentParameter(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kValueFieldNumber = 2,
+    kNameFieldNumber = 1,
+  };
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue value = 2;
+  bool has_value() const;
+  void clear_value() ;
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& value() const;
+  [[nodiscard]] ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE release_value();
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL mutable_value();
+  void set_allocated_value(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_value(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE unsafe_arena_release_value();
+
+  private:
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& _internal_value() const;
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL _internal_mutable_value();
+
+  public:
+  // .tinkoff.public.invest.api.contract.v1.AccountValue name = 1;
+  void clear_name() ;
+  ::tinkoff::public_::invest::api::contract::v1::AccountValue name() const;
+  void set_name(::tinkoff::public_::invest::api::contract::v1::AccountValue value);
+
+  private:
+  ::tinkoff::public_::invest::api::contract::v1::AccountValue _internal_name() const;
+  void _internal_set_name(::tinkoff::public_::invest::api::contract::v1::AccountValue value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.InstrumentParameter)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2,
+                                   1, 0,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const InstrumentParameter& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value_;
+    int name_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_users_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull InstrumentParameter_class_data_;
 // -------------------------------------------------------------------
 
 class GetUserTariffResponse final : public ::google::protobuf::Message
@@ -2299,6 +3160,7 @@ class GetMarginAttributesResponse final : public ::google::protobuf::Message
     kFundsSufficiencyLevelFieldNumber = 4,
     kAmountOfMissingFundsFieldNumber = 5,
     kCorrectedMarginFieldNumber = 6,
+    kGuaranteeForFuturesFieldNumber = 7,
   };
   // .tinkoff.public.invest.api.contract.v1.MoneyValue liquid_portfolio = 1;
   bool has_liquid_portfolio() const;
@@ -2390,12 +3252,27 @@ class GetMarginAttributesResponse final : public ::google::protobuf::Message
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL _internal_mutable_corrected_margin();
 
   public:
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue guarantee_for_futures = 7;
+  bool has_guarantee_for_futures() const;
+  void clear_guarantee_for_futures() ;
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& guarantee_for_futures() const;
+  [[nodiscard]] ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE release_guarantee_for_futures();
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL mutable_guarantee_for_futures();
+  void set_allocated_guarantee_for_futures(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_guarantee_for_futures(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE unsafe_arena_release_guarantee_for_futures();
+
+  private:
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& _internal_guarantee_for_futures() const;
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL _internal_mutable_guarantee_for_futures();
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 6,
-                                   6, 0,
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
+                                   7, 0,
                                    2>
       _table_;
 
@@ -2422,6 +3299,7 @@ class GetMarginAttributesResponse final : public ::google::protobuf::Message
     ::tinkoff::public_::invest::api::contract::v1::Quotation* PROTOBUF_NULLABLE funds_sufficiency_level_;
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE amount_of_missing_funds_;
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE corrected_margin_;
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE guarantee_for_futures_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -3611,6 +4489,417 @@ class GetAccountsResponse final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull GetAccountsResponse_class_data_;
+// -------------------------------------------------------------------
+
+class AccountValuesWithParameters final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters) */ {
+ public:
+  inline AccountValuesWithParameters() : AccountValuesWithParameters(nullptr) {}
+  ~AccountValuesWithParameters() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(AccountValuesWithParameters* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(AccountValuesWithParameters));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR AccountValuesWithParameters(::google::protobuf::internal::ConstantInitialized);
+
+  inline AccountValuesWithParameters(const AccountValuesWithParameters& from) : AccountValuesWithParameters(nullptr, from) {}
+  inline AccountValuesWithParameters(AccountValuesWithParameters&& from) noexcept
+      : AccountValuesWithParameters(nullptr, ::std::move(from)) {}
+  inline AccountValuesWithParameters& operator=(const AccountValuesWithParameters& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AccountValuesWithParameters& operator=(AccountValuesWithParameters&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AccountValuesWithParameters& default_instance() {
+    return *reinterpret_cast<const AccountValuesWithParameters*>(
+        &_AccountValuesWithParameters_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 20;
+  friend void swap(AccountValuesWithParameters& a, AccountValuesWithParameters& b) { a.Swap(&b); }
+  inline void Swap(AccountValuesWithParameters* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AccountValuesWithParameters* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AccountValuesWithParameters* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<AccountValuesWithParameters>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const AccountValuesWithParameters& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const AccountValuesWithParameters& from) { AccountValuesWithParameters::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(AccountValuesWithParameters* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters"; }
+
+  explicit AccountValuesWithParameters(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  AccountValuesWithParameters(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const AccountValuesWithParameters& from);
+  AccountValuesWithParameters(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, AccountValuesWithParameters&& from) noexcept
+      : AccountValuesWithParameters(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kValuesFieldNumber = 2,
+    kAccountIdFieldNumber = 1,
+  };
+  // repeated .tinkoff.public.invest.api.contract.v1.InstrumentParameter values = 2;
+  int values_size() const;
+  private:
+  int _internal_values_size() const;
+
+  public:
+  void clear_values() ;
+  ::tinkoff::public_::invest::api::contract::v1::InstrumentParameter* PROTOBUF_NONNULL mutable_values(int index);
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::InstrumentParameter>* PROTOBUF_NONNULL mutable_values();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::InstrumentParameter>& _internal_values() const;
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::InstrumentParameter>* PROTOBUF_NONNULL _internal_mutable_values();
+  public:
+  const ::tinkoff::public_::invest::api::contract::v1::InstrumentParameter& values(int index) const;
+  ::tinkoff::public_::invest::api::contract::v1::InstrumentParameter* PROTOBUF_NONNULL add_values();
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::InstrumentParameter>& values() const;
+  // string account_id = 1;
+  void clear_account_id() ;
+  const ::std::string& account_id() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_account_id(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_account_id();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_account_id();
+  void set_allocated_account_id(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_account_id() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_account_id(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_account_id();
+
+  public:
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2,
+                                   1, 84,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const AccountValuesWithParameters& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField< ::tinkoff::public_::invest::api::contract::v1::InstrumentParameter > values_;
+    ::google::protobuf::internal::ArenaStringPtr account_id_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_users_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull AccountValuesWithParameters_class_data_;
+// -------------------------------------------------------------------
+
+class GetAccountValuesResponse final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.GetAccountValuesResponse) */ {
+ public:
+  inline GetAccountValuesResponse() : GetAccountValuesResponse(nullptr) {}
+  ~GetAccountValuesResponse() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(GetAccountValuesResponse* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(GetAccountValuesResponse));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR GetAccountValuesResponse(::google::protobuf::internal::ConstantInitialized);
+
+  inline GetAccountValuesResponse(const GetAccountValuesResponse& from) : GetAccountValuesResponse(nullptr, from) {}
+  inline GetAccountValuesResponse(GetAccountValuesResponse&& from) noexcept
+      : GetAccountValuesResponse(nullptr, ::std::move(from)) {}
+  inline GetAccountValuesResponse& operator=(const GetAccountValuesResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetAccountValuesResponse& operator=(GetAccountValuesResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetAccountValuesResponse& default_instance() {
+    return *reinterpret_cast<const GetAccountValuesResponse*>(
+        &_GetAccountValuesResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 19;
+  friend void swap(GetAccountValuesResponse& a, GetAccountValuesResponse& b) { a.Swap(&b); }
+  inline void Swap(GetAccountValuesResponse* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetAccountValuesResponse* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetAccountValuesResponse* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<GetAccountValuesResponse>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const GetAccountValuesResponse& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const GetAccountValuesResponse& from) { GetAccountValuesResponse::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(GetAccountValuesResponse* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.GetAccountValuesResponse"; }
+
+  explicit GetAccountValuesResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  GetAccountValuesResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const GetAccountValuesResponse& from);
+  GetAccountValuesResponse(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, GetAccountValuesResponse&& from) noexcept
+      : GetAccountValuesResponse(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kAccountsFieldNumber = 1,
+  };
+  // repeated .tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters accounts = 1;
+  int accounts_size() const;
+  private:
+  int _internal_accounts_size() const;
+
+  public:
+  void clear_accounts() ;
+  ::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters* PROTOBUF_NONNULL mutable_accounts(int index);
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters>* PROTOBUF_NONNULL mutable_accounts();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters>& _internal_accounts() const;
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters>* PROTOBUF_NONNULL _internal_mutable_accounts();
+  public:
+  const ::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters& accounts(int index) const;
+  ::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters* PROTOBUF_NONNULL add_accounts();
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters>& accounts() const;
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.GetAccountValuesResponse)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1,
+                                   1, 0,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const GetAccountValuesResponse& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField< ::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters > accounts_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_users_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull GetAccountValuesResponse_class_data_;
 
 // ===================================================================
 
@@ -4741,6 +6030,99 @@ inline void GetMarginAttributesResponse::set_allocated_corrected_margin(::tinkof
 
   _impl_.corrected_margin_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse.corrected_margin)
+}
+
+// .tinkoff.public.invest.api.contract.v1.MoneyValue guarantee_for_futures = 7;
+inline bool GetMarginAttributesResponse::has_guarantee_for_futures() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
+  PROTOBUF_ASSUME(!value || _impl_.guarantee_for_futures_ != nullptr);
+  return value;
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& GetMarginAttributesResponse::_internal_guarantee_for_futures() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue* p = _impl_.guarantee_for_futures_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::MoneyValue&>(::tinkoff::public_::invest::api::contract::v1::_MoneyValue_default_instance_);
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& GetMarginAttributesResponse::guarantee_for_futures() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse.guarantee_for_futures)
+  return _internal_guarantee_for_futures();
+}
+inline void GetMarginAttributesResponse::unsafe_arena_set_allocated_guarantee_for_futures(
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.guarantee_for_futures_);
+  }
+  _impl_.guarantee_for_futures_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000040U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse.guarantee_for_futures)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE GetMarginAttributesResponse::release_guarantee_for_futures() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000040U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.guarantee_for_futures_;
+  _impl_.guarantee_for_futures_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE GetMarginAttributesResponse::unsafe_arena_release_guarantee_for_futures() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse.guarantee_for_futures)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000040U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.guarantee_for_futures_;
+  _impl_.guarantee_for_futures_ = nullptr;
+  return temp;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL GetMarginAttributesResponse::_internal_mutable_guarantee_for_futures() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.guarantee_for_futures_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(GetArena());
+    _impl_.guarantee_for_futures_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(p);
+  }
+  return _impl_.guarantee_for_futures_;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL GetMarginAttributesResponse::mutable_guarantee_for_futures()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_guarantee_for_futures();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse.guarantee_for_futures)
+  return _msg;
+}
+inline void GetMarginAttributesResponse::set_allocated_guarantee_for_futures(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.guarantee_for_futures_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000040U);
+  }
+
+  _impl_.guarantee_for_futures_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse.guarantee_for_futures)
 }
 
 // -------------------------------------------------------------------
@@ -6106,6 +7488,670 @@ inline void CurrencyTransferRequest::set_allocated_transaction_id(::std::string*
 
 // CurrencyTransferResponse
 
+// -------------------------------------------------------------------
+
+// PayInRequest
+
+// string from_account_id = 1 [(.google.api.field_behavior) = REQUIRED];
+inline void PayInRequest::clear_from_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.from_account_id_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline const ::std::string& PayInRequest::from_account_id() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PayInRequest.from_account_id)
+  return _internal_from_account_id();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void PayInRequest::set_from_account_id(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  _impl_.from_account_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PayInRequest.from_account_id)
+}
+inline ::std::string* PROTOBUF_NONNULL PayInRequest::mutable_from_account_id()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::std::string* _s = _internal_mutable_from_account_id();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PayInRequest.from_account_id)
+  return _s;
+}
+inline const ::std::string& PayInRequest::_internal_from_account_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.from_account_id_.Get();
+}
+inline void PayInRequest::_internal_set_from_account_id(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.from_account_id_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL PayInRequest::_internal_mutable_from_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.from_account_id_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE PayInRequest::release_from_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PayInRequest.from_account_id)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  auto* released = _impl_.from_account_id_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.from_account_id_.Set("", GetArena());
+  }
+  return released;
+}
+inline void PayInRequest::set_allocated_from_account_id(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+  _impl_.from_account_id_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.from_account_id_.IsDefault()) {
+    _impl_.from_account_id_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PayInRequest.from_account_id)
+}
+
+// string to_account_id = 2 [(.google.api.field_behavior) = REQUIRED];
+inline void PayInRequest::clear_to_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.to_account_id_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::std::string& PayInRequest::to_account_id() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PayInRequest.to_account_id)
+  return _internal_to_account_id();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void PayInRequest::set_to_account_id(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  _impl_.to_account_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PayInRequest.to_account_id)
+}
+inline ::std::string* PROTOBUF_NONNULL PayInRequest::mutable_to_account_id()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::std::string* _s = _internal_mutable_to_account_id();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PayInRequest.to_account_id)
+  return _s;
+}
+inline const ::std::string& PayInRequest::_internal_to_account_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.to_account_id_.Get();
+}
+inline void PayInRequest::_internal_set_to_account_id(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.to_account_id_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL PayInRequest::_internal_mutable_to_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.to_account_id_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE PayInRequest::release_to_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PayInRequest.to_account_id)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  auto* released = _impl_.to_account_id_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.to_account_id_.Set("", GetArena());
+  }
+  return released;
+}
+inline void PayInRequest::set_allocated_to_account_id(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+  _impl_.to_account_id_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.to_account_id_.IsDefault()) {
+    _impl_.to_account_id_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PayInRequest.to_account_id)
+}
+
+// .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 3 [(.google.api.field_behavior) = REQUIRED];
+inline bool PayInRequest::has_amount() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  PROTOBUF_ASSUME(!value || _impl_.amount_ != nullptr);
+  return value;
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& PayInRequest::_internal_amount() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue* p = _impl_.amount_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::MoneyValue&>(::tinkoff::public_::invest::api::contract::v1::_MoneyValue_default_instance_);
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& PayInRequest::amount() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PayInRequest.amount)
+  return _internal_amount();
+}
+inline void PayInRequest::unsafe_arena_set_allocated_amount(
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.amount_);
+  }
+  _impl_.amount_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.PayInRequest.amount)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE PayInRequest::release_amount() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.amount_;
+  _impl_.amount_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE PayInRequest::unsafe_arena_release_amount() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PayInRequest.amount)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.amount_;
+  _impl_.amount_ = nullptr;
+  return temp;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL PayInRequest::_internal_mutable_amount() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.amount_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(GetArena());
+    _impl_.amount_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(p);
+  }
+  return _impl_.amount_;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL PayInRequest::mutable_amount()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_amount();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PayInRequest.amount)
+  return _msg;
+}
+inline void PayInRequest::set_allocated_amount(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.amount_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+
+  _impl_.amount_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PayInRequest.amount)
+}
+
+// -------------------------------------------------------------------
+
+// PayInResponse
+
+// -------------------------------------------------------------------
+
+// GetAccountValuesRequest
+
+// repeated string accounts = 1;
+inline int GetAccountValuesRequest::_internal_accounts_size() const {
+  return _internal_accounts().size();
+}
+inline int GetAccountValuesRequest::accounts_size() const {
+  return _internal_accounts_size();
+}
+inline void GetAccountValuesRequest::clear_accounts() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.accounts_.Clear();
+  ClearHasBitForRepeated(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline ::std::string* PROTOBUF_NONNULL GetAccountValuesRequest::add_accounts()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::std::string* _s =
+      _internal_mutable_accounts()->InternalAddWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), GetArena());
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_add_mutable:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.accounts)
+  return _s;
+}
+inline const ::std::string& GetAccountValuesRequest::accounts(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.accounts)
+  return _internal_accounts().Get(index);
+}
+inline ::std::string* PROTOBUF_NONNULL GetAccountValuesRequest::mutable_accounts(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.accounts)
+  return _internal_mutable_accounts()->Mutable(index);
+}
+template <typename Arg_, typename... Args_>
+inline void GetAccountValuesRequest::set_accounts(int index, Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::AssignToString(*_internal_mutable_accounts()->Mutable(index), ::std::forward<Arg_>(value),
+                        args... );
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.accounts)
+}
+template <typename Arg_, typename... Args_>
+inline void GetAccountValuesRequest::add_accounts(Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::google::protobuf::internal::AddToRepeatedPtrField(
+      ::google::protobuf::MessageLite::internal_visibility(), GetArena(),
+      *_internal_mutable_accounts(), ::std::forward<Arg_>(value),
+      args... );
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.accounts)
+}
+inline const ::google::protobuf::RepeatedPtrField<::std::string>& GetAccountValuesRequest::accounts()
+    const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.accounts)
+  return _internal_accounts();
+}
+inline ::google::protobuf::RepeatedPtrField<::std::string>* PROTOBUF_NONNULL
+GetAccountValuesRequest::mutable_accounts() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.accounts)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_accounts();
+}
+inline const ::google::protobuf::RepeatedPtrField<::std::string>&
+GetAccountValuesRequest::_internal_accounts() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.accounts_;
+}
+inline ::google::protobuf::RepeatedPtrField<::std::string>* PROTOBUF_NONNULL
+GetAccountValuesRequest::_internal_mutable_accounts() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.accounts_;
+}
+
+// repeated .tinkoff.public.invest.api.contract.v1.AccountValue values = 2;
+inline int GetAccountValuesRequest::_internal_values_size() const {
+  return _internal_values().size();
+}
+inline int GetAccountValuesRequest::values_size() const {
+  return _internal_values_size();
+}
+inline void GetAccountValuesRequest::clear_values() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.values_.Clear();
+  ClearHasBitForRepeated(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::AccountValue GetAccountValuesRequest::values(int index) const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.values)
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::AccountValue>(_internal_values().Get(index));
+}
+inline void GetAccountValuesRequest::set_values(int index, ::tinkoff::public_::invest::api::contract::v1::AccountValue value) {
+  _internal_mutable_values()->Set(index, value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.values)
+}
+inline void GetAccountValuesRequest::add_values(::tinkoff::public_::invest::api::contract::v1::AccountValue value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _internal_mutable_values()->Add(value);
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000002U);
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.values)
+}
+inline const ::google::protobuf::RepeatedField<int>& GetAccountValuesRequest::values() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.values)
+  return _internal_values();
+}
+inline ::google::protobuf::RepeatedField<int>* PROTOBUF_NONNULL GetAccountValuesRequest::mutable_values()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000002U);
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.GetAccountValuesRequest.values)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_values();
+}
+inline const ::google::protobuf::RepeatedField<int>& GetAccountValuesRequest::_internal_values()
+    const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.values_;
+}
+inline ::google::protobuf::RepeatedField<int>* PROTOBUF_NONNULL
+GetAccountValuesRequest::_internal_mutable_values() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.values_;
+}
+
+// -------------------------------------------------------------------
+
+// GetAccountValuesResponse
+
+// repeated .tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters accounts = 1;
+inline int GetAccountValuesResponse::_internal_accounts_size() const {
+  return _internal_accounts().size();
+}
+inline int GetAccountValuesResponse::accounts_size() const {
+  return _internal_accounts_size();
+}
+inline void GetAccountValuesResponse::clear_accounts() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.accounts_.Clear();
+  ClearHasBitForRepeated(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters* PROTOBUF_NONNULL GetAccountValuesResponse::mutable_accounts(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetAccountValuesResponse.accounts)
+  return _internal_mutable_accounts()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters>* PROTOBUF_NONNULL GetAccountValuesResponse::mutable_accounts()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.GetAccountValuesResponse.accounts)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_accounts();
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters& GetAccountValuesResponse::accounts(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetAccountValuesResponse.accounts)
+  return _internal_accounts().Get(index);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters* PROTOBUF_NONNULL GetAccountValuesResponse::add_accounts()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters* _add =
+      _internal_mutable_accounts()->InternalAddWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), GetArena());
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.GetAccountValuesResponse.accounts)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters>& GetAccountValuesResponse::accounts() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.GetAccountValuesResponse.accounts)
+  return _internal_accounts();
+}
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters>&
+GetAccountValuesResponse::_internal_accounts() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.accounts_;
+}
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::AccountValuesWithParameters>* PROTOBUF_NONNULL
+GetAccountValuesResponse::_internal_mutable_accounts() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.accounts_;
+}
+
+// -------------------------------------------------------------------
+
+// AccountValuesWithParameters
+
+// string account_id = 1;
+inline void AccountValuesWithParameters::clear_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.account_id_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::std::string& AccountValuesWithParameters::account_id() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters.account_id)
+  return _internal_account_id();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void AccountValuesWithParameters::set_account_id(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  _impl_.account_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters.account_id)
+}
+inline ::std::string* PROTOBUF_NONNULL AccountValuesWithParameters::mutable_account_id()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::std::string* _s = _internal_mutable_account_id();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters.account_id)
+  return _s;
+}
+inline const ::std::string& AccountValuesWithParameters::_internal_account_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.account_id_.Get();
+}
+inline void AccountValuesWithParameters::_internal_set_account_id(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.account_id_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL AccountValuesWithParameters::_internal_mutable_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.account_id_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE AccountValuesWithParameters::release_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters.account_id)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  auto* released = _impl_.account_id_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.account_id_.Set("", GetArena());
+  }
+  return released;
+}
+inline void AccountValuesWithParameters::set_allocated_account_id(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+  _impl_.account_id_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.account_id_.IsDefault()) {
+    _impl_.account_id_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters.account_id)
+}
+
+// repeated .tinkoff.public.invest.api.contract.v1.InstrumentParameter values = 2;
+inline int AccountValuesWithParameters::_internal_values_size() const {
+  return _internal_values().size();
+}
+inline int AccountValuesWithParameters::values_size() const {
+  return _internal_values_size();
+}
+inline void AccountValuesWithParameters::clear_values() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.values_.Clear();
+  ClearHasBitForRepeated(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::InstrumentParameter* PROTOBUF_NONNULL AccountValuesWithParameters::mutable_values(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters.values)
+  return _internal_mutable_values()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::InstrumentParameter>* PROTOBUF_NONNULL AccountValuesWithParameters::mutable_values()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters.values)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_values();
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::InstrumentParameter& AccountValuesWithParameters::values(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters.values)
+  return _internal_values().Get(index);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::InstrumentParameter* PROTOBUF_NONNULL AccountValuesWithParameters::add_values()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::tinkoff::public_::invest::api::contract::v1::InstrumentParameter* _add =
+      _internal_mutable_values()->InternalAddWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), GetArena());
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters.values)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::InstrumentParameter>& AccountValuesWithParameters::values() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.AccountValuesWithParameters.values)
+  return _internal_values();
+}
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::InstrumentParameter>&
+AccountValuesWithParameters::_internal_values() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.values_;
+}
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::InstrumentParameter>* PROTOBUF_NONNULL
+AccountValuesWithParameters::_internal_mutable_values() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.values_;
+}
+
+// -------------------------------------------------------------------
+
+// InstrumentParameter
+
+// .tinkoff.public.invest.api.contract.v1.AccountValue name = 1;
+inline void InstrumentParameter::clear_name() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.name_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::AccountValue InstrumentParameter::name() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.InstrumentParameter.name)
+  return _internal_name();
+}
+inline void InstrumentParameter::set_name(::tinkoff::public_::invest::api::contract::v1::AccountValue value) {
+  _internal_set_name(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.InstrumentParameter.name)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::AccountValue InstrumentParameter::_internal_name() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::AccountValue>(_impl_.name_);
+}
+inline void InstrumentParameter::_internal_set_name(::tinkoff::public_::invest::api::contract::v1::AccountValue value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.name_ = value;
+}
+
+// .tinkoff.public.invest.api.contract.v1.MoneyValue value = 2;
+inline bool InstrumentParameter::has_value() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000001U);
+  PROTOBUF_ASSUME(!value || _impl_.value_ != nullptr);
+  return value;
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& InstrumentParameter::_internal_value() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue* p = _impl_.value_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::MoneyValue&>(::tinkoff::public_::invest::api::contract::v1::_MoneyValue_default_instance_);
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& InstrumentParameter::value() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.InstrumentParameter.value)
+  return _internal_value();
+}
+inline void InstrumentParameter::unsafe_arena_set_allocated_value(
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.value_);
+  }
+  _impl_.value_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.InstrumentParameter.value)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE InstrumentParameter::release_value() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.value_;
+  _impl_.value_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE InstrumentParameter::unsafe_arena_release_value() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.InstrumentParameter.value)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.value_;
+  _impl_.value_ = nullptr;
+  return temp;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL InstrumentParameter::_internal_mutable_value() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.value_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(GetArena());
+    _impl_.value_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(p);
+  }
+  return _impl_.value_;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL InstrumentParameter::mutable_value()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_value();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.InstrumentParameter.value)
+  return _msg;
+}
+inline void InstrumentParameter::set_allocated_value(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.value_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+
+  _impl_.value_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.InstrumentParameter.value)
+}
+
 #ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif  // __GNUC__
@@ -6139,6 +8185,12 @@ struct is_proto_enum<::tinkoff::public_::invest::api::contract::v1::AccessLevel>
 template <>
 inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::tinkoff::public_::invest::api::contract::v1::AccessLevel>() {
   return ::tinkoff::public_::invest::api::contract::v1::AccessLevel_descriptor();
+}
+template <>
+struct is_proto_enum<::tinkoff::public_::invest::api::contract::v1::AccountValue> : std::true_type {};
+template <>
+inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::tinkoff::public_::invest::api::contract::v1::AccountValue>() {
+  return ::tinkoff::public_::invest::api::contract::v1::AccountValue_descriptor();
 }
 
 }  // namespace protobuf

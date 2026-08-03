@@ -31,6 +31,7 @@
 #include "google/protobuf/generated_enum_reflection.h"
 #include "google/protobuf/unknown_field_set.h"
 #include "common.pb.h"
+#include "stoporders.pb.h"
 #include "google/protobuf/timestamp.pb.h"
 #include "google/api/field_behavior.pb.h"
 // @@protoc_insertion_point(includes)
@@ -152,6 +153,10 @@ class OrderStateStreamResponse_OrderState;
 struct OrderStateStreamResponse_OrderStateDefaultTypeInternal;
 extern OrderStateStreamResponse_OrderStateDefaultTypeInternal _OrderStateStreamResponse_OrderState_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull OrderStateStreamResponse_OrderState_class_data_;
+class OrderStateStreamResponse_StopOrderState;
+struct OrderStateStreamResponse_StopOrderStateDefaultTypeInternal;
+extern OrderStateStreamResponse_StopOrderStateDefaultTypeInternal _OrderStateStreamResponse_StopOrderState_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull OrderStateStreamResponse_StopOrderState_class_data_;
 class OrderTrade;
 struct OrderTradeDefaultTypeInternal;
 extern OrderTradeDefaultTypeInternal _OrderTrade_default_instance_;
@@ -2229,8 +2234,9 @@ class ReplaceOrderRequest final : public ::google::protobuf::Message
     kOrderIdFieldNumber = 6,
     kIdempotencyKeyFieldNumber = 7,
     kPriceFieldNumber = 12,
-    kQuantityFieldNumber = 11,
+    kOrderIdTypeFieldNumber = 5,
     kPriceTypeFieldNumber = 13,
+    kQuantityFieldNumber = 11,
     kConfirmMarginTradeFieldNumber = 14,
   };
   // string account_id = 1 [(.google.api.field_behavior) = REQUIRED];
@@ -2293,14 +2299,15 @@ class ReplaceOrderRequest final : public ::google::protobuf::Message
   ::tinkoff::public_::invest::api::contract::v1::Quotation* PROTOBUF_NONNULL _internal_mutable_price();
 
   public:
-  // int64 quantity = 11 [(.google.api.field_behavior) = REQUIRED];
-  void clear_quantity() ;
-  ::int64_t quantity() const;
-  void set_quantity(::int64_t value);
+  // optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 5;
+  bool has_order_id_type() const;
+  void clear_order_id_type() ;
+  ::tinkoff::public_::invest::api::contract::v1::OrderIdType order_id_type() const;
+  void set_order_id_type(::tinkoff::public_::invest::api::contract::v1::OrderIdType value);
 
   private:
-  ::int64_t _internal_quantity() const;
-  void _internal_set_quantity(::int64_t value);
+  ::tinkoff::public_::invest::api::contract::v1::OrderIdType _internal_order_id_type() const;
+  void _internal_set_order_id_type(::tinkoff::public_::invest::api::contract::v1::OrderIdType value);
 
   public:
   // optional .tinkoff.public.invest.api.contract.v1.PriceType price_type = 13;
@@ -2312,6 +2319,16 @@ class ReplaceOrderRequest final : public ::google::protobuf::Message
   private:
   ::tinkoff::public_::invest::api::contract::v1::PriceType _internal_price_type() const;
   void _internal_set_price_type(::tinkoff::public_::invest::api::contract::v1::PriceType value);
+
+  public:
+  // int64 quantity = 11 [(.google.api.field_behavior) = REQUIRED];
+  void clear_quantity() ;
+  ::int64_t quantity() const;
+  void set_quantity(::int64_t value);
+
+  private:
+  ::int64_t _internal_quantity() const;
+  void _internal_set_quantity(::int64_t value);
 
   public:
   // bool confirm_margin_trade = 14;
@@ -2328,8 +2345,8 @@ class ReplaceOrderRequest final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 7,
-                                   1, 99,
+  static const ::google::protobuf::internal::TcParseTable<4, 8,
+                                   1, 107,
                                    2>
       _table_;
 
@@ -2354,8 +2371,9 @@ class ReplaceOrderRequest final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr order_id_;
     ::google::protobuf::internal::ArenaStringPtr idempotency_key_;
     ::tinkoff::public_::invest::api::contract::v1::Quotation* PROTOBUF_NULLABLE price_;
-    ::int64_t quantity_;
+    int order_id_type_;
     int price_type_;
+    ::int64_t quantity_;
     bool confirm_margin_trade_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -3261,6 +3279,356 @@ class OrderTrade final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull OrderTrade_class_data_;
+// -------------------------------------------------------------------
+
+class OrderStateStreamResponse_StopOrderState final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState) */ {
+ public:
+  inline OrderStateStreamResponse_StopOrderState() : OrderStateStreamResponse_StopOrderState(nullptr) {}
+  ~OrderStateStreamResponse_StopOrderState() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(OrderStateStreamResponse_StopOrderState* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(OrderStateStreamResponse_StopOrderState));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR OrderStateStreamResponse_StopOrderState(::google::protobuf::internal::ConstantInitialized);
+
+  inline OrderStateStreamResponse_StopOrderState(const OrderStateStreamResponse_StopOrderState& from) : OrderStateStreamResponse_StopOrderState(nullptr, from) {}
+  inline OrderStateStreamResponse_StopOrderState(OrderStateStreamResponse_StopOrderState&& from) noexcept
+      : OrderStateStreamResponse_StopOrderState(nullptr, ::std::move(from)) {}
+  inline OrderStateStreamResponse_StopOrderState& operator=(const OrderStateStreamResponse_StopOrderState& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline OrderStateStreamResponse_StopOrderState& operator=(OrderStateStreamResponse_StopOrderState&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const OrderStateStreamResponse_StopOrderState& default_instance() {
+    return *reinterpret_cast<const OrderStateStreamResponse_StopOrderState*>(
+        &_OrderStateStreamResponse_StopOrderState_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 28;
+  friend void swap(OrderStateStreamResponse_StopOrderState& a, OrderStateStreamResponse_StopOrderState& b) { a.Swap(&b); }
+  inline void Swap(OrderStateStreamResponse_StopOrderState* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(OrderStateStreamResponse_StopOrderState* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  OrderStateStreamResponse_StopOrderState* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<OrderStateStreamResponse_StopOrderState>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const OrderStateStreamResponse_StopOrderState& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const OrderStateStreamResponse_StopOrderState& from) { OrderStateStreamResponse_StopOrderState::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(OrderStateStreamResponse_StopOrderState* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState"; }
+
+  explicit OrderStateStreamResponse_StopOrderState(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  OrderStateStreamResponse_StopOrderState(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const OrderStateStreamResponse_StopOrderState& from);
+  OrderStateStreamResponse_StopOrderState(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, OrderStateStreamResponse_StopOrderState&& from) noexcept
+      : OrderStateStreamResponse_StopOrderState(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kStopOrderIdFieldNumber = 1,
+    kAccountIdFieldNumber = 2,
+    kInstrumentUidFieldNumber = 8,
+    kTickerFieldNumber = 9,
+    kClassCodeFieldNumber = 10,
+    kCreatedAtFieldNumber = 3,
+    kPriceFieldNumber = 5,
+    kStopPriceFieldNumber = 6,
+    kDirectionFieldNumber = 4,
+    kOrderTypeFieldNumber = 7,
+    kStatusFieldNumber = 11,
+  };
+  // string stop_order_id = 1;
+  void clear_stop_order_id() ;
+  const ::std::string& stop_order_id() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_stop_order_id(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_stop_order_id();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_stop_order_id();
+  void set_allocated_stop_order_id(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_stop_order_id() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_stop_order_id(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_stop_order_id();
+
+  public:
+  // string account_id = 2;
+  void clear_account_id() ;
+  const ::std::string& account_id() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_account_id(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_account_id();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_account_id();
+  void set_allocated_account_id(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_account_id() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_account_id(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_account_id();
+
+  public:
+  // string instrument_uid = 8;
+  void clear_instrument_uid() ;
+  const ::std::string& instrument_uid() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_instrument_uid(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_instrument_uid();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_instrument_uid();
+  void set_allocated_instrument_uid(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_instrument_uid() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_instrument_uid(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_instrument_uid();
+
+  public:
+  // string ticker = 9;
+  void clear_ticker() ;
+  const ::std::string& ticker() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_ticker(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_ticker();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_ticker();
+  void set_allocated_ticker(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_ticker() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_ticker(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_ticker();
+
+  public:
+  // string class_code = 10;
+  void clear_class_code() ;
+  const ::std::string& class_code() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_class_code(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_class_code();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_class_code();
+  void set_allocated_class_code(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_class_code() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_class_code(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_class_code();
+
+  public:
+  // .google.protobuf.Timestamp created_at = 3;
+  bool has_created_at() const;
+  void clear_created_at() ;
+  const ::google::protobuf::Timestamp& created_at() const;
+  [[nodiscard]] ::google::protobuf::Timestamp* PROTOBUF_NULLABLE release_created_at();
+  ::google::protobuf::Timestamp* PROTOBUF_NONNULL mutable_created_at();
+  void set_allocated_created_at(::google::protobuf::Timestamp* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_created_at(::google::protobuf::Timestamp* PROTOBUF_NULLABLE value);
+  ::google::protobuf::Timestamp* PROTOBUF_NULLABLE unsafe_arena_release_created_at();
+
+  private:
+  const ::google::protobuf::Timestamp& _internal_created_at() const;
+  ::google::protobuf::Timestamp* PROTOBUF_NONNULL _internal_mutable_created_at();
+
+  public:
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue price = 5;
+  bool has_price() const;
+  void clear_price() ;
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& price() const;
+  [[nodiscard]] ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE release_price();
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL mutable_price();
+  void set_allocated_price(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_price(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE unsafe_arena_release_price();
+
+  private:
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& _internal_price() const;
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL _internal_mutable_price();
+
+  public:
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue stop_price = 6;
+  bool has_stop_price() const;
+  void clear_stop_price() ;
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& stop_price() const;
+  [[nodiscard]] ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE release_stop_price();
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL mutable_stop_price();
+  void set_allocated_stop_price(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_stop_price(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE unsafe_arena_release_stop_price();
+
+  private:
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& _internal_stop_price() const;
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL _internal_mutable_stop_price();
+
+  public:
+  // .tinkoff.public.invest.api.contract.v1.OrderDirection direction = 4;
+  void clear_direction() ;
+  ::tinkoff::public_::invest::api::contract::v1::OrderDirection direction() const;
+  void set_direction(::tinkoff::public_::invest::api::contract::v1::OrderDirection value);
+
+  private:
+  ::tinkoff::public_::invest::api::contract::v1::OrderDirection _internal_direction() const;
+  void _internal_set_direction(::tinkoff::public_::invest::api::contract::v1::OrderDirection value);
+
+  public:
+  // .tinkoff.public.invest.api.contract.v1.OrderType order_type = 7;
+  void clear_order_type() ;
+  ::tinkoff::public_::invest::api::contract::v1::OrderType order_type() const;
+  void set_order_type(::tinkoff::public_::invest::api::contract::v1::OrderType value);
+
+  private:
+  ::tinkoff::public_::invest::api::contract::v1::OrderType _internal_order_type() const;
+  void _internal_set_order_type(::tinkoff::public_::invest::api::contract::v1::OrderType value);
+
+  public:
+  // .tinkoff.public.invest.api.contract.v1.StopOrderStatusOption status = 11;
+  void clear_status() ;
+  ::tinkoff::public_::invest::api::contract::v1::StopOrderStatusOption status() const;
+  void set_status(::tinkoff::public_::invest::api::contract::v1::StopOrderStatusOption value);
+
+  private:
+  ::tinkoff::public_::invest::api::contract::v1::StopOrderStatusOption _internal_status() const;
+  void _internal_set_status(::tinkoff::public_::invest::api::contract::v1::StopOrderStatusOption value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<4, 11,
+                                   3, 147,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const OrderStateStreamResponse_StopOrderState& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr stop_order_id_;
+    ::google::protobuf::internal::ArenaStringPtr account_id_;
+    ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
+    ::google::protobuf::internal::ArenaStringPtr ticker_;
+    ::google::protobuf::internal::ArenaStringPtr class_code_;
+    ::google::protobuf::Timestamp* PROTOBUF_NULLABLE created_at_;
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE price_;
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE stop_price_;
+    int direction_;
+    int order_type_;
+    int status_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_orders_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull OrderStateStreamResponse_StopOrderState_class_data_;
 // -------------------------------------------------------------------
 
 class OrderStage final : public ::google::protobuf::Message
@@ -5799,6 +6167,7 @@ class OrderStateStreamResponse_OrderState final : public ::google::protobuf::Mes
     kTickerFieldNumber = 7,
     kClassCodeFieldNumber = 8,
     kAccountIdFieldNumber = 13,
+    kTradeOrderIdFieldNumber = 14,
     kCurrencyFieldNumber = 26,
     kExchangeFieldNumber = 36,
     kInstrumentUidFieldNumber = 41,
@@ -5926,6 +6295,21 @@ class OrderStateStreamResponse_OrderState final : public ::google::protobuf::Mes
   const ::std::string& _internal_account_id() const;
   PROTOBUF_ALWAYS_INLINE void _internal_set_account_id(const ::std::string& value);
   ::std::string* PROTOBUF_NONNULL _internal_mutable_account_id();
+
+  public:
+  // string trade_order_id = 14 [(.google.api.field_behavior) = REQUIRED];
+  void clear_trade_order_id() ;
+  const ::std::string& trade_order_id() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_trade_order_id(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_trade_order_id();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_trade_order_id();
+  void set_allocated_trade_order_id(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_trade_order_id() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_trade_order_id(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_trade_order_id();
 
   public:
   // string currency = 26;
@@ -6179,8 +6563,8 @@ class OrderStateStreamResponse_OrderState final : public ::google::protobuf::Mes
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<5, 27,
-                                   7, 197,
+  static const ::google::protobuf::internal::TcParseTable<5, 28,
+                                   7, 211,
                                    7>
       _table_;
 
@@ -6208,6 +6592,7 @@ class OrderStateStreamResponse_OrderState final : public ::google::protobuf::Mes
     ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::google::protobuf::internal::ArenaStringPtr class_code_;
     ::google::protobuf::internal::ArenaStringPtr account_id_;
+    ::google::protobuf::internal::ArenaStringPtr trade_order_id_;
     ::google::protobuf::internal::ArenaStringPtr currency_;
     ::google::protobuf::internal::ArenaStringPtr exchange_;
     ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
@@ -8125,9 +8510,10 @@ class OrderStateStreamResponse final : public ::google::protobuf::Message
     kOrderState = 1,
     kPing = 2,
     kSubscription = 3,
+    kStopOrderState = 4,
     PAYLOAD_NOT_SET = 0,
   };
-  static constexpr int kIndexInFileMessages = 28;
+  static constexpr int kIndexInFileMessages = 29;
   friend void swap(OrderStateStreamResponse& a, OrderStateStreamResponse& b) { a.Swap(&b); }
   inline void Swap(OrderStateStreamResponse* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -8212,6 +8598,7 @@ class OrderStateStreamResponse final : public ::google::protobuf::Message
   ::google::protobuf::Metadata GetMetadata() const;
   // nested types ----------------------------------------------------
   using OrderState = OrderStateStreamResponse_OrderState;
+  using StopOrderState = OrderStateStreamResponse_StopOrderState;
   using MarkerType = OrderStateStreamResponse_MarkerType;
   static constexpr MarkerType MARKER_UNKNOWN = OrderStateStreamResponse_MarkerType_MARKER_UNKNOWN;
   static constexpr MarkerType MARKER_BROKER = OrderStateStreamResponse_MarkerType_MARKER_BROKER;
@@ -8271,6 +8658,7 @@ class OrderStateStreamResponse final : public ::google::protobuf::Message
     kOrderStateFieldNumber = 1,
     kPingFieldNumber = 2,
     kSubscriptionFieldNumber = 3,
+    kStopOrderStateFieldNumber = 4,
   };
   // .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState order_state = 1;
   bool has_order_state() const;
@@ -8329,6 +8717,25 @@ class OrderStateStreamResponse final : public ::google::protobuf::Message
   ::tinkoff::public_::invest::api::contract::v1::SubscriptionResponse* PROTOBUF_NONNULL _internal_mutable_subscription();
 
   public:
+  // .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState stop_order_state = 4;
+  bool has_stop_order_state() const;
+  private:
+  bool _internal_has_stop_order_state() const;
+
+  public:
+  void clear_stop_order_state() ;
+  const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState& stop_order_state() const;
+  [[nodiscard]] ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NULLABLE release_stop_order_state();
+  ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NONNULL mutable_stop_order_state();
+  void set_allocated_stop_order_state(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_stop_order_state(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NULLABLE value);
+  ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NULLABLE unsafe_arena_release_stop_order_state();
+
+  private:
+  const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState& _internal_stop_order_state() const;
+  ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NONNULL _internal_mutable_stop_order_state();
+
+  public:
   void clear_payload();
   PayloadCase payload_case() const;
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse)
@@ -8337,11 +8744,12 @@ class OrderStateStreamResponse final : public ::google::protobuf::Message
   void set_has_order_state();
   void set_has_ping();
   void set_has_subscription();
+  void set_has_stop_order_state();
   inline bool has_payload() const;
   inline void clear_has_payload();
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 3,
-                                   3, 0,
+  static const ::google::protobuf::internal::TcParseTable<0, 4,
+                                   4, 0,
                                    2>
       _table_;
 
@@ -8366,6 +8774,7 @@ class OrderStateStreamResponse final : public ::google::protobuf::Message
       ::google::protobuf::Message* PROTOBUF_NULLABLE order_state_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE ping_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE subscription_;
+      ::google::protobuf::Message* PROTOBUF_NULLABLE stop_order_state_;
     } payload_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint32_t _oneof_case_[1];
@@ -15037,6 +15446,35 @@ inline void ReplaceOrderRequest::set_allocated_account_id(::std::string* PROTOBU
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest.account_id)
 }
 
+// optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 5;
+inline bool ReplaceOrderRequest::has_order_id_type() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
+  return value;
+}
+inline void ReplaceOrderRequest::clear_order_id_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.order_id_type_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000010U);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OrderIdType ReplaceOrderRequest::order_id_type() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest.order_id_type)
+  return _internal_order_id_type();
+}
+inline void ReplaceOrderRequest::set_order_id_type(::tinkoff::public_::invest::api::contract::v1::OrderIdType value) {
+  _internal_set_order_id_type(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest.order_id_type)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OrderIdType ReplaceOrderRequest::_internal_order_id_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::OrderIdType>(_impl_.order_id_type_);
+}
+inline void ReplaceOrderRequest::_internal_set_order_id_type(::tinkoff::public_::invest::api::contract::v1::OrderIdType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.order_id_type_ = value;
+}
+
 // string order_id = 6 [(.google.api.field_behavior) = REQUIRED];
 inline void ReplaceOrderRequest::clear_order_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
@@ -15172,7 +15610,7 @@ inline void ReplaceOrderRequest::clear_quantity() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.quantity_ = ::int64_t{0};
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000010U);
+                  0x00000040U);
 }
 inline ::int64_t ReplaceOrderRequest::quantity() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest.quantity)
@@ -15180,7 +15618,7 @@ inline ::int64_t ReplaceOrderRequest::quantity() const {
 }
 inline void ReplaceOrderRequest::set_quantity(::int64_t value) {
   _internal_set_quantity(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest.quantity)
 }
 inline ::int64_t ReplaceOrderRequest::_internal_quantity() const {
@@ -15319,7 +15757,7 @@ inline void ReplaceOrderRequest::clear_confirm_margin_trade() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.confirm_margin_trade_ = false;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000040U);
+                  0x00000080U);
 }
 inline bool ReplaceOrderRequest::confirm_margin_trade() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest.confirm_margin_trade)
@@ -15327,7 +15765,7 @@ inline bool ReplaceOrderRequest::confirm_margin_trade() const {
 }
 inline void ReplaceOrderRequest::set_confirm_margin_trade(bool value) {
   _internal_set_confirm_margin_trade(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest.confirm_margin_trade)
 }
 inline bool ReplaceOrderRequest::_internal_confirm_margin_trade() const {
@@ -18165,7 +18603,7 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_client_code(::std
 
 // .google.protobuf.Timestamp created_at = 4;
 inline bool OrderStateStreamResponse_OrderState::has_created_at() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000400U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000800U);
   PROTOBUF_ASSUME(!value || _impl_.created_at_ != nullptr);
   return value;
 }
@@ -18186,16 +18624,16 @@ inline void OrderStateStreamResponse_OrderState::unsafe_arena_set_allocated_crea
   }
   _impl_.created_at_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00000400U);
+    SetHasBit(_impl_._has_bits_[0], 0x00000800U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000400U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00000800U);
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.created_at)
 }
 inline ::google::protobuf::Timestamp* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::release_created_at() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00000400U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00000800U);
   ::google::protobuf::Timestamp* released = _impl_.created_at_;
   _impl_.created_at_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
@@ -18215,7 +18653,7 @@ inline ::google::protobuf::Timestamp* PROTOBUF_NULLABLE OrderStateStreamResponse
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.created_at)
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00000400U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00000800U);
   ::google::protobuf::Timestamp* temp = _impl_.created_at_;
   _impl_.created_at_ = nullptr;
   return temp;
@@ -18230,7 +18668,7 @@ inline ::google::protobuf::Timestamp* PROTOBUF_NONNULL OrderStateStreamResponse_
 }
 inline ::google::protobuf::Timestamp* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::mutable_created_at()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000400U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000800U);
   ::google::protobuf::Timestamp* _msg = _internal_mutable_created_at();
   // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.created_at)
   return _msg;
@@ -18247,9 +18685,9 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_created_at(::goog
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    SetHasBit(_impl_._has_bits_[0], 0x00000400U);
+    SetHasBit(_impl_._has_bits_[0], 0x00000800U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000400U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00000800U);
   }
 
   _impl_.created_at_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
@@ -18261,7 +18699,7 @@ inline void OrderStateStreamResponse_OrderState::clear_execution_report_status()
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.execution_report_status_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00010000U);
+                  0x00020000U);
 }
 inline ::tinkoff::public_::invest::api::contract::v1::OrderExecutionReportStatus OrderStateStreamResponse_OrderState::execution_report_status() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.execution_report_status)
@@ -18269,7 +18707,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::OrderExecutionReportStatus
 }
 inline void OrderStateStreamResponse_OrderState::set_execution_report_status(::tinkoff::public_::invest::api::contract::v1::OrderExecutionReportStatus value) {
   _internal_set_execution_report_status(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00010000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00020000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.execution_report_status)
 }
 inline ::tinkoff::public_::invest::api::contract::v1::OrderExecutionReportStatus OrderStateStreamResponse_OrderState::_internal_execution_report_status() const {
@@ -18283,14 +18721,14 @@ inline void OrderStateStreamResponse_OrderState::_internal_set_execution_report_
 
 // optional .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StatusCauseInfo status_info = 6;
 inline bool OrderStateStreamResponse_OrderState::has_status_info() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00020000U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00040000U);
   return value;
 }
 inline void OrderStateStreamResponse_OrderState::clear_status_info() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.status_info_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00020000U);
+                  0x00040000U);
 }
 inline ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StatusCauseInfo OrderStateStreamResponse_OrderState::status_info() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.status_info)
@@ -18298,7 +18736,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_S
 }
 inline void OrderStateStreamResponse_OrderState::set_status_info(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StatusCauseInfo value) {
   _internal_set_status_info(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00020000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00040000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.status_info)
 }
 inline ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StatusCauseInfo OrderStateStreamResponse_OrderState::_internal_status_info() const {
@@ -18445,7 +18883,7 @@ inline void OrderStateStreamResponse_OrderState::clear_lot_size() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.lot_size_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00040000U);
+                  0x00080000U);
 }
 inline ::int32_t OrderStateStreamResponse_OrderState::lot_size() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.lot_size)
@@ -18453,7 +18891,7 @@ inline ::int32_t OrderStateStreamResponse_OrderState::lot_size() const {
 }
 inline void OrderStateStreamResponse_OrderState::set_lot_size(::int32_t value) {
   _internal_set_lot_size(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00040000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00080000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.lot_size)
 }
 inline ::int32_t OrderStateStreamResponse_OrderState::_internal_lot_size() const {
@@ -18470,7 +18908,7 @@ inline void OrderStateStreamResponse_OrderState::clear_direction() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.direction_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00080000U);
+                  0x00100000U);
 }
 inline ::tinkoff::public_::invest::api::contract::v1::OrderDirection OrderStateStreamResponse_OrderState::direction() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.direction)
@@ -18478,7 +18916,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::OrderDirection OrderStateS
 }
 inline void OrderStateStreamResponse_OrderState::set_direction(::tinkoff::public_::invest::api::contract::v1::OrderDirection value) {
   _internal_set_direction(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00080000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00100000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.direction)
 }
 inline ::tinkoff::public_::invest::api::contract::v1::OrderDirection OrderStateStreamResponse_OrderState::_internal_direction() const {
@@ -18495,7 +18933,7 @@ inline void OrderStateStreamResponse_OrderState::clear_time_in_force() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.time_in_force_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00100000U);
+                  0x00200000U);
 }
 inline ::tinkoff::public_::invest::api::contract::v1::TimeInForceType OrderStateStreamResponse_OrderState::time_in_force() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.time_in_force)
@@ -18503,7 +18941,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::TimeInForceType OrderState
 }
 inline void OrderStateStreamResponse_OrderState::set_time_in_force(::tinkoff::public_::invest::api::contract::v1::TimeInForceType value) {
   _internal_set_time_in_force(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00100000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00200000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.time_in_force)
 }
 inline ::tinkoff::public_::invest::api::contract::v1::TimeInForceType OrderStateStreamResponse_OrderState::_internal_time_in_force() const {
@@ -18520,7 +18958,7 @@ inline void OrderStateStreamResponse_OrderState::clear_order_type() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.order_type_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00200000U);
+                  0x00400000U);
 }
 inline ::tinkoff::public_::invest::api::contract::v1::OrderType OrderStateStreamResponse_OrderState::order_type() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.order_type)
@@ -18528,7 +18966,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::OrderType OrderStateStream
 }
 inline void OrderStateStreamResponse_OrderState::set_order_type(::tinkoff::public_::invest::api::contract::v1::OrderType value) {
   _internal_set_order_type(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00200000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00400000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.order_type)
 }
 inline ::tinkoff::public_::invest::api::contract::v1::OrderType OrderStateStreamResponse_OrderState::_internal_order_type() const {
@@ -18605,9 +19043,74 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_account_id(::std:
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.account_id)
 }
 
+// string trade_order_id = 14 [(.google.api.field_behavior) = REQUIRED];
+inline void OrderStateStreamResponse_OrderState::clear_trade_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.trade_order_id_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000080U);
+}
+inline const ::std::string& OrderStateStreamResponse_OrderState::trade_order_id() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.trade_order_id)
+  return _internal_trade_order_id();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void OrderStateStreamResponse_OrderState::set_trade_order_id(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  _impl_.trade_order_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.trade_order_id)
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::mutable_trade_order_id()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  ::std::string* _s = _internal_mutable_trade_order_id();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.trade_order_id)
+  return _s;
+}
+inline const ::std::string& OrderStateStreamResponse_OrderState::_internal_trade_order_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.trade_order_id_.Get();
+}
+inline void OrderStateStreamResponse_OrderState::_internal_set_trade_order_id(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.trade_order_id_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::_internal_mutable_trade_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.trade_order_id_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::release_trade_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.trade_order_id)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000080U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000080U);
+  auto* released = _impl_.trade_order_id_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.trade_order_id_.Set("", GetArena());
+  }
+  return released;
+}
+inline void OrderStateStreamResponse_OrderState::set_allocated_trade_order_id(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000080U);
+  }
+  _impl_.trade_order_id_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.trade_order_id_.IsDefault()) {
+    _impl_.trade_order_id_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.trade_order_id)
+}
+
 // .tinkoff.public.invest.api.contract.v1.MoneyValue initial_order_price = 22;
 inline bool OrderStateStreamResponse_OrderState::has_initial_order_price() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000800U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00001000U);
   PROTOBUF_ASSUME(!value || _impl_.initial_order_price_ != nullptr);
   return value;
 }
@@ -18628,16 +19131,16 @@ inline void OrderStateStreamResponse_OrderState::unsafe_arena_set_allocated_init
   }
   _impl_.initial_order_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00000800U);
+    SetHasBit(_impl_._has_bits_[0], 0x00001000U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000800U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00001000U);
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.initial_order_price)
 }
 inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::release_initial_order_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00000800U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00001000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.initial_order_price_;
   _impl_.initial_order_price_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
@@ -18657,7 +19160,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLA
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.initial_order_price)
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00000800U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00001000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.initial_order_price_;
   _impl_.initial_order_price_ = nullptr;
   return temp;
@@ -18672,7 +19175,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNU
 }
 inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::mutable_initial_order_price()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000800U);
+  SetHasBit(_impl_._has_bits_[0], 0x00001000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_initial_order_price();
   // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.initial_order_price)
   return _msg;
@@ -18689,9 +19192,9 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_initial_order_pri
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    SetHasBit(_impl_._has_bits_[0], 0x00000800U);
+    SetHasBit(_impl_._has_bits_[0], 0x00001000U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000800U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00001000U);
   }
 
   _impl_.initial_order_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
@@ -18700,7 +19203,7 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_initial_order_pri
 
 // .tinkoff.public.invest.api.contract.v1.MoneyValue order_price = 23;
 inline bool OrderStateStreamResponse_OrderState::has_order_price() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00001000U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00002000U);
   PROTOBUF_ASSUME(!value || _impl_.order_price_ != nullptr);
   return value;
 }
@@ -18721,16 +19224,16 @@ inline void OrderStateStreamResponse_OrderState::unsafe_arena_set_allocated_orde
   }
   _impl_.order_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00001000U);
+    SetHasBit(_impl_._has_bits_[0], 0x00002000U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00001000U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00002000U);
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.order_price)
 }
 inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::release_order_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00001000U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00002000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.order_price_;
   _impl_.order_price_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
@@ -18750,7 +19253,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLA
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.order_price)
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00001000U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00002000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.order_price_;
   _impl_.order_price_ = nullptr;
   return temp;
@@ -18765,7 +19268,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNU
 }
 inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::mutable_order_price()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00001000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00002000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_order_price();
   // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.order_price)
   return _msg;
@@ -18782,9 +19285,9 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_order_price(::tin
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    SetHasBit(_impl_._has_bits_[0], 0x00001000U);
+    SetHasBit(_impl_._has_bits_[0], 0x00002000U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00001000U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00002000U);
   }
 
   _impl_.order_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
@@ -18793,7 +19296,7 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_order_price(::tin
 
 // optional .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 24;
 inline bool OrderStateStreamResponse_OrderState::has_amount() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00002000U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00004000U);
   PROTOBUF_ASSUME(!value || _impl_.amount_ != nullptr);
   return value;
 }
@@ -18814,16 +19317,16 @@ inline void OrderStateStreamResponse_OrderState::unsafe_arena_set_allocated_amou
   }
   _impl_.amount_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00002000U);
+    SetHasBit(_impl_._has_bits_[0], 0x00004000U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00002000U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00004000U);
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.amount)
 }
 inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::release_amount() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00002000U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00004000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.amount_;
   _impl_.amount_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
@@ -18843,7 +19346,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLA
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.amount)
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00002000U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00004000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.amount_;
   _impl_.amount_ = nullptr;
   return temp;
@@ -18858,7 +19361,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNU
 }
 inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::mutable_amount()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00002000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00004000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_amount();
   // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.amount)
   return _msg;
@@ -18875,9 +19378,9 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_amount(::tinkoff:
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    SetHasBit(_impl_._has_bits_[0], 0x00002000U);
+    SetHasBit(_impl_._has_bits_[0], 0x00004000U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00002000U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00004000U);
   }
 
   _impl_.amount_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
@@ -18886,7 +19389,7 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_amount(::tinkoff:
 
 // .tinkoff.public.invest.api.contract.v1.MoneyValue executed_order_price = 25;
 inline bool OrderStateStreamResponse_OrderState::has_executed_order_price() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00004000U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00008000U);
   PROTOBUF_ASSUME(!value || _impl_.executed_order_price_ != nullptr);
   return value;
 }
@@ -18907,16 +19410,16 @@ inline void OrderStateStreamResponse_OrderState::unsafe_arena_set_allocated_exec
   }
   _impl_.executed_order_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00004000U);
+    SetHasBit(_impl_._has_bits_[0], 0x00008000U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00004000U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.executed_order_price)
 }
 inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::release_executed_order_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00004000U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.executed_order_price_;
   _impl_.executed_order_price_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
@@ -18936,7 +19439,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLA
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.executed_order_price)
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00004000U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.executed_order_price_;
   _impl_.executed_order_price_ = nullptr;
   return temp;
@@ -18951,7 +19454,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNU
 }
 inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::mutable_executed_order_price()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00004000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00008000U);
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_executed_order_price();
   // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.executed_order_price)
   return _msg;
@@ -18968,9 +19471,9 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_executed_order_pr
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    SetHasBit(_impl_._has_bits_[0], 0x00004000U);
+    SetHasBit(_impl_._has_bits_[0], 0x00008000U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00004000U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
   }
 
   _impl_.executed_order_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
@@ -18982,7 +19485,7 @@ inline void OrderStateStreamResponse_OrderState::clear_currency() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.currency_.ClearToEmpty();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000080U);
+                  0x00000100U);
 }
 inline const ::std::string& OrderStateStreamResponse_OrderState::currency() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
@@ -18992,13 +19495,13 @@ inline const ::std::string& OrderStateStreamResponse_OrderState::currency() cons
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void OrderStateStreamResponse_OrderState::set_currency(Arg_&& arg, Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
   _impl_.currency_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.currency)
 }
 inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::mutable_currency()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
   ::std::string* _s = _internal_mutable_currency();
   // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.currency)
   return _s;
@@ -19018,10 +19521,10 @@ inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::_int
 inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::release_currency() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.currency)
-  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000080U)) {
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000100U)) {
     return nullptr;
   }
-  ClearHasBit(_impl_._has_bits_[0], 0x00000080U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00000100U);
   auto* released = _impl_.currency_.Release();
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
     _impl_.currency_.Set("", GetArena());
@@ -19031,9 +19534,9 @@ inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::rel
 inline void OrderStateStreamResponse_OrderState::set_allocated_currency(::std::string* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+    SetHasBit(_impl_._has_bits_[0], 0x00000100U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000080U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00000100U);
   }
   _impl_.currency_.SetAllocated(value, GetArena());
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.currency_.IsDefault()) {
@@ -19047,7 +19550,7 @@ inline void OrderStateStreamResponse_OrderState::clear_lots_requested() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.lots_requested_ = ::int64_t{0};
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00400000U);
+                  0x00800000U);
 }
 inline ::int64_t OrderStateStreamResponse_OrderState::lots_requested() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.lots_requested)
@@ -19055,7 +19558,7 @@ inline ::int64_t OrderStateStreamResponse_OrderState::lots_requested() const {
 }
 inline void OrderStateStreamResponse_OrderState::set_lots_requested(::int64_t value) {
   _internal_set_lots_requested(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00400000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00800000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.lots_requested)
 }
 inline ::int64_t OrderStateStreamResponse_OrderState::_internal_lots_requested() const {
@@ -19072,7 +19575,7 @@ inline void OrderStateStreamResponse_OrderState::clear_lots_executed() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.lots_executed_ = ::int64_t{0};
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00800000U);
+                  0x01000000U);
 }
 inline ::int64_t OrderStateStreamResponse_OrderState::lots_executed() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.lots_executed)
@@ -19080,7 +19583,7 @@ inline ::int64_t OrderStateStreamResponse_OrderState::lots_executed() const {
 }
 inline void OrderStateStreamResponse_OrderState::set_lots_executed(::int64_t value) {
   _internal_set_lots_executed(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00800000U);
+  SetHasBit(_impl_._has_bits_[0], 0x01000000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.lots_executed)
 }
 inline ::int64_t OrderStateStreamResponse_OrderState::_internal_lots_executed() const {
@@ -19097,7 +19600,7 @@ inline void OrderStateStreamResponse_OrderState::clear_lots_left() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.lots_left_ = ::int64_t{0};
   ClearHasBit(_impl_._has_bits_[0],
-                  0x01000000U);
+                  0x02000000U);
 }
 inline ::int64_t OrderStateStreamResponse_OrderState::lots_left() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.lots_left)
@@ -19105,7 +19608,7 @@ inline ::int64_t OrderStateStreamResponse_OrderState::lots_left() const {
 }
 inline void OrderStateStreamResponse_OrderState::set_lots_left(::int64_t value) {
   _internal_set_lots_left(value);
-  SetHasBit(_impl_._has_bits_[0], 0x01000000U);
+  SetHasBit(_impl_._has_bits_[0], 0x02000000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.lots_left)
 }
 inline ::int64_t OrderStateStreamResponse_OrderState::_internal_lots_left() const {
@@ -19122,7 +19625,7 @@ inline void OrderStateStreamResponse_OrderState::clear_lots_cancelled() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.lots_cancelled_ = ::int64_t{0};
   ClearHasBit(_impl_._has_bits_[0],
-                  0x02000000U);
+                  0x04000000U);
 }
 inline ::int64_t OrderStateStreamResponse_OrderState::lots_cancelled() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.lots_cancelled)
@@ -19130,7 +19633,7 @@ inline ::int64_t OrderStateStreamResponse_OrderState::lots_cancelled() const {
 }
 inline void OrderStateStreamResponse_OrderState::set_lots_cancelled(::int64_t value) {
   _internal_set_lots_cancelled(value);
-  SetHasBit(_impl_._has_bits_[0], 0x02000000U);
+  SetHasBit(_impl_._has_bits_[0], 0x04000000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.lots_cancelled)
 }
 inline ::int64_t OrderStateStreamResponse_OrderState::_internal_lots_cancelled() const {
@@ -19144,14 +19647,14 @@ inline void OrderStateStreamResponse_OrderState::_internal_set_lots_cancelled(::
 
 // optional .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.MarkerType marker = 31;
 inline bool OrderStateStreamResponse_OrderState::has_marker() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x04000000U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x08000000U);
   return value;
 }
 inline void OrderStateStreamResponse_OrderState::clear_marker() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.marker_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x04000000U);
+                  0x08000000U);
 }
 inline ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_MarkerType OrderStateStreamResponse_OrderState::marker() const {
   // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.marker)
@@ -19159,7 +19662,7 @@ inline ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_M
 }
 inline void OrderStateStreamResponse_OrderState::set_marker(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_MarkerType value) {
   _internal_set_marker(value);
-  SetHasBit(_impl_._has_bits_[0], 0x04000000U);
+  SetHasBit(_impl_._has_bits_[0], 0x08000000U);
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.marker)
 }
 inline ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_MarkerType OrderStateStreamResponse_OrderState::_internal_marker() const {
@@ -19229,7 +19732,7 @@ OrderStateStreamResponse_OrderState::_internal_mutable_trades() {
 
 // .google.protobuf.Timestamp completion_time = 35;
 inline bool OrderStateStreamResponse_OrderState::has_completion_time() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00008000U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00010000U);
   PROTOBUF_ASSUME(!value || _impl_.completion_time_ != nullptr);
   return value;
 }
@@ -19250,16 +19753,16 @@ inline void OrderStateStreamResponse_OrderState::unsafe_arena_set_allocated_comp
   }
   _impl_.completion_time_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00008000U);
+    SetHasBit(_impl_._has_bits_[0], 0x00010000U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00010000U);
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.completion_time)
 }
 inline ::google::protobuf::Timestamp* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::release_completion_time() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00010000U);
   ::google::protobuf::Timestamp* released = _impl_.completion_time_;
   _impl_.completion_time_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
@@ -19279,7 +19782,7 @@ inline ::google::protobuf::Timestamp* PROTOBUF_NULLABLE OrderStateStreamResponse
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.completion_time)
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00010000U);
   ::google::protobuf::Timestamp* temp = _impl_.completion_time_;
   _impl_.completion_time_ = nullptr;
   return temp;
@@ -19294,7 +19797,7 @@ inline ::google::protobuf::Timestamp* PROTOBUF_NONNULL OrderStateStreamResponse_
 }
 inline ::google::protobuf::Timestamp* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::mutable_completion_time()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00008000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00010000U);
   ::google::protobuf::Timestamp* _msg = _internal_mutable_completion_time();
   // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.completion_time)
   return _msg;
@@ -19311,9 +19814,9 @@ inline void OrderStateStreamResponse_OrderState::set_allocated_completion_time(:
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    SetHasBit(_impl_._has_bits_[0], 0x00008000U);
+    SetHasBit(_impl_._has_bits_[0], 0x00010000U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00010000U);
   }
 
   _impl_.completion_time_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
@@ -19325,7 +19828,7 @@ inline void OrderStateStreamResponse_OrderState::clear_exchange() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.exchange_.ClearToEmpty();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000100U);
+                  0x00000200U);
 }
 inline const ::std::string& OrderStateStreamResponse_OrderState::exchange() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
@@ -19335,13 +19838,13 @@ inline const ::std::string& OrderStateStreamResponse_OrderState::exchange() cons
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void OrderStateStreamResponse_OrderState::set_exchange(Arg_&& arg, Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000200U);
   _impl_.exchange_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.exchange)
 }
 inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::mutable_exchange()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000200U);
   ::std::string* _s = _internal_mutable_exchange();
   // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.exchange)
   return _s;
@@ -19361,10 +19864,10 @@ inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::_int
 inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::release_exchange() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.exchange)
-  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000100U)) {
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000200U)) {
     return nullptr;
   }
-  ClearHasBit(_impl_._has_bits_[0], 0x00000100U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00000200U);
   auto* released = _impl_.exchange_.Release();
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
     _impl_.exchange_.Set("", GetArena());
@@ -19374,9 +19877,9 @@ inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::rel
 inline void OrderStateStreamResponse_OrderState::set_allocated_exchange(::std::string* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00000100U);
+    SetHasBit(_impl_._has_bits_[0], 0x00000200U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000100U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00000200U);
   }
   _impl_.exchange_.SetAllocated(value, GetArena());
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.exchange_.IsDefault()) {
@@ -19390,7 +19893,7 @@ inline void OrderStateStreamResponse_OrderState::clear_instrument_uid() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.instrument_uid_.ClearToEmpty();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000200U);
+                  0x00000400U);
 }
 inline const ::std::string& OrderStateStreamResponse_OrderState::instrument_uid() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
@@ -19400,13 +19903,13 @@ inline const ::std::string& OrderStateStreamResponse_OrderState::instrument_uid(
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void OrderStateStreamResponse_OrderState::set_instrument_uid(Arg_&& arg, Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  SetHasBit(_impl_._has_bits_[0], 0x00000200U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000400U);
   _impl_.instrument_uid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
   // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.instrument_uid)
 }
 inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::mutable_instrument_uid()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000200U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000400U);
   ::std::string* _s = _internal_mutable_instrument_uid();
   // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.instrument_uid)
   return _s;
@@ -19426,10 +19929,10 @@ inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_OrderState::_int
 inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::release_instrument_uid() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.instrument_uid)
-  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000200U)) {
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000400U)) {
     return nullptr;
   }
-  ClearHasBit(_impl_._has_bits_[0], 0x00000200U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00000400U);
   auto* released = _impl_.instrument_uid_.Release();
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
     _impl_.instrument_uid_.Set("", GetArena());
@@ -19439,15 +19942,698 @@ inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_OrderState::rel
 inline void OrderStateStreamResponse_OrderState::set_allocated_instrument_uid(::std::string* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00000200U);
+    SetHasBit(_impl_._has_bits_[0], 0x00000400U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000200U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00000400U);
   }
   _impl_.instrument_uid_.SetAllocated(value, GetArena());
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.instrument_uid_.IsDefault()) {
     _impl_.instrument_uid_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.OrderState.instrument_uid)
+}
+
+// -------------------------------------------------------------------
+
+// OrderStateStreamResponse_StopOrderState
+
+// string stop_order_id = 1;
+inline void OrderStateStreamResponse_StopOrderState::clear_stop_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.stop_order_id_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline const ::std::string& OrderStateStreamResponse_StopOrderState::stop_order_id() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_order_id)
+  return _internal_stop_order_id();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void OrderStateStreamResponse_StopOrderState::set_stop_order_id(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  _impl_.stop_order_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_order_id)
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::mutable_stop_order_id()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::std::string* _s = _internal_mutable_stop_order_id();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_order_id)
+  return _s;
+}
+inline const ::std::string& OrderStateStreamResponse_StopOrderState::_internal_stop_order_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.stop_order_id_.Get();
+}
+inline void OrderStateStreamResponse_StopOrderState::_internal_set_stop_order_id(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.stop_order_id_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::_internal_mutable_stop_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.stop_order_id_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::release_stop_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_order_id)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  auto* released = _impl_.stop_order_id_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.stop_order_id_.Set("", GetArena());
+  }
+  return released;
+}
+inline void OrderStateStreamResponse_StopOrderState::set_allocated_stop_order_id(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+  _impl_.stop_order_id_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.stop_order_id_.IsDefault()) {
+    _impl_.stop_order_id_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_order_id)
+}
+
+// string account_id = 2;
+inline void OrderStateStreamResponse_StopOrderState::clear_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.account_id_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::std::string& OrderStateStreamResponse_StopOrderState::account_id() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.account_id)
+  return _internal_account_id();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void OrderStateStreamResponse_StopOrderState::set_account_id(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  _impl_.account_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.account_id)
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::mutable_account_id()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::std::string* _s = _internal_mutable_account_id();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.account_id)
+  return _s;
+}
+inline const ::std::string& OrderStateStreamResponse_StopOrderState::_internal_account_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.account_id_.Get();
+}
+inline void OrderStateStreamResponse_StopOrderState::_internal_set_account_id(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.account_id_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::_internal_mutable_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.account_id_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::release_account_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.account_id)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  auto* released = _impl_.account_id_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.account_id_.Set("", GetArena());
+  }
+  return released;
+}
+inline void OrderStateStreamResponse_StopOrderState::set_allocated_account_id(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+  _impl_.account_id_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.account_id_.IsDefault()) {
+    _impl_.account_id_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.account_id)
+}
+
+// .google.protobuf.Timestamp created_at = 3;
+inline bool OrderStateStreamResponse_StopOrderState::has_created_at() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000020U);
+  PROTOBUF_ASSUME(!value || _impl_.created_at_ != nullptr);
+  return value;
+}
+inline const ::google::protobuf::Timestamp& OrderStateStreamResponse_StopOrderState::_internal_created_at() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::google::protobuf::Timestamp* p = _impl_.created_at_;
+  return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
+}
+inline const ::google::protobuf::Timestamp& OrderStateStreamResponse_StopOrderState::created_at() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.created_at)
+  return _internal_created_at();
+}
+inline void OrderStateStreamResponse_StopOrderState::unsafe_arena_set_allocated_created_at(
+    ::google::protobuf::Timestamp* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.created_at_);
+  }
+  _impl_.created_at_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000020U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.created_at)
+}
+inline ::google::protobuf::Timestamp* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::release_created_at() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000020U);
+  ::google::protobuf::Timestamp* released = _impl_.created_at_;
+  _impl_.created_at_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::google::protobuf::Timestamp* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::unsafe_arena_release_created_at() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.created_at)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000020U);
+  ::google::protobuf::Timestamp* temp = _impl_.created_at_;
+  _impl_.created_at_ = nullptr;
+  return temp;
+}
+inline ::google::protobuf::Timestamp* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::_internal_mutable_created_at() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.created_at_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Timestamp>(GetArena());
+    _impl_.created_at_ = reinterpret_cast<::google::protobuf::Timestamp*>(p);
+  }
+  return _impl_.created_at_;
+}
+inline ::google::protobuf::Timestamp* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::mutable_created_at()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  ::google::protobuf::Timestamp* _msg = _internal_mutable_created_at();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.created_at)
+  return _msg;
+}
+inline void OrderStateStreamResponse_StopOrderState::set_allocated_created_at(::google::protobuf::Timestamp* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.created_at_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000020U);
+  }
+
+  _impl_.created_at_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.created_at)
+}
+
+// .tinkoff.public.invest.api.contract.v1.OrderDirection direction = 4;
+inline void OrderStateStreamResponse_StopOrderState::clear_direction() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.direction_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000100U);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OrderDirection OrderStateStreamResponse_StopOrderState::direction() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.direction)
+  return _internal_direction();
+}
+inline void OrderStateStreamResponse_StopOrderState::set_direction(::tinkoff::public_::invest::api::contract::v1::OrderDirection value) {
+  _internal_set_direction(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.direction)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OrderDirection OrderStateStreamResponse_StopOrderState::_internal_direction() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::OrderDirection>(_impl_.direction_);
+}
+inline void OrderStateStreamResponse_StopOrderState::_internal_set_direction(::tinkoff::public_::invest::api::contract::v1::OrderDirection value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.direction_ = value;
+}
+
+// .tinkoff.public.invest.api.contract.v1.MoneyValue price = 5;
+inline bool OrderStateStreamResponse_StopOrderState::has_price() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
+  PROTOBUF_ASSUME(!value || _impl_.price_ != nullptr);
+  return value;
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& OrderStateStreamResponse_StopOrderState::_internal_price() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue* p = _impl_.price_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::MoneyValue&>(::tinkoff::public_::invest::api::contract::v1::_MoneyValue_default_instance_);
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& OrderStateStreamResponse_StopOrderState::price() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.price)
+  return _internal_price();
+}
+inline void OrderStateStreamResponse_StopOrderState::unsafe_arena_set_allocated_price(
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.price_);
+  }
+  _impl_.price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000040U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.price)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::release_price() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000040U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.price_;
+  _impl_.price_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::unsafe_arena_release_price() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.price)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000040U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.price_;
+  _impl_.price_ = nullptr;
+  return temp;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::_internal_mutable_price() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.price_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(GetArena());
+    _impl_.price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(p);
+  }
+  return _impl_.price_;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::mutable_price()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_price();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.price)
+  return _msg;
+}
+inline void OrderStateStreamResponse_StopOrderState::set_allocated_price(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.price_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000040U);
+  }
+
+  _impl_.price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.price)
+}
+
+// .tinkoff.public.invest.api.contract.v1.MoneyValue stop_price = 6;
+inline bool OrderStateStreamResponse_StopOrderState::has_stop_price() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000080U);
+  PROTOBUF_ASSUME(!value || _impl_.stop_price_ != nullptr);
+  return value;
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& OrderStateStreamResponse_StopOrderState::_internal_stop_price() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue* p = _impl_.stop_price_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::MoneyValue&>(::tinkoff::public_::invest::api::contract::v1::_MoneyValue_default_instance_);
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& OrderStateStreamResponse_StopOrderState::stop_price() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_price)
+  return _internal_stop_price();
+}
+inline void OrderStateStreamResponse_StopOrderState::unsafe_arena_set_allocated_stop_price(
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.stop_price_);
+  }
+  _impl_.stop_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000080U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_price)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::release_stop_price() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000080U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.stop_price_;
+  _impl_.stop_price_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::unsafe_arena_release_stop_price() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_price)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000080U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.stop_price_;
+  _impl_.stop_price_ = nullptr;
+  return temp;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::_internal_mutable_stop_price() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.stop_price_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(GetArena());
+    _impl_.stop_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(p);
+  }
+  return _impl_.stop_price_;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::mutable_stop_price()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_stop_price();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_price)
+  return _msg;
+}
+inline void OrderStateStreamResponse_StopOrderState::set_allocated_stop_price(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.stop_price_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000080U);
+  }
+
+  _impl_.stop_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.stop_price)
+}
+
+// .tinkoff.public.invest.api.contract.v1.OrderType order_type = 7;
+inline void OrderStateStreamResponse_StopOrderState::clear_order_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.order_type_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000200U);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OrderType OrderStateStreamResponse_StopOrderState::order_type() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.order_type)
+  return _internal_order_type();
+}
+inline void OrderStateStreamResponse_StopOrderState::set_order_type(::tinkoff::public_::invest::api::contract::v1::OrderType value) {
+  _internal_set_order_type(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000200U);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.order_type)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OrderType OrderStateStreamResponse_StopOrderState::_internal_order_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::OrderType>(_impl_.order_type_);
+}
+inline void OrderStateStreamResponse_StopOrderState::_internal_set_order_type(::tinkoff::public_::invest::api::contract::v1::OrderType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.order_type_ = value;
+}
+
+// string instrument_uid = 8;
+inline void OrderStateStreamResponse_StopOrderState::clear_instrument_uid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_uid_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline const ::std::string& OrderStateStreamResponse_StopOrderState::instrument_uid() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.instrument_uid)
+  return _internal_instrument_uid();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void OrderStateStreamResponse_StopOrderState::set_instrument_uid(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  _impl_.instrument_uid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.instrument_uid)
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::mutable_instrument_uid()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::std::string* _s = _internal_mutable_instrument_uid();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.instrument_uid)
+  return _s;
+}
+inline const ::std::string& OrderStateStreamResponse_StopOrderState::_internal_instrument_uid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.instrument_uid_.Get();
+}
+inline void OrderStateStreamResponse_StopOrderState::_internal_set_instrument_uid(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_uid_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::_internal_mutable_instrument_uid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.instrument_uid_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::release_instrument_uid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.instrument_uid)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000004U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  auto* released = _impl_.instrument_uid_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.instrument_uid_.Set("", GetArena());
+  }
+  return released;
+}
+inline void OrderStateStreamResponse_StopOrderState::set_allocated_instrument_uid(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+  _impl_.instrument_uid_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.instrument_uid_.IsDefault()) {
+    _impl_.instrument_uid_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.instrument_uid)
+}
+
+// string ticker = 9;
+inline void OrderStateStreamResponse_StopOrderState::clear_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000008U);
+}
+inline const ::std::string& OrderStateStreamResponse_StopOrderState::ticker() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.ticker)
+  return _internal_ticker();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void OrderStateStreamResponse_StopOrderState::set_ticker(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  _impl_.ticker_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.ticker)
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::mutable_ticker()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  ::std::string* _s = _internal_mutable_ticker();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.ticker)
+  return _s;
+}
+inline const ::std::string& OrderStateStreamResponse_StopOrderState::_internal_ticker() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.ticker_.Get();
+}
+inline void OrderStateStreamResponse_StopOrderState::_internal_set_ticker(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::_internal_mutable_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.ticker_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::release_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.ticker)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000008U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000008U);
+  auto* released = _impl_.ticker_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.ticker_.Set("", GetArena());
+  }
+  return released;
+}
+inline void OrderStateStreamResponse_StopOrderState::set_allocated_ticker(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000008U);
+  }
+  _impl_.ticker_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ticker_.IsDefault()) {
+    _impl_.ticker_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.ticker)
+}
+
+// string class_code = 10;
+inline void OrderStateStreamResponse_StopOrderState::clear_class_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.class_code_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000010U);
+}
+inline const ::std::string& OrderStateStreamResponse_StopOrderState::class_code() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.class_code)
+  return _internal_class_code();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void OrderStateStreamResponse_StopOrderState::set_class_code(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  _impl_.class_code_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.class_code)
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::mutable_class_code()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  ::std::string* _s = _internal_mutable_class_code();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.class_code)
+  return _s;
+}
+inline const ::std::string& OrderStateStreamResponse_StopOrderState::_internal_class_code() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.class_code_.Get();
+}
+inline void OrderStateStreamResponse_StopOrderState::_internal_set_class_code(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.class_code_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL OrderStateStreamResponse_StopOrderState::_internal_mutable_class_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.class_code_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE OrderStateStreamResponse_StopOrderState::release_class_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.class_code)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000010U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000010U);
+  auto* released = _impl_.class_code_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.class_code_.Set("", GetArena());
+  }
+  return released;
+}
+inline void OrderStateStreamResponse_StopOrderState::set_allocated_class_code(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000010U);
+  }
+  _impl_.class_code_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.class_code_.IsDefault()) {
+    _impl_.class_code_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.class_code)
+}
+
+// .tinkoff.public.invest.api.contract.v1.StopOrderStatusOption status = 11;
+inline void OrderStateStreamResponse_StopOrderState::clear_status() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.status_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000400U);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::StopOrderStatusOption OrderStateStreamResponse_StopOrderState::status() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.status)
+  return _internal_status();
+}
+inline void OrderStateStreamResponse_StopOrderState::set_status(::tinkoff::public_::invest::api::contract::v1::StopOrderStatusOption value) {
+  _internal_set_status(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000400U);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState.status)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::StopOrderStatusOption OrderStateStreamResponse_StopOrderState::_internal_status() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::StopOrderStatusOption>(_impl_.status_);
+}
+inline void OrderStateStreamResponse_StopOrderState::_internal_set_status(::tinkoff::public_::invest::api::contract::v1::StopOrderStatusOption value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.status_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -19686,6 +20872,88 @@ inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionResponse* PROT
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   ::tinkoff::public_::invest::api::contract::v1::SubscriptionResponse* _msg = _internal_mutable_subscription();
   // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.subscription)
+  return _msg;
+}
+
+// .tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.StopOrderState stop_order_state = 4;
+inline bool OrderStateStreamResponse::has_stop_order_state() const {
+  return payload_case() == kStopOrderState;
+}
+inline bool OrderStateStreamResponse::_internal_has_stop_order_state() const {
+  return payload_case() == kStopOrderState;
+}
+inline void OrderStateStreamResponse::set_has_stop_order_state() {
+  _impl_._oneof_case_[0] = kStopOrderState;
+}
+inline void OrderStateStreamResponse::clear_stop_order_state() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (payload_case() == kStopOrderState) {
+    if (GetArena() == nullptr) {
+      delete _impl_.payload_.stop_order_state_;
+    } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+      ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.stop_order_state_);
+    }
+    clear_has_payload();
+  }
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NULLABLE OrderStateStreamResponse::release_stop_order_state() {
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.stop_order_state)
+  if (payload_case() == kStopOrderState) {
+    clear_has_payload();
+    auto* temp = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState*>(_impl_.payload_.stop_order_state_);
+    if (GetArena() != nullptr) {
+      temp = ::google::protobuf::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.payload_.stop_order_state_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState& OrderStateStreamResponse::_internal_stop_order_state() const {
+  return payload_case() == kStopOrderState ? static_cast<const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState&>(*reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState*>(_impl_.payload_.stop_order_state_))
+                     : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState&>(::tinkoff::public_::invest::api::contract::v1::_OrderStateStreamResponse_StopOrderState_default_instance_);
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState& OrderStateStreamResponse::stop_order_state() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.stop_order_state)
+  return _internal_stop_order_state();
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NULLABLE OrderStateStreamResponse::unsafe_arena_release_stop_order_state() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.stop_order_state)
+  if (payload_case() == kStopOrderState) {
+    clear_has_payload();
+    auto* temp = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState*>(_impl_.payload_.stop_order_state_);
+    _impl_.payload_.stop_order_state_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void OrderStateStreamResponse::unsafe_arena_set_allocated_stop_order_state(
+    ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NULLABLE value) {
+  // We rely on the oneof clear method to free the earlier contents
+  // of this oneof. We can directly use the pointer we're given to
+  // set the new value.
+  clear_payload();
+  if (value) {
+    set_has_stop_order_state();
+    _impl_.payload_.stop_order_state_ = reinterpret_cast<::google::protobuf::Message*>(value);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.stop_order_state)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NONNULL OrderStateStreamResponse::_internal_mutable_stop_order_state() {
+  if (payload_case() != kStopOrderState) {
+    clear_payload();
+    set_has_stop_order_state();
+    _impl_.payload_.stop_order_state_ = reinterpret_cast<::google::protobuf::Message*>(
+        ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState>(GetArena()));
+  }
+  return reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState*>(_impl_.payload_.stop_order_state_);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* PROTOBUF_NONNULL OrderStateStreamResponse::mutable_stop_order_state()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState* _msg = _internal_mutable_stop_order_state();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OrderStateStreamResponse.stop_order_state)
   return _msg;
 }
 

@@ -1789,6 +1789,7 @@ class StopOrder final : public ::google::protobuf::Message
     kTakeProfitTypeFieldNumber = 13,
     kStatusFieldNumber = 15,
     kExchangeOrderTypeFieldNumber = 16,
+    kInstantExecutionFieldNumber = 20,
   };
   // string stop_order_id = 1;
   void clear_stop_order_id() ;
@@ -2046,11 +2047,21 @@ class StopOrder final : public ::google::protobuf::Message
   void _internal_set_exchange_order_type(::tinkoff::public_::invest::api::contract::v1::ExchangeOrderType value);
 
   public:
+  // bool instant_execution = 20;
+  void clear_instant_execution() ;
+  bool instant_execution() const;
+  void set_instant_execution(bool value);
+
+  private:
+  bool _internal_instant_execution() const;
+  void _internal_set_instant_execution(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.StopOrder)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<5, 19,
+  static const ::google::protobuf::internal::TcParseTable<5, 20,
                                    6, 144,
                                    2>
       _table_;
@@ -2091,6 +2102,7 @@ class StopOrder final : public ::google::protobuf::Message
     int take_profit_type_;
     int status_;
     int exchange_order_type_;
+    bool instant_execution_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -2488,6 +2500,7 @@ class PostStopOrderRequest final : public ::google::protobuf::Message
     kTakeProfitTypeFieldNumber = 12,
     kPriceTypeFieldNumber = 14,
     kConfirmMarginTradeFieldNumber = 16,
+    kInstantExecutionFieldNumber = 17,
   };
   // optional string figi = 1 [deprecated = true];
   [[deprecated]]  bool has_figi() const;
@@ -2690,11 +2703,22 @@ class PostStopOrderRequest final : public ::google::protobuf::Message
   void _internal_set_confirm_margin_trade(bool value);
 
   public:
+  // optional bool instant_execution = 17;
+  bool has_instant_execution() const;
+  void clear_instant_execution() ;
+  bool instant_execution() const;
+  void set_instant_execution(bool value);
+
+  private:
+  bool _internal_instant_execution() const;
+  void _internal_set_instant_execution(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.PostStopOrderRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 16,
+  static const ::google::protobuf::internal::TcParseTable<5, 17,
                                    4, 118,
                                    2>
       _table_;
@@ -2732,6 +2756,7 @@ class PostStopOrderRequest final : public ::google::protobuf::Message
     int take_profit_type_;
     int price_type_;
     bool confirm_margin_trade_;
+    bool instant_execution_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -4033,6 +4058,35 @@ inline bool PostStopOrderRequest::_internal_confirm_margin_trade() const {
 inline void PostStopOrderRequest::_internal_set_confirm_margin_trade(bool value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.confirm_margin_trade_ = value;
+}
+
+// optional bool instant_execution = 17;
+inline bool PostStopOrderRequest::has_instant_execution() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00010000U);
+  return value;
+}
+inline void PostStopOrderRequest::clear_instant_execution() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instant_execution_ = false;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00010000U);
+}
+inline bool PostStopOrderRequest::instant_execution() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PostStopOrderRequest.instant_execution)
+  return _internal_instant_execution();
+}
+inline void PostStopOrderRequest::set_instant_execution(bool value) {
+  _internal_set_instant_execution(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00010000U);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PostStopOrderRequest.instant_execution)
+}
+inline bool PostStopOrderRequest::_internal_instant_execution() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.instant_execution_;
+}
+inline void PostStopOrderRequest::_internal_set_instant_execution(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instant_execution_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -6459,6 +6513,31 @@ inline void StopOrder::set_allocated_class_code(::std::string* PROTOBUF_NULLABLE
     _impl_.class_code_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.StopOrder.class_code)
+}
+
+// bool instant_execution = 20;
+inline void StopOrder::clear_instant_execution() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instant_execution_ = false;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00080000U);
+}
+inline bool StopOrder::instant_execution() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.StopOrder.instant_execution)
+  return _internal_instant_execution();
+}
+inline void StopOrder::set_instant_execution(bool value) {
+  _internal_set_instant_execution(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00080000U);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.StopOrder.instant_execution)
+}
+inline bool StopOrder::_internal_instant_execution() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.instant_execution_;
+}
+inline void StopOrder::_internal_set_instant_execution(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instant_execution_ = value;
 }
 
 #ifdef __GNUC__

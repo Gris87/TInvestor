@@ -6,9 +6,9 @@ import time
 from loguru import logger
 from pathlib import Path
 
-from tinkoff.invest import Client, GetOperationsByCursorRequest
-from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
-from tinkoff.invest.schemas import AccountType, OperationState
+from t_tech.invest import Client, GetOperationsByCursorRequest
+from t_tech.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
+from t_tech.invest.schemas import AccountType, OperationState
 
 
 RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"

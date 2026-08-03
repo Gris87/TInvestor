@@ -12,37 +12,37 @@ fi
 
 
 
-rm -rf /tmp/investAPI
+rm -rf /tmp/invest-contracts
 rm -rf /tmp/invest-python
-git clone git@github.com:RussianInvestments/investAPI.git /tmp/investAPI
-git clone git@github.com:RussianInvestments/invest-python.git /tmp/invest-python
+git clone https://opensource.tbank.ru/invest/invest-contracts.git /tmp/invest-contracts
+git clone https://opensource.tbank.ru/invest/invest-python.git /tmp/invest-python
 
 
 
 rm -rf libs/investapi/messages
-cp -r /tmp/investAPI/src/docs/contracts libs/investapi/messages
-rm -rf /tmp/investAPI
+cp -r /tmp/invest-contracts/src/docs/contracts libs/investapi/messages
+rm -rf /tmp/invest-contracts
 
-rm -rf tools/py3/tinkoff-accounts/tinkoff
-rm -rf tools/py3/tinkoff-annihilate-mm/tinkoff
-rm -rf tools/py3/tinkoff-asap-trading/tinkoff
-rm -rf tools/py3/tinkoff-bidir-trading/tinkoff
-rm -rf tools/py3/tinkoff-fall-trading/tinkoff
-rm -rf tools/py3/tinkoff-favorite-group/tinkoff
-rm -rf tools/py3/tinkoff-follower/tinkoff
-rm -rf tools/py3/tinkoff-terminate-trading/tinkoff
-rm -rf tools/py3/tinkoff-tmon-weekend-trading/tinkoff
-rm -rf tools/py3/tinvestor-notifier/tinkoff
-cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-accounts/tinkoff
-cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-annihilate-mm/tinkoff
-cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-asap-trading/tinkoff
-cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-bidir-trading/tinkoff
-cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-fall-trading/tinkoff
-cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-favorite-group/tinkoff
-cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-follower/tinkoff
-cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-terminate-trading/tinkoff
-cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-tmon-weekend-trading/tinkoff
-cp -r /tmp/invest-python/tinkoff tools/py3/tinvestor-notifier/tinkoff
+rm -rf tools/py3/tinkoff-accounts/t_tech
+rm -rf tools/py3/tinkoff-annihilate-mm/t_tech
+rm -rf tools/py3/tinkoff-asap-trading/t_tech
+rm -rf tools/py3/tinkoff-bidir-trading/t_tech
+rm -rf tools/py3/tinkoff-fall-trading/t_tech
+rm -rf tools/py3/tinkoff-favorite-group/t_tech
+rm -rf tools/py3/tinkoff-follower/t_tech
+rm -rf tools/py3/tinkoff-terminate-trading/t_tech
+rm -rf tools/py3/tinkoff-tmon-weekend-trading/t_tech
+rm -rf tools/py3/tinvestor-notifier/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-accounts/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-annihilate-mm/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-asap-trading/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-bidir-trading/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-fall-trading/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-favorite-group/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-follower/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-terminate-trading/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-tmon-weekend-trading/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinvestor-notifier/t_tech
 rm -rf /tmp/invest-python
 
 

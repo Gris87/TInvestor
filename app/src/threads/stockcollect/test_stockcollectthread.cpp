@@ -387,13 +387,13 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*zipFileMock1, exists()).WillOnce(Return(false));
     EXPECT_CALL(
         *httpClientMock,
-        get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), IHttpClient::Headers())
+        get(QUrl("https://invest-public-api.tbank.ru/history-data?instrumentId=aaaaa&year=2024"), IHttpClient::Headers())
     )
         .WillOnce(Return(tooManyRequestsHttpResult));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(
         *httpClientMock,
-        get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2024"), IHttpClient::Headers())
+        get(QUrl("https://invest-public-api.tbank.ru/history-data?instrumentId=aaaaa&year=2024"), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
     EXPECT_CALL(*zipFileMock1, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
@@ -420,7 +420,7 @@ TEST_F(Test_StockCollectThread, Test_run)
     EXPECT_CALL(*zipFileMock2, exists()).WillOnce(Return(false));
     EXPECT_CALL(
         *httpClientMock,
-        get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2025"), IHttpClient::Headers())
+        get(QUrl("https://invest-public-api.tbank.ru/history-data?instrumentId=aaaaa&year=2025"), IHttpClient::Headers())
     )
         .WillOnce(Return(internalServerErrorHttpResult));
     EXPECT_CALL(*zipFileMock2, getDevice()).WillOnce(Return(&zipBuffer));
@@ -431,7 +431,7 @@ TEST_F(Test_StockCollectThread, Test_run)
         .WillOnce(Return(std::shared_ptr<IFile>(zipFileMock3)));
     EXPECT_CALL(
         *httpClientMock,
-        get(QUrl("https://invest-public-api.tinkoff.ru/history-data?instrumentId=aaaaa&year=2026"), IHttpClient::Headers())
+        get(QUrl("https://invest-public-api.tbank.ru/history-data?instrumentId=aaaaa&year=2026"), IHttpClient::Headers())
     )
         .WillOnce(Return(tooManyRequestsHttpResult));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));

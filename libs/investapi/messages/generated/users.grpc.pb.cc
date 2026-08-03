@@ -34,6 +34,8 @@ static const char* UsersService_method_names[] = {
   "/tinkoff.public.invest.api.contract.v1.UsersService/GetInfo",
   "/tinkoff.public.invest.api.contract.v1.UsersService/GetBankAccounts",
   "/tinkoff.public.invest.api.contract.v1.UsersService/CurrencyTransfer",
+  "/tinkoff.public.invest.api.contract.v1.UsersService/PayIn",
+  "/tinkoff.public.invest.api.contract.v1.UsersService/GetAccountValues",
 };
 
 std::unique_ptr< UsersService::Stub> UsersService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -49,6 +51,8 @@ UsersService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chann
   , rpcmethod_GetInfo_(UsersService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetBankAccounts_(UsersService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_CurrencyTransfer_(UsersService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_PayIn_(UsersService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAccountValues_(UsersService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status UsersService::Stub::GetAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* response) {
@@ -189,6 +193,52 @@ void UsersService::Stub::async::CurrencyTransfer(::grpc::ClientContext* context,
   return result;
 }
 
+::grpc::Status UsersService::Stub::PayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::PayInRequest, ::tinkoff::public_::invest::api::contract::v1::PayInResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PayIn_, context, request, response);
+}
+
+void UsersService::Stub::async::PayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::PayInRequest, ::tinkoff::public_::invest::api::contract::v1::PayInResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PayIn_, context, request, response, std::move(f));
+}
+
+void UsersService::Stub::async::PayIn(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PayIn_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>* UsersService::Stub::PrepareAsyncPayInRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::PayInResponse, ::tinkoff::public_::invest::api::contract::v1::PayInRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PayIn_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PayInResponse>* UsersService::Stub::AsyncPayInRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncPayInRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status UsersService::Stub::GetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetAccountValues_, context, request, response);
+}
+
+void UsersService::Stub::async::GetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetAccountValues_, context, request, response, std::move(f));
+}
+
+void UsersService::Stub::async::GetAccountValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetAccountValues_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>* UsersService::Stub::PrepareAsyncGetAccountValuesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetAccountValues_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse>* UsersService::Stub::AsyncGetAccountValuesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetAccountValuesRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 UsersService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UsersService_method_names[0],
@@ -250,6 +300,26 @@ UsersService::Service::Service() {
              ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* resp) {
                return service->CurrencyTransfer(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UsersService_method_names[6],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::public_::invest::api::contract::v1::PayInRequest, ::tinkoff::public_::invest::api::contract::v1::PayInResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UsersService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::PayInResponse* resp) {
+               return service->PayIn(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      UsersService_method_names[7],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](UsersService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* resp) {
+               return service->GetAccountValues(ctx, req, resp);
+             }, this)));
 }
 
 UsersService::Service::~Service() {
@@ -291,6 +361,20 @@ UsersService::Service::~Service() {
 }
 
 ::grpc::Status UsersService::Service::CurrencyTransfer(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyTransferResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UsersService::Service::PayIn(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PayInRequest* request, ::tinkoff::public_::invest::api::contract::v1::PayInResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status UsersService::Service::GetAccountValues(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountValuesResponse* response) {
   (void) context;
   (void) request;
   (void) response;
