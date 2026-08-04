@@ -49,6 +49,24 @@ runs:
             "Linux"   { sudo apt-get update; sudo apt-get install -y lcov }
         }
 
+    # Install Russian certificates
+    - name: Install Russian certificates
+      if: steps.cache-test.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                Import-Certificate -FilePath ./TInvestor-source/app/dist/russian_trusted_root_ca_pem.crt -CertStoreLocation Cert:\LocalMachine\Root
+                Import-Certificate -FilePath ./TInvestor-source/app/dist/russian_trusted_sub_ca_pem.crt -CertStoreLocation Cert:\LocalMachine\Root
+            }
+            "Linux" {
+                sudo cp ./TInvestor-source/app/dist/russian_trusted_root_ca_pem.crt /usr/local/share/ca-certificates/
+                sudo cp ./TInvestor-source/app/dist/russian_trusted_sub_ca_pem.crt /usr/local/share/ca-certificates/
+                sudo update-ca-certificates
+            }
+        }
+
     # Download build artifacts (debug)
     - name: Download build artifacts (debug)
       if: steps.cache-test.outputs.cache-hit != 'true'
