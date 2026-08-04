@@ -46,3 +46,7 @@ chmod 755 ${TINVESTOR_DESKTOP_FILE}
 chmod 755 ${NOTIFIER_DESKTOP_FILE}
 chmod 755 $HOME/Desktop/TInvestor.desktop
 chmod 755 $HOME/Desktop/TInvestorNotifier.desktop
+
+sudo cp russian_trusted_root_ca_pem.crt /usr/local/share/ca-certificates/
+sudo cp russian_trusted_sub_ca_pem.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates

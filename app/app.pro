@@ -42,15 +42,17 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 
+copy_dist_files.commands =  $(COPY_FILE) "$$shell_path($${PWD}/dist/russian_trusted_root_ca_pem.crt)" "$$shell_path($${OUT_PWD}/build)" &&
+copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/russian_trusted_sub_ca_pem.crt)" "$$shell_path($${OUT_PWD}/build)" &&
+
 win32* {
-    copy_dist_files.commands =  $(COPY_FILE) "$$shell_path($${PWD}/dist/windows/post_install.bat)" "$$shell_path($${OUT_PWD}/build)" &&
-    copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/windows/tbank.ru.crt)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/windows/post_install.bat)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_dist_files.commands += ($(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/tools)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/tools)") &&
     copy_dist_files.commands += ($(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/tools/py3)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/tools/py3)") &&
 }
 
 linux* {
-    copy_dist_files.commands =  $(COPY_FILE) "$$shell_path($${PWD}/dist/linux/icon.png)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/linux/icon.png)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/linux/notifier_icon.png)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_dist_files.commands += $(COPY_FILE) "$$shell_path($${PWD}/dist/linux/post_install.sh)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_dist_files.commands += $(MKDIR) "$$shell_path($${OUT_PWD}/build/tools)" &&
