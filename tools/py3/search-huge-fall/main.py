@@ -37,33 +37,34 @@ def _process_stocks(args, stocks):
     commands = []
 
     for stock in stocks:
-        commands.append(
-            [
-                "python",
-                str(Path(PATH_TO_SCRIPT) / "parallel.py"),
-                "--cache", args.cache,
-                "--instrument-id", stock["instrumentId"],
-                "--ticker", stock["instrumentTicker"],
-                "--day-range", f"{args.day_range}",
-                "--fall", f"{args.fall:.1f}",
-            ]
-        )
+        if not stock["forQualInvestorFlag"]:
+            commands.append(
+                [
+                    "python",
+                    str(Path(PATH_TO_SCRIPT) / "parallel.py"),
+                    "--cache", args.cache,
+                    "--instrument-id", stock["instrumentId"],
+                    "--ticker", stock["instrumentTicker"],
+                    "--day-range", f"{args.day_range}",
+                    "--fall", f"{args.fall:.1f}",
+                ]
+            )
 
     success, output = _execute_commands(commands)
 
     if success:
         output.sort(key=lambda x: x[args.sort_by])
 
-        print("========================================")
-        print("Time                   Stock      Fall")
-        print("========================================")
+        print("======================================")
+        print("Time                   Stock    Fall")
+        print("======================================")
 
         for stock_result in output:
             timestamp = stock_result["timestamp"]
             ticker = stock_result["ticker"]
             fall = stock_result["fall"]
 
-            print(f"{timestamp:19}    {ticker:7}    {fall:3}%")
+            print(f"{timestamp:19}    {ticker:5}    {fall:5.2f}%")
 
 
 def _execute_commands(commands):

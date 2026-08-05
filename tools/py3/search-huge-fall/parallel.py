@@ -1,5 +1,6 @@
 import argparse
 import csv
+import datetime as dt
 import json
 import re
 import requests
@@ -11,6 +12,7 @@ from datetime import datetime, timezone
 from http import HTTPStatus
 from io import TextIOWrapper
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 
 HISTORY_DATA_URL = "https://invest-public-api.tbank.ru/history-data"
@@ -22,6 +24,8 @@ ONE_MINUTE   = 60 * MS_IN_SECOND
 ONE_HOUR     = 60 * ONE_MINUTE
 ONE_DAY      = 24 * ONE_HOUR
 
+MAXIMUM_STEP_DELTA = 2 * ONE_HOUR
+
 CSV_FIELD_FIGI = 0
 CSV_FIELD_TIMESTAMP = 1
 CSV_FIELD_OPEN_PRICE = 2
@@ -31,6 +35,11 @@ CSV_FIELD_LOW_PRICE = 5
 CSV_FIELD_VOLUME = 6
 
 ZIP_FILENAME_REGEXP = re.compile(r".*_(\d{4})(\d{2})(\d{2})\.csv")
+
+MOSCOW_TZ = ZoneInfo("Europe/Moscow")
+
+WORKDAY_START = dt.time(10, 5, tzinfo=MOSCOW_TZ)
+WORKDAY_END   = dt.time(22, 30, tzinfo=MOSCOW_TZ)
 
 
 def process_stock(args):
@@ -129,7 +138,36 @@ def _download_file(params):
 def _search_falls(args, data):
     res = []
 
+    for i in range(len(data) - 1):
+        cur = data[i]
+        next = data[i + 1]
+
+        if next["timestamp"] - cur["timestamp"] < MAXIMUM_STEP_DELTA:
+            cur_close_price = cur["closePrice"]
+            next_low_price = next["lowPrice"]
+
+            fall = HUNDRED_PERCENT - (next_low_price / cur_close_price) * HUNDRED_PERCENT
+
+            if fall >= args.fall:
+                cur_datetime = datetime.fromtimestamp(cur["timestamp"] / MS_IN_SECOND, MOSCOW_TZ)
+
+                if _is_working_day(cur_datetime):
+                    res.append({
+                        "timestamp": cur_datetime.strftime("%Y-%m-%d %H:%M:%S"),
+                        "ticker": args.ticker,
+                        "fall": fall,
+                    })
+
     return res
+
+
+def _is_working_day(d):
+    if d.isoweekday() >= 6:
+        return False
+
+    t = d.timetz()
+
+    return t >= WORKDAY_START and t < WORKDAY_END
 
 
 if __name__ == "__main__":
