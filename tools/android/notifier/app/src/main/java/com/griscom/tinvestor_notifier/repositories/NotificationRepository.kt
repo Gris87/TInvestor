@@ -11,6 +11,12 @@ class NotificationRepository(
 ) {
     val notificationsListReversed: Flow<List<NotificationEntity>> = notificationDao.getNotificationsReversed()
 
+    suspend fun getNotificationById(notificationId: Int): NotificationEntity {
+        return withContext(Dispatchers.IO) {
+            return@withContext notificationDao.getNotificationById(notificationId) ?: NotificationEntity()
+        }
+    }
+
     suspend fun insertNotifications(notifications: List<NotificationEntity>) {
         notificationDao.insertNotifications(notifications)
     }

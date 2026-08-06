@@ -37,8 +37,8 @@ class MainActivityUnitTest1 {
                                     imageComparator =
                                         SimpleImageComparator(
                                             maxDistance = 0.007F,
-                                            vShift = 2,
-                                            hShift = 2,
+                                            vShift = 1,
+                                            hShift = 1,
                                         ),
                                 ),
                         ),

@@ -57,7 +57,6 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.griscom.tinvestor_notifier.R
 import com.griscom.tinvestor_notifier.datastore.DataStoreManager
-import com.griscom.tinvestor_notifier.db.NotificationDao
 import com.griscom.tinvestor_notifier.db.NotificationEntity
 import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
 import com.griscom.tinvestor_notifier.repositories.NotificationRepository
@@ -106,12 +105,12 @@ class MainActivity : ComponentActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_CODE_POST_NOTIFICATIONS)
         }
 
-        val db = NotificationRoomDatabase.getInstance(application)
-        val notificationDao = db.notificationDao()
+        val repository =
+            NotificationRepository(NotificationRoomDatabase.getInstance(application).notificationDao())
 
         setContent {
             TInvestorNotifierTheme {
-                ConversationContent(notificationDao)
+                ConversationContent(repository)
             }
         }
     }
@@ -126,10 +125,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ConversationContent(
-    notificationDao: NotificationDao,
+    repository: NotificationRepository,
     listState: LazyListState = rememberLazyListState(),
 ) {
-    val repository = NotificationRepository(notificationDao)
     val notifications by repository.notificationsListReversed.collectAsState(initial = emptyList())
 
     ConversationContentInternal(notifications, listState)
@@ -322,7 +320,7 @@ fun NotificationItem(
                     onClick = {
                         val intent =
                             Intent(context, LogDisplayActivity::class.java).apply {
-                                putExtra("LOG_KEY", notification.data)
+                                putExtra("NOTIFICATION_ID", notification.id)
                             }
                         context.startActivity(intent)
                     },

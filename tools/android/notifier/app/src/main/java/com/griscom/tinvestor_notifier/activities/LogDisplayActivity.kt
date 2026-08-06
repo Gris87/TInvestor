@@ -16,12 +16,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.griscom.tinvestor_notifier.R
+import com.griscom.tinvestor_notifier.db.NotificationRoomDatabase
+import com.griscom.tinvestor_notifier.repositories.NotificationRepository
 import com.griscom.tinvestor_notifier.ui.theme.TInvestorNotifierTheme
 import my.nanihadesuka.compose.ColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSettings
@@ -31,18 +38,36 @@ class LogDisplayActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val text = intent.getStringExtra("LOG_KEY") ?: ""
+        val repository =
+            NotificationRepository(NotificationRoomDatabase.getInstance(application).notificationDao())
+
+        val notificationId = intent.getIntExtra("NOTIFICATION_ID", 1)
 
         setContent {
             TInvestorNotifierTheme {
-                LogDisplayContent(text)
+                LogDisplayContent(repository, notificationId)
             }
         }
     }
 }
 
 @Composable
-fun LogDisplayContent(text: String) {
+fun LogDisplayContent(
+    repository: NotificationRepository,
+    notificationId: Int,
+) {
+    var text by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        val notification = repository.getNotificationById(notificationId)
+        text = notification.data
+    }
+
+    LogDisplayContentInternal(text)
+}
+
+@Composable
+fun LogDisplayContentInternal(text: String) {
     val scrollState = rememberScrollState()
 
     Scaffold(
@@ -73,9 +98,9 @@ fun LogDisplayContent(text: String) {
 
 @Preview
 @Composable
-fun LogDisplayContentPreview() {
+fun LogDisplayContentInternalPreview() {
     TInvestorNotifierTheme {
-        LogDisplayContent(
+        LogDisplayContentInternal(
             """
             This is a multiline text block in Jetpack Compose.
             You can long-press anywhere on this paragraph to bring up

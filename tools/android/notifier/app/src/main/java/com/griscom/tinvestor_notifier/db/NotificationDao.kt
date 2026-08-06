@@ -10,6 +10,9 @@ interface NotificationDao {
     @Query("SELECT * FROM notifications ORDER BY id DESC")
     fun getNotificationsReversed(): Flow<List<NotificationEntity>>
 
+    @Query("SELECT * FROM notifications WHERE id = :notificationId")
+    suspend fun getNotificationById(notificationId: Int): NotificationEntity?
+
     @Insert
     suspend fun insertNotifications(notifications: List<NotificationEntity>)
 
