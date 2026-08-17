@@ -51,6 +51,18 @@ TEST_F(Test_Notifier, Test_setFilter)
     notifier->setFilter(filter);
 }
 
+TEST_F(Test_Notifier, Test_handleDisconnection)
+{
+    const InSequence seq;
+
+    StrictMock<NotificationWidgetMock> notificationWidgetMock;
+
+    EXPECT_CALL(*notificationWidgetFactoryMock, newInstance(QString("Connection lost"), nullptr))
+        .WillOnce(Return(&notificationWidgetMock));
+
+    notifier->handleDisconnection();
+}
+
 TEST_F(Test_Notifier, Test_notificationsAdded_and_resetNotificationWidgets)
 {
     const InSequence seq;

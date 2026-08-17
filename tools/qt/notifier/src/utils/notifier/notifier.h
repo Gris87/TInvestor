@@ -21,6 +21,7 @@ public:
 
     void setEnabled(bool enabled) override;
     void setFilter(const Filter& filter) override;
+    void handleDisconnection() override;
     void resetNotificationWidgets() override;
     void notificationsAdded(const QList<NotificationInfo>& notifications) override;
 

@@ -77,6 +77,14 @@
     </message>
 </context>
 <context>
+    <name>Notifier</name>
+    <message>
+        <location filename="../../src/utils/notifier/notifier.cpp" line="50"/>
+        <source>Connection lost</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../../src/main.cpp" line="97"/>

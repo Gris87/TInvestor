@@ -141,6 +141,8 @@ void MainWindow::requestTimerTicked()
 void MainWindow::disconnectTimerTicked()
 {
     mTrayIcon->handleDisconnection();
+    mNotifier->handleDisconnection();
+
     disconnectTimer.stop();
 }
 

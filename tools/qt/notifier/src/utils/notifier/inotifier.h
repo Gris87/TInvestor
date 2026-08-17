@@ -25,6 +25,7 @@ public:
 
     virtual void setEnabled(bool enabled)                                         = 0;
     virtual void setFilter(const Filter& filter)                                  = 0;
+    virtual void handleDisconnection()                                            = 0;
     virtual void resetNotificationWidgets()                                       = 0;
     virtual void notificationsAdded(const QList<NotificationInfo>& notifications) = 0;
 

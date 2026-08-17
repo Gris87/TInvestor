@@ -39,6 +39,22 @@ void Notifier::setFilter(const Filter& filter)
     mFilter = filter;
 }
 
+void Notifier::handleDisconnection()
+{
+    QList<NotificationInfo> notifications;
+    NotificationInfo        notification;
+
+    notification.requestTimestamp = QDateTime::currentMSecsSinceEpoch();
+    notification.timestamp        = notification.requestTimestamp;
+    notification.messageType      = MESSAGE_TYPE_SYSTEM;
+    notification.text             = tr("Connection lost");
+    notification.data             = "";
+
+    notifications.append(notification);
+
+    notificationsAdded(notifications);
+}
+
 void Notifier::resetNotificationWidgets()
 {
     for (INotificationWidget* notificationWidget : std::as_const(mNotificationWidgets))

@@ -231,6 +231,7 @@ TEST_F(Test_MainWindow, Test_disconnectTimerTicked)
     ASSERT_EQ(mainWindow->disconnectTimer.isActive(), true);
 
     EXPECT_CALL(*trayIconMock, handleDisconnection());
+    EXPECT_CALL(*notifierMock, handleDisconnection());
 
     mainWindow->disconnectTimerTicked();
 

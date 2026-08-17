@@ -24,6 +24,7 @@ public:
 
     MOCK_METHOD(void, setEnabled, (bool enabled), (override));
     MOCK_METHOD(void, setFilter, (const Filter& filter), (override));
+    MOCK_METHOD(void, handleDisconnection, (), (override));
     MOCK_METHOD(void, resetNotificationWidgets, (), (override));
     MOCK_METHOD(void, notificationsAdded, (const QList<NotificationInfo>& notifications), (override));
 };
