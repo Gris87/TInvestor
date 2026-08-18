@@ -589,6 +589,53 @@ void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marke
     }
 }
 
+std::shared_ptr<OperationsStream> GrpcClient::createOperationsStream(const QString& accountId)
+{
+    std::shared_ptr<OperationsStream> res = std::make_shared<OperationsStream>();
+
+    tinkoff::OperationsStreamRequest req;
+    req.add_accounts(accountId.toStdString());
+
+    res->context.set_credentials(mCreds);
+    res->stream = mRawGrpcClient->createOperationsStream(mOperationsStreamService, &res->context, req);
+
+    return res;
+}
+
+std::shared_ptr<tinkoff::OperationsStreamResponse>
+GrpcClient::readOperationsStream(std::shared_ptr<OperationsStream>& operationsStream)
+{
+    std::shared_ptr<tinkoff::OperationsStreamResponse> resp = std::make_shared<tinkoff::OperationsStreamResponse>();
+
+    if (!mRawGrpcClient->readOperationsStream(operationsStream, resp.get()))
+    {
+        // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readOperationsStream()"); // Not a problem
+
+        return nullptr;
+    }
+
+    return resp;
+}
+
+void GrpcClient::cancelOperationsStream(std::shared_ptr<OperationsStream>& operationsStream)
+{
+    operationsStream->context.TryCancel();
+}
+
+void GrpcClient::finishOperationsStream(std::shared_ptr<OperationsStream>& operationsStream)
+{
+    const grpc::Status     status    = mRawGrpcClient->finishOperationsStream(operationsStream);
+    const grpc::StatusCode errorCode = status.error_code();
+
+    if (!status.ok() &&
+        errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED &&
+        errorCode != grpc::StatusCode::UNKNOWN &&
+        errorCode != grpc::StatusCode::CANCELLED)
+    {
+        emitAuthFailed(status);
+    }
+}
+
 std::shared_ptr<PortfolioStream> GrpcClient::createPortfolioStream(const QString& accountId)
 {
     std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();

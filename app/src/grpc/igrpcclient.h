@@ -75,6 +75,12 @@ public:
     virtual void cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) = 0;
     virtual void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) = 0;
 
+    virtual std::shared_ptr<OperationsStream> createOperationsStream(const QString& accountId) = 0;
+    virtual std::shared_ptr<tinkoff::OperationsStreamResponse>
+                 readOperationsStream(std::shared_ptr<OperationsStream>& operationsStream)   = 0;
+    virtual void cancelOperationsStream(std::shared_ptr<OperationsStream>& operationsStream) = 0;
+    virtual void finishOperationsStream(std::shared_ptr<OperationsStream>& operationsStream) = 0;
+
     virtual std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId)                                  = 0;
     virtual std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId, const QString& anotherAccountId) = 0;
     virtual std::shared_ptr<tinkoff::PortfolioStreamResponse>

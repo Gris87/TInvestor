@@ -105,6 +105,16 @@ public:
     MOCK_METHOD(void, cancelMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
     MOCK_METHOD(void, finishMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
 
+    MOCK_METHOD(std::shared_ptr<OperationsStream>, createOperationsStream, (const QString& accountId), (override));
+    MOCK_METHOD(
+        std::shared_ptr<tinkoff::OperationsStreamResponse>,
+        readOperationsStream,
+        (std::shared_ptr<OperationsStream> & operationsStream),
+        (override)
+    );
+    MOCK_METHOD(void, cancelOperationsStream, (std::shared_ptr<OperationsStream> & operationsStream), (override));
+    MOCK_METHOD(void, finishOperationsStream, (std::shared_ptr<OperationsStream> & operationsStream), (override));
+
     MOCK_METHOD(std::shared_ptr<PortfolioStream>, createPortfolioStream, (const QString& accountId), (override));
     MOCK_METHOD(
         std::shared_ptr<PortfolioStream>,

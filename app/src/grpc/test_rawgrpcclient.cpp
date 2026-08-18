@@ -974,6 +974,33 @@ TEST_F(Test_RawGrpcClient, Test_MarketDataStream)
     ASSERT_EQ(client->finishMarketDataStream(marketDataStream).error_code(), grpc::StatusCode::CANCELLED);
 }
 
+TEST_F(Test_RawGrpcClient, Test_OperationsStream)
+{
+    const InSequence seq;
+
+    tinkoff::OperationsStreamRequest req;
+    req.add_accounts("0f81dc3c-d399-4018-ac3d-4ae077d9e34d");
+
+    QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+
+    std::shared_ptr<OperationsStream> operationsStream(new OperationsStream());
+
+    operationsStream->context.set_credentials(creds);
+    operationsStream->stream = client->createOperationsStream(operationsStreamService, &operationsStream->context, req);
+
+    ASSERT_NE(operationsStream->stream, nullptr);
+
+    operationsStream->context.TryCancel();
+
+    tinkoff::OperationsStreamResponse resp;
+    ASSERT_EQ(client->readOperationsStream(operationsStream, &resp), false);
+
+    ASSERT_EQ(client->finishOperationsStream(operationsStream).error_code(), grpc::StatusCode::CANCELLED);
+}
+
 TEST_F(Test_RawGrpcClient, Test_PortfolioStream)
 {
     const InSequence seq;

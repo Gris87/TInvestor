@@ -53,6 +53,14 @@ struct MarketDataStream
     Stream              stream;
 };
 
+struct OperationsStream
+{
+    using Stream = std::unique_ptr<grpc::ClientReader<tinkoff::OperationsStreamResponse>>;
+
+    grpc::ClientContext context;
+    Stream              stream;
+};
+
 struct PortfolioStream
 {
     using Stream = std::unique_ptr<grpc::ClientReader<tinkoff::PortfolioStreamResponse>>;
@@ -170,6 +178,15 @@ public:
     )                                                                                                                         = 0;
     virtual bool readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream, tinkoff::MarketDataResponse* resp) = 0;
     virtual grpc::Status finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                          = 0;
+
+    virtual OperationsStream::Stream createOperationsStream(
+        const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
+        grpc::ClientContext*                                           context,
+        const tinkoff::OperationsStreamRequest&                        req
+    ) = 0;
+    virtual bool
+    readOperationsStream(std::shared_ptr<OperationsStream>& operationsStream, tinkoff::OperationsStreamResponse* resp) = 0;
+    virtual grpc::Status finishOperationsStream(std::shared_ptr<OperationsStream>& operationsStream)                   = 0;
 
     virtual PortfolioStream::Stream createPortfolioStream(
         const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,

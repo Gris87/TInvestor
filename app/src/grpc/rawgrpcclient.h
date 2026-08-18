@@ -116,6 +116,15 @@ public:
     bool readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream, tinkoff::MarketDataResponse* resp) override;
     grpc::Status finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
 
+    OperationsStream::Stream createOperationsStream(
+        const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
+        grpc::ClientContext*                                           context,
+        const tinkoff::OperationsStreamRequest&                        req
+    ) override;
+    bool
+    readOperationsStream(std::shared_ptr<OperationsStream>& operationsStream, tinkoff::OperationsStreamResponse* resp) override;
+    grpc::Status finishOperationsStream(std::shared_ptr<OperationsStream>& operationsStream) override;
+
     PortfolioStream::Stream createPortfolioStream(
         const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
         grpc::ClientContext*                                           context,

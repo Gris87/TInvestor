@@ -502,6 +502,67 @@ TEST_F(Test_GrpcClient, Test_finishMarketDataStream)
     client->finishMarketDataStream(marketDataStream);
 }
 
+TEST_F(Test_GrpcClient, Test_createOperationsStream)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createOperationsStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    const std::shared_ptr<OperationsStream> operationsStream = client->createOperationsStream("aaaaa");
+    ASSERT_NE(operationsStream, nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_readOperationsStream)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createOperationsStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    std::shared_ptr<OperationsStream> operationsStream = client->createOperationsStream("aaaaa");
+    ASSERT_NE(operationsStream, nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, readOperationsStream(operationsStream, NotNull())).WillOnce(Return(false));
+
+    ASSERT_EQ(client->readOperationsStream(operationsStream), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, readOperationsStream(operationsStream, NotNull())).WillOnce(Return(true));
+
+    ASSERT_NE(client->readOperationsStream(operationsStream), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_cancelOperationsStream)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createOperationsStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    std::shared_ptr<OperationsStream> operationsStream = client->createOperationsStream("aaaaa");
+    ASSERT_NE(operationsStream, nullptr);
+
+    client->cancelOperationsStream(operationsStream);
+}
+
+TEST_F(Test_GrpcClient, Test_finishOperationsStream)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, createOperationsStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    std::shared_ptr<OperationsStream> operationsStream = client->createOperationsStream("aaaaa");
+    ASSERT_NE(operationsStream, nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, finishOperationsStream(operationsStream)).WillOnce(Return(badStatus));
+
+    client->finishOperationsStream(operationsStream);
+
+    EXPECT_CALL(*rawGrpcClientMock, finishOperationsStream(operationsStream)).WillOnce(Return(goodStatus));
+
+    client->finishOperationsStream(operationsStream);
+}
+
 TEST_F(Test_GrpcClient, Test_createPortfolioStream)
 {
     const InSequence seq;
