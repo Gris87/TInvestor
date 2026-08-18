@@ -627,9 +627,7 @@ void GrpcClient::finishOperationsStream(std::shared_ptr<OperationsStream>& opera
     const grpc::Status     status    = mRawGrpcClient->finishOperationsStream(operationsStream);
     const grpc::StatusCode errorCode = status.error_code();
 
-    if (!status.ok() &&
-        errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED &&
-        errorCode != grpc::StatusCode::UNKNOWN &&
+    if (!status.ok() && errorCode != grpc::StatusCode::RESOURCE_EXHAUSTED && errorCode != grpc::StatusCode::UNKNOWN &&
         errorCode != grpc::StatusCode::CANCELLED)
     {
         emitAuthFailed(status);

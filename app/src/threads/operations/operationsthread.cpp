@@ -44,7 +44,7 @@ OperationsThread::OperationsThread(
     mGrpcRetryClient(grpcRetryClient),
     mOptimizer(optimizer),
     mAccountId(),
-    mPortfolioStream(),
+    mOperationsStream(),
     mLastCleanRefreshTimestamp(),
     mLastRequestTimestamp(),
     mLastOperationTimestamp(),
@@ -80,7 +80,7 @@ void OperationsThread::run()
 
     while (!QThread::currentThread()->isInterruptionRequested())
     {
-        if (createPortfolioStream())
+        if (createOperationsStream())
         {
             if (requestOperations())
             {
@@ -90,17 +90,17 @@ void OperationsThread::run()
                 {
                     optimize();
 
-                    const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
-                        mGrpcClient->readPortfolioStream(mPortfolioStream);
+                    const std::shared_ptr<tinkoff::OperationsStreamResponse> operationsStreamResponse =
+                        mGrpcClient->readOperationsStream(mOperationsStream);
 
-                    if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
+                    if (QThread::currentThread()->isInterruptionRequested() || operationsStreamResponse == nullptr)
                     {
                         mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread());
 
                         break;
                     }
 
-                    if (portfolioStreamResponse->has_portfolio())
+                    if (operationsStreamResponse->has_operation())
                     {
                         if (mTimeUtils->interruptibleSleep(SLEEP_BEFORE_REQUEST, QThread::currentThread()))
                         {
@@ -118,9 +118,9 @@ void OperationsThread::run()
 
             const QWriteLocker lock(mRwMutex);
 
-            mGrpcClient->cancelPortfolioStream(mPortfolioStream);
-            mGrpcClient->finishPortfolioStream(mPortfolioStream);
-            mPortfolioStream = nullptr;
+            mGrpcClient->cancelOperationsStream(mOperationsStream);
+            mGrpcClient->finishOperationsStream(mOperationsStream);
+            mOperationsStream = nullptr;
         }
         else
         {
@@ -148,15 +148,15 @@ void OperationsThread::terminateThread()
 
     const QReadLocker lock(mRwMutex);
 
-    if (mPortfolioStream != nullptr)
+    if (mOperationsStream != nullptr)
     {
-        mGrpcClient->cancelPortfolioStream(mPortfolioStream);
+        mGrpcClient->cancelOperationsStream(mOperationsStream);
     }
 
     requestInterruption();
 }
 
-bool OperationsThread::createPortfolioStream()
+bool OperationsThread::createOperationsStream()
 {
     bool res = false;
 
@@ -164,9 +164,9 @@ bool OperationsThread::createPortfolioStream()
 
     if (!QThread::currentThread()->isInterruptionRequested())
     {
-        mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId);
+        mOperationsStream = mGrpcClient->createOperationsStream(mAccountId);
 
-        res = mPortfolioStream != nullptr;
+        res = mOperationsStream != nullptr;
     }
 
     return res;

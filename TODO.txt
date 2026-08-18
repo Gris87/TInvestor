@@ -1,4 +1,3 @@
-OperationsStream
 In case if income will decrease double check what was changed since 2026-07-06 (Additional gap is 3%)
 Update defaults
 Improve coverage

@@ -43,7 +43,7 @@ public:
     void setAccountId(const QString& account, const QString& accountId) override;
     void terminateThread() override;
 
-    bool createPortfolioStream();
+    bool createOperationsStream();
 
     bool requestOperations();
     void handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
@@ -73,28 +73,28 @@ private:
     [[nodiscard]]
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;
 
-    QReadWriteLock*                  mRwMutex;
-    IOperationsDatabase*             mOperationsDatabase;
-    IInstrumentsStorage*             mInstrumentsStorage;
-    ILogosStorage*                   mLogosStorage;
-    ITimeUtils*                      mTimeUtils;
-    IGrpcClient*                     mGrpcClient;
-    IGrpcRetryClient*                mGrpcRetryClient;
-    IOptimizer*                      mOptimizer;
-    QString                          mAccountId;
-    std::shared_ptr<PortfolioStream> mPortfolioStream;
-    qint64                           mLastCleanRefreshTimestamp;
-    qint64                           mLastRequestTimestamp;
-    qint64                           mLastOperationTimestamp;
-    qint8                            mAmountOfOperationsWithSameTimestamp;
-    int                              mAmountOfEntries;
-    int                              mLimitOperations;
-    int                              mOptimizeSize;
-    QString                          mLastPositionUidForExtAccount;
-    QSet<QString>                    mOperationsLastDays;
-    QuantityAndCostInstruments       mInstruments;
-    Quotation                        mInputMoney;
-    Quotation                        mTotalYieldWithCommission;
-    Quotation                        mRemainedMoney;
-    Quotation                        mTotalMoney;
+    QReadWriteLock*                   mRwMutex;
+    IOperationsDatabase*              mOperationsDatabase;
+    IInstrumentsStorage*              mInstrumentsStorage;
+    ILogosStorage*                    mLogosStorage;
+    ITimeUtils*                       mTimeUtils;
+    IGrpcClient*                      mGrpcClient;
+    IGrpcRetryClient*                 mGrpcRetryClient;
+    IOptimizer*                       mOptimizer;
+    QString                           mAccountId;
+    std::shared_ptr<OperationsStream> mOperationsStream;
+    qint64                            mLastCleanRefreshTimestamp;
+    qint64                            mLastRequestTimestamp;
+    qint64                            mLastOperationTimestamp;
+    qint8                             mAmountOfOperationsWithSameTimestamp;
+    int                               mAmountOfEntries;
+    int                               mLimitOperations;
+    int                               mOptimizeSize;
+    QString                           mLastPositionUidForExtAccount;
+    QSet<QString>                     mOperationsLastDays;
+    QuantityAndCostInstruments        mInstruments;
+    Quotation                         mInputMoney;
+    Quotation                         mTotalYieldWithCommission;
+    Quotation                         mRemainedMoney;
+    Quotation                         mTotalMoney;
 };
