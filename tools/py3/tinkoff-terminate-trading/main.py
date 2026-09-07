@@ -35,7 +35,7 @@ async def terminate_trading(args):
 
             return
 
-        await _cancel_orders(client, args.account)
+        await _cancel_orders(client, args.account, args.keep)
 
 
 def _get_token(token, token_file):
@@ -65,20 +65,21 @@ async def _validate_account(client, account_id):
     return True
 
 
-async def _cancel_orders(client, account):
+async def _cancel_orders(client, account, keep):
     logger.info(f"Cancel orders")
 
     tinkoff_orders = await client.orders.get_orders(account_id=account)
 
     for order in tinkoff_orders.orders:
-        direction = "Buy" if order.direction == OrderDirection.ORDER_DIRECTION_BUY else "Sell"
-        logger.info(f"Cancelling order: {direction} {order.instrument_uid} {order.order_id}")
+        if order.instrument_uid not in keep:
+            direction = "Buy" if order.direction == OrderDirection.ORDER_DIRECTION_BUY else "Sell"
+            logger.info(f"Cancelling order: {direction} {order.instrument_uid} {order.order_id}")
 
-        await client.orders.cancel_order(
-            account_id=account,
-            order_id=order.order_id,
-            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
-        )
+            await client.orders.cancel_order(
+                account_id=account,
+                order_id=order.order_id,
+                order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+            )
 
 
 def main():
@@ -117,6 +118,14 @@ def main():
         type=str,
         default="",
         help="Account ID",
+    )
+    parser.add_argument(
+        "--keep",
+        dest="keep",
+        nargs="*",
+        type=str,
+        default=[],
+        help="Keep orders for specified instrument IDs",
     )
     args = parser.parse_args()
 
