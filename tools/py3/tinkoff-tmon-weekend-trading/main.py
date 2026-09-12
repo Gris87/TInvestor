@@ -120,7 +120,8 @@ async def _handle_orderbook(client, account, orderbook):
         tasks = []
 
         if len(prices) > BUY_PRICE_OFFSET:
-            tasks.append(_buy(client, account, decimal_to_quotation(prices[BUY_PRICE_OFFSET])))
+            buy_price = min(prices[BUY_PRICE_OFFSET], quotation_to_decimal(orderbook.bids[0].price))
+            tasks.append(_buy(client, account, decimal_to_quotation(buy_price)))
 
         tasks.append(_sell(client, account, decimal_to_quotation(prices[0])))
 
