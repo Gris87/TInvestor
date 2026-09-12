@@ -21,12 +21,12 @@ from t_tech.invest.utils import decimal_to_quotation, quotation_to_decimal
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
 
 WORKDAY_START = dt.time(10, 0, tzinfo=MOSCOW_TZ)
-WORKDAY_END   = dt.time(23, 30, tzinfo=MOSCOW_TZ)
+WORKDAY_END   = dt.time(23, 50, tzinfo=MOSCOW_TZ)
 
 TMON_UID = "498ec3ff-ef27-4729-9703-a5aac48d5789"
 
 QUANTITY_THRESHOLD = 5000000
-BUY_PRICE_OFFSET = 2
+BUY_PRICE_OFFSET = 1
 
 
 async def tmon_weekend_trading(args):
@@ -82,9 +82,10 @@ async def _validate_account(client, account_id):
 async def _start_orderbook_streaming(client, account):
     while True:
         if not _is_weekend_work_time():
-            logger.info("Terminate because current time is not valid")
+            logger.info("Sleep because current time is not valid")
+            await asyncio.sleep(_seconds_to_next_morning() + 1)
 
-            break
+            continue
 
         orderbook = await client.market_data.get_order_book(instrument_id=TMON_UID, depth=50)
         await _handle_orderbook(client, account, orderbook)
@@ -180,6 +181,17 @@ def _is_weekend_work_time():
     t = d.timetz()
 
     return t >= WORKDAY_START and t < WORKDAY_END
+
+
+def _seconds_to_next_morning():
+    now = datetime.now(MOSCOW_TZ)
+
+    target_morning = now.replace(hour=WORKDAY_START.hour, minute=0, second=0, microsecond=0)
+
+    if now >= target_morning:
+        target_morning += timedelta(days=1)
+
+    return int((target_morning - now).total_seconds())
 
 
 def main():
