@@ -4,7 +4,7 @@ import datetime as dt
 import logging
 import sys
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from loguru import logger
 from zoneinfo import ZoneInfo
 
@@ -82,15 +82,17 @@ async def _validate_account(client, account_id):
 async def _start_orderbook_streaming(client, account):
     while True:
         if not _is_weekend_work_time():
-            logger.info("Sleep because current time is not valid")
-            await asyncio.sleep(_seconds_to_next_morning() + 1)
+            seconds = _seconds_to_next_morning() + 1
+
+            logger.info(f"Sleep for {seconds}s because current time is not valid")
+            await asyncio.sleep(seconds)
 
             continue
 
         orderbook = await client.market_data.get_order_book(instrument_id=TMON_UID, depth=50)
-        await _handle_orderbook(client, account, orderbook)
+        success = await _handle_orderbook(client, account, orderbook)
 
-        await asyncio.sleep(10)
+        await asyncio.sleep(10 if success else 1)
 
 
 async def _handle_orderbook(client, account, orderbook):
@@ -127,6 +129,10 @@ async def _handle_orderbook(client, account, orderbook):
 
         if len(tasks) > 0:
             await asyncio.gather(*tasks)
+
+        return True
+
+    return False
 
 
 async def _buy(client, account, price):
