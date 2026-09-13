@@ -5,6 +5,7 @@ import logging
 import sys
 
 from datetime import datetime, timedelta
+from decimal import Decimal
 from loguru import logger
 from zoneinfo import ZoneInfo
 
@@ -27,6 +28,7 @@ TMON_UID = "498ec3ff-ef27-4729-9703-a5aac48d5789"
 
 QUANTITY_THRESHOLD = 5000000
 BUY_PRICE_OFFSET = 1
+PRICE_INCREMENT = Decimal(0.01)
 
 
 async def tmon_weekend_trading(args):
@@ -98,6 +100,7 @@ async def _start_orderbook_streaming(client, account):
 async def _handle_orderbook(client, account, orderbook):
     bid_found = False
     ask_found = False
+    ask_price = None
     prices = []
 
     for bid in orderbook.bids:
@@ -111,21 +114,19 @@ async def _handle_orderbook(client, account, orderbook):
     for ask in orderbook.asks:
         if ask.quantity >= QUANTITY_THRESHOLD:
             ask_found = True
+            ask_price = quotation_to_decimal(ask.price)
 
             break
 
         prices.append(quotation_to_decimal(ask.price))
 
     if bid_found and ask_found and len(prices) > 0:
-        prices.sort(reverse=True)
-
         tasks = []
 
-        if len(prices) > BUY_PRICE_OFFSET:
-            buy_price = min(prices[BUY_PRICE_OFFSET], quotation_to_decimal(orderbook.bids[0].price))
-            tasks.append(_buy(client, account, decimal_to_quotation(buy_price)))
+        buy_price = min(ask_price - PRICE_INCREMENT * (BUY_PRICE_OFFSET + 1), quotation_to_decimal(orderbook.bids[0].price))
 
-        tasks.append(_sell(client, account, decimal_to_quotation(prices[0])))
+        tasks.append(_buy(client, account, decimal_to_quotation(buy_price)))
+        tasks.append(_sell(client, account, decimal_to_quotation(ask_price - PRICE_INCREMENT)))
 
         if len(tasks) > 0:
             await asyncio.gather(*tasks)
