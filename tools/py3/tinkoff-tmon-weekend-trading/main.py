@@ -28,7 +28,7 @@ TMON_UID = "498ec3ff-ef27-4729-9703-a5aac48d5789"
 
 QUANTITY_THRESHOLD = 5000000
 BUY_PRICE_OFFSET = 1
-PRICE_INCREMENT = Decimal(0.01)
+PRICE_INCREMENT = Decimal("0.01")
 
 
 async def tmon_weekend_trading(args):
