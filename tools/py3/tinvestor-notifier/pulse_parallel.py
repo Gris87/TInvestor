@@ -29,6 +29,9 @@ def _get_pulse_posts(args):
     while True:
         resp = requests.get(PULSE_URL.format(ticker=args.ticker))
 
+        if resp.status_code == HTTPStatus.ACCEPTED:
+            return []
+
         if resp.status_code != HTTPStatus.OK:
             time.sleep(1)
 
