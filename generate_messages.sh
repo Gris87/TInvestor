@@ -30,6 +30,7 @@ rm -rf tools/py3/tinkoff-bidir-trading/t_tech
 rm -rf tools/py3/tinkoff-fall-trading/t_tech
 rm -rf tools/py3/tinkoff-favorite-group/t_tech
 rm -rf tools/py3/tinkoff-follower/t_tech
+rm -rf tools/py3/tinkoff-pulse-follower/t_tech
 rm -rf tools/py3/tinkoff-terminate-trading/t_tech
 rm -rf tools/py3/tinkoff-tmon-weekend-trading/t_tech
 rm -rf tools/py3/tinvestor-notifier/t_tech
@@ -40,6 +41,7 @@ cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-bidir-trading/t_tech
 cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-fall-trading/t_tech
 cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-favorite-group/t_tech
 cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-follower/t_tech
+cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-pulse-follower/t_tech
 cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-terminate-trading/t_tech
 cp -r /tmp/invest-python/t_tech tools/py3/tinkoff-tmon-weekend-trading/t_tech
 cp -r /tmp/invest-python/t_tech tools/py3/tinvestor-notifier/t_tech

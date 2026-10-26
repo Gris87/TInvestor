@@ -1,3 +1,4 @@
+Follow as pulse follower
 Incredible trading of TMON when price changes (-0.5% - +0.5%)
 Make all cron jobs to work as services
 Think how to ignore zero portfolio notification
