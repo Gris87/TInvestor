@@ -1,11 +1,14 @@
 import asyncio
 import argparse
+import datetime as dt
 import logging
 import requests
 import sys
 
+from datetime import datetime, timedelta
 from http import HTTPStatus
 from loguru import logger
+from zoneinfo import ZoneInfo
 
 from t_tech.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from t_tech.invest.retrying.aio.client import AsyncRetryingClient
@@ -16,6 +19,11 @@ from t_tech.invest.retrying.settings import RetryClientSettings
 
 
 PROFILE_URL = "https://api-invest.tbank.ru/invest-terminal/api-social/social/v1/profile/{profile_id}"
+
+MOSCOW_TZ = ZoneInfo("Europe/Moscow")
+
+WORKDAY_START = dt.time(6, 55, tzinfo=MOSCOW_TZ)
+WORKDAY_END   = dt.time(23, 50, tzinfo=MOSCOW_TZ)
 
 
 async def follow(args):
@@ -42,6 +50,23 @@ async def follow(args):
             sys.exit(1)
 
             return
+
+        await _start_follow_poll_mode(dest_client, args.src_profile, args.dest_account)
+
+
+async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
+    logger.info("Start in poll mode")
+
+    while True:
+        if not _is_work_time():
+            seconds = _seconds_to_next_morning() + 1
+
+            logger.info(f"Sleep for {seconds}s because current time is not valid")
+            await asyncio.sleep(seconds)
+
+            continue
+
+        await asyncio.sleep(10)
 
 
 def _get_token(token, token_file):
@@ -92,6 +117,24 @@ async def _validate_account(client, account_id, direction):
     logger.info(f'{direction} account "{account_id}" ({accounts[account_id]}) found')
 
     return True
+
+
+def _is_work_time():
+    d = datetime.now(MOSCOW_TZ)
+    t = d.timetz()
+
+    return t >= WORKDAY_START and t < WORKDAY_END
+
+
+def _seconds_to_next_morning():
+    now = datetime.now(MOSCOW_TZ)
+
+    target_morning = now.replace(hour=WORKDAY_START.hour, minute=WORKDAY_START.minute, second=0, microsecond=0)
+
+    if now >= target_morning:
+        target_morning += timedelta(days=1)
+
+    return int((target_morning - now).total_seconds())
 
 
 def main():

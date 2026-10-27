@@ -93,6 +93,8 @@ async def _validate_account(client, account_id, direction):
 
 
 async def _start_follow_stream_mode(src_client, dest_client, src_account, dest_account):
+    logger.info("Start in stream mode")
+
     src_stream = src_client.operations_stream.portfolio_stream(accounts=[src_account])
     dest_stream = dest_client.operations_stream.portfolio_stream(accounts=[dest_account])
 
@@ -106,6 +108,8 @@ async def _start_follow_stream_mode(src_client, dest_client, src_account, dest_a
 
 
 async def _start_follow_poll_mode(src_client, dest_client, src_account, dest_account):
+    logger.info("Start in poll mode")
+
     src_timestamp = await _get_last_operation_timestamp(src_client, src_account)
     dest_timestamp = await _get_last_operation_timestamp(dest_client, dest_account)
 
@@ -129,6 +133,8 @@ async def _start_follow_poll_mode(src_client, dest_client, src_account, dest_acc
 
 
 async def _start_follow_poll_file_mode(src_client, dest_client, src_account, dest_account, polling_file):
+    logger.info("Start in poll file mode")
+
     last_modified = os.path.getmtime(polling_file)
 
     while True:

@@ -196,7 +196,7 @@ def _is_weekend_work_time():
 def _seconds_to_next_morning():
     now = datetime.now(MOSCOW_TZ)
 
-    target_morning = now.replace(hour=WORKDAY_START.hour, minute=0, second=0, microsecond=0)
+    target_morning = now.replace(hour=WORKDAY_START.hour, minute=WORKDAY_START.minute, second=0, microsecond=0)
 
     if now >= target_morning:
         target_morning += timedelta(days=1)
