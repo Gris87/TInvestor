@@ -62,6 +62,8 @@ async def _validate_account(client, account_id):
 
         return False
 
+    logger.info(f'Account "{account_id}" ({accounts[account_id]}) found')
+
     return True
 
 

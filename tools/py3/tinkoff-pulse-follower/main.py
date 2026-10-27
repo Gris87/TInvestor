@@ -1,12 +1,21 @@
 import asyncio
 import argparse
 import logging
+import requests
 import sys
 
+from http import HTTPStatus
 from loguru import logger
+
+from t_tech.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
+from t_tech.invest.retrying.aio.client import AsyncRetryingClient
+from t_tech.invest.retrying.settings import RetryClientSettings
 
 
 #logging.basicConfig(level=logging.DEBUG)
+
+
+PROFILE_URL = "https://api-invest.tbank.ru/invest-terminal/api-social/social/v1/profile/{profile_id}"
 
 
 async def follow(args):
@@ -24,6 +33,11 @@ async def follow(args):
     async with AsyncRetryingClient(dest_token, settings=retry_settings, target=INVEST_GRPC_API if args.official_dest else INVEST_GRPC_API_SANDBOX) as dest_client:
         logger.info("Verifying accounts")
 
+        if not await _validate_profile(args.src_profile, "Source"):
+            sys.exit(1)
+
+            return
+
         if not await _validate_account(dest_client, args.dest_account, "Destination"):
             sys.exit(1)
 
@@ -36,6 +50,27 @@ def _get_token(token, token_file):
 
     with open(token_file, "r") as f:
         return f.read().strip()
+
+
+async def _validate_profile(profile_id, direction):
+    resp = requests.get(PROFILE_URL.format(profile_id=profile_id))
+
+    if resp.status_code != HTTPStatus.OK:
+        logger.error(f'{direction} profile "{profile_id}" not found')
+
+        return False
+
+    resp_json = resp.json()
+    nickname = resp_json["payload"]["nickname"]
+
+    if resp_json["payload"]["status"] != "open":
+        logger.error(f'{direction} profile "{profile_id}" ({nickname}) not openned')
+
+        return False
+
+    logger.info(f'{direction} profile "{profile_id}" ({nickname}) found')
+
+    return True
 
 
 async def _validate_account(client, account_id, direction):
@@ -53,6 +88,8 @@ async def _validate_account(client, account_id, direction):
             print(f"{id:36} | {name}")
 
         return False
+
+    logger.info(f'{direction} account "{account_id}" ({accounts[account_id]}) found')
 
     return True
 
