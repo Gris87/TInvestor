@@ -151,6 +151,23 @@ async def _start_follow_poll_file_mode(src_client, dest_client, src_account, des
         await asyncio.sleep(1)
 
 
+async def _get_last_operation_timestamp(client, account):
+    req = GetOperationsByCursorRequest(
+        account_id=account,
+        limit=1,
+        state=OperationState.OPERATION_STATE_EXECUTED,
+        cursor="",
+        without_trades=True
+    )
+
+    operations = await client.operations.get_operations_by_cursor(req)
+
+    if len(operations.items) > 0:
+        return int(operations.items[0].date.timestamp() * 1000)
+
+    return 0
+
+
 async def _get_valid_portfolio(client, account):
     while True:
         portfolio = await client.operations.get_portfolio(account_id=account)
@@ -170,23 +187,6 @@ async def _get_valid_portfolio(client, account):
             return portfolio
 
         await asyncio.sleep(1)
-
-
-async def _get_last_operation_timestamp(client, account):
-    req = GetOperationsByCursorRequest(
-        account_id=account,
-        limit=1,
-        state=OperationState.OPERATION_STATE_EXECUTED,
-        cursor="",
-        without_trades=True
-    )
-
-    operations = await client.operations.get_operations_by_cursor(req)
-
-    if len(operations.items) > 0:
-        return int(operations.items[0].date.timestamp() * 1000)
-
-    return 0
 
 
 async def _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio):

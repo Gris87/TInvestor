@@ -10,13 +10,17 @@ from http import HTTPStatus
 from loguru import logger
 from zoneinfo import ZoneInfo
 
+from t_tech.invest import GetOperationsByCursorRequest
 from t_tech.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from t_tech.invest.retrying.aio.client import AsyncRetryingClient
 from t_tech.invest.retrying.settings import RetryClientSettings
+from t_tech.invest.schemas import OperationState
 
 
 #logging.basicConfig(level=logging.DEBUG)
 
+
+RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
 
 PROFILE_URL = "https://api-invest.tbank.ru/invest-terminal/api-social/social/v1/profile/{profile_id}"
 
@@ -52,21 +56,6 @@ async def follow(args):
             return
 
         await _start_follow_poll_mode(dest_client, args.src_profile, args.dest_account)
-
-
-async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
-    logger.info("Start in poll mode")
-
-    while True:
-        if not _is_work_time():
-            seconds = _seconds_to_next_morning() + 1
-
-            logger.info(f"Sleep for {seconds}s because current time is not valid")
-            await asyncio.sleep(seconds)
-
-            continue
-
-        await asyncio.sleep(10)
 
 
 def _get_token(token, token_file):
@@ -117,6 +106,87 @@ async def _validate_account(client, account_id, direction):
     logger.info(f'{direction} account "{account_id}" ({accounts[account_id]}) found')
 
     return True
+
+
+async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
+    logger.info("Start in poll mode")
+
+    last_modified = -1
+
+    while True:
+        if not _is_work_time():
+            seconds = _seconds_to_next_morning() + 1
+
+            logger.info(f"Sleep for {seconds}s because current time is not valid")
+            await asyncio.sleep(seconds)
+
+            continue
+
+        src_timestamp = await _get_last_profile_trade_timestamp(src_profile)
+        dest_timestamp = await _get_last_operation_timestamp(dest_client, dest_account)
+
+        current_modified = src_timestamp + dest_timestamp
+
+        if current_modified != last_modified:
+            last_modified = current_modified
+
+            src_portfolio = await _get_profile_portfolio(src_profile)
+            dest_portfolio = await _get_valid_portfolio(dest_client, dest_account)
+
+            await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
+
+        await asyncio.sleep(10)
+
+
+async def _get_last_profile_trade_timestamp(profile_id):
+    return 0
+
+
+async def _get_last_operation_timestamp(client, account):
+    req = GetOperationsByCursorRequest(
+        account_id=account,
+        limit=1,
+        state=OperationState.OPERATION_STATE_EXECUTED,
+        cursor="",
+        without_trades=True
+    )
+
+    operations = await client.operations.get_operations_by_cursor(req)
+
+    if len(operations.items) > 0:
+        return int(operations.items[0].date.timestamp() * 1000)
+
+    return 0
+
+
+async def _get_profile_portfolio(profile_id):
+    return {}
+
+
+async def _get_valid_portfolio(client, account):
+    while True:
+        portfolio = await client.operations.get_portfolio(account_id=account)
+
+        good = True
+
+        for position in portfolio.positions:
+            if position.instrument_uid==RUBLE_UID:
+                continue
+
+            if position.average_position_price.units <= 0 and position.average_position_price.nano <= 0:
+                good = False
+
+                break
+
+        if good:
+            return portfolio
+
+        await asyncio.sleep(1)
+
+
+async def _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio):
+    print(src_portfolio)
+    print(dest_portfolio)
 
 
 def _is_work_time():
