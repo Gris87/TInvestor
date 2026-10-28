@@ -18,6 +18,8 @@ from t_tech.invest.retrying.aio.client import AsyncRetryingClient
 from t_tech.invest.retrying.settings import RetryClientSettings
 from t_tech.invest.schemas import OperationState
 
+from localization import *
+
 
 #logging.basicConfig(level=logging.DEBUG)
 
@@ -115,6 +117,8 @@ async def _validate_account(client, account_id, direction):
 
 
 _instruments_cache = {}
+_types_cache = {}
+_companies_cache = {}
 
 
 async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
@@ -125,6 +129,8 @@ async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
     while True:
         if not _is_work_time():
             _instruments_cache.clear()
+            _types_cache.clear()
+            _companies_cache.clear()
 
             seconds = _seconds_to_next_morning() + 1
 
@@ -154,6 +160,8 @@ async def _get_last_profile_trade_timestamp(client, profile_id):
     items = payload["items"]
 
     if len(_instruments_cache) == 0:
+        logger.info("Filling instruments cache")
+
         await _fill_instruments_cache_from_payload(client, payload)
 
         while payload["hasNext"]:
@@ -178,22 +186,44 @@ async def _fill_instruments_cache_from_payload(client, payload):
 
     for item in items:
         if item["currency"] == "rub":
-            show_name = item["showName"]
+            class_code = item["classCode"]
+            ticker = item["ticker"]
 
-            if show_name not in _instruments_cache:
-                class_code = item["classCode"]
-                ticker = item["ticker"]
+            full_id = class_code + "_" + ticker
 
-                _instruments_cache[show_name] = await _get_instrument_info(client, class_code, ticker)
+            if full_id not in _instruments_cache:
+                type_localized = TYPES_RUS[item["type"]]
+
+                uid, lot, company = await _get_instrument_info(client, class_code, ticker)
+
+                _instruments_cache[full_id] = {
+                    "uid": uid,
+                    "lot": lot,
+                }
+
+                if type_localized not in _types_cache:
+                    _types_cache[type_localized] = {}
+
+                if company not in _companies_cache:
+                    _companies_cache[company] = {}
+
+                _types_cache[type_localized][full_id] = {}
+                _companies_cache[company][full_id] = {}
 
 
 async def _get_instrument_info(client, class_code, ticker):
-    resp = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
+    logger.info(f"Getting info for instrument {class_code}/{ticker}")
 
-    return {
-        "uid": resp.instrument.uid,
-        "lot": resp.instrument.lot,
-    }
+    resp1 = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
+    asset_uid = resp1.instrument.asset_uid
+
+    company = OTHER
+
+    if asset_uid != "":
+        resp2 = await client.instruments.get_asset_by(id=asset_uid)
+        company = resp2.asset.brand.company
+
+    return resp1.instrument.uid, resp1.instrument.lot, company
 
 
 async def _request_profile_trades(profile_id, next_cursor=""):
