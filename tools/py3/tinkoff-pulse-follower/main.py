@@ -4,10 +4,12 @@ import datetime as dt
 import logging
 import requests
 import sys
+import time
 
 from datetime import datetime, timedelta
 from http import HTTPStatus
 from loguru import logger
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from t_tech.invest import GetOperationsByCursorRequest
@@ -22,12 +24,16 @@ from t_tech.invest.schemas import OperationState
 
 RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
 
-PROFILE_URL = "https://api-invest.tbank.ru/invest-terminal/api-social/social/v1/profile/{profile_id}"
+PROFILE_URL   = "https://api-invest.tbank.ru/invest-terminal/api-social/social/v1/profile/{profile_id}"
+TRADES_URL    = "https://api-invest.tbank.ru/invest-terminal/api-social/social/v1/profile/{profile_id}/instrument"
+PORTFOLIO_URL = "https://api-invest.tbank.ru/invest-terminal/api-social/social/v1/profile/{profile_id}/portfolio/analytics"
 
 MOSCOW_TZ = ZoneInfo("Europe/Moscow")
 
-WORKDAY_START = dt.time(6, 55, tzinfo=MOSCOW_TZ)
+WORKDAY_START = dt.time(6, 0, tzinfo=MOSCOW_TZ)
 WORKDAY_END   = dt.time(23, 50, tzinfo=MOSCOW_TZ)
+
+SESSION_EXPIRATION_TIME = 18 * 60 * 60 # 18 hours
 
 
 async def follow(args):
@@ -108,6 +114,9 @@ async def _validate_account(client, account_id, direction):
     return True
 
 
+_instruments_cache = {}
+
+
 async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
     logger.info("Start in poll mode")
 
@@ -115,6 +124,8 @@ async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
 
     while True:
         if not _is_work_time():
+            _instruments_cache.clear()
+
             seconds = _seconds_to_next_morning() + 1
 
             logger.info(f"Sleep for {seconds}s because current time is not valid")
@@ -139,7 +150,57 @@ async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
 
 
 async def _get_last_profile_trade_timestamp(profile_id):
+    payload = await _request_profile_trades(profile_id)
+    items = payload["items"]
+
+    if len(_instruments_cache) == 0:
+        await _fill_instruments_cache_from_payload(payload)
+
+        while payload["hasNext"]:
+            next_cursor = payload["nextCursor"]
+
+            payload = await _request_profile_trades(profile_id, next_cursor)
+            await _fill_instruments_cache_from_payload(payload)
+    else:
+        await _fill_instruments_cache_from_payload(payload)
+
+    if len(items) > 0:
+        last_trade = items[0]
+        max_trade_date_time = last_trade["statistics"]["maxTradeDateTime"]
+
+        return datetime.fromisoformat(max_trade_date_time).timestamp()
+
     return 0
+
+
+async def _fill_instruments_cache_from_payload(payload):
+    items = payload["items"]
+
+    for item in items:
+        if item["currency"] == "rub":
+            show_name = item["showName"]
+
+            if show_name not in _instruments_cache:
+                ticker = item["ticker"]
+                class_code = item["classCode"]
+
+                _instruments_cache[show_name] = await _get_instrument_info(ticker, class_code)
+
+
+async def _get_instrument_info(ticker, class_code):
+    return {}
+
+
+async def _request_profile_trades(profile_id, next_cursor=""):
+    next_cursor = f"?nextCursor={next_cursor}" if next_cursor != "" else ""
+    cookies = {"sessionID": _get_session_id()}
+
+    resp = requests.get(TRADES_URL.format(profile_id=profile_id)+next_cursor, cookies=cookies)
+    print(resp.status_code)
+
+    resp_json = resp.json()
+
+    return resp_json["payload"]
 
 
 async def _get_last_operation_timestamp(client, account):
@@ -187,6 +248,31 @@ async def _get_valid_portfolio(client, account):
 async def _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio):
     print(src_portfolio)
     print(dest_portfolio)
+
+
+def _get_session_id():
+    session_path = Path("session_id.txt")
+
+    first_warning = True
+
+    while True:
+        now = time.time()
+        mtime = session_path.stat().st_mtime if session_path.is_file() else 0
+
+        if now - mtime > SESSION_EXPIRATION_TIME:
+            if first_warning:
+                first_warning = False
+
+                logger.warning("Waiting for new session ID")
+
+            time.sleep(1)
+
+            continue
+
+        break
+
+    with open(session_path, "r") as f:
+        return f.read().strip()
 
 
 def _is_work_time():
