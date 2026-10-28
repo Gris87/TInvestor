@@ -438,8 +438,6 @@ _instrument_lot_cache = {}
 
 
 async def _get_instrument_lot(client, instrument_id):
-    global _instrument_lot_cache
-
     if instrument_id in _instrument_lot_cache:
         return _instrument_lot_cache[instrument_id]
 

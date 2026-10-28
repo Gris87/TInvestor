@@ -12,7 +12,7 @@ from loguru import logger
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from t_tech.invest import GetOperationsByCursorRequest
+from t_tech.invest import InstrumentIdType, GetOperationsByCursorRequest
 from t_tech.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from t_tech.invest.retrying.aio.client import AsyncRetryingClient
 from t_tech.invest.retrying.settings import RetryClientSettings
@@ -133,7 +133,7 @@ async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
 
             continue
 
-        src_timestamp = await _get_last_profile_trade_timestamp(src_profile)
+        src_timestamp = await _get_last_profile_trade_timestamp(dest_client, src_profile)
         dest_timestamp = await _get_last_operation_timestamp(dest_client, dest_account)
 
         current_modified = src_timestamp + dest_timestamp
@@ -149,20 +149,20 @@ async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
         await asyncio.sleep(10)
 
 
-async def _get_last_profile_trade_timestamp(profile_id):
+async def _get_last_profile_trade_timestamp(client, profile_id):
     payload = await _request_profile_trades(profile_id)
     items = payload["items"]
 
     if len(_instruments_cache) == 0:
-        await _fill_instruments_cache_from_payload(payload)
+        await _fill_instruments_cache_from_payload(client, payload)
 
         while payload["hasNext"]:
             next_cursor = payload["nextCursor"]
 
             payload = await _request_profile_trades(profile_id, next_cursor)
-            await _fill_instruments_cache_from_payload(payload)
+            await _fill_instruments_cache_from_payload(client, payload)
     else:
-        await _fill_instruments_cache_from_payload(payload)
+        await _fill_instruments_cache_from_payload(client, payload)
 
     if len(items) > 0:
         last_trade = items[0]
@@ -173,7 +173,7 @@ async def _get_last_profile_trade_timestamp(profile_id):
     return 0
 
 
-async def _fill_instruments_cache_from_payload(payload):
+async def _fill_instruments_cache_from_payload(client, payload):
     items = payload["items"]
 
     for item in items:
@@ -181,26 +181,37 @@ async def _fill_instruments_cache_from_payload(payload):
             show_name = item["showName"]
 
             if show_name not in _instruments_cache:
-                ticker = item["ticker"]
                 class_code = item["classCode"]
+                ticker = item["ticker"]
 
-                _instruments_cache[show_name] = await _get_instrument_info(ticker, class_code)
+                _instruments_cache[show_name] = await _get_instrument_info(client, class_code, ticker)
 
 
-async def _get_instrument_info(ticker, class_code):
-    return {}
+async def _get_instrument_info(client, class_code, ticker):
+    resp = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
+
+    return {
+        "uid": resp.instrument.uid,
+        "lot": resp.instrument.lot,
+    }
 
 
 async def _request_profile_trades(profile_id, next_cursor=""):
     next_cursor = f"?nextCursor={next_cursor}" if next_cursor != "" else ""
-    cookies = {"sessionID": _get_session_id()}
 
-    resp = requests.get(TRADES_URL.format(profile_id=profile_id)+next_cursor, cookies=cookies)
-    print(resp.status_code)
+    while True:
+        cookies = {"sessionID": _get_session_id()}
 
-    resp_json = resp.json()
+        resp = requests.get(TRADES_URL.format(profile_id=profile_id)+next_cursor, cookies=cookies)
 
-    return resp_json["payload"]
+        if resp.status_code != HTTPStatus.OK:
+            await asyncio.sleep(1)
+
+            continue
+
+        resp_json = resp.json()
+
+        return resp_json["payload"]
 
 
 async def _get_last_operation_timestamp(client, account):
@@ -221,7 +232,26 @@ async def _get_last_operation_timestamp(client, account):
 
 
 async def _get_profile_portfolio(profile_id):
+    payload = await _request_profile_portfolio(profile_id)
+    print(payload)
+
     return {}
+
+
+async def _request_profile_portfolio(profile_id):
+    while True:
+        cookies = {"sessionID": _get_session_id()}
+
+        resp = requests.get(PORTFOLIO_URL.format(profile_id=profile_id), cookies=cookies)
+
+        if resp.status_code != HTTPStatus.OK:
+            await asyncio.sleep(1)
+
+            continue
+
+        resp_json = resp.json()
+
+        return resp_json["payload"]
 
 
 async def _get_valid_portfolio(client, account):
