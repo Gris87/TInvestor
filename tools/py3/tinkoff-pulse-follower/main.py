@@ -39,6 +39,12 @@ WORKDAY_END   = dt.time(23, 50, tzinfo=MOSCOW_TZ)
 
 SESSION_EXPIRATION_TIME = 18 * 60 * 60 # 18 hours
 
+IGNORE_INSTRUMENTS = {
+    "PSSU/DIAS",
+    "PSSU/UGLD",
+    "TQBR/DIOD",
+}
+
 
 _instruments_cache = {}
 _types_cache = {}
@@ -196,10 +202,10 @@ async def _fill_instruments_cache_from_payload(client, payload):
             class_code = item["classCode"]
             ticker = item["ticker"]
 
-            full_id = class_code + "_" + ticker
+            full_id = class_code + "/" + ticker
 
-            if full_id not in _instruments_cache:
-                logger.info(f"Getting info for instrument {class_code}/{ticker}")
+            if full_id not in _instruments_cache and full_id not in IGNORE_INSTRUMENTS:
+                logger.info(f"Getting info for instrument {full_id}")
 
                 while True:
                     try:
@@ -225,7 +231,7 @@ async def _fill_instruments_cache_from_payload(client, payload):
                         _companies_cache[company][full_id] = {}
                         _sectors_cache[sector][full_id] = {}
                     except AioRequestError as e:
-                        logger.warning(f"Failed to get info for instrument {class_code}/{ticker}: {e}")
+                        logger.warning(f"Failed to get info for instrument {full_id}: {e}")
 
                         if e.details != "50002": # NOT_FOUND (instrument not found)
                             logger.warning("Retrying")
@@ -290,9 +296,25 @@ async def _get_last_operation_timestamp(client, account):
 
 async def _get_profile_portfolio(profile_id):
     payload = await _request_profile_portfolio(profile_id)
+    await _validate_constants(payload)
+
     print(payload)
 
     return {}
+
+
+async def _validate_constants(payload):
+    for t in payload["types"]:
+        title = t["title"]
+
+        if title not in TYPES_VALIDATION:
+            logger.warning(f'Type "{title}" is unknown')
+
+    for t in payload["sectors"]:
+        title = t["title"]
+
+        if title not in SECTORS_VALIDATION:
+            logger.warning(f'Sector "{title}" is unknown')
 
 
 async def _request_profile_portfolio(profile_id):
