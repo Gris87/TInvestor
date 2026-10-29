@@ -1,6 +1,7 @@
 import asyncio
 import argparse
 import datetime as dt
+import json
 import logging
 import requests
 import sys
@@ -14,6 +15,7 @@ from zoneinfo import ZoneInfo
 
 from t_tech.invest import InstrumentIdType, GetOperationsByCursorRequest
 from t_tech.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
+from t_tech.invest.exceptions import AioRequestError
 from t_tech.invest.retrying.aio.client import AsyncRetryingClient
 from t_tech.invest.retrying.settings import RetryClientSettings
 from t_tech.invest.schemas import OperationState
@@ -71,7 +73,7 @@ async def follow(args):
 
                 return
 
-            await _start_follow_poll_mode(dest_client, tidy_client, args.src_profile, args.dest_account)
+            await _start_follow_poll_mode(dest_client, tidy_client, args.cache, args.src_profile, args.dest_account)
 
 
 def _get_token(token, token_file):
@@ -124,17 +126,16 @@ async def _validate_account(client, account_id, direction):
     return True
 
 
-async def _start_follow_poll_mode(dest_client, tidy_client, src_profile, dest_account):
+async def _start_follow_poll_mode(dest_client, tidy_client, cache_path, src_profile, dest_account):
     logger.info("Start in poll mode")
+
+    _load_cache(cache_path)
 
     last_modified = -1
 
     while True:
         if not _is_work_time():
-            _instruments_cache.clear()
-            _types_cache.clear()
-            _companies_cache.clear()
-            _sectors_cache.clear()
+            _clear_cache()
 
             seconds = _seconds_to_next_morning() + 1
 
@@ -143,7 +144,7 @@ async def _start_follow_poll_mode(dest_client, tidy_client, src_profile, dest_ac
 
             continue
 
-        src_timestamp = await _get_last_profile_trade_timestamp(tidy_client, src_profile)
+        src_timestamp = await _get_last_profile_trade_timestamp(tidy_client, cache_path, src_profile)
         dest_timestamp = await _get_last_operation_timestamp(dest_client, dest_account)
 
         current_modified = src_timestamp + dest_timestamp
@@ -159,7 +160,7 @@ async def _start_follow_poll_mode(dest_client, tidy_client, src_profile, dest_ac
         await asyncio.sleep(10)
 
 
-async def _get_last_profile_trade_timestamp(client, profile_id):
+async def _get_last_profile_trade_timestamp(client, cache_path, profile_id):
     payload = await _request_profile_trades(profile_id)
     items = payload["items"]
 
@@ -175,6 +176,8 @@ async def _get_last_profile_trade_timestamp(client, profile_id):
             await _fill_instruments_cache_from_payload(client, payload)
     else:
         await _fill_instruments_cache_from_payload(client, payload)
+
+    _save_cache(cache_path)
 
     if len(items) > 0:
         last_trade = items[0]
@@ -196,32 +199,41 @@ async def _fill_instruments_cache_from_payload(client, payload):
             full_id = class_code + "_" + ticker
 
             if full_id not in _instruments_cache:
-                type_localized = TYPES_RUS[item["type"]]
+                logger.info(f"Getting info for instrument {class_code}/{ticker}")
 
-                uid, lot, company, sector = await _get_instrument_info(client, class_code, ticker)
+                while True:
+                    try:
+                        type_localized = TYPES_RUS[item["type"]]
 
-                _instruments_cache[full_id] = {
-                    "uid": uid,
-                    "lot": lot,
-                }
+                        uid, lot, company, sector = await _get_instrument_info(client, class_code, ticker)
 
-                if type_localized not in _types_cache:
-                    _types_cache[type_localized] = {}
+                        _instruments_cache[full_id] = {
+                            "uid": uid,
+                            "lot": lot,
+                        }
 
-                if company not in _companies_cache:
-                    _companies_cache[company] = {}
+                        if type_localized not in _types_cache:
+                            _types_cache[type_localized] = {}
 
-                if sector not in _sectors_cache:
-                    _sectors_cache[sector] = {}
+                        if company not in _companies_cache:
+                            _companies_cache[company] = {}
 
-                _types_cache[type_localized][full_id] = {}
-                _companies_cache[company][full_id] = {}
-                _sectors_cache[sector][full_id] = {}
+                        if sector not in _sectors_cache:
+                            _sectors_cache[sector] = {}
+
+                        _types_cache[type_localized][full_id] = {}
+                        _companies_cache[company][full_id] = {}
+                        _sectors_cache[sector][full_id] = {}
+                    except AioRequestError as e:
+                        logger.warning(f"Failed to get info for instrument {class_code}/{ticker}: {e}")
+
+                        if e.code != "50002": # NOT_FOUND (instrument not found)
+                            continue
+
+                    break
 
 
 async def _get_instrument_info(client, class_code, ticker):
-    logger.info(f"Getting info for instrument {class_code}/{ticker}")
-
     resp1 = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
     asset_uid = resp1.instrument.asset_uid
 
@@ -255,18 +267,21 @@ async def _request_profile_trades(profile_id, next_cursor=""):
 
 
 async def _get_last_operation_timestamp(client, account):
-    req = GetOperationsByCursorRequest(
-        account_id=account,
-        limit=1,
-        state=OperationState.OPERATION_STATE_EXECUTED,
-        cursor="",
-        without_trades=True
-    )
+    try:
+        req = GetOperationsByCursorRequest(
+            account_id=account,
+            limit=1,
+            state=OperationState.OPERATION_STATE_EXECUTED,
+            cursor="",
+            without_trades=True
+        )
 
-    operations = await client.operations.get_operations_by_cursor(req)
+        operations = await client.operations.get_operations_by_cursor(req)
 
-    if len(operations.items) > 0:
-        return int(operations.items[0].date.timestamp() * 1000)
+        if len(operations.items) > 0:
+            return int(operations.items[0].date.timestamp() * 1000)
+    except Exception as e:
+        logger.warning(f"Failed to get last operation timestamp: {e}")
 
     return 0
 
@@ -296,21 +311,24 @@ async def _request_profile_portfolio(profile_id):
 
 async def _get_valid_portfolio(client, account):
     while True:
-        portfolio = await client.operations.get_portfolio(account_id=account)
+        try:
+            portfolio = await client.operations.get_portfolio(account_id=account)
 
-        good = True
+            good = True
 
-        for position in portfolio.positions:
-            if position.instrument_uid==RUBLE_UID:
-                continue
+            for position in portfolio.positions:
+                if position.instrument_uid==RUBLE_UID:
+                    continue
 
-            if position.average_position_price.units <= 0 and position.average_position_price.nano <= 0:
-                good = False
+                if position.average_position_price.units <= 0 and position.average_position_price.nano <= 0:
+                    good = False
 
-                break
+                    break
 
-        if good:
-            return portfolio
+            if good:
+                return portfolio
+        except Exception as e:
+            logger.warning(f"Failed to get valid portfolio: {e}")
 
         await asyncio.sleep(1)
 
@@ -343,6 +361,49 @@ def _get_session_id():
 
     with open(session_path, "r") as f:
         return f.read().strip()
+
+
+def _clear_cache():
+    _instruments_cache.clear()
+    _types_cache.clear()
+    _companies_cache.clear()
+    _sectors_cache.clear()
+
+
+def _load_cache(cache_path):
+    global _instruments_cache
+    global _types_cache
+    global _companies_cache
+    global _sectors_cache
+
+    cache_folder_path = Path(cache_path) / "tinkoff_pulse_follower"
+    instruments_path = cache_folder_path / "instruments.json"
+
+    if instruments_path.exists():
+        with open(instruments_path, "r", encoding="utf-8") as f:
+            data = json.loads(f.read())
+
+            _instruments_cache = data["instruments"]
+            _types_cache = data["types"]
+            _companies_cache = data["companies"]
+            _sectors_cache = data["sectors"]
+
+
+def _save_cache(cache_path):
+    cache_folder_path = Path(cache_path) / "tinkoff_pulse_follower"
+    cache_folder_path.mkdir(parents=True, exist_ok=True)
+
+    instruments_path = cache_folder_path / "instruments.json"
+
+    data = {
+        "instruments": _instruments_cache,
+        "types": _types_cache,
+        "companies": _companies_cache,
+        "sectors": _sectors_cache,
+    }
+
+    with open(instruments_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False)
 
 
 def _is_work_time():
@@ -407,6 +468,13 @@ def main():
         default="",
         help="Destination account ID",
     )
+    parser.add_argument(
+        "--cache",
+        dest="cache",
+        type=str,
+        default="",
+        help="Path to cache folder"
+    )
     args = parser.parse_args()
 
     if (args.dest_token == "" and args.dest_token_file == "") or (args.dest_token != "" and args.dest_token_file != ""):
@@ -421,6 +489,11 @@ def main():
 
     if args.dest_account == "":
         logger.error("Please specify destination account ID with --dest-account")
+
+        sys.exit(1)
+
+    if args.cache == "":
+        logger.error("Please specify path to cache folder with --cache")
 
         sys.exit(1)
 

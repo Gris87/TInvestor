@@ -152,39 +152,45 @@ async def _start_follow_poll_file_mode(src_client, dest_client, src_account, des
 
 
 async def _get_last_operation_timestamp(client, account):
-    req = GetOperationsByCursorRequest(
-        account_id=account,
-        limit=1,
-        state=OperationState.OPERATION_STATE_EXECUTED,
-        cursor="",
-        without_trades=True
-    )
+    try:
+        req = GetOperationsByCursorRequest(
+            account_id=account,
+            limit=1,
+            state=OperationState.OPERATION_STATE_EXECUTED,
+            cursor="",
+            without_trades=True
+        )
 
-    operations = await client.operations.get_operations_by_cursor(req)
+        operations = await client.operations.get_operations_by_cursor(req)
 
-    if len(operations.items) > 0:
-        return int(operations.items[0].date.timestamp() * 1000)
+        if len(operations.items) > 0:
+            return int(operations.items[0].date.timestamp() * 1000)
+    except Exception as e:
+        logger.warning(f"Failed to get last operation timestamp: {e}")
 
     return 0
 
 
 async def _get_valid_portfolio(client, account):
     while True:
-        portfolio = await client.operations.get_portfolio(account_id=account)
+        try:
+            portfolio = await client.operations.get_portfolio(account_id=account)
 
-        good = True
+            good = True
 
-        for position in portfolio.positions:
-            if position.instrument_uid==RUBLE_UID:
-                continue
+            for position in portfolio.positions:
+                if position.instrument_uid==RUBLE_UID:
+                    continue
 
-            if position.average_position_price.units <= 0 and position.average_position_price.nano <= 0:
-                good = False
+                if position.average_position_price.units <= 0 and position.average_position_price.nano <= 0:
+                    good = False
 
-                break
+                    break
 
-        if good:
-            return portfolio
+            if good:
+                return portfolio
+        except Exception as e:
+            logger.warning(f"Failed to get valid portfolio: {e}")
 
         await asyncio.sleep(1)
 
