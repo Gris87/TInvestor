@@ -38,6 +38,12 @@ WORKDAY_END   = dt.time(23, 50, tzinfo=MOSCOW_TZ)
 SESSION_EXPIRATION_TIME = 18 * 60 * 60 # 18 hours
 
 
+_instruments_cache = {}
+_types_cache = {}
+_companies_cache = {}
+_sectors_cache = {}
+
+
 async def follow(args):
     if args.official_dest and not args.confirm:
         answer = input("Are you sure to use official destination account? [Y/n]")
@@ -49,21 +55,23 @@ async def follow(args):
 
     dest_token = _get_token(args.dest_token, args.dest_token_file)
     retry_settings = RetryClientSettings(use_retry=True, max_retry_attempt=10000)
+    retry_settings2 = RetryClientSettings(use_retry=True, max_retry_attempt=3)
 
     async with AsyncRetryingClient(dest_token, settings=retry_settings, target=INVEST_GRPC_API if args.official_dest else INVEST_GRPC_API_SANDBOX) as dest_client:
-        logger.info("Verifying accounts")
+        async with AsyncRetryingClient(dest_token, settings=retry_settings2, target=INVEST_GRPC_API if args.official_dest else INVEST_GRPC_API_SANDBOX) as tidy_client:
+            logger.info("Verifying accounts")
 
-        if not await _validate_profile(args.src_profile, "Source"):
-            sys.exit(1)
+            if not await _validate_profile(args.src_profile, "Source"):
+                sys.exit(1)
 
-            return
+                return
 
-        if not await _validate_account(dest_client, args.dest_account, "Destination"):
-            sys.exit(1)
+            if not await _validate_account(dest_client, args.dest_account, "Destination"):
+                sys.exit(1)
 
-            return
+                return
 
-        await _start_follow_poll_mode(dest_client, args.src_profile, args.dest_account)
+            await _start_follow_poll_mode(dest_client, tidy_client, args.src_profile, args.dest_account)
 
 
 def _get_token(token, token_file):
@@ -116,12 +124,7 @@ async def _validate_account(client, account_id, direction):
     return True
 
 
-_instruments_cache = {}
-_types_cache = {}
-_companies_cache = {}
-
-
-async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
+async def _start_follow_poll_mode(dest_client, tidy_client, src_profile, dest_account):
     logger.info("Start in poll mode")
 
     last_modified = -1
@@ -131,6 +134,7 @@ async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
             _instruments_cache.clear()
             _types_cache.clear()
             _companies_cache.clear()
+            _sectors_cache.clear()
 
             seconds = _seconds_to_next_morning() + 1
 
@@ -139,7 +143,7 @@ async def _start_follow_poll_mode(dest_client, src_profile, dest_account):
 
             continue
 
-        src_timestamp = await _get_last_profile_trade_timestamp(dest_client, src_profile)
+        src_timestamp = await _get_last_profile_trade_timestamp(tidy_client, src_profile)
         dest_timestamp = await _get_last_operation_timestamp(dest_client, dest_account)
 
         current_modified = src_timestamp + dest_timestamp
@@ -194,7 +198,7 @@ async def _fill_instruments_cache_from_payload(client, payload):
             if full_id not in _instruments_cache:
                 type_localized = TYPES_RUS[item["type"]]
 
-                uid, lot, company = await _get_instrument_info(client, class_code, ticker)
+                uid, lot, company, sector = await _get_instrument_info(client, class_code, ticker)
 
                 _instruments_cache[full_id] = {
                     "uid": uid,
@@ -207,8 +211,12 @@ async def _fill_instruments_cache_from_payload(client, payload):
                 if company not in _companies_cache:
                     _companies_cache[company] = {}
 
+                if sector not in _sectors_cache:
+                    _sectors_cache[sector] = {}
+
                 _types_cache[type_localized][full_id] = {}
                 _companies_cache[company][full_id] = {}
+                _sectors_cache[sector][full_id] = {}
 
 
 async def _get_instrument_info(client, class_code, ticker):
@@ -218,12 +226,14 @@ async def _get_instrument_info(client, class_code, ticker):
     asset_uid = resp1.instrument.asset_uid
 
     company = OTHER
+    sector = OTHER
 
     if asset_uid != "":
         resp2 = await client.instruments.get_asset_by(id=asset_uid)
         company = resp2.asset.brand.company
+        sector = SECTORS_RUS[resp2.asset.brand.sector]
 
-    return resp1.instrument.uid, resp1.instrument.lot, company
+    return resp1.instrument.uid, resp1.instrument.lot, company, sector
 
 
 async def _request_profile_trades(profile_id, next_cursor=""):
