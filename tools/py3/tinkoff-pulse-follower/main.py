@@ -227,7 +227,9 @@ async def _fill_instruments_cache_from_payload(client, payload):
                     except AioRequestError as e:
                         logger.warning(f"Failed to get info for instrument {class_code}/{ticker}: {e}")
 
-                        if e.code != "50002": # NOT_FOUND (instrument not found)
+                        if e.details != "50002": # NOT_FOUND (instrument not found)
+                            logger.warning("Retrying")
+
                             continue
 
                     break
