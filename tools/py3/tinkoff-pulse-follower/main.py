@@ -47,9 +47,6 @@ IGNORE_INSTRUMENTS = {
 
 
 _instruments_cache = {}
-_types_cache = {}
-_companies_cache = {}
-_sectors_cache = {}
 _last_complete_timestamp = 0
 _last_portfolio = {
     "types": {
@@ -154,7 +151,7 @@ async def _start_follow_poll_mode(dest_client, tidy_client, cache_path, src_prof
 
     while True:
         if not _is_work_time():
-            _clear_cache()
+            _instruments_cache.clear()
 
             seconds = _seconds_to_next_morning() + 1
 
@@ -220,27 +217,16 @@ async def _fill_instruments_cache_from_items(client, items):
 
                 while True:
                     try:
-                        type_localized = TYPES_RUS[item["type"]]
+                        instrument_type, uid, lot, company, sector = await _get_instrument_info(client, item["type"], class_code, ticker)
 
-                        uid, lot, company, sector = await _get_instrument_info(client, class_code, ticker)
-
-                        _instruments_cache[full_id] = {
-                            "uid": uid,
-                            "lot": lot,
-                        }
-
-                        if type_localized not in _types_cache:
-                            _types_cache[type_localized] = {}
-
-                        if company not in _companies_cache:
-                            _companies_cache[company] = {}
-
-                        if sector not in _sectors_cache:
-                            _sectors_cache[sector] = {}
-
-                        _types_cache[type_localized][full_id] = {}
-                        _companies_cache[company][full_id] = {}
-                        _sectors_cache[sector][full_id] = {}
+                        if instrument_type is not None:
+                            _instruments_cache[full_id] = {
+                                "type": instrument_type,
+                                "uid": uid,
+                                "lot": lot,
+                                "company": company,
+                                "sector": sector,
+                            }
                     except AioRequestError as e:
                         logger.warning(f"Failed to get info for instrument {full_id}: {e}")
 
@@ -252,19 +238,36 @@ async def _fill_instruments_cache_from_items(client, items):
                     break
 
 
-async def _get_instrument_info(client, class_code, ticker):
+async def _get_instrument_info(client, instrument_type, class_code, ticker):
     resp1 = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
-    asset_uid = resp1.instrument.asset_uid
+
+    if not resp1.instrument.api_trade_available_flag:
+        return None, None, None, None, None
 
     company = OTHER
     sector = OTHER
 
-    if asset_uid != "":
-        resp2 = await client.instruments.get_asset_by(id=asset_uid)
+    if resp1.instrument.asset_uid != "":
+        resp2 = await client.instruments.get_asset_by(id=resp1.instrument.asset_uid)
         company = resp2.asset.brand.company
-        sector = SECTORS_RUS[resp2.asset.brand.sector]
+        sector = SECTORS_RUS[resp2.asset.brand.sector.replace("_", "").lower()]
 
-    return resp1.instrument.uid, resp1.instrument.lot, company, sector
+    if instrument_type == "futures":
+        resp3 = await client.instruments.future_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
+
+        if resp3.instrument.sector != "":
+            sector = SECTORS_RUS[resp3.instrument.sector.replace("SECTOR_", "").replace("_", "").lower()]
+
+        try:
+            if resp3.instrument.basic_asset_position_uid != "":
+                resp4 = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_POSITION_UID, id=resp3.instrument.basic_asset_position_uid)
+
+                if resp4.instrument.currency != "rub":
+                    instrument_type = "neoactive"
+        except AioRequestError as e:
+            logger.warning(f"Failed to get info for instrument from position uid {resp3.instrument.basic_asset_position_uid}: {e}")
+
+    return TYPES_RUS[instrument_type], resp1.instrument.uid, resp1.instrument.lot, company, sector
 
 
 async def _request_profile_trades(profile_id, next_cursor=""):
@@ -370,7 +373,8 @@ async def _get_trades_from_timestamp(profile_id, timestamp):
             if trade_timestamp <= timestamp:
                 return res
 
-            res.append(trade)
+            if trade["currency"] == "rub":
+                res.append(trade)
 
         if not payload["hasNext"]:
             break
@@ -463,30 +467,15 @@ def _get_session_id():
         return f.read().strip()
 
 
-def _clear_cache():
-    _instruments_cache.clear()
-    _types_cache.clear()
-    _companies_cache.clear()
-    _sectors_cache.clear()
-
-
 def _load_cache(cache_path):
     global _instruments_cache
-    global _types_cache
-    global _companies_cache
-    global _sectors_cache
 
     cache_folder_path = Path(cache_path) / "tinkoff_pulse_follower"
     instruments_path = cache_folder_path / "instruments.json"
 
     if instruments_path.exists():
         with open(instruments_path, "r", encoding="utf-8") as f:
-            data = json.loads(f.read())
-
-            _instruments_cache = data["instruments"]
-            _types_cache = data["types"]
-            _companies_cache = data["companies"]
-            _sectors_cache = data["sectors"]
+            _instruments_cache = json.loads(f.read())
 
 
 def _save_cache(cache_path):
@@ -495,15 +484,8 @@ def _save_cache(cache_path):
 
     instruments_path = cache_folder_path / "instruments.json"
 
-    data = {
-        "instruments": _instruments_cache,
-        "types": _types_cache,
-        "companies": _companies_cache,
-        "sectors": _sectors_cache,
-    }
-
     with open(instruments_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False)
+        json.dump(_instruments_cache, f, ensure_ascii=False)
 
 
 def _is_work_time():
