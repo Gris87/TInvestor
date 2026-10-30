@@ -50,6 +50,9 @@ _instruments_cache = {}
 _types_cache = {}
 _companies_cache = {}
 _sectors_cache = {}
+_last_complete_timestamp = 0
+_last_portfolio = {}
+_generated_portfolio = {}
 
 
 async def follow(args):
@@ -158,7 +161,7 @@ async def _start_follow_poll_mode(dest_client, tidy_client, cache_path, src_prof
         if current_modified != last_modified:
             last_modified = current_modified
 
-            src_portfolio = await _get_profile_portfolio(src_profile)
+            src_portfolio = await _get_profile_portfolio(tidy_client, src_profile)
             dest_portfolio = await _get_valid_portfolio(dest_client, dest_account)
 
             await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
@@ -173,15 +176,15 @@ async def _get_last_profile_trade_timestamp(client, cache_path, profile_id):
     if len(_instruments_cache) == 0:
         logger.info("Filling instruments cache")
 
-        await _fill_instruments_cache_from_payload(client, payload)
+        await _fill_instruments_cache_from_items(client, payload["items"])
 
         while payload["hasNext"]:
             next_cursor = payload["nextCursor"]
 
             payload = await _request_profile_trades(profile_id, next_cursor)
-            await _fill_instruments_cache_from_payload(client, payload)
+            await _fill_instruments_cache_from_items(client, payload["items"])
     else:
-        await _fill_instruments_cache_from_payload(client, payload)
+        await _fill_instruments_cache_from_items(client, payload["items"])
 
     _save_cache(cache_path)
 
@@ -194,9 +197,7 @@ async def _get_last_profile_trade_timestamp(client, cache_path, profile_id):
     return 0
 
 
-async def _fill_instruments_cache_from_payload(client, payload):
-    items = payload["items"]
-
+async def _fill_instruments_cache_from_items(client, items):
     for item in items:
         if item["currency"] == "rub":
             class_code = item["classCode"]
@@ -294,13 +295,40 @@ async def _get_last_operation_timestamp(client, account):
     return 0
 
 
-async def _get_profile_portfolio(profile_id):
+async def _get_profile_portfolio(client, profile_id):
+    global _last_complete_timestamp
+    global _last_portfolio
+    global _generated_portfolio
+
     payload = await _request_profile_portfolio(profile_id)
     await _validate_constants(payload)
 
-    print(payload)
+    while True:
+        trades = await _get_trades_from_timestamp(profile_id, _last_complete_timestamp)
 
-    return {}
+        payload_to_double_check = await _request_profile_portfolio(profile_id)
+
+        if payload != payload_to_double_check:
+            payload = payload_to_double_check
+
+            continue
+
+        break
+
+    if len(trades) > 0:
+        logger.debug("New trades found:\n{trades}".format(trades=json.dumps(trades, indent=4, ensure_ascii=False)))
+        logger.debug("Portfolio changed from:\n{old_portfolio}\n\nto:\n\n{new_portfolio}".format(old_portfolio=json.dumps(_last_portfolio, indent=4, ensure_ascii=False), new_portfolio=json.dumps(payload, indent=4, ensure_ascii=False)))
+
+        await _fill_instruments_cache_from_items(client, trades)
+        _generated_portfolio = await _generate_portfolio(_generated_portfolio, _last_portfolio, payload, trades)
+
+        last_trade = trades[0]
+        max_trade_date_time = last_trade["statistics"]["maxTradeDateTime"]
+
+        _last_complete_timestamp = datetime.fromisoformat(max_trade_date_time).timestamp()
+        _last_portfolio = payload
+
+    return _generated_portfolio
 
 
 async def _validate_constants(payload):
@@ -310,11 +338,39 @@ async def _validate_constants(payload):
         if title not in TYPES_VALIDATION:
             logger.warning(f'Type "{title}" is unknown')
 
-    for t in payload["sectors"]:
-        title = t["title"]
+    for s in payload["sectors"]:
+        title = s["title"]
 
         if title not in SECTORS_VALIDATION:
             logger.warning(f'Sector "{title}" is unknown')
+
+
+async def _get_trades_from_timestamp(profile_id, timestamp):
+    res = []
+
+    payload = await _request_profile_trades(profile_id)
+
+    while True:
+        for trade in payload["items"]:
+            max_trade_date_time = trade["statistics"]["maxTradeDateTime"]
+            trade_timestamp = datetime.fromisoformat(max_trade_date_time).timestamp()
+
+            if trade_timestamp <= timestamp:
+                return res
+
+            res.append(trade)
+
+        if not payload["hasNext"]:
+            break
+
+        next_cursor = payload["nextCursor"]
+        payload = await _request_profile_trades(profile_id, next_cursor)
+
+    return res
+
+
+async def _generate_portfolio(generated_portfolio, old_portfolio, new_portfolio, trades):
+    return {}
 
 
 async def _request_profile_portfolio(profile_id):
