@@ -51,7 +51,17 @@ _types_cache = {}
 _companies_cache = {}
 _sectors_cache = {}
 _last_complete_timestamp = 0
-_last_portfolio = {}
+_last_portfolio = {
+    "types": {
+        CURRENCY: 100
+    },
+    "issuers": {
+        CURRENCY: 100
+    },
+    "sectors": {
+        CURRENCY: 100
+    }
+}
 _generated_portfolio = {}
 
 
@@ -316,6 +326,8 @@ async def _get_profile_portfolio(client, profile_id):
         break
 
     if len(trades) > 0:
+        payload = await _simplify_portfolio(payload)
+
         logger.debug("New trades found:\n{trades}".format(trades=json.dumps(trades, indent=4, ensure_ascii=False)))
         logger.debug("Portfolio changed from:\n{old_portfolio}\n\nto:\n\n{new_portfolio}".format(old_portfolio=json.dumps(_last_portfolio, indent=4, ensure_ascii=False), new_portfolio=json.dumps(payload, indent=4, ensure_ascii=False)))
 
@@ -367,6 +379,14 @@ async def _get_trades_from_timestamp(profile_id, timestamp):
         payload = await _request_profile_trades(profile_id, next_cursor)
 
     return res
+
+
+async def _simplify_portfolio(portfolio):
+    return {
+        "types": {x["title"]: x["percent"] for x in portfolio["types"] if x["title"] == CURRENCY or x["percent"] > 0},
+        "issuers": {x["title"]: x["percent"] for x in portfolio["issuers"] if x["title"] == CURRENCY or x["percent"] > 0},
+        "sectors": {x["title"]: x["percent"] for x in portfolio["sectors"] if x["title"] == CURRENCY or x["percent"] > 0},
+    }
 
 
 async def _generate_portfolio(generated_portfolio, old_portfolio, new_portfolio, trades):

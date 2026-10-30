@@ -32,4 +32,5 @@ SECTORS_RUS = {
 TYPES_VALIDATION = set(TYPES_RUS.values())
 SECTORS_VALIDATION = set(SECTORS_RUS.values())
 
+CURRENCY = "Валюта и Металлы"
 OTHER = "Другое"
