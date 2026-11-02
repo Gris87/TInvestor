@@ -8,17 +8,19 @@ import sys
 import time
 
 from datetime import datetime, timedelta
+from decimal import Decimal
 from http import HTTPStatus
 from loguru import logger
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from t_tech.invest import InstrumentIdType, GetOperationsByCursorRequest
+from t_tech.invest import InstrumentIdType, GetOperationsByCursorRequest, MoneyValue, PortfolioPosition, PortfolioResponse
 from t_tech.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from t_tech.invest.exceptions import AioRequestError
 from t_tech.invest.retrying.aio.client import AsyncRetryingClient
 from t_tech.invest.retrying.settings import RetryClientSettings
 from t_tech.invest.schemas import OperationState
+from t_tech.invest.utils import decimal_to_money, decimal_to_quotation
 
 from localization import *
 
@@ -44,6 +46,8 @@ IGNORE_INSTRUMENTS = {
     "PSSU/UGLD",
     "TQBR/DIOD",
 }
+
+TOTAL_MONEY_AVAILABLE = Decimal("100000000.00")
 
 
 _instruments_cache = {}
@@ -471,7 +475,34 @@ async def _calculate_part(portfolio, full_id):
 
 
 async def _convert_generated_portfolio(generated_portfolio):
-    return generated_portfolio
+    positions = []
+
+    money_remained = TOTAL_MONEY_AVAILABLE
+
+    for full_id, part in generated_portfolio.items():
+        instrument_info = _instruments_cache[full_id]
+
+        instrument_uid = instrument_info["uid"]
+        lot = instrument_info["lot"]
+
+        money_part = TOTAL_MONEY_AVAILABLE * Decimal(str(part / 100))
+        money_remained -= money_part
+
+        current_price = Decimal("1.000000000") / lot
+
+        positions.append(PortfolioPosition(
+            instrument_uid=instrument_uid,
+            quantity=decimal_to_quotation(money_part),
+            average_position_price=MoneyValue(currency="rub", units=1, nano=0),
+            current_price=decimal_to_money(current_price, currency="rub")
+        ))
+
+    positions.insert(0, PortfolioPosition(
+        instrument_uid=RUBLE_UID,
+        quantity=decimal_to_quotation(money_remained),
+    ))
+
+    return PortfolioResponse(positions=positions)
 
 
 async def _request_profile_portfolio(profile_id):
