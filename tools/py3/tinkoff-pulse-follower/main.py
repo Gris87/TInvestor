@@ -14,13 +14,13 @@ from loguru import logger
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from t_tech.invest import InstrumentIdType, GetOperationsByCursorRequest, MoneyValue, PortfolioPosition, PortfolioResponse
+from t_tech.invest import InstrumentIdType, GetMaxLotsRequest, GetOperationsByCursorRequest, MoneyValue, OrderDirection, OrderExecutionReportStatus, OrderType, PortfolioPosition, PortfolioResponse, PriceType, TimeInForceType
 from t_tech.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from t_tech.invest.exceptions import AioRequestError
 from t_tech.invest.retrying.aio.client import AsyncRetryingClient
 from t_tech.invest.retrying.settings import RetryClientSettings
-from t_tech.invest.schemas import OperationState
-from t_tech.invest.utils import decimal_to_money, decimal_to_quotation
+from t_tech.invest.schemas import OperationState, OrderIdType
+from t_tech.invest.utils import decimal_to_money, decimal_to_quotation, quotation_to_decimal
 
 from localization import *
 
@@ -51,6 +51,7 @@ TOTAL_MONEY_AVAILABLE = Decimal("100000000.00")
 
 
 _instruments_cache = {}
+_instrument_lot_cache = {}
 _last_complete_timestamp = -1
 _total_operations = {}
 _last_portfolio = {
@@ -159,6 +160,7 @@ async def _start_follow_poll_mode(dest_client, tidy_client, cache_path, src_prof
 
         if not _is_work_time():
             _instruments_cache.clear()
+            _instrument_lot_cache.clear()
 
             seconds = _seconds_to_next_morning() + 1
 
@@ -254,6 +256,7 @@ async def _fill_instruments_cache_from_items(client, items):
                             "company": company,
                             "sector": sector,
                         }
+                        _instrument_lot_cache[uid] = lot
                     except AioRequestError as e:
                         logger.warning(f"Failed to get info for instrument {full_id}: {e}")
 
@@ -546,8 +549,289 @@ async def _get_valid_portfolio(client, account):
 
 
 async def _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio):
-    print(src_portfolio)
-    print(dest_portfolio)
+    src_instrument_to_cost, src_total_cost = _build_instrument_to_cost_map(src_portfolio)
+    dest_instrument_to_cost, dest_total_cost = _build_instrument_to_cost_map(dest_portfolio)
+
+    instruments_for_sale, instruments_for_buy = await _build_instruments_for_trading(dest_client, src_instrument_to_cost, dest_instrument_to_cost, src_total_cost, dest_total_cost)
+
+    if instruments_for_sale or instruments_for_buy:
+        logger.info("Synchronization in progress")
+
+        if instruments_for_sale:
+            await _trade_instruments(dest_client, dest_account, instruments_for_sale)
+
+        if instruments_for_buy:
+            await _trade_instruments(dest_client, dest_account, instruments_for_buy)
+
+        logger.info("Synchronized")
+
+
+def _build_instrument_to_cost_map(portfolio):
+    res = {}
+    total_cost = Decimal("0.00")
+
+    for position in portfolio.positions:
+        if position.instrument_uid == RUBLE_UID:
+            item = {
+                "price": 1.0,
+                "cost": quotation_to_decimal(position.quantity)
+            }
+        else:
+            item = {
+                "price": quotation_to_decimal(position.current_price),
+                "cost": quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price)
+            }
+
+        res[position.instrument_uid] = item
+        total_cost += item["cost"]
+
+    del res[RUBLE_UID]
+
+    return res, total_cost
+
+
+async def _build_instruments_for_trading(dest_client, src_instrument_to_cost, dest_instrument_to_cost, src_total_cost, dest_total_cost):
+    instruments_for_sale = {}
+    instruments_for_buy = {}
+
+    for src_instrument_id, src_portfolio_item in src_instrument_to_cost.items():
+        src_part = src_portfolio_item["cost"] / src_total_cost
+        expected_cost = src_part * dest_total_cost
+
+        if src_instrument_id not in dest_instrument_to_cost:
+            instruments_for_buy[src_instrument_id] = expected_cost
+
+            continue
+
+        lot = await _get_instrument_lot(dest_client, src_instrument_id)
+
+        dest_portfolio_item = dest_instrument_to_cost[src_instrument_id]
+        delta = expected_cost - dest_portfolio_item["cost"]
+        lot_price = dest_portfolio_item["price"] * lot
+
+        if delta < -lot_price / 2:
+            instruments_for_sale[src_instrument_id] = expected_cost
+        elif delta > lot_price / 2:
+            instruments_for_buy[src_instrument_id] = expected_cost
+
+    for dest_instrument_id in dest_instrument_to_cost:
+        if dest_instrument_id not in src_instrument_to_cost:
+            instruments_for_sale[dest_instrument_id] = Decimal(0)  # Need to sell all
+
+    return instruments_for_sale, instruments_for_buy
+
+
+async def _trade_instruments(dest_client, dest_account, instruments):
+    tasks = []
+
+    dest_portfolio = await _get_valid_portfolio(dest_client, dest_account)
+
+    for instrument_id, expected_cost in instruments.items():
+        current_cost = Decimal(0)
+
+        for position in dest_portfolio.positions:
+            if position.instrument_uid == instrument_id:
+                current_cost = quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price)
+
+                break
+
+        delta = expected_cost - current_cost
+
+        if delta > 0:
+            tasks.append(_buy(dest_client, dest_account, instrument_id, delta))
+        else:
+            tasks.append(_sell(dest_client, dest_account, instrument_id, -delta, expected_cost == Decimal(0)))
+
+    await asyncio.gather(*tasks)
+
+
+async def _buy(dest_client, dest_account, instrument_id, delta):
+    lot = await _get_instrument_lot(dest_client, instrument_id)
+
+    order_id = None
+    order_price = None
+
+    while True:
+        try:
+            if order_id is not None:
+                resp = await dest_client.orders.get_order_state(
+                    account_id=dest_account,
+                    order_id=order_id,
+                    price_type=PriceType.PRICE_TYPE_CURRENCY,
+                    order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                )
+
+                if resp.execution_report_status == OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_FILL:
+                    break
+
+            order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
+            price = _calculate_buy_price(order_book)
+
+            if price is not None:
+                if price != order_price:
+                    if order_id is not None:
+                        resp = await dest_client.orders.get_order_state(
+                            account_id=dest_account,
+                            order_id=order_id,
+                            price_type=PriceType.PRICE_TYPE_CURRENCY,
+                            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                        )
+
+                        delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
+
+                        await dest_client.orders.cancel_order(
+                            account_id=dest_account,
+                            order_id=order_id,
+                            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                        )
+
+                        order_id = None
+                        order_price = None
+
+                    price_decimal = quotation_to_decimal(price)
+                    lot_price = lot * price_decimal
+
+                    req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=price)
+                    max_lots = await dest_client.orders.get_max_lots(req)
+
+                    delta_quantity = round(delta / lot_price)
+                    amount_to_buy = min(delta_quantity, max_lots.buy_margin_limits.buy_max_lots)
+
+                    if amount_to_buy > 0:
+                        resp = await dest_client.orders.post_order(
+                            quantity=amount_to_buy,
+                            price=price,
+                            direction=OrderDirection.ORDER_DIRECTION_BUY,
+                            account_id=dest_account,
+                            order_type=OrderType.ORDER_TYPE_LIMIT,
+                            instrument_id=instrument_id,
+                            time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+                            price_type=PriceType.PRICE_TYPE_CURRENCY,
+                            confirm_margin_trade=True,
+                        )
+
+                        if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                            order_id = resp.order_id
+                            order_price = price
+                        else:
+                            logger.warning(f'Order to buy "{instrument_id}" rejected')
+                    else:
+                        break
+        except Exception as e:
+            logger.warning(f"Failed to buy: {e}")
+
+        await asyncio.sleep(30)
+
+
+async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
+    lot = await _get_instrument_lot(dest_client, instrument_id)
+
+    order_id = None
+    order_price = None
+
+    while True:
+        try:
+            if order_id is not None:
+                resp = await dest_client.orders.get_order_state(
+                    account_id=dest_account,
+                    order_id=order_id,
+                    price_type=PriceType.PRICE_TYPE_CURRENCY,
+                    order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                )
+
+                if resp.execution_report_status == OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_FILL:
+                    break
+
+            order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
+            price = _calculate_sell_price(order_book)
+
+            if price is not None:
+                if price != order_price:
+                    if order_id is not None:
+                        resp = await dest_client.orders.get_order_state(
+                            account_id=dest_account,
+                            order_id=order_id,
+                            price_type=PriceType.PRICE_TYPE_CURRENCY,
+                            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                        )
+
+                        delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
+
+                        await dest_client.orders.cancel_order(
+                            account_id=dest_account,
+                            order_id=order_id,
+                            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                        )
+
+                        order_id = None
+                        order_price = None
+
+                    price_decimal = quotation_to_decimal(price)
+                    lot_price = lot * price_decimal
+
+                    req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=price)
+                    max_lots = await dest_client.orders.get_max_lots(req)
+
+                    if sell_all:
+                        amount_to_sell = max_lots.sell_limits.sell_max_lots
+                    else:
+                        delta_quantity = round(delta / lot_price)
+                        amount_to_sell = min(delta_quantity, max_lots.sell_margin_limits.sell_max_lots)
+
+                    if amount_to_sell > 0:
+                        resp = await dest_client.orders.post_order(
+                            quantity=amount_to_sell,
+                            price=price,
+                            direction=OrderDirection.ORDER_DIRECTION_SELL,
+                            account_id=dest_account,
+                            order_type=OrderType.ORDER_TYPE_LIMIT,
+                            instrument_id=instrument_id,
+                            time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+                            price_type=PriceType.PRICE_TYPE_CURRENCY,
+                            confirm_margin_trade=True,
+                        )
+
+                        if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                            order_id = resp.order_id
+                            order_price = price
+                        else:
+                            logger.warning(f'Order to sell "{instrument_id}" rejected')
+                    else:
+                        break
+        except Exception as e:
+            logger.warning(f"Failed to sell: {e}")
+
+        await asyncio.sleep(30)
+
+
+async def _get_instrument_lot(client, instrument_id):
+    if instrument_id in _instrument_lot_cache:
+        return _instrument_lot_cache[instrument_id]
+
+    resp = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_UID, id=instrument_id)
+    _instrument_lot_cache[instrument_id] = resp.instrument.lot
+
+    return resp.instrument.lot
+
+
+def _calculate_buy_price(order_book):
+    if order_book.asks:
+        return order_book.asks[0].price
+
+    if order_book.bids:
+        return order_book.bids[0].price
+
+    return None
+
+
+def _calculate_sell_price(order_book):
+    if order_book.bids:
+        return order_book.bids[0].price
+
+    if order_book.asks:
+        return order_book.asks[0].price
+
+    return None
 
 
 def _get_session_id():
@@ -589,6 +873,14 @@ def _load_cache(cache_path):
     if instruments_path.exists():
         with open(instruments_path, "r", encoding="utf-8") as f:
             _instruments_cache = json.loads(f.read())
+
+            _instrument_lot_cache.clear()
+
+            for instrument_info in _instruments_cache.values():
+                instrument_uid = instrument_info["uid"]
+                lot = instrument_info["lot"]
+
+                _instrument_lot_cache[instrument_uid] = lot
 
     if portfolio_path.exists():
         with open(portfolio_path, "r", encoding="utf-8") as f:
