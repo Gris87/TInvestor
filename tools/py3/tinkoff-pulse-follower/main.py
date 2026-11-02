@@ -37,7 +37,7 @@ MOSCOW_TZ = ZoneInfo("Europe/Moscow")
 WORKDAY_START = dt.time(6, 0, tzinfo=MOSCOW_TZ)
 WORKDAY_END   = dt.time(23, 50, tzinfo=MOSCOW_TZ)
 
-SESSION_EXPIRATION_TIME = 18 * 60 * 60 # 18 hours
+SESSION_EXPIRATION_TIME = 20 * 60 * 60 # 20 hours
 
 IGNORE_INSTRUMENTS = {
     "PSSU/DIAS",
@@ -48,6 +48,7 @@ IGNORE_INSTRUMENTS = {
 
 _instruments_cache = {}
 _last_complete_timestamp = 0
+_total_operations = {}
 _last_portfolio = {
     "types": {
         CURRENCY: 100
@@ -150,6 +151,8 @@ async def _start_follow_poll_mode(dest_client, tidy_client, cache_path, src_prof
     last_modified = -1
 
     while True:
+        # logger.debug("Tick")
+
         if not _is_work_time():
             _instruments_cache.clear()
 
@@ -163,12 +166,10 @@ async def _start_follow_poll_mode(dest_client, tidy_client, cache_path, src_prof
         src_timestamp = await _get_last_profile_trade_timestamp(tidy_client, cache_path, src_profile)
         dest_timestamp = await _get_last_operation_timestamp(dest_client, dest_account)
 
-        current_modified = src_timestamp + dest_timestamp
+        if last_modified != dest_timestamp or src_timestamp < 0:
+            last_modified = dest_timestamp
 
-        if current_modified != last_modified:
-            last_modified = current_modified
-
-            src_portfolio = await _get_profile_portfolio(tidy_client, src_profile)
+            src_portfolio = await _get_profile_portfolio(tidy_client, cache_path, src_profile)
             dest_portfolio = await _get_valid_portfolio(dest_client, dest_account)
 
             await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
@@ -197,9 +198,21 @@ async def _get_last_profile_trade_timestamp(client, cache_path, profile_id):
 
     if len(items) > 0:
         last_trade = items[0]
-        max_trade_date_time = last_trade["statistics"]["maxTradeDateTime"]
 
-        return datetime.fromisoformat(max_trade_date_time).timestamp()
+        full_id = last_trade["classCode"] + "/" + last_trade["ticker"]
+
+        if full_id not in _total_operations or _total_operations[full_id] != last_trade["statistics"]["totalOperationsCount"]:
+            # logger.debug("New operation found")
+
+            return -1
+
+        payload = await _request_profile_portfolio(profile_id)
+        payload = await _simplify_portfolio(payload)
+
+        if _last_portfolio != payload:
+            # logger.debug("Portfolio change found")
+
+            return -1
 
     return 0
 
@@ -219,14 +232,13 @@ async def _fill_instruments_cache_from_items(client, items):
                     try:
                         instrument_type, uid, lot, company, sector = await _get_instrument_info(client, item["type"], class_code, ticker)
 
-                        if instrument_type is not None:
-                            _instruments_cache[full_id] = {
-                                "type": instrument_type,
-                                "uid": uid,
-                                "lot": lot,
-                                "company": company,
-                                "sector": sector,
-                            }
+                        _instruments_cache[full_id] = {
+                            "type": instrument_type,
+                            "uid": uid,
+                            "lot": lot,
+                            "company": company,
+                            "sector": sector,
+                        }
                     except AioRequestError as e:
                         logger.warning(f"Failed to get info for instrument {full_id}: {e}")
 
@@ -242,7 +254,7 @@ async def _get_instrument_info(client, instrument_type, class_code, ticker):
     resp1 = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
 
     if not resp1.instrument.api_trade_available_flag:
-        return None, None, None, None, None
+        return "", "", 0, "", ""
 
     company = OTHER
     sector = OTHER
@@ -308,7 +320,7 @@ async def _get_last_operation_timestamp(client, account):
     return 0
 
 
-async def _get_profile_portfolio(client, profile_id):
+async def _get_profile_portfolio(client, cache_path, profile_id):
     global _last_complete_timestamp
     global _last_portfolio
     global _generated_portfolio
@@ -343,6 +355,8 @@ async def _get_profile_portfolio(client, profile_id):
         _last_complete_timestamp = datetime.fromisoformat(max_trade_date_time).timestamp()
         _last_portfolio = payload
 
+        _save_portfolio_cache(cache_path)
+
     return _generated_portfolio
 
 
@@ -370,10 +384,13 @@ async def _get_trades_from_timestamp(profile_id, timestamp):
             max_trade_date_time = trade["statistics"]["maxTradeDateTime"]
             trade_timestamp = datetime.fromisoformat(max_trade_date_time).timestamp()
 
-            if trade_timestamp <= timestamp:
+            if trade_timestamp < timestamp:
                 return res
 
             if trade["currency"] == "rub":
+                full_id = trade["classCode"] + "/" + trade["ticker"]
+                _total_operations[full_id] = trade["statistics"]["totalOperationsCount"]
+
                 res.append(trade)
 
         if not payload["hasNext"]:
@@ -469,13 +486,27 @@ def _get_session_id():
 
 def _load_cache(cache_path):
     global _instruments_cache
+    global _last_complete_timestamp
+    global _total_operations
+    global _last_portfolio
+    global _generated_portfolio
 
     cache_folder_path = Path(cache_path) / "tinkoff_pulse_follower"
     instruments_path = cache_folder_path / "instruments.json"
+    portfolio_path = cache_folder_path / "portfolio.json"
 
     if instruments_path.exists():
         with open(instruments_path, "r", encoding="utf-8") as f:
             _instruments_cache = json.loads(f.read())
+
+    if portfolio_path.exists():
+        with open(portfolio_path, "r", encoding="utf-8") as f:
+            data = json.loads(f.read())
+
+            _last_complete_timestamp = data["timestamp"]
+            _total_operations = data["total_operations"]
+            _last_portfolio = data["last_portfolio"]
+            _generated_portfolio = data["generated"]
 
 
 def _save_cache(cache_path):
@@ -486,6 +517,23 @@ def _save_cache(cache_path):
 
     with open(instruments_path, "w", encoding="utf-8") as f:
         json.dump(_instruments_cache, f, ensure_ascii=False)
+
+
+def _save_portfolio_cache(cache_path):
+    cache_folder_path = Path(cache_path) / "tinkoff_pulse_follower"
+    cache_folder_path.mkdir(parents=True, exist_ok=True)
+
+    portfolio_path = cache_folder_path / "portfolio.json"
+
+    data = {
+        "timestamp": _last_complete_timestamp,
+        "total_operations": _total_operations,
+        "last_portfolio": _last_portfolio,
+        "generated": _generated_portfolio,
+    }
+
+    with open(portfolio_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False)
 
 
 def _is_work_time():

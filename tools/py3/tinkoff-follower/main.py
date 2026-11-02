@@ -121,7 +121,7 @@ async def _start_follow_poll_mode(src_client, dest_client, src_account, dest_acc
 
         current_modified = src_timestamp + dest_timestamp
 
-        if current_modified != last_modified:
+        if last_modified != current_modified:
             last_modified = current_modified
 
             src_portfolio = await _get_valid_portfolio(src_client, src_account)
@@ -140,7 +140,7 @@ async def _start_follow_poll_file_mode(src_client, dest_client, src_account, des
     while True:
         current_modified = os.path.getmtime(polling_file)
 
-        if current_modified != last_modified:
+        if last_modified != current_modified:
             last_modified = current_modified
 
             src_portfolio = await _get_valid_portfolio(src_client, src_account)
