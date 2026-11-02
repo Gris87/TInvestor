@@ -47,7 +47,7 @@ IGNORE_INSTRUMENTS = {
 
 
 _instruments_cache = {}
-_last_complete_timestamp = 0
+_last_complete_timestamp = -1
 _total_operations = {}
 _last_portfolio = {
     "types": {
@@ -178,6 +178,8 @@ async def _start_follow_poll_mode(dest_client, tidy_client, cache_path, src_prof
 
 
 async def _get_last_profile_trade_timestamp(client, cache_path, profile_id):
+    global _last_complete_timestamp
+
     payload = await _request_profile_trades(profile_id)
     items = payload["items"]
 
@@ -194,15 +196,24 @@ async def _get_last_profile_trade_timestamp(client, cache_path, profile_id):
     else:
         await _fill_instruments_cache_from_items(client, payload["items"])
 
-    _save_cache(cache_path)
+    _save_instruments_cache(cache_path)
 
     if len(items) > 0:
         last_trade = items[0]
 
-        full_id = last_trade["classCode"] + "/" + last_trade["ticker"]
+        class_code = last_trade["classCode"]
+        ticker = last_trade["ticker"]
+
+        full_id = class_code + "/" + ticker
 
         if full_id not in _total_operations or _total_operations[full_id] != last_trade["statistics"]["totalOperationsCount"]:
             # logger.debug("New operation found")
+
+            if _last_complete_timestamp < 0:
+                _total_operations[full_id] = last_trade["statistics"]["totalOperationsCount"]
+                max_trade_date_time = last_trade["statistics"]["maxTradeDateTime"]
+
+                _last_complete_timestamp = datetime.fromisoformat(max_trade_date_time).timestamp()
 
             return -1
 
@@ -357,7 +368,9 @@ async def _get_profile_portfolio(client, cache_path, profile_id):
 
         _save_portfolio_cache(cache_path)
 
-    return _generated_portfolio
+    res = await _convert_generated_portfolio(_generated_portfolio)
+
+    return res
 
 
 async def _validate_constants(payload):
@@ -388,7 +401,11 @@ async def _get_trades_from_timestamp(profile_id, timestamp):
                 return res
 
             if trade["currency"] == "rub":
-                full_id = trade["classCode"] + "/" + trade["ticker"]
+                class_code = trade["classCode"]
+                ticker = trade["ticker"]
+
+                full_id = class_code + "/" + ticker
+
                 _total_operations[full_id] = trade["statistics"]["totalOperationsCount"]
 
                 res.append(trade)
@@ -404,14 +421,57 @@ async def _get_trades_from_timestamp(profile_id, timestamp):
 
 async def _simplify_portfolio(portfolio):
     return {
-        "types": {x["title"]: x["percent"] for x in portfolio["types"] if x["title"] == CURRENCY or x["percent"] > 0},
-        "issuers": {x["title"]: x["percent"] for x in portfolio["issuers"] if x["title"] == CURRENCY or x["percent"] > 0},
-        "sectors": {x["title"]: x["percent"] for x in portfolio["sectors"] if x["title"] == CURRENCY or x["percent"] > 0},
+        "types": {x["title"]: x["percent"] for x in portfolio["types"] if x["title"] == CURRENCY or x["percent"] != 0},
+        "issuers": {x["title"]: x["percent"] for x in portfolio["issuers"] if x["title"] == CURRENCY or x["percent"] != 0},
+        "sectors": {x["title"]: x["percent"] for x in portfolio["sectors"] if x["title"] == CURRENCY or x["percent"] != 0},
     }
 
 
 async def _generate_portfolio(generated_portfolio, old_portfolio, new_portfolio, trades):
-    return {}
+    for full_id in list(generated_portfolio.keys()):
+        part = await _calculate_part(new_portfolio, full_id)
+
+        if part == 0:
+            del generated_portfolio[full_id]
+
+    for trade in trades:
+        class_code = trade["classCode"]
+        ticker = trade["ticker"]
+
+        full_id = class_code + "/" + ticker
+
+        new_part = await _calculate_part(new_portfolio, full_id)
+
+        if new_part != 0:
+            old_part = await _calculate_part(old_portfolio, full_id)
+
+            if full_id not in generated_portfolio:
+                generated_portfolio[full_id] = 0
+
+            generated_portfolio[full_id] += new_part - old_part
+
+    return generated_portfolio
+
+
+async def _calculate_part(portfolio, full_id):
+    if full_id not in _instruments_cache:
+        return 0
+
+    instrument_info = _instruments_cache[full_id]
+
+    instrument_type = instrument_info["type"]
+    company = instrument_info["company"]
+    sector = instrument_info["sector"]
+
+    type_part = portfolio["types"].get(instrument_type, 0)
+    company_part = portfolio["issuers"].get(company, 0)
+    sector_part = portfolio["sectors"].get(sector, 0)
+
+    return min(type_part, company_part, sector_part)
+
+
+async def _convert_generated_portfolio(generated_portfolio):
+    return generated_portfolio
 
 
 async def _request_profile_portfolio(profile_id):
@@ -509,7 +569,7 @@ def _load_cache(cache_path):
             _generated_portfolio = data["generated"]
 
 
-def _save_cache(cache_path):
+def _save_instruments_cache(cache_path):
     cache_folder_path = Path(cache_path) / "tinkoff_pulse_follower"
     cache_folder_path.mkdir(parents=True, exist_ok=True)
 
