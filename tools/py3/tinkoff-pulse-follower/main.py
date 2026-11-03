@@ -258,8 +258,9 @@ async def _fill_instruments_cache_from_items(client, items):
                             "sector": sector,
                         }
                         _instruments_by_uid_cache[uid] = {
+                            "full_id": full_id,
                             "lot": lot,
-                            "nominal": nominal
+                            "nominal": nominal,
                         }
                     except AioRequestError as e:
                         logger.warning(f"Failed to get info for instrument {full_id}: {e}")
@@ -663,6 +664,7 @@ async def _trade_instruments(dest_client, dest_account, instruments):
 
 async def _buy(dest_client, dest_account, instrument_id, delta):
     instrument_info = _instruments_by_uid_cache[instrument_id]
+    full_id = instrument_info["full_id"]
     lot = instrument_info["lot"]
     nominal = Decimal(instrument_info["nominal"])
 
@@ -716,7 +718,7 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
                     amount_to_buy = min(delta_quantity, max_lots.buy_margin_limits.buy_max_lots)
 
                     if amount_to_buy > 0:
-                        logger.debug(f'Creating order to buy {amount_to_buy} lots of "{instrument_id}" at price {quotation_to_decimal(price)}')
+                        logger.debug(f"Creating order to buy {amount_to_buy} lots of {full_id} at price {quotation_to_decimal(price)}")
 
                         resp = await dest_client.orders.post_order(
                             quantity=amount_to_buy,
@@ -745,6 +747,7 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
 
 async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
     instrument_info = _instruments_by_uid_cache[instrument_id]
+    full_id = instrument_info["full_id"]
     lot = instrument_info["lot"]
     nominal = Decimal(instrument_info["nominal"])
 
@@ -801,7 +804,7 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                         amount_to_sell = min(delta_quantity, max_lots.sell_margin_limits.sell_max_lots)
 
                     if amount_to_sell > 0:
-                        logger.debug(f'Creating order to sell {amount_to_buy} lots of "{instrument_id}" at price {quotation_to_decimal(price)}')
+                        logger.debug(f"Creating order to sell {amount_to_sell} lots of {full_id} at price {quotation_to_decimal(price)}")
 
                         resp = await dest_client.orders.post_order(
                             quantity=amount_to_sell,
@@ -890,12 +893,13 @@ def _load_cache(cache_path):
 
             _instruments_by_uid_cache.clear()
 
-            for instrument_info in _instruments_by_ticker_cache.values():
+            for full_id, instrument_info in _instruments_by_ticker_cache.items():
                 uid = instrument_info["uid"]
                 lot = instrument_info["lot"]
                 nominal = instrument_info["nominal"]
 
                 _instruments_by_uid_cache[uid] = {
+                    "full_id": full_id,
                     "lot": lot,
                     "nominal": nominal
                 }

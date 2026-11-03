@@ -421,7 +421,7 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                     amount_to_sell = min(delta_quantity, max_lots.sell_limits.sell_max_lots)
 
                 if amount_to_sell > 0:
-                    logger.debug(f'Creating order to sell {amount_to_buy} lots of "{instrument_id}" at price {quotation_to_decimal(price)}')
+                    logger.debug(f'Creating order to sell {amount_to_sell} lots of "{instrument_id}" at price {quotation_to_decimal(price)}')
 
                     resp = await dest_client.orders.post_order(
                         quantity=amount_to_sell,

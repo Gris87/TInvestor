@@ -27,6 +27,7 @@ AuthDialog::AuthDialog(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUt
     ui->setupUi(this);
 
 #ifndef USE_SANDBOX
+    setWindowTitle(windowTitle() + " (Sandbox)");
     ui->tokenLineEdit->setText(userStorage->getToken());
 #else
     Q_UNUSED(userStorage);
