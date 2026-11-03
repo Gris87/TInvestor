@@ -10041,6 +10041,8 @@ class PortfolioResponse final : public ::google::protobuf::Message
     kDailyYieldFieldNumber = 15,
     kDailyYieldRelativeFieldNumber = 16,
     kTotalAmountDfaFieldNumber = 17,
+    kTotalVarMarginFieldNumber = 18,
+    kTotalVarMarginSettledFieldNumber = 19,
   };
   // repeated .tinkoff.public.invest.api.contract.v1.PortfolioPosition positions = 7;
   int positions_size() const;
@@ -10271,12 +10273,42 @@ class PortfolioResponse final : public ::google::protobuf::Message
   ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL _internal_mutable_total_amount_dfa();
 
   public:
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin = 18;
+  bool has_total_var_margin() const;
+  void clear_total_var_margin() ;
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& total_var_margin() const;
+  [[nodiscard]] ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE release_total_var_margin();
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL mutable_total_var_margin();
+  void set_allocated_total_var_margin(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_total_var_margin(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE unsafe_arena_release_total_var_margin();
+
+  private:
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& _internal_total_var_margin() const;
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL _internal_mutable_total_var_margin();
+
+  public:
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin_settled = 19;
+  bool has_total_var_margin_settled() const;
+  void clear_total_var_margin_settled() ;
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& total_var_margin_settled() const;
+  [[nodiscard]] ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE release_total_var_margin_settled();
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL mutable_total_var_margin_settled();
+  void set_allocated_total_var_margin_settled(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_total_var_margin_settled(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE unsafe_arena_release_total_var_margin_settled();
+
+  private:
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& _internal_total_var_margin_settled() const;
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL _internal_mutable_total_var_margin_settled();
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.PortfolioResponse)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 15,
-                                   14, 82,
+  static const ::google::protobuf::internal::TcParseTable<5, 17,
+                                   16, 90,
                                    2>
       _table_;
 
@@ -10312,6 +10344,8 @@ class PortfolioResponse final : public ::google::protobuf::Message
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE daily_yield_;
     ::tinkoff::public_::invest::api::contract::v1::Quotation* PROTOBUF_NULLABLE daily_yield_relative_;
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE total_amount_dfa_;
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE total_var_margin_;
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE total_var_margin_settled_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -17466,6 +17500,192 @@ inline void PortfolioResponse::set_allocated_total_amount_dfa(::tinkoff::public_
 
   _impl_.total_amount_dfa_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_amount_dfa)
+}
+
+// .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin = 18;
+inline bool PortfolioResponse::has_total_var_margin() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00008000U);
+  PROTOBUF_ASSUME(!value || _impl_.total_var_margin_ != nullptr);
+  return value;
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& PortfolioResponse::_internal_total_var_margin() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue* p = _impl_.total_var_margin_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::MoneyValue&>(::tinkoff::public_::invest::api::contract::v1::_MoneyValue_default_instance_);
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& PortfolioResponse::total_var_margin() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_var_margin)
+  return _internal_total_var_margin();
+}
+inline void PortfolioResponse::unsafe_arena_set_allocated_total_var_margin(
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.total_var_margin_);
+  }
+  _impl_.total_var_margin_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00008000U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_var_margin)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE PortfolioResponse::release_total_var_margin() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.total_var_margin_;
+  _impl_.total_var_margin_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE PortfolioResponse::unsafe_arena_release_total_var_margin() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_var_margin)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.total_var_margin_;
+  _impl_.total_var_margin_ = nullptr;
+  return temp;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL PortfolioResponse::_internal_mutable_total_var_margin() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.total_var_margin_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(GetArena());
+    _impl_.total_var_margin_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(p);
+  }
+  return _impl_.total_var_margin_;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL PortfolioResponse::mutable_total_var_margin()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00008000U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_total_var_margin();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_var_margin)
+  return _msg;
+}
+inline void PortfolioResponse::set_allocated_total_var_margin(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.total_var_margin_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00008000U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00008000U);
+  }
+
+  _impl_.total_var_margin_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_var_margin)
+}
+
+// .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin_settled = 19;
+inline bool PortfolioResponse::has_total_var_margin_settled() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00010000U);
+  PROTOBUF_ASSUME(!value || _impl_.total_var_margin_settled_ != nullptr);
+  return value;
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& PortfolioResponse::_internal_total_var_margin_settled() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::tinkoff::public_::invest::api::contract::v1::MoneyValue* p = _impl_.total_var_margin_settled_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::MoneyValue&>(::tinkoff::public_::invest::api::contract::v1::_MoneyValue_default_instance_);
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MoneyValue& PortfolioResponse::total_var_margin_settled() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_var_margin_settled)
+  return _internal_total_var_margin_settled();
+}
+inline void PortfolioResponse::unsafe_arena_set_allocated_total_var_margin_settled(
+    ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.total_var_margin_settled_);
+  }
+  _impl_.total_var_margin_settled_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00010000U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00010000U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_var_margin_settled)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE PortfolioResponse::release_total_var_margin_settled() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00010000U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* released = _impl_.total_var_margin_settled_;
+  _impl_.total_var_margin_settled_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE PortfolioResponse::unsafe_arena_release_total_var_margin_settled() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_var_margin_settled)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00010000U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* temp = _impl_.total_var_margin_settled_;
+  _impl_.total_var_margin_settled_ = nullptr;
+  return temp;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL PortfolioResponse::_internal_mutable_total_var_margin_settled() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.total_var_margin_settled_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(GetArena());
+    _impl_.total_var_margin_settled_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(p);
+  }
+  return _impl_.total_var_margin_settled_;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NONNULL PortfolioResponse::mutable_total_var_margin_settled()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00010000U);
+  ::tinkoff::public_::invest::api::contract::v1::MoneyValue* _msg = _internal_mutable_total_var_margin_settled();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_var_margin_settled)
+  return _msg;
+}
+inline void PortfolioResponse::set_allocated_total_var_margin_settled(::tinkoff::public_::invest::api::contract::v1::MoneyValue* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.total_var_margin_settled_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00010000U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00010000U);
+  }
+
+  _impl_.total_var_margin_settled_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::MoneyValue*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PortfolioResponse.total_var_margin_settled)
 }
 
 // -------------------------------------------------------------------

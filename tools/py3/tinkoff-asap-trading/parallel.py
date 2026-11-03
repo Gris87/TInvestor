@@ -125,9 +125,9 @@ async def _post_order(args, client, direction, amount_of_lots, price):
     await _cancel_orders_for_instrument(args, client)
 
     if direction == OrderDirection.ORDER_DIRECTION_BUY:
-        logger.info(f"Creating order to buy {amount_of_lots} at price {price}")
+        logger.info(f"Creating order to buy {amount_of_lots} at price {quotation_to_decimal(price)}")
     else:
-        logger.info(f"Creating order to sell {amount_of_lots} at price {price}")
+        logger.info(f"Creating order to sell {amount_of_lots} at price {quotation_to_decimal(price)}")
 
     await client.orders.post_order(
         quantity=amount_of_lots,

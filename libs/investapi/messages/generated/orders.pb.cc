@@ -114,38 +114,6 @@ struct OrderStateStreamRequestDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 OrderStateStreamRequestDefaultTypeInternal _OrderStateStreamRequest_default_instance_;
 
-inline constexpr GetOrderStateRequest::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        account_id_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        order_id_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        price_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::PriceType >(0)},
-        order_id_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::OrderIdType >(0)} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR GetOrderStateRequest::GetOrderStateRequest(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(GetOrderStateRequest_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct GetOrderStateRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR GetOrderStateRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~GetOrderStateRequestDefaultTypeInternal() {}
-  union {
-    GetOrderStateRequest _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetOrderStateRequestDefaultTypeInternal _GetOrderStateRequest_default_instance_;
-
 inline constexpr GetMaxLotsResponse_SellLimitsView::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -488,6 +456,39 @@ struct GetOrdersRequest_GetOrdersRequestFiltersDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetOrdersRequest_GetOrdersRequestFiltersDefaultTypeInternal _GetOrdersRequest_GetOrdersRequestFilters_default_instance_;
+
+inline constexpr GetOrderStateRequest::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        account_id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        order_id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        order_date_{nullptr},
+        price_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::PriceType >(0)},
+        order_id_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::OrderIdType >(0)} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR GetOrderStateRequest::GetOrderStateRequest(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(GetOrderStateRequest_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct GetOrderStateRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetOrderStateRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetOrderStateRequestDefaultTypeInternal() {}
+  union {
+    GetOrderStateRequest _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetOrderStateRequestDefaultTypeInternal _GetOrderStateRequest_default_instance_;
 
 inline constexpr GetOrderPriceResponse_ExtraFuture::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -1229,15 +1230,17 @@ const ::uint32_t
         1,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, _impl_._has_bits_),
-        7, // hasbit index offset
+        8, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, _impl_.account_id_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, _impl_.order_id_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, _impl_.price_type_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, _impl_.order_id_type_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, _impl_.order_date_),
         0,
         1,
-        2,
         3,
+        4,
+        2,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest_GetOrdersRequestFilters, _impl_._has_bits_),
         6, // hasbit index offset
@@ -1546,25 +1549,25 @@ static const ::_pbi::MigrationSchema
         {143, sizeof(::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest)},
         {152, sizeof(::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse)},
         {159, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest)},
-        {170, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest_GetOrdersRequestFilters)},
-        {179, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest)},
-        {186, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse)},
-        {191, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderState)},
-        {238, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStage)},
-        {249, sizeof(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest)},
-        {268, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest)},
-        {277, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse_BuyLimitsView)},
-        {286, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse_SellLimitsView)},
-        {291, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse)},
-        {304, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest)},
-        {317, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse_ExtraBond)},
-        {324, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse_ExtraFuture)},
-        {329, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse)},
-        {352, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest)},
-        {359, sizeof(::tinkoff::public_::invest::api::contract::v1::SubscriptionResponse)},
-        {372, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState)},
-        {431, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState)},
-        {456, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse)},
+        {172, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest_GetOrdersRequestFilters)},
+        {181, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest)},
+        {188, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse)},
+        {193, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderState)},
+        {240, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStage)},
+        {251, sizeof(::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest)},
+        {270, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest)},
+        {279, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse_BuyLimitsView)},
+        {288, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse_SellLimitsView)},
+        {293, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse)},
+        {306, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest)},
+        {319, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse_ExtraBond)},
+        {326, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse_ExtraFuture)},
+        {331, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse)},
+        {354, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest)},
+        {361, sizeof(::tinkoff::public_::invest::api::contract::v1::SubscriptionResponse)},
+        {374, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_OrderState)},
+        {433, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse_StopOrderState)},
+        {458, sizeof(::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::tinkoff::public_::invest::api::contract::v1::_TradesStreamRequest_default_instance_._instance,
@@ -1694,254 +1697,256 @@ const char descriptor_table_protodef_orders_2eproto[] ABSL_ATTRIBUTE_SECTION_VAR
     "_type\"\224\001\n\023CancelOrderResponse\022(\n\004time\030\001 "
     "\001(\0132\032.google.protobuf.Timestamp\022S\n\021respo"
     "nse_metadata\030\376\001 \001(\01327.tinkoff.public.inv"
-    "est.api.contract.v1.ResponseMetadata\"\360\001\n"
+    "est.api.contract.v1.ResponseMetadata\"\264\002\n"
     "\024GetOrderStateRequest\022\030\n\naccount_id\030\001 \001("
     "\tB\004\342A\001\002\022\026\n\010order_id\030\002 \001(\tB\004\342A\001\002\022D\n\nprice"
     "_type\030\003 \001(\01620.tinkoff.public.invest.api."
     "contract.v1.PriceType\022N\n\rorder_id_type\030\004"
     " \001(\01622.tinkoff.public.invest.api.contrac"
-    "t.v1.OrderIdTypeH\000\210\001\001B\020\n\016_order_id_type\""
-    "\226\003\n\020GetOrdersRequest\022\030\n\naccount_id\030\001 \001(\t"
-    "B\004\342A\001\002\022n\n\020advanced_filters\030\002 \001(\0132O.tinko"
-    "ff.public.invest.api.contract.v1.GetOrde"
-    "rsRequest.GetOrdersRequestFiltersH\000\210\001\001\032\342"
-    "\001\n\027GetOrdersRequestFilters\022-\n\004from\030\001 \001(\013"
-    "2\032.google.protobuf.TimestampH\000\210\001\001\022+\n\002to\030"
-    "\002 \001(\0132\032.google.protobuf.TimestampH\001\210\001\001\022["
-    "\n\020execution_status\030\003 \003(\0162A.tinkoff.publi"
-    "c.invest.api.contract.v1.OrderExecutionR"
-    "eportStatusB\007\n\005_fromB\005\n\003_toB\023\n\021_advanced"
-    "_filters\"V\n\021GetOrdersResponse\022A\n\006orders\030"
-    "\001 \003(\01321.tinkoff.public.invest.api.contra"
-    "ct.v1.OrderState\"\256\t\n\nOrderState\022\020\n\010order"
-    "_id\030\001 \001(\t\022b\n\027execution_report_status\030\002 \001"
-    "(\0162A.tinkoff.public.invest.api.contract."
-    "v1.OrderExecutionReportStatus\022\026\n\016lots_re"
-    "quested\030\003 \001(\003\022\025\n\rlots_executed\030\004 \001(\003\022N\n\023"
-    "initial_order_price\030\005 \001(\01321.tinkoff.publ"
-    "ic.invest.api.contract.v1.MoneyValue\022O\n\024"
-    "executed_order_price\030\006 \001(\01321.tinkoff.pub"
-    "lic.invest.api.contract.v1.MoneyValue\022M\n"
-    "\022total_order_amount\030\007 \001(\01321.tinkoff.publ"
-    "ic.invest.api.contract.v1.MoneyValue\022Q\n\026"
-    "average_position_price\030\010 \001(\01321.tinkoff.p"
-    "ublic.invest.api.contract.v1.MoneyValue\022"
-    "M\n\022initial_commission\030\t \001(\01321.tinkoff.pu"
-    "blic.invest.api.contract.v1.MoneyValue\022N"
-    "\n\023executed_commission\030\n \001(\01321.tinkoff.pu"
-    "blic.invest.api.contract.v1.MoneyValue\022\014"
-    "\n\004figi\030\013 \001(\t\022H\n\tdirection\030\014 \001(\01625.tinkof"
-    "f.public.invest.api.contract.v1.OrderDir"
-    "ection\022Q\n\026initial_security_price\030\r \001(\01321"
-    ".tinkoff.public.invest.api.contract.v1.M"
-    "oneyValue\022A\n\006stages\030\016 \003(\01321.tinkoff.publ"
-    "ic.invest.api.contract.v1.OrderStage\022M\n\022"
-    "service_commission\030\017 \001(\01321.tinkoff.publi"
-    "c.invest.api.contract.v1.MoneyValue\022\020\n\010c"
-    "urrency\030\020 \001(\t\022D\n\norder_type\030\021 \001(\01620.tink"
-    "off.public.invest.api.contract.v1.OrderT"
-    "ype\022.\n\norder_date\030\022 \001(\0132\032.google.protobu"
-    "f.Timestamp\022\026\n\016instrument_uid\030\023 \001(\t\022\030\n\020o"
-    "rder_request_id\030\024 \001(\t\022\016\n\006ticker\030\025 \001(\t\022\022\n"
-    "\nclass_code\030\026 \001(\t\"\246\001\n\nOrderStage\022@\n\005pric"
-    "e\030\001 \001(\01321.tinkoff.public.invest.api.cont"
-    "ract.v1.MoneyValue\022\020\n\010quantity\030\002 \001(\003\022\020\n\010"
-    "trade_id\030\003 \001(\t\0222\n\016execution_time\030\005 \001(\0132\032"
-    ".google.protobuf.Timestamp\"\250\003\n\023ReplaceOr"
-    "derRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022N\n\r"
-    "order_id_type\030\005 \001(\01622.tinkoff.public.inv"
-    "est.api.contract.v1.OrderIdTypeH\000\210\001\001\022\026\n\010"
-    "order_id\030\006 \001(\tB\004\342A\001\002\022\035\n\017idempotency_key\030"
-    "\007 \001(\tB\004\342A\001\002\022\026\n\010quantity\030\013 \001(\003B\004\342A\001\002\022D\n\005p"
-    "rice\030\014 \001(\01320.tinkoff.public.invest.api.c"
-    "ontract.v1.QuotationH\001\210\001\001\022I\n\nprice_type\030"
-    "\r \001(\01620.tinkoff.public.invest.api.contra"
-    "ct.v1.PriceTypeH\002\210\001\001\022\034\n\024confirm_margin_t"
-    "rade\030\016 \001(\010B\020\n\016_order_id_typeB\010\n\006_priceB\r"
-    "\n\013_price_type\"\232\001\n\021GetMaxLotsRequest\022\030\n\na"
-    "ccount_id\030\001 \001(\tB\004\342A\001\002\022\033\n\rinstrument_id\030\002"
-    " \001(\tB\004\342A\001\002\022D\n\005price\030\003 \001(\01320.tinkoff.publ"
-    "ic.invest.api.contract.v1.QuotationH\000\210\001\001"
-    "B\010\n\006_price\"\346\004\n\022GetMaxLotsResponse\022\020\n\010cur"
-    "rency\030\001 \001(\t\022[\n\nbuy_limits\030\002 \001(\0132G.tinkof"
-    "f.public.invest.api.contract.v1.GetMaxLo"
-    "tsResponse.BuyLimitsView\022b\n\021buy_margin_l"
-    "imits\030\003 \001(\0132G.tinkoff.public.invest.api."
-    "contract.v1.GetMaxLotsResponse.BuyLimits"
-    "View\022]\n\013sell_limits\030\004 \001(\0132H.tinkoff.publ"
-    "ic.invest.api.contract.v1.GetMaxLotsResp"
-    "onse.SellLimitsView\022d\n\022sell_margin_limit"
-    "s\030\005 \001(\0132H.tinkoff.public.invest.api.cont"
-    "ract.v1.GetMaxLotsResponse.SellLimitsVie"
-    "w\032\216\001\n\rBuyLimitsView\022J\n\020buy_money_amount\030"
-    "\001 \001(\01320.tinkoff.public.invest.api.contra"
-    "ct.v1.Quotation\022\024\n\014buy_max_lots\030\002 \001(\003\022\033\n"
-    "\023buy_max_market_lots\030\003 \001(\003\032\'\n\016SellLimits"
-    "View\022\025\n\rsell_max_lots\030\001 \001(\003\"\336\001\n\024GetOrder"
-    "PriceRequest\022\022\n\naccount_id\030\001 \001(\t\022\025\n\rinst"
-    "rument_id\030\002 \001(\t\022\?\n\005price\030\003 \001(\01320.tinkoff"
-    ".public.invest.api.contract.v1.Quotation"
-    "\022H\n\tdirection\030\014 \001(\01625.tinkoff.public.inv"
-    "est.api.contract.v1.OrderDirection\022\020\n\010qu"
-    "antity\030\r \001(\003\"\343\007\n\025GetOrderPriceResponse\022M"
-    "\n\022total_order_amount\030\001 \001(\01321.tinkoff.pub"
-    "lic.invest.api.contract.v1.MoneyValue\022O\n"
-    "\024initial_order_amount\030\005 \001(\01321.tinkoff.pu"
-    "blic.invest.api.contract.v1.MoneyValue\022\026"
-    "\n\016lots_requested\030\003 \001(\003\022N\n\023executed_commi"
-    "ssion\030\007 \001(\01321.tinkoff.public.invest.api."
-    "contract.v1.MoneyValue\022R\n\027executed_commi"
-    "ssion_rub\030\010 \001(\01321.tinkoff.public.invest."
-    "api.contract.v1.MoneyValue\022M\n\022service_co"
-    "mmission\030\t \001(\01321.tinkoff.public.invest.a"
-    "pi.contract.v1.MoneyValue\022J\n\017deal_commis"
-    "sion\030\n \001(\01321.tinkoff.public.invest.api.c"
-    "ontract.v1.MoneyValue\022\\\n\nextra_bond\030\014 \001("
-    "\0132F.tinkoff.public.invest.api.contract.v"
-    "1.GetOrderPriceResponse.ExtraBondH\000\022`\n\014e"
-    "xtra_future\030\r \001(\0132H.tinkoff.public.inves"
-    "t.api.contract.v1.GetOrderPriceResponse."
-    "ExtraFutureH\000\032\244\001\n\tExtraBond\022D\n\taci_value"
-    "\030\002 \001(\01321.tinkoff.public.invest.api.contr"
-    "act.v1.MoneyValue\022Q\n\027nominal_conversion_"
-    "rate\030\003 \001(\01320.tinkoff.public.invest.api.c"
-    "ontract.v1.Quotation\032X\n\013ExtraFuture\022I\n\016i"
-    "nitial_margin\030\002 \001(\01321.tinkoff.public.inv"
-    "est.api.contract.v1.MoneyValueB\022\n\020instru"
-    "ment_extra\"a\n\027OrderStateStreamRequest\022\020\n"
-    "\010accounts\030\001 \003(\t\022\036\n\021ping_delay_millis\030\017 \001"
-    "(\005H\000\210\001\001B\024\n\022_ping_delay_millis\"\363\001\n\024Subscr"
-    "iptionResponse\022\023\n\013tracking_id\030\001 \001(\t\022O\n\006s"
-    "tatus\030\002 \001(\0162\?.tinkoff.public.invest.api."
-    "contract.v1.ResultSubscriptionStatus\022\021\n\t"
-    "stream_id\030\004 \001(\t\022\020\n\010accounts\030\005 \003(\t\022F\n\005err"
-    "or\030\007 \001(\01322.tinkoff.public.invest.api.con"
-    "tract.v1.ErrorDetailH\000\210\001\001B\010\n\006_error\"\325\025\n\030"
-    "OrderStateStreamResponse\022a\n\013order_state\030"
-    "\001 \001(\0132J.tinkoff.public.invest.api.contra"
-    "ct.v1.OrderStateStreamResponse.OrderStat"
-    "eH\000\022;\n\004ping\030\002 \001(\0132+.tinkoff.public.inves"
-    "t.api.contract.v1.PingH\000\022S\n\014subscription"
-    "\030\003 \001(\0132;.tinkoff.public.invest.api.contr"
-    "act.v1.SubscriptionResponseH\000\022j\n\020stop_or"
-    "der_state\030\004 \001(\0132N.tinkoff.public.invest."
-    "api.contract.v1.OrderStateStreamResponse"
-    ".StopOrderStateH\000\032\363\n\n\nOrderState\022\020\n\010orde"
-    "r_id\030\001 \001(\t\022\035\n\020order_request_id\030\002 \001(\tH\000\210\001"
-    "\001\022\023\n\013client_code\030\003 \001(\t\022.\n\ncreated_at\030\004 \001"
-    "(\0132\032.google.protobuf.Timestamp\022b\n\027execut"
-    "ion_report_status\030\005 \001(\0162A.tinkoff.public"
-    ".invest.api.contract.v1.OrderExecutionRe"
-    "portStatus\022i\n\013status_info\030\006 \001(\0162O.tinkof"
-    "f.public.invest.api.contract.v1.OrderSta"
-    "teStreamResponse.StatusCauseInfoH\001\210\001\001\022\016\n"
-    "\006ticker\030\007 \001(\t\022\022\n\nclass_code\030\010 \001(\t\022\020\n\010lot"
-    "_size\030\t \001(\005\022H\n\tdirection\030\n \001(\01625.tinkoff"
-    ".public.invest.api.contract.v1.OrderDire"
-    "ction\022M\n\rtime_in_force\030\013 \001(\01626.tinkoff.p"
-    "ublic.invest.api.contract.v1.TimeInForce"
-    "Type\022D\n\norder_type\030\014 \001(\01620.tinkoff.publi"
-    "c.invest.api.contract.v1.OrderType\022\022\n\nac"
-    "count_id\030\r \001(\t\022\034\n\016trade_order_id\030\016 \001(\tB\004"
-    "\342A\001\002\022N\n\023initial_order_price\030\026 \001(\01321.tink"
-    "off.public.invest.api.contract.v1.MoneyV"
-    "alue\022F\n\013order_price\030\027 \001(\01321.tinkoff.publ"
-    "ic.invest.api.contract.v1.MoneyValue\022F\n\006"
-    "amount\030\030 \001(\01321.tinkoff.public.invest.api"
-    ".contract.v1.MoneyValueH\002\210\001\001\022O\n\024executed"
-    "_order_price\030\031 \001(\01321.tinkoff.public.inve"
-    "st.api.contract.v1.MoneyValue\022\020\n\010currenc"
-    "y\030\032 \001(\t\022\026\n\016lots_requested\030\033 \001(\003\022\025\n\rlots_"
-    "executed\030\034 \001(\003\022\021\n\tlots_left\030\035 \001(\003\022\026\n\016lot"
-    "s_cancelled\030\036 \001(\003\022_\n\006marker\030\037 \001(\0162J.tink"
+    "t.v1.OrderIdTypeH\000\210\001\001\0223\n\norder_date\030\005 \001("
+    "\0132\032.google.protobuf.TimestampH\001\210\001\001B\020\n\016_o"
+    "rder_id_typeB\r\n\013_order_date\"\226\003\n\020GetOrder"
+    "sRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022n\n\020ad"
+    "vanced_filters\030\002 \001(\0132O.tinkoff.public.in"
+    "vest.api.contract.v1.GetOrdersRequest.Ge"
+    "tOrdersRequestFiltersH\000\210\001\001\032\342\001\n\027GetOrders"
+    "RequestFilters\022-\n\004from\030\001 \001(\0132\032.google.pr"
+    "otobuf.TimestampH\000\210\001\001\022+\n\002to\030\002 \001(\0132\032.goog"
+    "le.protobuf.TimestampH\001\210\001\001\022[\n\020execution_"
+    "status\030\003 \003(\0162A.tinkoff.public.invest.api"
+    ".contract.v1.OrderExecutionReportStatusB"
+    "\007\n\005_fromB\005\n\003_toB\023\n\021_advanced_filters\"V\n\021"
+    "GetOrdersResponse\022A\n\006orders\030\001 \003(\01321.tink"
     "off.public.invest.api.contract.v1.OrderS"
-    "tateStreamResponse.MarkerTypeH\003\210\001\001\022A\n\006tr"
-    "ades\030! \003(\01321.tinkoff.public.invest.api.c"
-    "ontract.v1.OrderTrade\0223\n\017completion_time"
-    "\030# \001(\0132\032.google.protobuf.Timestamp\022\020\n\010ex"
-    "change\030$ \001(\t\022\026\n\016instrument_uid\030) \001(\tB\023\n\021"
-    "_order_request_idB\016\n\014_status_infoB\t\n\007_am"
-    "ountB\t\n\007_marker\032\216\004\n\016StopOrderState\022\025\n\rst"
-    "op_order_id\030\001 \001(\t\022\022\n\naccount_id\030\002 \001(\t\022.\n"
-    "\ncreated_at\030\003 \001(\0132\032.google.protobuf.Time"
-    "stamp\022H\n\tdirection\030\004 \001(\01625.tinkoff.publi"
-    "c.invest.api.contract.v1.OrderDirection\022"
-    "@\n\005price\030\005 \001(\01321.tinkoff.public.invest.a"
-    "pi.contract.v1.MoneyValue\022E\n\nstop_price\030"
-    "\006 \001(\01321.tinkoff.public.invest.api.contra"
-    "ct.v1.MoneyValue\022D\n\norder_type\030\007 \001(\01620.t"
-    "inkoff.public.invest.api.contract.v1.Ord"
-    "erType\022\026\n\016instrument_uid\030\010 \001(\t\022\016\n\006ticker"
-    "\030\t \001(\t\022\022\n\nclass_code\030\n \001(\t\022L\n\006status\030\013 \001"
-    "(\0162<.tinkoff.public.invest.api.contract."
-    "v1.StopOrderStatusOption\"\257\001\n\nMarkerType\022"
-    "\022\n\016MARKER_UNKNOWN\020\000\022\021\n\rMARKER_BROKER\020\001\022\017"
-    "\n\013MARKER_CHAT\020\002\022\020\n\014MARKER_PAPER\020\003\022\021\n\rMAR"
-    "KER_MARGIN\020\004\022\020\n\014MARKER_TKBNM\020\005\022\020\n\014MARKER"
-    "_SHORT\020\006\022\021\n\rMARKER_SPECMM\020\007\022\r\n\tMARKER_PO"
-    "\020\010\"\223\002\n\017StatusCauseInfo\022\025\n\021CAUSE_UNSPECIF"
-    "IED\020\000\022\035\n\031CAUSE_CANCELLED_BY_CLIENT\020\017\022\037\n\033"
-    "CAUSE_CANCELLED_BY_EXCHANGE\020\001\022\'\n#CAUSE_C"
-    "ANCELLED_NOT_ENOUGH_POSITION\020\002\022#\n\037CAUSE_"
-    "CANCELLED_BY_CLIENT_BLOCK\020\003\022\034\n\030CAUSE_REJ"
-    "ECTED_BY_BROKER\020\004\022\036\n\032CAUSE_REJECTED_BY_E"
-    "XCHANGE\020\005\022\035\n\031CAUSE_CANCELLED_BY_BROKER\020\006"
-    "B\t\n\007payload*d\n\016OrderDirection\022\037\n\033ORDER_D"
-    "IRECTION_UNSPECIFIED\020\000\022\027\n\023ORDER_DIRECTIO"
-    "N_BUY\020\001\022\030\n\024ORDER_DIRECTION_SELL\020\002*n\n\tOrd"
-    "erType\022\032\n\026ORDER_TYPE_UNSPECIFIED\020\000\022\024\n\020OR"
-    "DER_TYPE_LIMIT\020\001\022\025\n\021ORDER_TYPE_MARKET\020\002\022"
-    "\030\n\024ORDER_TYPE_BESTPRICE\020\003*\200\002\n\032OrderExecu"
-    "tionReportStatus\022\'\n#EXECUTION_REPORT_STA"
-    "TUS_UNSPECIFIED\020\000\022 \n\034EXECUTION_REPORT_ST"
-    "ATUS_FILL\020\001\022$\n EXECUTION_REPORT_STATUS_R"
-    "EJECTED\020\002\022%\n!EXECUTION_REPORT_STATUS_CAN"
-    "CELLED\020\003\022\037\n\033EXECUTION_REPORT_STATUS_NEW\020"
-    "\004\022)\n%EXECUTION_REPORT_STATUS_PARTIALLYFI"
-    "LL\020\005*\210\001\n\017TimeInForceType\022\035\n\031TIME_IN_FORC"
-    "E_UNSPECIFIED\020\000\022\025\n\021TIME_IN_FORCE_DAY\020\001\022\037"
-    "\n\033TIME_IN_FORCE_FILL_AND_KILL\020\002\022\036\n\032TIME_"
-    "IN_FORCE_FILL_OR_KILL\020\003*c\n\013OrderIdType\022\035"
-    "\n\031ORDER_ID_TYPE_UNSPECIFIED\020\000\022\032\n\026ORDER_I"
-    "D_TYPE_EXCHANGE\020\001\022\031\n\025ORDER_ID_TYPE_REQUE"
-    "ST\020\0022\271\002\n\023OrdersStreamService\022\211\001\n\014TradesS"
-    "tream\022:.tinkoff.public.invest.api.contra"
-    "ct.v1.TradesStreamRequest\032;.tinkoff.publ"
-    "ic.invest.api.contract.v1.TradesStreamRe"
-    "sponse0\001\022\225\001\n\020OrderStateStream\022>.tinkoff."
-    "public.invest.api.contract.v1.OrderState"
-    "StreamRequest\032\?.tinkoff.public.invest.ap"
-    "i.contract.v1.OrderStateStreamResponse0\001"
-    "2\277\010\n\rOrdersService\022~\n\tPostOrder\0227.tinkof"
-    "f.public.invest.api.contract.v1.PostOrde"
-    "rRequest\0328.tinkoff.public.invest.api.con"
-    "tract.v1.PostOrderResponse\022\215\001\n\016PostOrder"
-    "Async\022<.tinkoff.public.invest.api.contra"
-    "ct.v1.PostOrderAsyncRequest\032=.tinkoff.pu"
-    "blic.invest.api.contract.v1.PostOrderAsy"
-    "ncResponse\022\204\001\n\013CancelOrder\0229.tinkoff.pub"
-    "lic.invest.api.contract.v1.CancelOrderRe"
-    "quest\032:.tinkoff.public.invest.api.contra"
-    "ct.v1.CancelOrderResponse\022\177\n\rGetOrderSta"
-    "te\022;.tinkoff.public.invest.api.contract."
-    "v1.GetOrderStateRequest\0321.tinkoff.public"
-    ".invest.api.contract.v1.OrderState\022~\n\tGe"
-    "tOrders\0227.tinkoff.public.invest.api.cont"
-    "ract.v1.GetOrdersRequest\0328.tinkoff.publi"
-    "c.invest.api.contract.v1.GetOrdersRespon"
-    "se\022\204\001\n\014ReplaceOrder\022:.tinkoff.public.inv"
-    "est.api.contract.v1.ReplaceOrderRequest\032"
-    "8.tinkoff.public.invest.api.contract.v1."
-    "PostOrderResponse\022\201\001\n\nGetMaxLots\0228.tinko"
-    "ff.public.invest.api.contract.v1.GetMaxL"
-    "otsRequest\0329.tinkoff.public.invest.api.c"
-    "ontract.v1.GetMaxLotsResponse\022\212\001\n\rGetOrd"
-    "erPrice\022;.tinkoff.public.invest.api.cont"
-    "ract.v1.GetOrderPriceRequest\032<.tinkoff.p"
-    "ublic.invest.api.contract.v1.GetOrderPri"
-    "ceResponseBa\n\034ru.tinkoff.piapi.contract."
-    "v1P\001Z\014./;investapi\242\002\005TIAPI\252\002\024Tinkoff.Inv"
-    "estApi.V1\312\002\021Tinkoff\\Invest\\V1b\006proto3"
+    "tate\"\256\t\n\nOrderState\022\020\n\010order_id\030\001 \001(\t\022b\n"
+    "\027execution_report_status\030\002 \001(\0162A.tinkoff"
+    ".public.invest.api.contract.v1.OrderExec"
+    "utionReportStatus\022\026\n\016lots_requested\030\003 \001("
+    "\003\022\025\n\rlots_executed\030\004 \001(\003\022N\n\023initial_orde"
+    "r_price\030\005 \001(\01321.tinkoff.public.invest.ap"
+    "i.contract.v1.MoneyValue\022O\n\024executed_ord"
+    "er_price\030\006 \001(\01321.tinkoff.public.invest.a"
+    "pi.contract.v1.MoneyValue\022M\n\022total_order"
+    "_amount\030\007 \001(\01321.tinkoff.public.invest.ap"
+    "i.contract.v1.MoneyValue\022Q\n\026average_posi"
+    "tion_price\030\010 \001(\01321.tinkoff.public.invest"
+    ".api.contract.v1.MoneyValue\022M\n\022initial_c"
+    "ommission\030\t \001(\01321.tinkoff.public.invest."
+    "api.contract.v1.MoneyValue\022N\n\023executed_c"
+    "ommission\030\n \001(\01321.tinkoff.public.invest."
+    "api.contract.v1.MoneyValue\022\014\n\004figi\030\013 \001(\t"
+    "\022H\n\tdirection\030\014 \001(\01625.tinkoff.public.inv"
+    "est.api.contract.v1.OrderDirection\022Q\n\026in"
+    "itial_security_price\030\r \001(\01321.tinkoff.pub"
+    "lic.invest.api.contract.v1.MoneyValue\022A\n"
+    "\006stages\030\016 \003(\01321.tinkoff.public.invest.ap"
+    "i.contract.v1.OrderStage\022M\n\022service_comm"
+    "ission\030\017 \001(\01321.tinkoff.public.invest.api"
+    ".contract.v1.MoneyValue\022\020\n\010currency\030\020 \001("
+    "\t\022D\n\norder_type\030\021 \001(\01620.tinkoff.public.i"
+    "nvest.api.contract.v1.OrderType\022.\n\norder"
+    "_date\030\022 \001(\0132\032.google.protobuf.Timestamp\022"
+    "\026\n\016instrument_uid\030\023 \001(\t\022\030\n\020order_request"
+    "_id\030\024 \001(\t\022\016\n\006ticker\030\025 \001(\t\022\022\n\nclass_code\030"
+    "\026 \001(\t\"\246\001\n\nOrderStage\022@\n\005price\030\001 \001(\01321.ti"
+    "nkoff.public.invest.api.contract.v1.Mone"
+    "yValue\022\020\n\010quantity\030\002 \001(\003\022\020\n\010trade_id\030\003 \001"
+    "(\t\0222\n\016execution_time\030\005 \001(\0132\032.google.prot"
+    "obuf.Timestamp\"\250\003\n\023ReplaceOrderRequest\022\030"
+    "\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022N\n\rorder_id_typ"
+    "e\030\005 \001(\01622.tinkoff.public.invest.api.cont"
+    "ract.v1.OrderIdTypeH\000\210\001\001\022\026\n\010order_id\030\006 \001"
+    "(\tB\004\342A\001\002\022\035\n\017idempotency_key\030\007 \001(\tB\004\342A\001\002\022"
+    "\026\n\010quantity\030\013 \001(\003B\004\342A\001\002\022D\n\005price\030\014 \001(\01320"
+    ".tinkoff.public.invest.api.contract.v1.Q"
+    "uotationH\001\210\001\001\022I\n\nprice_type\030\r \001(\01620.tink"
+    "off.public.invest.api.contract.v1.PriceT"
+    "ypeH\002\210\001\001\022\034\n\024confirm_margin_trade\030\016 \001(\010B\020"
+    "\n\016_order_id_typeB\010\n\006_priceB\r\n\013_price_typ"
+    "e\"\232\001\n\021GetMaxLotsRequest\022\030\n\naccount_id\030\001 "
+    "\001(\tB\004\342A\001\002\022\033\n\rinstrument_id\030\002 \001(\tB\004\342A\001\002\022D"
+    "\n\005price\030\003 \001(\01320.tinkoff.public.invest.ap"
+    "i.contract.v1.QuotationH\000\210\001\001B\010\n\006_price\"\346"
+    "\004\n\022GetMaxLotsResponse\022\020\n\010currency\030\001 \001(\t\022"
+    "[\n\nbuy_limits\030\002 \001(\0132G.tinkoff.public.inv"
+    "est.api.contract.v1.GetMaxLotsResponse.B"
+    "uyLimitsView\022b\n\021buy_margin_limits\030\003 \001(\0132"
+    "G.tinkoff.public.invest.api.contract.v1."
+    "GetMaxLotsResponse.BuyLimitsView\022]\n\013sell"
+    "_limits\030\004 \001(\0132H.tinkoff.public.invest.ap"
+    "i.contract.v1.GetMaxLotsResponse.SellLim"
+    "itsView\022d\n\022sell_margin_limits\030\005 \001(\0132H.ti"
+    "nkoff.public.invest.api.contract.v1.GetM"
+    "axLotsResponse.SellLimitsView\032\216\001\n\rBuyLim"
+    "itsView\022J\n\020buy_money_amount\030\001 \001(\01320.tink"
+    "off.public.invest.api.contract.v1.Quotat"
+    "ion\022\024\n\014buy_max_lots\030\002 \001(\003\022\033\n\023buy_max_mar"
+    "ket_lots\030\003 \001(\003\032\'\n\016SellLimitsView\022\025\n\rsell"
+    "_max_lots\030\001 \001(\003\"\336\001\n\024GetOrderPriceRequest"
+    "\022\022\n\naccount_id\030\001 \001(\t\022\025\n\rinstrument_id\030\002 "
+    "\001(\t\022\?\n\005price\030\003 \001(\01320.tinkoff.public.inve"
+    "st.api.contract.v1.Quotation\022H\n\tdirectio"
+    "n\030\014 \001(\01625.tinkoff.public.invest.api.cont"
+    "ract.v1.OrderDirection\022\020\n\010quantity\030\r \001(\003"
+    "\"\343\007\n\025GetOrderPriceResponse\022M\n\022total_orde"
+    "r_amount\030\001 \001(\01321.tinkoff.public.invest.a"
+    "pi.contract.v1.MoneyValue\022O\n\024initial_ord"
+    "er_amount\030\005 \001(\01321.tinkoff.public.invest."
+    "api.contract.v1.MoneyValue\022\026\n\016lots_reque"
+    "sted\030\003 \001(\003\022N\n\023executed_commission\030\007 \001(\0132"
+    "1.tinkoff.public.invest.api.contract.v1."
+    "MoneyValue\022R\n\027executed_commission_rub\030\010 "
+    "\001(\01321.tinkoff.public.invest.api.contract"
+    ".v1.MoneyValue\022M\n\022service_commission\030\t \001"
+    "(\01321.tinkoff.public.invest.api.contract."
+    "v1.MoneyValue\022J\n\017deal_commission\030\n \001(\01321"
+    ".tinkoff.public.invest.api.contract.v1.M"
+    "oneyValue\022\\\n\nextra_bond\030\014 \001(\0132F.tinkoff."
+    "public.invest.api.contract.v1.GetOrderPr"
+    "iceResponse.ExtraBondH\000\022`\n\014extra_future\030"
+    "\r \001(\0132H.tinkoff.public.invest.api.contra"
+    "ct.v1.GetOrderPriceResponse.ExtraFutureH"
+    "\000\032\244\001\n\tExtraBond\022D\n\taci_value\030\002 \001(\01321.tin"
+    "koff.public.invest.api.contract.v1.Money"
+    "Value\022Q\n\027nominal_conversion_rate\030\003 \001(\01320"
+    ".tinkoff.public.invest.api.contract.v1.Q"
+    "uotation\032X\n\013ExtraFuture\022I\n\016initial_margi"
+    "n\030\002 \001(\01321.tinkoff.public.invest.api.cont"
+    "ract.v1.MoneyValueB\022\n\020instrument_extra\"a"
+    "\n\027OrderStateStreamRequest\022\020\n\010accounts\030\001 "
+    "\003(\t\022\036\n\021ping_delay_millis\030\017 \001(\005H\000\210\001\001B\024\n\022_"
+    "ping_delay_millis\"\363\001\n\024SubscriptionRespon"
+    "se\022\023\n\013tracking_id\030\001 \001(\t\022O\n\006status\030\002 \001(\0162"
+    "\?.tinkoff.public.invest.api.contract.v1."
+    "ResultSubscriptionStatus\022\021\n\tstream_id\030\004 "
+    "\001(\t\022\020\n\010accounts\030\005 \003(\t\022F\n\005error\030\007 \001(\01322.t"
+    "inkoff.public.invest.api.contract.v1.Err"
+    "orDetailH\000\210\001\001B\010\n\006_error\"\325\025\n\030OrderStateSt"
+    "reamResponse\022a\n\013order_state\030\001 \001(\0132J.tink"
+    "off.public.invest.api.contract.v1.OrderS"
+    "tateStreamResponse.OrderStateH\000\022;\n\004ping\030"
+    "\002 \001(\0132+.tinkoff.public.invest.api.contra"
+    "ct.v1.PingH\000\022S\n\014subscription\030\003 \001(\0132;.tin"
+    "koff.public.invest.api.contract.v1.Subsc"
+    "riptionResponseH\000\022j\n\020stop_order_state\030\004 "
+    "\001(\0132N.tinkoff.public.invest.api.contract"
+    ".v1.OrderStateStreamResponse.StopOrderSt"
+    "ateH\000\032\363\n\n\nOrderState\022\020\n\010order_id\030\001 \001(\t\022\035"
+    "\n\020order_request_id\030\002 \001(\tH\000\210\001\001\022\023\n\013client_"
+    "code\030\003 \001(\t\022.\n\ncreated_at\030\004 \001(\0132\032.google."
+    "protobuf.Timestamp\022b\n\027execution_report_s"
+    "tatus\030\005 \001(\0162A.tinkoff.public.invest.api."
+    "contract.v1.OrderExecutionReportStatus\022i"
+    "\n\013status_info\030\006 \001(\0162O.tinkoff.public.inv"
+    "est.api.contract.v1.OrderStateStreamResp"
+    "onse.StatusCauseInfoH\001\210\001\001\022\016\n\006ticker\030\007 \001("
+    "\t\022\022\n\nclass_code\030\010 \001(\t\022\020\n\010lot_size\030\t \001(\005\022"
+    "H\n\tdirection\030\n \001(\01625.tinkoff.public.inve"
+    "st.api.contract.v1.OrderDirection\022M\n\rtim"
+    "e_in_force\030\013 \001(\01626.tinkoff.public.invest"
+    ".api.contract.v1.TimeInForceType\022D\n\norde"
+    "r_type\030\014 \001(\01620.tinkoff.public.invest.api"
+    ".contract.v1.OrderType\022\022\n\naccount_id\030\r \001"
+    "(\t\022\034\n\016trade_order_id\030\016 \001(\tB\004\342A\001\002\022N\n\023init"
+    "ial_order_price\030\026 \001(\01321.tinkoff.public.i"
+    "nvest.api.contract.v1.MoneyValue\022F\n\013orde"
+    "r_price\030\027 \001(\01321.tinkoff.public.invest.ap"
+    "i.contract.v1.MoneyValue\022F\n\006amount\030\030 \001(\013"
+    "21.tinkoff.public.invest.api.contract.v1"
+    ".MoneyValueH\002\210\001\001\022O\n\024executed_order_price"
+    "\030\031 \001(\01321.tinkoff.public.invest.api.contr"
+    "act.v1.MoneyValue\022\020\n\010currency\030\032 \001(\t\022\026\n\016l"
+    "ots_requested\030\033 \001(\003\022\025\n\rlots_executed\030\034 \001"
+    "(\003\022\021\n\tlots_left\030\035 \001(\003\022\026\n\016lots_cancelled\030"
+    "\036 \001(\003\022_\n\006marker\030\037 \001(\0162J.tinkoff.public.i"
+    "nvest.api.contract.v1.OrderStateStreamRe"
+    "sponse.MarkerTypeH\003\210\001\001\022A\n\006trades\030! \003(\01321"
+    ".tinkoff.public.invest.api.contract.v1.O"
+    "rderTrade\0223\n\017completion_time\030# \001(\0132\032.goo"
+    "gle.protobuf.Timestamp\022\020\n\010exchange\030$ \001(\t"
+    "\022\026\n\016instrument_uid\030) \001(\tB\023\n\021_order_reque"
+    "st_idB\016\n\014_status_infoB\t\n\007_amountB\t\n\007_mar"
+    "ker\032\216\004\n\016StopOrderState\022\025\n\rstop_order_id\030"
+    "\001 \001(\t\022\022\n\naccount_id\030\002 \001(\t\022.\n\ncreated_at\030"
+    "\003 \001(\0132\032.google.protobuf.Timestamp\022H\n\tdir"
+    "ection\030\004 \001(\01625.tinkoff.public.invest.api"
+    ".contract.v1.OrderDirection\022@\n\005price\030\005 \001"
+    "(\01321.tinkoff.public.invest.api.contract."
+    "v1.MoneyValue\022E\n\nstop_price\030\006 \001(\01321.tink"
+    "off.public.invest.api.contract.v1.MoneyV"
+    "alue\022D\n\norder_type\030\007 \001(\01620.tinkoff.publi"
+    "c.invest.api.contract.v1.OrderType\022\026\n\016in"
+    "strument_uid\030\010 \001(\t\022\016\n\006ticker\030\t \001(\t\022\022\n\ncl"
+    "ass_code\030\n \001(\t\022L\n\006status\030\013 \001(\0162<.tinkoff"
+    ".public.invest.api.contract.v1.StopOrder"
+    "StatusOption\"\257\001\n\nMarkerType\022\022\n\016MARKER_UN"
+    "KNOWN\020\000\022\021\n\rMARKER_BROKER\020\001\022\017\n\013MARKER_CHA"
+    "T\020\002\022\020\n\014MARKER_PAPER\020\003\022\021\n\rMARKER_MARGIN\020\004"
+    "\022\020\n\014MARKER_TKBNM\020\005\022\020\n\014MARKER_SHORT\020\006\022\021\n\r"
+    "MARKER_SPECMM\020\007\022\r\n\tMARKER_PO\020\010\"\223\002\n\017Statu"
+    "sCauseInfo\022\025\n\021CAUSE_UNSPECIFIED\020\000\022\035\n\031CAU"
+    "SE_CANCELLED_BY_CLIENT\020\017\022\037\n\033CAUSE_CANCEL"
+    "LED_BY_EXCHANGE\020\001\022\'\n#CAUSE_CANCELLED_NOT"
+    "_ENOUGH_POSITION\020\002\022#\n\037CAUSE_CANCELLED_BY"
+    "_CLIENT_BLOCK\020\003\022\034\n\030CAUSE_REJECTED_BY_BRO"
+    "KER\020\004\022\036\n\032CAUSE_REJECTED_BY_EXCHANGE\020\005\022\035\n"
+    "\031CAUSE_CANCELLED_BY_BROKER\020\006B\t\n\007payload*"
+    "d\n\016OrderDirection\022\037\n\033ORDER_DIRECTION_UNS"
+    "PECIFIED\020\000\022\027\n\023ORDER_DIRECTION_BUY\020\001\022\030\n\024O"
+    "RDER_DIRECTION_SELL\020\002*n\n\tOrderType\022\032\n\026OR"
+    "DER_TYPE_UNSPECIFIED\020\000\022\024\n\020ORDER_TYPE_LIM"
+    "IT\020\001\022\025\n\021ORDER_TYPE_MARKET\020\002\022\030\n\024ORDER_TYP"
+    "E_BESTPRICE\020\003*\200\002\n\032OrderExecutionReportSt"
+    "atus\022\'\n#EXECUTION_REPORT_STATUS_UNSPECIF"
+    "IED\020\000\022 \n\034EXECUTION_REPORT_STATUS_FILL\020\001\022"
+    "$\n EXECUTION_REPORT_STATUS_REJECTED\020\002\022%\n"
+    "!EXECUTION_REPORT_STATUS_CANCELLED\020\003\022\037\n\033"
+    "EXECUTION_REPORT_STATUS_NEW\020\004\022)\n%EXECUTI"
+    "ON_REPORT_STATUS_PARTIALLYFILL\020\005*\210\001\n\017Tim"
+    "eInForceType\022\035\n\031TIME_IN_FORCE_UNSPECIFIE"
+    "D\020\000\022\025\n\021TIME_IN_FORCE_DAY\020\001\022\037\n\033TIME_IN_FO"
+    "RCE_FILL_AND_KILL\020\002\022\036\n\032TIME_IN_FORCE_FIL"
+    "L_OR_KILL\020\003*c\n\013OrderIdType\022\035\n\031ORDER_ID_T"
+    "YPE_UNSPECIFIED\020\000\022\032\n\026ORDER_ID_TYPE_EXCHA"
+    "NGE\020\001\022\031\n\025ORDER_ID_TYPE_REQUEST\020\0022\271\002\n\023Ord"
+    "ersStreamService\022\211\001\n\014TradesStream\022:.tink"
+    "off.public.invest.api.contract.v1.Trades"
+    "StreamRequest\032;.tinkoff.public.invest.ap"
+    "i.contract.v1.TradesStreamResponse0\001\022\225\001\n"
+    "\020OrderStateStream\022>.tinkoff.public.inves"
+    "t.api.contract.v1.OrderStateStreamReques"
+    "t\032\?.tinkoff.public.invest.api.contract.v"
+    "1.OrderStateStreamResponse0\0012\277\010\n\rOrdersS"
+    "ervice\022~\n\tPostOrder\0227.tinkoff.public.inv"
+    "est.api.contract.v1.PostOrderRequest\0328.t"
+    "inkoff.public.invest.api.contract.v1.Pos"
+    "tOrderResponse\022\215\001\n\016PostOrderAsync\022<.tink"
+    "off.public.invest.api.contract.v1.PostOr"
+    "derAsyncRequest\032=.tinkoff.public.invest."
+    "api.contract.v1.PostOrderAsyncResponse\022\204"
+    "\001\n\013CancelOrder\0229.tinkoff.public.invest.a"
+    "pi.contract.v1.CancelOrderRequest\032:.tink"
+    "off.public.invest.api.contract.v1.Cancel"
+    "OrderResponse\022\177\n\rGetOrderState\022;.tinkoff"
+    ".public.invest.api.contract.v1.GetOrderS"
+    "tateRequest\0321.tinkoff.public.invest.api."
+    "contract.v1.OrderState\022~\n\tGetOrders\0227.ti"
+    "nkoff.public.invest.api.contract.v1.GetO"
+    "rdersRequest\0328.tinkoff.public.invest.api"
+    ".contract.v1.GetOrdersResponse\022\204\001\n\014Repla"
+    "ceOrder\022:.tinkoff.public.invest.api.cont"
+    "ract.v1.ReplaceOrderRequest\0328.tinkoff.pu"
+    "blic.invest.api.contract.v1.PostOrderRes"
+    "ponse\022\201\001\n\nGetMaxLots\0228.tinkoff.public.in"
+    "vest.api.contract.v1.GetMaxLotsRequest\0329"
+    ".tinkoff.public.invest.api.contract.v1.G"
+    "etMaxLotsResponse\022\212\001\n\rGetOrderPrice\022;.ti"
+    "nkoff.public.invest.api.contract.v1.GetO"
+    "rderPriceRequest\032<.tinkoff.public.invest"
+    ".api.contract.v1.GetOrderPriceResponseBa"
+    "\n\034ru.tinkoff.piapi.contract.v1P\001Z\014./;inv"
+    "estapi\242\002\005TIAPI\252\002\024Tinkoff.InvestApi.V1\312\002\021"
+    "Tinkoff\\Invest\\V1b\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_orders_2eproto_deps[4] = {
@@ -1954,7 +1959,7 @@ static ::absl::once_flag descriptor_table_orders_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_orders_2eproto = {
     false,
     false,
-    13677,
+    13745,
     descriptor_table_protodef_orders_2eproto,
     "orders.proto",
     &descriptor_table_orders_2eproto_once,
@@ -7027,6 +7032,12 @@ class GetOrderStateRequest::_Internal {
       8 * PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_._has_bits_);
 };
 
+void GetOrderStateRequest::clear_order_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.order_date_ != nullptr) _impl_.order_date_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
 GetOrderStateRequest::GetOrderStateRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, GetOrderStateRequest_class_data_.base()) {
@@ -7058,6 +7069,10 @@ GetOrderStateRequest::GetOrderStateRequest(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.order_date_ = (CheckHasBit(cached_has_bits, 0x00000004U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.order_date_)
+                : nullptr;
   ::memcpy(reinterpret_cast<char*>(&_impl_) +
                offsetof(Impl_, price_type_),
            reinterpret_cast<const char*>(&from._impl_) +
@@ -7078,10 +7093,10 @@ PROTOBUF_NDEBUG_INLINE GetOrderStateRequest::Impl_::Impl_(
 inline void GetOrderStateRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   ::memset(reinterpret_cast<char*>(&_impl_) +
-               offsetof(Impl_, price_type_),
+               offsetof(Impl_, order_date_),
            0,
            offsetof(Impl_, order_id_type_) -
-               offsetof(Impl_, price_type_) +
+               offsetof(Impl_, order_date_) +
                sizeof(Impl_::order_id_type_));
 }
 GetOrderStateRequest::~GetOrderStateRequest() {
@@ -7097,6 +7112,7 @@ inline void GetOrderStateRequest::SharedDtor(MessageLite& self) {
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.account_id_.Destroy();
   this_._impl_.order_id_.Destroy();
+  delete this_._impl_.order_date_;
   this_._impl_.~Impl_();
 }
 
@@ -7143,18 +7159,18 @@ GetOrderStateRequest::GetClassData() const {
   return GetOrderStateRequest_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 0, 85, 2>
+const ::_pbi::TcParseTable<3, 5, 1, 85, 2>
 GetOrderStateRequest::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_._has_bits_),
     0, // no _extensions_
-    4, 24,  // max_field_number, fast_idx_mask
+    5, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967280,  // skipmap
+    4294967264,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    4,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
+    5,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
     GetOrderStateRequest_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
@@ -7162,10 +7178,7 @@ GetOrderStateRequest::_table_ = {
     ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GetOrderStateRequest, _impl_.order_id_type_), 3>(),
-     {32, 3, 0,
-      PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.order_id_type_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // string account_id = 1 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::FastUS1,
      {10, 0, 0,
@@ -7175,9 +7188,19 @@ GetOrderStateRequest::_table_ = {
      {18, 1, 0,
       PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.order_id_)}},
     // .tinkoff.public.invest.api.contract.v1.PriceType price_type = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GetOrderStateRequest, _impl_.price_type_), 2>(),
-     {24, 2, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GetOrderStateRequest, _impl_.price_type_), 3>(),
+     {24, 3, 0,
       PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.price_type_)}},
+    // optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GetOrderStateRequest, _impl_.order_id_type_), 4>(),
+     {32, 4, 0,
+      PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.order_id_type_)}},
+    // optional .google.protobuf.Timestamp order_date = 5;
+    {::_pbi::TcParser::FastMtS1,
+     {42, 2, 0,
+      PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.order_date_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
@@ -7186,11 +7209,15 @@ GetOrderStateRequest::_table_ = {
     // string order_id = 2 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.order_id_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // .tinkoff.public.invest.api.contract.v1.PriceType price_type = 3;
-    {PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.price_type_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.price_type_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 4;
-    {PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.order_id_type_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    {PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.order_id_type_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // optional .google.protobuf.Timestamp order_date = 5;
+    {PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.order_date_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
-  // no aux_entries
+  {{
+      {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
+  }},
   {{
     "\72\12\10\0\0\0\0\0"
     "tinkoff.public.invest.api.contract.v1.GetOrderStateRequest"
@@ -7206,15 +7233,19 @@ PROTOBUF_NOINLINE void GetOrderStateRequest::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       _impl_.account_id_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       _impl_.order_id_.ClearNonDefaultToEmpty();
     }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      ABSL_DCHECK(_impl_.order_date_ != nullptr);
+      _impl_.order_date_->Clear();
+    }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000cU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000018U)) {
     ::memset(&_impl_.price_type_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.order_id_type_) -
         reinterpret_cast<char*>(&_impl_.price_type_)) + sizeof(_impl_.order_id_type_));
@@ -7263,7 +7294,7 @@ PROTOBUF_NOINLINE void GetOrderStateRequest::Clear() {
   }
 
   // .tinkoff.public.invest.api.contract.v1.PriceType price_type = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
     if (this_._internal_price_type() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -7272,10 +7303,17 @@ PROTOBUF_NOINLINE void GetOrderStateRequest::Clear() {
   }
 
   // optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 4;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         4, this_._internal_order_id_type(), target);
+  }
+
+  // optional .google.protobuf.Timestamp order_date = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        5, *this_._impl_.order_date_, this_._impl_.order_date_->GetCachedSize(), target,
+        stream);
   }
 
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
@@ -7303,7 +7341,7 @@ PROTOBUF_NOINLINE void GetOrderStateRequest::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
     // string account_id = 1 [(.google.api.field_behavior) = REQUIRED];
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       if (!this_._internal_account_id().empty()) {
@@ -7318,15 +7356,20 @@ PROTOBUF_NOINLINE void GetOrderStateRequest::Clear() {
                                         this_._internal_order_id());
       }
     }
-    // .tinkoff.public.invest.api.contract.v1.PriceType price_type = 3;
+    // optional .google.protobuf.Timestamp order_date = 5;
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.order_date_);
+    }
+    // .tinkoff.public.invest.api.contract.v1.PriceType price_type = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (this_._internal_price_type() != 0) {
         total_size += 1 +
                       ::_pbi::WireFormatLite::EnumSize(this_._internal_price_type());
       }
     }
     // optional .tinkoff.public.invest.api.contract.v1.OrderIdType order_id_type = 4;
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this_._internal_order_id_type());
     }
@@ -7343,13 +7386,14 @@ void GetOrderStateRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
+  ::google::protobuf::Arena* arena = _this->GetArena();
   // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetOrderStateRequest)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       if (!from._internal_account_id().empty()) {
         _this->_internal_set_account_id(from._internal_account_id());
@@ -7369,11 +7413,19 @@ void GetOrderStateRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      ABSL_DCHECK(from._impl_.order_date_ != nullptr);
+      if (_this->_impl_.order_date_ == nullptr) {
+        _this->_impl_.order_date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.order_date_);
+      } else {
+        _this->_impl_.order_date_->MergeFrom(*from._impl_.order_date_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (from._internal_price_type() != 0) {
         _this->_impl_.price_type_ = from._impl_.price_type_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       _this->_impl_.order_id_type_ = from._impl_.order_id_type_;
     }
   }
@@ -7401,9 +7453,9 @@ void GetOrderStateRequest::InternalSwap(GetOrderStateRequest* PROTOBUF_RESTRICT 
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.order_id_type_)
       + sizeof(GetOrderStateRequest::_impl_.order_id_type_)
-      - PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.price_type_)>(
-          reinterpret_cast<char*>(&_impl_.price_type_),
-          reinterpret_cast<char*>(&other->_impl_.price_type_));
+      - PROTOBUF_FIELD_OFFSET(GetOrderStateRequest, _impl_.order_date_)>(
+          reinterpret_cast<char*>(&_impl_.order_date_),
+          reinterpret_cast<char*>(&other->_impl_.order_date_));
 }
 
 ::google::protobuf::Metadata GetOrderStateRequest::GetMetadata() const {

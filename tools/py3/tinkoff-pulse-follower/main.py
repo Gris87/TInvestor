@@ -39,7 +39,7 @@ MOSCOW_TZ = ZoneInfo("Europe/Moscow")
 WORKDAY_START = dt.time(6, 0, tzinfo=MOSCOW_TZ)
 WORKDAY_END   = dt.time(23, 50, tzinfo=MOSCOW_TZ)
 
-SESSION_EXPIRATION_TIME = 20 * 60 * 60 # 20 hours
+SESSION_EXPIRATION_TIME = 23 * 60 * 60 # 23 hours
 
 IGNORE_INSTRUMENTS = {
     "PSSU/DIAS",
@@ -698,6 +698,8 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
                     amount_to_buy = min(delta_quantity, max_lots.buy_margin_limits.buy_max_lots)
 
                     if amount_to_buy > 0:
+                        logger.debug(f'Creating order to buy {amount_to_buy} lots of "{instrument_id}" at price {quotation_to_decimal(price)}')
+
                         resp = await dest_client.orders.post_order(
                             quantity=amount_to_buy,
                             price=price,
@@ -779,6 +781,8 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                         amount_to_sell = min(delta_quantity, max_lots.sell_margin_limits.sell_max_lots)
 
                     if amount_to_sell > 0:
+                        logger.debug(f'Creating order to sell {amount_to_buy} lots of "{instrument_id}" at price {quotation_to_decimal(price)}')
+
                         resp = await dest_client.orders.post_order(
                             quantity=amount_to_sell,
                             price=price,

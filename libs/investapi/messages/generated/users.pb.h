@@ -197,6 +197,10 @@ enum AccountType : int {
   ACCOUNT_TYPE_DEBIT = 5,
   ACCOUNT_TYPE_SAVING = 6,
   ACCOUNT_TYPE_DFA = 7,
+  ACCOUNT_TYPE_SHARED_SAVING = 8,
+  ACCOUNT_TYPE_DEPOSIT = 9,
+  ACCOUNT_TYPE_OMS = 10,
+  ACCOUNT_TYPE_OFP_DEPOSIT = 11,
   AccountType_INT_MIN_SENTINEL_DO_NOT_USE_ =
       ::std::numeric_limits<::int32_t>::min(),
   AccountType_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -207,11 +211,11 @@ extern const uint32_t AccountType_internal_data_[];
 inline constexpr AccountType AccountType_MIN =
     static_cast<AccountType>(0);
 inline constexpr AccountType AccountType_MAX =
-    static_cast<AccountType>(7);
+    static_cast<AccountType>(11);
 inline bool AccountType_IsValid(int value) {
-  return 0 <= value && value <= 7;
+  return 0 <= value && value <= 11;
 }
-inline constexpr int AccountType_ARRAYSIZE = 7 + 1;
+inline constexpr int AccountType_ARRAYSIZE = 11 + 1;
 const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL AccountType_descriptor();
 template <typename T>
 const ::std::string& AccountType_Name(T value) {
@@ -222,7 +226,7 @@ const ::std::string& AccountType_Name(T value) {
 }
 template <>
 inline const ::std::string& AccountType_Name(AccountType value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<AccountType_descriptor, 0, 7>(
+  return ::google::protobuf::internal::NameOfDenseEnum<AccountType_descriptor, 0, 11>(
       static_cast<int>(value));
 }
 inline bool AccountType_Parse(

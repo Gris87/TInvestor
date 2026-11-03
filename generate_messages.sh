@@ -14,8 +14,8 @@ fi
 
 rm -rf /tmp/invest-contracts
 rm -rf /tmp/invest-python
-git clone https://opensource.tbank.ru/invest/invest-contracts.git /tmp/invest-contracts
-git clone https://opensource.tbank.ru/invest/invest-python.git /tmp/invest-python
+git clone https://github.com/Invest-SDK/invest-contracts.git /tmp/invest-contracts
+git clone https://github.com/Invest-SDK/invest-python.git /tmp/invest-python
 
 
 

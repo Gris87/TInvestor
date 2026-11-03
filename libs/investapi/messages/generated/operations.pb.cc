@@ -1226,7 +1226,9 @@ inline constexpr PortfolioResponse::Impl_::Impl_(
         total_amount_portfolio_{nullptr},
         daily_yield_{nullptr},
         daily_yield_relative_{nullptr},
-        total_amount_dfa_{nullptr} {}
+        total_amount_dfa_{nullptr},
+        total_var_margin_{nullptr},
+        total_var_margin_settled_{nullptr} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR PortfolioResponse::PortfolioResponse(::_pbi::ConstantInitialized)
@@ -1799,7 +1801,7 @@ const ::uint32_t
         1,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, _impl_._has_bits_),
-        18, // hasbit index offset
+        20, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, _impl_.total_amount_shares_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, _impl_.total_amount_bonds_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, _impl_.total_amount_etf_),
@@ -1815,6 +1817,8 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, _impl_.daily_yield_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, _impl_.daily_yield_relative_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, _impl_.total_amount_dfa_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, _impl_.total_var_margin_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, _impl_.total_var_margin_settled_),
         3,
         4,
         5,
@@ -1830,6 +1834,8 @@ const ::uint32_t
         12,
         13,
         14,
+        15,
+        16,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PositionsRequest, _impl_._has_bits_),
         4, // hasbit index offset
@@ -2437,49 +2443,49 @@ static const ::_pbi::MigrationSchema
         {57, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationTrade)},
         {68, sizeof(::tinkoff::public_::invest::api::contract::v1::PortfolioRequest)},
         {75, sizeof(::tinkoff::public_::invest::api::contract::v1::PortfolioResponse)},
-        {108, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsRequest)},
-        {113, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsResponse)},
-        {130, sizeof(::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest)},
-        {135, sizeof(::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse)},
-        {144, sizeof(::tinkoff::public_::invest::api::contract::v1::PortfolioPosition)},
-        {187, sizeof(::tinkoff::public_::invest::api::contract::v1::VirtualPortfolioPosition)},
-        {218, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsSecurities)},
-        {239, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsFutures)},
-        {256, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsOptions)},
-        {271, sizeof(::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest)},
-        {276, sizeof(::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse)},
-        {281, sizeof(::tinkoff::public_::invest::api::contract::v1::GenerateBrokerReportRequest)},
-        {290, sizeof(::tinkoff::public_::invest::api::contract::v1::GenerateBrokerReportResponse)},
-        {295, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBrokerReportRequest)},
-        {302, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBrokerReportResponse)},
-        {315, sizeof(::tinkoff::public_::invest::api::contract::v1::BrokerReport)},
-        {372, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest)},
-        {377, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse)},
-        {382, sizeof(::tinkoff::public_::invest::api::contract::v1::GenerateDividendsForeignIssuerReportRequest)},
-        {391, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerReportRequest)},
-        {398, sizeof(::tinkoff::public_::invest::api::contract::v1::GenerateDividendsForeignIssuerReportResponse)},
-        {403, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerReportResponse)},
-        {414, sizeof(::tinkoff::public_::invest::api::contract::v1::DividendsForeignIssuerReport)},
-        {441, sizeof(::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest)},
-        {448, sizeof(::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse)},
-        {454, sizeof(::tinkoff::public_::invest::api::contract::v1::PortfolioSubscriptionResult)},
-        {463, sizeof(::tinkoff::public_::invest::api::contract::v1::AccountSubscriptionStatus)},
-        {470, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest)},
-        {495, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse)},
-        {504, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationItem)},
-        {567, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationItemTrades)},
-        {572, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationItemTrade)},
-        {587, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest)},
-        {596, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse)},
-        {603, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsSubscriptionResult)},
-        {612, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsSubscriptionStatus)},
-        {619, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionData)},
-        {634, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsMoney)},
-        {641, sizeof(::tinkoff::public_::invest::api::contract::v1::ChildOperationItem)},
-        {648, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest)},
-        {655, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse)},
-        {661, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationsSubscriptionResult)},
-        {672, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationData)},
+        {112, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsRequest)},
+        {117, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsResponse)},
+        {134, sizeof(::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest)},
+        {139, sizeof(::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse)},
+        {148, sizeof(::tinkoff::public_::invest::api::contract::v1::PortfolioPosition)},
+        {191, sizeof(::tinkoff::public_::invest::api::contract::v1::VirtualPortfolioPosition)},
+        {222, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsSecurities)},
+        {243, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsFutures)},
+        {260, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsOptions)},
+        {275, sizeof(::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest)},
+        {280, sizeof(::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse)},
+        {285, sizeof(::tinkoff::public_::invest::api::contract::v1::GenerateBrokerReportRequest)},
+        {294, sizeof(::tinkoff::public_::invest::api::contract::v1::GenerateBrokerReportResponse)},
+        {299, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBrokerReportRequest)},
+        {306, sizeof(::tinkoff::public_::invest::api::contract::v1::GetBrokerReportResponse)},
+        {319, sizeof(::tinkoff::public_::invest::api::contract::v1::BrokerReport)},
+        {376, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest)},
+        {381, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse)},
+        {386, sizeof(::tinkoff::public_::invest::api::contract::v1::GenerateDividendsForeignIssuerReportRequest)},
+        {395, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerReportRequest)},
+        {402, sizeof(::tinkoff::public_::invest::api::contract::v1::GenerateDividendsForeignIssuerReportResponse)},
+        {407, sizeof(::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerReportResponse)},
+        {418, sizeof(::tinkoff::public_::invest::api::contract::v1::DividendsForeignIssuerReport)},
+        {445, sizeof(::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest)},
+        {452, sizeof(::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse)},
+        {458, sizeof(::tinkoff::public_::invest::api::contract::v1::PortfolioSubscriptionResult)},
+        {467, sizeof(::tinkoff::public_::invest::api::contract::v1::AccountSubscriptionStatus)},
+        {474, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest)},
+        {499, sizeof(::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse)},
+        {508, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationItem)},
+        {571, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationItemTrades)},
+        {576, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationItemTrade)},
+        {591, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest)},
+        {600, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse)},
+        {607, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsSubscriptionResult)},
+        {616, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsSubscriptionStatus)},
+        {623, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionData)},
+        {638, sizeof(::tinkoff::public_::invest::api::contract::v1::PositionsMoney)},
+        {645, sizeof(::tinkoff::public_::invest::api::contract::v1::ChildOperationItem)},
+        {652, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationsStreamRequest)},
+        {659, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationsStreamResponse)},
+        {665, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationsSubscriptionResult)},
+        {676, sizeof(::tinkoff::public_::invest::api::contract::v1::OperationData)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::tinkoff::public_::invest::api::contract::v1::_OperationsRequest_default_instance_._instance,
@@ -2573,7 +2579,7 @@ const char descriptor_table_protodef_operations_2eproto[] ABSL_ATTRIBUTE_SECTION
     "\001(\0162G.tinkoff.public.invest.api.contract"
     ".v1.PortfolioRequest.CurrencyRequestH\000\210\001"
     "\001\",\n\017CurrencyRequest\022\007\n\003RUB\020\000\022\007\n\003USD\020\001\022\007"
-    "\n\003EUR\020\002B\013\n\t_currency\"\200\t\n\021PortfolioRespon"
+    "\n\003EUR\020\002B\013\n\t_currency\"\242\n\n\021PortfolioRespon"
     "se\022N\n\023total_amount_shares\030\001 \001(\01321.tinkof"
     "f.public.invest.api.contract.v1.MoneyVal"
     "ue\022M\n\022total_amount_bonds\030\002 \001(\01321.tinkoff"
@@ -2602,444 +2608,448 @@ const char descriptor_table_protodef_operations_2eproto[] ABSL_ATTRIBUTE_SECTION
     "ve\030\020 \001(\01320.tinkoff.public.invest.api.con"
     "tract.v1.Quotation\022K\n\020total_amount_dfa\030\021"
     " \001(\01321.tinkoff.public.invest.api.contrac"
-    "t.v1.MoneyValue\",\n\020PositionsRequest\022\030\n\na"
-    "ccount_id\030\001 \001(\tB\004\342A\001\002\"\265\003\n\021PositionsRespo"
-    "nse\022@\n\005money\030\001 \003(\01321.tinkoff.public.inve"
-    "st.api.contract.v1.MoneyValue\022B\n\007blocked"
-    "\030\002 \003(\01321.tinkoff.public.invest.api.contr"
-    "act.v1.MoneyValue\022N\n\nsecurities\030\003 \003(\0132:."
-    "tinkoff.public.invest.api.contract.v1.Po"
-    "sitionsSecurities\022\"\n\032limits_loading_in_p"
-    "rogress\030\004 \001(\010\022H\n\007futures\030\005 \003(\01327.tinkoff"
-    ".public.invest.api.contract.v1.Positions"
-    "Futures\022H\n\007options\030\006 \003(\01327.tinkoff.publi"
-    "c.invest.api.contract.v1.PositionsOption"
-    "s\022\022\n\naccount_id\030\017 \001(\t\"1\n\025WithdrawLimitsR"
-    "equest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\"\354\001\n\026Wit"
-    "hdrawLimitsResponse\022@\n\005money\030\001 \003(\01321.tin"
-    "koff.public.invest.api.contract.v1.Money"
-    "Value\022B\n\007blocked\030\002 \003(\01321.tinkoff.public."
-    "invest.api.contract.v1.MoneyValue\022L\n\021blo"
-    "cked_guarantee\030\003 \003(\01321.tinkoff.public.in"
-    "vest.api.contract.v1.MoneyValue\"\237\t\n\021Port"
-    "folioPosition\022\014\n\004figi\030\001 \001(\t\022\027\n\017instrumen"
-    "t_type\030\002 \001(\t\022B\n\010quantity\030\003 \001(\01320.tinkoff"
-    ".public.invest.api.contract.v1.Quotation"
-    "\022Q\n\026average_position_price\030\004 \001(\01321.tinko"
-    "ff.public.invest.api.contract.v1.MoneyVa"
-    "lue\022H\n\016expected_yield\030\005 \001(\01320.tinkoff.pu"
-    "blic.invest.api.contract.v1.Quotation\022F\n"
-    "\013current_nkd\030\006 \001(\01321.tinkoff.public.inve"
-    "st.api.contract.v1.MoneyValue\022W\n\031average"
-    "_position_price_pt\030\007 \001(\01320.tinkoff.publi"
-    "c.invest.api.contract.v1.QuotationB\002\030\001\022H"
-    "\n\rcurrent_price\030\010 \001(\01321.tinkoff.public.i"
-    "nvest.api.contract.v1.MoneyValue\022V\n\033aver"
-    "age_position_price_fifo\030\t \001(\01321.tinkoff."
-    "public.invest.api.contract.v1.MoneyValue"
-    "\022K\n\rquantity_lots\030\n \001(\01320.tinkoff.public"
-    ".invest.api.contract.v1.QuotationB\002\030\001\022\017\n"
-    "\007blocked\030\025 \001(\010\022F\n\014blocked_lots\030\026 \001(\01320.t"
-    "inkoff.public.invest.api.contract.v1.Quo"
-    "tation\022\024\n\014position_uid\030\030 \001(\t\022\026\n\016instrume"
-    "nt_uid\030\031 \001(\t\022E\n\nvar_margin\030\032 \001(\01321.tinko"
-    "ff.public.invest.api.contract.v1.MoneyVa"
-    "lue\022M\n\023expected_yield_fifo\030\033 \001(\01320.tinko"
+    "t.v1.MoneyValue\022K\n\020total_var_margin\030\022 \001("
+    "\01321.tinkoff.public.invest.api.contract.v"
+    "1.MoneyValue\022S\n\030total_var_margin_settled"
+    "\030\023 \001(\01321.tinkoff.public.invest.api.contr"
+    "act.v1.MoneyValue\",\n\020PositionsRequest\022\030\n"
+    "\naccount_id\030\001 \001(\tB\004\342A\001\002\"\265\003\n\021PositionsRes"
+    "ponse\022@\n\005money\030\001 \003(\01321.tinkoff.public.in"
+    "vest.api.contract.v1.MoneyValue\022B\n\007block"
+    "ed\030\002 \003(\01321.tinkoff.public.invest.api.con"
+    "tract.v1.MoneyValue\022N\n\nsecurities\030\003 \003(\0132"
+    ":.tinkoff.public.invest.api.contract.v1."
+    "PositionsSecurities\022\"\n\032limits_loading_in"
+    "_progress\030\004 \001(\010\022H\n\007futures\030\005 \003(\01327.tinko"
+    "ff.public.invest.api.contract.v1.Positio"
+    "nsFutures\022H\n\007options\030\006 \003(\01327.tinkoff.pub"
+    "lic.invest.api.contract.v1.PositionsOpti"
+    "ons\022\022\n\naccount_id\030\017 \001(\t\"1\n\025WithdrawLimit"
+    "sRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\"\354\001\n\026W"
+    "ithdrawLimitsResponse\022@\n\005money\030\001 \003(\01321.t"
+    "inkoff.public.invest.api.contract.v1.Mon"
+    "eyValue\022B\n\007blocked\030\002 \003(\01321.tinkoff.publi"
+    "c.invest.api.contract.v1.MoneyValue\022L\n\021b"
+    "locked_guarantee\030\003 \003(\01321.tinkoff.public."
+    "invest.api.contract.v1.MoneyValue\"\237\t\n\021Po"
+    "rtfolioPosition\022\014\n\004figi\030\001 \001(\t\022\027\n\017instrum"
+    "ent_type\030\002 \001(\t\022B\n\010quantity\030\003 \001(\01320.tinko"
     "ff.public.invest.api.contract.v1.Quotati"
-    "on\022F\n\013daily_yield\030\037 \001(\01321.tinkoff.public"
-    ".invest.api.contract.v1.MoneyValue\022\016\n\006ti"
-    "cker\030  \001(\t\022\022\n\nclass_code\030! \001(\t\022R\n\022var_ma"
-    "rgin_settled\030\" \001(\01321.tinkoff.public.inve"
-    "st.api.contract.v1.MoneyValueH\000\210\001\001B\025\n\023_v"
-    "ar_margin_settled\"\336\005\n\030VirtualPortfolioPo"
-    "sition\022\024\n\014position_uid\030\001 \001(\t\022\026\n\016instrume"
-    "nt_uid\030\002 \001(\t\022\014\n\004figi\030\003 \001(\t\022\027\n\017instrument"
-    "_type\030\004 \001(\t\022B\n\010quantity\030\005 \001(\01320.tinkoff."
+    "on\022Q\n\026average_position_price\030\004 \001(\01321.tin"
+    "koff.public.invest.api.contract.v1.Money"
+    "Value\022H\n\016expected_yield\030\005 \001(\01320.tinkoff."
     "public.invest.api.contract.v1.Quotation\022"
-    "Q\n\026average_position_price\030\006 \001(\01321.tinkof"
+    "F\n\013current_nkd\030\006 \001(\01321.tinkoff.public.in"
+    "vest.api.contract.v1.MoneyValue\022W\n\031avera"
+    "ge_position_price_pt\030\007 \001(\01320.tinkoff.pub"
+    "lic.invest.api.contract.v1.QuotationB\002\030\001"
+    "\022H\n\rcurrent_price\030\010 \001(\01321.tinkoff.public"
+    ".invest.api.contract.v1.MoneyValue\022V\n\033av"
+    "erage_position_price_fifo\030\t \001(\01321.tinkof"
     "f.public.invest.api.contract.v1.MoneyVal"
-    "ue\022H\n\016expected_yield\030\007 \001(\01320.tinkoff.pub"
-    "lic.invest.api.contract.v1.Quotation\022M\n\023"
-    "expected_yield_fifo\030\010 \001(\01320.tinkoff.publ"
-    "ic.invest.api.contract.v1.Quotation\022/\n\013e"
-    "xpire_date\030\t \001(\0132\032.google.protobuf.Times"
-    "tamp\022H\n\rcurrent_price\030\n \001(\01321.tinkoff.pu"
-    "blic.invest.api.contract.v1.MoneyValue\022V"
-    "\n\033average_position_price_fifo\030\013 \001(\01321.ti"
-    "nkoff.public.invest.api.contract.v1.Mone"
-    "yValue\022F\n\013daily_yield\030\037 \001(\01321.tinkoff.pu"
-    "blic.invest.api.contract.v1.MoneyValue\022\016"
-    "\n\006ticker\030  \001(\t\022\022\n\nclass_code\030! \001(\t\"\312\001\n\023P"
-    "ositionsSecurities\022\014\n\004figi\030\001 \001(\t\022\017\n\007bloc"
-    "ked\030\002 \001(\003\022\017\n\007balance\030\003 \001(\003\022\024\n\014position_u"
-    "id\030\004 \001(\t\022\026\n\016instrument_uid\030\005 \001(\t\022\016\n\006tick"
-    "er\030\006 \001(\t\022\022\n\nclass_code\030\007 \001(\t\022\030\n\020exchange"
-    "_blocked\030\013 \001(\010\022\027\n\017instrument_type\030\020 \001(\t\""
-    "\224\001\n\020PositionsFutures\022\014\n\004figi\030\001 \001(\t\022\017\n\007bl"
+    "ue\022K\n\rquantity_lots\030\n \001(\01320.tinkoff.publ"
+    "ic.invest.api.contract.v1.QuotationB\002\030\001\022"
+    "\017\n\007blocked\030\025 \001(\010\022F\n\014blocked_lots\030\026 \001(\01320"
+    ".tinkoff.public.invest.api.contract.v1.Q"
+    "uotation\022\024\n\014position_uid\030\030 \001(\t\022\026\n\016instru"
+    "ment_uid\030\031 \001(\t\022E\n\nvar_margin\030\032 \001(\01321.tin"
+    "koff.public.invest.api.contract.v1.Money"
+    "Value\022M\n\023expected_yield_fifo\030\033 \001(\01320.tin"
+    "koff.public.invest.api.contract.v1.Quota"
+    "tion\022F\n\013daily_yield\030\037 \001(\01321.tinkoff.publ"
+    "ic.invest.api.contract.v1.MoneyValue\022\016\n\006"
+    "ticker\030  \001(\t\022\022\n\nclass_code\030! \001(\t\022R\n\022var_"
+    "margin_settled\030\" \001(\01321.tinkoff.public.in"
+    "vest.api.contract.v1.MoneyValueH\000\210\001\001B\025\n\023"
+    "_var_margin_settled\"\336\005\n\030VirtualPortfolio"
+    "Position\022\024\n\014position_uid\030\001 \001(\t\022\026\n\016instru"
+    "ment_uid\030\002 \001(\t\022\014\n\004figi\030\003 \001(\t\022\027\n\017instrume"
+    "nt_type\030\004 \001(\t\022B\n\010quantity\030\005 \001(\01320.tinkof"
+    "f.public.invest.api.contract.v1.Quotatio"
+    "n\022Q\n\026average_position_price\030\006 \001(\01321.tink"
+    "off.public.invest.api.contract.v1.MoneyV"
+    "alue\022H\n\016expected_yield\030\007 \001(\01320.tinkoff.p"
+    "ublic.invest.api.contract.v1.Quotation\022M"
+    "\n\023expected_yield_fifo\030\010 \001(\01320.tinkoff.pu"
+    "blic.invest.api.contract.v1.Quotation\022/\n"
+    "\013expire_date\030\t \001(\0132\032.google.protobuf.Tim"
+    "estamp\022H\n\rcurrent_price\030\n \001(\01321.tinkoff."
+    "public.invest.api.contract.v1.MoneyValue"
+    "\022V\n\033average_position_price_fifo\030\013 \001(\01321."
+    "tinkoff.public.invest.api.contract.v1.Mo"
+    "neyValue\022F\n\013daily_yield\030\037 \001(\01321.tinkoff."
+    "public.invest.api.contract.v1.MoneyValue"
+    "\022\016\n\006ticker\030  \001(\t\022\022\n\nclass_code\030! \001(\t\"\312\001\n"
+    "\023PositionsSecurities\022\014\n\004figi\030\001 \001(\t\022\017\n\007bl"
     "ocked\030\002 \001(\003\022\017\n\007balance\030\003 \001(\003\022\024\n\014position"
     "_uid\030\004 \001(\t\022\026\n\016instrument_uid\030\005 \001(\t\022\016\n\006ti"
-    "cker\030\006 \001(\t\022\022\n\nclass_code\030\007 \001(\t\"\206\001\n\020Posit"
-    "ionsOptions\022\024\n\014position_uid\030\001 \001(\t\022\026\n\016ins"
-    "trument_uid\030\002 \001(\t\022\016\n\006ticker\030\003 \001(\t\022\022\n\ncla"
-    "ss_code\030\004 \001(\t\022\017\n\007blocked\030\013 \001(\003\022\017\n\007balanc"
-    "e\030\025 \001(\003\"\362\001\n\023BrokerReportRequest\022l\n\036gener"
-    "ate_broker_report_request\030\001 \001(\0132B.tinkof"
-    "f.public.invest.api.contract.v1.Generate"
-    "BrokerReportRequestH\000\022b\n\031get_broker_repo"
-    "rt_request\030\002 \001(\0132=.tinkoff.public.invest"
-    ".api.contract.v1.GetBrokerReportRequestH"
-    "\000B\t\n\007payload\"\367\001\n\024BrokerReportResponse\022n\n"
-    "\037generate_broker_report_response\030\001 \001(\0132C"
-    ".tinkoff.public.invest.api.contract.v1.G"
-    "enerateBrokerReportResponseH\000\022d\n\032get_bro"
-    "ker_report_response\030\002 \001(\0132>.tinkoff.publ"
-    "ic.invest.api.contract.v1.GetBrokerRepor"
-    "tResponseH\000B\t\n\007payload\"\225\001\n\033GenerateBroke"
-    "rReportRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002"
-    "\022.\n\004from\030\002 \001(\0132\032.google.protobuf.Timesta"
-    "mpB\004\342A\001\002\022,\n\002to\030\003 \001(\0132\032.google.protobuf.T"
-    "imestampB\004\342A\001\002\"/\n\034GenerateBrokerReportRe"
-    "sponse\022\017\n\007task_id\030\001 \001(\t\"K\n\026GetBrokerRepo"
-    "rtRequest\022\025\n\007task_id\030\001 \001(\tB\004\342A\001\002\022\021\n\004page"
-    "\030\002 \001(\005H\000\210\001\001B\007\n\005_page\"\254\001\n\027GetBrokerReport"
-    "Response\022J\n\rbroker_report\030\001 \003(\01323.tinkof"
-    "f.public.invest.api.contract.v1.BrokerRe"
-    "port\022\022\n\nitemsCount\030\002 \001(\005\022\022\n\npagesCount\030\003"
-    " \001(\005\022\014\n\004page\030\004 \001(\005\022\017\n\007task_id\030\005 \001(\t\"\332\010\n\014"
-    "BrokerReport\022\020\n\010trade_id\030\001 \001(\t\022\020\n\010order_"
-    "id\030\002 \001(\t\022\014\n\004figi\030\003 \001(\t\022\024\n\014execute_sign\030\004"
-    " \001(\t\0222\n\016trade_datetime\030\005 \001(\0132\032.google.pr"
-    "otobuf.Timestamp\022\020\n\010exchange\030\006 \001(\t\022\022\n\ncl"
-    "ass_code\030\007 \001(\t\022\021\n\tdirection\030\010 \001(\t\022\014\n\004nam"
-    "e\030\t \001(\t\022\016\n\006ticker\030\n \001(\t\022@\n\005price\030\013 \001(\01321"
-    ".tinkoff.public.invest.api.contract.v1.M"
-    "oneyValue\022\020\n\010quantity\030\014 \001(\003\022G\n\014order_amo"
-    "unt\030\r \001(\01321.tinkoff.public.invest.api.co"
-    "ntract.v1.MoneyValue\022C\n\taci_value\030\016 \001(\0132"
-    "0.tinkoff.public.invest.api.contract.v1."
-    "Quotation\022M\n\022total_order_amount\030\017 \001(\01321."
-    "tinkoff.public.invest.api.contract.v1.Mo"
-    "neyValue\022L\n\021broker_commission\030\020 \001(\01321.ti"
-    "nkoff.public.invest.api.contract.v1.Mone"
-    "yValue\022N\n\023exchange_commission\030\021 \001(\01321.ti"
-    "nkoff.public.invest.api.contract.v1.Mone"
-    "yValue\022W\n\034exchange_clearing_commission\030\022"
-    " \001(\01321.tinkoff.public.invest.api.contrac"
-    "t.v1.MoneyValue\022C\n\trepo_rate\030\023 \001(\01320.tin"
-    "koff.public.invest.api.contract.v1.Quota"
-    "tion\022\r\n\005party\030\024 \001(\t\0224\n\020clear_value_date\030"
-    "\025 \001(\0132\032.google.protobuf.Timestamp\0222\n\016sec"
-    "_value_date\030\026 \001(\0132\032.google.protobuf.Time"
-    "stamp\022\025\n\rbroker_status\030\027 \001(\t\022\037\n\027separate"
-    "_agreement_type\030\030 \001(\t\022!\n\031separate_agreem"
-    "ent_number\030\031 \001(\t\022\037\n\027separate_agreement_d"
-    "ate\030\032 \001(\t\022\025\n\rdelivery_type\030\033 \001(\t\"\250\002\n Get"
-    "DividendsForeignIssuerRequest\022\200\001\n\"genera"
-    "te_div_foreign_issuer_report\030\001 \001(\0132R.tin"
-    "koff.public.invest.api.contract.v1.Gener"
-    "ateDividendsForeignIssuerReportRequestH\000"
-    "\022v\n\035get_div_foreign_issuer_report\030\002 \001(\0132"
-    "M.tinkoff.public.invest.api.contract.v1."
-    "GetDividendsForeignIssuerReportRequestH\000"
-    "B\t\n\007payload\"\260\002\n!GetDividendsForeignIssue"
-    "rResponse\022\212\001\n+generate_div_foreign_issue"
-    "r_report_response\030\001 \001(\0132S.tinkoff.public"
-    ".invest.api.contract.v1.GenerateDividend"
-    "sForeignIssuerReportResponseH\000\022s\n\031div_fo"
-    "reign_issuer_report\030\002 \001(\0132N.tinkoff.publ"
-    "ic.invest.api.contract.v1.GetDividendsFo"
-    "reignIssuerReportResponseH\000B\t\n\007payload\"\245"
-    "\001\n+GenerateDividendsForeignIssuerReportR"
-    "equest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022.\n\004from"
-    "\030\002 \001(\0132\032.google.protobuf.TimestampB\004\342A\001\002"
-    "\022,\n\002to\030\003 \001(\0132\032.google.protobuf.Timestamp"
-    "B\004\342A\001\002\"[\n&GetDividendsForeignIssuerRepor"
-    "tRequest\022\025\n\007task_id\030\001 \001(\tB\004\342A\001\002\022\021\n\004page\030"
-    "\002 \001(\005H\000\210\001\001B\007\n\005_page\"\?\n,GenerateDividends"
-    "ForeignIssuerReportResponse\022\017\n\007task_id\030\001"
-    " \001(\t\"\315\001\n\'GetDividendsForeignIssuerReport"
-    "Response\022l\n\037dividends_foreign_issuer_rep"
-    "ort\030\001 \003(\0132C.tinkoff.public.invest.api.co"
-    "ntract.v1.DividendsForeignIssuerReport\022\022"
-    "\n\nitemsCount\030\002 \001(\005\022\022\n\npagesCount\030\003 \001(\005\022\014"
-    "\n\004page\030\004 \001(\005\"\311\004\n\034DividendsForeignIssuerR"
-    "eport\022/\n\013record_date\030\001 \001(\0132\032.google.prot"
-    "obuf.Timestamp\0220\n\014payment_date\030\002 \001(\0132\032.g"
-    "oogle.protobuf.Timestamp\022\025\n\rsecurity_nam"
-    "e\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\026\n\016issuer_country\030"
-    "\005 \001(\t\022\020\n\010quantity\030\006 \001(\003\022B\n\010dividend\030\007 \001("
+    "cker\030\006 \001(\t\022\022\n\nclass_code\030\007 \001(\t\022\030\n\020exchan"
+    "ge_blocked\030\013 \001(\010\022\027\n\017instrument_type\030\020 \001("
+    "\t\"\224\001\n\020PositionsFutures\022\014\n\004figi\030\001 \001(\t\022\017\n\007"
+    "blocked\030\002 \001(\003\022\017\n\007balance\030\003 \001(\003\022\024\n\014positi"
+    "on_uid\030\004 \001(\t\022\026\n\016instrument_uid\030\005 \001(\t\022\016\n\006"
+    "ticker\030\006 \001(\t\022\022\n\nclass_code\030\007 \001(\t\"\206\001\n\020Pos"
+    "itionsOptions\022\024\n\014position_uid\030\001 \001(\t\022\026\n\016i"
+    "nstrument_uid\030\002 \001(\t\022\016\n\006ticker\030\003 \001(\t\022\022\n\nc"
+    "lass_code\030\004 \001(\t\022\017\n\007blocked\030\013 \001(\003\022\017\n\007bala"
+    "nce\030\025 \001(\003\"\362\001\n\023BrokerReportRequest\022l\n\036gen"
+    "erate_broker_report_request\030\001 \001(\0132B.tink"
+    "off.public.invest.api.contract.v1.Genera"
+    "teBrokerReportRequestH\000\022b\n\031get_broker_re"
+    "port_request\030\002 \001(\0132=.tinkoff.public.inve"
+    "st.api.contract.v1.GetBrokerReportReques"
+    "tH\000B\t\n\007payload\"\367\001\n\024BrokerReportResponse\022"
+    "n\n\037generate_broker_report_response\030\001 \001(\013"
+    "2C.tinkoff.public.invest.api.contract.v1"
+    ".GenerateBrokerReportResponseH\000\022d\n\032get_b"
+    "roker_report_response\030\002 \001(\0132>.tinkoff.pu"
+    "blic.invest.api.contract.v1.GetBrokerRep"
+    "ortResponseH\000B\t\n\007payload\"\225\001\n\033GenerateBro"
+    "kerReportRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342A"
+    "\001\002\022.\n\004from\030\002 \001(\0132\032.google.protobuf.Times"
+    "tampB\004\342A\001\002\022,\n\002to\030\003 \001(\0132\032.google.protobuf"
+    ".TimestampB\004\342A\001\002\"/\n\034GenerateBrokerReport"
+    "Response\022\017\n\007task_id\030\001 \001(\t\"K\n\026GetBrokerRe"
+    "portRequest\022\025\n\007task_id\030\001 \001(\tB\004\342A\001\002\022\021\n\004pa"
+    "ge\030\002 \001(\005H\000\210\001\001B\007\n\005_page\"\254\001\n\027GetBrokerRepo"
+    "rtResponse\022J\n\rbroker_report\030\001 \003(\01323.tink"
+    "off.public.invest.api.contract.v1.Broker"
+    "Report\022\022\n\nitemsCount\030\002 \001(\005\022\022\n\npagesCount"
+    "\030\003 \001(\005\022\014\n\004page\030\004 \001(\005\022\017\n\007task_id\030\005 \001(\t\"\332\010"
+    "\n\014BrokerReport\022\020\n\010trade_id\030\001 \001(\t\022\020\n\010orde"
+    "r_id\030\002 \001(\t\022\014\n\004figi\030\003 \001(\t\022\024\n\014execute_sign"
+    "\030\004 \001(\t\0222\n\016trade_datetime\030\005 \001(\0132\032.google."
+    "protobuf.Timestamp\022\020\n\010exchange\030\006 \001(\t\022\022\n\n"
+    "class_code\030\007 \001(\t\022\021\n\tdirection\030\010 \001(\t\022\014\n\004n"
+    "ame\030\t \001(\t\022\016\n\006ticker\030\n \001(\t\022@\n\005price\030\013 \001(\013"
+    "21.tinkoff.public.invest.api.contract.v1"
+    ".MoneyValue\022\020\n\010quantity\030\014 \001(\003\022G\n\014order_a"
+    "mount\030\r \001(\01321.tinkoff.public.invest.api."
+    "contract.v1.MoneyValue\022C\n\taci_value\030\016 \001("
     "\01320.tinkoff.public.invest.api.contract.v"
-    "1.Quotation\022M\n\023external_commission\030\010 \001(\013"
-    "20.tinkoff.public.invest.api.contract.v1"
-    ".Quotation\022H\n\016dividend_gross\030\t \001(\01320.tin"
-    "koff.public.invest.api.contract.v1.Quota"
-    "tion\022=\n\003tax\030\n \001(\01320.tinkoff.public.inves"
-    "t.api.contract.v1.Quotation\022I\n\017dividend_"
-    "amount\030\013 \001(\01320.tinkoff.public.invest.api"
-    ".contract.v1.Quotation\022\020\n\010currency\030\014 \001(\t"
-    "\"{\n\026PortfolioStreamRequest\022\020\n\010accounts\030\001"
-    " \003(\t\022O\n\rping_settings\030\017 \001(\01328.tinkoff.pu"
-    "blic.invest.api.contract.v1.PingDelaySet"
-    "tings\"\215\002\n\027PortfolioStreamResponse\022[\n\rsub"
-    "scriptions\030\001 \001(\0132B.tinkoff.public.invest"
-    ".api.contract.v1.PortfolioSubscriptionRe"
-    "sultH\000\022M\n\tportfolio\030\002 \001(\01328.tinkoff.publ"
-    "ic.invest.api.contract.v1.PortfolioRespo"
-    "nseH\000\022;\n\004ping\030\003 \001(\0132+.tinkoff.public.inv"
-    "est.api.contract.v1.PingH\000B\t\n\007payload\"\231\001"
-    "\n\033PortfolioSubscriptionResult\022R\n\010account"
-    "s\030\001 \003(\0132@.tinkoff.public.invest.api.cont"
-    "ract.v1.AccountSubscriptionStatus\022\023\n\013tra"
-    "cking_id\030\007 \001(\t\022\021\n\tstream_id\030\010 \001(\t\"\220\001\n\031Ac"
-    "countSubscriptionStatus\022\022\n\naccount_id\030\001 "
-    "\001(\t\022_\n\023subscription_status\030\006 \001(\0162B.tinko"
-    "ff.public.invest.api.contract.v1.Portfol"
-    "ioSubscriptionStatus\"\326\004\n\034GetOperationsBy"
-    "CursorRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022"
-    "\032\n\rinstrument_id\030\002 \001(\tH\000\210\001\001\022-\n\004from\030\006 \001("
-    "\0132\032.google.protobuf.TimestampH\001\210\001\001\022+\n\002to"
-    "\030\007 \001(\0132\032.google.protobuf.TimestampH\002\210\001\001\022"
-    "\023\n\006cursor\030\013 \001(\tH\003\210\001\001\022\022\n\005limit\030\014 \001(\005H\004\210\001\001"
-    "\022M\n\017operation_types\030\r \003(\01624.tinkoff.publ"
-    "ic.invest.api.contract.v1.OperationType\022"
-    "I\n\005state\030\016 \001(\01625.tinkoff.public.invest.a"
-    "pi.contract.v1.OperationStateH\005\210\001\001\022 \n\023wi"
-    "thout_commissions\030\017 \001(\010H\006\210\001\001\022\033\n\016without_"
-    "trades\030\020 \001(\010H\007\210\001\001\022\037\n\022without_overnights\030"
-    "\021 \001(\010H\010\210\001\001B\020\n\016_instrument_idB\007\n\005_fromB\005\n"
-    "\003_toB\t\n\007_cursorB\010\n\006_limitB\010\n\006_stateB\026\n\024_"
-    "without_commissionsB\021\n\017_without_tradesB\025"
-    "\n\023_without_overnights\"\213\001\n\035GetOperationsB"
-    "yCursorResponse\022\020\n\010has_next\030\001 \001(\010\022\023\n\013nex"
-    "t_cursor\030\002 \001(\t\022C\n\005items\030\006 \003(\01324.tinkoff."
-    "public.invest.api.contract.v1.OperationI"
-    "tem\"\352\t\n\rOperationItem\022\016\n\006cursor\030\001 \001(\t\022\031\n"
-    "\021broker_account_id\030\006 \001(\t\022\n\n\002id\030\020 \001(\t\022\033\n\023"
-    "parent_operation_id\030\021 \001(\t\022\014\n\004name\030\022 \001(\t\022"
-    "(\n\004date\030\025 \001(\0132\032.google.protobuf.Timestam"
-    "p\022B\n\004type\030\026 \001(\01624.tinkoff.public.invest."
-    "api.contract.v1.OperationType\022\023\n\013descrip"
-    "tion\030\027 \001(\t\022D\n\005state\030\030 \001(\01625.tinkoff.publ"
-    "ic.invest.api.contract.v1.OperationState"
-    "\022\026\n\016instrument_uid\030\037 \001(\t\022\014\n\004figi\030  \001(\t\022\027"
-    "\n\017instrument_type\030! \001(\t\022N\n\017instrument_ki"
-    "nd\030\" \001(\01625.tinkoff.public.invest.api.con"
-    "tract.v1.InstrumentType\022\024\n\014position_uid\030"
-    "# \001(\t\022\016\n\006ticker\030$ \001(\t\022\022\n\nclass_code\030% \001("
-    "\t\022B\n\007payment\030) \001(\01321.tinkoff.public.inve"
-    "st.api.contract.v1.MoneyValue\022@\n\005price\030*"
-    " \001(\01321.tinkoff.public.invest.api.contrac"
-    "t.v1.MoneyValue\022E\n\ncommission\030+ \001(\01321.ti"
-    "nkoff.public.invest.api.contract.v1.Mone"
-    "yValue\022@\n\005yield\030, \001(\01321.tinkoff.public.i"
-    "nvest.api.contract.v1.MoneyValue\022H\n\016yiel"
-    "d_relative\030- \001(\01320.tinkoff.public.invest"
-    ".api.contract.v1.Quotation\022F\n\013accrued_in"
-    "t\030. \001(\01321.tinkoff.public.invest.api.cont"
-    "ract.v1.MoneyValue\022\020\n\010quantity\0303 \001(\003\022\025\n\r"
-    "quantity_rest\0304 \001(\003\022\025\n\rquantity_done\0305 \001"
-    "(\003\0224\n\020cancel_date_time\0308 \001(\0132\032.google.pr"
-    "otobuf.Timestamp\022\025\n\rcancel_reason\0309 \001(\t\022"
-    "O\n\013trades_info\030= \001(\0132:.tinkoff.public.in"
-    "vest.api.contract.v1.OperationItemTrades"
-    "\022\021\n\tasset_uid\030@ \001(\t\022S\n\020child_operations\030"
-    "A \003(\01329.tinkoff.public.invest.api.contra"
-    "ct.v1.ChildOperationItem\"`\n\023OperationIte"
-    "mTrades\022I\n\006trades\030\006 \003(\01329.tinkoff.public"
-    ".invest.api.contract.v1.OperationItemTra"
-    "de\"\253\002\n\022OperationItemTrade\022\013\n\003num\030\001 \001(\t\022("
-    "\n\004date\030\006 \001(\0132\032.google.protobuf.Timestamp"
-    "\022\020\n\010quantity\030\013 \001(\003\022@\n\005price\030\020 \001(\01321.tink"
-    "off.public.invest.api.contract.v1.MoneyV"
-    "alue\022@\n\005yield\030\025 \001(\01321.tinkoff.public.inv"
-    "est.api.contract.v1.MoneyValue\022H\n\016yield_"
-    "relative\030\026 \001(\01320.tinkoff.public.invest.a"
-    "pi.contract.v1.Quotation\"\233\001\n\026PositionsSt"
-    "reamRequest\022\020\n\010accounts\030\001 \003(\t\022\036\n\026with_in"
-    "itial_positions\030\003 \001(\010\022O\n\rping_settings\030\017"
-    " \001(\01328.tinkoff.public.invest.api.contrac"
-    "t.v1.PingDelaySettings\"\336\002\n\027PositionsStre"
-    "amResponse\022[\n\rsubscriptions\030\001 \001(\0132B.tink"
-    "off.public.invest.api.contract.v1.Positi"
-    "onsSubscriptionResultH\000\022G\n\010position\030\002 \001("
-    "\01323.tinkoff.public.invest.api.contract.v"
-    "1.PositionDataH\000\022;\n\004ping\030\003 \001(\0132+.tinkoff"
-    ".public.invest.api.contract.v1.PingH\000\022U\n"
-    "\021initial_positions\030\005 \001(\01328.tinkoff.publi"
-    "c.invest.api.contract.v1.PositionsRespon"
-    "seH\000B\t\n\007payload\"\233\001\n\033PositionsSubscriptio"
-    "nResult\022T\n\010accounts\030\001 \003(\0132B.tinkoff.publ"
-    "ic.invest.api.contract.v1.PositionsSubsc"
-    "riptionStatus\022\023\n\013tracking_id\030\007 \001(\t\022\021\n\tst"
-    "ream_id\030\010 \001(\t\"\231\001\n\033PositionsSubscriptionS"
-    "tatus\022\022\n\naccount_id\030\001 \001(\t\022f\n\023subscriptio"
-    "n_status\030\006 \001(\0162I.tinkoff.public.invest.a"
-    "pi.contract.v1.PositionsAccountSubscript"
-    "ionStatus\"\366\002\n\014PositionData\022\022\n\naccount_id"
-    "\030\001 \001(\t\022D\n\005money\030\002 \003(\01325.tinkoff.public.i"
-    "nvest.api.contract.v1.PositionsMoney\022N\n\n"
-    "securities\030\003 \003(\0132:.tinkoff.public.invest"
-    ".api.contract.v1.PositionsSecurities\022H\n\007"
-    "futures\030\004 \003(\01327.tinkoff.public.invest.ap"
-    "i.contract.v1.PositionsFutures\022H\n\007option"
-    "s\030\005 \003(\01327.tinkoff.public.invest.api.cont"
-    "ract.v1.PositionsOptions\022(\n\004date\030\006 \001(\0132\032"
-    ".google.protobuf.Timestamp\"\246\001\n\016Positions"
-    "Money\022J\n\017available_value\030\001 \001(\01321.tinkoff"
-    ".public.invest.api.contract.v1.MoneyValu"
-    "e\022H\n\rblocked_value\030\002 \001(\01321.tinkoff.publi"
-    "c.invest.api.contract.v1.MoneyValue\"p\n\022C"
-    "hildOperationItem\022\026\n\016instrument_uid\030\001 \001("
-    "\t\022B\n\007payment\030\002 \001(\01321.tinkoff.public.inve"
-    "st.api.contract.v1.MoneyValue\"|\n\027Operati"
-    "onsStreamRequest\022\020\n\010accounts\030\001 \003(\t\022O\n\rpi"
-    "ng_settings\030\017 \001(\01328.tinkoff.public.inves"
-    "t.api.contract.v1.PingDelaySettings\"\213\002\n\030"
-    "OperationsStreamResponse\022\\\n\rsubscription"
-    "s\030\001 \001(\0132C.tinkoff.public.invest.api.cont"
-    "ract.v1.OperationsSubscriptionResultH\000\022I"
-    "\n\toperation\030\002 \001(\01324.tinkoff.public.inves"
-    "t.api.contract.v1.OperationDataH\000\022;\n\004pin"
-    "g\030\003 \001(\0132+.tinkoff.public.invest.api.cont"
-    "ract.v1.PingH\000B\t\n\007payload\"\301\001\n\034Operations"
-    "SubscriptionResult\022\020\n\010accounts\030\001 \003(\t\022g\n\023"
-    "subscription_status\030\002 \001(\0162J.tinkoff.publ"
-    "ic.invest.api.contract.v1.OperationsAcco"
-    "untSubscriptionStatus\022\023\n\013tracking_id\030\007 \001"
-    "(\t\022\021\n\tstream_id\030\010 \001(\t\"\242\004\n\rOperationData\022"
-    "\031\n\021broker_account_id\030\001 \001(\t\022\n\n\002id\030\002 \001(\t\022\033"
-    "\n\023parent_operation_id\030\003 \001(\t\022\014\n\004name\030\004 \001("
-    "\t\022(\n\004date\030\005 \001(\0132\032.google.protobuf.Timest"
-    "amp\022B\n\004type\030\006 \001(\01624.tinkoff.public.inves"
-    "t.api.contract.v1.OperationType\022D\n\005state"
-    "\030\007 \001(\01625.tinkoff.public.invest.api.contr"
-    "act.v1.OperationState\022\026\n\016instrument_uid\030"
-    "\010 \001(\t\022\014\n\004figi\030\t \001(\t\022\027\n\017instrument_type\030\n"
-    " \001(\t\022N\n\017instrument_kind\030\013 \001(\01625.tinkoff."
-    "public.invest.api.contract.v1.Instrument"
-    "Type\022\024\n\014position_uid\030\014 \001(\t\022\016\n\006ticker\030\r \001"
-    "(\t\022\022\n\nclass_code\030\016 \001(\t\022B\n\007payment\030\017 \001(\0132"
+    "1.Quotation\022M\n\022total_order_amount\030\017 \001(\0132"
     "1.tinkoff.public.invest.api.contract.v1."
-    "MoneyValue*\213\001\n\016OperationState\022\037\n\033OPERATI"
-    "ON_STATE_UNSPECIFIED\020\000\022\034\n\030OPERATION_STAT"
-    "E_EXECUTED\020\001\022\034\n\030OPERATION_STATE_CANCELED"
-    "\020\002\022\034\n\030OPERATION_STATE_PROGRESS\020\003*\371\021\n\rOpe"
-    "rationType\022\036\n\032OPERATION_TYPE_UNSPECIFIED"
-    "\020\000\022\030\n\024OPERATION_TYPE_INPUT\020\001\022\033\n\027OPERATIO"
-    "N_TYPE_BOND_TAX\020\002\022$\n OPERATION_TYPE_OUTP"
-    "UT_SECURITIES\020\003\022\034\n\030OPERATION_TYPE_OVERNI"
-    "GHT\020\004\022\026\n\022OPERATION_TYPE_TAX\020\005\022&\n\"OPERATI"
-    "ON_TYPE_BOND_REPAYMENT_FULL\020\006\022\034\n\030OPERATI"
-    "ON_TYPE_SELL_CARD\020\007\022\037\n\033OPERATION_TYPE_DI"
-    "VIDEND_TAX\020\010\022\031\n\025OPERATION_TYPE_OUTPUT\020\t\022"
-    "!\n\035OPERATION_TYPE_BOND_REPAYMENT\020\n\022!\n\035OP"
-    "ERATION_TYPE_TAX_CORRECTION\020\013\022\036\n\032OPERATI"
-    "ON_TYPE_SERVICE_FEE\020\014\022\036\n\032OPERATION_TYPE_"
-    "BENEFIT_TAX\020\r\022\035\n\031OPERATION_TYPE_MARGIN_F"
-    "EE\020\016\022\026\n\022OPERATION_TYPE_BUY\020\017\022\033\n\027OPERATIO"
-    "N_TYPE_BUY_CARD\020\020\022#\n\037OPERATION_TYPE_INPU"
-    "T_SECURITIES\020\021\022\036\n\032OPERATION_TYPE_SELL_MA"
-    "RGIN\020\022\022\035\n\031OPERATION_TYPE_BROKER_FEE\020\023\022\035\n"
-    "\031OPERATION_TYPE_BUY_MARGIN\020\024\022\033\n\027OPERATIO"
-    "N_TYPE_DIVIDEND\020\025\022\027\n\023OPERATION_TYPE_SELL"
-    "\020\026\022\031\n\025OPERATION_TYPE_COUPON\020\027\022\036\n\032OPERATI"
-    "ON_TYPE_SUCCESS_FEE\020\030\022$\n OPERATION_TYPE_"
-    "DIVIDEND_TRANSFER\020\031\022%\n!OPERATION_TYPE_AC"
-    "CRUING_VARMARGIN\020\032\022(\n$OPERATION_TYPE_WRI"
-    "TING_OFF_VARMARGIN\020\033\022\037\n\033OPERATION_TYPE_D"
-    "ELIVERY_BUY\020\034\022 \n\034OPERATION_TYPE_DELIVERY"
-    "_SELL\020\035\022\035\n\031OPERATION_TYPE_TRACK_MFEE\020\036\022\035"
-    "\n\031OPERATION_TYPE_TRACK_PFEE\020\037\022\"\n\036OPERATI"
-    "ON_TYPE_TAX_PROGRESSIVE\020 \022\'\n#OPERATION_T"
-    "YPE_BOND_TAX_PROGRESSIVE\020!\022+\n\'OPERATION_"
-    "TYPE_DIVIDEND_TAX_PROGRESSIVE\020\"\022*\n&OPERA"
-    "TION_TYPE_BENEFIT_TAX_PROGRESSIVE\020#\022-\n)O"
-    "PERATION_TYPE_TAX_CORRECTION_PROGRESSIVE"
-    "\020$\022\'\n#OPERATION_TYPE_TAX_REPO_PROGRESSIV"
-    "E\020%\022\033\n\027OPERATION_TYPE_TAX_REPO\020&\022 \n\034OPER"
-    "ATION_TYPE_TAX_REPO_HOLD\020\'\022\"\n\036OPERATION_"
-    "TYPE_TAX_REPO_REFUND\020(\022,\n(OPERATION_TYPE"
-    "_TAX_REPO_HOLD_PROGRESSIVE\020)\022.\n*OPERATIO"
-    "N_TYPE_TAX_REPO_REFUND_PROGRESSIVE\020*\022\032\n\026"
-    "OPERATION_TYPE_DIV_EXT\020+\022(\n$OPERATION_TY"
-    "PE_TAX_CORRECTION_COUPON\020,\022\033\n\027OPERATION_"
-    "TYPE_CASH_FEE\020-\022\032\n\026OPERATION_TYPE_OUT_FE"
-    "E\020.\022!\n\035OPERATION_TYPE_OUT_STAMP_DUTY\020/\022\037"
-    "\n\033OPERATION_TYPE_OUTPUT_SWIFT\0202\022\036\n\032OPERA"
-    "TION_TYPE_INPUT_SWIFT\0203\022#\n\037OPERATION_TYP"
-    "E_OUTPUT_ACQUIRING\0205\022\"\n\036OPERATION_TYPE_I"
-    "NPUT_ACQUIRING\0206\022!\n\035OPERATION_TYPE_OUTPU"
-    "T_PENALTY\0207\022\035\n\031OPERATION_TYPE_ADVICE_FEE"
-    "\0208\022\037\n\033OPERATION_TYPE_TRANS_IIS_BS\0209\022\036\n\032O"
-    "PERATION_TYPE_TRANS_BS_BS\020:\022\034\n\030OPERATION"
-    "_TYPE_OUT_MULTI\020;\022\034\n\030OPERATION_TYPE_INP_"
-    "MULTI\020<\022!\n\035OPERATION_TYPE_OVER_PLACEMENT"
-    "\020=\022\033\n\027OPERATION_TYPE_OVER_COM\020>\022\036\n\032OPERA"
-    "TION_TYPE_OVER_INCOME\020\?\022$\n OPERATION_TYP"
-    "E_OPTION_EXPIRATION\020@\022$\n OPERATION_TYPE_"
-    "FUTURE_EXPIRATION\020A\022\034\n\030OPERATION_TYPE_OT"
-    "HER_FEE\020B\022\030\n\024OPERATION_TYPE_OTHER\020C\022!\n\035O"
-    "PERATION_TYPE_DFA_REDEMPTION\020D\022 \n\034OPERAT"
-    "ION_TYPE_PRIMARY_ORDER\020E\022\032\n\026OPERATION_TY"
-    "PE_FUNDING\020F*\336\001\n\033PortfolioSubscriptionSt"
-    "atus\022-\n)PORTFOLIO_SUBSCRIPTION_STATUS_UN"
-    "SPECIFIED\020\000\022)\n%PORTFOLIO_SUBSCRIPTION_ST"
-    "ATUS_SUCCESS\020\001\0223\n/PORTFOLIO_SUBSCRIPTION"
-    "_STATUS_ACCOUNT_NOT_FOUND\020\002\0220\n,PORTFOLIO"
-    "_SUBSCRIPTION_STATUS_INTERNAL_ERROR\020\003*\345\001"
-    "\n\"PositionsAccountSubscriptionStatus\022-\n)"
-    "POSITIONS_SUBSCRIPTION_STATUS_UNSPECIFIE"
-    "D\020\000\022)\n%POSITIONS_SUBSCRIPTION_STATUS_SUC"
-    "CESS\020\001\0223\n/POSITIONS_SUBSCRIPTION_STATUS_"
-    "ACCOUNT_NOT_FOUND\020\002\0220\n,POSITIONS_SUBSCRI"
-    "PTION_STATUS_INTERNAL_ERROR\020\003*\352\001\n#Operat"
-    "ionsAccountSubscriptionStatus\022.\n*OPERATI"
-    "ONS_SUBSCRIPTION_STATUS_UNSPECIFIED\020\000\022*\n"
-    "&OPERATIONS_SUBSCRIPTION_STATUS_SUCCESS\020"
-    "\001\0224\n0OPERATIONS_SUBSCRIPTION_STATUS_ACCO"
-    "UNT_NOT_FOUND\020\002\0221\n-OPERATIONS_SUBSCRIPTI"
-    "ON_STATUS_INTERNAL_ERROR\020\0032\230\010\n\021Operation"
-    "sService\022\204\001\n\rGetOperations\0228.tinkoff.pub"
-    "lic.invest.api.contract.v1.OperationsReq"
-    "uest\0329.tinkoff.public.invest.api.contrac"
-    "t.v1.OperationsResponse\022\201\001\n\014GetPortfolio"
-    "\0227.tinkoff.public.invest.api.contract.v1"
-    ".PortfolioRequest\0328.tinkoff.public.inves"
-    "t.api.contract.v1.PortfolioResponse\022\201\001\n\014"
-    "GetPositions\0227.tinkoff.public.invest.api"
-    ".contract.v1.PositionsRequest\0328.tinkoff."
-    "public.invest.api.contract.v1.PositionsR"
-    "esponse\022\220\001\n\021GetWithdrawLimits\022<.tinkoff."
-    "public.invest.api.contract.v1.WithdrawLi"
-    "mitsRequest\032=.tinkoff.public.invest.api."
-    "contract.v1.WithdrawLimitsResponse\022\212\001\n\017G"
-    "etBrokerReport\022:.tinkoff.public.invest.a"
-    "pi.contract.v1.BrokerReportRequest\032;.tin"
-    "koff.public.invest.api.contract.v1.Broke"
-    "rReportResponse\022\256\001\n\031GetDividendsForeignI"
-    "ssuer\022G.tinkoff.public.invest.api.contra"
-    "ct.v1.GetDividendsForeignIssuerRequest\032H"
-    ".tinkoff.public.invest.api.contract.v1.G"
-    "etDividendsForeignIssuerResponse\022\242\001\n\025Get"
-    "OperationsByCursor\022C.tinkoff.public.inve"
-    "st.api.contract.v1.GetOperationsByCursor"
-    "Request\032D.tinkoff.public.invest.api.cont"
-    "ract.v1.GetOperationsByCursorResponse2\333\003"
-    "\n\027OperationsStreamService\022\222\001\n\017PortfolioS"
-    "tream\022=.tinkoff.public.invest.api.contra"
-    "ct.v1.PortfolioStreamRequest\032>.tinkoff.p"
-    "ublic.invest.api.contract.v1.PortfolioSt"
-    "reamResponse0\001\022\222\001\n\017PositionsStream\022=.tin"
-    "koff.public.invest.api.contract.v1.Posit"
-    "ionsStreamRequest\032>.tinkoff.public.inves"
-    "t.api.contract.v1.PositionsStreamRespons"
-    "e0\001\022\225\001\n\020OperationsStream\022>.tinkoff.publi"
-    "c.invest.api.contract.v1.OperationsStrea"
-    "mRequest\032\?.tinkoff.public.invest.api.con"
-    "tract.v1.OperationsStreamResponse0\001Ba\n\034r"
-    "u.tinkoff.piapi.contract.v1P\001Z\014./;invest"
-    "api\242\002\005TIAPI\252\002\024Tinkoff.InvestApi.V1\312\002\021Tin"
-    "koff\\Invest\\V1b\006proto3"
+    "MoneyValue\022L\n\021broker_commission\030\020 \001(\01321."
+    "tinkoff.public.invest.api.contract.v1.Mo"
+    "neyValue\022N\n\023exchange_commission\030\021 \001(\01321."
+    "tinkoff.public.invest.api.contract.v1.Mo"
+    "neyValue\022W\n\034exchange_clearing_commission"
+    "\030\022 \001(\01321.tinkoff.public.invest.api.contr"
+    "act.v1.MoneyValue\022C\n\trepo_rate\030\023 \001(\01320.t"
+    "inkoff.public.invest.api.contract.v1.Quo"
+    "tation\022\r\n\005party\030\024 \001(\t\0224\n\020clear_value_dat"
+    "e\030\025 \001(\0132\032.google.protobuf.Timestamp\0222\n\016s"
+    "ec_value_date\030\026 \001(\0132\032.google.protobuf.Ti"
+    "mestamp\022\025\n\rbroker_status\030\027 \001(\t\022\037\n\027separa"
+    "te_agreement_type\030\030 \001(\t\022!\n\031separate_agre"
+    "ement_number\030\031 \001(\t\022\037\n\027separate_agreement"
+    "_date\030\032 \001(\t\022\025\n\rdelivery_type\030\033 \001(\t\"\250\002\n G"
+    "etDividendsForeignIssuerRequest\022\200\001\n\"gene"
+    "rate_div_foreign_issuer_report\030\001 \001(\0132R.t"
+    "inkoff.public.invest.api.contract.v1.Gen"
+    "erateDividendsForeignIssuerReportRequest"
+    "H\000\022v\n\035get_div_foreign_issuer_report\030\002 \001("
+    "\0132M.tinkoff.public.invest.api.contract.v"
+    "1.GetDividendsForeignIssuerReportRequest"
+    "H\000B\t\n\007payload\"\260\002\n!GetDividendsForeignIss"
+    "uerResponse\022\212\001\n+generate_div_foreign_iss"
+    "uer_report_response\030\001 \001(\0132S.tinkoff.publ"
+    "ic.invest.api.contract.v1.GenerateDivide"
+    "ndsForeignIssuerReportResponseH\000\022s\n\031div_"
+    "foreign_issuer_report\030\002 \001(\0132N.tinkoff.pu"
+    "blic.invest.api.contract.v1.GetDividends"
+    "ForeignIssuerReportResponseH\000B\t\n\007payload"
+    "\"\245\001\n+GenerateDividendsForeignIssuerRepor"
+    "tRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022.\n\004fr"
+    "om\030\002 \001(\0132\032.google.protobuf.TimestampB\004\342A"
+    "\001\002\022,\n\002to\030\003 \001(\0132\032.google.protobuf.Timesta"
+    "mpB\004\342A\001\002\"[\n&GetDividendsForeignIssuerRep"
+    "ortRequest\022\025\n\007task_id\030\001 \001(\tB\004\342A\001\002\022\021\n\004pag"
+    "e\030\002 \001(\005H\000\210\001\001B\007\n\005_page\"\?\n,GenerateDividen"
+    "dsForeignIssuerReportResponse\022\017\n\007task_id"
+    "\030\001 \001(\t\"\315\001\n\'GetDividendsForeignIssuerRepo"
+    "rtResponse\022l\n\037dividends_foreign_issuer_r"
+    "eport\030\001 \003(\0132C.tinkoff.public.invest.api."
+    "contract.v1.DividendsForeignIssuerReport"
+    "\022\022\n\nitemsCount\030\002 \001(\005\022\022\n\npagesCount\030\003 \001(\005"
+    "\022\014\n\004page\030\004 \001(\005\"\311\004\n\034DividendsForeignIssue"
+    "rReport\022/\n\013record_date\030\001 \001(\0132\032.google.pr"
+    "otobuf.Timestamp\0220\n\014payment_date\030\002 \001(\0132\032"
+    ".google.protobuf.Timestamp\022\025\n\rsecurity_n"
+    "ame\030\003 \001(\t\022\014\n\004isin\030\004 \001(\t\022\026\n\016issuer_countr"
+    "y\030\005 \001(\t\022\020\n\010quantity\030\006 \001(\003\022B\n\010dividend\030\007 "
+    "\001(\01320.tinkoff.public.invest.api.contract"
+    ".v1.Quotation\022M\n\023external_commission\030\010 \001"
+    "(\01320.tinkoff.public.invest.api.contract."
+    "v1.Quotation\022H\n\016dividend_gross\030\t \001(\01320.t"
+    "inkoff.public.invest.api.contract.v1.Quo"
+    "tation\022=\n\003tax\030\n \001(\01320.tinkoff.public.inv"
+    "est.api.contract.v1.Quotation\022I\n\017dividen"
+    "d_amount\030\013 \001(\01320.tinkoff.public.invest.a"
+    "pi.contract.v1.Quotation\022\020\n\010currency\030\014 \001"
+    "(\t\"{\n\026PortfolioStreamRequest\022\020\n\010accounts"
+    "\030\001 \003(\t\022O\n\rping_settings\030\017 \001(\01328.tinkoff."
+    "public.invest.api.contract.v1.PingDelayS"
+    "ettings\"\215\002\n\027PortfolioStreamResponse\022[\n\rs"
+    "ubscriptions\030\001 \001(\0132B.tinkoff.public.inve"
+    "st.api.contract.v1.PortfolioSubscription"
+    "ResultH\000\022M\n\tportfolio\030\002 \001(\01328.tinkoff.pu"
+    "blic.invest.api.contract.v1.PortfolioRes"
+    "ponseH\000\022;\n\004ping\030\003 \001(\0132+.tinkoff.public.i"
+    "nvest.api.contract.v1.PingH\000B\t\n\007payload\""
+    "\231\001\n\033PortfolioSubscriptionResult\022R\n\010accou"
+    "nts\030\001 \003(\0132@.tinkoff.public.invest.api.co"
+    "ntract.v1.AccountSubscriptionStatus\022\023\n\013t"
+    "racking_id\030\007 \001(\t\022\021\n\tstream_id\030\010 \001(\t\"\220\001\n\031"
+    "AccountSubscriptionStatus\022\022\n\naccount_id\030"
+    "\001 \001(\t\022_\n\023subscription_status\030\006 \001(\0162B.tin"
+    "koff.public.invest.api.contract.v1.Portf"
+    "olioSubscriptionStatus\"\326\004\n\034GetOperations"
+    "ByCursorRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001"
+    "\002\022\032\n\rinstrument_id\030\002 \001(\tH\000\210\001\001\022-\n\004from\030\006 "
+    "\001(\0132\032.google.protobuf.TimestampH\001\210\001\001\022+\n\002"
+    "to\030\007 \001(\0132\032.google.protobuf.TimestampH\002\210\001"
+    "\001\022\023\n\006cursor\030\013 \001(\tH\003\210\001\001\022\022\n\005limit\030\014 \001(\005H\004\210"
+    "\001\001\022M\n\017operation_types\030\r \003(\01624.tinkoff.pu"
+    "blic.invest.api.contract.v1.OperationTyp"
+    "e\022I\n\005state\030\016 \001(\01625.tinkoff.public.invest"
+    ".api.contract.v1.OperationStateH\005\210\001\001\022 \n\023"
+    "without_commissions\030\017 \001(\010H\006\210\001\001\022\033\n\016withou"
+    "t_trades\030\020 \001(\010H\007\210\001\001\022\037\n\022without_overnight"
+    "s\030\021 \001(\010H\010\210\001\001B\020\n\016_instrument_idB\007\n\005_fromB"
+    "\005\n\003_toB\t\n\007_cursorB\010\n\006_limitB\010\n\006_stateB\026\n"
+    "\024_without_commissionsB\021\n\017_without_trades"
+    "B\025\n\023_without_overnights\"\213\001\n\035GetOperation"
+    "sByCursorResponse\022\020\n\010has_next\030\001 \001(\010\022\023\n\013n"
+    "ext_cursor\030\002 \001(\t\022C\n\005items\030\006 \003(\01324.tinkof"
+    "f.public.invest.api.contract.v1.Operatio"
+    "nItem\"\352\t\n\rOperationItem\022\016\n\006cursor\030\001 \001(\t\022"
+    "\031\n\021broker_account_id\030\006 \001(\t\022\n\n\002id\030\020 \001(\t\022\033"
+    "\n\023parent_operation_id\030\021 \001(\t\022\014\n\004name\030\022 \001("
+    "\t\022(\n\004date\030\025 \001(\0132\032.google.protobuf.Timest"
+    "amp\022B\n\004type\030\026 \001(\01624.tinkoff.public.inves"
+    "t.api.contract.v1.OperationType\022\023\n\013descr"
+    "iption\030\027 \001(\t\022D\n\005state\030\030 \001(\01625.tinkoff.pu"
+    "blic.invest.api.contract.v1.OperationSta"
+    "te\022\026\n\016instrument_uid\030\037 \001(\t\022\014\n\004figi\030  \001(\t"
+    "\022\027\n\017instrument_type\030! \001(\t\022N\n\017instrument_"
+    "kind\030\" \001(\01625.tinkoff.public.invest.api.c"
+    "ontract.v1.InstrumentType\022\024\n\014position_ui"
+    "d\030# \001(\t\022\016\n\006ticker\030$ \001(\t\022\022\n\nclass_code\030% "
+    "\001(\t\022B\n\007payment\030) \001(\01321.tinkoff.public.in"
+    "vest.api.contract.v1.MoneyValue\022@\n\005price"
+    "\030* \001(\01321.tinkoff.public.invest.api.contr"
+    "act.v1.MoneyValue\022E\n\ncommission\030+ \001(\01321."
+    "tinkoff.public.invest.api.contract.v1.Mo"
+    "neyValue\022@\n\005yield\030, \001(\01321.tinkoff.public"
+    ".invest.api.contract.v1.MoneyValue\022H\n\016yi"
+    "eld_relative\030- \001(\01320.tinkoff.public.inve"
+    "st.api.contract.v1.Quotation\022F\n\013accrued_"
+    "int\030. \001(\01321.tinkoff.public.invest.api.co"
+    "ntract.v1.MoneyValue\022\020\n\010quantity\0303 \001(\003\022\025"
+    "\n\rquantity_rest\0304 \001(\003\022\025\n\rquantity_done\0305"
+    " \001(\003\0224\n\020cancel_date_time\0308 \001(\0132\032.google."
+    "protobuf.Timestamp\022\025\n\rcancel_reason\0309 \001("
+    "\t\022O\n\013trades_info\030= \001(\0132:.tinkoff.public."
+    "invest.api.contract.v1.OperationItemTrad"
+    "es\022\021\n\tasset_uid\030@ \001(\t\022S\n\020child_operation"
+    "s\030A \003(\01329.tinkoff.public.invest.api.cont"
+    "ract.v1.ChildOperationItem\"`\n\023OperationI"
+    "temTrades\022I\n\006trades\030\006 \003(\01329.tinkoff.publ"
+    "ic.invest.api.contract.v1.OperationItemT"
+    "rade\"\253\002\n\022OperationItemTrade\022\013\n\003num\030\001 \001(\t"
+    "\022(\n\004date\030\006 \001(\0132\032.google.protobuf.Timesta"
+    "mp\022\020\n\010quantity\030\013 \001(\003\022@\n\005price\030\020 \001(\01321.ti"
+    "nkoff.public.invest.api.contract.v1.Mone"
+    "yValue\022@\n\005yield\030\025 \001(\01321.tinkoff.public.i"
+    "nvest.api.contract.v1.MoneyValue\022H\n\016yiel"
+    "d_relative\030\026 \001(\01320.tinkoff.public.invest"
+    ".api.contract.v1.Quotation\"\233\001\n\026Positions"
+    "StreamRequest\022\020\n\010accounts\030\001 \003(\t\022\036\n\026with_"
+    "initial_positions\030\003 \001(\010\022O\n\rping_settings"
+    "\030\017 \001(\01328.tinkoff.public.invest.api.contr"
+    "act.v1.PingDelaySettings\"\336\002\n\027PositionsSt"
+    "reamResponse\022[\n\rsubscriptions\030\001 \001(\0132B.ti"
+    "nkoff.public.invest.api.contract.v1.Posi"
+    "tionsSubscriptionResultH\000\022G\n\010position\030\002 "
+    "\001(\01323.tinkoff.public.invest.api.contract"
+    ".v1.PositionDataH\000\022;\n\004ping\030\003 \001(\0132+.tinko"
+    "ff.public.invest.api.contract.v1.PingH\000\022"
+    "U\n\021initial_positions\030\005 \001(\01328.tinkoff.pub"
+    "lic.invest.api.contract.v1.PositionsResp"
+    "onseH\000B\t\n\007payload\"\233\001\n\033PositionsSubscript"
+    "ionResult\022T\n\010accounts\030\001 \003(\0132B.tinkoff.pu"
+    "blic.invest.api.contract.v1.PositionsSub"
+    "scriptionStatus\022\023\n\013tracking_id\030\007 \001(\t\022\021\n\t"
+    "stream_id\030\010 \001(\t\"\231\001\n\033PositionsSubscriptio"
+    "nStatus\022\022\n\naccount_id\030\001 \001(\t\022f\n\023subscript"
+    "ion_status\030\006 \001(\0162I.tinkoff.public.invest"
+    ".api.contract.v1.PositionsAccountSubscri"
+    "ptionStatus\"\366\002\n\014PositionData\022\022\n\naccount_"
+    "id\030\001 \001(\t\022D\n\005money\030\002 \003(\01325.tinkoff.public"
+    ".invest.api.contract.v1.PositionsMoney\022N"
+    "\n\nsecurities\030\003 \003(\0132:.tinkoff.public.inve"
+    "st.api.contract.v1.PositionsSecurities\022H"
+    "\n\007futures\030\004 \003(\01327.tinkoff.public.invest."
+    "api.contract.v1.PositionsFutures\022H\n\007opti"
+    "ons\030\005 \003(\01327.tinkoff.public.invest.api.co"
+    "ntract.v1.PositionsOptions\022(\n\004date\030\006 \001(\013"
+    "2\032.google.protobuf.Timestamp\"\246\001\n\016Positio"
+    "nsMoney\022J\n\017available_value\030\001 \001(\01321.tinko"
+    "ff.public.invest.api.contract.v1.MoneyVa"
+    "lue\022H\n\rblocked_value\030\002 \001(\01321.tinkoff.pub"
+    "lic.invest.api.contract.v1.MoneyValue\"p\n"
+    "\022ChildOperationItem\022\026\n\016instrument_uid\030\001 "
+    "\001(\t\022B\n\007payment\030\002 \001(\01321.tinkoff.public.in"
+    "vest.api.contract.v1.MoneyValue\"|\n\027Opera"
+    "tionsStreamRequest\022\020\n\010accounts\030\001 \003(\t\022O\n\r"
+    "ping_settings\030\017 \001(\01328.tinkoff.public.inv"
+    "est.api.contract.v1.PingDelaySettings\"\213\002"
+    "\n\030OperationsStreamResponse\022\\\n\rsubscripti"
+    "ons\030\001 \001(\0132C.tinkoff.public.invest.api.co"
+    "ntract.v1.OperationsSubscriptionResultH\000"
+    "\022I\n\toperation\030\002 \001(\01324.tinkoff.public.inv"
+    "est.api.contract.v1.OperationDataH\000\022;\n\004p"
+    "ing\030\003 \001(\0132+.tinkoff.public.invest.api.co"
+    "ntract.v1.PingH\000B\t\n\007payload\"\301\001\n\034Operatio"
+    "nsSubscriptionResult\022\020\n\010accounts\030\001 \003(\t\022g"
+    "\n\023subscription_status\030\002 \001(\0162J.tinkoff.pu"
+    "blic.invest.api.contract.v1.OperationsAc"
+    "countSubscriptionStatus\022\023\n\013tracking_id\030\007"
+    " \001(\t\022\021\n\tstream_id\030\010 \001(\t\"\242\004\n\rOperationDat"
+    "a\022\031\n\021broker_account_id\030\001 \001(\t\022\n\n\002id\030\002 \001(\t"
+    "\022\033\n\023parent_operation_id\030\003 \001(\t\022\014\n\004name\030\004 "
+    "\001(\t\022(\n\004date\030\005 \001(\0132\032.google.protobuf.Time"
+    "stamp\022B\n\004type\030\006 \001(\01624.tinkoff.public.inv"
+    "est.api.contract.v1.OperationType\022D\n\005sta"
+    "te\030\007 \001(\01625.tinkoff.public.invest.api.con"
+    "tract.v1.OperationState\022\026\n\016instrument_ui"
+    "d\030\010 \001(\t\022\014\n\004figi\030\t \001(\t\022\027\n\017instrument_type"
+    "\030\n \001(\t\022N\n\017instrument_kind\030\013 \001(\01625.tinkof"
+    "f.public.invest.api.contract.v1.Instrume"
+    "ntType\022\024\n\014position_uid\030\014 \001(\t\022\016\n\006ticker\030\r"
+    " \001(\t\022\022\n\nclass_code\030\016 \001(\t\022B\n\007payment\030\017 \001("
+    "\01321.tinkoff.public.invest.api.contract.v"
+    "1.MoneyValue*\213\001\n\016OperationState\022\037\n\033OPERA"
+    "TION_STATE_UNSPECIFIED\020\000\022\034\n\030OPERATION_ST"
+    "ATE_EXECUTED\020\001\022\034\n\030OPERATION_STATE_CANCEL"
+    "ED\020\002\022\034\n\030OPERATION_STATE_PROGRESS\020\003*\371\021\n\rO"
+    "perationType\022\036\n\032OPERATION_TYPE_UNSPECIFI"
+    "ED\020\000\022\030\n\024OPERATION_TYPE_INPUT\020\001\022\033\n\027OPERAT"
+    "ION_TYPE_BOND_TAX\020\002\022$\n OPERATION_TYPE_OU"
+    "TPUT_SECURITIES\020\003\022\034\n\030OPERATION_TYPE_OVER"
+    "NIGHT\020\004\022\026\n\022OPERATION_TYPE_TAX\020\005\022&\n\"OPERA"
+    "TION_TYPE_BOND_REPAYMENT_FULL\020\006\022\034\n\030OPERA"
+    "TION_TYPE_SELL_CARD\020\007\022\037\n\033OPERATION_TYPE_"
+    "DIVIDEND_TAX\020\010\022\031\n\025OPERATION_TYPE_OUTPUT\020"
+    "\t\022!\n\035OPERATION_TYPE_BOND_REPAYMENT\020\n\022!\n\035"
+    "OPERATION_TYPE_TAX_CORRECTION\020\013\022\036\n\032OPERA"
+    "TION_TYPE_SERVICE_FEE\020\014\022\036\n\032OPERATION_TYP"
+    "E_BENEFIT_TAX\020\r\022\035\n\031OPERATION_TYPE_MARGIN"
+    "_FEE\020\016\022\026\n\022OPERATION_TYPE_BUY\020\017\022\033\n\027OPERAT"
+    "ION_TYPE_BUY_CARD\020\020\022#\n\037OPERATION_TYPE_IN"
+    "PUT_SECURITIES\020\021\022\036\n\032OPERATION_TYPE_SELL_"
+    "MARGIN\020\022\022\035\n\031OPERATION_TYPE_BROKER_FEE\020\023\022"
+    "\035\n\031OPERATION_TYPE_BUY_MARGIN\020\024\022\033\n\027OPERAT"
+    "ION_TYPE_DIVIDEND\020\025\022\027\n\023OPERATION_TYPE_SE"
+    "LL\020\026\022\031\n\025OPERATION_TYPE_COUPON\020\027\022\036\n\032OPERA"
+    "TION_TYPE_SUCCESS_FEE\020\030\022$\n OPERATION_TYP"
+    "E_DIVIDEND_TRANSFER\020\031\022%\n!OPERATION_TYPE_"
+    "ACCRUING_VARMARGIN\020\032\022(\n$OPERATION_TYPE_W"
+    "RITING_OFF_VARMARGIN\020\033\022\037\n\033OPERATION_TYPE"
+    "_DELIVERY_BUY\020\034\022 \n\034OPERATION_TYPE_DELIVE"
+    "RY_SELL\020\035\022\035\n\031OPERATION_TYPE_TRACK_MFEE\020\036"
+    "\022\035\n\031OPERATION_TYPE_TRACK_PFEE\020\037\022\"\n\036OPERA"
+    "TION_TYPE_TAX_PROGRESSIVE\020 \022\'\n#OPERATION"
+    "_TYPE_BOND_TAX_PROGRESSIVE\020!\022+\n\'OPERATIO"
+    "N_TYPE_DIVIDEND_TAX_PROGRESSIVE\020\"\022*\n&OPE"
+    "RATION_TYPE_BENEFIT_TAX_PROGRESSIVE\020#\022-\n"
+    ")OPERATION_TYPE_TAX_CORRECTION_PROGRESSI"
+    "VE\020$\022\'\n#OPERATION_TYPE_TAX_REPO_PROGRESS"
+    "IVE\020%\022\033\n\027OPERATION_TYPE_TAX_REPO\020&\022 \n\034OP"
+    "ERATION_TYPE_TAX_REPO_HOLD\020\'\022\"\n\036OPERATIO"
+    "N_TYPE_TAX_REPO_REFUND\020(\022,\n(OPERATION_TY"
+    "PE_TAX_REPO_HOLD_PROGRESSIVE\020)\022.\n*OPERAT"
+    "ION_TYPE_TAX_REPO_REFUND_PROGRESSIVE\020*\022\032"
+    "\n\026OPERATION_TYPE_DIV_EXT\020+\022(\n$OPERATION_"
+    "TYPE_TAX_CORRECTION_COUPON\020,\022\033\n\027OPERATIO"
+    "N_TYPE_CASH_FEE\020-\022\032\n\026OPERATION_TYPE_OUT_"
+    "FEE\020.\022!\n\035OPERATION_TYPE_OUT_STAMP_DUTY\020/"
+    "\022\037\n\033OPERATION_TYPE_OUTPUT_SWIFT\0202\022\036\n\032OPE"
+    "RATION_TYPE_INPUT_SWIFT\0203\022#\n\037OPERATION_T"
+    "YPE_OUTPUT_ACQUIRING\0205\022\"\n\036OPERATION_TYPE"
+    "_INPUT_ACQUIRING\0206\022!\n\035OPERATION_TYPE_OUT"
+    "PUT_PENALTY\0207\022\035\n\031OPERATION_TYPE_ADVICE_F"
+    "EE\0208\022\037\n\033OPERATION_TYPE_TRANS_IIS_BS\0209\022\036\n"
+    "\032OPERATION_TYPE_TRANS_BS_BS\020:\022\034\n\030OPERATI"
+    "ON_TYPE_OUT_MULTI\020;\022\034\n\030OPERATION_TYPE_IN"
+    "P_MULTI\020<\022!\n\035OPERATION_TYPE_OVER_PLACEME"
+    "NT\020=\022\033\n\027OPERATION_TYPE_OVER_COM\020>\022\036\n\032OPE"
+    "RATION_TYPE_OVER_INCOME\020\?\022$\n OPERATION_T"
+    "YPE_OPTION_EXPIRATION\020@\022$\n OPERATION_TYP"
+    "E_FUTURE_EXPIRATION\020A\022\034\n\030OPERATION_TYPE_"
+    "OTHER_FEE\020B\022\030\n\024OPERATION_TYPE_OTHER\020C\022!\n"
+    "\035OPERATION_TYPE_DFA_REDEMPTION\020D\022 \n\034OPER"
+    "ATION_TYPE_PRIMARY_ORDER\020E\022\032\n\026OPERATION_"
+    "TYPE_FUNDING\020F*\336\001\n\033PortfolioSubscription"
+    "Status\022-\n)PORTFOLIO_SUBSCRIPTION_STATUS_"
+    "UNSPECIFIED\020\000\022)\n%PORTFOLIO_SUBSCRIPTION_"
+    "STATUS_SUCCESS\020\001\0223\n/PORTFOLIO_SUBSCRIPTI"
+    "ON_STATUS_ACCOUNT_NOT_FOUND\020\002\0220\n,PORTFOL"
+    "IO_SUBSCRIPTION_STATUS_INTERNAL_ERROR\020\003*"
+    "\345\001\n\"PositionsAccountSubscriptionStatus\022-"
+    "\n)POSITIONS_SUBSCRIPTION_STATUS_UNSPECIF"
+    "IED\020\000\022)\n%POSITIONS_SUBSCRIPTION_STATUS_S"
+    "UCCESS\020\001\0223\n/POSITIONS_SUBSCRIPTION_STATU"
+    "S_ACCOUNT_NOT_FOUND\020\002\0220\n,POSITIONS_SUBSC"
+    "RIPTION_STATUS_INTERNAL_ERROR\020\003*\352\001\n#Oper"
+    "ationsAccountSubscriptionStatus\022.\n*OPERA"
+    "TIONS_SUBSCRIPTION_STATUS_UNSPECIFIED\020\000\022"
+    "*\n&OPERATIONS_SUBSCRIPTION_STATUS_SUCCES"
+    "S\020\001\0224\n0OPERATIONS_SUBSCRIPTION_STATUS_AC"
+    "COUNT_NOT_FOUND\020\002\0221\n-OPERATIONS_SUBSCRIP"
+    "TION_STATUS_INTERNAL_ERROR\020\0032\230\010\n\021Operati"
+    "onsService\022\204\001\n\rGetOperations\0228.tinkoff.p"
+    "ublic.invest.api.contract.v1.OperationsR"
+    "equest\0329.tinkoff.public.invest.api.contr"
+    "act.v1.OperationsResponse\022\201\001\n\014GetPortfol"
+    "io\0227.tinkoff.public.invest.api.contract."
+    "v1.PortfolioRequest\0328.tinkoff.public.inv"
+    "est.api.contract.v1.PortfolioResponse\022\201\001"
+    "\n\014GetPositions\0227.tinkoff.public.invest.a"
+    "pi.contract.v1.PositionsRequest\0328.tinkof"
+    "f.public.invest.api.contract.v1.Position"
+    "sResponse\022\220\001\n\021GetWithdrawLimits\022<.tinkof"
+    "f.public.invest.api.contract.v1.Withdraw"
+    "LimitsRequest\032=.tinkoff.public.invest.ap"
+    "i.contract.v1.WithdrawLimitsResponse\022\212\001\n"
+    "\017GetBrokerReport\022:.tinkoff.public.invest"
+    ".api.contract.v1.BrokerReportRequest\032;.t"
+    "inkoff.public.invest.api.contract.v1.Bro"
+    "kerReportResponse\022\256\001\n\031GetDividendsForeig"
+    "nIssuer\022G.tinkoff.public.invest.api.cont"
+    "ract.v1.GetDividendsForeignIssuerRequest"
+    "\032H.tinkoff.public.invest.api.contract.v1"
+    ".GetDividendsForeignIssuerResponse\022\242\001\n\025G"
+    "etOperationsByCursor\022C.tinkoff.public.in"
+    "vest.api.contract.v1.GetOperationsByCurs"
+    "orRequest\032D.tinkoff.public.invest.api.co"
+    "ntract.v1.GetOperationsByCursorResponse2"
+    "\333\003\n\027OperationsStreamService\022\222\001\n\017Portfoli"
+    "oStream\022=.tinkoff.public.invest.api.cont"
+    "ract.v1.PortfolioStreamRequest\032>.tinkoff"
+    ".public.invest.api.contract.v1.Portfolio"
+    "StreamResponse0\001\022\222\001\n\017PositionsStream\022=.t"
+    "inkoff.public.invest.api.contract.v1.Pos"
+    "itionsStreamRequest\032>.tinkoff.public.inv"
+    "est.api.contract.v1.PositionsStreamRespo"
+    "nse0\001\022\225\001\n\020OperationsStream\022>.tinkoff.pub"
+    "lic.invest.api.contract.v1.OperationsStr"
+    "eamRequest\032\?.tinkoff.public.invest.api.c"
+    "ontract.v1.OperationsStreamResponse0\001Ba\n"
+    "\034ru.tinkoff.piapi.contract.v1P\001Z\014./;inve"
+    "stapi\242\002\005TIAPI\252\002\024Tinkoff.InvestApi.V1\312\002\021T"
+    "inkoff\\Invest\\V1b\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_operations_2eproto_deps[3] = {
@@ -3051,7 +3061,7 @@ static ::absl::once_flag descriptor_table_operations_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_operations_2eproto = {
     false,
     false,
-    20222,
+    20384,
     descriptor_table_protodef_operations_2eproto,
     "operations.proto",
     &descriptor_table_operations_2eproto_once,
@@ -5593,6 +5603,18 @@ void PortfolioResponse::clear_total_amount_dfa() {
   ClearHasBit(_impl_._has_bits_[0],
                   0x00004000U);
 }
+void PortfolioResponse::clear_total_var_margin() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.total_var_margin_ != nullptr) _impl_.total_var_margin_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00008000U);
+}
+void PortfolioResponse::clear_total_var_margin_settled() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.total_var_margin_settled_ != nullptr) _impl_.total_var_margin_settled_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00010000U);
+}
 PortfolioResponse::PortfolioResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, PortfolioResponse_class_data_.base()) {
@@ -5662,6 +5684,12 @@ PortfolioResponse::PortfolioResponse(
   _impl_.total_amount_dfa_ = (CheckHasBit(cached_has_bits, 0x00004000U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.total_amount_dfa_)
                 : nullptr;
+  _impl_.total_var_margin_ = (CheckHasBit(cached_has_bits, 0x00008000U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.total_var_margin_)
+                : nullptr;
+  _impl_.total_var_margin_settled_ = (CheckHasBit(cached_has_bits, 0x00010000U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.total_var_margin_settled_)
+                : nullptr;
 
   // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.PortfolioResponse)
 }
@@ -5678,9 +5706,9 @@ inline void PortfolioResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena)
   ::memset(reinterpret_cast<char*>(&_impl_) +
                offsetof(Impl_, total_amount_shares_),
            0,
-           offsetof(Impl_, total_amount_dfa_) -
+           offsetof(Impl_, total_var_margin_settled_) -
                offsetof(Impl_, total_amount_shares_) +
-               sizeof(Impl_::total_amount_dfa_));
+               sizeof(Impl_::total_var_margin_settled_));
 }
 PortfolioResponse::~PortfolioResponse() {
   // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.PortfolioResponse)
@@ -5706,6 +5734,8 @@ inline void PortfolioResponse::SharedDtor(MessageLite& self) {
   delete this_._impl_.daily_yield_;
   delete this_._impl_.daily_yield_relative_;
   delete this_._impl_.total_amount_dfa_;
+  delete this_._impl_.total_var_margin_;
+  delete this_._impl_.total_var_margin_settled_;
   this_._impl_.~Impl_();
 }
 
@@ -5768,17 +5798,17 @@ PortfolioResponse::GetClassData() const {
   return PortfolioResponse_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 15, 14, 82, 2>
+const ::_pbi::TcParseTable<5, 17, 16, 90, 2>
 PortfolioResponse::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_._has_bits_),
     0, // no _extensions_
-    17, 120,  // max_field_number, fast_idx_mask
+    19, 248,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294848512,  // skipmap
+    4294455296,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    15,  // num_field_entries
-    14,  // num_aux_entries
+    17,  // num_field_entries
+    16,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     PortfolioResponse_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -5787,10 +5817,7 @@ PortfolioResponse::_table_ = {
     ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::PortfolioResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // .tinkoff.public.invest.api.contract.v1.Quotation daily_yield_relative = 16;
-    {::_pbi::TcParser::FastMtS2,
-     {386, 13, 12,
-      PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.daily_yield_relative_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // .tinkoff.public.invest.api.contract.v1.MoneyValue total_amount_shares = 1;
     {::_pbi::TcParser::FastMtS1,
      {10, 3, 0,
@@ -5845,6 +5872,34 @@ PortfolioResponse::_table_ = {
     {::_pbi::TcParser::FastMtS1,
      {122, 12, 11,
       PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.daily_yield_)}},
+    // .tinkoff.public.invest.api.contract.v1.Quotation daily_yield_relative = 16;
+    {::_pbi::TcParser::FastMtS2,
+     {386, 13, 12,
+      PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.daily_yield_relative_)}},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue total_amount_dfa = 17;
+    {::_pbi::TcParser::FastMtS2,
+     {394, 14, 13,
+      PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.total_amount_dfa_)}},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin = 18;
+    {::_pbi::TcParser::FastMtS2,
+     {402, 15, 14,
+      PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.total_var_margin_)}},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin_settled = 19;
+    {::_pbi::TcParser::FastMtS2,
+     {410, 16, 15,
+      PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.total_var_margin_settled_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
@@ -5878,6 +5933,10 @@ PortfolioResponse::_table_ = {
     {PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.daily_yield_relative_), _Internal::kHasBitsOffset + 13, 12, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .tinkoff.public.invest.api.contract.v1.MoneyValue total_amount_dfa = 17;
     {PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.total_amount_dfa_), _Internal::kHasBitsOffset + 14, 13, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin = 18;
+    {PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.total_var_margin_), _Internal::kHasBitsOffset + 15, 14, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin_settled = 19;
+    {PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.total_var_margin_settled_), _Internal::kHasBitsOffset + 16, 15, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
@@ -5894,9 +5953,11 @@ PortfolioResponse::_table_ = {
       {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
       {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
       {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
+      {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
   }},
   {{
-    "\67\0\0\0\0\0\0\0\12\0\0\0\0\0\0\0"
+    "\67\0\0\0\0\0\0\0\12\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
     "tinkoff.public.invest.api.contract.v1.PortfolioResponse"
     "account_id"
   }},
@@ -5940,7 +6001,7 @@ PROTOBUF_NOINLINE void PortfolioResponse::Clear() {
       _impl_.total_amount_futures_->Clear();
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00007f00U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
     if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       ABSL_DCHECK(_impl_.expected_yield_ != nullptr);
       _impl_.expected_yield_->Clear();
@@ -5969,6 +6030,14 @@ PROTOBUF_NOINLINE void PortfolioResponse::Clear() {
       ABSL_DCHECK(_impl_.total_amount_dfa_ != nullptr);
       _impl_.total_amount_dfa_->Clear();
     }
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+      ABSL_DCHECK(_impl_.total_var_margin_ != nullptr);
+      _impl_.total_var_margin_->Clear();
+    }
+  }
+  if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+    ABSL_DCHECK(_impl_.total_var_margin_settled_ != nullptr);
+    _impl_.total_var_margin_settled_->Clear();
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -6113,6 +6182,20 @@ PROTOBUF_NOINLINE void PortfolioResponse::Clear() {
         stream);
   }
 
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin = 18;
+  if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        18, *this_._impl_.total_var_margin_, this_._impl_.total_var_margin_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin_settled = 19;
+  if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        19, *this_._impl_.total_var_margin_settled_, this_._impl_.total_var_margin_settled_->GetCachedSize(), target,
+        stream);
+  }
+
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -6186,7 +6269,7 @@ PROTOBUF_NOINLINE void PortfolioResponse::Clear() {
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.total_amount_futures_);
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00007f00U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
     // .tinkoff.public.invest.api.contract.v1.Quotation expected_yield = 6;
     if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       total_size += 1 +
@@ -6221,6 +6304,18 @@ PROTOBUF_NOINLINE void PortfolioResponse::Clear() {
     if (CheckHasBit(cached_has_bits, 0x00004000U)) {
       total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.total_amount_dfa_);
+    }
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin = 18;
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+      total_size += 2 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.total_var_margin_);
+    }
+  }
+   {
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue total_var_margin_settled = 19;
+    if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+      total_size += 2 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.total_var_margin_settled_);
     }
   }
   return this_.MaybeComputeUnknownFieldsSize(total_size,
@@ -6303,7 +6398,7 @@ void PortfolioResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00007f00U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
     if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       ABSL_DCHECK(from._impl_.expected_yield_ != nullptr);
       if (_this->_impl_.expected_yield_ == nullptr) {
@@ -6360,6 +6455,22 @@ void PortfolioResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.total_amount_dfa_->MergeFrom(*from._impl_.total_amount_dfa_);
       }
     }
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+      ABSL_DCHECK(from._impl_.total_var_margin_ != nullptr);
+      if (_this->_impl_.total_var_margin_ == nullptr) {
+        _this->_impl_.total_var_margin_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.total_var_margin_);
+      } else {
+        _this->_impl_.total_var_margin_->MergeFrom(*from._impl_.total_var_margin_);
+      }
+    }
+  }
+  if (CheckHasBit(cached_has_bits, 0x00010000U)) {
+    ABSL_DCHECK(from._impl_.total_var_margin_settled_ != nullptr);
+    if (_this->_impl_.total_var_margin_settled_ == nullptr) {
+      _this->_impl_.total_var_margin_settled_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.total_var_margin_settled_);
+    } else {
+      _this->_impl_.total_var_margin_settled_->MergeFrom(*from._impl_.total_var_margin_settled_);
+    }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
@@ -6384,8 +6495,8 @@ void PortfolioResponse::InternalSwap(PortfolioResponse* PROTOBUF_RESTRICT PROTOB
   _impl_.virtual_positions_.InternalSwap(&other->_impl_.virtual_positions_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.account_id_, &other->_impl_.account_id_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.total_amount_dfa_)
-      + sizeof(PortfolioResponse::_impl_.total_amount_dfa_)
+      PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.total_var_margin_settled_)
+      + sizeof(PortfolioResponse::_impl_.total_var_margin_settled_)
       - PROTOBUF_FIELD_OFFSET(PortfolioResponse, _impl_.total_amount_shares_)>(
           reinterpret_cast<char*>(&_impl_.total_amount_shares_),
           reinterpret_cast<char*>(&other->_impl_.total_amount_shares_));
