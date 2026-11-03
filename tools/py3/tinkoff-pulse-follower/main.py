@@ -683,7 +683,7 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
                     break
 
             order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
-            price = _calculate_buy_price(order_book) * nominal
+            price = decimal_to_quotation(quotation_to_decimal(_calculate_buy_price(order_book)) * nominal)
 
             if price is not None:
                 if price != order_price:
@@ -765,7 +765,7 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                     break
 
             order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
-            price = _calculate_sell_price(order_book) * nominal
+            price = decimal_to_quotation(quotation_to_decimal(_calculate_sell_price(order_book)) * nominal)
 
             if price is not None:
                 if price != order_price:
