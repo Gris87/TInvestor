@@ -20,7 +20,7 @@ from t_tech.invest.exceptions import AioRequestError
 from t_tech.invest.retrying.aio.client import AsyncRetryingClient
 from t_tech.invest.retrying.settings import RetryClientSettings
 from t_tech.invest.schemas import OperationState, OrderIdType
-from t_tech.invest.utils import decimal_to_money, decimal_to_quotation, quotation_to_decimal
+from t_tech.invest.utils import decimal_to_money, decimal_to_quotation, money_to_decimal, quotation_to_decimal
 
 from localization import *
 
@@ -50,8 +50,8 @@ IGNORE_INSTRUMENTS = {
 TOTAL_MONEY_AVAILABLE = Decimal("100000000.00")
 
 
-_instruments_cache = {}
-_instrument_lot_cache = {}
+_instruments_by_ticker_cache = {}
+_instruments_by_uid_cache = {}
 _last_complete_timestamp = -1
 _total_operations = {}
 _last_portfolio = {
@@ -159,8 +159,8 @@ async def _start_follow_poll_mode(dest_client, tidy_client, cache_path, src_prof
         # logger.debug("Tick")
 
         if not _is_work_time():
-            _instruments_cache.clear()
-            _instrument_lot_cache.clear()
+            _instruments_by_ticker_cache.clear()
+            _instruments_by_uid_cache.clear()
 
             seconds = _seconds_to_next_morning() + 1
 
@@ -189,7 +189,7 @@ async def _get_last_profile_trade_timestamp(client, cache_path, profile_id):
     payload = await _request_profile_trades(profile_id)
     items = payload["items"]
 
-    if len(_instruments_cache) == 0:
+    if len(_instruments_by_ticker_cache) == 0:
         logger.info("Filling instruments cache")
 
         await _fill_instruments_cache_from_items(client, payload["items"])
@@ -242,21 +242,25 @@ async def _fill_instruments_cache_from_items(client, items):
 
             full_id = class_code + "/" + ticker
 
-            if full_id not in _instruments_cache and full_id not in IGNORE_INSTRUMENTS:
+            if full_id not in _instruments_by_ticker_cache and full_id not in IGNORE_INSTRUMENTS:
                 logger.info(f"Getting info for instrument {full_id}")
 
                 while True:
                     try:
-                        instrument_type, uid, lot, company, sector = await _get_instrument_info(client, item["type"], class_code, ticker)
+                        instrument_type, uid, lot, nominal, company, sector = await _get_instrument_info(client, item["type"], class_code, ticker)
 
-                        _instruments_cache[full_id] = {
+                        _instruments_by_ticker_cache[full_id] = {
                             "type": instrument_type,
                             "uid": uid,
                             "lot": lot,
+                            "nominal": nominal,
                             "company": company,
                             "sector": sector,
                         }
-                        _instrument_lot_cache[uid] = lot
+                        _instruments_by_uid_cache[uid] = {
+                            "lot": lot,
+                            "nominal": nominal
+                        }
                     except AioRequestError as e:
                         logger.warning(f"Failed to get info for instrument {full_id}: {e}")
 
@@ -272,8 +276,9 @@ async def _get_instrument_info(client, instrument_type, class_code, ticker):
     resp1 = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
 
     if not resp1.instrument.api_trade_available_flag:
-        return "", "", 0, "", ""
+        return "", "", 0, "1.00", "", ""
 
+    nominal = "1.00"
     company = OTHER
     sector = OTHER
 
@@ -282,7 +287,12 @@ async def _get_instrument_info(client, instrument_type, class_code, ticker):
         company = resp2.asset.brand.company
         sector = SECTORS_RUS[resp2.asset.brand.sector.replace("_", "").lower()]
 
-    if instrument_type == "futures":
+    if instrument_type == "bond":
+        resp3 = await client.instruments.bond_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
+
+        nominal_decimal = money_to_decimal(resp3.instrument.nominal) / Decimal("100.00")
+        nominal=str(nominal_decimal)
+    elif instrument_type == "futures":
         resp3 = await client.instruments.future_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
 
         if resp3.instrument.sector != "":
@@ -294,10 +304,15 @@ async def _get_instrument_info(client, instrument_type, class_code, ticker):
 
                 if resp4.instrument.currency != "rub":
                     instrument_type = "neoactive"
+
+                if resp4.instrument.asset_uid != "":
+                    resp5 = await client.instruments.get_asset_by(id=resp4.instrument.asset_uid)
+                    company = resp5.asset.brand.company
+                    sector = SECTORS_RUS[resp5.asset.brand.sector.replace("_", "").lower()]
         except AioRequestError as e:
             logger.warning(f"Failed to get info for instrument from position uid {resp3.instrument.basic_asset_position_uid}: {e}")
 
-    return TYPES_RUS[instrument_type], resp1.instrument.uid, resp1.instrument.lot, company, sector
+    return TYPES_RUS[instrument_type], resp1.instrument.uid, resp1.instrument.lot, nominal, company, sector
 
 
 async def _request_profile_trades(profile_id, next_cursor=""):
@@ -461,10 +476,10 @@ async def _generate_portfolio(generated_portfolio, old_portfolio, new_portfolio,
 
 
 async def _calculate_part(portfolio, full_id):
-    if full_id not in _instruments_cache:
+    if full_id not in _instruments_by_ticker_cache:
         return 0
 
-    instrument_info = _instruments_cache[full_id]
+    instrument_info = _instruments_by_ticker_cache[full_id]
 
     instrument_type = instrument_info["type"]
     company = instrument_info["company"]
@@ -483,7 +498,7 @@ async def _convert_generated_portfolio(generated_portfolio):
     money_remained = TOTAL_MONEY_AVAILABLE
 
     for full_id, part in generated_portfolio.items():
-        instrument_info = _instruments_cache[full_id]
+        instrument_info = _instruments_by_ticker_cache[full_id]
 
         instrument_uid = instrument_info["uid"]
         lot = instrument_info["lot"]
@@ -603,7 +618,8 @@ async def _build_instruments_for_trading(dest_client, src_instrument_to_cost, de
 
             continue
 
-        lot = await _get_instrument_lot(dest_client, src_instrument_id)
+        instrument_info = _instruments_by_uid_cache[src_instrument_id]
+        lot = instrument_info["lot"]
 
         dest_portfolio_item = dest_instrument_to_cost[src_instrument_id]
         delta = expected_cost - dest_portfolio_item["cost"]
@@ -646,7 +662,9 @@ async def _trade_instruments(dest_client, dest_account, instruments):
 
 
 async def _buy(dest_client, dest_account, instrument_id, delta):
-    lot = await _get_instrument_lot(dest_client, instrument_id)
+    instrument_info = _instruments_by_uid_cache[instrument_id]
+    lot = instrument_info["lot"]
+    nominal = Decimal(instrument_info["nominal"])
 
     order_id = None
     order_price = None
@@ -665,7 +683,7 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
                     break
 
             order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
-            price = _calculate_buy_price(order_book)
+            price = _calculate_buy_price(order_book) * nominal
 
             if price is not None:
                 if price != order_price:
@@ -726,7 +744,9 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
 
 
 async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
-    lot = await _get_instrument_lot(dest_client, instrument_id)
+    instrument_info = _instruments_by_uid_cache[instrument_id]
+    lot = instrument_info["lot"]
+    nominal = Decimal(instrument_info["nominal"])
 
     order_id = None
     order_price = None
@@ -745,7 +765,7 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                     break
 
             order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
-            price = _calculate_sell_price(order_book)
+            price = _calculate_sell_price(order_book) * nominal
 
             if price is not None:
                 if price != order_price:
@@ -808,16 +828,6 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
         await asyncio.sleep(30)
 
 
-async def _get_instrument_lot(client, instrument_id):
-    if instrument_id in _instrument_lot_cache:
-        return _instrument_lot_cache[instrument_id]
-
-    resp = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_UID, id=instrument_id)
-    _instrument_lot_cache[instrument_id] = resp.instrument.lot
-
-    return resp.instrument.lot
-
-
 def _calculate_buy_price(order_book):
     if order_book.asks:
         return order_book.asks[0].price
@@ -864,7 +874,7 @@ def _get_session_id():
 
 
 def _load_cache(cache_path):
-    global _instruments_cache
+    global _instruments_by_ticker_cache
     global _last_complete_timestamp
     global _total_operations
     global _last_portfolio
@@ -876,15 +886,19 @@ def _load_cache(cache_path):
 
     if instruments_path.exists():
         with open(instruments_path, "r", encoding="utf-8") as f:
-            _instruments_cache = json.loads(f.read())
+            _instruments_by_ticker_cache = json.loads(f.read())
 
-            _instrument_lot_cache.clear()
+            _instruments_by_uid_cache.clear()
 
-            for instrument_info in _instruments_cache.values():
-                instrument_uid = instrument_info["uid"]
+            for instrument_info in _instruments_by_ticker_cache.values():
+                uid = instrument_info["uid"]
                 lot = instrument_info["lot"]
+                nominal = instrument_info["nominal"]
 
-                _instrument_lot_cache[instrument_uid] = lot
+                _instruments_by_uid_cache[uid] = {
+                    "lot": lot,
+                    "nominal": nominal
+                }
 
     if portfolio_path.exists():
         with open(portfolio_path, "r", encoding="utf-8") as f:
@@ -903,7 +917,7 @@ def _save_instruments_cache(cache_path):
     instruments_path = cache_folder_path / "instruments.json"
 
     with open(instruments_path, "w", encoding="utf-8") as f:
-        json.dump(_instruments_cache, f, ensure_ascii=False)
+        json.dump(_instruments_by_ticker_cache, f, ensure_ascii=False)
 
 
 def _save_portfolio_cache(cache_path):
