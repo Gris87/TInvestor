@@ -685,60 +685,64 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
                     break
 
             order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
-            price = decimal_to_quotation(quotation_to_decimal(_calculate_buy_price(order_book)) * nominal)
+            price = _calculate_buy_price(order_book)
 
-            if price is not None:
-                if price != order_price:
-                    if order_id is not None:
-                        resp = await dest_client.orders.get_order_state(
-                            account_id=dest_account,
-                            order_id=order_id,
-                            price_type=PriceType.PRICE_TYPE_CURRENCY,
-                            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
-                        )
+            if price is None:
+                break
 
-                        delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
+            price = decimal_to_quotation(quotation_to_decimal(price) * nominal)
 
-                        await dest_client.orders.cancel_order(
-                            account_id=dest_account,
-                            order_id=order_id,
-                            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
-                        )
+            if price != order_price:
+                if order_id is not None:
+                    resp = await dest_client.orders.get_order_state(
+                        account_id=dest_account,
+                        order_id=order_id,
+                        price_type=PriceType.PRICE_TYPE_CURRENCY,
+                        order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                    )
 
-                        order_id = None
-                        order_price = None
+                    delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
 
-                    price_decimal = quotation_to_decimal(price)
-                    lot_price = lot * price_decimal
+                    await dest_client.orders.cancel_order(
+                        account_id=dest_account,
+                        order_id=order_id,
+                        order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                    )
 
-                    req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=price)
-                    max_lots = await dest_client.orders.get_max_lots(req)
+                    order_id = None
+                    order_price = None
 
-                    delta_quantity = round(delta / lot_price)
-                    amount_to_buy = min(delta_quantity, max_lots.buy_margin_limits.buy_max_lots)
+                price_decimal = quotation_to_decimal(price)
+                lot_price = lot * price_decimal
 
-                    if amount_to_buy > 0:
-                        logger.debug(f"Creating order to buy {amount_to_buy} lots of {full_id} at price {quotation_to_decimal(price)}")
+                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=price)
+                max_lots = await dest_client.orders.get_max_lots(req)
 
-                        resp = await dest_client.orders.post_order(
-                            quantity=amount_to_buy,
-                            price=price,
-                            direction=OrderDirection.ORDER_DIRECTION_BUY,
-                            account_id=dest_account,
-                            order_type=OrderType.ORDER_TYPE_LIMIT,
-                            instrument_id=instrument_id,
-                            time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
-                            price_type=PriceType.PRICE_TYPE_CURRENCY,
-                            confirm_margin_trade=True,
-                        )
+                delta_quantity = round(delta / lot_price)
+                amount_to_buy = min(delta_quantity, max_lots.buy_margin_limits.buy_max_lots)
 
-                        if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
-                            order_id = resp.order_id
-                            order_price = price
-                        else:
-                            logger.warning(f'Order to buy "{instrument_id}" rejected')
+                if amount_to_buy > 0:
+                    logger.debug(f"Creating order to buy {amount_to_buy} lots of {full_id} at price {quotation_to_decimal(price)}")
+
+                    resp = await dest_client.orders.post_order(
+                        quantity=amount_to_buy,
+                        price=price,
+                        direction=OrderDirection.ORDER_DIRECTION_BUY,
+                        account_id=dest_account,
+                        order_type=OrderType.ORDER_TYPE_LIMIT,
+                        instrument_id=instrument_id,
+                        time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+                        price_type=PriceType.PRICE_TYPE_CURRENCY,
+                        confirm_margin_trade=True,
+                    )
+
+                    if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                        order_id = resp.order_id
+                        order_price = price
                     else:
-                        break
+                        logger.warning(f'Order to buy "{instrument_id}" rejected')
+                else:
+                    break
         except Exception as e:
             logger.warning(f"Failed to buy: {e}")
 
@@ -768,63 +772,67 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                     break
 
             order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
-            price = decimal_to_quotation(quotation_to_decimal(_calculate_sell_price(order_book)) * nominal)
+            price = _calculate_sell_price(order_book)
 
-            if price is not None:
-                if price != order_price:
-                    if order_id is not None:
-                        resp = await dest_client.orders.get_order_state(
-                            account_id=dest_account,
-                            order_id=order_id,
-                            price_type=PriceType.PRICE_TYPE_CURRENCY,
-                            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
-                        )
+            if price is None:
+                break
 
-                        delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
+            price = decimal_to_quotation(quotation_to_decimal(price) * nominal)
 
-                        await dest_client.orders.cancel_order(
-                            account_id=dest_account,
-                            order_id=order_id,
-                            order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
-                        )
+            if price != order_price:
+                if order_id is not None:
+                    resp = await dest_client.orders.get_order_state(
+                        account_id=dest_account,
+                        order_id=order_id,
+                        price_type=PriceType.PRICE_TYPE_CURRENCY,
+                        order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                    )
 
-                        order_id = None
-                        order_price = None
+                    delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
 
-                    price_decimal = quotation_to_decimal(price)
-                    lot_price = lot * price_decimal
+                    await dest_client.orders.cancel_order(
+                        account_id=dest_account,
+                        order_id=order_id,
+                        order_id_type=OrderIdType.ORDER_ID_TYPE_EXCHANGE
+                    )
 
-                    req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=price)
-                    max_lots = await dest_client.orders.get_max_lots(req)
+                    order_id = None
+                    order_price = None
 
-                    if sell_all:
-                        amount_to_sell = max_lots.sell_limits.sell_max_lots
+                price_decimal = quotation_to_decimal(price)
+                lot_price = lot * price_decimal
+
+                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=price)
+                max_lots = await dest_client.orders.get_max_lots(req)
+
+                if sell_all:
+                    amount_to_sell = max_lots.sell_limits.sell_max_lots
+                else:
+                    delta_quantity = round(delta / lot_price)
+                    amount_to_sell = min(delta_quantity, max_lots.sell_margin_limits.sell_max_lots)
+
+                if amount_to_sell > 0:
+                    logger.debug(f"Creating order to sell {amount_to_sell} lots of {full_id} at price {quotation_to_decimal(price)}")
+
+                    resp = await dest_client.orders.post_order(
+                        quantity=amount_to_sell,
+                        price=price,
+                        direction=OrderDirection.ORDER_DIRECTION_SELL,
+                        account_id=dest_account,
+                        order_type=OrderType.ORDER_TYPE_LIMIT,
+                        instrument_id=instrument_id,
+                        time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+                        price_type=PriceType.PRICE_TYPE_CURRENCY,
+                        confirm_margin_trade=True,
+                    )
+
+                    if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
+                        order_id = resp.order_id
+                        order_price = price
                     else:
-                        delta_quantity = round(delta / lot_price)
-                        amount_to_sell = min(delta_quantity, max_lots.sell_margin_limits.sell_max_lots)
-
-                    if amount_to_sell > 0:
-                        logger.debug(f"Creating order to sell {amount_to_sell} lots of {full_id} at price {quotation_to_decimal(price)}")
-
-                        resp = await dest_client.orders.post_order(
-                            quantity=amount_to_sell,
-                            price=price,
-                            direction=OrderDirection.ORDER_DIRECTION_SELL,
-                            account_id=dest_account,
-                            order_type=OrderType.ORDER_TYPE_LIMIT,
-                            instrument_id=instrument_id,
-                            time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
-                            price_type=PriceType.PRICE_TYPE_CURRENCY,
-                            confirm_margin_trade=True,
-                        )
-
-                        if resp.execution_report_status != OrderExecutionReportStatus.EXECUTION_REPORT_STATUS_REJECTED:
-                            order_id = resp.order_id
-                            order_price = price
-                        else:
-                            logger.warning(f'Order to sell "{instrument_id}" rejected')
-                    else:
-                        break
+                        logger.warning(f'Order to sell "{instrument_id}" rejected')
+                else:
+                    break
         except Exception as e:
             logger.warning(f"Failed to sell: {e}")
 

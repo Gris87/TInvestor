@@ -66,11 +66,15 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient,
         std::unique_ptr<grpc::MetadataCredentialsPlugin>(new InvestApiAuthenticator(userStorage))
     );
 
+    grpc::experimental::TlsChannelCredentialsOptions options;
+    options.set_verify_server_certs(false);
+    options.set_check_call_host(false);
+
     grpc::ChannelArguments args;
     args.SetMaxReceiveMessageSize(MAX_RECEIVE_MESSAGE_SIZE);
 
     const std::shared_ptr<grpc::Channel> channel =
-        grpc::CreateCustomChannel(GRPC_ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()), args);
+        grpc::CreateCustomChannel(GRPC_ADDRESS, grpc::experimental::TlsCredentials(options), args);
 
     mUsersService            = tinkoff::UsersService::NewStub(channel);
     mInstrumentsService      = tinkoff::InstrumentsService::NewStub(channel);
