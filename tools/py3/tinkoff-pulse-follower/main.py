@@ -6,6 +6,7 @@ import logging
 import requests
 import sys
 import time
+import traceback
 
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -350,6 +351,7 @@ async def _get_last_operation_timestamp(client, account):
             return int(operations.items[0].date.timestamp() * 1000)
     except Exception as e:
         logger.warning(f"Failed to get last operation timestamp: {e}")
+        logger.warning(traceback.format_exc())
 
     return 0
 
@@ -560,6 +562,7 @@ async def _get_valid_portfolio(client, account):
                 return portfolio
         except Exception as e:
             logger.warning(f"Failed to get valid portfolio: {e}")
+            logger.warning(traceback.format_exc())
 
         await asyncio.sleep(1)
 
@@ -745,6 +748,7 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
                     break
         except Exception as e:
             logger.warning(f"Failed to buy: {e}")
+            logger.warning(traceback.format_exc())
 
         await asyncio.sleep(30)
 
@@ -835,6 +839,7 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                     break
         except Exception as e:
             logger.warning(f"Failed to sell: {e}")
+            logger.warning(traceback.format_exc())
 
         await asyncio.sleep(30)
 
