@@ -297,6 +297,9 @@ async def _get_instrument_info(client, instrument_type, class_code, ticker):
     elif instrument_type == "futures":
         resp3 = await client.instruments.future_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER, class_code=class_code, id=ticker)
 
+        nominal_decimal = quotation_to_decimal(resp3.instrument.min_price_increment_amount) / quotation_to_decimal(resp3.instrument.min_price_increment)
+        nominal=str(nominal_decimal)
+
         if resp3.instrument.sector != "":
             sector = SECTORS_RUS[resp3.instrument.sector.replace("SECTOR_", "").replace("_", "").lower()]
 
@@ -743,11 +746,11 @@ async def _buy(dest_client, dest_account, instrument_id, delta):
                         order_id = resp.order_id
                         order_price = price
                     else:
-                        logger.warning(f'Order to buy "{instrument_id}" rejected')
+                        logger.warning(f'Order to buy {full_id} rejected')
                 else:
                     break
         except Exception as e:
-            logger.warning(f"Failed to buy: {e}")
+            logger.warning(f"Failed to buy {full_id}: {e}")
             logger.warning(traceback.format_exc())
 
         await asyncio.sleep(30)
@@ -834,11 +837,11 @@ async def _sell(dest_client, dest_account, instrument_id, delta, sell_all):
                         order_id = resp.order_id
                         order_price = price
                     else:
-                        logger.warning(f'Order to sell "{instrument_id}" rejected')
+                        logger.warning(f'Order to sell {full_id} rejected')
                 else:
                     break
         except Exception as e:
-            logger.warning(f"Failed to sell: {e}")
+            logger.warning(f"Failed to sell {full_id}: {e}")
             logger.warning(traceback.format_exc())
 
         await asyncio.sleep(30)
