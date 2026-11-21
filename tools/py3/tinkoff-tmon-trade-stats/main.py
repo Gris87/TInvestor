@@ -116,7 +116,64 @@ async def _handle_last_trades(args, trades, from_dt):
 
 
 async def _display_stats(args):
-    print(args)
+    print("Time    Trades")
+
+    while True:
+        results = await _handle_stats(args, _load_stats(args))
+        await _print_results(results)
+
+        await asyncio.sleep(60)
+
+
+def _load_stats(args):
+    res = []
+
+    cache_folder_path = Path(args.cache) / "tmon_trade_stats"
+    trades_path = cache_folder_path / "trades.json"
+
+    if trades_path.exists():
+        with open(trades_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        content = content.rstrip().rstrip(",")
+
+        res = json.loads("[" + content + "]")
+
+    return res
+
+
+async def _handle_stats(args, stats):
+    if len(stats) == 0:
+        return {
+            "time": "00:00",
+            "trades": {},
+        }
+
+    trades = {}
+
+    for stat in stats:
+        if stat["time"] >= args.from_time:
+            for price, quantity in stat["trades"].items():
+                if price not in trades:
+                    trades[price] = 0
+
+                trades[price] += quantity
+
+    return {
+        "time": stats[-1]["time"],
+        "trades": dict(sorted(trades.items())),
+    }
+
+
+async def _print_results(results):
+    time_str = results["time"]
+
+    print(f"{time_str}   ", end="")
+
+    for price, quantity in results["trades"].items():
+        print(f"{price} - {quantity}    ", end="")
+
+    print("")
 
 
 async def _clear_cache(args):
@@ -170,7 +227,7 @@ def main():
     )
     parser.add_argument(
         "--from",
-        dest="from",
+        dest="from_time",
         type=str,
         default="",
         help="From time in format HH:MM",
