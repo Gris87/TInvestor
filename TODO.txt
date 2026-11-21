@@ -1,9 +1,12 @@
+Write script to calculate amount lots in trade on timeline for TMON
+Replace RetryClient with simple client and retries
+Do not short in pulse-follower
 Need to test with bonds on sandbox (operations/portfolio)
 Need to test with futures on sandbox (CCX6)
 GetOrderBook Take into account Nominal for bonds for following/trading. Price = Nominal * price / 100
 Incredible trading of TMON when price changes (-0.5% - +0.5%)
 Make all cron jobs to work as services
-Think how to ignore zero portfolio notification
+Think how to ignore zero portfolio notification ("positions": [])
 In case if income will decrease double check what was changed since 2026-07-06 (Additional gap is 3%)
 Update defaults
 Improve coverage
