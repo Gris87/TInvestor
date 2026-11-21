@@ -67,6 +67,7 @@ copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinko
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-follower)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-follower)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-pulse-follower)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-pulse-follower)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-terminate-trading)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-terminate-trading)" &&
+copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-tmon-trade-stats)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-tmon-trade-stats)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinkoff-tmon-weekend-trading)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinkoff-tmon-weekend-trading)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinvestor-notifier)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinvestor-notifier)" &&
 copy_dist_files.commands += $(COPY_DIR) "$$shell_path($${PWD}/../tools/py3/tinvestor-notifier-server)" "$$shell_path($${OUT_PWD}/build/tools/py3/tinvestor-notifier-server)" &&

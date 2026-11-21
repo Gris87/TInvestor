@@ -260,6 +260,7 @@ def is_file_skipped(file_path):
         "/tools/py3/tinkoff-follower/t_tech/" in file_path or
         "/tools/py3/tinkoff-pulse-follower/t_tech/" in file_path or
         "/tools/py3/tinkoff-terminate-trading/t_tech/" in file_path or
+        "/tools/py3/tinkoff-tmon-trade-stats/t_tech/" in file_path or
         "/tools/py3/tinkoff-tmon-weekend-trading/t_tech/" in file_path or
         "/tools/py3/tinvestor-notifier/t_tech/" in file_path or
         "/TInvestor.pro.user" in file_path
