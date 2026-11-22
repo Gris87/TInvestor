@@ -1,4 +1,3 @@
-Write script to calculate amount lots in trade on timeline for TMON
 Replace RetryClient with simple client and retries
 Do not short in pulse-follower
 Need to test with bonds on sandbox (operations/portfolio)

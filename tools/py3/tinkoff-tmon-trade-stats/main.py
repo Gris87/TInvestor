@@ -6,7 +6,7 @@ import logging
 import shutil
 import sys
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from loguru import logger
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -171,13 +171,13 @@ async def _print_results(results):
     print(f"{time_str}   ", end="")
 
     for price, quantity in results["trades"].items():
-        print(f"{price} - {quantity}    ", end="")
+        print(f"{price} - {quantity:6}    ", end="")
 
     print("")
 
 
 async def _clear_cache(args):
-    shutil.rmtree(Path(args.cache) / "tmon_trade_stats")
+    shutil.rmtree(Path(args.cache) / "tmon_trade_stats", ignore_errors=True)
 
 
 def _is_weekend_work_time():
