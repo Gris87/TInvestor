@@ -118,9 +118,13 @@ async def _handle_last_trades(args, trades, from_dt):
 async def _display_stats(args):
     print("Time    Trades")
 
+    prev_trades = {}
+
     while True:
         results = await _handle_stats(args, _load_stats(args))
-        await _print_results(results)
+        await _print_results(results, prev_trades)
+
+        prev_trades = results["trades"]
 
         await asyncio.sleep(60)
 
@@ -165,13 +169,22 @@ async def _handle_stats(args, stats):
     }
 
 
-async def _print_results(results):
+async def _print_results(results, prev_trades):
     time_str = results["time"]
 
     print(f"{time_str}   ", end="")
 
     for price, quantity in results["trades"].items():
-        print(f"{price} - {quantity:6}    ", end="")
+        print(f"{price} - {quantity:6} ", end="")
+
+        if price in prev_trades:
+            delta = quantity - prev_trades[price]
+            delta_str = f"(+{delta})"
+
+            print(f"{delta_str:9}    ", end="")
+
+        else:
+            print("             ", end="")
 
     print("")
 
