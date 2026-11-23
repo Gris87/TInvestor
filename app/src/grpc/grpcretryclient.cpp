@@ -112,7 +112,7 @@ std::shared_ptr<tinkoff::PortfolioResponse> GrpcRetryClient::getValidPortfolio(Q
 
 bool GrpcRetryClient::validatePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
 {
-    bool res = true;
+    bool res = tinkoffPortfolio.positions_size() > 0;
 
     for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
     {

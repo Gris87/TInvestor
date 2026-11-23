@@ -89,7 +89,7 @@ async def _get_money_and_tmon_cost(client, account_id):
     while True:
         portfolio = await client.operations.get_portfolio(account_id=account_id)
 
-        good = True
+        good = len(portfolio.positions) > 0
 
         for position in portfolio.positions:
             if position.instrument_uid==RUBLE_UID:

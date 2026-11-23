@@ -550,7 +550,7 @@ async def _get_valid_portfolio(client, account):
         try:
             portfolio = await client.operations.get_portfolio(account_id=account)
 
-            good = True
+            good = len(portfolio.positions) > 0
 
             for position in portfolio.positions:
                 if position.instrument_uid==RUBLE_UID:
