@@ -141,7 +141,7 @@ TEST_F(Test_RawGrpcClient, Test_getAccounts)
     // clang-format off
     ASSERT_EQ(status.ok(),                               true);
     ASSERT_EQ(resp->accounts_size(),                     1);
-    ASSERT_EQ(resp->accounts(0).id(),                    "ff2a6286-662f-43ce-b368-0d6638868ff2");
+    ASSERT_EQ(resp->accounts(0).id(),                    "54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
     ASSERT_EQ(resp->accounts(0).type(),                  tinkoff::ACCOUNT_TYPE_TINKOFF);
     ASSERT_EQ(resp->accounts(0).name(),                  "Test account");
     ASSERT_EQ(resp->accounts(0).status(),                tinkoff::ACCOUNT_STATUS_OPEN);
@@ -703,7 +703,7 @@ TEST_F(Test_RawGrpcClient, Test_getPortfolio)
 
     context.set_credentials(creds);
 
-    req.set_account_id("ff2a6286-662f-43ce-b368-0d6638868ff2");
+    req.set_account_id("54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
 
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, readLock());
@@ -714,7 +714,7 @@ TEST_F(Test_RawGrpcClient, Test_getPortfolio)
 
     // clang-format off
     ASSERT_EQ(status.ok(),                             true);
-    ASSERT_EQ(resp->account_id(),                      "ff2a6286-662f-43ce-b368-0d6638868ff2");
+    ASSERT_EQ(resp->account_id(),                      "54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
     ASSERT_NE(resp->total_amount_currencies().units(), 0);
     ASSERT_NE(resp->total_amount_portfolio().units(),  0);
     ASSERT_GT(resp->positions_size(),                  0);
@@ -737,7 +737,7 @@ TEST_F(Test_RawGrpcClient, Test_getOperations)
 
     context.set_credentials(creds);
 
-    req.set_account_id("ff2a6286-662f-43ce-b368-0d6638868ff2");
+    req.set_account_id("54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
     req.set_limit(2);
     req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
     req.set_without_trades(true);
@@ -753,7 +753,7 @@ TEST_F(Test_RawGrpcClient, Test_getOperations)
     ASSERT_EQ(status.ok(),                        true);
     ASSERT_GT(resp->items_size(),                 0);
     ASSERT_NE(resp->items(0).cursor(),            "");
-    ASSERT_EQ(resp->items(0).broker_account_id(), "ff2a6286-662f-43ce-b368-0d6638868ff2");
+    ASSERT_EQ(resp->items(0).broker_account_id(), "54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
     ASSERT_NE(resp->items(0).id(),                "");
     ASSERT_GT(resp->items(0).date().seconds(),    1704056400);
     ASSERT_NE(resp->items(0).description(),       "");
@@ -774,7 +774,7 @@ TEST_F(Test_RawGrpcClient, Test_getMaxLots)
 
     context.set_credentials(creds);
 
-    req.set_account_id("ff2a6286-662f-43ce-b368-0d6638868ff2");
+    req.set_account_id("54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
     req.set_instrument_id(SPBE_UID);
 
     QString token = SANDBOX_TOKEN;
@@ -834,7 +834,7 @@ TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
     tinkoffPrice->set_units(priceUnits);
     tinkoffPrice->set_nano(priceNano);
 
-    req2.set_account_id("ff2a6286-662f-43ce-b368-0d6638868ff2");
+    req2.set_account_id("54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
     req2.set_instrument_id(SPBE_UID);
     req2.set_direction(tinkoff::ORDER_DIRECTION_BUY);
     req2.set_quantity(1);
@@ -891,7 +891,7 @@ TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
 
     context3.set_credentials(creds);
 
-    req3.set_account_id("ff2a6286-662f-43ce-b368-0d6638868ff2");
+    req3.set_account_id("54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
     req3.set_order_id(resp2->order_id());
     req3.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
     req3.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
@@ -948,7 +948,7 @@ TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
 
     context4.set_credentials(creds);
 
-    req4.set_account_id("ff2a6286-662f-43ce-b368-0d6638868ff2");
+    req4.set_account_id("54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
     req4.set_order_id(resp2->order_id());
     req4.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
 
@@ -1004,7 +1004,7 @@ TEST_F(Test_RawGrpcClient, Test_OperationsStream)
     const InSequence seq;
 
     tinkoff::OperationsStreamRequest req;
-    req.add_accounts("ff2a6286-662f-43ce-b368-0d6638868ff2");
+    req.add_accounts("54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
 
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, readLock());
@@ -1031,7 +1031,7 @@ TEST_F(Test_RawGrpcClient, Test_PortfolioStream)
     const InSequence seq;
 
     tinkoff::PortfolioStreamRequest req;
-    req.add_accounts("ff2a6286-662f-43ce-b368-0d6638868ff2");
+    req.add_accounts("54813b80-74ba-419a-8bcf-4d0b5c1b2ece");
 
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, readLock());

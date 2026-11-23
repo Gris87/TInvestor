@@ -1,3 +1,4 @@
+Force bi-dir to get trade instruments at 19:00-19:10
 Replace RetryClient with simple client and retries
 Do not short in pulse-follower
 Need to test with bonds on sandbox (operations/portfolio)
