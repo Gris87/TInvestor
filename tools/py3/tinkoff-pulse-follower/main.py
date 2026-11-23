@@ -478,6 +478,9 @@ async def _generate_portfolio(generated_portfolio, old_portfolio, new_portfolio,
 
             generated_portfolio[full_id] += new_part - old_part
 
+            if generated_portfolio[full_id] <= 0:
+                del generated_portfolio[full_id]
+
     return generated_portfolio
 
 
@@ -599,9 +602,15 @@ def _build_instrument_to_cost_map(portfolio):
                 "cost": quotation_to_decimal(position.quantity)
             }
         else:
+            nominal = Decimal("1.00")
+
+            if position.average_position_price.currency == "pt.":
+                instrument_info = _instruments_by_uid_cache[position.instrument_uid]
+                nominal = Decimal(instrument_info["nominal"])
+
             item = {
                 "price": quotation_to_decimal(position.current_price),
-                "cost": quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price)
+                "cost": quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price) * nominal
             }
 
         res[position.instrument_uid] = item
@@ -654,7 +663,13 @@ async def _trade_instruments(dest_client, dest_account, instruments):
 
         for position in dest_portfolio.positions:
             if position.instrument_uid == instrument_id:
-                current_cost = quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price)
+                nominal = Decimal("1.00")
+
+                if position.average_position_price.currency == "pt.":
+                    instrument_info = _instruments_by_uid_cache[instrument_id]
+                    nominal = Decimal(instrument_info["nominal"])
+
+                current_cost = quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price) * nominal
 
                 break
 
