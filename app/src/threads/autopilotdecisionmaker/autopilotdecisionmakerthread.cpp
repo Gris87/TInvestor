@@ -7,12 +7,19 @@
 
 
 const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+const char* const TMON_UID  = "498ec3ff-ef27-4729-9703-a5aac48d5789";
 
 constexpr qint64 MS_IN_SECOND = 1000LL;
 constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
 constexpr qint64 ONE_HOUR     = 60LL * ONE_MINUTE;
 constexpr qint64 ONE_DAY      = 24LL * ONE_HOUR;
 constexpr qint64 DATE_RANGE   = 90LL * ONE_DAY;
+
+// clang-format off
+static const QSet<QString> KEEP_INSTRUMENTS{ // clazy:exclude=non-pod-global-static
+    TMON_UID
+};
+// clang-format on
 
 
 
@@ -124,17 +131,20 @@ Portfolio AutoPilotDecisionMakerThread::handlePortfolioResponse(const tinkoff::P
         const QString instrumentId   = QString::fromStdString(position.instrument_uid());
         const QString instrumentType = QString::fromStdString(position.instrument_type());
 
-        PortfolioItem item;
+        if (!KEEP_INSTRUMENTS.contains(instrumentId))
+        {
+            PortfolioItem item;
 
-        item.instrumentId = instrumentId;
-        item.showPrices   = instrumentId != RUBLE_UID;
-        item.available    = quotationToDouble(position.quantity());
-        item.price        = item.showPrices ? quotationToFloat(position.current_price()) : 1.0f;
-        item.avgPriceFifo = item.showPrices ? quotationToFloat(position.average_position_price_fifo()) : 1.0f;
-        item.avgPriceWavg = item.showPrices ? quotationToFloat(position.average_position_price()) : 1.0f;
-        item.cost         = item.available * item.avgPriceFifo;
+            item.instrumentId = instrumentId;
+            item.showPrices   = instrumentId != RUBLE_UID;
+            item.available    = quotationToDouble(position.quantity());
+            item.price        = item.showPrices ? quotationToFloat(position.current_price()) : 1.0f;
+            item.avgPriceFifo = item.showPrices ? quotationToFloat(position.average_position_price_fifo()) : 1.0f;
+            item.avgPriceWavg = item.showPrices ? quotationToFloat(position.average_position_price()) : 1.0f;
+            item.cost         = item.available * item.avgPriceFifo;
 
-        categories[instrumentType].append(item);
+            categories[instrumentType].append(item);
+        }
     }
 
     for (auto it = categories.constBegin(); it != categories.constEnd(); ++it)
