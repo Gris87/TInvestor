@@ -17,14 +17,15 @@ from portfolio import check_portfolio
 from pulse import check_pulse
 
 
-HUGE_SELL          = 45.0
-HUNDRED_PERCENT    = 100.0
-MS_IN_SECOND       = 1000
-ONE_MINUTE         = 60 * MS_IN_SECOND
-ONE_HOUR           = 60 * ONE_MINUTE
-ONE_DAY            = 24 * ONE_HOUR
-HUGE_SELL_INTERVAL = 5 * ONE_DAY
-HUGE_SELL_STEP     = 60
+HUGE_SELL               = 45.0
+HUNDRED_PERCENT         = 100.0
+MS_IN_SECOND            = 1000
+ONE_MINUTE              = 60 * MS_IN_SECOND
+ONE_HOUR                = 60 * ONE_MINUTE
+ONE_DAY                 = 24 * ONE_HOUR
+SESSION_EXPIRATION_TIME = 12 * 60 * 60 # 12 hours
+HUGE_SELL_INTERVAL      = 5 * ONE_DAY
+HUGE_SELL_STEP          = 60
 
 
 def notifier(args):
@@ -41,6 +42,7 @@ def notifier(args):
     _check_core_file(args)
     _check_cron_failures(args)
     _check_app_running(args)
+    _check_session_expired(args)
 
     if args.extra_huge_sell:
         _check_huge_sell(args)
@@ -95,6 +97,17 @@ def _check_app_running(args):
 
         home_directory = Path.home()
         subprocess.Popen(["xdg-open", f"{home_directory}/Desktop/TInvestor.desktop"], close_fds=True)
+
+
+def _check_session_expired(args):
+    session_path = Path("session_id.txt")
+
+    if session_path.is_file():
+        now = time.time()
+        mtime = session_path.stat().st_mtime
+
+        if now - mtime > SESSION_EXPIRATION_TIME:
+            store_message(args, "system", msg_session_expired, "")
 
 
 def _check_huge_sell(args):

@@ -1,4 +1,3 @@
-Notify about expired session
 Replace RetryClient with simple client and retries
 Need to test with bonds on sandbox (operations/portfolio)
 Need to test with futures on sandbox (CCX6, NRX6)
