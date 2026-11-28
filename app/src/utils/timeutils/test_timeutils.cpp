@@ -54,6 +54,14 @@ TEST_F(Test_TimeUtils, Test_isMonday)
     ASSERT_EQ(timeUtils->isMonday(1704574800000), false); // 00:00 MSK Sun
 }
 
+TEST_F(Test_TimeUtils, Test_isEveningSessionBegin)
+{
+    ASSERT_EQ(timeUtils->isEveningSessionBegin(1704124740000), false); // 18:59 MSK
+    ASSERT_EQ(timeUtils->isEveningSessionBegin(1704124800000), true);  // 19:00 MSK
+    ASSERT_EQ(timeUtils->isEveningSessionBegin(1704125340000), true);  // 19:09 MSK
+    ASSERT_EQ(timeUtils->isEveningSessionBegin(1704125400000), false); // 19:10 MSK
+}
+
 TEST_F(Test_TimeUtils, Test_isNormalOrEveningSession)
 {
     ASSERT_EQ(timeUtils->isNormalOrEveningSession(1704056400000), false); // 00:00 MSK

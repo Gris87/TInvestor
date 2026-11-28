@@ -1,6 +1,5 @@
-Force bi-dir to get trade instruments at 19:00-19:10
+Notify about expired session
 Replace RetryClient with simple client and retries
-Do not short in pulse-follower
 Need to test with bonds on sandbox (operations/portfolio)
 Need to test with futures on sandbox (CCX6, NRX6)
 Validate future part calculation (NRX6) and double check with follower mode

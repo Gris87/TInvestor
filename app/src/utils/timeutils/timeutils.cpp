@@ -4,13 +4,17 @@
 
 
 
-constexpr int SLEEP_STEP_IN_MS            = 100;
-constexpr int NORMAL_SESSION_START_HOUR   = 10;
-constexpr int NORMAL_SESSION_START_MINUTE = 0;
-constexpr int NORMAL_SESSION_END_HOUR     = 18;
-constexpr int NORMAL_SESSION_END_MINUTE   = 40;
-constexpr int EXTRA_SESSION_END_HOUR      = 23;
-constexpr int EXTRA_SESSION_END_MINUTE    = 0;
+constexpr int SLEEP_STEP_IN_MS               = 100;
+constexpr int NORMAL_SESSION_START_HOUR      = 10;
+constexpr int NORMAL_SESSION_START_MINUTE    = 0;
+constexpr int NORMAL_SESSION_END_HOUR        = 18;
+constexpr int NORMAL_SESSION_END_MINUTE      = 40;
+constexpr int EXTRA_SESSION_END_HOUR         = 23;
+constexpr int EXTRA_SESSION_END_MINUTE       = 0;
+constexpr int EVENING_SESSION_START_HOUR     = 19;
+constexpr int EVENING_SESSION_START_MINUTE   = 0;
+constexpr int EVENING_SESSION_DELAYED_HOUR   = 19;
+constexpr int EVENING_SESSION_DELAYED_MINUTE = 10;
 
 
 
@@ -83,6 +87,17 @@ bool TimeUtils::isNormalOrEveningSession(qint64 timestamp)
     const QTime time      = dateTime.time();
     const QTime startTime = QTime(NORMAL_SESSION_START_HOUR, NORMAL_SESSION_START_MINUTE);
     const QTime endTime   = QTime(EXTRA_SESSION_END_HOUR, EXTRA_SESSION_END_MINUTE);
+
+    return time >= startTime && time < endTime;
+}
+
+bool TimeUtils::isEveningSessionBegin(qint64 timestamp)
+{
+    const QDateTime dateTime = QDateTime::fromMSecsSinceEpoch(timestamp, mMoscowTimezone);
+
+    const QTime time      = dateTime.time();
+    const QTime startTime = QTime(EVENING_SESSION_START_HOUR, EVENING_SESSION_START_MINUTE);
+    const QTime endTime   = QTime(EVENING_SESSION_DELAYED_HOUR, EVENING_SESSION_DELAYED_MINUTE);
 
     return time >= startTime && time < endTime;
 }

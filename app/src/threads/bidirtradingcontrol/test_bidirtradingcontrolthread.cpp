@@ -69,6 +69,7 @@ TEST_F(Test_BiDirTradingControlThread, Test_run)
 
     EXPECT_CALL(*configMock, isTradeHugeBid()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeHugeSpread()).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, isEveningSessionBegin(Ge(1704056400000))).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isTradeInNonWorkingHours()).WillOnce(Return(true));
     EXPECT_CALL(*timeUtilsMock, isNormalOrEveningSession(Ge(1704056400000))).WillOnce(Return(false));
 

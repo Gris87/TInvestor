@@ -58,8 +58,8 @@ void BiDirTradingControlThread::run()
     const bool   tradeHugeBid    = mConfig->isTradeHugeBid();
     const bool   tradeHugeSpread = mConfig->isTradeHugeSpread();
 
-    if (timestamp - mLastDetectionTimestamp > DETECTION_INTERVAL || mLastTradeHugeBid != tradeHugeBid ||
-        mLastTradeHugeSpread != tradeHugeSpread)
+    if (mTimeUtils->isEveningSessionBegin(timestamp) || timestamp - mLastDetectionTimestamp > DETECTION_INTERVAL ||
+        mLastTradeHugeBid != tradeHugeBid || mLastTradeHugeSpread != tradeHugeSpread)
     {
         detectStocksForBiDirTrading(timestamp, tradeHugeBid, tradeHugeSpread);
     }
